@@ -823,6 +823,7 @@ const mapLegend = document.querySelector("#mapLegend");
 const menuToggle = document.querySelector("#menuToggle");
 const menuBackdrop = document.querySelector("#menuBackdrop");
 const sidePanel = document.querySelector("#sidePanel");
+const appShell = document.querySelector(".app-shell");
 const sourcesToggle = document.querySelector("#sourcesToggle");
 const sourcesClose = document.querySelector("#sourcesClose");
 const sourceCard = document.querySelector("#sourceCard");
@@ -2463,7 +2464,13 @@ document.addEventListener("click", (event) => {
 });
 resetView.addEventListener("click", () => fitMapToClosures(currentClosures));
 window.addEventListener("resize", () => map.invalidateSize());
-menuToggle.addEventListener("click", () => setMobileMenuOpen(!sidePanel.classList.contains("is-open")));
+menuToggle.addEventListener("click", () => {
+  if (window.matchMedia("(max-width: 880px)").matches) {
+    setMobileMenuOpen(!sidePanel.classList.contains("is-open"));
+  } else {
+    setDesktopPanelOpen(appShell.classList.contains("panel-collapsed"));
+  }
+});
 menuBackdrop.addEventListener("click", () => setMobileMenuOpen(false));
 sourcesToggle.addEventListener("click", () => setSourcesOpen(true));
 sourcesClose.addEventListener("click", () => setSourcesOpen(false));
@@ -2485,6 +2492,14 @@ function setMobileMenuOpen(isOpen) {
   menuToggle.setAttribute("aria-expanded", String(isOpen));
   menuToggle.setAttribute("aria-label", t(isOpen ? "menu.close" : "menu.open"));
   menuBackdrop.hidden = !isOpen;
+  setTimeout(() => map.invalidateSize(true), 240);
+}
+
+function setDesktopPanelOpen(isOpen) {
+  appShell.classList.toggle("panel-collapsed", !isOpen);
+  menuToggle.classList.toggle("is-open", isOpen);
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute("aria-label", t(isOpen ? "menu.close" : "menu.open"));
   setTimeout(() => map.invalidateSize(true), 240);
 }
 
@@ -2540,6 +2555,10 @@ panelResizeHandle.addEventListener("pointercancel", () => {
 const currentDate = formatInputDate(new Date());
 dateStart.value = currentDate;
 dateEnd.value = currentDate;
+
+if (!window.matchMedia("(max-width: 880px)").matches) {
+  setDesktopPanelOpen(true);
+}
 
 renderMunicipalityLinks();
 updateView({ fit: true });
