@@ -6,19 +6,21 @@ function renderFaqSources() {
     return;
   }
 
+  sourceList.replaceChildren();
+
   [...window.SOURCE_CATALOG]
     .sort((first, second) => first.name.localeCompare(second.name, "fr", { sensitivity: "base" }))
-    .forEach(({ name, url }) => {
+    .forEach((source) => {
     const row = document.createElement("tr");
     const nameCell = document.createElement("td");
     const linkCell = document.createElement("td");
     const link = document.createElement("a");
 
-    nameCell.textContent = name;
-    link.href = url;
+    nameCell.textContent = currentLanguage() === "en" && source.nameEn ? source.nameEn : source.name;
+    link.href = currentLanguage() === "en" && source.enUrl ? source.enUrl : url;
     link.target = "_blank";
     link.rel = "noreferrer";
-    link.textContent = "Ouvrir la source";
+    link.textContent = t("faq.sourceLink");
     linkCell.append(link);
     row.append(nameCell, linkCell);
       sourceList.append(row);
@@ -28,7 +30,7 @@ function renderFaqSources() {
 function sortFaqLists() {
   document.querySelectorAll(".faq-list").forEach((list) => {
     [...list.querySelectorAll(":scope > details")]
-      .sort((first, second) => first.querySelector("summary").textContent.localeCompare(second.querySelector("summary").textContent, "fr", { sensitivity: "base" }))
+      .sort((first, second) => first.querySelector("summary").textContent.localeCompare(second.querySelector("summary").textContent, currentLanguage(), { sensitivity: "base" }))
       .forEach((item) => list.append(item));
   });
 }
@@ -48,6 +50,10 @@ function openAnchoredDetails() {
 backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 window.addEventListener("scroll", updateBackToTop, { passive: true });
 window.addEventListener("hashchange", openAnchoredDetails);
+window.addEventListener("languagechange", () => {
+  renderFaqSources();
+  sortFaqLists();
+});
 renderFaqSources();
 sortFaqLists();
 updateBackToTop();

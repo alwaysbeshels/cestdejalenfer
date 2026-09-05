@@ -122,3 +122,12 @@ You are the maintenance engineer for the static web application **Carte des entr
 - Do not commit, create branches, add secrets, or publish to GitHub unless explicitly asked.
 - Do not silently replace an official source with sample data when a live request fails. Show a clear status message and retain the available layers.
 - Keep code ASCII unless the relevant source data or existing file intentionally contains accented French text.
+
+## Internationalization
+
+- Keep interface text in the shared `languages/fr.js` and `languages/en.js` catalogs and use translation keys in HTML and generated UI instead of duplicating literal interface text.
+- Keep the FR/EN switch synchronized across the map and FAQ, persist the user's language choice locally, and update generated labels, status messages, legends, lists, and popups when the language changes.
+- Treat source-published titles, descriptions, directions, dates, limits, detours, references, and responsible parties as source data. Preserve their original wording and language unless an official or verified translation is available.
+- Translate application-owned labels around source data, such as filter names, severity labels, metadata labels, empty states, and loading/error messages. Never silently machine-translate official traffic instructions in a way that could change their meaning.
+- Keep shareable application routes available under `/fr/` and `/en/`, including the corresponding FAQ routes, and preserve the active language when switching between the map and FAQ.
+- For external source links, use a verified English URL only when the source publishes one. Otherwise keep the official source URL and do not invent an `/en/` path; source websites may expose their own language switch.

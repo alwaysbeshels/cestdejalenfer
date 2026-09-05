@@ -1,22 +1,22 @@
 const CATEGORY_META = {
-  municipal: { label: "Ville" },
-  private: { label: "Secteurs prives" },
-  linkedCity: { label: "Villes liées" },
-  commercial: { label: "Rues marchandes" },
-  event: { label: "Événements" },
-  regional: { label: "Grands axes" },
-  q511: { label: "Quebec 511" },
-  laval: { label: "Laval" },
-  longueuil: { label: "Longueuil" },
-  strike: { label: "Greves / manifs" }
+  municipal: { label: () => t("category.municipal") },
+  private: { label: () => t("category.private") },
+  linkedCity: { label: () => t("category.linkedCity") },
+  commercial: { label: () => t("category.commercial") },
+  event: { label: () => t("category.event") },
+  regional: { label: () => t("category.regional") },
+  q511: { label: () => t("category.q511") },
+  laval: { label: () => t("category.laval") },
+  longueuil: { label: () => t("category.longueuil") },
+  strike: { label: () => t("category.strike") }
 };
 
 const SEVERITY_META = {
-  critical: { label: "Rue fermée", color: "#ff1744", width: 9, opacity: 0.98 },
-  major: { label: "Voie touchée", color: "#ff8c00", width: 7, opacity: 0.96 },
-  moderate: { label: "Accès limite", color: "#ffe600", width: 6, opacity: 0.94 },
-  parking: { label: "Stationnement", color: "#ff2bd6", width: 5, opacity: 0.92 },
-  minor: { label: "Faible impact", color: "#00e676", width: 4, opacity: 0.78 }
+  critical: { label: () => t("severity.critical"), color: "#ff1744", width: 9, opacity: 0.98 },
+  major: { label: () => t("severity.major"), color: "#ff8c00", width: 7, opacity: 0.96 },
+  moderate: { label: () => t("severity.moderate"), color: "#ffe600", width: 6, opacity: 0.94 },
+  parking: { label: () => t("severity.parking"), color: "#ff2bd6", width: 5, opacity: 0.92 },
+  minor: { label: () => t("severity.minor"), color: "#00e676", width: 4, opacity: 0.78 }
 };
 
 const LIVE_SOURCES = {
@@ -29,9 +29,9 @@ const LIVE_SOURCES = {
 };
 
 const LAVAL_LAYERS = [
-  { id: 0, label: "Rues barrées", severity: "critical" },
-  { id: 2, label: "Entrave partielle", severity: "major" },
-  { id: 3, label: "Entrave planifiée", severity: "moderate" }
+  { id: 0, labelKey: "laval.closed", severity: "critical" },
+  { id: 2, labelKey: "laval.partial", severity: "major" },
+  { id: 3, labelKey: "laval.planned", severity: "moderate" }
 ];
 
 const GREATER_MONTREAL_BOUNDS = {
@@ -882,7 +882,7 @@ baseLayer.on("load", () => {
   });
   map.invalidateSize();
 });
-baseLayer.on("tileerror", () => showMapStatus("Le fond de carte charge mal. Les fermetures restent affichees, mais verifie la connexion Internet.", "error"));
+baseLayer.on("tileerror", () => showMapStatus(t("map.tileError"), "error"));
 map.on("moveend zoomend", () => scheduleLavalOfficialLines());
 map.on("moveend", () => {
   updateViewportList();
@@ -900,6 +900,10 @@ function escapeHtml(value) {
 }
 
 function correctFrenchText(value) {
+  if (currentLanguage() !== "fr") {
+    return String(value ?? "");
+  }
+
   const corrections = [
     [/\bMontreal\b/g, "Montréal"],
     [/\bQuebec\b/g, "Québec"],
@@ -1322,17 +1326,17 @@ function normalizeLavalFeature(feature, layer) {
     id: `laval-${layer.id}-${properties.OBJECTID}`,
     category: "laval",
     sourceKind: "laval-mapserver",
-    title: `${properties.ENTRAVE || layer.label} - ${properties.LOCALISATION || "Localisation non publiée"}`,
+    title: `${properties.ENTRAVE || t(layer.labelKey)} - ${properties.LOCALISATION || t("popup.notPublished")}`,
     responsible: properties.RESPONSABLE || "Ville de Laval",
     borough: "Laval",
     startDate: dateOnlyFromTimestamp(properties.DATE_DEBUT),
     endDate: dateOnlyFromTimestamp(properties.DATE_FIN),
     impact: [properties.ENTRAVE, properties.CIRCULATION, properties.REMARQUE].filter(isMeaningfulLavalValue).join(" - ") || "Details de circulation non publies.",
-    trafficLabel: properties.ENTRAVE || layer.label,
+    trafficLabel: properties.ENTRAVE || t(layer.labelKey),
     severity: layer.severity,
-    direction: "Direction precise non publiée dans les attributs Laval.",
-    streets: properties.LOCALISATION || "Localisation non publiée",
-    source: `Laval Info-Travaux - ${layer.label}`,
+    direction: properties.DIRECTION || t("popup.notPublished"),
+    streets: properties.LOCALISATION || t("popup.notPublished"),
+    source: `Laval Info-Travaux - ${t(layer.labelKey)}`,
     sourceUrl: "https://vl.maps.arcgis.com/apps/instant/sidebar/index.html?appid=729ff9eeb851437b9a4cf365efadfe8f",
     periods: ["day", "night"],
     color: severity.color,
@@ -1812,7 +1816,7 @@ async function fetchJson(url) {
 }
 
 async function loadOfficialData() {
-  showMapStatus("Chargement des entraves depuis plusieurs sources officielles...", "loading");
+  showMapStatus(t("map.loading"), "loading");
 
   const [montrealResult, uciResult, regionalResult, linkedCityResult, longueuilResult, lavalResult, quebec511Result, pedestrianStreetResult] = await Promise.allSettled([
     fetchJson(LIVE_SOURCES.montreal),
@@ -1872,7 +1876,7 @@ async function loadOfficialData() {
   }
 
   if (officialClosures.length === 0) {
-    showMapStatus("APIs officielles non disponibles: affichage des données de secours seulement.", "error");
+    showMapStatus(t("map.apiUnavailable"), "error");
   } else {
     allClosures = dedupeClosures(officialClosures);
     showMapStatus(`Donnees chargees: ${sourceCounts.join(" + ")}.`, "ready");
@@ -1905,14 +1909,14 @@ function popupContent(closure) {
   return `
     <div class="popup-card">
       <p class="popup-title">${escapeHtml(closure.title)}</p>
-      <p class="popup-meta"><strong>${escapeHtml(severity.label)}</strong> - ${escapeHtml(meta.label)}</p>
+      <p class="popup-meta"><strong>${escapeHtml(severity.label())}</strong> - ${escapeHtml(meta.label())}</p>
       <p class="popup-meta">${escapeHtml(closure.streets)}</p>
-      <p class="popup-meta">${formatDate(closure.startDate)} au ${formatDate(closure.endDate)}</p>
+      <p class="popup-meta">${formatDate(closure.startDate)} ${t("popup.to")} ${formatDate(closure.endDate)}</p>
       ${details}
-      <p class="popup-meta"><strong>Responsable:</strong> ${escapeHtml(closure.responsible)}</p>
-      <p class="popup-meta"><strong>Moment:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
-      <p class="popup-meta"><strong>Impact auto:</strong> ${escapeHtml(closure.impact)}</p>
-      <p class="popup-meta"><strong>Direction:</strong> ${escapeHtml(closure.direction)}</p>
+      <p class="popup-meta"><strong>${t("popup.responsible")}:</strong> ${escapeHtml(closure.responsible)}</p>
+      <p class="popup-meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
+      <p class="popup-meta"><strong>${t("popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
+      <p class="popup-meta"><strong>${t("popup.direction")}:</strong> ${escapeHtml(closure.direction)}</p>
       <a href="${escapeHtml(closure.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(closure.source)}</a>
     </div>
   `;
@@ -1920,23 +1924,23 @@ function popupContent(closure) {
 
 function periodsLabel(periods) {
   if (periods.includes("day") && periods.includes("night")) {
-    return "Jour et nuit";
+    return t("popup.dayNight");
   }
 
   if (periods.includes("night")) {
-    return "Nuit (23 h à 5 h)";
+    return t("popup.night");
   }
 
-  return "Jour";
+  return t("popup.day");
 }
 
 function groupedPopupContent(closures) {
-  const title = closures.length === 1 ? "1 entrave à cet endroit" : `${closures.length} entraves à cet endroit`;
+  const title = closures.length === 1 ? t("popup.one") : `${closures.length} ${t("popup.many")}`;
   return `
     <button class="popup-close-button" type="button" aria-label="Fermer les détails">&times;</button>
     <div class="popup-group-title">${title}</div>
     ${closures.slice(0, 8).map(popupContent).join("")}
-    ${closures.length > 8 ? `<p class="popup-meta">${closures.length - 8} autres entraves tres proches. Zoomez ou filtrez pour les isoler.</p>` : ""}
+    ${closures.length > 8 ? `<p class="popup-meta">${closures.length - 8} ${t("popup.otherNearby")}</p>` : ""}
   `;
 }
 
@@ -1968,7 +1972,7 @@ function openMapPopup(latLng, content, maxWidth) {
       closeButton = document.createElement("button");
       closeButton.className = "popup-close-button";
       closeButton.type = "button";
-      closeButton.setAttribute("aria-label", "Fermer les détails");
+      closeButton.setAttribute("aria-label", t("map.closeDetails"));
       closeButton.textContent = "×";
       popupContentElement.prepend(closeButton);
     }
@@ -2319,8 +2323,8 @@ function renderList(closures) {
     card.style.borderLeftColor = closure.color || severity.color;
     card.innerHTML = `
       <div class="badge-row">
-        <span class="badge severity-badge">${escapeHtml(severity.label)}</span>
-        <span class="badge">${escapeHtml(meta.label)}</span>
+        <span class="badge severity-badge">${escapeHtml(severity.label())}</span>
+        <span class="badge">${escapeHtml(meta.label())}</span>
         <span class="badge">${escapeHtml(closure.borough)}</span>
       </div>
       <h3>${escapeHtml(closure.title)}</h3>
@@ -2393,6 +2397,15 @@ function updateView({ fit = false } = {}) {
     fitMapToClosures(currentClosures);
   }
 }
+
+window.addEventListener("languagechange", () => {
+  setSourceSectionOpen(!sourceFilters.hidden);
+  menuToggle.setAttribute("aria-label", t(menuToggle.classList.contains("is-open") ? "menu.close" : "menu.open"));
+  updateMapLegend();
+  renderMap(currentClosures);
+  updateViewportList();
+  updateLavalOfficialLines();
+});
 
 function showMapStatus(message, mode = "loading") {
   mapStatus.textContent = correctFrenchText(message);
@@ -2472,7 +2485,7 @@ function setMobileMenuOpen(isOpen) {
   sidePanel.classList.toggle("is-open", isOpen);
   menuToggle.classList.toggle("is-open", isOpen);
   menuToggle.setAttribute("aria-expanded", String(isOpen));
-  menuToggle.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
+  menuToggle.setAttribute("aria-label", t(isOpen ? "menu.close" : "menu.open"));
   menuBackdrop.hidden = !isOpen;
   setTimeout(() => map.invalidateSize(true), 240);
 }
@@ -2487,7 +2500,7 @@ function setSourceSectionOpen(isOpen) {
   sourceFilters.hidden = !isOpen;
   sourceSectionToggle.setAttribute("aria-expanded", String(isOpen));
   sourceSectionToggle.classList.toggle("is-open", isOpen);
-  sourceSectionToggle.querySelector("span").textContent = isOpen ? "Masquer les sources" : "Afficher les sources";
+  sourceSectionToggle.querySelector("span").textContent = t(isOpen ? "filters.hideSources" : "filters.showSources");
   sourceSectionToggle.querySelector("b").textContent = isOpen ? "-" : "+";
 }
 
@@ -2534,6 +2547,6 @@ renderMunicipalityLinks();
 updateView({ fit: true });
 loadOfficialData().catch((error) => {
   console.error("Official data load failed", error);
-  showMapStatus("Impossible de charger les APIs officielles. Les données de secours restent affichees.", "error");
+  showMapStatus(t("map.loadError"), "error");
   updateView({ fit: true });
 });

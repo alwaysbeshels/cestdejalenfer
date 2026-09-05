@@ -72,6 +72,7 @@ h1 {
 }
 
 .faq-nav a,
+.faq-nav .language-toggle,
 .faq-footer a {
   display: inline-flex;
   align-items: center;
@@ -87,6 +88,7 @@ h1 {
 }
 
 .faq-nav a:hover,
+.faq-nav .language-toggle:hover,
 .faq-footer a:hover {
   background: var(--accent-dark);
 }
@@ -95,6 +97,11 @@ h1 {
   border: 1px solid var(--line);
   background: var(--panel);
   color: var(--accent-dark);
+}
+
+.faq-nav .language-toggle {
+  border: 1px solid var(--accent-dark);
+  cursor: pointer;
 }
 
 .faq-section {
@@ -260,7 +267,8 @@ details a {
     width: 100%;
   }
 
-  .faq-nav a {
+  .faq-nav a,
+  .faq-nav .language-toggle {
     flex: 1 1 0;
   }
 

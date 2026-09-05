@@ -140,7 +140,8 @@ h2 {
   gap: 6px;
 }
 
-.site-nav a {
+.site-nav a,
+.site-nav .language-toggle {
   min-width: 58px;
   min-height: 30px;
   padding: 6px 9px;
@@ -152,7 +153,8 @@ h2 {
   text-align: center;
 }
 
-.site-nav a:hover {
+.site-nav a:hover,
+.site-nav .language-toggle:hover {
   background: #e7f2ee;
 }
 
@@ -160,6 +162,13 @@ h2 {
   border-color: var(--accent);
   background: var(--accent);
   color: #fff;
+}
+
+.site-nav .language-toggle {
+  border-color: var(--accent-dark);
+  background: var(--accent-dark);
+  color: #fff;
+  cursor: pointer;
 }
 
 .controls {
@@ -1194,7 +1203,8 @@ button:hover {
     padding-right: 64px;
   }
 
-  .site-nav a {
+  .site-nav a,
+  .site-nav .language-toggle {
     min-width: 54px;
     padding-inline: 7px;
     font-size: 0.74rem;

@@ -8,88 +8,81 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQGcI5uZ3u3z7e5w9f5nEpPuFAxH22s=" crossorigin="">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-document-title="document.mapTitle">
   <div class="app-shell">
-    <button id="menuToggle" class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-controls="sidePanel" aria-expanded="false">
+    <button id="menuToggle" class="menu-toggle" type="button" data-i18n-aria-label="menu.open" aria-controls="sidePanel" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <div id="menuBackdrop" class="menu-backdrop" hidden></div>
-    <aside id="sidePanel" class="panel" aria-label="Filtres et entraves">
-      <button id="panelResizeHandle" class="panel-resize-handle" type="button" aria-label="Ajuster la largeur du menu" title="Ajuster la largeur du menu"></button>
+    <aside id="sidePanel" class="panel" data-i18n-aria-label="filters.label">
+      <button id="panelResizeHandle" class="panel-resize-handle" type="button" data-i18n-aria-label="menu.resize" data-i18n-title="menu.resize"></button>
       <header class="brand-block">
-        <p class="eyebrow">Région métropolitaine de Montréal</p>
-        <h1>Carte des entraves</h1>
-        <p class="intro">Carte de conduite pour repérer les rues fermées, les voies retranchées, les restrictions UCI et les secteurs où les détours sont probables.</p>
-        <nav class="site-nav" aria-label="Navigation principale">
-          <a class="is-current" href="index.html" aria-current="page">Carte</a>
-          <a href="faq.html">FAQ</a>
+        <p class="eyebrow" data-i18n="map.region"></p>
+        <h1 data-i18n="map.title"></h1>
+        <p class="intro" data-i18n="map.intro"></p>
+        <nav class="site-nav" data-i18n-aria-label="nav.main">
+          <a class="is-current" href="index.html" data-language-page="map" aria-current="page" data-i18n="nav.map"></a>
+          <a href="faq.html" data-language-page="faq" data-i18n="nav.faq"></a>
+          <button id="languageToggle" class="language-toggle" type="button" aria-label="Passer à l'anglais">EN</button>
         </nav>
       </header>
 
-      <section class="controls" aria-label="Filtres">
+      <section class="controls" data-i18n-aria-label="filters.label">
         <div class="date-range-fields">
-          <button id="todayDates" class="today-button" type="button">Aujourd'hui</button>
+          <button id="todayDates" class="today-button" type="button" data-i18n="filters.today"></button>
           <label class="field">
-            <span>Début</span>
+            <span data-i18n="filters.start"></span>
             <input id="dateStart" type="date">
           </label>
           <label class="field">
-            <span>Fin</span>
+            <span data-i18n="filters.end"></span>
             <input id="dateEnd" type="date">
           </label>
-          <button id="dateHelp" class="icon-help small" type="button" aria-label="Information sur la période">i</button>
-          <div id="dateHelpBubble" class="help-bubble" hidden>La période affiche toutes les entraves qui touchent au moins une journée entre les deux dates, même si elles ne durent que quelques heures ou quelques jours.</div>
+          <button id="dateHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.dateHelpLabel">i</button>
+          <div id="dateHelpBubble" class="help-bubble" data-i18n="filters.dateHelp" hidden></div>
         </div>
 
         <div class="filter-heading">
-          <h2 class="filter-title">Moment des travaux</h2>
-          <button id="timeHelp" class="icon-help small" type="button" aria-label="Information sur les travaux de jour et de nuit">i</button>
-          <div id="timeHelpBubble" class="help-bubble filter-help" hidden>
-            <p><strong>Jour:</strong> entraves hors de la plage de nuit.</p>
-            <p><strong>Nuit:</strong> toute entrave qui touche la période de 23 h à 5 h, même si elle commence avant 23 h ou finit après 5 h.</p>
-          </div>
+          <h2 class="filter-title" data-i18n="filters.time"></h2>
+          <button id="timeHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.timeHelpLabel">i</button>
+          <div id="timeHelpBubble" class="help-bubble filter-help" data-i18n="filters.timeHelp" hidden></div>
         </div>
         <div class="toggle-grid time-filters" role="group" aria-label="Moment des travaux">
-          <label><input type="checkbox" value="day" checked> Jour</label>
-          <label><input type="checkbox" value="night" checked> Nuit</label>
+          <label><input type="checkbox" value="day" checked><span data-i18n="filters.day"></span></label>
+          <label><input type="checkbox" value="night" checked><span data-i18n="filters.night"></span></label>
         </div>
 
         <div class="filter-heading">
-          <h2 class="filter-title">Responsable / source</h2>
+          <h2 class="filter-title" data-i18n="filters.source"></h2>
           <button id="sourceSectionToggle" class="section-toggle" type="button" aria-controls="sourceFilters" aria-expanded="false">
-            <span>Afficher les sources</span><b aria-hidden="true">+</b>
+            <span data-i18n="filters.showSources"></span><b aria-hidden="true">+</b>
           </button>
-          <button id="sourceHelp" class="icon-help small" type="button" aria-label="Information sur responsable et source">i</button>
-          <div id="sourceHelpBubble" class="help-bubble filter-help" hidden>Ce filtre sert à choisir la source ou le responsable publié pour les fermetures: Ville de Montréal, secteurs privés, événements, grands axes ou sources municipales indépendantes à consulter séparément.</div>
+          <button id="sourceHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.sourceHelpLabel">i</button>
+          <div id="sourceHelpBubble" class="help-bubble filter-help" data-i18n="filters.sourceHelp" hidden></div>
         </div>
-        <div id="sourceFilters" class="toggle-grid source-filters" role="group" aria-label="Responsable ou source des entraves" hidden>
-          <label><input type="checkbox" value="municipal" checked> Ville</label>
-          <label><input type="checkbox" value="private" checked> Secteurs privés</label>
-          <label><input type="checkbox" value="linkedCity" checked> Villes liées</label>
-          <label><input type="checkbox" value="commercial" checked> Rues marchandes</label>
-          <label><input type="checkbox" value="event" checked> Événements</label>
-          <label><input type="checkbox" value="regional" checked> Grands axes</label>
-          <label><input type="checkbox" value="q511" checked> Québec 511</label>
-          <label><input type="checkbox" value="laval" checked> Laval</label>
-          <label><input type="checkbox" value="longueuil" checked> Longueuil</label>
-          <label><input type="checkbox" value="strike" checked> Grèves / manifestations</label>
+        <div id="sourceFilters" class="toggle-grid source-filters" role="group" data-i18n-aria-label="filters.sourceGroupLabel" hidden>
+          <label><input type="checkbox" value="municipal" checked><span data-i18n="category.municipal"></span></label>
+          <label><input type="checkbox" value="private" checked><span data-i18n="category.private"></span></label>
+          <label><input type="checkbox" value="linkedCity" checked><span data-i18n="category.linkedCity"></span></label>
+          <label><input type="checkbox" value="commercial" checked><span data-i18n="category.commercial"></span></label>
+          <label><input type="checkbox" value="event" checked><span data-i18n="category.event"></span></label>
+          <label><input type="checkbox" value="regional" checked><span data-i18n="category.regional"></span></label>
+          <label><input type="checkbox" value="q511" checked><span data-i18n="category.q511"></span></label>
+          <label><input type="checkbox" value="laval" checked><span data-i18n="category.laval"></span></label>
+          <label><input type="checkbox" value="longueuil" checked><span data-i18n="category.longueuil"></span></label>
+          <label><input type="checkbox" value="strike" checked><span data-i18n="category.strike"></span></label>
         </div>
 
         <div class="filter-heading">
-          <h2 class="filter-title">Type d'impact</h2>
-          <button id="impactHelp" class="icon-help small" type="button" aria-label="Information sur les types d'impact">i</button>
-          <div id="impactHelpBubble" class="help-bubble filter-help" hidden>
-            <p><strong>Rue fermée:</strong> circulation interdite.</p>
-            <p><strong>Voie touchée:</strong> une voie de circulation est retranchée.</p>
-            <p><strong>Accès limité:</strong> circulation locale ou sens temporaire.</p>
-            <p><strong>Stationnement:</strong> la rue reste ouverte, mais le stationnement est retiré ou interdit.</p>
-          </div>
+          <h2 class="filter-title" data-i18n="filters.impact"></h2>
+          <button id="impactHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.impactHelpLabel">i</button>
+          <div id="impactHelpBubble" class="help-bubble filter-help" data-i18n="filters.impactHelp" hidden></div>
         </div>
-        <div class="toggle-grid impact-filters" role="group" aria-label="Types d'impact sur la circulation">
-          <label><input type="checkbox" value="critical" checked><i class="impact-dot critical"></i> Rue fermée <span class="impact-count" data-impact-count="critical"></span></label>
-          <label><input type="checkbox" value="major" checked><i class="impact-dot major"></i> Voie touchée <span class="impact-count" data-impact-count="major"></span></label>
-          <label><input type="checkbox" value="moderate" checked><i class="impact-dot moderate"></i> Accès limité <span class="impact-count" data-impact-count="moderate"></span></label>
-          <label><input type="checkbox" value="parking"><i class="impact-dot parking"></i> Stationnement <span class="impact-count" data-impact-count="parking"></span></label>
+        <div class="toggle-grid impact-filters" role="group" data-i18n-aria-label="filters.impactGroupLabel">
+          <label><input type="checkbox" value="critical" checked><i class="impact-dot critical"></i> <span data-i18n="filters.critical"></span> <span class="impact-count" data-impact-count="critical"></span></label>
+          <label><input type="checkbox" value="major" checked><i class="impact-dot major"></i> <span data-i18n="filters.major"></span> <span class="impact-count" data-impact-count="major"></span></label>
+          <label><input type="checkbox" value="moderate" checked><i class="impact-dot moderate"></i> <span data-i18n="filters.moderate"></span> <span class="impact-count" data-impact-count="moderate"></span></label>
+          <label><input type="checkbox" value="parking"><i class="impact-dot parking"></i> <span data-i18n="filters.parking"></span> <span class="impact-count" data-impact-count="parking"></span></label>
         </div>
 
       </section>
@@ -97,56 +90,59 @@
       <section class="summary" aria-live="polite">
         <div>
           <strong id="visibleCount">0</strong>
-          <span>entraves visibles</span>
+          <span data-i18n="summary.visible"></span>
         </div>
-        <button id="resetView" type="button">Recentrer</button>
+        <button id="resetView" type="button" data-i18n="summary.reset"></button>
       </section>
 
       <section class="municipality-section" hidden>
         <div class="filter-heading">
-          <h2>Sources travaux des villes liées</h2>
-          <button id="municipalityHelp" class="icon-help small" type="button" aria-label="Information sur les municipalités indépendantes">i</button>
-          <div id="municipalityHelpBubble" class="help-bubble filter-help" hidden>Ces 15 municipalités sont sur l'île de Montréal, mais ne sont pas toujours incluses dans le flux Info-entraves de la Ville. Les liens pointent vers leurs pages Travaux, Info-travaux, projets ou avis officiels.</div>
+          <h2 data-i18n="municipalities.title"></h2>
+          <button id="municipalityHelp" class="icon-help small" type="button" data-i18n-aria-label="municipalities.helpLabel">i</button>
+          <div id="municipalityHelpBubble" class="help-bubble filter-help" data-i18n="municipalities.help" hidden></div>
         </div>
-        <p class="section-note">Aucune source publique unique ne normalise toutes ces villes. Cette section les inclut comme sources officielles à consulter ou à brancher dans une prochaine couche de données.</p>
+        <p class="section-note" data-i18n="municipalities.note"></p>
         <div id="municipalityList" class="municipality-list"></div>
       </section>
 
       <section class="list-section">
-        <h2>Entraves actives</h2>
+        <h2 data-i18n="list.title"></h2>
         <label class="field list-search" hidden>
-          <span class="visually-hidden">Recherche</span>
-          <input id="searchFilter" type="search" placeholder="Rue, responsable, arrondissement...">
+          <span class="visually-hidden" data-i18n="list.searchLabel"></span>
+          <input id="searchFilter" type="search" data-i18n-placeholder="list.searchPlaceholder">
         </label>
         <div id="closureList" class="closure-list"></div>
       </section>
     </aside>
 
     <main class="map-zone">
-      <div id="map" aria-label="Carte interactive de Montréal"></div>
-      <div id="mapStatus" class="map-status" role="status">Chargement de la carte...</div>
-      <p class="map-instruction">Cliquez sur une ligne colorée pour voir les détails des travaux.</p>
-      <aside id="mapFirstVisitHint" class="map-first-visit-hint" aria-label="Conseil pour utiliser la carte" hidden>
-        <button id="mapFirstVisitClose" type="button" aria-label="Fermer le conseil">&times;</button>
-        <strong>Petit conseil</strong>
-        <span>Cliquez sur une ligne colorée pour consulter les dates, les détails et les détours.</span>
+      <div id="map" data-i18n-aria-label="map.interactiveLabel"></div>
+      <div id="mapStatus" class="map-status" role="status" data-i18n="map.loadingInitial"></div>
+      <p class="map-instruction" data-i18n="map.instruction"></p>
+      <aside id="mapFirstVisitHint" class="map-first-visit-hint" data-i18n-aria-label="map.tipLabel" hidden>
+        <button id="mapFirstVisitClose" type="button" data-i18n-aria-label="map.tipClose">&times;</button>
+        <strong data-i18n="map.tipTitle"></strong>
+        <span data-i18n="map.tipText"></span>
       </aside>
-      <section id="mapLegend" class="severity-legend map-legend" aria-label="Légende des impacts auto">
-        <span class="severity-chip critical" data-legend-impact="critical">Rue fermée</span>
-        <span class="severity-chip major" data-legend-impact="major">Voie touchée</span>
-        <span class="severity-chip moderate" data-legend-impact="moderate">Accès limité</span>
-        <span class="severity-chip parking" data-legend-impact="parking">Stationnement</span>
+      <section id="mapLegend" class="severity-legend map-legend" data-i18n-aria-label="map.legendLabel">
+        <span class="severity-chip critical" data-legend-impact="critical" data-i18n="severity.critical"></span>
+        <span class="severity-chip major" data-legend-impact="major" data-i18n="severity.major"></span>
+        <span class="severity-chip moderate" data-legend-impact="moderate" data-i18n="severity.moderate"></span>
+        <span class="severity-chip parking" data-legend-impact="parking" data-i18n="severity.parking"></span>
       </section>
-      <button id="sourcesToggle" class="sources-toggle" type="button" aria-controls="sourceCard" aria-expanded="false">Sources</button>
-      <section id="sourceCard" class="source-card" aria-label="Sources officielles" hidden>
-        <button id="sourcesClose" class="sources-close" type="button" aria-label="Fermer les sources">&times;</button>
-        <strong>Sources officielles</strong>
-        <span>La liste complète des sources et leurs liens est disponible dans le <a href="faq.html#sources-utilisees">FAQ</a>.</span>
+      <button id="sourcesToggle" class="sources-toggle" type="button" data-i18n="map.sources" aria-controls="sourceCard" aria-expanded="false"></button>
+      <section id="sourceCard" class="source-card" data-i18n-aria-label="map.sourcesLabel" hidden>
+        <button id="sourcesClose" class="sources-close" type="button" data-i18n-aria-label="map.sourcesClose">&times;</button>
+        <strong data-i18n="map.sourcesLabel"></strong>
+        <span data-i18n="map.sourcesText"></span>
       </section>
     </main>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="languages/fr.js"></script>
+  <script src="languages/en.js"></script>
+  <script src="i18n.js"></script>
   <script src="data/sources.js"></script>
   <script src="data/closures.js"></script>
   <script src="app.js"></script>
