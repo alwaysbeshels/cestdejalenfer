@@ -91,8 +91,10 @@ input {
 }
 
 .brand-block {
+  position: relative;
   display: grid;
   gap: 8px;
+  padding-right: 74px;
 }
 
 .eyebrow {
@@ -125,6 +127,36 @@ h2 {
   color: var(--muted);
   font-size: 0.82rem;
   line-height: 1.45;
+}
+
+.site-nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.site-nav a {
+  min-width: 58px;
+  min-height: 30px;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.site-nav a:hover {
+  background: #e7f2ee;
+}
+
+.site-nav a.is-current {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
 }
 
 .controls {
@@ -991,6 +1023,16 @@ button:hover {
   h1 {
     max-width: none;
     white-space: nowrap;
+  }
+
+  .brand-block {
+    padding-right: 64px;
+  }
+
+  .site-nav a {
+    min-width: 54px;
+    padding-inline: 7px;
+    font-size: 0.74rem;
   }
 }
 
