@@ -4,7 +4,7 @@ Application statique pour visualiser les fermetures de rues, voies retranchees e
 
 ## Utilisation
 
-La carte est une application statique. Depuis la racine du projet, démarrez le serveur local avec `python3 -m http.server 5500`, puis ouvrez `http://localhost:5500/index.html`. Vous pouvez aussi utiliser l'extension Live Server de VS Code en configurant son port sur `5500`. Elle utilise Leaflet avec le fond OpenStreetMap standard et des données GeoJSON officielles.
+La carte est une application statique. Depuis la racine du projet, démarrez le serveur local avec `python3 -m http.server 5500`, puis ouvrez `http://localhost:5500/index.html`. Vous pouvez aussi utiliser l'extension Live Server de VS Code en configurant son port sur `5500`. La commande standard du projet est donc `python3 -m http.server 5500`, et il faut tester sur `localhost:5500`, pas sur un autre port. Elle utilise Leaflet avec le fond OpenStreetMap standard et des données GeoJSON officielles.
 
 ## Publication avec GitHub Pages
 

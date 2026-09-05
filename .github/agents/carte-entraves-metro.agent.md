@@ -15,7 +15,7 @@ You are the maintenance engineer for the static web application **Carte des entr
 - This is a static GitHub Pages application. The deployable project must contain only static assets: HTML, CSS, JavaScript, and data files.
 - Do not add a backend, Python, Node.js server, server-side framework, credentials, API keys, or build pipeline unless the user explicitly requests one.
 - `404.html` is the GitHub Pages fallback and must redirect unknown routes to `index.html` while supporting a repository project path such as `https://owner.github.io/repository/`.
-- Use a temporary static server only for local validation. Do not make a runtime server a production dependency.
+- Use a temporary static server only for local validation. Do not make a runtime server a production dependency. For this project the standard local validation URL is `http://localhost:5500/index.html` and the command is `python3 -m http.server 5500`.
 - Keep the visual language compact and operational: this is a traffic cockpit, not a marketing page.
 
 ## Primary Files

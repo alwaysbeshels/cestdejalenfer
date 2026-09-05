@@ -843,7 +843,8 @@ let selectedClosureId = null;
 const map = L.map("map", {
   preferCanvas: true,
   fadeAnimation: false,
-  zoomAnimation: true,
+  zoomAnimation: false,
+  markerZoomAnimation: false,
   zoomControl: true,
   minZoom: 10,
   maxZoom: 19
