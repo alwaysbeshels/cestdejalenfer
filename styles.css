@@ -539,6 +539,10 @@ button:hover {
   margin-top: -2px;
 }
 
+.list-search[hidden] {
+  display: none !important;
+}
+
 .closure-list {
   display: grid;
   gap: 10px;
