@@ -127,32 +127,6 @@ h2 {
   line-height: 1.45;
 }
 
-.site-nav {
-  display: flex;
-  gap: 6px;
-  margin-top: 4px;
-}
-
-.site-nav a {
-  min-height: 30px;
-  padding: 6px 9px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  color: var(--accent-dark);
-  font-size: 0.78rem;
-  font-weight: 800;
-}
-
-.site-nav a:hover {
-  background: #e7f2ee;
-}
-
-.site-nav a.is-current {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
-}
-
 .controls {
   display: grid;
   gap: 12px;
@@ -753,6 +727,7 @@ button:hover {
 }
 
 .traffic-arrow {
+  display: none !important;
   width: 18px !important;
   height: 18px !important;
   margin-left: -9px !important;
@@ -851,18 +826,6 @@ button:hover {
 .source-card span {
   color: var(--muted);
   font-size: 0.82rem;
-}
-
-.source-faq-link {
-  width: fit-content;
-  margin-top: 3px;
-  color: var(--accent-dark);
-  font-size: 0.82rem;
-  font-weight: 800;
-}
-
-.source-faq-link:hover {
-  text-decoration: underline;
 }
 
 .popup-title {

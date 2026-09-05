@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Carte des entraves - Montréal</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQGcI5uZ3u3z7e5w9f5nEpPuFAxH22s=" crossorigin="">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -18,10 +19,6 @@
         <p class="eyebrow">Région métropolitaine de Montréal</p>
         <h1>Carte des entraves</h1>
         <p class="intro">Carte de conduite pour repérer les rues fermées, les voies retranchées, les restrictions UCI et les secteurs où les détours sont probables.</p>
-        <nav class="site-nav" aria-label="Navigation principale">
-          <a class="is-current" href="index.html" aria-current="page">Carte</a>
-          <a href="faq.html">FAQ</a>
-        </nav>
       </header>
 
       <section class="controls" aria-label="Filtres">
@@ -29,11 +26,11 @@
           <button id="todayDates" class="today-button" type="button">Aujourd'hui</button>
           <label class="field">
             <span>Début</span>
-            <input id="dateStart" type="date" value="2026-09-04">
+            <input id="dateStart" type="date">
           </label>
           <label class="field">
             <span>Fin</span>
-            <input id="dateEnd" type="date" value="2026-09-04">
+            <input id="dateEnd" type="date">
           </label>
           <button id="dateHelp" class="icon-help small" type="button" aria-label="Information sur la période">i</button>
           <div id="dateHelpBubble" class="help-bubble" hidden>La période affiche toutes les entraves qui touchent au moins une journée entre les deux dates, même si elles ne durent que quelques heures ou quelques jours.</div>
@@ -77,14 +74,14 @@
           <h2 class="filter-title">Type d'impact</h2>
           <button id="impactHelp" class="icon-help small" type="button" aria-label="Information sur les types d'impact">i</button>
           <div id="impactHelpBubble" class="help-bubble filter-help" hidden>
-            <p><strong>Fermé:</strong> circulation interdite.</p>
+            <p><strong>Rue fermée:</strong> circulation interdite.</p>
             <p><strong>Voie touchée:</strong> une voie de circulation est retranchée.</p>
             <p><strong>Accès limité:</strong> circulation locale ou sens temporaire.</p>
             <p><strong>Stationnement:</strong> la rue reste ouverte, mais le stationnement est retiré ou interdit.</p>
           </div>
         </div>
         <div class="toggle-grid impact-filters" role="group" aria-label="Types d'impact sur la circulation">
-          <label><input type="checkbox" value="critical" checked><i class="impact-dot critical"></i> Fermé <span class="impact-count" data-impact-count="critical"></span></label>
+          <label><input type="checkbox" value="critical" checked><i class="impact-dot critical"></i> Rue fermée <span class="impact-count" data-impact-count="critical"></span></label>
           <label><input type="checkbox" value="major" checked><i class="impact-dot major"></i> Voie touchée <span class="impact-count" data-impact-count="major"></span></label>
           <label><input type="checkbox" value="moderate" checked><i class="impact-dot moderate"></i> Accès limité <span class="impact-count" data-impact-count="moderate"></span></label>
           <label><input type="checkbox" value="parking"><i class="impact-dot parking"></i> Stationnement <span class="impact-count" data-impact-count="parking"></span></label>
@@ -124,7 +121,7 @@
       <div id="map" aria-label="Carte interactive de Montréal"></div>
       <div id="mapStatus" class="map-status" role="status">Chargement de la carte...</div>
       <section id="mapLegend" class="severity-legend map-legend" aria-label="Légende des impacts auto">
-        <span class="severity-chip critical" data-legend-impact="critical">Fermé</span>
+        <span class="severity-chip critical" data-legend-impact="critical">Rue fermée</span>
         <span class="severity-chip major" data-legend-impact="major">Voie touchée</span>
         <span class="severity-chip moderate" data-legend-impact="moderate">Accès limité</span>
         <span class="severity-chip parking" data-legend-impact="parking">Stationnement</span>
@@ -134,7 +131,6 @@
         <button id="sourcesClose" class="sources-close" type="button" aria-label="Fermer les sources">&times;</button>
         <strong>Sources officielles</strong>
         <span>Ville de Montréal (WFS), carte UCI 2026, Laval Info-Travaux, Ville de Longueuil, MTMD / Québec 511 via Données Québec, Mobilité Montréal et avis publics des villes liées.</span>
-        <a class="source-faq-link" href="faq.html">Questions fréquentes</a>
       </section>
     </main>
   </div>
