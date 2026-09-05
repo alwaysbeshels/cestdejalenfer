@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Questions fréquentes | Carte des entraves</title>
+  <link rel="stylesheet" href="faq.css">
+</head>
+<body>
+  <main class="faq-shell">
+    <header class="faq-header">
+      <div>
+        <p class="eyebrow">Carte des entraves</p>
+        <h1>Questions fréquentes</h1>
+        <p class="intro">Repères utiles pour utiliser la carte et comprendre ce que les entraves affichées signifient pour vos déplacements.</p>
+      </div>
+      <nav class="faq-nav" aria-label="Navigation principale">
+        <a href="index.html">Carte</a>
+        <a class="is-current" href="faq.html" aria-current="page">FAQ</a>
+      </nav>
+    </header>
+
+    <section class="faq-section" aria-labelledby="about-title">
+      <h2 id="about-title">À propos</h2>
+      <div class="faq-list">
+        <details>
+          <summary>Pourquoi cette carte a-t-elle été créée?</summary>
+          <p>Parce qu'il devenait étonnamment compliqué de savoir quelle rue fermerait, à quel moment, dans quelle direction et pour combien de temps. Les autoroutes n'étaient pas plus simples. L'information existait, mais elle était dispersée. Cette carte a été créée pour la rassembler au même endroit, avant que le détour devienne un projet de fin de semaine.</p>
+        </details>
+        <details>
+          <summary>Pourquoi le nom cestdejalenfer.ca?</summary>
+          <p>Le nom est un clin d'œil aux discussions très publiques sur les déplacements difficiles à Montréal, notamment à la formule « ça va être l'enfer » associée à la mairesse Soraya Martínez Ferrada. Pour beaucoup de personnes qui conduisent depuis le début de l'été, le site part d'un constat plus direct: c'est déjà compliqué. Autant avoir une carte sous la main.</p>
+        </details>
+        <details>
+          <summary>Qui a créé ce site?</summary>
+          <p>Je m'appelle Shelsea Saint-Fleur. J'ai réalisé ce projet durant du temps libre, avec l'idée très simple de rendre les entraves routières un peu moins mystérieuses. Le site est perfectible, et c'est tout à fait normal: les travaux changent, les données publiques évoluent et personne n'a encore trouvé comment faire disparaître les cônes orange.</p>
+          <p class="profile-link"><strong>Mon LinkedIn:</strong> <a href="https://www.linkedin.com/in/shelseastf/" target="_blank" rel="noreferrer">linkedin.com/in/shelseastf</a></p>
+        </details>
+        <details>
+          <summary>Vous aimeriez laisser un commentaire ou proposer une amélioration?</summary>
+          <p>Vous pouvez partager vos commentaires et vos idées dans le formulaire <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8TiTOGHRjDw36fzIT3DS9ayLfqEcNaE6c_q2BYldNxhgddA/viewform" target="_blank" rel="noreferrer">Commentaires &amp; Améliorations</a>.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="use-title">
+      <h2 id="use-title">Utiliser la carte</h2>
+      <div class="faq-list">
+        <details>
+          <summary>Que signifient les couleurs?</summary>
+          <p>Le rouge indique une rue ou un accès fermé. L'orange signale une voie de circulation touchée. Le jaune correspond à un accès limité, à une circulation locale ou à un sens temporaire. Le rose indique une entrave de stationnement.</p>
+        </details>
+        <details>
+          <summary>Pourquoi certaines couleurs ne figurent-elles pas dans la légende?</summary>
+          <p>La légende au bas de la carte suit les choix du filtre « Type d'impact ». Une catégorie décochée est masquée sur la carte et retirée de la légende.</p>
+        </details>
+        <details>
+          <summary>Pourquoi la liste des entraves change-t-elle lorsque je déplace la carte?</summary>
+          <p>La section « Entraves actives » affiche uniquement les entraves qui intersectent la zone actuellement visible. Les dates, les sources, le type d'impact, le moment des travaux et la recherche s'ajoutent à ce filtre géographique.</p>
+        </details>
+        <details>
+          <summary>Comment rechercher une rue ou un secteur?</summary>
+          <p>Utilisez le champ de recherche au-dessus de la liste des entraves. Il recherche notamment les rues, les arrondissements, les municipalités, les responsables, les impacts et les directions publiées.</p>
+        </details>
+        <details>
+          <summary>Pourquoi une flèche apparaît-elle sur certains segments?</summary>
+          <p>La flèche indique le sens de la géométrie publiée pour un segment. Elle aide à distinguer les entraves directionnelles lorsque la source fournit une ligne. À faible zoom, certaines flèches sont volontairement masquées pour garder la carte lisible.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="data-title">
+      <h2 id="data-title">Données et fraîcheur</h2>
+      <div class="faq-list">
+        <details>
+          <summary>À quel moment les données sont-elles mises à jour?</summary>
+          <p>Les données de Montréal, Laval, Longueuil et du MTMD sont relues à chaque ouverture ou actualisation de la page. Leur disponibilité et leur fréquence de mise à jour dépendent toutefois de chaque organisme public.</p>
+        </details>
+        <details>
+          <summary>Quelles sources sont utilisées?</summary>
+          <p>La carte combine les flux publics de la Ville de Montréal, les restrictions UCI 2026, Laval Info-Travaux, la Ville de Longueuil, le MTMD et Québec 511 par l'entremise de Données Québec, Mobilité Montréal ainsi que certains avis de villes liées.</p>
+        </details>
+        <details>
+          <summary>Pourquoi les entraves Québec 511 sont-elles attribuées au MTMD?</summary>
+          <p>Les travaux routiers proviennent du GeoJSON public du ministère des Transports et de la Mobilité durable, publié sur Données Québec. Ce flux fournit les dates, la direction, les détours, le type d'entrave et la géométrie officielle des segments.</p>
+        </details>
+        <details>
+          <summary>Pourquoi Laval se comporte-t-elle un peu différemment?</summary>
+          <p>Laval publie les détails des entraves et les lignes de sa carte à partir d'un MapServer. Les lignes sont affichées à partir de ce service officiel et recolorées selon la légende de la carte. Un clic sur une ligne récupère les détails publiés par Laval, comme les dates, le type d'entrave, la nature des travaux et la référence.</p>
+        </details>
+        <details>
+          <summary>Les données couvrent-elles toutes les rues?</summary>
+          <p>Non. La carte dépend des entraves publiées par les organismes responsables. Une fermeture urgente, une entrave privée, un événement ponctuel ou un changement très récent peut apparaître avec un délai ou ne pas être disponible dans les flux publics.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="travel-title">
+      <h2 id="travel-title">Préparer un déplacement</h2>
+      <div class="faq-list">
+        <details>
+          <summary>La carte remplace-t-elle une application de navigation?</summary>
+          <p>Non. Elle sert à repérer les secteurs à risque et à comprendre la nature des entraves avant de partir. Vérifiez ensuite votre itinéraire dans votre outil de navigation habituel et respectez toujours la signalisation sur le terrain.</p>
+        </details>
+        <details>
+          <summary>Les dates indiquent-elles une fermeture continue?</summary>
+          <p>Pas nécessairement. Une date définit la période où une entrave peut être active. Consultez le détail de l'entrave pour connaître les heures, la direction, les voies touchées, les détours ou les exceptions éventuelles.</p>
+        </details>
+        <details>
+          <summary>Que signifient les filtres Jour et Nuit?</summary>
+          <p>Le filtre Nuit retient les entraves qui touchent la plage de 23 h à 5 h. Le filtre Jour affiche les autres entraves actives durant la journée. Une entrave continue peut être visible dans les deux catégories.</p>
+        </details>
+        <details>
+          <summary>Pourquoi une entrave n'apparaît-elle pas après avoir choisi une date?</summary>
+          <p>Vérifiez d'abord la zone visible de la carte, les sources sélectionnées et le type d'impact. La liste n'affiche que les entraves qui correspondent à tous les filtres et qui se trouvent dans le cadrage actuel.</p>
+        </details>
+      </div>
+    </section>
+
+    <footer class="faq-footer">
+      <p>Les données affichées sont publiques, mais les conditions sur le terrain et la signalisation routière prévalent toujours.</p>
+      <a href="index.html">Ouvrir la carte des entraves</a>
+    </footer>
+  </main>
+</body>
+</html>

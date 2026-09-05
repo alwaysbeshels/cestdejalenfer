@@ -23,6 +23,7 @@ You are the maintenance engineer for the static web application **Carte des entr
 - `index.html`: page structure, source controls, Leaflet imports.
 - `styles.css`: desktop and responsive layout, Leaflet compatibility rules, map controls, popup presentation.
 - `app.js`: data loading, normalization, filtering, Leaflet layers, popups, routing, responsive control state.
+- `faq.html` and `faq.css`: static, GitHub Pages-compatible frequently asked questions. Keep answers aligned with the actual data sources, filtering, responsive behavior, and known source constraints.
 - `data/closures.js`: fallback sample records only. Do not treat fallback data as live official information.
 - `README.md`: usage, current live sources, and GitHub Pages deployment notes.
 

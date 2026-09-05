@@ -12,7 +12,7 @@ const CATEGORY_META = {
 };
 
 const SEVERITY_META = {
-  critical: { label: "Rue fermée", color: "#ff1744", width: 9, opacity: 0.98 },
+  critical: { label: "Fermé", color: "#ff1744", width: 9, opacity: 0.98 },
   major: { label: "Voie touchée", color: "#ff8c00", width: 7, opacity: 0.96 },
   moderate: { label: "Accès limite", color: "#ffe600", width: 6, opacity: 0.94 },
   parking: { label: "Stationnement", color: "#ff2bd6", width: 5, opacity: 0.92 },
@@ -44,21 +44,20 @@ const GREATER_MONTREAL_BOUNDS = {
 const REGIONAL_MAJOR_CLOSURES = [
   {
     id: "regional-a25-tunnel-lafontaine-sud-weekend",
-    title: "Fermeture complète - A-25 / tunnel Louis-Hippolyte-La Fontaine sud",
+    title: "Fermeture complète - tunnel Louis-Hippolyte-La Fontaine",
     category: "regional",
     responsible: "Mobilité Montréal / MTMD",
-    borough: "Montreal - Longueuil",
+    borough: "Montréal - Longueuil",
     startDate: "2026-09-04",
     endDate: "2026-09-08",
-    impact: "Fermeture complète du tunnel vers la Rive-Sud; détour via pont Jacques-Cartier et réseau municipal.",
+    impact: "Fermeture complète du tunnel vers la Rive-Sud; détour via le pont Jacques-Cartier et le réseau municipal.",
     trafficLabel: "Fermeture complète",
     severity: "critical",
-    direction: "Direction sud vers Longueuil. Fermetures de nuit et fermeture prolongee de vendredi 23 h à mardi 5 h selon Mobilité Montréal.",
-    streets: "A-25 / tunnel Louis-Hippolyte-La Fontaine, entre Montreal et R-132",
+    direction: "Direction sud vers Longueuil. Fermetures de nuit et fermeture prolongée de vendredi 23 h à mardi 5 h selon Mobilité Montréal.",
+    streets: "Tunnel Louis-Hippolyte-La Fontaine, entre Montréal et la R-132",
     source: "Mobilité Montréal - fermetures majeures",
     sourceUrl: "https://mobilitemontreal.gouv.qc.ca/fermetures-majeures/",
     periods: ["night"],
-    routeEndpoints: [[-73.5228, 45.5934], [-73.4883, 45.5456]],
     geometry: { type: "LineString", coordinates: [[-73.521, 45.590], [-73.512, 45.575], [-73.498, 45.556], [-73.488, 45.544]] },
     point: [-73.502, 45.562]
   },
@@ -67,50 +66,48 @@ const REGIONAL_MAJOR_CLOSURES = [
     title: "Pont Victoria / R-112 - travée est fermée",
     category: "regional",
     responsible: "CN / Mobilité Montréal",
-    borough: "Montreal - Saint-Lambert",
+    borough: "Montréal - Saint-Lambert",
     startDate: "2026-09-04",
     endDate: "2026-09-10",
-    impact: "Circulation sur une voie unique avec direction variable selon l'heure; prévoir retards importants.",
-    trafficLabel: "Pont a voie unique",
+    impact: "Circulation sur une voie unique avec direction variable selon l'heure; prévoir des retards importants.",
+    trafficLabel: "Pont à voie unique",
     severity: "major",
-    direction: "Vers Montreal entre minuit et midi; vers Rive-Sud entre midi et minuit après mardi 5 h.",
+    direction: "Vers Montréal entre minuit et midi; vers la Rive-Sud entre midi et minuit après mardi 5 h.",
     streets: "Pont Victoria / route 112",
     source: "Mobilité Montréal - fermetures majeures",
     sourceUrl: "https://mobilitemontreal.gouv.qc.ca/fermetures-majeures/",
     periods: ["day", "night"],
-    routeEndpoints: [[-73.5435, 45.4942], [-73.5090, 45.4654]],
     geometry: { type: "LineString", coordinates: [[-73.537, 45.492], [-73.526, 45.482], [-73.515, 45.472]] },
     point: [-73.526, 45.482]
   },
   {
     id: "regional-r138-mercier-clement",
-    title: "R-138 / secteur pont Honore-Mercier - sorties et accès Clement fermes",
+    title: "R-138 / secteur pont Honoré-Mercier - sorties et accès Clément fermés",
     category: "regional",
-    responsible: "Ville de Montreal / Mobilité Montréal",
+    responsible: "Ville de Montréal / Mobilité Montréal",
     borough: "LaSalle",
     startDate: "2026-09-04",
     endDate: "2026-09-08",
-    impact: "Fermeture des sorties et accès vers ou depuis la rue Clement; secteur a éviter et détours par Airlie, Newman, Lafleur et Saint-Patrick.",
-    trafficLabel: "Sorties et accès fermes",
+    impact: "Fermeture des sorties et accès vers ou depuis la rue Clément; secteur à éviter et détours par Airlie, Newman, Lafleur et Saint-Patrick.",
+    trafficLabel: "Sorties et accès fermés",
     severity: "critical",
-    direction: "R-138 est et ouest, accès vers le pont Honore-Mercier touches.",
-    streets: "Route 138, secteur rue Clement / pont Honore-Mercier",
+    direction: "R-138 est et ouest, accès vers le pont Honoré-Mercier touchés.",
+    streets: "Route 138, secteur rue Clément / pont Honoré-Mercier",
     source: "Mobilité Montréal - fermetures majeures",
     sourceUrl: "https://mobilitemontreal.gouv.qc.ca/fermetures-majeures/",
     periods: ["day", "night"],
-    routeEndpoints: [[-73.6527, 45.4250], [-73.5922, 45.4448]],
     geometry: { type: "LineString", coordinates: [[-73.641, 45.430], [-73.630, 45.430], [-73.615, 45.433], [-73.602, 45.440]] },
     point: [-73.622, 45.432]
   },
   {
     id: "regional-rue-bridge-sud",
-    title: "Rue Bridge - fermeture complète direction sud",
+    title: "Rue Bridge - fermeture complète en direction sud",
     category: "regional",
-    responsible: "Hydro-Quebec / Mobilité Montréal",
+    responsible: "Hydro-Québec / Mobilité Montréal",
     borough: "Le Sud-Ouest",
     startDate: "2026-09-05",
     endDate: "2026-09-07",
-    impact: "Direction sud fermée entre des Irlandais et Mill; direction nord partiellement ouverte avec 1 voie sur 2.",
+    impact: "Direction sud fermée entre des Irlandais et Mill; direction nord partiellement ouverte avec une voie sur deux.",
     trafficLabel: "Direction fermée",
     severity: "critical",
     direction: "Direction sud fermée; direction nord partiellement ouverte.",
@@ -118,7 +115,6 @@ const REGIONAL_MAJOR_CLOSURES = [
     source: "Mobilité Montréal - fermetures majeures",
     sourceUrl: "https://mobilitemontreal.gouv.qc.ca/fermetures-majeures/",
     periods: ["day", "night"],
-    routeEndpoints: [[-73.5529, 45.4971], [-73.5481, 45.4798]],
     geometry: { type: "LineString", coordinates: [[-73.552, 45.492], [-73.550, 45.486], [-73.548, 45.481]] },
     point: [-73.550, 45.486]
   },
@@ -126,85 +122,69 @@ const REGIONAL_MAJOR_CLOSURES = [
     id: "regional-qc511-a19-north-montreal-laval",
     title: "A-19 direction nord - voies fermées vers Laval",
     category: "q511",
-    responsible: "Quebec 511 / MTMD",
-    borough: "Montreal - Laval",
+    responsible: "Québec 511 / MTMD",
+    borough: "Montréal - Laval",
     startDate: "2026-09-04",
     endDate: "2026-09-04",
-    impact: "Entrave routière signalée sur Quebec 511 avec voies fermées sur l'A-19 en direction nord en sortant de Montreal.",
+    impact: "Entrave routière signalée sur Québec 511 avec voies fermées sur l'A-19 en direction nord en sortant de Montréal.",
     trafficLabel: "Voies fermées",
     severity: "major",
-    direction: "Direction nord, de Montreal vers Laval. Heures et configuration exacte à confirmer dans Quebec 511.",
+    direction: "Direction nord, de Montréal vers Laval.",
     streets: "Autoroute 19 / pont Papineau-Leblanc, direction nord",
-    source: "Quebec 511 - carte interactive",
+    source: "Québec 511 - carte interactive",
     sourceUrl: "https://www.quebec511.info/fr/Carte/Default.aspx",
     periods: ["day", "night"],
-    geometry: {
-      type: "LineString",
-      coordinates: [
-        [-73.658546, 45.570352],
-        [-73.659264, 45.570494],
-        [-73.660388, 45.570963],
-        [-73.660388, 45.570963],
-        [-73.661548, 45.571515],
-        [-73.664318, 45.573735],
-        [-73.665184, 45.574543],
-        [-73.666248, 45.575518],
-        [-73.666752, 45.575974],
-        [-73.667693, 45.576831]
-      ]
-    },
+    geometry: { type: "LineString", coordinates: [[-73.658546, 45.570352], [-73.659264, 45.570494], [-73.660388, 45.570963], [-73.661548, 45.571515], [-73.664318, 45.573735], [-73.665184, 45.574543], [-73.666248, 45.575518], [-73.666752, 45.575974], [-73.667693, 45.576831]] },
     point: [-73.665184, 45.574543]
   },
   {
     id: "regional-qc511-a19-south-laval-montreal",
-    title: "A-19 direction sud - voies fermées vers Montreal",
+    title: "A-19 direction sud - voies fermées vers Montréal",
     category: "q511",
-    responsible: "Quebec 511 / MTMD",
-    borough: "Laval - Montreal",
+    responsible: "Québec 511 / MTMD",
+    borough: "Laval - Montréal",
     startDate: "2026-09-04",
     endDate: "2026-09-04",
-    impact: "Entrave routière signalée sur Quebec 511 avec voies fermées sur l'A-19 en direction sud vers Montreal.",
+    impact: "Entrave routière signalée sur Québec 511 avec voies fermées sur l'A-19 en direction sud vers Montréal.",
     trafficLabel: "Voies fermées",
     severity: "major",
-    direction: "Direction sud, de Laval vers Montreal. Heures et configuration exacte à confirmer dans Quebec 511.",
+    direction: "Direction sud, de Laval vers Montréal.",
     streets: "Autoroute 19 / pont Papineau-Leblanc, direction sud",
-    source: "Quebec 511 - carte interactive",
+    source: "Québec 511 - carte interactive",
     sourceUrl: "https://www.quebec511.info/fr/Carte/Default.aspx",
     periods: ["day", "night"],
-    geometry: {
-      type: "LineString",
-      coordinates: [
-        [-73.665039, 45.574621],
-        [-73.664318, 45.573735],
-        [-73.661548, 45.571515],
-        [-73.660388, 45.570963],
-        [-73.659264, 45.570494],
-        [-73.658546, 45.570352]
-      ]
-    },
+    geometry: { type: "LineString", coordinates: [[-73.665039, 45.574621], [-73.664318, 45.573735], [-73.661548, 45.571515], [-73.660388, 45.570963], [-73.659264, 45.570494], [-73.658546, 45.570352]] },
     point: [-73.661548, 45.571515]
   },
   {
     id: "regional-qc511-a520-ouest-romeo-vachon",
-    title: "A-520 ouest - accès Romeo-Vachon ferme",
+    title: "A-520 ouest - accès Roméo-Vachon fermé",
     category: "q511",
-    responsible: "Quebec 511 / MTMD",
+    responsible: "Québec 511 / MTMD",
     borough: "Dorval",
     startDate: "2026-09-04",
     endDate: "2026-11-11",
-    impact: "Fermeture de l'accès en provenance du boulevard Romeo-Vachon en direction sud vers l'A-520 ouest; détour via A-20 est et demi-tour à la sortie 58.",
-    trafficLabel: "Accès ferme",
+    impact: "Fermeture de l'accès depuis le boulevard Roméo-Vachon en direction sud vers l'A-520 ouest; détour via l'A-20 est et demi-tour à la sortie 58.",
+    trafficLabel: "Accès fermé",
     severity: "critical",
-    direction: "A-520 ouest, accès depuis boulevard Romeo-Vachon direction sud.",
-    streets: "Autoroute 520 ouest / boulevard Romeo-Vachon",
-    source: "Quebec 511 / Mobilité Montréal - fermetures à prévoir",
+    direction: "A-520 ouest, accès depuis le boulevard Roméo-Vachon en direction sud.",
+    streets: "Autoroute 520 ouest / boulevard Roméo-Vachon",
+    source: "Québec 511 / Mobilité Montréal - fermetures à prévoir",
     sourceUrl: "https://www.quebec511.info/fr/Carte/Default.aspx",
     periods: ["day", "night"],
-    routeEndpoints: [[-73.7367, 45.4635], [-73.7528, 45.4625]],
     geometry: { type: "LineString", coordinates: [[-73.7367, 45.4635], [-73.7528, 45.4625]] },
     point: [-73.744, 45.463]
   }
 ];
+
+const REGIONAL_FALLBACK_MATCHERS = {
+  "regional-a25-tunnel-lafontaine-sud-weekend": /Louis-Hippolyte-La Fontaine/i,
+  "regional-pont-victoria-route-112": /pont Victoria/i,
+  "regional-r138-mercier-clement": /rue Clément/i,
+  "regional-qc511-a19-north-montreal-laval": /pont Papineau-Leblanc/i,
+  "regional-qc511-a19-south-laval-montreal": /pont Papineau-Leblanc/i,
+  "regional-qc511-a520-ouest-romeo-vachon": /Roméo-Vachon/i
+};
 
 const LINKED_MUNICIPALITIES = [
   { name: "Baie-d'Urfe", coordinates: [-73.916, 45.414], url: "https://baie-durfe.qc.ca/fr/nos-departements/page/info-travaux", detail: "Info-travaux avec dates et impacts", quality: "detaillee", links: [{ label: "Info-travaux", url: "https://baie-durfe.qc.ca/fr/nos-departements/page/info-travaux" }] },
@@ -1118,7 +1098,7 @@ function trafficDetailsFromImpact(impactType) {
 function trafficDetailsFromUciType(type) {
   switch (type) {
     case "Rue fermée":
-      return { severity: "critical", label: "Rue fermée UCI", impact: "Circulation interdite pendant la periode indiquee." };
+      return { severity: "critical", label: "Fermé UCI", impact: "Circulation interdite pendant la période indiquée." };
     case "Circulation locale":
       return { severity: "moderate", label: "Circulation locale", impact: "Accès limite aux residents et besoins locaux." };
     case "Double sens":
@@ -1317,7 +1297,7 @@ function dateOnlyFromTimestamp(value) {
 
 function cleanQuebec511Direction(direction, text) {
   const source = `${direction || ""} ${text || ""}`;
-  if (/deux directions|deux sens/i.test(source)) {
+  if (/deux directions|deux sens|nord\s+et\s+sud|sud\s+et\s+nord|est\s+et\s+ouest|ouest\s+et\s+est/i.test(source)) {
     return "Dans les deux directions.";
   }
 
@@ -1334,13 +1314,18 @@ function cleanQuebec511Direction(direction, text) {
 }
 
 async function loadLinkedCityWorks() {
-  const routedWorks = await Promise.all(LINKED_CITY_WORKS.map(async (work) => {
+  return Promise.all(LINKED_CITY_WORKS.map(async (work) => {
     if (!work.routeEndpoints) {
       return normalizeLinkedCityWork(work);
     }
 
     try {
       const geometry = await fetchRouteGeometry(work.routeEndpoints);
+      if (!isPlausibleLocalRoute(geometry, work.routeEndpoints)) {
+        console.warn("Linked-city route rejected as implausible", work.id);
+        return normalizeLinkedCityWork(work);
+      }
+
       return normalizeLinkedCityWork({
         ...work,
         geometry,
@@ -1351,30 +1336,10 @@ async function loadLinkedCityWorks() {
       return normalizeLinkedCityWork(work);
     }
   }));
-
-  return routedWorks;
 }
 
 async function loadRegionalClosures() {
-  const routedClosures = await Promise.all(REGIONAL_MAJOR_CLOSURES.map(async (closure) => {
-    if (!closure.routeEndpoints) {
-      return normalizeRegionalClosure(closure);
-    }
-
-    try {
-      const geometry = await fetchRouteGeometry(closure.routeEndpoints);
-      return normalizeRegionalClosure({
-        ...closure,
-        geometry,
-        point: representativePoint(geometry)
-      });
-    } catch (error) {
-      console.warn("Regional route alignment failed", closure.id, error);
-      return normalizeRegionalClosure(closure);
-    }
-  }));
-
-  return routedClosures;
+  return REGIONAL_MAJOR_CLOSURES.map(normalizeRegionalClosure);
 }
 
 async function loadLongueuilClosures() {
@@ -1416,7 +1381,7 @@ function intersectsGreaterMontreal(bbox) {
 
 async function fetchRouteGeometry(routeEndpoints) {
   const coordinates = routeEndpoints.map(([lon, lat]) => `${lon},${lat}`).join(";");
-  const url = `https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=full&géométries=geojson`;
+  const url = `https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=full&geometries=geojson`;
   const data = await fetchJson(url);
   const geometry = data.routes?.[0]?.geometry;
   if (!geometry?.coordinates?.length) {
@@ -1424,6 +1389,33 @@ async function fetchRouteGeometry(routeEndpoints) {
   }
 
   return geometry;
+}
+
+function isPlausibleLocalRoute(geometry, routeEndpoints) {
+  const routeCoordinates = flattenCoordinates(geometry?.coordinates);
+  if (routeCoordinates.length < 2 || routeEndpoints.length < 2) {
+    return false;
+  }
+
+  const routeLength = routeCoordinates.slice(1).reduce((total, coordinate, index) => {
+    return total + coordinateDistanceMeters(routeCoordinates[index], coordinate);
+  }, 0);
+  const directLength = routeEndpoints.slice(1).reduce((total, coordinate, index) => {
+    return total + coordinateDistanceMeters(routeEndpoints[index], coordinate);
+  }, 0);
+
+  return directLength > 0 && routeLength / directLength <= 2.5;
+}
+
+function coordinateDistanceMeters([longitudeA, latitudeA], [longitudeB, latitudeB]) {
+  const earthRadius = 6371000;
+  const latitudeDelta = degreesToRadians(latitudeB - latitudeA);
+  const longitudeDelta = degreesToRadians(longitudeB - longitudeA);
+  const latitudeStart = degreesToRadians(latitudeA);
+  const latitudeEnd = degreesToRadians(latitudeB);
+  const haversine = Math.sin(latitudeDelta / 2) ** 2
+    + Math.cos(latitudeStart) * Math.cos(latitudeEnd) * Math.sin(longitudeDelta / 2) ** 2;
+  return earthRadius * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
 }
 
 function periodsFromMontrealSchedule(properties) {
@@ -1672,14 +1664,18 @@ async function loadOfficialData() {
     sourceCounts.push(`${uciClosures.length} segments UCI`);
   }
 
-  if (regionalResult.status === "fulfilled") {
-    officialClosures.push(...regionalResult.value);
-    sourceCounts.push(`${regionalResult.value.length} fermetures ponts/grands axes alignees aux routes`);
+  const quebec511Closures = quebec511Result.status === "fulfilled" ? quebec511Result.value : [];
+  if (quebec511Result.status === "fulfilled") {
+    officialClosures.push(...quebec511Closures);
+    sourceCounts.push(`${quebec511Closures.length} entraves Québec 511 / MTMD`);
   }
 
-  if (quebec511Result.status === "fulfilled") {
-    officialClosures.push(...quebec511Result.value);
-    sourceCounts.push(`${quebec511Result.value.length} entraves Quebec 511 / MTMD`);
+  if (regionalResult.status === "fulfilled" && regionalResult.value.length > 0) {
+    const regionalFallbacks = regionalResult.value.filter((closure) => !isCoveredByOfficialMtmd(closure, quebec511Closures));
+    officialClosures.push(...regionalFallbacks);
+    if (regionalFallbacks.length > 0) {
+      sourceCounts.push(`${regionalFallbacks.length} fermetures de ponts et grands axes`);
+    }
   }
 
   if (lavalResult.status === "fulfilled") {
@@ -1719,6 +1715,15 @@ function dedupeClosures(closures) {
     seen.add(closure.id);
     return true;
   });
+}
+
+function isCoveredByOfficialMtmd(closure, mtmdClosures) {
+  const matcher = REGIONAL_FALLBACK_MATCHERS[closure.id];
+  if (!matcher) {
+    return false;
+  }
+
+  return mtmdClosures.some((mtmdClosure) => matcher.test(`${mtmdClosure.title} ${mtmdClosure.streets} ${mtmdClosure.impact}`));
 }
 
 function popupContent(closure) {
@@ -1846,8 +1851,9 @@ function renderMap(closures) {
     }
 
     const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
-    const commonStyle = { color: closure.color, weight: severity.width, opacity: severity.opacity, renderer: fastRenderer };
-    const hitStyle = { color: closure.color, weight: Math.max(34, severity.width + 20), opacity: 0.01, renderer: fastRenderer };
+    const weight = lineWeightForZoom(severity.width);
+    const commonStyle = { color: closure.color, weight, opacity: severity.opacity, renderer: fastRenderer };
+    const hitStyle = { color: closure.color, weight: Math.max(26, weight + 18), opacity: 0.01, renderer: fastRenderer };
     let mainLayer = null;
 
     if (closure.geometry?.type === "LineString") {
@@ -1865,7 +1871,7 @@ function renderMap(closures) {
     } else if (closure.geometry?.type === "Polygon") {
       mainLayer = L.polygon(toLatLngs(closure.geometry.coordinates), {
         color: closure.color,
-        weight: severity.width,
+        weight,
         opacity: severity.opacity,
         fillColor: closure.color,
         fillOpacity: closure.severity === "critical" ? 0.32 : 0.2,
@@ -1886,6 +1892,12 @@ function renderMap(closures) {
       mainLayer.on("click", (event) => openGroupedPopup(closure, event.latlng));
     }
   });
+}
+
+function lineWeightForZoom(baseWeight) {
+  const zoom = map.getZoom();
+  const factor = zoom >= 15 ? 1 : zoom >= 14 ? 0.86 : zoom >= 13 ? 0.72 : zoom >= 12 ? 0.58 : 0.46;
+  return Math.max(3, Math.round(baseWeight * factor));
 }
 
 function scheduleLavalOfficialLines() {
@@ -1943,9 +1955,9 @@ function updateLavalOfficialLines() {
 
 function lavalDynamicLayers() {
   return [
-    lavalDynamicLayer(0, SEVERITY_META.critical.color, SEVERITY_META.critical.width),
-    lavalDynamicLayer(2, SEVERITY_META.major.color, SEVERITY_META.major.width),
-    lavalDynamicLayer(3, SEVERITY_META.moderate.color, SEVERITY_META.moderate.width)
+    lavalDynamicLayer(0, SEVERITY_META.critical.color, lineWeightForZoom(SEVERITY_META.critical.width)),
+    lavalDynamicLayer(2, SEVERITY_META.major.color, lineWeightForZoom(SEVERITY_META.major.width)),
+    lavalDynamicLayer(3, SEVERITY_META.moderate.color, lineWeightForZoom(SEVERITY_META.moderate.width))
   ];
 }
 
@@ -2200,19 +2212,19 @@ dateStart.addEventListener("change", () => {
   if (parseDate(dateStart.value) > parseDate(dateEnd.value)) {
     dateEnd.value = dateStart.value;
   }
-  updateView({ fit: true });
+  updateView();
 });
-dateEnd.addEventListener("change", () => updateView({ fit: true }));
+dateEnd.addEventListener("change", () => updateView());
 todayDates.addEventListener("click", () => {
   const today = formatInputDate(new Date());
   dateStart.value = today;
   dateEnd.value = today;
-  updateView({ fit: true });
+  updateView();
 });
-searchFilter.addEventListener("input", () => updateView({ fit: true }));
-categoryFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: true })));
-impactFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: true })));
-timeFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: true })));
+searchFilter.addEventListener("input", () => updateView());
+categoryFilters.forEach((input) => input.addEventListener("change", () => updateView()));
+impactFilters.forEach((input) => input.addEventListener("change", () => updateView()));
+timeFilters.forEach((input) => input.addEventListener("change", () => updateView()));
 dateHelp.addEventListener("click", () => {
   dateHelpBubble.hidden = !dateHelpBubble.hidden;
 });
