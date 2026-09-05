@@ -100,4 +100,8 @@ function setupLanguageToggle() {
   applyTranslations();
 }
 
-window.addEventListener("DOMContentLoaded", setupLanguageToggle);
+if (document.readyState === "loading") {
+  window.addEventListener("DOMContentLoaded", setupLanguageToggle);
+} else {
+  setupLanguageToggle();
+}
