@@ -189,6 +189,40 @@ h2 {
   gap: 8px;
 }
 
+.section-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 30px;
+  margin-left: auto;
+  padding: 5px 8px 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent-dark);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.section-toggle:hover,
+.section-toggle.is-open {
+  background: #e7f2ee;
+  color: var(--accent-dark);
+}
+
+.section-toggle b {
+  width: 14px;
+  color: var(--ink);
+  font-size: 1.1rem;
+  line-height: 1;
+  text-align: center;
+}
+
+.source-filters[hidden] {
+  display: none;
+}
+
 .icon-help.small {
   width: 24px;
   height: 24px;
