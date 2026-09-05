@@ -12,6 +12,7 @@
   --event: #c23764;
   --regional: #5b6c2d;
   --strike: #2f3136;
+  --panel-width: 540px;
   font-family: "Aptos", "Segoe UI", sans-serif;
 }
 
@@ -54,7 +55,7 @@ input {
 
 .app-shell {
   display: grid;
-  grid-template-columns: minmax(460px, 540px) 1fr;
+  grid-template-columns: var(--panel-width) 1fr;
   height: 100vh;
   min-height: 0;
   overflow: hidden;
@@ -77,6 +78,8 @@ input {
 }
 
 .panel {
+  container-type: inline-size;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -323,6 +326,37 @@ h2 {
   background: #fff;
   font-size: 0.86rem;
   line-height: 1.2;
+}
+
+@container (max-width: 380px) {
+  .toggle-grid,
+  .source-filters {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel-resize-handle {
+  position: absolute;
+  top: 0;
+  right: -5px;
+  bottom: 0;
+  width: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: ew-resize;
+  z-index: 3;
+}
+
+.panel-resize-handle:hover,
+.is-resizing-panel .panel-resize-handle {
+  background: rgba(15, 123, 102, 0.22);
+}
+
+.is-resizing-panel {
+  cursor: ew-resize;
+  user-select: none;
 }
 
 .impact-dot {
@@ -805,6 +839,34 @@ button:hover {
   color: #8f2045;
 }
 
+.map-status[data-mode="loading"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  top: 50%;
+  left: 50%;
+  z-index: 1500;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.map-status[data-mode="loading"]::before {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  border: 3px solid rgba(15, 123, 102, 0.2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  content: "";
+  animation: map-loading-spin 800ms linear infinite;
+}
+
+@keyframes map-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .map-instruction {
   position: absolute;
   top: 18px;
@@ -826,7 +888,7 @@ button:hover {
 
 .map-first-visit-hint {
   position: absolute;
-  top: 68px;
+  top: 50%;
   left: 50%;
   display: grid;
   gap: 4px;
@@ -839,7 +901,7 @@ button:hover {
   color: var(--muted);
   font-size: 0.84rem;
   line-height: 1.4;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   z-index: 1100;
 }
 
@@ -950,9 +1012,25 @@ button:hover {
 }
 
 .popup-group-title {
+  padding-right: 30px;
   margin-bottom: 10px;
   color: var(--ink);
   font-weight: 900;
+}
+
+.popup-close-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 1.35rem;
+  line-height: 1;
 }
 
 .popup-card + .popup-card {
@@ -981,6 +1059,7 @@ button:hover {
 }
 
 .leaflet-popup-content {
+  position: relative;
   width: 360px !important;
   max-width: calc(100vw - 72px);
   max-height: 420px;
@@ -1013,6 +1092,10 @@ button:hover {
     border-right: 1px solid var(--line);
     border-bottom: 0;
     z-index: 1200;
+  }
+
+  .panel-resize-handle {
+    display: none;
   }
 
   .panel.is-open {
@@ -1094,12 +1177,12 @@ button:hover {
   }
 
   .map-instruction {
-    top: 72px;
+    top: 14px;
     max-width: calc(100% - 120px);
   }
 
   .map-first-visit-hint {
-    top: 122px;
+    top: 50%;
   }
 
   h1 {

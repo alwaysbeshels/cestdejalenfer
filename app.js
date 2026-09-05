@@ -828,6 +828,7 @@ const sourcesClose = document.querySelector("#sourcesClose");
 const sourceCard = document.querySelector("#sourceCard");
 const mapFirstVisitHint = document.querySelector("#mapFirstVisitHint");
 const mapFirstVisitClose = document.querySelector("#mapFirstVisitClose");
+const panelResizeHandle = document.querySelector("#panelResizeHandle");
 
 let allClosures = [
   ...window.CLOSURES.map(normalizeLegacyClosure),
@@ -859,10 +860,6 @@ const fastRenderer = L.canvas({ padding: 0.5 });
 function dismissMapFirstVisitHint() {
   mapFirstVisitHint.hidden = true;
   window.localStorage.setItem("mapClickHintSeen", "true");
-}
-
-if (!window.localStorage.getItem("mapClickHintSeen")) {
-  mapFirstVisitHint.hidden = false;
 }
 
 function mapLineWidth(width) {
@@ -1815,7 +1812,7 @@ async function fetchJson(url) {
 }
 
 async function loadOfficialData() {
-  showMapStatus("Chargement des entraves officielles Montreal + UCI + Laval + Longueuil...", "loading");
+  showMapStatus("Chargement des entraves depuis plusieurs sources officielles...", "loading");
 
   const [montrealResult, uciResult, regionalResult, linkedCityResult, longueuilResult, lavalResult, quebec511Result, pedestrianStreetResult] = await Promise.allSettled([
     fetchJson(LIVE_SOURCES.montreal),
@@ -1936,6 +1933,7 @@ function periodsLabel(periods) {
 function groupedPopupContent(closures) {
   const title = closures.length === 1 ? "1 entrave à cet endroit" : `${closures.length} entraves à cet endroit`;
   return `
+    <button class="popup-close-button" type="button" aria-label="Fermer les détails">&times;</button>
     <div class="popup-group-title">${title}</div>
     ${closures.slice(0, 8).map(popupContent).join("")}
     ${closures.length > 8 ? `<p class="popup-meta">${closures.length - 8} autres entraves tres proches. Zoomez ou filtrez pour les isoler.</p>` : ""}
@@ -1957,6 +1955,25 @@ function openMapPopup(latLng, content, maxWidth) {
     .setLatLng(latLng)
     .setContent(content)
     .openOn(map);
+
+  requestAnimationFrame(() => {
+    const popupElement = popup.getElement();
+    const popupContentElement = popupElement?.querySelector(".leaflet-popup-content");
+    if (!popupContentElement) {
+      return;
+    }
+
+    let closeButton = popupContentElement.querySelector(".popup-close-button");
+    if (!closeButton) {
+      closeButton = document.createElement("button");
+      closeButton.className = "popup-close-button";
+      closeButton.type = "button";
+      closeButton.setAttribute("aria-label", "Fermer les détails");
+      closeButton.textContent = "×";
+      popupContentElement.prepend(closeButton);
+    }
+    closeButton.addEventListener("click", () => map.closePopup());
+  });
 
   if (window.matchMedia("(max-width: 880px)").matches) {
     requestAnimationFrame(() => centerPopupInMobileMap(popup));
@@ -2381,6 +2398,10 @@ function showMapStatus(message, mode = "loading") {
   mapStatus.textContent = correctFrenchText(message);
   mapStatus.dataset.mode = mode;
   mapStatus.hidden = mode === "ready";
+
+  if (mode === "ready" && !window.localStorage.getItem("mapClickHintSeen")) {
+    mapFirstVisitHint.hidden = false;
+  }
 }
 
 dateStart.addEventListener("change", () => {
@@ -2469,6 +2490,41 @@ function setSourceSectionOpen(isOpen) {
   sourceSectionToggle.querySelector("span").textContent = isOpen ? "Masquer les sources" : "Afficher les sources";
   sourceSectionToggle.querySelector("b").textContent = isOpen ? "-" : "+";
 }
+
+function setPanelWidth(width) {
+  const clampedWidth = Math.max(270, Math.min(540, width));
+  document.documentElement.style.setProperty("--panel-width", `${clampedWidth}px`);
+}
+
+let panelResizeStart = null;
+panelResizeHandle.addEventListener("pointerdown", (event) => {
+  if (window.matchMedia("(max-width: 880px)").matches) {
+    return;
+  }
+
+  panelResizeStart = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startWidth: document.querySelector(".panel").getBoundingClientRect().width
+  };
+  panelResizeHandle.setPointerCapture(event.pointerId);
+  document.body.classList.add("is-resizing-panel");
+});
+panelResizeHandle.addEventListener("pointermove", (event) => {
+  if (!panelResizeStart || event.pointerId !== panelResizeStart.pointerId) {
+    return;
+  }
+
+  setPanelWidth(panelResizeStart.startWidth + event.clientX - panelResizeStart.startX);
+});
+panelResizeHandle.addEventListener("pointerup", () => {
+  panelResizeStart = null;
+  document.body.classList.remove("is-resizing-panel");
+});
+panelResizeHandle.addEventListener("pointercancel", () => {
+  panelResizeStart = null;
+  document.body.classList.remove("is-resizing-panel");
+});
 
 const currentDate = formatInputDate(new Date());
 dateStart.value = currentDate;
