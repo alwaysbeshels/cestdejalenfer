@@ -715,6 +715,8 @@ const dateHelp = document.querySelector("#dateHelp");
 const dateHelpBubble = document.querySelector("#dateHelpBubble");
 const sourceHelp = document.querySelector("#sourceHelp");
 const sourceHelpBubble = document.querySelector("#sourceHelpBubble");
+const sourceSectionToggle = document.querySelector("#sourceSectionToggle");
+const sourceFilters = document.querySelector("#sourceFilters");
 const impactHelp = document.querySelector("#impactHelp");
 const impactHelpBubble = document.querySelector("#impactHelpBubble");
 const timeHelp = document.querySelector("#timeHelp");
@@ -921,8 +923,12 @@ function getFilterBaseClosures() {
 }
 
 function getClosuresInViewport() {
+  return filterClosuresToViewport(currentClosures);
+}
+
+function filterClosuresToViewport(closures) {
   const bounds = map.getBounds();
-  return currentClosures.filter((closure) => closure.category === "laval"
+  return closures.filter((closure) => closure.category === "laval"
     ? !lavalViewportIds || lavalViewportIds.has(closure.id)
     : closureIntersectsBounds(closure, bounds));
 }
@@ -945,6 +951,7 @@ function updateViewportList() {
   const viewportClosures = getClosuresInViewport();
   renderList(viewportClosures);
   visibleCount.textContent = String(viewportClosures.length);
+  updateImpactCounts();
 }
 
 function scheduleLavalViewportRefresh() {
@@ -992,14 +999,15 @@ async function refreshLavalViewportEntries() {
 }
 
 function updateImpactCounts() {
-  const counts = getFilterBaseClosures().reduce((result, closure) => {
+  const counts = filterClosuresToViewport(getFilterBaseClosures()).reduce((result, closure) => {
     result[closure.severity] = (result[closure.severity] || 0) + 1;
     return result;
   }, {});
 
   document.querySelectorAll("[data-impact-count]").forEach((element) => {
     const impact = element.dataset.impactCount;
-    element.textContent = `(${counts[impact] || 0})`;
+    const count = counts[impact] || 0;
+    element.textContent = `(${count} ${count === 1 ? "visible" : "visibles"})`;
   });
 }
 
@@ -2103,6 +2111,7 @@ dateHelp.addEventListener("click", () => {
 sourceHelp.addEventListener("click", () => {
   sourceHelpBubble.hidden = !sourceHelpBubble.hidden;
 });
+sourceSectionToggle.addEventListener("click", () => setSourceSectionOpen(sourceFilters.hidden));
 impactHelp.addEventListener("click", () => {
   impactHelpBubble.hidden = !impactHelpBubble.hidden;
 });
@@ -2155,6 +2164,14 @@ function setSourcesOpen(isOpen) {
   sourceCard.hidden = !isOpen;
   sourcesToggle.hidden = isOpen;
   sourcesToggle.setAttribute("aria-expanded", String(isOpen));
+}
+
+function setSourceSectionOpen(isOpen) {
+  sourceFilters.hidden = !isOpen;
+  sourceSectionToggle.setAttribute("aria-expanded", String(isOpen));
+  sourceSectionToggle.classList.toggle("is-open", isOpen);
+  sourceSectionToggle.querySelector("span").textContent = isOpen ? "Masquer les sources" : "Afficher les sources";
+  sourceSectionToggle.querySelector("b").textContent = isOpen ? "-" : "+";
 }
 
 renderMunicipalityLinks();
