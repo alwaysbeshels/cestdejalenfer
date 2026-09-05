@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carte des entraves - Montreal</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQGcI5uZ3u3z7e5w9f5nEpPuFAxH22s=" crossorigin="">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <button id="menuToggle" class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-controls="sidePanel" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div id="menuBackdrop" class="menu-backdrop" hidden></div>
+    <aside id="sidePanel" class="panel" aria-label="Filtres et entraves">
+      <header class="brand-block">
+        <p class="eyebrow">Région métropolitaine de Montréal</p>
+        <h1>Carte des entraves</h1>
+        <p class="intro">Carte de conduite pour reperer rues fermees, voies retranchees, restrictions UCI et secteurs ou les detours deviennent probables.</p>
+      </header>
+
+      <section class="controls" aria-label="Filtres">
+        <div class="date-range-fields">
+          <button id="todayDates" class="today-button" type="button">Aujourd'hui</button>
+          <label class="field">
+            <span>Debut</span>
+            <input id="dateStart" type="date" value="2026-09-04">
+          </label>
+          <label class="field">
+            <span>Fin</span>
+            <input id="dateEnd" type="date" value="2026-09-04">
+          </label>
+          <button id="dateHelp" class="icon-help" type="button" aria-label="Information sur la periode">i</button>
+          <div id="dateHelpBubble" class="help-bubble" hidden>La periode affiche toutes les entraves qui touchent au moins une journee entre les deux dates, meme si elles ne durent que quelques heures ou quelques jours.</div>
+        </div>
+
+        <label class="field">
+          <span>Recherche</span>
+          <input id="searchFilter" type="search" placeholder="Rue, responsable, arrondissement...">
+        </label>
+
+        <div class="filter-heading">
+          <h2 class="filter-title">Responsable / source</h2>
+          <button id="sourceHelp" class="icon-help small" type="button" aria-label="Information sur responsable et source">i</button>
+          <div id="sourceHelpBubble" class="help-bubble filter-help" hidden>Ce filtre sert a choisir qui est la source ou le responsable publie pour les fermetures: Ville de Montreal, secteurs prives, evenements, grands axes, ou sources municipales independantes a consulter separement.</div>
+        </div>
+        <div class="toggle-grid source-filters" role="group" aria-label="Responsable ou source des entraves">
+          <label><input type="checkbox" value="municipal" checked> Ville</label>
+          <label><input type="checkbox" value="private" checked> Secteurs prives</label>
+          <label><input type="checkbox" value="linkedCity" checked> Villes liees</label>
+          <label><input type="checkbox" value="commercial" checked> Rues marchandes</label>
+          <label><input type="checkbox" value="event" checked> Evenements</label>
+          <label><input type="checkbox" value="regional" checked> Grands axes</label>
+          <label><input type="checkbox" value="q511" checked> Quebec 511</label>
+          <label><input type="checkbox" value="laval" checked> Laval</label>
+          <label><input type="checkbox" value="longueuil" checked> Longueuil</label>
+          <label><input type="checkbox" value="strike" checked> Greves / manifs</label>
+        </div>
+
+        <div class="filter-heading">
+          <h2 class="filter-title">Type d'impact</h2>
+          <button id="impactHelp" class="icon-help small" type="button" aria-label="Information sur les types d'impact">i</button>
+          <div id="impactHelpBubble" class="help-bubble filter-help" hidden>
+            <p><strong>Rue fermee:</strong> circulation interdite.</p>
+            <p><strong>Voie touchee:</strong> une voie de circulation est retranchee.</p>
+            <p><strong>Acces limite:</strong> circulation locale ou sens temporaire.</p>
+            <p><strong>Stationnement:</strong> la rue reste ouverte, mais le stationnement est retire ou interdit.</p>
+          </div>
+        </div>
+        <div class="toggle-grid impact-filters" role="group" aria-label="Types d'impact sur la circulation">
+          <label><input type="checkbox" value="critical" checked><i class="impact-dot critical"></i> Rue fermee <span class="impact-count" data-impact-count="critical"></span></label>
+          <label><input type="checkbox" value="major" checked><i class="impact-dot major"></i> Voie touchee <span class="impact-count" data-impact-count="major"></span></label>
+          <label><input type="checkbox" value="moderate" checked><i class="impact-dot moderate"></i> Acces limite <span class="impact-count" data-impact-count="moderate"></span></label>
+          <label><input type="checkbox" value="parking"><i class="impact-dot parking"></i> Stationnement <span class="impact-count" data-impact-count="parking"></span></label>
+        </div>
+
+        <div class="filter-heading">
+          <h2 class="filter-title">Moment des travaux</h2>
+          <button id="timeHelp" class="icon-help small" type="button" aria-label="Information sur les travaux de jour et de nuit">i</button>
+          <div id="timeHelpBubble" class="help-bubble filter-help" hidden>
+            <p><strong>Jour:</strong> entraves hors de la plage de nuit.</p>
+            <p><strong>Nuit:</strong> toute entrave qui touche la periode de 23 h a 5 h, meme si elle commence avant 23 h ou finit apres 5 h.</p>
+          </div>
+        </div>
+        <div class="toggle-grid time-filters" role="group" aria-label="Moment des travaux">
+          <label><input type="checkbox" value="day" checked> Jour</label>
+          <label><input type="checkbox" value="night" checked> Nuit</label>
+        </div>
+      </section>
+
+      <section class="summary" aria-live="polite">
+        <div>
+          <strong id="visibleCount">0</strong>
+          <span>entraves visibles</span>
+        </div>
+        <button id="resetView" type="button">Recentrer</button>
+      </section>
+
+      <section class="severity-legend" aria-label="Niveaux d'impact auto">
+        <span class="severity-chip critical">Rue fermee</span>
+        <span class="severity-chip major">Voie touchee</span>
+        <span class="severity-chip moderate">Acces limite</span>
+        <span class="severity-chip parking">Stationnement</span>
+      </section>
+
+      <section class="municipality-section" hidden>
+        <div class="filter-heading">
+          <h2>Sources travaux des villes liees</h2>
+          <button id="municipalityHelp" class="icon-help small" type="button" aria-label="Information sur les municipalites independantes">i</button>
+          <div id="municipalityHelpBubble" class="help-bubble filter-help" hidden>Ces 15 municipalites sont sur l'ile de Montreal, mais ne sont pas toujours incluses dans le flux Info entraves de la Ville. Les liens pointent vers leurs pages Travaux, Info-travaux, projets ou avis officiels.</div>
+        </div>
+        <p class="section-note">Aucune source publique unique ne normalise toutes ces villes. Cette section les inclut comme sources officielles a consulter ou a brancher dans une prochaine couche de donnees.</p>
+        <div id="municipalityList" class="municipality-list"></div>
+      </section>
+
+      <section class="list-section">
+        <h2>Entraves auto actives</h2>
+        <div id="closureList" class="closure-list"></div>
+      </section>
+    </aside>
+
+    <main class="map-zone">
+      <div id="map" aria-label="Carte interactive de Montreal"></div>
+      <div id="mapStatus" class="map-status" role="status">Chargement de la carte...</div>
+      <button id="sourcesToggle" class="sources-toggle" type="button" aria-controls="sourceCard" aria-expanded="false">Sources</button>
+      <section id="sourceCard" class="source-card" aria-label="Sources officielles" hidden>
+        <button id="sourcesClose" class="sources-close" type="button" aria-label="Fermer les sources">&times;</button>
+        <strong>Sources officielles</strong>
+        <span>Ville de Montreal (WFS), carte UCI 2026, Laval Info-Travaux, Ville de Longueuil, MTMD / Quebec 511 via Donnees Quebec, Mobilite Montreal et avis publics des villes liees.</span>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="data/closures.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
