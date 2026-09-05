@@ -6,12 +6,24 @@
   <title>Redirection vers la carte</title>
 </head>
 <body>
+  <p>Redirection vers la carte...</p>
+  <p><a id="fallbackLink" href="index.html">Ouvrir la carte</a></p>
   <script>
     const pathSegments = window.location.pathname.split("/").filter(Boolean);
-    const projectBase = window.location.hostname.endsWith(".github.io") && pathSegments.length
-      ? `/${pathSegments[0]}/`
+    const isGithubPagesProject = window.location.hostname.endsWith(".github.io");
+    const projectBase = isGithubPagesProject && pathSegments.length
+      ? `/${pathSegments.shift()}/`
       : "/";
-    window.location.replace(`${projectBase}index.html`);
+    const language = pathSegments[0] === "en" || pathSegments[0] === "fr"
+      ? pathSegments[0]
+      : null;
+    const target = language
+      ? `${projectBase}${language}/index.html`
+      : `${projectBase}index.html`;
+    const fallbackLink = document.querySelector("#fallbackLink");
+    fallbackLink.href = target;
+    document.documentElement.lang = language || "fr";
+    window.location.replace(target);
   </script>
 </body>
 </html>

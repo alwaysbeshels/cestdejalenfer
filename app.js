@@ -1954,7 +1954,7 @@ function openGroupedPopup(primaryClosure, latLng) {
 function openMapPopup(latLng, content, maxWidth) {
   const popup = L.popup({
     maxWidth,
-    autoPan: !window.matchMedia("(max-width: 880px)").matches
+    autoPan: false
   })
     .setLatLng(latLng)
     .setContent(content)
@@ -1979,12 +1979,10 @@ function openMapPopup(latLng, content, maxWidth) {
     closeButton.addEventListener("click", () => map.closePopup());
   });
 
-  if (window.matchMedia("(max-width: 880px)").matches) {
-    requestAnimationFrame(() => centerPopupInMobileMap(popup));
-  }
+  requestAnimationFrame(() => centerPopupInMap(popup));
 }
 
-function centerPopupInMobileMap(popup, pass = 0) {
+function centerPopupInMap(popup, pass = 0) {
   const popupElement = popup.getElement();
   const mapElement = map.getContainer();
   if (!popupElement || !mapElement) {
@@ -2002,7 +2000,7 @@ function centerPopupInMobileMap(popup, pass = 0) {
 
   map.panBy([horizontalOffset, verticalOffset], { animate: true, duration: 0.28 });
   if (pass === 0) {
-    map.once("moveend", () => requestAnimationFrame(() => centerPopupInMobileMap(popup, 1)));
+    map.once("moveend", () => requestAnimationFrame(() => centerPopupInMap(popup, 1)));
   }
 }
 
