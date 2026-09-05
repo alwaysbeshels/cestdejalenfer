@@ -124,6 +124,12 @@
     <main class="map-zone">
       <div id="map" aria-label="Carte interactive de Montréal"></div>
       <div id="mapStatus" class="map-status" role="status">Chargement de la carte...</div>
+      <p class="map-instruction">Cliquez sur une ligne colorée pour voir les détails des travaux.</p>
+      <aside id="mapFirstVisitHint" class="map-first-visit-hint" aria-label="Conseil pour utiliser la carte" hidden>
+        <button id="mapFirstVisitClose" type="button" aria-label="Fermer le conseil">&times;</button>
+        <strong>Petit conseil</strong>
+        <span>Cliquez sur une ligne colorée pour consulter les dates, les détails et les détours.</span>
+      </aside>
       <section id="mapLegend" class="severity-legend map-legend" aria-label="Légende des impacts auto">
         <span class="severity-chip critical" data-legend-impact="critical">Rue fermée</span>
         <span class="severity-chip major" data-legend-impact="major">Voie touchée</span>

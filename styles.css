@@ -805,6 +805,70 @@ button:hover {
   color: #8f2045;
 }
 
+.map-instruction {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  max-width: calc(100% - 420px);
+  margin: 0;
+  padding: 9px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 8px;
+  background: rgba(255, 253, 248, 0.94);
+  box-shadow: 0 10px 26px rgba(20, 29, 26, 0.14);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-align: center;
+  transform: translateX(-50%);
+  z-index: 520;
+}
+
+.map-first-visit-hint {
+  position: absolute;
+  top: 68px;
+  left: 50%;
+  display: grid;
+  gap: 4px;
+  width: min(340px, calc(100% - 36px));
+  padding: 14px 42px 14px 15px;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  background: #fffdf8;
+  box-shadow: 0 14px 34px rgba(20, 29, 26, 0.22);
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+  transform: translateX(-50%);
+  z-index: 1100;
+}
+
+.map-first-visit-hint[hidden] {
+  display: none !important;
+}
+
+.map-first-visit-hint strong {
+  color: var(--ink);
+}
+
+.map-first-visit-hint button {
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.leaflet-interactive {
+  cursor: pointer;
+}
+
 .source-card {
   position: absolute;
   right: 18px;
@@ -1027,6 +1091,15 @@ button:hover {
   #map {
     height: 100vh;
     min-height: 0;
+  }
+
+  .map-instruction {
+    top: 72px;
+    max-width: calc(100% - 120px);
+  }
+
+  .map-first-visit-hint {
+    top: 122px;
   }
 
   h1 {

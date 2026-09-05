@@ -826,6 +826,8 @@ const sidePanel = document.querySelector("#sidePanel");
 const sourcesToggle = document.querySelector("#sourcesToggle");
 const sourcesClose = document.querySelector("#sourcesClose");
 const sourceCard = document.querySelector("#sourceCard");
+const mapFirstVisitHint = document.querySelector("#mapFirstVisitHint");
+const mapFirstVisitClose = document.querySelector("#mapFirstVisitClose");
 
 let allClosures = [
   ...window.CLOSURES.map(normalizeLegacyClosure),
@@ -853,6 +855,15 @@ const baseLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", 
 const closureLayer = L.layerGroup().addTo(map);
 const arrowLayer = L.layerGroup().addTo(map);
 const fastRenderer = L.canvas({ padding: 0.5 });
+
+function dismissMapFirstVisitHint() {
+  mapFirstVisitHint.hidden = true;
+  window.localStorage.setItem("mapClickHintSeen", "true");
+}
+
+if (!window.localStorage.getItem("mapClickHintSeen")) {
+  mapFirstVisitHint.hidden = false;
+}
 
 function mapLineWidth(width) {
   const zoom = map.getZoom();
@@ -2020,13 +2031,19 @@ function renderMap(closures) {
     if (closure.geometry?.type === "LineString") {
       const latLngs = toLatLngs(closure.geometry.coordinates);
       mainLayer = L.polyline(latLngs, commonStyle).addTo(closureLayer);
-      L.polyline(latLngs, hitStyle).on("click", (event) => openGroupedPopup(closure, event.latlng)).addTo(closureLayer);
+      L.polyline(latLngs, hitStyle).on("click", (event) => {
+        dismissMapFirstVisitHint();
+        openGroupedPopup(closure, event.latlng);
+      }).addTo(closureLayer);
       addDirectionArrows(latLngs, closure);
     } else if (closure.geometry?.type === "MultiLineString") {
       closure.geometry.coordinates.forEach((lineCoordinates) => {
         const latLngs = toLatLngs(lineCoordinates);
         mainLayer = L.polyline(latLngs, commonStyle).addTo(closureLayer);
-        L.polyline(latLngs, hitStyle).on("click", (event) => openGroupedPopup(closure, event.latlng)).addTo(closureLayer);
+        L.polyline(latLngs, hitStyle).on("click", (event) => {
+          dismissMapFirstVisitHint();
+          openGroupedPopup(closure, event.latlng);
+        }).addTo(closureLayer);
         addDirectionArrows(latLngs, closure);
       });
     } else if (closure.geometry?.type === "Polygon") {
@@ -2050,7 +2067,10 @@ function renderMap(closures) {
     }
 
     if (mainLayer) {
-      mainLayer.on("click", (event) => openGroupedPopup(closure, event.latlng));
+      mainLayer.on("click", (event) => {
+        dismissMapFirstVisitHint();
+        openGroupedPopup(closure, event.latlng);
+      });
     }
   });
 }
@@ -2415,6 +2435,7 @@ menuToggle.addEventListener("click", () => setMobileMenuOpen(!sidePanel.classLis
 menuBackdrop.addEventListener("click", () => setMobileMenuOpen(false));
 sourcesToggle.addEventListener("click", () => setSourcesOpen(true));
 sourcesClose.addEventListener("click", () => setSourcesOpen(false));
+mapFirstVisitClose.addEventListener("click", dismissMapFirstVisitHint);
 map.on("zoomend", () => renderMap(currentClosures));
 map.on("click", (event) => {
   const closure = nearestClosure(event.latlng);
