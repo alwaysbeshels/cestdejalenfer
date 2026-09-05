@@ -14,6 +14,8 @@ La carte est une application statique: ouvrez `index.html` avec un serveur stati
 
 GitHub Pages publie directement `index.html`, `styles.css`, `app.js`, le dossier `data` et `404.html`. Aucun serveur Python ou Node.js n'est requis. La page `404.html` redirige les chemins inconnus vers l'application.
 
+Le catalogue partagé des sources se trouve dans `data/sources.js`. Il alimente le panneau Sources de la carte et le tableau de la section Sources du FAQ; toute nouvelle source ajoutée à ce catalogue apparaît automatiquement dans les deux endroits.
+
 ## Ce qui est inclus
 
 - Vraie carte interactive centrée sur Montreal.

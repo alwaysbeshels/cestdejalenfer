@@ -77,9 +77,16 @@
           <summary>À quel moment les données sont-elles mises à jour?</summary>
           <p>Les données de Montréal, Laval, Longueuil et du MTMD sont relues à chaque ouverture ou actualisation de la page. Leur disponibilité et leur fréquence de mise à jour dépendent toutefois de chaque organisme public.</p>
         </details>
-        <details>
+        <details id="sources-utilisees">
           <summary>Quelles sources sont utilisées?</summary>
-          <p>La carte combine les flux publics de la Ville de Montréal, les restrictions UCI 2026, Laval Info-Travaux, la Ville de Longueuil, le MTMD et Québec 511 par l'entremise de Données Québec, Mobilité Montréal ainsi que certains avis de villes liées.</p>
+          <p>La carte combine des flux officiels et des pages publiques de travaux. Le tableau ci-dessous regroupe les sources actuellement utilisées ou consultées, avec un lien direct vers chacune. Il est généré à partir du catalogue partagé de l'application afin que toute nouvelle source ajoutée au catalogue apparaisse aussi ici.</p>
+          <div class="source-table-wrap">
+            <table class="source-table">
+              <caption class="visually-hidden">Sources utilisées par la carte</caption>
+              <thead><tr><th scope="col">Source</th><th scope="col">Lien</th></tr></thead>
+              <tbody id="faqSourceList"></tbody>
+            </table>
+          </div>
         </details>
         <details>
           <summary>Pourquoi les entraves Québec 511 sont-elles attribuées au MTMD?</summary>
@@ -123,5 +130,8 @@
       <a href="index.html">Ouvrir la carte des entraves</a>
     </footer>
   </main>
+  <button id="backToTop" class="back-to-top" type="button" aria-label="Remonter en haut de la page" hidden>↑</button>
+  <script src="data/sources.js"></script>
+  <script src="faq.js"></script>
 </body>
 </html>

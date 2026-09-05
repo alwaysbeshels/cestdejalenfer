@@ -813,7 +813,7 @@ button:hover {
   border-radius: 8px;
   background: rgba(255, 253, 248, 0.92);
   box-shadow: 0 12px 40px rgba(20, 29, 26, 0.16);
-  z-index: 500;
+  z-index: 1200;
 }
 
 .source-card[hidden] {
@@ -858,6 +858,11 @@ button:hover {
 .source-card span {
   color: var(--muted);
   font-size: 0.82rem;
+}
+
+.source-card a {
+  color: var(--accent-dark);
+  font-weight: 900;
 }
 
 .popup-title {

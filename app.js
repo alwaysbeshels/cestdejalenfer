@@ -853,6 +853,13 @@ const baseLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", 
 const closureLayer = L.layerGroup().addTo(map);
 const arrowLayer = L.layerGroup().addTo(map);
 const fastRenderer = L.canvas({ padding: 0.5 });
+
+function mapLineWidth(width) {
+  const zoom = map.getZoom();
+  const scale = Math.max(0.3, Math.min(1, 0.3 + (zoom - 10) * 0.1167));
+  return Math.max(1, Math.round(width * scale));
+}
+
 let lavalOfficialLines = null;
 let lavalOverlayTimer = null;
 let lavalOverlayRequestId = 0;
@@ -2005,7 +2012,8 @@ function renderMap(closures) {
     }
 
     const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
-    const commonStyle = { color: closure.color, weight: severity.width, opacity: severity.opacity, renderer: fastRenderer };
+    const lineWidth = mapLineWidth(severity.width);
+    const commonStyle = { color: closure.color, weight: lineWidth, opacity: severity.opacity, renderer: fastRenderer };
     const hitStyle = { color: closure.color, weight: Math.max(34, severity.width + 20), opacity: 0.01, renderer: fastRenderer };
     let mainLayer = null;
 
@@ -2024,7 +2032,7 @@ function renderMap(closures) {
     } else if (closure.geometry?.type === "Polygon") {
       mainLayer = L.polygon(toLatLngs(closure.geometry.coordinates), {
         color: closure.color,
-        weight: severity.width,
+        weight: lineWidth,
         opacity: severity.opacity,
         fillColor: closure.color,
         fillOpacity: closure.severity === "critical" ? 0.32 : 0.2,
@@ -2102,9 +2110,9 @@ function updateLavalOfficialLines() {
 
 function lavalDynamicLayers() {
   return [
-    lavalDynamicLayer(0, SEVERITY_META.critical.color, SEVERITY_META.critical.width),
-    lavalDynamicLayer(2, SEVERITY_META.major.color, SEVERITY_META.major.width),
-    lavalDynamicLayer(3, SEVERITY_META.moderate.color, SEVERITY_META.moderate.width)
+    lavalDynamicLayer(0, SEVERITY_META.critical.color, mapLineWidth(SEVERITY_META.critical.width)),
+    lavalDynamicLayer(2, SEVERITY_META.major.color, mapLineWidth(SEVERITY_META.major.width)),
+    lavalDynamicLayer(3, SEVERITY_META.moderate.color, mapLineWidth(SEVERITY_META.moderate.width))
   ];
 }
 

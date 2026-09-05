@@ -169,6 +169,61 @@ details a {
   text-underline-offset: 2px;
 }
 
+.source-table-wrap {
+  overflow-x: auto;
+  margin: 0 16px 16px;
+}
+
+.source-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.source-table th,
+.source-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.source-table th {
+  color: var(--ink);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.source-table td:first-child {
+  width: 65%;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--accent-dark);
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 8px 20px rgba(20, 29, 26, 0.2);
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: 900;
+  line-height: 1;
+  z-index: 10;
+}
+
+.back-to-top:hover {
+  background: var(--accent-dark);
+}
+
 .faq-footer {
   display: flex;
   align-items: center;
@@ -215,6 +270,11 @@ details a {
 
   .intro {
     font-size: 0.92rem;
+  }
+
+  .back-to-top {
+    right: 14px;
+    bottom: 14px;
   }
 
   .faq-section {

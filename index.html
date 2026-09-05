@@ -113,7 +113,7 @@
 
       <section class="list-section">
         <h2>Entraves actives</h2>
-        <label class="field list-search">
+        <label class="field list-search" hidden>
           <span class="visually-hidden">Recherche</span>
           <input id="searchFilter" type="search" placeholder="Rue, responsable, arrondissement...">
         </label>
@@ -134,12 +134,13 @@
       <section id="sourceCard" class="source-card" aria-label="Sources officielles" hidden>
         <button id="sourcesClose" class="sources-close" type="button" aria-label="Fermer les sources">&times;</button>
         <strong>Sources officielles</strong>
-        <span>Ville de Montréal (WFS), carte UCI 2026, Laval Info-Travaux, Ville de Longueuil, MTMD / Québec 511 via Données Québec, Mobilité Montréal et avis publics des villes liées.</span>
+        <span>La liste complète des sources et leurs liens est disponible dans le <a href="faq.html#sources-utilisees">FAQ</a>.</span>
       </section>
     </main>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="data/sources.js"></script>
   <script src="data/closures.js"></script>
   <script src="app.js"></script>
 </body>
