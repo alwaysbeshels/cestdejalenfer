@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redirection vers la carte</title>
+</head>
+<body>
+  <script>
+    const pathSegments = window.location.pathname.split("/").filter(Boolean);
+    const projectBase = window.location.hostname.endsWith(".github.io") && pathSegments.length
+      ? `/${pathSegments[0]}/`
+      : "/";
+    window.location.replace(`${projectBase}index.html`);
+  </script>
+</body>
+</html>
