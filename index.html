@@ -35,10 +35,12 @@
             <input id="dateStart" type="date">
           </label>
           <label class="field">
-            <span data-i18n="filters.end"></span>
+            <span class="date-label-with-help">
+              <span data-i18n="filters.end"></span>
+              <button id="dateHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.dateHelpLabel">i</button>
+            </span>
             <input id="dateEnd" type="date">
           </label>
-          <button id="dateHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.dateHelpLabel">i</button>
           <div id="dateHelpBubble" class="help-bubble" data-i18n="filters.dateHelp" hidden></div>
         </div>
 
@@ -52,7 +54,7 @@
           <label><input type="checkbox" value="night" checked><span data-i18n="filters.night"></span></label>
         </div>
 
-        <div class="filter-heading">
+        <div class="filter-heading source-filter-heading">
           <h2 class="filter-title" data-i18n="filters.source"></h2>
           <button id="sourceSectionToggle" class="section-toggle" type="button" aria-controls="sourceFilters" aria-expanded="false">
             <span data-i18n="filters.showSources"></span><b aria-hidden="true">+</b>

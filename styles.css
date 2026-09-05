@@ -211,9 +211,24 @@ h2 {
   line-height: 1;
 }
 
-.date-range-fields .icon-help {
+.date-range-fields > .icon-help {
   align-self: end;
   margin-bottom: 9px;
+}
+
+.date-label-with-help {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.date-label-with-help .icon-help {
+  position: static !important;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  margin: 0 !important;
 }
 
 .help-bubble {
@@ -365,8 +380,10 @@ h2 {
   }
 
   .date-range-fields .icon-help {
-    justify-self: start;
-    margin-bottom: 0;
+    position: absolute;
+    top: 50px;
+    left: 70px;
+    margin: 0;
   }
 
   .filter-heading {
@@ -376,6 +393,17 @@ h2 {
   .section-toggle {
     margin-left: 0;
     flex: 1 1 100%;
+  }
+
+  .source-filter-heading {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  .source-filter-heading .section-toggle {
+    grid-column: 1 / -1;
+    width: 100%;
   }
 }
 
@@ -455,6 +483,37 @@ h2 {
     padding-top: 72px;
   }
 
+  .brand-block {
+    padding-top: 0;
+    padding-right: 0;
+  }
+
+  .site-nav {
+    position: fixed;
+    top: 14px;
+    right: calc(100vw - var(--panel-width) + 18px);
+    display: flex;
+    gap: 6px;
+    width: auto;
+    z-index: 1300;
+  }
+
+  .site-nav a,
+  .site-nav .language-toggle {
+    min-width: 48px;
+    padding-inline: 7px;
+  }
+
+  .date-range-fields .field:has(.date-label-with-help) {
+    position: relative;
+  }
+
+  .date-range-fields .field:has(.date-label-with-help) .date-label-with-help .icon-help {
+    position: absolute !important;
+    right: -26px;
+    bottom: 9px;
+  }
+
   .menu-toggle {
     position: fixed;
     top: 14px;
@@ -501,6 +560,10 @@ h2 {
 
   .panel-collapsed .menu-toggle {
     background: #fffdf8;
+  }
+
+  .panel-collapsed .site-nav {
+    display: none;
   }
 }
 
@@ -1241,6 +1304,7 @@ button:hover {
     position: fixed;
     inset: 0 auto 0 0;
     width: min(440px, calc(100vw - 54px));
+    padding-top: 0;
     max-height: none;
     transform: translateX(-105%);
     transition: transform 220ms ease;
@@ -1256,6 +1320,26 @@ button:hover {
   .panel.is-open {
     translate: 0;
     transform: none !important;
+  }
+
+  .brand-block {
+    padding-top: 68px;
+    padding-right: 0;
+  }
+
+  .site-nav {
+    position: absolute;
+    top: 14px;
+    right: 0;
+    display: flex;
+    gap: 6px;
+    width: auto;
+  }
+
+  .site-nav a,
+  .site-nav .language-toggle {
+    min-width: 48px;
+    padding-inline: 7px;
   }
 
   .menu-toggle {
@@ -1342,11 +1426,43 @@ button:hover {
 
   h1 {
     max-width: none;
-    white-space: nowrap;
+    white-space: normal;
   }
 
   .brand-block {
-    padding-right: 64px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .date-range-fields {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .date-range-fields .icon-help {
+    position: absolute;
+    top: 50px;
+    left: calc(50% + 30px);
+    width: 24px;
+    height: 24px;
+    min-height: 24px;
+    margin: 0;
+  }
+
+  .source-filter-heading {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .source-filter-heading .section-toggle {
+    width: 100%;
+    order: 3;
+  }
+
+  .source-filter-heading #sourceHelp {
+    order: 2;
+    margin-left: 6px;
   }
 
   .site-nav a,
@@ -1360,6 +1476,44 @@ button:hover {
 @media (max-width: 520px) {
   .panel {
     padding: 14px;
+    padding-top: 0;
+  }
+
+  .brand-block {
+    padding-top: 68px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .date-range-fields {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .date-range-fields .icon-help {
+    position: absolute;
+    top: 50px;
+    left: calc(50% + 30px);
+    width: 24px;
+    height: 24px;
+    min-height: 24px;
+    margin: 0;
+  }
+
+  .source-filter-heading {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .source-filter-heading .section-toggle {
+    width: 100%;
+    order: 3;
+  }
+
+  .source-filter-heading #sourceHelp {
+    order: 2;
+    margin-left: 6px;
   }
 
   .toggle-grid {
@@ -1381,7 +1535,7 @@ button:hover {
   }
 
   .date-range-fields {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 30px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 6px;
   }
 
@@ -1404,7 +1558,7 @@ button:hover {
     width: 24px;
     height: 24px;
     min-height: 24px;
-    margin-bottom: 8px;
+    margin: 0;
   }
 
   .summary {
@@ -1419,5 +1573,13 @@ button:hover {
     min-height: 38px;
     padding: 8px 10px;
     white-space: nowrap;
+  }
+}
+
+@container (max-width: 440px) {
+  .date-range-fields .field:has(.date-label-with-help) .date-label-with-help .icon-help {
+    position: static !important;
+    right: auto;
+    bottom: auto;
   }
 }

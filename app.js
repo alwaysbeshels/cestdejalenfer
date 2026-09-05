@@ -2556,7 +2556,9 @@ const currentDate = formatInputDate(new Date());
 dateStart.value = currentDate;
 dateEnd.value = currentDate;
 
-if (!window.matchMedia("(max-width: 880px)").matches) {
+if (window.matchMedia("(max-width: 880px)").matches) {
+  setMobileMenuOpen(false);
+} else {
   setDesktopPanelOpen(true);
 }
 
