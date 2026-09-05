@@ -156,6 +156,11 @@ h2 {
   line-height: 1;
 }
 
+.date-range-fields .icon-help {
+  align-self: end;
+  margin-bottom: 9px;
+}
+
 .help-bubble {
   position: absolute;
   right: 0;
@@ -224,6 +229,7 @@ h2 {
 }
 
 .icon-help.small {
+  flex: 0 0 24px;
   width: 24px;
   height: 24px;
   min-height: 24px;
@@ -352,6 +358,25 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.map-legend {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  max-width: calc(100% - 152px);
+  padding: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 8px;
+  background: rgba(255, 253, 248, 0.94);
+  box-shadow: 0 10px 26px rgba(20, 29, 26, 0.16);
+  pointer-events: none;
+  z-index: 520;
+}
+
+.map-legend[hidden],
+.map-legend .severity-chip[hidden] {
+  display: none;
 }
 
 .severity-chip {
@@ -871,7 +896,8 @@ button:hover {
   }
 
   .panel.is-open {
-    transform: translateX(0);
+    translate: 0;
+    transform: none !important;
   }
 
   .menu-toggle {
@@ -932,6 +958,7 @@ button:hover {
   }
 
   .leaflet-top.leaflet-left {
+    width: auto;
     right: 14px;
     left: auto;
   }
@@ -953,7 +980,7 @@ button:hover {
 
 @media (max-width: 520px) {
   .panel {
-    padding: 18px;
+    padding: 14px;
   }
 
   .toggle-grid {
@@ -965,7 +992,30 @@ button:hover {
   }
 
   .date-range-fields {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 30px;
+    gap: 6px;
+  }
+
+  .date-range-fields .today-button {
+    min-height: 36px;
+    padding-inline: 8px;
+  }
+
+  .date-range-fields .field {
+    min-width: 0;
+  }
+
+  .date-range-fields .field input {
+    min-width: 0;
+    padding: 9px 6px;
+    font-size: 0.8rem;
+  }
+
+  .date-range-fields .icon-help {
+    width: 24px;
+    height: 24px;
+    min-height: 24px;
+    margin-bottom: 8px;
   }
 
   .summary {

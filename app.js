@@ -732,6 +732,7 @@ const closureList = document.querySelector("#closureList");
 const visibleCount = document.querySelector("#visibleCount");
 const resetView = document.querySelector("#resetView");
 const mapStatus = document.querySelector("#mapStatus");
+const mapLegend = document.querySelector("#mapLegend");
 const menuToggle = document.querySelector("#menuToggle");
 const menuBackdrop = document.querySelector("#menuBackdrop");
 const sidePanel = document.querySelector("#sidePanel");
@@ -1009,6 +1010,17 @@ function updateImpactCounts() {
     const count = counts[impact] || 0;
     element.textContent = `(${count} ${count === 1 ? "visible" : "visibles"})`;
   });
+}
+
+function updateMapLegend() {
+  const activeImpacts = getActiveImpacts();
+  let visibleChipCount = 0;
+  mapLegend.querySelectorAll("[data-legend-impact]").forEach((chip) => {
+    const isVisible = activeImpacts.has(chip.dataset.legendImpact);
+    chip.hidden = !isVisible;
+    visibleChipCount += Number(isVisible);
+  });
+  mapLegend.hidden = visibleChipCount === 0;
 }
 
 function categoryFromAuthority(authority) {
@@ -1689,10 +1701,43 @@ function openGroupedPopup(primaryClosure, latLng) {
   selectedClosureId = primaryClosure.id;
   renderMap(currentClosures);
   const nearbyClosures = closuresNearLatLng(latLng, primaryClosure);
-  L.popup({ maxWidth: 420 })
+  openMapPopup(latLng, groupedPopupContent(nearbyClosures), 420);
+}
+
+function openMapPopup(latLng, content, maxWidth) {
+  const popup = L.popup({
+    maxWidth,
+    autoPan: !window.matchMedia("(max-width: 880px)").matches
+  })
     .setLatLng(latLng)
-    .setContent(groupedPopupContent(nearbyClosures))
+    .setContent(content)
     .openOn(map);
+
+  if (window.matchMedia("(max-width: 880px)").matches) {
+    requestAnimationFrame(() => centerPopupInMobileMap(popup));
+  }
+}
+
+function centerPopupInMobileMap(popup, pass = 0) {
+  const popupElement = popup.getElement();
+  const mapElement = map.getContainer();
+  if (!popupElement || !mapElement) {
+    return;
+  }
+
+  const popupBounds = popupElement.getBoundingClientRect();
+  const mapBounds = mapElement.getBoundingClientRect();
+  const horizontalOffset = popupBounds.left + popupBounds.width / 2 - (mapBounds.left + mapBounds.width / 2);
+  const verticalOffset = popupBounds.top + popupBounds.height / 2 - (mapBounds.top + mapBounds.height / 2);
+
+  if (pass > 0 && Math.abs(horizontalOffset) < 3 && Math.abs(verticalOffset) < 3) {
+    return;
+  }
+
+  map.panBy([horizontalOffset, verticalOffset], { animate: true, duration: 0.28 });
+  if (pass === 0) {
+    map.once("moveend", () => requestAnimationFrame(() => centerPopupInMobileMap(popup, 1)));
+  }
 }
 
 function closuresNearLatLng(latLng, primaryClosure) {
@@ -1880,10 +1925,7 @@ async function identifyLavalClosure(latLng) {
     }
 
     const closure = normalizeLavalIdentifyResult(result);
-    L.popup({ maxWidth: 420 })
-      .setLatLng(latLng)
-      .setContent(popupContent(closure))
-      .openOn(map);
+    openMapPopup(latLng, popupContent(closure), 420);
     return true;
   } catch (error) {
     console.warn("Laval identify failed", error);
@@ -2061,16 +2103,14 @@ function focusClosure(closure, { openPopup = false } = {}) {
 
   if (openPopup) {
     const popupLatLng = L.latLng(point[1], point[0]);
-    L.popup({ maxWidth: 380 })
-      .setLatLng(popupLatLng)
-      .setContent(groupedPopupContent(closuresNearLatLng(popupLatLng, closure)))
-      .openOn(map);
+    openMapPopup(popupLatLng, groupedPopupContent(closuresNearLatLng(popupLatLng, closure)), 380);
   }
 }
 
 function updateView({ fit = false } = {}) {
   currentClosures = getFilteredClosures();
   updateImpactCounts();
+  updateMapLegend();
   renderMap(currentClosures);
   updateLavalOfficialLines();
   updateViewportList();

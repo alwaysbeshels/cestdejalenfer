@@ -31,8 +31,21 @@
             <span>Fin</span>
             <input id="dateEnd" type="date" value="2026-09-04">
           </label>
-          <button id="dateHelp" class="icon-help" type="button" aria-label="Information sur la periode">i</button>
+          <button id="dateHelp" class="icon-help small" type="button" aria-label="Information sur la periode">i</button>
           <div id="dateHelpBubble" class="help-bubble" hidden>La periode affiche toutes les entraves qui touchent au moins une journee entre les deux dates, meme si elles ne durent que quelques heures ou quelques jours.</div>
+        </div>
+
+        <div class="filter-heading">
+          <h2 class="filter-title">Moment des travaux</h2>
+          <button id="timeHelp" class="icon-help small" type="button" aria-label="Information sur les travaux de jour et de nuit">i</button>
+          <div id="timeHelpBubble" class="help-bubble filter-help" hidden>
+            <p><strong>Jour:</strong> entraves hors de la plage de nuit.</p>
+            <p><strong>Nuit:</strong> toute entrave qui touche la periode de 23 h a 5 h, meme si elle commence avant 23 h ou finit apres 5 h.</p>
+          </div>
+        </div>
+        <div class="toggle-grid time-filters" role="group" aria-label="Moment des travaux">
+          <label><input type="checkbox" value="day" checked> Jour</label>
+          <label><input type="checkbox" value="night" checked> Nuit</label>
         </div>
 
         <label class="field">
@@ -78,18 +91,6 @@
           <label><input type="checkbox" value="parking"><i class="impact-dot parking"></i> Stationnement <span class="impact-count" data-impact-count="parking"></span></label>
         </div>
 
-        <div class="filter-heading">
-          <h2 class="filter-title">Moment des travaux</h2>
-          <button id="timeHelp" class="icon-help small" type="button" aria-label="Information sur les travaux de jour et de nuit">i</button>
-          <div id="timeHelpBubble" class="help-bubble filter-help" hidden>
-            <p><strong>Jour:</strong> entraves hors de la plage de nuit.</p>
-            <p><strong>Nuit:</strong> toute entrave qui touche la periode de 23 h a 5 h, meme si elle commence avant 23 h ou finit apres 5 h.</p>
-          </div>
-        </div>
-        <div class="toggle-grid time-filters" role="group" aria-label="Moment des travaux">
-          <label><input type="checkbox" value="day" checked> Jour</label>
-          <label><input type="checkbox" value="night" checked> Nuit</label>
-        </div>
       </section>
 
       <section class="summary" aria-live="polite">
@@ -98,13 +99,6 @@
           <span>entraves visibles</span>
         </div>
         <button id="resetView" type="button">Recentrer</button>
-      </section>
-
-      <section class="severity-legend" aria-label="Niveaux d'impact auto">
-        <span class="severity-chip critical">Rue fermee</span>
-        <span class="severity-chip major">Voie touchee</span>
-        <span class="severity-chip moderate">Acces limite</span>
-        <span class="severity-chip parking">Stationnement</span>
       </section>
 
       <section class="municipality-section" hidden>
@@ -126,6 +120,12 @@
     <main class="map-zone">
       <div id="map" aria-label="Carte interactive de Montreal"></div>
       <div id="mapStatus" class="map-status" role="status">Chargement de la carte...</div>
+      <section id="mapLegend" class="severity-legend map-legend" aria-label="Legende des impacts auto">
+        <span class="severity-chip critical" data-legend-impact="critical">Rue fermee</span>
+        <span class="severity-chip major" data-legend-impact="major">Voie touchee</span>
+        <span class="severity-chip moderate" data-legend-impact="moderate">Acces limite</span>
+        <span class="severity-chip parking" data-legend-impact="parking">Stationnement</span>
+      </section>
       <button id="sourcesToggle" class="sources-toggle" type="button" aria-controls="sourceCard" aria-expanded="false">Sources</button>
       <section id="sourceCard" class="source-card" aria-label="Sources officielles" hidden>
         <button id="sourcesClose" class="sources-close" type="button" aria-label="Fermer les sources">&times;</button>
