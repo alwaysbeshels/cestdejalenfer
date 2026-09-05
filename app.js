@@ -1,9 +1,9 @@
 const CATEGORY_META = {
   municipal: { label: "Ville" },
   private: { label: "Secteurs prives" },
-  linkedCity: { label: "Villes liees" },
+  linkedCity: { label: "Villes liées" },
   commercial: { label: "Rues marchandes" },
-  event: { label: "Evenements" },
+  event: { label: "Événements" },
   regional: { label: "Grands axes" },
   q511: { label: "Quebec 511" },
   laval: { label: "Laval" },
@@ -12,9 +12,9 @@ const CATEGORY_META = {
 };
 
 const SEVERITY_META = {
-  critical: { label: "Rue fermee", color: "#ff1744", width: 9, opacity: 0.98 },
-  major: { label: "Voie touchee", color: "#ff8c00", width: 7, opacity: 0.96 },
-  moderate: { label: "Acces limite", color: "#ffe600", width: 6, opacity: 0.94 },
+  critical: { label: "Rue fermée", color: "#ff1744", width: 9, opacity: 0.98 },
+  major: { label: "Voie touchée", color: "#ff8c00", width: 7, opacity: 0.96 },
+  moderate: { label: "Accès limite", color: "#ffe600", width: 6, opacity: 0.94 },
   parking: { label: "Stationnement", color: "#ff2bd6", width: 5, opacity: 0.92 },
   minor: { label: "Faible impact", color: "#00e676", width: 4, opacity: 0.78 }
 };
@@ -44,18 +44,18 @@ const GREATER_MONTREAL_BOUNDS = {
 const REGIONAL_MAJOR_CLOSURES = [
   {
     id: "regional-a25-tunnel-lafontaine-sud-weekend",
-    title: "Fermeture complete - A-25 / tunnel Louis-Hippolyte-La Fontaine sud",
+    title: "Fermeture complète - A-25 / tunnel Louis-Hippolyte-La Fontaine sud",
     category: "regional",
-    responsible: "Mobilite Montreal / MTMD",
+    responsible: "Mobilité Montréal / MTMD",
     borough: "Montreal - Longueuil",
     startDate: "2026-09-04",
     endDate: "2026-09-08",
-    impact: "Fermeture complete du tunnel vers la Rive-Sud; detour via pont Jacques-Cartier et reseau municipal.",
-    trafficLabel: "Fermeture complete",
+    impact: "Fermeture complète du tunnel vers la Rive-Sud; détour via pont Jacques-Cartier et réseau municipal.",
+    trafficLabel: "Fermeture complète",
     severity: "critical",
-    direction: "Direction sud vers Longueuil. Fermetures de nuit et fermeture prolongee de vendredi 23 h a mardi 5 h selon Mobilite Montreal.",
+    direction: "Direction sud vers Longueuil. Fermetures de nuit et fermeture prolongee de vendredi 23 h à mardi 5 h selon Mobilité Montréal.",
     streets: "A-25 / tunnel Louis-Hippolyte-La Fontaine, entre Montreal et R-132",
-    source: "Mobilite Montreal - fermetures majeures",
+    source: "Mobilité Montréal - fermetures majeures",
     sourceUrl: "https://mobilitemontreal.gouv.qc.ca/fermetures-majeures/",
     periods: ["night"],
     routeEndpoints: [[-73.5228, 45.5934], [-73.4883, 45.5456]],
@@ -64,18 +64,18 @@ const REGIONAL_MAJOR_CLOSURES = [
   },
   {
     id: "regional-pont-victoria-route-112",
-    title: "Pont Victoria / R-112 - travée est fermee",
+    title: "Pont Victoria / R-112 - travée est fermée",
     category: "regional",
-    responsible: "CN / Mobilite Montreal",
+    responsible: "CN / Mobilité Montréal",
     borough: "Montreal - Saint-Lambert",
     startDate: "2026-09-04",
     endDate: "2026-09-10",
-    impact: "Circulation sur une voie unique avec direction variable selon l'heure; prevoir retards importants.",
+    impact: "Circulation sur une voie unique avec direction variable selon l'heure; prévoir retards importants.",
     trafficLabel: "Pont a voie unique",
     severity: "major",
-    direction: "Vers Montreal entre minuit et midi; vers Rive-Sud entre midi et minuit apres mardi 5 h.",
+    direction: "Vers Montreal entre minuit et midi; vers Rive-Sud entre midi et minuit après mardi 5 h.",
     streets: "Pont Victoria / route 112",
-    source: "Mobilite Montreal - fermetures majeures",
+    source: "Mobilité Montréal - fermetures majeures",
     sourceUrl: "https://mobilitemontreal.gouv.qc.ca/fermetures-majeures/",
     periods: ["day", "night"],
     routeEndpoints: [[-73.5435, 45.4942], [-73.5090, 45.4654]],
@@ -84,18 +84,18 @@ const REGIONAL_MAJOR_CLOSURES = [
   },
   {
     id: "regional-r138-mercier-clement",
-    title: "R-138 / secteur pont Honore-Mercier - sorties et acces Clement fermes",
+    title: "R-138 / secteur pont Honore-Mercier - sorties et accès Clement fermes",
     category: "regional",
-    responsible: "Ville de Montreal / Mobilite Montreal",
+    responsible: "Ville de Montreal / Mobilité Montréal",
     borough: "LaSalle",
     startDate: "2026-09-04",
     endDate: "2026-09-08",
-    impact: "Fermeture des sorties et acces vers ou depuis la rue Clement; secteur a eviter et detours par Airlie, Newman, Lafleur et Saint-Patrick.",
-    trafficLabel: "Sorties et acces fermes",
+    impact: "Fermeture des sorties et accès vers ou depuis la rue Clement; secteur a éviter et détours par Airlie, Newman, Lafleur et Saint-Patrick.",
+    trafficLabel: "Sorties et accès fermes",
     severity: "critical",
-    direction: "R-138 est et ouest, acces vers le pont Honore-Mercier touches.",
+    direction: "R-138 est et ouest, accès vers le pont Honore-Mercier touches.",
     streets: "Route 138, secteur rue Clement / pont Honore-Mercier",
-    source: "Mobilite Montreal - fermetures majeures",
+    source: "Mobilité Montréal - fermetures majeures",
     sourceUrl: "https://mobilitemontreal.gouv.qc.ca/fermetures-majeures/",
     periods: ["day", "night"],
     routeEndpoints: [[-73.6527, 45.4250], [-73.5922, 45.4448]],
@@ -104,18 +104,18 @@ const REGIONAL_MAJOR_CLOSURES = [
   },
   {
     id: "regional-rue-bridge-sud",
-    title: "Rue Bridge - fermeture complete direction sud",
+    title: "Rue Bridge - fermeture complète direction sud",
     category: "regional",
-    responsible: "Hydro-Quebec / Mobilite Montreal",
+    responsible: "Hydro-Quebec / Mobilité Montréal",
     borough: "Le Sud-Ouest",
     startDate: "2026-09-05",
     endDate: "2026-09-07",
-    impact: "Direction sud fermee entre des Irlandais et Mill; direction nord partiellement ouverte avec 1 voie sur 2.",
-    trafficLabel: "Direction fermee",
+    impact: "Direction sud fermée entre des Irlandais et Mill; direction nord partiellement ouverte avec 1 voie sur 2.",
+    trafficLabel: "Direction fermée",
     severity: "critical",
-    direction: "Direction sud fermee; direction nord partiellement ouverte.",
+    direction: "Direction sud fermée; direction nord partiellement ouverte.",
     streets: "Rue Bridge, entre des Irlandais et Mill",
-    source: "Mobilite Montreal - fermetures majeures",
+    source: "Mobilité Montréal - fermetures majeures",
     sourceUrl: "https://mobilitemontreal.gouv.qc.ca/fermetures-majeures/",
     periods: ["day", "night"],
     routeEndpoints: [[-73.5529, 45.4971], [-73.5481, 45.4798]],
@@ -124,16 +124,16 @@ const REGIONAL_MAJOR_CLOSURES = [
   },
   {
     id: "regional-qc511-a19-north-montreal-laval",
-    title: "A-19 direction nord - voies fermees vers Laval",
+    title: "A-19 direction nord - voies fermées vers Laval",
     category: "q511",
     responsible: "Quebec 511 / MTMD",
     borough: "Montreal - Laval",
     startDate: "2026-09-04",
     endDate: "2026-09-04",
-    impact: "Entrave routiere signalee sur Quebec 511 avec voies fermees sur l'A-19 en direction nord en sortant de Montreal.",
-    trafficLabel: "Voies fermees",
+    impact: "Entrave routière signalée sur Quebec 511 avec voies fermées sur l'A-19 en direction nord en sortant de Montreal.",
+    trafficLabel: "Voies fermées",
     severity: "major",
-    direction: "Direction nord, de Montreal vers Laval. Heures et configuration exacte a confirmer dans Quebec 511.",
+    direction: "Direction nord, de Montreal vers Laval. Heures et configuration exacte à confirmer dans Quebec 511.",
     streets: "Autoroute 19 / pont Papineau-Leblanc, direction nord",
     source: "Quebec 511 - carte interactive",
     sourceUrl: "https://www.quebec511.info/fr/Carte/Default.aspx",
@@ -157,16 +157,16 @@ const REGIONAL_MAJOR_CLOSURES = [
   },
   {
     id: "regional-qc511-a19-south-laval-montreal",
-    title: "A-19 direction sud - voies fermees vers Montreal",
+    title: "A-19 direction sud - voies fermées vers Montreal",
     category: "q511",
     responsible: "Quebec 511 / MTMD",
     borough: "Laval - Montreal",
     startDate: "2026-09-04",
     endDate: "2026-09-04",
-    impact: "Entrave routiere signalee sur Quebec 511 avec voies fermees sur l'A-19 en direction sud vers Montreal.",
-    trafficLabel: "Voies fermees",
+    impact: "Entrave routière signalée sur Quebec 511 avec voies fermées sur l'A-19 en direction sud vers Montreal.",
+    trafficLabel: "Voies fermées",
     severity: "major",
-    direction: "Direction sud, de Laval vers Montreal. Heures et configuration exacte a confirmer dans Quebec 511.",
+    direction: "Direction sud, de Laval vers Montreal. Heures et configuration exacte à confirmer dans Quebec 511.",
     streets: "Autoroute 19 / pont Papineau-Leblanc, direction sud",
     source: "Quebec 511 - carte interactive",
     sourceUrl: "https://www.quebec511.info/fr/Carte/Default.aspx",
@@ -186,18 +186,18 @@ const REGIONAL_MAJOR_CLOSURES = [
   },
   {
     id: "regional-qc511-a520-ouest-romeo-vachon",
-    title: "A-520 ouest - acces Romeo-Vachon ferme",
+    title: "A-520 ouest - accès Romeo-Vachon ferme",
     category: "q511",
     responsible: "Quebec 511 / MTMD",
     borough: "Dorval",
     startDate: "2026-09-04",
     endDate: "2026-11-11",
-    impact: "Fermeture de l'acces en provenance du boulevard Romeo-Vachon en direction sud vers l'A-520 ouest; detour via A-20 est et demi-tour a la sortie 58.",
-    trafficLabel: "Acces ferme",
+    impact: "Fermeture de l'accès en provenance du boulevard Romeo-Vachon en direction sud vers l'A-520 ouest; détour via A-20 est et demi-tour à la sortie 58.",
+    trafficLabel: "Accès ferme",
     severity: "critical",
-    direction: "A-520 ouest, acces depuis boulevard Romeo-Vachon direction sud.",
+    direction: "A-520 ouest, accès depuis boulevard Romeo-Vachon direction sud.",
     streets: "Autoroute 520 ouest / boulevard Romeo-Vachon",
-    source: "Quebec 511 / Mobilite Montreal - fermetures a prevoir",
+    source: "Quebec 511 / Mobilité Montréal - fermetures à prévoir",
     sourceUrl: "https://www.quebec511.info/fr/Carte/Default.aspx",
     periods: ["day", "night"],
     routeEndpoints: [[-73.7367, 45.4635], [-73.7528, 45.4625]],
@@ -218,7 +218,7 @@ const LINKED_MUNICIPALITIES = [
   { name: "Montreal-Est", coordinates: [-73.507, 45.632], url: "https://ville.montreal-est.qc.ca/", detail: "Avis et travaux municipaux", links: [{ label: "Site municipal", url: "https://ville.montreal-est.qc.ca/" }] },
   { name: "Montreal-Ouest", coordinates: [-73.649, 45.452], url: "https://montreal-west.ca/", detail: "Avis et travaux municipaux", links: [{ label: "Site municipal", url: "https://montreal-west.ca/" }] },
   { name: "Ville de Mont-Royal", coordinates: [-73.642, 45.516], url: "https://www.ville.mont-royal.qc.ca/fr/actualites/divers/info-construction-tous-les-developpements-sur-les-travaux-en-cours", detail: "Info construction", links: [{ label: "Info construction", url: "https://www.ville.mont-royal.qc.ca/fr/actualites/divers/info-construction-tous-les-developpements-sur-les-travaux-en-cours" }] },
-  { name: "Pointe-Claire", coordinates: [-73.806, 45.448], url: "https://www.pointe-claire.ca/reseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers", detail: "Travaux et grands chantiers", links: [{ label: "Travaux et grands chantiers", url: "https://www.pointe-claire.ca/reseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers" }, { label: "Grands chantiers", url: "https://www.pointe-claire.ca/reseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers" }] },
+  { name: "Pointe-Claire", coordinates: [-73.806, 45.448], url: "https://www.pointe-claire.ca/réseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers", detail: "Travaux et grands chantiers", links: [{ label: "Travaux et grands chantiers", url: "https://www.pointe-claire.ca/réseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers" }, { label: "Grands chantiers", url: "https://www.pointe-claire.ca/réseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers" }] },
   { name: "Sainte-Anne-de-Bellevue", coordinates: [-73.951, 45.406], url: "https://urgences.sadb.qc.ca/en/notices", detail: "Portail des avis", links: [{ label: "Portail des avis", url: "https://urgences.sadb.qc.ca/en/notices" }] },
   { name: "Senneville", coordinates: [-73.950, 45.430], url: "https://www.ville.senneville.qc.ca/", detail: "Avis municipaux", links: [{ label: "Site municipal", url: "https://www.ville.senneville.qc.ca/" }] },
   { name: "Westmount", coordinates: [-73.596, 45.485], url: "https://westmount.org/en/urban-planning-and-infrastructure/roads-and-public-works/roadwork-and-projects", detail: "Roadwork and Projects", quality: "detaillee", links: [{ label: "Roadwork and Projects", url: "https://westmount.org/en/urban-planning-and-infrastructure/roads-and-public-works/roadwork-and-projects" }, { label: "Avis en cours", url: "https://citoyen.westmount.org/en/notices" }] }
@@ -231,10 +231,10 @@ const LINKED_CITY_WORKS = [
     borough: "Baie-d'Urfe",
     startDate: "2026-09-15",
     endDate: "2026-10-27",
-    impact: "Travaux de reconstruction; acces a la gare EXO maintenu, mais deplacements locaux a prevoir selon la signalisation.",
-    trafficLabel: "Acces limite",
+    impact: "Travaux de reconstruction; accès à la gare EXO maintenu, mais déplacements locaux a prévoir selon la signalisation.",
+    trafficLabel: "Accès limite",
     severity: "moderate",
-    direction: "Secteur Clark-Graham vers la gare EXO. Direction automobile non precisee dans l'avis municipal.",
+    direction: "Secteur Clark-Graham vers la gare EXO. Direction automobile non précisée dans l'avis municipal.",
     streets: "Avenue Clark-Graham vers gare EXO Baie-d'Urfe",
     responsible: "Ville de Baie-d'Urfe",
     source: "Baie-d'Urfe - Info-travaux",
@@ -246,14 +246,14 @@ const LINKED_CITY_WORKS = [
   },
   {
     id: "linked-ddo-ravel-roadwork",
-    title: "Refection de chaussees, bordures et trottoirs - Ravel",
+    title: "Réfection de chaussées, bordures et trottoirs - Ravel",
     borough: "Dollard-des-Ormeaux",
     startDate: "2026-08-03",
     endDate: "2026-09-25",
     impact: "Travaux en cours sur la rue Ravel; ralentissements locaux possibles.",
-    trafficLabel: "Voie touchee",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Direction precise non publiee dans l'avis municipal.",
+    direction: "Direction precise non publiée dans l'avis municipal.",
     streets: "Rue Ravel",
     responsible: "Ville de Dollard-des-Ormeaux",
     source: "DDO - Info-travaux",
@@ -265,14 +265,14 @@ const LINKED_CITY_WORKS = [
   },
   {
     id: "linked-ddo-hamlet-roadwork",
-    title: "Refection de chaussees, bordures et trottoirs - Hamlet",
+    title: "Réfection de chaussées, bordures et trottoirs - Hamlet",
     borough: "Dollard-des-Ormeaux",
     startDate: "2026-08-03",
     endDate: "2026-09-25",
     impact: "Travaux en cours sur Hamlet; ralentissements locaux possibles.",
-    trafficLabel: "Voie touchee",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Direction precise non publiee dans l'avis municipal.",
+    direction: "Direction precise non publiée dans l'avis municipal.",
     streets: "Hamlet",
     responsible: "Ville de Dollard-des-Ormeaux",
     source: "DDO - Info-travaux",
@@ -284,14 +284,14 @@ const LINKED_CITY_WORKS = [
   },
   {
     id: "linked-ddo-malard-roadwork",
-    title: "Refection de chaussees, bordures et trottoirs - Malard",
+    title: "Réfection de chaussées, bordures et trottoirs - Malard",
     borough: "Dollard-des-Ormeaux",
     startDate: "2026-08-03",
     endDate: "2026-09-25",
     impact: "Travaux en cours sur Malard; ralentissements locaux possibles.",
-    trafficLabel: "Voie touchee",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Direction precise non publiee dans l'avis municipal.",
+    direction: "Direction precise non publiée dans l'avis municipal.",
     streets: "Malard",
     responsible: "Ville de Dollard-des-Ormeaux",
     source: "DDO - Info-travaux",
@@ -307,10 +307,10 @@ const LINKED_CITY_WORKS = [
     borough: "Dollard-des-Ormeaux",
     startDate: "2026-09-01",
     endDate: "2026-11-30",
-    impact: "Travaux planifies au parc Sunnybrooke; circulation locale possiblement affectee aux abords du chantier.",
-    trafficLabel: "Acces limite",
+    impact: "Travaux planifiés au parc Sunnybrooke; circulation locale possiblement affectee aux abords du chantier.",
+    trafficLabel: "Accès limite",
     severity: "moderate",
-    direction: "Acces local au parc; direction routiere non precisee.",
+    direction: "Accès local au parc; direction routière non précisée.",
     streets: "Parc Sunnybrooke",
     responsible: "Ville de Dollard-des-Ormeaux",
     source: "DDO - Info-travaux",
@@ -322,14 +322,14 @@ const LINKED_CITY_WORKS = [
   },
   {
     id: "linked-dorval-herron-resurfacing",
-    title: "Resurfacage du chemin Herron entre Oakville et Elm",
+    title: "Resurfaçage du chemin Herron entre Oakville et Elm",
     borough: "Dorval",
     startDate: "2026-06-18",
     endDate: "2026-09-30",
-    impact: "Travaux sur le chemin Herron; circulation locale et acces riverains a surveiller.",
-    trafficLabel: "Voie touchee",
+    impact: "Travaux sur le chemin Herron; circulation locale et accès riverains à surveiller.",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Chemin Herron, entre les avenues Oakville et Elm. Direction precise non publiee dans l'extrait.",
+    direction: "Chemin Herron, entre les avenues Oakville et Elm. Direction precise non publiée dans l'extrait.",
     streets: "Chemin Herron, entre Oakville et Elm",
     responsible: "Cite de Dorval",
     source: "Dorval - Info-travaux",
@@ -345,11 +345,11 @@ const LINKED_CITY_WORKS = [
     borough: "Dorval",
     startDate: "2026-08-01",
     endDate: "2026-11-30",
-    impact: "Travaux de canalisation souterraine sur le corridor d'energie; entraves locales possibles.",
-    trafficLabel: "Acces limite",
+    impact: "Travaux de canalisation souterraine sur le corridor d'énergie; entraves locales possibles.",
+    trafficLabel: "Accès limite",
     severity: "moderate",
-    direction: "Corridor Dorval vers Saint-Laurent; direction routiere non precisee.",
-    streets: "Corridor d'energie Dorval-Saint-Laurent",
+    direction: "Corridor Dorval vers Saint-Laurent; direction routière non précisée.",
+    streets: "Corridor d'énergie Dorval-Saint-Laurent",
     responsible: "Hydro-Quebec / Cite de Dorval",
     source: "Dorval - Info-travaux",
     sourceUrl: "https://www.ville.dorval.qc.ca/fr/environnement-et-voirie/infrastructures-urbaines/info-travaux",
@@ -360,14 +360,14 @@ const LINKED_CITY_WORKS = [
   },
   {
     id: "linked-hampstead-fleet",
-    title: "Travaux a venir sur l'avenue Fleet",
+    title: "Travaux à venir sur l'avenue Fleet",
     borough: "Hampstead",
     startDate: "2026-09-04",
     endDate: "2026-12-31",
-    impact: "Travaux prevus sur l'avenue Fleet; surveiller les avis municipaux pour les fermetures et detours exacts.",
-    trafficLabel: "Acces limite",
+    impact: "Travaux prévus sur l'avenue Fleet; surveiller les avis municipaux pour les fermetures et détours exacts.",
+    trafficLabel: "Accès limite",
     severity: "moderate",
-    direction: "Avenue Fleet; direction precise non publiee dans l'extrait.",
+    direction: "Avenue Fleet; direction precise non publiée dans l'extrait.",
     streets: "Avenue Fleet",
     responsible: "Ville de Hampstead",
     source: "Hampstead - Chantiers dans ma rue",
@@ -384,9 +384,9 @@ const LINKED_CITY_WORKS = [
     startDate: "2026-09-04",
     endDate: "2026-09-04",
     impact: "Intervention urgente sur conduite d'eau; entraves locales possibles entre 7 h et 9 h 25.",
-    trafficLabel: "Voie touchee",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Le Boulevard; direction precise non publiee dans l'avis.",
+    direction: "Le Boulevard; direction precise non publiée dans l'avis.",
     streets: "Le Boulevard",
     responsible: "City of Westmount",
     source: "Westmount - Avis en cours",
@@ -402,10 +402,10 @@ const LINKED_CITY_WORKS = [
     borough: "Westmount",
     startDate: "2026-08-17",
     endDate: "2026-11-30",
-    impact: "Reconstruction de Mountain Avenue; detours et ralentissements locaux possibles.",
-    trafficLabel: "Voie touchee",
+    impact: "Reconstruction de Mountain Avenue; détours et ralentissements locaux possibles.",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Mountain Avenue entre Cedar Avenue et Sherbrooke Street. Direction precise non publiee dans l'avis.",
+    direction: "Mountain Avenue entre Cedar Avenue et Sherbrooke Street. Direction precise non publiée dans l'avis.",
     streets: "Mountain Avenue, entre Cedar Avenue et Sherbrooke Street",
     responsible: "City of Westmount",
     source: "Westmount - Avis en cours",
@@ -421,10 +421,10 @@ const LINKED_CITY_WORKS = [
     borough: "Westmount",
     startDate: "2026-08-15",
     endDate: "2026-12-31",
-    impact: "Nouvelles configurations de circulation; changements de parcours locaux a prevoir.",
-    trafficLabel: "Acces limite",
+    impact: "Nouvelles configurations de circulation; changements de parcours locaux a prévoir.",
+    trafficLabel: "Accès limite",
     severity: "moderate",
-    direction: "Argyle, Metcalfe et Kensington; details de direction a consulter dans l'avis.",
+    direction: "Argyle, Metcalfe et Kensington; details de direction à consulter dans l'avis.",
     streets: "Argyle, Metcalfe et Kensington",
     responsible: "City of Westmount",
     source: "Westmount - Avis en cours",
@@ -436,14 +436,14 @@ const LINKED_CITY_WORKS = [
   },
   {
     id: "linked-westmount-arlington-sherbrooke",
-    title: "Rehabilitation of Arlington Avenue and Sherbrooke Street West",
+    title: "Réhabilitation of Arlington Avenue and Sherbrooke Street West",
     borough: "Westmount",
     startDate: "2026-05-19",
     endDate: "2026-09-07",
-    impact: "Rehabilitation d'Arlington Avenue et Sherbrooke Street West entre Grosvenor et Strathcona; entraves locales possibles.",
-    trafficLabel: "Voie touchee",
+    impact: "Réhabilitation d'Arlington Avenue et Sherbrooke Street West entre Grosvenor et Strathcona; entraves locales possibles.",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Entre Grosvenor Avenue et Strathcona Avenue. Direction precise non publiee dans l'avis.",
+    direction: "Entre Grosvenor Avenue et Strathcona Avenue. Direction precise non publiée dans l'avis.",
     streets: "Arlington Avenue et Sherbrooke Street West, entre Grosvenor et Strathcona",
     responsible: "City of Westmount",
     source: "Westmount - Avis en cours",
@@ -455,18 +455,18 @@ const LINKED_CITY_WORKS = [
   },
   {
     id: "linked-pointe-claire-a40-service-saint-jean",
-    title: "Resurfacage voie de desserte A-40 sud et boulevard Saint-Jean",
+    title: "Resurfaçage voie de desserte A-40 sud et boulevard Saint-Jean",
     borough: "Pointe-Claire",
     startDate: "2026-05-01",
     endDate: "2026-11-30",
-    impact: "Grand chantier 2026 de resurfacage; ralentissements et reductions de voies possibles sur la desserte sud de l'A-40 et boulevard Saint-Jean.",
-    trafficLabel: "Voie touchee",
+    impact: "Grand chantier 2026 de resurfaçage; ralentissements et réductions de voies possibles sur la desserte sud de l'A-40 et boulevard Saint-Jean.",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Voie de desserte sud de l'autoroute 40 et boulevard Saint-Jean; direction precise non publiee sur la page.",
+    direction: "Voie de desserte sud de l'autoroute 40 et boulevard Saint-Jean; direction precise non publiée sur la page.",
     streets: "Voie de desserte sud de l'A-40 et boulevard Saint-Jean",
     responsible: "Ville de Pointe-Claire",
     source: "Pointe-Claire - Grands chantiers 2026",
-    sourceUrl: "https://www.pointe-claire.ca/reseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
+    sourceUrl: "https://www.pointe-claire.ca/réseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
     periods: ["day"],
     routeEndpoints: [[-73.8200, 45.4615], [-73.7890, 45.4608], [-73.7810, 45.4625]],
     point: [-73.800, 45.461],
@@ -474,18 +474,18 @@ const LINKED_CITY_WORKS = [
   },
   {
     id: "linked-pointe-claire-lakeshore",
-    title: "Resurfacage chemin du Bord-du-Lac-Lakeshore",
+    title: "Resurfaçage chemin du Bord-du-Lac-Lakeshore",
     borough: "Pointe-Claire",
     startDate: "2026-05-01",
     endDate: "2026-11-30",
-    impact: "Grand chantier 2026 de resurfacage entre l'entree de l'A-20 et l'avenue Lakeside; circulation locale a surveiller.",
-    trafficLabel: "Voie touchee",
+    impact: "Grand chantier 2026 de resurfaçage entre l'entrée de l'A-20 et l'avenue Lakeside; circulation locale à surveiller.",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Chemin du Bord-du-Lac-Lakeshore entre l'entree de l'autoroute 20 et l'avenue Lakeside.",
+    direction: "Chemin du Bord-du-Lac-Lakeshore entre l'entrée de l'autoroute 20 et l'avenue Lakeside.",
     streets: "Chemin du Bord-du-Lac-Lakeshore, entre A-20 et avenue Lakeside",
     responsible: "Ville de Pointe-Claire",
     source: "Pointe-Claire - Grands chantiers 2026",
-    sourceUrl: "https://www.pointe-claire.ca/reseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
+    sourceUrl: "https://www.pointe-claire.ca/réseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
     periods: ["day"],
     routeEndpoints: [[-73.8270, 45.4290], [-73.8040, 45.4335]],
     point: [-73.815, 45.432],
@@ -498,13 +498,13 @@ const LINKED_CITY_WORKS = [
     startDate: "2026-05-01",
     endDate: "2026-11-30",
     impact: "Reconstruction avec remplacement des lampadaires; entraves locales possibles.",
-    trafficLabel: "Voie touchee",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Avenue Chestnut; direction precise non publiee sur la page.",
+    direction: "Avenue Chestnut; direction precise non publiée sur la page.",
     streets: "Avenue Chestnut",
     responsible: "Ville de Pointe-Claire",
     source: "Pointe-Claire - Grands chantiers 2026",
-    sourceUrl: "https://www.pointe-claire.ca/reseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
+    sourceUrl: "https://www.pointe-claire.ca/réseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
     periods: ["day"],
     routeEndpoints: [[-73.8065, 45.4520], [-73.8015, 45.4550]],
     point: [-73.804, 45.453],
@@ -516,14 +516,14 @@ const LINKED_CITY_WORKS = [
     borough: "Pointe-Claire",
     startDate: "2026-05-01",
     endDate: "2026-11-30",
-    impact: "Reconstruction routiere locale; reductions de circulation possibles selon la signalisation.",
-    trafficLabel: "Voie touchee",
+    impact: "Reconstruction routière locale; réductions de circulation possibles selon la signalisation.",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Avenue d'Ivanhoe Crescent; direction precise non publiee sur la page.",
+    direction: "Avenue d'Ivanhoe Crescent; direction precise non publiée sur la page.",
     streets: "Avenue d'Ivanhoe Crescent",
     responsible: "Ville de Pointe-Claire",
     source: "Pointe-Claire - Grands chantiers 2026",
-    sourceUrl: "https://www.pointe-claire.ca/reseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
+    sourceUrl: "https://www.pointe-claire.ca/réseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
     periods: ["day"],
     routeEndpoints: [[-73.8025, 45.4485], [-73.7975, 45.4515]],
     point: [-73.800, 45.450],
@@ -531,18 +531,18 @@ const LINKED_CITY_WORKS = [
   },
   {
     id: "linked-pointe-claire-saint-joachim-sainte-anne",
-    title: "Fouilles archeologiques Saint-Joachim et Sainte-Anne",
+    title: "Fouilles archéologiques Saint-Joachim et Sainte-Anne",
     borough: "Pointe-Claire",
     startDate: "2026-05-01",
     endDate: "2026-11-30",
-    impact: "Fouilles archeologiques sur des avenues locales; circulation et stationnement a surveiller.",
-    trafficLabel: "Acces limite",
+    impact: "Fouilles archéologiques sur des avenues locales; circulation et stationnement à surveiller.",
+    trafficLabel: "Accès limite",
     severity: "moderate",
-    direction: "Avenues Saint-Joachim et Sainte-Anne; direction precise non publiee sur la page.",
+    direction: "Avenues Saint-Joachim et Sainte-Anne; direction precise non publiée sur la page.",
     streets: "Avenues Saint-Joachim et Sainte-Anne",
     responsible: "Ville de Pointe-Claire",
     source: "Pointe-Claire - Grands chantiers 2026",
-    sourceUrl: "https://www.pointe-claire.ca/reseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
+    sourceUrl: "https://www.pointe-claire.ca/réseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
     periods: ["day"],
     routeEndpoints: [[-73.8110, 45.4310], [-73.8020, 45.4325]],
     point: [-73.806, 45.432],
@@ -550,18 +550,18 @@ const LINKED_CITY_WORKS = [
   },
   {
     id: "linked-pointe-claire-sources-a40-lighting",
-    title: "Remplacement eclairage echangeur des Sources / A-40",
+    title: "Remplacement éclairage échangeur des Sources / A-40",
     borough: "Pointe-Claire",
     startDate: "2026-05-01",
     endDate: "2026-11-30",
-    impact: "Remplacement du systeme d'eclairage sur l'echangeur des Sources et la bretelle sud de l'A-40; entraves possibles sur bretelles.",
-    trafficLabel: "Voie touchee",
+    impact: "Remplacement du systeme d'éclairage sur l'échangeur des Sources et la bretelle sud de l'A-40; entraves possibles sur bretelles.",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Echangeur des Sources et bretelle sud de l'autoroute 40; direction precise non publiee sur la page.",
-    streets: "Echangeur des Sources / bretelle sud de l'A-40",
+    direction: "Échangeur des Sources et bretelle sud de l'autoroute 40; direction précise non publiée sur la page.",
+    streets: "Échangeur des Sources / bretelle sud de l'A-40",
     responsible: "Ville de Pointe-Claire",
     source: "Pointe-Claire - Grands chantiers 2026",
-    sourceUrl: "https://www.pointe-claire.ca/reseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
+    sourceUrl: "https://www.pointe-claire.ca/réseaux-routiers-et-infrastructures-publics/travaux-et-grands-chantiers/grands-chantiers",
     periods: ["day", "night"],
     routeEndpoints: [[-73.7885, 45.4700], [-73.7755, 45.4690]],
     point: [-73.782, 45.469],
@@ -573,10 +573,10 @@ const LINKED_CITY_WORKS = [
     borough: "Westmount",
     startDate: "2026-05-01",
     endDate: "2026-11-30",
-    impact: "Reconstruction entre De Maisonneuve Boulevard et Glen Road en direction est; detours et ralentissements possibles.",
-    trafficLabel: "Voie touchee",
+    impact: "Reconstruction entre De Maisonneuve Boulevard et Glen Road en direction est; détours et ralentissements possibles.",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Direction est publiee par Westmount.",
+    direction: "Direction est publiée par Westmount.",
     streets: "Sainte-Catherine Street, entre De Maisonneuve Boulevard et Glen Road, eastbound",
     responsible: "City of Westmount",
     source: "Westmount - Roadwork and Projects",
@@ -593,9 +593,9 @@ const LINKED_CITY_WORKS = [
     startDate: "2026-05-01",
     endDate: "2026-11-30",
     impact: "Reconstruction d'infrastructures sur Renfrew Avenue; entraves locales possibles.",
-    trafficLabel: "Voie touchee",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Renfrew Avenue; direction precise non publiee sur la page.",
+    direction: "Renfrew Avenue; direction precise non publiée sur la page.",
     streets: "Renfrew Avenue",
     responsible: "City of Westmount / Hydro Westmount",
     source: "Westmount - Roadwork and Projects",
@@ -607,14 +607,14 @@ const LINKED_CITY_WORKS = [
   },
   {
     id: "linked-westmount-claremont-lorraine",
-    title: "Claremont Avenue Rehabilitation and Lorraine Avenue Reconstruction",
+    title: "Claremont Avenue Réhabilitation and Lorraine Avenue Reconstruction",
     borough: "Westmount",
     startDate: "2026-05-01",
     endDate: "2026-11-30",
-    impact: "Rehabilitation/reconstruction de rues locales; circulation et stationnement a surveiller.",
-    trafficLabel: "Voie touchee",
+    impact: "Réhabilitation/reconstruction de rues locales; circulation et stationnement à surveiller.",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Claremont Avenue et Lorraine Avenue; direction precise non publiee sur la page.",
+    direction: "Claremont Avenue et Lorraine Avenue; direction precise non publiée sur la page.",
     streets: "Claremont Avenue et Lorraine Avenue",
     responsible: "City of Westmount",
     source: "Westmount - Roadwork and Projects",
@@ -631,9 +631,9 @@ const LINKED_CITY_WORKS = [
     startDate: "2026-05-01",
     endDate: "2026-11-30",
     impact: "Reconstruction de Murray Hill Avenue; entraves locales possibles.",
-    trafficLabel: "Voie touchee",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Murray Hill Avenue; direction precise non publiee sur la page.",
+    direction: "Murray Hill Avenue; direction precise non publiée sur la page.",
     streets: "Murray Hill Avenue",
     responsible: "City of Westmount",
     source: "Westmount - Roadwork and Projects",
@@ -650,9 +650,9 @@ const LINKED_CITY_WORKS = [
     startDate: "2026-05-01",
     endDate: "2026-11-30",
     impact: "Travaux sur Grosvenor Avenue; entraves locales possibles.",
-    trafficLabel: "Voie touchee",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Grosvenor Avenue; direction precise non publiee sur la page.",
+    direction: "Grosvenor Avenue; direction precise non publiée sur la page.",
     streets: "Grosvenor Avenue",
     responsible: "City of Westmount",
     source: "Westmount - Roadwork and Projects",
@@ -669,9 +669,9 @@ const LINKED_CITY_WORKS = [
     startDate: "2026-05-01",
     endDate: "2026-11-30",
     impact: "Travaux d'aqueduc sur Atwater Avenue mentionnes par Westmount; entraves locales possibles.",
-    trafficLabel: "Voie touchee",
+    trafficLabel: "Voie touchée",
     severity: "major",
-    direction: "Atwater Avenue; direction precise non publiee sur la page.",
+    direction: "Atwater Avenue; direction precise non publiée sur la page.",
     streets: "Atwater Avenue",
     responsible: "Ville de Montreal / City of Westmount",
     source: "Westmount - Roadwork and Projects",
@@ -687,10 +687,10 @@ const LINKED_CITY_WORKS = [
     borough: "Kirkland",
     startDate: "2026-09-08",
     endDate: "2026-09-11",
-    impact: "Inspection de nuit des bornes d'incendie dans le secteur 3; impact surtout aqueduc, circulation locale a surveiller.",
-    trafficLabel: "Acces limite",
+    impact: "Inspection de nuit des bornes d'incendie dans le secteur 3; impact surtout aqueduc, circulation locale à surveiller.",
+    trafficLabel: "Accès limite",
     severity: "moderate",
-    direction: "Secteur rue Monsadel; direction routiere non publiee.",
+    direction: "Secteur rue Monsadel; direction routière non publiée.",
     streets: "Rue Monsadel et secteur 3",
     responsible: "Ville de Kirkland",
     source: "Kirkland - Info-Travaux",
@@ -787,13 +787,81 @@ map.on("moveend", () => {
 });
 
 function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>'"]/g, (character) => ({
+  return correctFrenchText(value).replace(/[&<>'"]/g, (character) => ({
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
     "'": "&#39;",
     "\"": "&quot;"
   }[character]));
+}
+
+function correctFrenchText(value) {
+  const corrections = [
+    [/\bMontreal\b/g, "Montréal"],
+    [/\bQuebec\b/g, "Québec"],
+    [/\bEvenements\b/g, "Événements"],
+    [/\bevenements\b/g, "événements"],
+    [/\bGreves\b/g, "Grèves"],
+    [/\bgreves\b/g, "grèves"],
+    [/\bprives\b/g, "privés"],
+    [/\bPrives\b/g, "Privés"],
+    [/\bliees\b/g, "liées"],
+    [/\bLiees\b/g, "Liées"],
+    [/\bfermees\b/g, "fermées"],
+    [/\bfermee\b/g, "fermée"],
+    [/\bFermee\b/g, "Fermée"],
+    [/\bbloquee\b/g, "bloquée"],
+    [/\bbloquees\b/g, "bloquées"],
+    [/\bBloquee\b/g, "Bloquée"],
+    [/\bcomplete\b/g, "complète"],
+    [/\bComplete\b/g, "Complète"],
+    [/\bAcces\b/g, "Accès"],
+    [/\bacces\b/g, "accès"],
+    [/\blimite\b/g, "limité"],
+    [/\bLimite\b/g, "Limité"],
+    [/\bretranchee\b/g, "retranchée"],
+    [/\bretranchees\b/g, "retranchées"],
+    [/\bDetour\b/g, "Détour"],
+    [/\bdetours\b/g, "détours"],
+    [/\bdetour\b/g, "détour"],
+    [/\bprecisee\b/g, "précisée"],
+    [/\bprecise\b/g, "précise"],
+    [/\bpubliee\b/g, "publiée"],
+    [/\bpublies\b/g, "publiés"],
+    [/\bDonnees\b/g, "Données"],
+    [/\bdonnees\b/g, "données"],
+    [/\bgeometrie\b/g, "géométrie"],
+    [/\bgeometries\b/g, "géométries"],
+    [/\bdirection routiere\b/g, "direction routière"],
+    [/\broutiere\b/g, "routière"],
+    [/\broutieres\b/g, "routières"],
+    [/\breseau\b/g, "réseau"],
+    [/\bReseau\b/g, "Réseau"],
+    [/\bprevoir\b/g, "prévoir"],
+    [/\bprevus\b/g, "prévus"],
+    [/\bprolongee\b/g, "prolongée"],
+    [/\bprolongees\b/g, "prolongées"],
+    [/\bindique\b/g, "indiqué"],
+    [/\bindiquee\b/g, "indiquée"],
+    [/\bplanifiee\b/g, "planifiée"],
+    [/\bplanifies\b/g, "planifiés"],
+    [/\bseparement\b/g, "séparément"],
+    [/\bconseillee\b/g, "conseillée"],
+    [/\ba consulter\b/g, "à consulter"],
+    [/\ba confirmer\b/g, "à confirmer"],
+    [/\ba prevoir\b/g, "à prévoir"],
+    [/\ba surveiller\b/g, "à surveiller"],
+    [/\ba venir\b/g, "à venir"],
+    [/\ba cet\b/g, "à cet"],
+    [/\ba cette\b/g, "à cette"],
+    [/\ba l'/g, "à l'"],
+    [/\ba la\b/g, "à la"],
+    [/\bmeme\b/g, "même"],
+    [/\bapres\b/g, "après"]
+  ];
+
+  return corrections.reduce((text, [pattern, replacement]) => text.replace(pattern, replacement), String(value ?? ""));
 }
 
 function renderMunicipalityLinks() {
@@ -1035,9 +1103,9 @@ function categoryFromAuthority(authority) {
 function trafficDetailsFromImpact(impactType) {
   switch (impactType) {
     case "blocked":
-      return { severity: "critical", label: "Rue bloquee", impact: "Circulation automobile bloquee sur le segment indique; detour probable." };
+      return { severity: "critical", label: "Rue bloquee", impact: "Circulation automobile bloquee sur le segment indique; détour probable." };
     case "trafficLane":
-      return { severity: "major", label: "Voie de circulation retranchee", impact: "Une voie de circulation est touchee; ralentissements et detours locaux possibles." };
+      return { severity: "major", label: "Voie de circulation retranchee", impact: "Une voie de circulation est touchée; ralentissements et détours locaux possibles." };
     case "trafficLaneAndParkingLane":
       return { severity: "major", label: "Voie et stationnement retranches", impact: "Une voie de circulation et le stationnement sont touches." };
     case "parkingLane":
@@ -1050,13 +1118,13 @@ function trafficDetailsFromImpact(impactType) {
 function trafficDetailsFromUciType(type) {
   switch (type) {
     case "Rue fermée":
-      return { severity: "critical", label: "Rue fermee UCI", impact: "Circulation interdite pendant la periode indiquee." };
+      return { severity: "critical", label: "Rue fermée UCI", impact: "Circulation interdite pendant la periode indiquee." };
     case "Circulation locale":
-      return { severity: "moderate", label: "Circulation locale", impact: "Acces limite aux residents et besoins locaux." };
+      return { severity: "moderate", label: "Circulation locale", impact: "Accès limite aux residents et besoins locaux." };
     case "Double sens":
       return { severity: "moderate", label: "Double sens temporaire", impact: "Sens de circulation modifie; prudence aux intersections." };
     default:
-      return { severity: "minor", label: type || "Restriction UCI", impact: "Restriction de circulation liee a l'evenement." };
+      return { severity: "minor", label: type || "Restriction UCI", impact: "Restriction de circulation liee à l'evenement." };
   }
 }
 
@@ -1092,33 +1160,33 @@ function normalizeQuebec511Feature(feature) {
     borough: quebec511LocationLabel(properties.localisation),
     startDate: dateOnlyFromTimestamp(properties.debut),
     endDate: dateOnlyFromTimestamp(properties.fin),
-    impact: [properties.entrave, properties.detoursEtItinerairesFacultatifs].filter(Boolean).join(" - ") || "Details de circulation non publies.",
+    impact: [properties.entrave, properties.detoursEtItinerairesFacultatifs].filter(Boolean).join(" - ") || "Détails de circulation non publiés.",
     trafficLabel: traffic.label,
     severity: traffic.severity,
     color: severity.color,
     direction: cleanQuebec511Direction(properties.direction, properties.localisation),
-    streets: properties.localisation || properties.routeAutoroute || "Localisation non publiee",
+    streets: properties.localisation || properties.routeAutoroute || "Localisation non publiée",
     source: "MTMD - Travaux routiers / Quebec 511",
     sourceUrl: properties.urlFrancais || "https://www.quebec511.info/fr/Carte/Default.aspx",
     periods: quebec511Periods(properties.entrave),
     geometry: feature.geometry,
     point: representativePoint(feature.geometry),
-    details: [["Type", properties.entraveType], ["Detour", properties.detoursEtItinerairesFacultatifs], ["Mise a jour MTMD", properties.miseAJour]]
+    details: [["Type", properties.entraveType], ["Détour", properties.detoursEtItinerairesFacultatifs], ["Mise à jour MTMD", properties.miseAJour]]
   };
 }
 
 function quebec511TrafficDetails(properties) {
   const text = `${properties.entraveType || ""} ${properties.entrave || ""}`.toLowerCase();
   if (/ferm|fermeture compl|route barr|autoroute barr/.test(text)) {
-    return { severity: "critical", label: "Fermeture routiere" };
+    return { severity: "critical", label: "Fermeture routière" };
   }
   if (/stationnement/.test(text)) {
     return { severity: "parking", label: "Stationnement touche" };
   }
   if (/alternance|voie|entrave|circulation/.test(text)) {
-    return { severity: "major", label: "Voie touchee" };
+    return { severity: "major", label: "Voie touchée" };
   }
-  return { severity: "moderate", label: "Acces limite" };
+  return { severity: "moderate", label: "Accès limite" };
 }
 
 function quebec511Periods(entrave) {
@@ -1141,7 +1209,7 @@ function normalizeLavalFeature(feature, layer) {
     id: `laval-${layer.id}-${properties.OBJECTID}`,
     category: "laval",
     sourceKind: "laval-mapserver",
-    title: `${properties.ENTRAVE || layer.label} - ${properties.LOCALISATION || "Localisation non publiee"}`,
+    title: `${properties.ENTRAVE || layer.label} - ${properties.LOCALISATION || "Localisation non publiée"}`,
     responsible: properties.RESPONSABLE || "Ville de Laval",
     borough: "Laval",
     startDate: dateOnlyFromTimestamp(properties.DATE_DEBUT),
@@ -1149,8 +1217,8 @@ function normalizeLavalFeature(feature, layer) {
     impact: [properties.ENTRAVE, properties.CIRCULATION, properties.REMARQUE].filter(isMeaningfulLavalValue).join(" - ") || "Details de circulation non publies.",
     trafficLabel: properties.ENTRAVE || layer.label,
     severity: layer.severity,
-    direction: "Direction precise non publiee dans les attributs Laval.",
-    streets: properties.LOCALISATION || "Localisation non publiee",
+    direction: "Direction precise non publiée dans les attributs Laval.",
+    streets: properties.LOCALISATION || "Localisation non publiée",
     source: `Laval Info-Travaux - ${layer.label}`,
     sourceUrl: "https://vl.maps.arcgis.com/apps/instant/sidebar/index.html?appid=729ff9eeb851437b9a4cf365efadfe8f",
     periods: ["day", "night"],
@@ -1187,7 +1255,7 @@ function normalizeLongueuilFeature(feature, layerKind) {
     trafficLabel: roadImpact.label,
     severity: roadImpact.severity,
     periods: ["day", "night"],
-    direction: "Direction precise non publiee dans les attributs Longueuil; consulter la signalisation locale.",
+    direction: "Direction precise non publiée dans les attributs Longueuil; consulter la signalisation locale.",
     streets: cleanLongueuilText(location),
     source: "Ville de Longueuil - Gestion des entraves",
     sourceUrl: properties.URL || "https://www.longueuil.quebec/fr/travaux-routiers",
@@ -1205,7 +1273,7 @@ function longueuilRoadImpact(repercussions, otherRepercussions) {
   }
 
   if (/Fermeture_Complete/i.test(value)) {
-    return { severity: "critical", label: "Fermeture complete", impact: cleanLongueuilText(value) };
+    return { severity: "critical", label: "Fermeture complète", impact: cleanLongueuilText(value) };
   }
 
   if (/Circ_Deviee_Alternance/i.test(value)) {
@@ -1223,7 +1291,7 @@ function longueuilResponsibleLabel(properties) {
   const labels = {
     1: "Ville de Longueuil",
     2: "Entrepreneur ou partenaire",
-    3: "Service public ou reseau technique"
+    3: "Service public ou réseau technique"
   };
 
   return labels[properties.RESPONSABLE] || "Ville de Longueuil";
@@ -1233,9 +1301,9 @@ function cleanLongueuilText(value) {
   return String(value || "Non precise")
     .replace(/_/g, " ")
     .replace(/Circ Deviee Alternance/g, "Circulation deviee ou en alternance")
-    .replace(/Fermeture Complete/g, "Fermeture complete")
+    .replace(/Fermeture Complete/g, "Fermeture complète")
     .replace(/Retrait Temporaire Stationnement/g, "Retrait temporaire du stationnement")
-    .replace(/Trottoirs Liens Cyclable Inacces/g, "trottoirs ou liens cyclables inaccessibles")
+    .replace(/Trottoirs Liens Cyclable Inaccès/g, "trottoirs ou liens cyclables inaccèssibles")
     .replace(/\s*,\s*/g, ", ")
     .replace(/\s+/g, " ")
     .trim();
@@ -1262,7 +1330,7 @@ function cleanQuebec511Direction(direction, text) {
   if (/direction sud/i.test(source)) return "En direction SUD.";
   if (/direction est/i.test(source)) return "En direction EST.";
   if (/direction ouest/i.test(source)) return "En direction OUEST.";
-  return "Direction non precisee dans Quebec 511.";
+  return "Direction non précisée dans Quebec 511.";
 }
 
 async function loadLinkedCityWorks() {
@@ -1348,7 +1416,7 @@ function intersectsGreaterMontreal(bbox) {
 
 async function fetchRouteGeometry(routeEndpoints) {
   const coordinates = routeEndpoints.map(([lon, lat]) => `${lon},${lat}`).join(";");
-  const url = `https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=full&geometries=geojson`;
+  const url = `https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=full&géométries=geojson`;
   const data = await fetchJson(url);
   const geometry = data.routes?.[0]?.geometry;
   if (!geometry?.coordinates?.length) {
@@ -1437,8 +1505,8 @@ function normalizeLegacyClosure(closure) {
     ...closure,
     sourceKind: "fallback",
     severity: severityKey,
-    trafficLabel: closure.category === "regional" ? "Fermeture majeure" : "Entrave routiere",
-    direction: "Direction precise non fournie dans les donnees de secours.",
+    trafficLabel: closure.category === "regional" ? "Fermeture majeure" : "Entrave routière",
+    direction: "Direction precise non fournie dans les données de secours.",
     periods: ["day", "night"],
     color: severity.color,
     geometry: { type: "LineString", coordinates: closure.path.map(([lat, lon]) => [lon, lat]) },
@@ -1459,9 +1527,9 @@ function normalizeMontrealFeature(feature, index) {
     }
 
     const lineGeometry = parseJson(impact.spatialAnalysis?.lineGeometry, null);
-    const from = impact.spatialAnalysis?.fromShortName || impact.spatialAnalysis?.fromName || "origine non precisee";
-    const to = impact.spatialAnalysis?.toShortName || impact.spatialAnalysis?.toName || "destination non precisee";
-    const street = impact.spatialAnalysis?.shortName || impact.streetId || properties.occupancyName || "Rue non precisee";
+    const from = impact.spatialAnalysis?.fromShortName || impact.spatialAnalysis?.fromName || "origine non précisée";
+    const to = impact.spatialAnalysis?.toShortName || impact.spatialAnalysis?.toName || "destination non précisée";
+    const street = impact.spatialAnalysis?.shortName || impact.streetId || properties.occupancyName || "Rue non précisée";
     const category = categoryFromAuthority(properties.siteAuthority || properties.occupancySubmitterDetailsSubmitterCategory);
     const severity = SEVERITY_META[traffic.severity] ?? SEVERITY_META.major;
     const geometry = lineGeometry || (polygonCoordinates ? { type: "Polygon", coordinates: polygonCoordinates } : feature.geometry);
@@ -1479,7 +1547,7 @@ function normalizeMontrealFeature(feature, index) {
       trafficLabel: traffic.label,
       severity: traffic.severity,
       periods: periodsFromMontrealSchedule(properties),
-      direction: `Segment ${from} vers ${to}. Direction exacte de voie non publiee dans ce flux si une seule direction est touchee.`,
+      direction: `Segment ${from} vers ${to}. Direction exacte de voie non publiée dans ce flux si une seule direction est touchée.`,
       streets: properties.occupancyName || `${street}, entre ${from} et ${to}`,
       source: "Ville de Montreal - Info entraves et travaux",
       sourceUrl: "https://services.montreal.ca/cartes/entraves",
@@ -1511,7 +1579,7 @@ function normalizeUciFeature(feature) {
     trafficLabel: traffic.label,
     severity: traffic.severity,
     periods: ["day", "night"],
-    direction: properties.type === "Double sens" ? "Circulation autorisee dans les deux sens sur ce segment temporaire." : "Les fleches suivent le sens de la geometrie officielle publiee pour ce segment.",
+    direction: properties.type === "Double sens" ? "Circulation autorisee dans les deux sens sur ce segment temporaire." : "Les fleches suivent le sens de la géométrie officielle publiée pour ce segment.",
     streets: `Segment UCI ${properties.id}`,
     source: "Ville de Montreal - carte UCI 2026",
     sourceUrl: "https://services.montreal.ca/cartes/uci",
@@ -1527,7 +1595,7 @@ function siteAuthorityLabel(authority) {
     contractorCity: "Entrepreneur de la Ville",
     cityOfMontreal: "Ville de Montreal",
     contractorPublicOrganization: "Organisation publique ou privee",
-    contractorRTU: "Compagnie de reseau technique urbain",
+    contractorRTU: "Compagnie de réseau technique urbain",
     csem: "CSEM"
   };
 
@@ -1621,7 +1689,7 @@ async function loadOfficialData() {
 
   if (linkedCityResult.status === "fulfilled") {
     officialClosures.push(...linkedCityResult.value);
-    sourceCounts.push(`${linkedCityResult.value.length} travaux de villes liees alignes aux rues`);
+    sourceCounts.push(`${linkedCityResult.value.length} travaux de villes liées alignes aux rues`);
   }
 
   if (longueuilResult.status === "fulfilled") {
@@ -1630,7 +1698,7 @@ async function loadOfficialData() {
   }
 
   if (officialClosures.length === 0) {
-    showMapStatus("APIs officielles non disponibles: affichage des donnees de secours seulement.", "error");
+    showMapStatus("APIs officielles non disponibles: affichage des données de secours seulement.", "error");
   } else {
     allClosures = dedupeClosures(officialClosures);
     showMapStatus(`Donnees chargees: ${sourceCounts.join(" + ")}.`, "ready");
@@ -1682,14 +1750,14 @@ function periodsLabel(periods) {
   }
 
   if (periods.includes("night")) {
-    return "Nuit (23 h a 5 h)";
+    return "Nuit (23 h à 5 h)";
   }
 
   return "Jour";
 }
 
 function groupedPopupContent(closures) {
-  const title = closures.length === 1 ? "1 entrave a cet endroit" : `${closures.length} entraves a cet endroit`;
+  const title = closures.length === 1 ? "1 entrave à cet endroit" : `${closures.length} entraves à cet endroit`;
   return `
     <div class="popup-group-title">${title}</div>
     ${closures.slice(0, 8).map(popupContent).join("")}
@@ -1940,7 +2008,7 @@ function normalizeLavalIdentifyResult(result) {
   const startDate = lavalAttribute(properties, "DATE_DEBUT", "Début :");
   const endDate = lavalAttribute(properties, "DATE_FIN", "Fin :");
   const entrave = lavalAttribute(properties, "ENTRAVE", "Entrave :");
-  const location = lavalAttribute(properties, "LOCALISATION", "Localisation :") || "Localisation non publiee";
+  const location = lavalAttribute(properties, "LOCALISATION", "Localisation :") || "Localisation non publiée";
   const circulation = lavalAttribute(properties, "CIRCULATION", "Circulation :");
   const remark = lavalAttribute(properties, "REMARQUE", "Remarques :");
   const responsible = lavalAttribute(properties, "RESPONSABLE", "Responsable :");
@@ -1960,7 +2028,7 @@ function normalizeLavalIdentifyResult(result) {
     trafficLabel: entrave || result.layerName || "Entrave Laval",
     severity,
     periods: ["day", "night"],
-    direction: "Direction precise non publiee dans les attributs Laval.",
+    direction: "Direction precise non publiée dans les attributs Laval.",
     streets: location,
     source: "Laval Info-Travaux - details officiels",
     sourceUrl: "https://vl.maps.arcgis.com/apps/instant/sidebar/index.html?appid=729ff9eeb851437b9a4cf365efadfe8f",
@@ -2123,7 +2191,7 @@ function updateView({ fit = false } = {}) {
 }
 
 function showMapStatus(message, mode = "loading") {
-  mapStatus.textContent = message;
+  mapStatus.textContent = correctFrenchText(message);
   mapStatus.dataset.mode = mode;
   mapStatus.hidden = mode === "ready";
 }
@@ -2218,6 +2286,6 @@ renderMunicipalityLinks();
 updateView({ fit: true });
 loadOfficialData().catch((error) => {
   console.error("Official data load failed", error);
-  showMapStatus("Impossible de charger les APIs officielles. Les donnees de secours restent affichees.", "error");
+  showMapStatus("Impossible de charger les APIs officielles. Les données de secours restent affichees.", "error");
   updateView({ fit: true });
 });

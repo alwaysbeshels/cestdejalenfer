@@ -123,6 +123,7 @@ h2 {
 
 .intro {
   color: var(--muted);
+  font-size: 0.82rem;
   line-height: 1.45;
 }
 
@@ -258,6 +259,15 @@ h2 {
   padding: 11px 12px;
   background: #fff;
   color: var(--ink);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .toggle-grid {
@@ -491,6 +501,10 @@ button:hover {
 .list-section {
   display: grid;
   gap: 10px;
+}
+
+.list-search {
+  margin-top: -2px;
 }
 
 .closure-list {
@@ -974,7 +988,8 @@ button:hover {
   }
 
   h1 {
-    max-width: 14ch;
+    max-width: none;
+    white-space: nowrap;
   }
 }
 
@@ -989,6 +1004,16 @@ button:hover {
 
   .source-filters {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .time-filters {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .time-filters label {
+    min-height: 38px;
+    padding: 8px;
   }
 
   .date-range-fields {
@@ -1019,7 +1044,16 @@ button:hover {
   }
 
   .summary {
-    align-items: stretch;
-    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .summary button {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 8px 10px;
+    white-space: nowrap;
   }
 }
