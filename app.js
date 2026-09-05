@@ -858,6 +858,14 @@ const baseLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", 
 const closureLayer = L.layerGroup().addTo(map);
 const arrowLayer = L.layerGroup().addTo(map);
 const fastRenderer = L.canvas({ padding: 0.5 });
+let mapRenderFrame = null;
+
+function scheduleMapRender() {
+  cancelAnimationFrame(mapRenderFrame);
+  mapRenderFrame = requestAnimationFrame(() => {
+    renderMap(currentClosures);
+  });
+}
 
 function dismissMapFirstVisitHint() {
   mapFirstVisitHint.hidden = true;
@@ -2373,9 +2381,9 @@ function fitMapToClosures(closures) {
 function focusClosure(closure, { openPopup = false } = {}) {
   const point = closure.point || representativePoint(closure.geometry);
   selectedClosureId = closure.id;
-  renderMap(currentClosures);
+  scheduleMapRender();
   map.flyTo([point[1], point[0]], Math.max(map.getZoom(), 15), { duration: 0.55 });
-  map.once("moveend", () => renderMap(currentClosures));
+  map.once("moveend", () => scheduleMapRender());
 
   if (openPopup) {
     const popupLatLng = L.latLng(point[1], point[0]);
@@ -2476,7 +2484,7 @@ menuBackdrop.addEventListener("click", () => setMobileMenuOpen(false));
 sourcesToggle.addEventListener("click", () => setSourcesOpen(true));
 sourcesClose.addEventListener("click", () => setSourcesOpen(false));
 mapFirstVisitClose.addEventListener("click", dismissMapFirstVisitHint);
-map.on("zoomend", () => renderMap(currentClosures));
+map.on("zoomend", () => scheduleMapRender());
 map.on("click", (event) => {
   const closure = nearestClosure(event.latlng);
   if (closure && closure.category !== "laval") {
