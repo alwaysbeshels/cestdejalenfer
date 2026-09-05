@@ -39,6 +39,15 @@ You are the maintenance engineer for the static web application **Carte des entr
 - Keep dates, source URLs, road names, authority/responsible party, traffic details, detours, work type, and reference numbers in the normalized record whenever the source publishes them.
 - Avoid source-specific line styles, halos, or colors. Apply the common impact styling consistently.
 
+### Pedestrian Streets Across All Sources
+
+- Treat a record as a pedestrian street regardless of its source when its title, street name, work type, traffic impact, tags, or published description indicates pedestrianization, a pedestrian-only street, a shared street, or a seasonal car-free closure. Do not rely on a single source name or category to detect it.
+- Keep the record in the driving-focused map when automobile circulation is closed or restricted, and classify the impact consistently as a road closure rather than as a separate source-owned visual style.
+- Use the official street geometry whenever the source publishes it. If the source does not publish geometry, retrieve only the named street segments from a pedestrian-compatible street geometry source; do not calculate a driving route, use a detour, or connect unrelated points.
+- Never draw a long artificial diagonal between two representative points or between sparse endpoints. A point may be used only as a focus or popup location when no line or polygon geometry is available; show the geometry as unavailable rather than inventing a route.
+- When a street geometry service returns multiple named segments, keep only segments that match the named street and the published bounds or endpoints. Preserve them as a `MultiLineString` or ordered line segments instead of joining disconnected ways with straight lines.
+- Preserve the pedestrian street's published dates, limits, direction, responsible authority, source URL, and automobile impact. Validate at least one representative pedestrian street visually after changing its geometry handling.
+
 ## Official Sources And Required Handling
 
 ### Montreal
