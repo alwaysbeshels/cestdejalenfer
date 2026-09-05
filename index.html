@@ -42,10 +42,13 @@
 
         <div class="filter-heading">
           <h2 class="filter-title">Responsable / source</h2>
+          <button id="sourceSectionToggle" class="section-toggle" type="button" aria-controls="sourceFilters" aria-expanded="false">
+            <span>Afficher les sources</span><b aria-hidden="true">+</b>
+          </button>
           <button id="sourceHelp" class="icon-help small" type="button" aria-label="Information sur responsable et source">i</button>
           <div id="sourceHelpBubble" class="help-bubble filter-help" hidden>Ce filtre sert a choisir qui est la source ou le responsable publie pour les fermetures: Ville de Montreal, secteurs prives, evenements, grands axes, ou sources municipales independantes a consulter separement.</div>
         </div>
-        <div class="toggle-grid source-filters" role="group" aria-label="Responsable ou source des entraves">
+        <div id="sourceFilters" class="toggle-grid source-filters" role="group" aria-label="Responsable ou source des entraves" hidden>
           <label><input type="checkbox" value="municipal" checked> Ville</label>
           <label><input type="checkbox" value="private" checked> Secteurs prives</label>
           <label><input type="checkbox" value="linkedCity" checked> Villes liees</label>
