@@ -1244,11 +1244,87 @@ button:hover {
   gap: 2px;
 }
 
-.popup-group-title {
-  padding-right: 30px;
-  margin-bottom: 10px;
+.popup-scroll-shell {
+  position: relative;
+}
+
+.popup-group-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 10px 30px 12px;
+  background: color-mix(in srgb, var(--popup-header-color, #ff8c00) 12%, #fffdf8);
   color: var(--ink);
   font-weight: 900;
+  border-bottom: 1px solid #e6e6e6;
+  text-align: center;
+}
+
+.popup-scroll-body {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(93, 109, 103, 0.55) transparent;
+  position: relative;
+}
+
+.popup-scroll-body::-webkit-scrollbar {
+  width: 10px;
+}
+
+.popup-scroll-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.popup-scroll-body::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(93, 109, 103, 0.5);
+}
+
+.popup-scroll-hint {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 22px;
+  margin-top: -18px;
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0), rgba(255, 253, 248, 0.9) 35%, rgba(255, 253, 248, 0.98));
+  color: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.popup-scroll-body.has-overflow .popup-scroll-hint {
+  opacity: 1;
+  animation: popupScrollBounce 1.3s ease-in-out infinite;
+}
+
+.popup-scroll-body.is-scrolled .popup-scroll-hint {
+  opacity: 0;
+}
+
+.popup-scroll-hint span {
+  display: inline-block;
+  font-size: 1.4rem;
+  line-height: 1;
+  transform: translateY(0);
+}
+
+@keyframes popupScrollBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
 }
 
 .popup-close-button {
@@ -1264,6 +1340,7 @@ button:hover {
   cursor: pointer;
   font-size: 1.35rem;
   line-height: 1;
+  z-index: 3;
 }
 
 .popup-card + .popup-card {
@@ -1289,17 +1366,21 @@ button:hover {
   background: #fffdf8;
   padding: 4px;
   box-shadow: 0 16px 38px rgba(20, 29, 26, 0.22);
+  max-height: min(420px, 68vh);
+  overflow: hidden;
 }
 
 .leaflet-popup-content {
   position: relative;
+  display: block;
   width: 360px !important;
   max-width: calc(100vw - 72px);
   max-height: 420px;
-  overflow-y: auto;
+  overflow: hidden;
   margin: 10px 12px;
   padding: 2px 8px 2px 4px;
   background: #fffdf8;
+  box-sizing: border-box;
 }
 
 .leaflet-popup-tip {

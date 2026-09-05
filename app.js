@@ -1946,11 +1946,19 @@ function periodsLabel(periods) {
 
 function groupedPopupContent(closures) {
   const title = closures.length === 1 ? t("popup.one") : `${closures.length} ${t("popup.many")}`;
+  const primaryColor = closures[0]?.color || "#ff8c00";
   return `
-    <button class="popup-close-button" type="button" aria-label="Fermer les détails">&times;</button>
-    <div class="popup-group-title">${title}</div>
-    ${closures.slice(0, 8).map(popupContent).join("")}
-    ${closures.length > 8 ? `<p class="popup-meta">${closures.length - 8} ${t("popup.otherNearby")}</p>` : ""}
+    <div class="popup-scroll-shell" style="--popup-header-color: ${primaryColor};">
+      <button class="popup-close-button" type="button" aria-label="Fermer les détails">&times;</button>
+      <div class="popup-group-header">${title}</div>
+      <div class="popup-scroll-body">
+        ${closures.slice(0, 8).map(popupContent).join("")}
+        ${closures.length > 8 ? `<p class="popup-meta">${closures.length - 8} ${t("popup.otherNearby")}</p>` : ""}
+        <div class="popup-scroll-hint" aria-hidden="true">
+          <span>↓</span>
+        </div>
+      </div>
+    </div>
   `;
 }
 
@@ -1987,6 +1995,24 @@ function openMapPopup(latLng, content, maxWidth) {
       popupContentElement.prepend(closeButton);
     }
     closeButton.addEventListener("click", () => map.closePopup());
+
+    const scrollBody = popupContentElement.querySelector(".popup-scroll-body");
+    const scrollHint = popupContentElement.querySelector(".popup-scroll-hint");
+    if (scrollBody && scrollHint) {
+      const updateHintState = () => {
+        const hasOverflow = scrollBody.scrollHeight > scrollBody.clientHeight + 2;
+        const atBottom = scrollBody.scrollTop + scrollBody.clientHeight >= scrollBody.scrollHeight - 4;
+        scrollBody.classList.toggle("has-overflow", hasOverflow && !atBottom);
+        scrollBody.classList.toggle("is-scrolled", atBottom);
+        scrollHint.hidden = !hasOverflow || atBottom;
+      };
+
+      updateHintState();
+      scrollBody.addEventListener("scroll", () => {
+        updateHintState();
+      }, { passive: true });
+      window.addEventListener("resize", updateHintState, { passive: true, once: true });
+    }
   });
 
   requestAnimationFrame(() => centerPopupInMap(popup));
