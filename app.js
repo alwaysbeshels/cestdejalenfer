@@ -1246,7 +1246,7 @@ function normalizePedestrianStreet(closure) {
     ...closure,
     sourceKind: "seasonal-pedestrian-street",
     color: severity.color,
-    geometry: closure.geometryFromOsm ? closure.geometry : { type: "Point", coordinates: closure.point }
+    geometry: closure.geometry || { type: "Point", coordinates: closure.point }
   };
 }
 
@@ -1501,7 +1501,7 @@ async function loadSeasonalPedestrianStreets() {
         geometryFromOsm: true
       });
     } catch (error) {
-      console.warn("Pedestrian street alignment failed", street.id, error);
+      console.warn("Pedestrian street geometry failed", street.id, error);
       return normalizePedestrianStreet(street);
     }
   }));
@@ -1513,7 +1513,7 @@ async function fetchNamedStreetGeometry(query, [west, south, east, north]) {
   const segments = data
     .filter((item) => item.geojson?.type === "LineString")
     .map((item) => item.geojson.coordinates)
-    .filter((coordinates) => coordinates.some(([longitude, latitude]) => {
+    .filter((coordinates) => coordinates.length > 1 && coordinates.some(([longitude, latitude]) => {
       return longitude >= west && longitude <= east && latitude >= south && latitude <= north;
     }));
 
