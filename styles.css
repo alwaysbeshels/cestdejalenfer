@@ -294,6 +294,21 @@ h2 {
   text-align: center;
 }
 
+.source-filter-heading {
+  display: flex;
+  align-items: center;
+}
+
+.source-filter-heading .section-toggle {
+  order: 3;
+  margin-left: auto;
+}
+
+.source-filter-heading #sourceHelp {
+  order: 2;
+  margin-left: 6px;
+}
+
 .source-filters[hidden] {
   display: none;
 }
@@ -1450,19 +1465,22 @@ button:hover {
   }
 
   .source-filter-heading {
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content 24px;
+    column-gap: 8px;
     align-items: center;
-    flex-wrap: wrap;
   }
 
   .source-filter-heading .section-toggle {
+    grid-column: 1 / -1;
     width: 100%;
-    order: 3;
+    margin-left: 0;
   }
 
   .source-filter-heading #sourceHelp {
-    order: 2;
-    margin-left: 6px;
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
   }
 
   .site-nav a,
