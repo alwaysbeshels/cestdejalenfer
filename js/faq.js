@@ -85,14 +85,31 @@ updateBackToTop();
 openAnchoredDetails();
 
 function reassertFavicon() {
-  let link = document.querySelector('head link[rel="icon"]');
-  if (!link) {
-    link = document.createElement("link");
-    link.rel = "icon";
-    document.head.appendChild(link);
-  }
-  link.type = "image/svg+xml";
-  link.href = "favicon.svg?v=2";
+  const icons = [
+    { rel: "icon", href: "favicon.ico", sizes: "48x48", type: null },
+    { rel: "icon", href: "favicon.svg", sizes: null, type: "image/svg+xml" },
+  ];
+
+  icons.forEach((icon) => {
+    const selector = icon.href.endsWith(".svg")
+      ? 'head link[rel="icon"][type="image/svg+xml"]'
+      : 'head link[rel="icon"]:not([type="image/svg+xml"])';
+    let link = document.querySelector(selector);
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = icon.rel;
+      document.head.appendChild(link);
+    }
+    if (icon.type) {
+      link.type = icon.type;
+    } else {
+      link.removeAttribute("type");
+    }
+    if (icon.sizes) {
+      link.setAttribute("sizes", icon.sizes);
+    }
+    link.href = icon.href;
+  });
 }
 
 window.addEventListener("load", reassertFavicon);

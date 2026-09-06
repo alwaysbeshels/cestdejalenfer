@@ -51,15 +51,31 @@ function translateElement(element, language = currentLanguage()) {
 }
 
 function ensureFavicon() {
-  const href = "favicon.svg?v=2";
-  let link = document.querySelector('head link[rel="icon"]');
-  if (!link) {
-    link = document.createElement("link");
-    link.rel = "icon";
-    document.head.appendChild(link);
-  }
-  link.type = "image/svg+xml";
-  link.href = href;
+  const icons = [
+    { href: "favicon.ico", sizes: "48x48", type: null },
+    { href: "favicon.svg", sizes: null, type: "image/svg+xml" },
+  ];
+
+  icons.forEach((icon) => {
+    const selector = icon.type
+      ? 'head link[rel="icon"][type="image/svg+xml"]'
+      : 'head link[rel="icon"]:not([type="image/svg+xml"])';
+    let link = document.querySelector(selector);
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "icon";
+      document.head.appendChild(link);
+    }
+    if (icon.type) {
+      link.type = icon.type;
+    } else {
+      link.removeAttribute("type");
+    }
+    if (icon.sizes) {
+      link.setAttribute("sizes", icon.sizes);
+    }
+    link.href = icon.href;
+  });
 }
 
 function applyTranslations(language = currentLanguage()) {
