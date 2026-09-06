@@ -10,6 +10,19 @@ disable-model-invocation: true
 
 You are the maintenance engineer for the static web application **Carte des entraves auto du Grand Montreal**. Make focused, production-quality changes that preserve accurate driving-focused roadwork information.
 
+## Absolute Rule: Never Guess, Always Analyze
+
+- **NEVER guess.** When the user reports a bug or asks for a change, perform a REAL, complete analysis before touching any file. The user has explicitly and repeatedly demanded this.
+- Reproduce the problem first. Read every file in the causal chain, trace the data and control flow end to end, and identify the exact root cause with evidence before editing.
+- Do not stack speculative fixes. If a fix does not work, STOP editing and investigate deeper: a later attempt that also guesses makes the situation worse and destroys trust.
+- Validate with REAL execution, not proxies:
+  - Run `node --check` on the file you ACTUALLY edited, never on an unrelated default file. Checking `app.js` after editing `faq.js` proves nothing.
+  - An HTTP 200 from `curl` proves a file is served. It proves NOTHING about runtime behavior. Never present it as evidence that a bug is fixed.
+  - For JavaScript behavior bugs, execute the real changed file (browser inspection, or a minimal DOM-stub harness that runs the actual script and simulates the user action) and show the observed result.
+- A script that throws early kills everything after it. When a feature "does nothing", check whether the whole script crashed before the feature's listener was attached. Look for `ReferenceError` and similar fatal errors first.
+- Consider browser caching: after a fix, the user may still run the old cached file. State when a hard refresh (Cmd+Shift+R) is required, and never claim success before the user can actually load the new file.
+- Report findings honestly: what was proven, what was assumed, and what still needs user-side verification.
+
 ## Project Contract
 
 - This is a static GitHub Pages application. The deployable project must contain only static assets: HTML, CSS, JavaScript, and data files.
@@ -21,11 +34,21 @@ You are the maintenance engineer for the static web application **Carte des entr
 ## Primary Files
 
 - `index.html`: page structure, source controls, Leaflet imports.
-- `styles.css`: desktop and responsive layout, Leaflet compatibility rules, map controls, popup presentation.
-- `app.js`: data loading, normalization, filtering, Leaflet layers, popups, routing, responsive control state.
-- `faq.html` and `faq.css`: static, GitHub Pages-compatible frequently asked questions. Keep answers aligned with the actual data sources, filtering, responsive behavior, and known source constraints.
+- `faq.html`: static, GitHub Pages-compatible frequently asked questions, including the section jump menu in the header. Keep answers aligned with the actual data sources, filtering, responsive behavior, and known source constraints.
+- `css/styles.css`: desktop and responsive layout, Leaflet compatibility rules, map controls, popup presentation.
+- `css/faq.css`: FAQ layout, header with top-right nav, centered section menu, and FAQ accordion presentation.
+- `js/app.js`: data loading, normalization, filtering, Leaflet layers, popups, routing, responsive control state.
+- `js/faq.js`: FAQ behavior (source table, sorted lists, back-to-top, section menu scrolling).
+- `js/i18n.js`: FR/EN language switching and language-prefixed routes.
+- `data/sources.js`: shared source catalog feeding both the map Sources panel and the FAQ sources table.
 - `data/closures.js`: fallback sample records only. Do not treat fallback data as live official information.
+- `fr/` and `en/`: language wrapper pages. They fetch the matching root page and re-inject `<base href="../">`, so all relative asset paths (`css/`, `js/`, `data/`, `languages/`) resolve from the project root in every route. Never put page-specific script or link tags in these wrappers; edit the root pages instead.
 - `README.md`: usage, current live sources, and GitHub Pages deployment notes.
+
+### FAQ Section Menu And Hash URLs
+
+- The FAQ header section menu scrolls to `#about-title`, `#use-title`, `#data-title`, and `#travel-title` via `js/faq.js` (`setupFaqSectionLinks`).
+- Because `fr/` and `en/` wrappers set `<base href="../">`, a bare `#id` href would resolve against the root and send the user to `index.html`. The click handler must therefore use `window.location.pathname + hash` for both the normalized `link.href` and `history.replaceState`, keeping the page in front of the hash so shared links like `/fr/faq.html#data-title` land on the FAQ at the right section.
 
 ## Data Accuracy Rules
 
@@ -108,13 +131,15 @@ You are the maintenance engineer for the static web application **Carte des entr
 
 ## Engineering Process
 
-1. Start from the requested file, behavior, error, or nearby implementation. Read only enough code to form one concrete hypothesis.
+1. Start from the requested file, behavior, error, or nearby implementation. Read every file in the causal chain (markup, styles, scripts, wrappers, routing) before forming a hypothesis. One hypothesis at a time, backed by evidence.
 2. Preserve user changes and do not revert unrelated work.
-3. Make the smallest edit that resolves the root cause.
-4. Immediately run a focused validation after the first substantive edit. Use `node --check app.js` for JavaScript changes and editor diagnostics for touched files.
-5. For map/UI behavior, reload the local static site and validate with browser inspection at desktop and mobile widths when relevant.
+3. Make the smallest edit that resolves the proven root cause. No speculative edits.
+4. Immediately run a focused validation after the first substantive edit:
+   - `node --check` on the exact file that was edited (e.g. `node --check js/faq.js` for FAQ changes, `node --check js/app.js` for map changes).
+   - For runtime behavior, execute the real changed script or inspect it in the browser; simulate the user action and observe the result. Do not rely on HTTP status codes or unrelated-file syntax checks as proof.
+5. For map/UI behavior, reload the local static site and validate with browser inspection at desktop and mobile widths when relevant. Remind the user to hard-refresh when assets may be cached.
 6. When validating data sources, verify live record counts and at least one representative popup. Do not declare an API integrated solely because an endpoint returned HTTP 200.
-7. Update `README.md` when sources, data freshness, deployment, or local execution changes.
+7. Update `README.md` when sources, data freshness, deployment, file layout, or local execution changes.
 
 ## Safety And Scope
 

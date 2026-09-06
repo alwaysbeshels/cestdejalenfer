@@ -28,12 +28,64 @@ body {
 }
 
 .faq-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 28px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "intro nav"
+    "toc toc";
+  align-items: start;
+  gap: 18px 28px;
   padding: 0 0 30px;
   border-bottom: 1px solid var(--line);
+}
+
+.faq-header > div {
+  grid-area: intro;
+}
+
+.faq-nav {
+  grid-area: nav;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 0.35rem;
+}
+
+.faq-section-nav {
+  grid-area: toc;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding-top: 10px;
+}
+
+.faq-section-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 14px;
+  border: 1px solid rgba(23, 32, 28, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.55);
+  color: var(--accent-dark);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.faq-section-link:hover,
+.faq-section-link:focus-visible {
+  border-color: rgba(8, 87, 71, 0.24);
+  background: rgba(255, 253, 248, 0.82);
+  outline: none;
+  transform: translateY(-1px);
 }
 
 .eyebrow {
@@ -114,6 +166,10 @@ h2 {
   font-size: 1rem;
   letter-spacing: 0;
   text-transform: uppercase;
+}
+
+.faq-section h2 {
+  scroll-margin-top: 20px;
 }
 
 .faq-list {
@@ -255,15 +311,27 @@ details a {
   .faq-header,
   .faq-footer {
     align-items: flex-start;
-    flex-direction: column;
   }
 
   .faq-header {
-    gap: 20px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "intro"
+      "nav"
+      "toc";
+    gap: 18px;
     padding-bottom: 24px;
   }
 
   .faq-nav {
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .faq-section-nav {
+    flex-wrap: wrap;
+    justify-content: center;
     width: 100%;
   }
 

@@ -50,9 +50,22 @@ function translateElement(element, language = currentLanguage()) {
   });
 }
 
+function ensureFavicon() {
+  const href = "favicon.svg?v=2";
+  let link = document.querySelector('head link[rel="icon"]');
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "icon";
+    document.head.appendChild(link);
+  }
+  link.type = "image/svg+xml";
+  link.href = href;
+}
+
 function applyTranslations(language = currentLanguage()) {
   document.documentElement.lang = language;
   document.title = t(document.body.dataset.documentTitle, language);
+  ensureFavicon();
   document.querySelectorAll("[data-i18n], [data-i18n-aria-label], [data-i18n-title], [data-i18n-placeholder]")
     .forEach((element) => translateElement(element, language));
 
@@ -105,3 +118,5 @@ if (document.readyState === "loading") {
 } else {
   setupLanguageToggle();
 }
+
+window.addEventListener("load", ensureFavicon);

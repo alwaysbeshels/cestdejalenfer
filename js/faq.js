@@ -17,7 +17,7 @@ function renderFaqSources() {
     const link = document.createElement("a");
 
     nameCell.textContent = currentLanguage() === "en" && source.nameEn ? source.nameEn : source.name;
-    link.href = currentLanguage() === "en" && source.enUrl ? source.enUrl : url;
+    link.href = currentLanguage() === "en" && source.enUrl ? source.enUrl : source.url;
     link.target = "_blank";
     link.rel = "noreferrer";
     link.textContent = t("faq.sourceLink");
@@ -40,11 +40,35 @@ function updateBackToTop() {
 }
 
 function openAnchoredDetails() {
+  if (!location.hash || location.hash.length < 2) {
+    return;
+  }
+
   const target = document.querySelector(location.hash);
   if (target instanceof HTMLDetailsElement) {
     target.open = true;
     requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
   }
+}
+
+function setupFaqSectionLinks() {
+  document.querySelectorAll(".faq-section-link").forEach((link) => {
+    const hash = link.getAttribute("href");
+    const target = hash ? document.querySelector(hash) : null;
+
+    if (!target) {
+      return;
+    }
+
+    link.href = `${window.location.pathname}${hash}`;
+
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      window.history.replaceState(null, "", `${window.location.pathname}${hash}`);
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
 }
 
 backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
@@ -54,7 +78,21 @@ window.addEventListener("languagechange", () => {
   renderFaqSources();
   sortFaqLists();
 });
+setupFaqSectionLinks();
 renderFaqSources();
 sortFaqLists();
 updateBackToTop();
 openAnchoredDetails();
+
+function reassertFavicon() {
+  let link = document.querySelector('head link[rel="icon"]');
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "icon";
+    document.head.appendChild(link);
+  }
+  link.type = "image/svg+xml";
+  link.href = "favicon.svg?v=2";
+}
+
+window.addEventListener("load", reassertFavicon);

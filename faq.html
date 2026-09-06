@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Questions fréquentes | Carte des entraves</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="faq.css">
+  <link rel="icon" href="favicon.svg?v=2" type="image/svg+xml">
+  <link rel="stylesheet" href="css/faq.css">
 </head>
 <body data-document-title="document.faqTitle">
   <main class="faq-shell">
@@ -17,8 +17,13 @@
       </div>
       <nav class="faq-nav" data-i18n-aria-label="nav.main">
         <a href="index.html" data-language-page="map" data-i18n="nav.map"></a>
-        <a class="is-current" href="faq.html" data-language-page="faq" aria-current="page" data-i18n="nav.faq"></a>
         <button id="languageToggle" class="language-toggle" type="button" aria-label="Passer à l'anglais">EN</button>
+      </nav>
+      <nav class="faq-section-nav" aria-label="Sections du FAQ" aria-label="FAQ sections">
+        <a href="#about-title" class="faq-section-link" data-i18n="faq.about"></a>
+        <a href="#use-title" class="faq-section-link" data-i18n="faq.use"></a>
+        <a href="#data-title" class="faq-section-link" data-i18n="faq.data"></a>
+        <a href="#travel-title" class="faq-section-link" data-i18n="faq.travel"></a>
       </nav>
     </header>
 
@@ -142,8 +147,8 @@
   <button id="backToTop" class="back-to-top" type="button" data-i18n-aria-label="faq.top" hidden>↑</button>
   <script src="languages/fr.js"></script>
   <script src="languages/en.js"></script>
-  <script src="i18n.js"></script>
+  <script src="js/i18n.js?v=2"></script>
   <script src="data/sources.js"></script>
-  <script src="faq.js"></script>
+  <script src="js/faq.js?v=2"></script>
 </body>
 </html>
