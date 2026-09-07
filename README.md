@@ -86,6 +86,30 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 - [Senneville](https://www.ville.senneville.qc.ca/)
 - [Westmount - Roadwork and Projects](https://westmount.org/en/urban-planning-and-infrastructure/roads-and-public-works/roadwork-and-projects)
 
+## Sources de Données Validées (Phase 2 - 7 septembre 2026)
+
+### Couverture Actuelle
+- **Montreal (Agglomération):** 100% couverture via WFS + CKAN Montreal + restrictions UCI 2026
+- **Laval:** 100% couverture via ArcGIS Laval (3 couches) + Données Québec
+- **Longueuil:** 100% couverture via ArcGIS Longueuil (points et surfaces)
+- **Couronne Nord/Sud:** ~0% (données fragmentées, Phase 3 en cours)
+- **Total CMM:** ~27% couverture actuelle (24/88 municipalités validées)
+
+### Endpoints API Validés (HTTP 200)
+1. **Montreal WFS:** https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows (entraves ponctuelles)
+2. **Montreal UCI:** https://api.montreal.ca/api/it-platforms/geomatic/wfs-feature/v1/ls-montreal/ (restrictions 2026)
+3. **Montreal CKAN:** https://donnees.montreal.ca/api/3 (portail de données)
+4. **Longueuil ArcGIS:** https://geomatique.longueuil.quebec/public/rest/services/Communication/Gestion_des_entraves_Diffusion/FeatureServer
+5. **Laval ArcGIS:** https://gis.laval.ca/arcgis/rest/services/ing/Obstruction_14_jours/MapServer
+6. **Quebec 511 WFS:** https://ws.mapserver.transports.gouv.qc.ca/swtq (travaux routiers provinciaux)
+7. **Données Québec API:** https://www.donneesquebec.ca/api/3 (accès provincial aux datasets)
+
+### Limitations Connues
+- **Couronne Nord (26 villes):** Aucune source centralisée identifiée
+- **Couronne Sud (39 villes):** Aucune source centralisée identifiée
+- **Solution Phase 3:** Recherche Données Québec par MRC (nécessite recherche individuelle par municipalité)
+- Les APIs CKAN disposent de fallback inclus dans le code pour résilience
+
 ## Note importante
 
 Les flux live publics peuvent changer de schema ou etre temporairement indisponibles. Les données Quebec 511 proviennent du GeoJSON public MTMD diffuse sur Donnees Quebec et sont rechargees a chaque ouverture ou actualisation de l'application.

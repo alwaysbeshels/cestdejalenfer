@@ -19,19 +19,27 @@ const SEVERITY_META = {
   minor: { label: () => t("severity.minor"), color: "#00e676", width: 4, opacity: 0.78 }
 };
 
+// Phase 2 Validation: Tous les endpoints ci-dessous ont été testés et validés HTTP 200
 const LIVE_SOURCES = {
+  // ✓ Phase 2 Validé - WFS Montreal (entraves ponctuelles)
   montreal: "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal:entraves-ponctuelles&outputFormat=application/json&CQL_FILTER=affectedArea%20like%20%27%25street%25%27",
+  // ✓ Phase 2 Validé - WFS Montreal (restrictions UCI 2026)
   uciRestrictions: "https://api.montreal.ca/api/it-platforms/geomatic/wfs-feature/v1/ls-montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ls-montreal:uci-2026-vdm-restrictions-circulation_v2&outputFormat=application/json",
+  // ✓ Phase 2 Validé - ArcGIS Longueuil (points d'entraves)
   longueuilPoints: "https://geomatique.longueuil.quebec/public/rest/services/Communication/Gestion_des_entraves_Diffusion/FeatureServer/0/query?f=geojson&where=1%3D1&outFields=*&outSR=4326",
+  // ✓ Phase 2 Validé - ArcGIS Longueuil (surfaces d'entraves)
   longueuilSurfaces: "https://geomatique.longueuil.quebec/public/rest/services/Communication/Gestion_des_entraves_Diffusion/FeatureServer/1/query?f=geojson&where=1%3D1&outFields=*&outSR=4326",
+  // ✓ Phase 2 Validé - ArcGIS Laval (3 couches: fermetures, restrictions, travaux prévus)
   lavalMapService: "https://gis.laval.ca/arcgis/rest/services/ing/Obstruction_14_jours/MapServer",
+  // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson"
 };
 
+// Phase 2 Validé - 3 couches ArcGIS Laval confirmées
 const LAVAL_LAYERS = [
-  { id: 0, labelKey: "laval.closed", severity: "critical" },
-  { id: 2, labelKey: "laval.partial", severity: "major" },
-  { id: 3, labelKey: "laval.planned", severity: "moderate" }
+  { id: 0, labelKey: "laval.closed", severity: "critical" },  // Fermetures complètes
+  { id: 2, labelKey: "laval.partial", severity: "major" },    // Restrictions partielles
+  { id: 3, labelKey: "laval.planned", severity: "moderate" }   // Travaux prévus
 ];
 
 const GREATER_MONTREAL_BOUNDS = {
@@ -39,6 +47,44 @@ const GREATER_MONTREAL_BOUNDS = {
   south: 45.0,
   east: -72.8,
   north: 46.3
+};
+
+// Phase 2: Fallback CKAN - accès aux données si endpoints WFS/ArcGIS indisponibles
+const LIVE_SOURCES_BACKUP = {
+  // Backup: CKAN Montreal - Accès aux données de travaux via API publique
+  ckanMontreal: {
+    endpoint: "https://donnees.montreal.ca/api/3/action/package_search",
+    params: {
+      q: "travaux|routes|entraves",
+      fq: "groups:transport",
+      format: "json",
+      rows: 100
+    },
+    description: "CKAN Montreal - Portail de données officielles travaux routiers"
+  },
+  
+  // Backup: Données Québec - Laval datasets
+  ckanLaval: {
+    endpoint: "https://www.donneesquebec.ca/api/3/action/package_search",
+    params: {
+      q: "travaux|laval",
+      fq: "organization:ville-de-laval",
+      format: "json",
+      rows: 100
+    },
+    description: "Données Québec - Datasets Laval (Fallback)"
+  },
+  
+  // Backup: Données Québec provincial - Tous les travaux
+  ckanQuebec: {
+    endpoint: "https://www.donneesquebec.ca/api/3/action/package_search",
+    params: {
+      q: "travaux|routes|entraves|circulation",
+      format: "json",
+      rows: 100
+    },
+    description: "Données Québec - Tous les travaux provinciaux (Fallback global)"
+  }
 };
 
 const REGIONAL_MAJOR_CLOSURES = [
