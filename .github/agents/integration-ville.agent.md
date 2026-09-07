@@ -21,6 +21,7 @@ Your sole deliverable is a correct `data/sources.js` catalog. When asked to rese
 - Never modify `README.md`, `js/`, `css/`, HTML, language files, package files, settings, or other agent files.
 - Do not run commands that write to the workspace. Terminal use is limited to read-only inspection and post-edit validation of `data/sources.js`.
 - Do not commit, stage, reset, publish, install dependencies, start a server, or create a branch.
+- The catalog distinguishes documentary sources from active map sources through an `inMap` boolean. Set `inMap: true` only when the source is actually loaded by the application or is the verified user-facing source for a loaded endpoint; otherwise set `inMap: false`.
 - Keep research notes in your working context and return them only in the chat response. Background research must leave no workspace artifacts.
 
 ## Objective
@@ -45,6 +46,7 @@ A source URL must take the user directly to the relevant page, map, layer, endpo
 - For ArcGIS, identify the actual city-owned app or service, inspect its layer metadata, and confirm it is public and roads-related. Prefer the layer endpoint when it exposes the actual source data; retain the associated official map too when it is a useful direct user-facing view.
 - Accept an individual official notice only when it explicitly has road, circulation, closure, lane, detour, parking, or comparable driving impact. Label such entries as an `Avis` and do not imply they are a permanent feed.
 - If the city publishes no qualifying source, add nothing. State `Aucune source directe validee` in the final response. Absence is better than a fabricated link.
+- A page, PDF, search widget, Google Maps integration, WordPress/Elementor endpoint, Activis search script, or generic road-network layer is not an active closure feed by itself. It may be catalogued as documentary (`inMap: false`) but cannot be treated as map data without dated automobile impact and official geometry or a verified named-road geometry.
 
 ## Research workflow
 
@@ -59,6 +61,14 @@ A source URL must take the user directly to the relevant page, map, layer, endpo
 	Use concise ASCII labels. Make the type precise: `Info-travaux`, `Carte interactive des travaux`, `Avis d'entrave`, `FeatureServer`, `MapServer`, `WFS GeoJSON`, or `Open511 evenements`.
 8. Keep the existing regional grouping/order. Add the municipality to the correct CMM section. Do not reformat unrelated entries.
 9. After editing, run `node --check data/sources.js` and a small read-only Node check that loads the catalog and verifies duplicate URLs. Correct any duplicate or syntax error before replying.
+
+## Known Active Source Contracts
+
+- Verified municipal data loaders currently include Repentigny Open511; Dorval and Boisbriand ArcGIS; L'Assomption incidents; Saint-Eustache lines/points; Chateauguay polygons; and Terrebonne entrave lines/points.
+- Terrebonne's verified public closure layers are `https://services3.arcgis.com/kKl4g5Ltuw8RvFq1/arcgis/rest/services/entrave_vue_publique/FeatureServer/1` and `/0`. They publish active status, dates, location, impact type, circulation notes, schedules, detours, and official line/point geometry.
+- Saint-Eustache, Chateauguay, Dorval, Boisbriand, and L'Assomption records must be checked for active dates/status and automobile impact. Do not load historical, test, empty, or "no obstruction" records.
+- Named-road enrichment is allowed only for point records that publish an explicit road name. Query only the named road, keep matching segments as a `MultiLineString`, and retain the original point when no verified segment is returned.
+- Do not add a city-wide road network as roadwork. A road-centerline service is reference geometry only until an official dated closure/work record is joined to it.
 
 ## Catalog quality rules
 

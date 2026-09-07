@@ -52,6 +52,12 @@ You are the maintenance engineer for the static web application **Carte des entr
 - `fr/` and `en/`: language wrapper pages. They fetch the matching root page and re-inject `<base href="../">`, so all relative asset paths (`css/`, `js/`, `data/`, `languages/`) resolve from the project root in every route. Never put page-specific script or link tags in these wrappers; edit the root pages instead.
 - `README.md`: usage, current live sources, and GitHub Pages deployment notes.
 
+### Source Catalog And Active Map Sources
+
+- Every `SOURCE_CATALOG` entry receives an `inMap` boolean. `inMap: true` means the source is actively loaded or represents a verified active map source; `inMap: false` means it is documentary, a candidate, a page/PDF, an unverified interactive map, or a service not loaded by `js/app.js`.
+- `js/faq.js` must display only catalog entries where `source.inMap === true` in the FAQ sources-used table. Do not describe the full catalog as active map coverage.
+- HTML pages, PDFs, search widgets, Google Maps scripts, reCAPTCHA, WordPress/Elementor APIs, and generic road-network layers may remain catalogued with `inMap: false`, but must not be converted into map closures without dated automobile impact and official geometry or a verified named-road geometry.
+
 ### FAQ Section Menu And Hash URLs
 
 - The FAQ header section menu scrolls to `#about-title`, `#use-title`, `#data-title`, and `#travel-title` via `js/faq.js` (`setupFaqSectionLinks`).
@@ -117,6 +123,13 @@ You are the maintenance engineer for the static web application **Carte des entr
 - Retain the curated major-axis restrictions and linked-city works only when their sources remain credible and date-bounded.
 - OSRM is a last resort only for existing linked-city records that have a street axis but no official geometry. Do not use it for highways, bridges, Laval, Longueuil, Montreal WFS, or MTMD GeoJSON records.
 - Never scrape the Mobilité Montréal HTML page (`mobilitemontreal.gouv.qc.ca/fermetures-majeures/`) to synthesize new records. A prior regression parsed its `<h3>` headings and mapped titles to hardcoded guessed coordinates (e.g. a hand-built title-to-lat/lon lookup table with a generic fallback point) — this is exactly the invented-geometry practice this project forbids, and it produced stray unexplained point markers on the map. Only `REGIONAL_MAJOR_CLOSURES` entries with hand-verified, source-checked `geometry`/`routeEndpoints` may represent Mobilité Montréal closures.
+
+### Verified Municipal Integrations
+
+- Current municipal live loaders include Repentigny Open511, Dorval ArcGIS, Boisbriand ArcGIS, L'Assomption ArcGIS incidents, Saint-Eustache ArcGIS lines/points, Chateauguay ArcGIS polygons, and Terrebonne ArcGIS entrave lines/points. Preserve their official fields, dates, status, impact, source URLs, and geometry types.
+- Terrebonne's public layers are `entrave_vue_publique/FeatureServer/1` (lines) and `/0` (points). Filter to active, non-expired records and preserve `type_entrave`, circulation notes, schedules, detours, and official geometry.
+- Dorval and Boisbriand publish many point geometries. Convert a point to named street geometry only when the record explicitly publishes a road name and a verified named-street geometry service returns matching segments. Otherwise retain the official point; never draw a route from its coordinates.
+- For municipal ArcGIS layers, filter terminated, expired, test, empty, or no-automobile-impact records. One failed municipal endpoint must not discard other fulfilled municipal sources; use per-source failure isolation.
 
 ## Map And Filtering Behavior
 
