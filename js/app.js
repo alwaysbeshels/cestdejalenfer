@@ -19,6 +19,32 @@ const SEVERITY_META = {
   minor: { label: () => t("severity.minor"), color: "#00e676", width: 4, opacity: 0.78 }
 };
 
+function roadTypeFromText(value) {
+  const text = String(value || "").toLowerCase();
+  if (/\btunnel\b/.test(text)) return "tunnel";
+  if (/\bpont\b|\bbridge\b|\bviaduc\b/.test(text)) return "bridge";
+  if (/\bautoroute\b|\bhighway\b|\ba[- ]?\d{1,3}\b/.test(text)) return "highway";
+  if (/\bchemin\b|\bch\.\s/.test(text)) return "road";
+  if (/\broute\b|\br[- ]?\d{1,3}\b/.test(text)) return "route";
+  if (/\brue\b|\bstreet\b|\bavenue\b|\bboulevard\b/.test(text)) return "street";
+  return null;
+}
+
+function closureImpactLabel(closure) {
+  if (closure.severity !== "critical") {
+    return (SEVERITY_META[closure.severity] ?? SEVERITY_META.major).label();
+  }
+
+  const type = closure.roadType || roadTypeFromText(`${closure.title || ""} ${closure.streets || ""}`);
+  if (type === "tunnel") return t("severity.closedTunnel");
+  if (type === "bridge") return t("severity.closedBridge");
+  if (type === "highway") return t("severity.closedHighway");
+  if (type === "road") return t("severity.closedRoad");
+  if (type === "route") return t("severity.closedRoute");
+  if (type === "street") return t("severity.closedStreet");
+  return t("severity.critical");
+}
+
 // Phase 2 Validation: Tous les endpoints ci-dessous ont été testés et validés HTTP 200
 const LIVE_SOURCES = {
   // ✓ Phase 2 Validé - WFS Montreal (entraves ponctuelles)
@@ -1266,7 +1292,7 @@ function categoryFromAuthority(authority) {
 function trafficDetailsFromImpact(impactType) {
   switch (impactType) {
     case "blocked":
-      return { severity: "critical", label: "Autoroute fermée", impact: "Circulation automobile bloquee sur le segment indique; détour probable." };
+      return { severity: "critical", label: "Fermeture complète", impact: "Circulation automobile bloquee sur le segment indique; détour probable." };
     case "trafficLane":
       return { severity: "major", label: "Voie de circulation retranchee", impact: "Une voie de circulation est touchée; ralentissements et détours locaux possibles." };
     case "trafficLaneAndParkingLane":
@@ -1281,7 +1307,7 @@ function trafficDetailsFromImpact(impactType) {
 function trafficDetailsFromUciType(type) {
   switch (type) {
     case "Rue fermée":
-      return { severity: "critical", label: "Autoroute fermée UCI", impact: "Circulation interdite pendant la periode indiquee." };
+      return { severity: "critical", label: "Rue fermée", impact: "Circulation interdite pendant la periode indiquee." };
     case "Circulation locale":
       return { severity: "moderate", label: "Circulation locale", impact: "Accès limite aux residents et besoins locaux." };
     case "Double sens":
@@ -1296,6 +1322,7 @@ function normalizeRegionalClosure(closure) {
   return {
     ...closure,
     sourceKind: "mobilite-montreal",
+    roadType: closure.roadType || roadTypeFromText(`${closure.title} ${closure.streets}`),
     color: severity.color
   };
 }
@@ -1305,6 +1332,7 @@ function normalizePedestrianStreet(closure) {
   return {
     ...closure,
     sourceKind: "seasonal-pedestrian-street",
+    roadType: "street",
     color: severity.color,
     geometry: closure.geometry || { type: "Point", coordinates: closure.point }
   };
@@ -1316,6 +1344,7 @@ function normalizeLinkedCityWork(closure) {
     ...closure,
     category: "linkedCity",
     sourceKind: "linked-city-work",
+    roadType: closure.roadType || roadTypeFromText(`${closure.title} ${closure.streets}`),
     color: severity.color
   };
 }
@@ -1336,6 +1365,7 @@ function normalizeQuebec511Feature(feature) {
     impact: [properties.entrave, properties.detoursEtItinerairesFacultatifs].filter(Boolean).join(" - ") || "Détails de circulation non publiés.",
     trafficLabel: traffic.label,
     severity: traffic.severity,
+    roadType: roadTypeFromText(`${properties.identificationDesTravaux || ""} ${properties.localisation || ""} ${properties.routeAutoroute || ""} ${properties.entraveType || ""}`),
     color: severity.color,
     direction: cleanQuebec511Direction(properties.direction, properties.localisation),
     streets: properties.localisation || properties.routeAutoroute || "Localisation non publiée",
@@ -1390,6 +1420,7 @@ function normalizeLavalFeature(feature, layer) {
     impact: [properties.ENTRAVE, properties.CIRCULATION, properties.REMARQUE].filter(isMeaningfulLavalValue).join(" - ") || "Details de circulation non publies.",
     trafficLabel: properties.ENTRAVE || t(layer.labelKey),
     severity: layer.severity,
+    roadType: roadTypeFromText(`${properties.ENTRAVE || ""} ${properties.LOCALISATION || ""}`),
     direction: properties.DIRECTION || t("popup.notPublished"),
     streets: properties.LOCALISATION || t("popup.notPublished"),
     source: `Laval Info-Travaux - ${t(layer.labelKey)}`,
@@ -1427,6 +1458,7 @@ function normalizeLongueuilFeature(feature, layerKind) {
     impact: roadImpact.impact,
     trafficLabel: roadImpact.label,
     severity: roadImpact.severity,
+    roadType: roadTypeFromText(`${title} ${location}`),
     periods: ["day", "night"],
     direction: "Direction precise non publiée dans les attributs Longueuil; consulter la signalisation locale.",
     streets: cleanLongueuilText(location),
@@ -1736,6 +1768,7 @@ function normalizeLegacyClosure(closure) {
     trafficLabel: closure.category === "regional" ? "Fermeture majeure" : "Entrave routière",
     direction: "Direction precise non fournie dans les données de secours.",
     periods: ["day", "night"],
+    roadType: roadTypeFromText(`${closure.title} ${closure.streets}`),
     color: severity.color,
     geometry: { type: "LineString", coordinates: closure.path.map(([lat, lon]) => [lon, lat]) },
     point: [closure.coordinates[1], closure.coordinates[0]]
@@ -1779,6 +1812,9 @@ function normalizeMontrealFeature(feature, index) {
       impact: displayTraffic.impact,
       trafficLabel: displayTraffic.label,
       severity: displayTraffic.severity,
+      roadType: pedestrianStreet
+        ? "street"
+        : roadTypeFromText(`${street} ${properties.occupancyName || ""} ${impact.spatialAnalysis?.name || ""}`),
       periods: periodsFromMontrealSchedule(properties),
       direction: `Segment ${from} vers ${to}. Direction exacte de voie non publiée dans ce flux si une seule direction est touchée.`,
       streets: properties.occupancyName || `${street}, entre ${from} et ${to}`,
@@ -1826,6 +1862,7 @@ function normalizeUciFeature(feature) {
     impact: traffic.impact,
     trafficLabel: traffic.label,
     severity: traffic.severity,
+    roadType: roadTypeFromText(`${properties.type || ""} ${properties.name || ""}`) || "street",
     periods: ["day", "night"],
     direction: properties.type === "Double sens" ? "Circulation autorisee dans les deux sens sur ce segment temporaire." : "Les fleches suivent le sens de la géométrie officielle publiée pour ce segment.",
     streets: `Segment UCI ${properties.id}`,
@@ -1985,7 +2022,7 @@ function popupContent(closure) {
   return `
     <div class="popup-card">
       <p class="popup-title">${escapeHtml(closure.title)}</p>
-      <p class="popup-meta"><strong>${escapeHtml(severity.label())}</strong> - ${escapeHtml(meta.label())}</p>
+      <p class="popup-meta"><strong>${escapeHtml(closureImpactLabel(closure))}</strong> - ${escapeHtml(meta.label())}</p>
       <p class="popup-meta">${escapeHtml(closure.streets)}</p>
       <p class="popup-meta">${formatDate(closure.startDate)} ${t("popup.to")} ${formatDate(closure.endDate)}</p>
       ${details}
@@ -2435,7 +2472,7 @@ function renderList(closures) {
     card.style.borderLeftColor = closure.color || severity.color;
     card.innerHTML = `
       <div class="badge-row">
-        <span class="badge severity-badge">${escapeHtml(severity.label())}</span>
+        <span class="badge severity-badge">${escapeHtml(closureImpactLabel(closure))}</span>
         <span class="badge">${escapeHtml(meta.label())}</span>
         <span class="badge">${escapeHtml(closure.borough)}</span>
       </div>
