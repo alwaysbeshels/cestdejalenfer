@@ -26,7 +26,7 @@ function roadTypeFromText(value) {
   if (/\bautoroute\b|\bhighway\b|\ba[- ]?\d{1,3}\b/.test(text)) return "highway";
   if (/\bchemin\b|\bch\.\s/.test(text)) return "road";
   if (/\broute\b|\br[- ]?\d{1,3}\b/.test(text)) return "route";
-  if (/\brue\b|\bstreet\b|\bavenue\b|\bboulevard\b/.test(text)) return "street";
+  if (/\brues?\b|\bstreets?\b|\bavenues?\b|\bboulevards?\b/.test(text)) return "street";
   return null;
 }
 
@@ -57,6 +57,16 @@ const LIVE_SOURCES = {
   longueuilSurfaces: "https://geomatique.longueuil.quebec/public/rest/services/Communication/Gestion_des_entraves_Diffusion/FeatureServer/1/query?f=geojson&where=1%3D1&outFields=*&outSR=4326",
   // ✓ Phase 2 Validé - ArcGIS Laval (3 couches: fermetures, restrictions, travaux prévus)
   lavalMapService: "https://gis.laval.ca/arcgis/rest/services/ing/Obstruction_14_jours/MapServer",
+  // Repentigny Open511 events with official road geometry
+  repentignyOpen511: "https://info-travaux.ville.repentigny.qc.ca/api/events/",
+  dorvalEntraves: "https://services2.arcgis.com/UfBk83iw7IIXzPRW/arcgis/rest/services/Entraves2410_Vue/FeatureServer/34",
+  boisbriandWorks: "https://services3.arcgis.com/x2965icj4V1l01th/arcgis/rest/services/Info_travaux_2026/FeatureServer/2",
+  saintEustacheLines: "https://services2.arcgis.com/wvG4T9QXold5hjxu/arcgis/rest/services/Entraves_routieres/FeatureServer/0",
+  saintEustachePoints: "https://services2.arcgis.com/wvG4T9QXold5hjxu/arcgis/rest/services/Entraves_routieres_ponctuelles/FeatureServer/0",
+  chateauguayWorks: "https://services5.arcgis.com/dJ7Fm5SAXQN3Do5M/arcgis/rest/services/Carte_des_travaux_en_cours_WFL1/FeatureServer/0",
+  assomptionIncidents: "https://services9.arcgis.com/hcaJWZHFtN5aFHXa/arcgis/rest/services/survey123_35de01d903b74a05a2e2396b74f2cb14_results/FeatureServer/0",
+  terrebonneEntraveLines: "https://services3.arcgis.com/kKl4g5Ltuw8RvFq1/arcgis/rest/services/entrave_vue_publique/FeatureServer/1",
+  terrebonneEntravePoints: "https://services3.arcgis.com/kKl4g5Ltuw8RvFq1/arcgis/rest/services/entrave_vue_publique/FeatureServer/0",
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson"
 };
@@ -1641,6 +1651,400 @@ async function loadQuebec511Closures() {
     .map(normalizeQuebec511Feature);
 }
 
+async function loadRepentignyClosures() {
+  const data = await fetchJson(LIVE_SOURCES.repentignyOpen511);
+  return (data.events || [])
+    .filter((event) => event.status === "ACTIVE" && event.geography?.coordinates?.length && event.schedule?.intervals?.length)
+    .map(normalizeRepentignyEvent)
+    .filter(Boolean);
+}
+
+function normalizeRepentignyEvent(event) {
+  const interval = event.schedule.intervals[0] || "";
+  const [startDate, endDate] = interval.split("/");
+  const road = event.roads?.[0];
+  if (!startDate || !endDate || !road || !event.geography) {
+    return null;
+  }
+
+  const severity = event.severity === "MAJOR" ? "major" : event.severity === "MINOR" ? "moderate" : "critical";
+  const geometry = event.geography;
+  const sourceUrl = event.url?.startsWith("http")
+    ? event.url
+    : `https://info-travaux.ville.repentigny.qc.ca${event.url || ""}`;
+
+  return {
+    id: `repentigny-open511-${event.id || event.url}`,
+    title: event.headline || event.description || "Entrave routière à Repentigny",
+    category: "linkedCity",
+    sourceKind: "repentigny-open511",
+    responsible: "Ville de Repentigny",
+    borough: "Repentigny",
+    startDate: startDate.slice(0, 10),
+    endDate: endDate.split("T")[0],
+    impact: [event.description, event.detour].filter(Boolean).join(" - ") || "Impact automobile publié par la Ville de Repentigny.",
+    trafficLabel: event.severity === "MAJOR" ? "Voie touchée" : "Accès limité",
+    severity,
+    roadType: roadTypeFromText(`${road.name} ${event.headline || ""}`),
+    periods: ["day", "night"],
+    direction: road.direction || "Direction non publiée.",
+    streets: `${road.name}${road.from && road.to ? `, entre ${road.from} et ${road.to}` : ""}`,
+    source: "Ville de Repentigny - Open511",
+    sourceUrl,
+    color: SEVERITY_META[severity].color,
+    geometry,
+    point: representativePoint(geometry),
+    rawType: event.event_type
+  };
+}
+
+async function loadMunicipalArcgisClosures() {
+  const sources = [
+    [LIVE_SOURCES.saintEustacheLines, normalizeSaintEustacheFeature],
+    [LIVE_SOURCES.saintEustachePoints, normalizeSaintEustacheFeature],
+    [LIVE_SOURCES.chateauguayWorks, normalizeChateauguayFeature],
+    [LIVE_SOURCES.assomptionIncidents, normalizeAssomptionFeature]
+  ];
+  const results = await Promise.all(sources.map(async ([endpoint, normalizer]) => {
+    try {
+      const params = new URLSearchParams({ f: "json", where: "1=1", outFields: "*", returnGeometry: "true", outSR: "4326", resultRecordCount: "2000" });
+      const data = await fetchJson(`${endpoint}/query?${params}`);
+      const closures = (data.features || []).map((feature) => normalizer(feature)).filter(Boolean);
+      return Promise.all(closures.map((closure) => enrichMunicipalPointGeometry(closure)));
+    } catch (error) {
+      console.warn("Municipal ArcGIS source failed", endpoint, error);
+      return [];
+    }
+  }));
+  return results.flat();
+}
+
+async function loadDorvalAndBoisbriandClosures() {
+  const sources = [
+    [LIVE_SOURCES.dorvalEntraves, normalizeDorvalFeature],
+    [LIVE_SOURCES.boisbriandWorks, normalizeBoisbriandFeature]
+  ];
+  const results = await Promise.all(sources.map(async ([endpoint, normalizer]) => {
+    try {
+      const params = new URLSearchParams({ f: "json", where: "1=1", outFields: "*", returnGeometry: "true", outSR: "4326", resultRecordCount: "2000" });
+      const data = await fetchJson(`${endpoint}/query?${params}`);
+      const closures = (data.features || []).map((feature) => normalizer(feature)).filter(Boolean);
+      return Promise.all(closures.map((closure) => enrichMunicipalPointGeometry(closure)));
+    } catch (error) {
+      console.warn("Dorval/Boisbriand source failed", endpoint, error);
+      return [];
+    }
+  }));
+  return results.flat();
+}
+
+async function loadTerrebonneClosures() {
+  const endpoints = [
+    LIVE_SOURCES.terrebonneEntraveLines,
+    LIVE_SOURCES.terrebonneEntravePoints
+  ];
+  const results = await Promise.all(endpoints.map(async (endpoint) => {
+    try {
+      const params = new URLSearchParams({ f: "json", where: "1=1", outFields: "*", returnGeometry: "true", outSR: "4326", resultRecordCount: "2000" });
+      const data = await fetchJson(`${endpoint}/query?${params}`);
+      return (data.features || []).map(normalizeTerrebonneFeature).filter(Boolean);
+    } catch (error) {
+      console.warn("Terrebonne ArcGIS source failed", endpoint, error);
+      return [];
+    }
+  }));
+  return results.flat();
+}
+
+function normalizeTerrebonneFeature(feature) {
+  const p = feature.attributes || {};
+  const geometry = esriGeometryToGeoJson(feature.geometry);
+  const endDate = dateOnlyFromTimestamp(p.date_fin);
+  const impact = [p.type_entrave, p.note_type_entrave, p.type_circulation, p.note_type_circulation, p.description].filter(Boolean).join(" - ");
+  if (!geometry || !p.localisation || p.statut_avis !== "Actif" || (endDate && endDate < new Date().toISOString().slice(0, 10))) return null;
+
+  const severity = municipalSeverity(impact);
+  const critical = severity === "critical";
+  return {
+    id: `terrebonne-${p.globalid || p.OBJECTID}`,
+    title: `${p.type_entrave || "Entrave routière"} - ${p.localisation}`,
+    category: "linkedCity",
+    sourceKind: "terrebonne-arcgis",
+    responsible: "Ville de Terrebonne",
+    borough: "Terrebonne",
+    startDate: dateOnlyFromTimestamp(p.date_debut),
+    endDate,
+    impact: impact || "Impact automobile publié par la Ville de Terrebonne.",
+    trafficLabel: critical ? "Fermeture complète" : "Voie touchée",
+    severity,
+    roadType: roadTypeFromText(p.localisation),
+    periods: ["day", "night"],
+    direction: p.note_type_circulation || "Direction non publiée.",
+    streets: p.localisation,
+    source: "Ville de Terrebonne - Carte des travaux",
+    sourceUrl: "https://cartographie.ville.terrebonne.qc.ca/travaux/",
+    color: SEVERITY_META[severity].color,
+    geometry,
+    point: representativePoint(geometry),
+    details: [["Horaire", p.horaire], ["Type d'entrave", p.type_entrave], ["Détour", p.note_type_circulation]]
+  };
+}
+
+function normalizeDorvalFeature(feature) {
+  const p = feature.attributes || {};
+  const geometry = esriGeometryToGeoJson(feature.geometry);
+  const endDate = dateOnlyFromTimestamp(p.DateFin);
+  if (!geometry || p.StatusEntr !== "Actif" || !endDate || endDate < new Date().toISOString().slice(0, 10)) return null;
+  const description = p.REMARQUE || `Entrave ${p.NO_ENTRAVE || ""}`;
+  const severity = municipalSeverity(description);
+  return {
+    id: `dorval-${p.FID}`,
+    title: `${p.NO_ENTRAVE || "Entrave routière"} - ${description}`,
+    category: "linkedCity",
+    sourceKind: "dorval-arcgis",
+    responsible: "Ville de Dorval",
+    borough: "Dorval",
+    startDate: dateOnlyFromTimestamp(p.DateDebut),
+    endDate,
+    impact: description,
+    trafficLabel: severity === "critical" ? "Fermeture complète" : "Accès limité",
+    severity,
+    roadType: roadTypeFromText(description),
+    roadSearchText: description,
+    periods: ["day", "night"],
+    direction: "Direction non publiée.",
+    streets: description,
+    source: "Ville de Dorval - Entraves",
+    sourceUrl: "https://www.arcgis.com/apps/mapviewer/index.html?url=https://services2.arcgis.com/UfBk83iw7IIXzPRW/ArcGIS/rest/services/Entraves2410_Vue/FeatureServer/34&source=sd",
+    color: SEVERITY_META[severity].color,
+    geometry,
+    point: representativePoint(geometry),
+    details: [["Référence", p.NO_ENTRAVE], ["Type", p.TYPE_ENTRA]]
+  };
+}
+
+function normalizeBoisbriandFeature(feature) {
+  const p = feature.attributes || {};
+  const geometry = esriGeometryToGeoJson(feature.geometry);
+  const endDate = dateOnlyFromTimestamp(p.DateFin);
+  const impact = [p.Impact, p.InfoSup].filter(Boolean).join(" - ");
+  if (!geometry || !p.Description || !endDate || endDate < new Date().toISOString().slice(0, 10) || /^test\b/i.test(p.Description) || !impact || /rien/i.test(impact)) return null;
+  const severity = municipalSeverity(impact);
+  return {
+    id: `boisbriand-${p.GlobalID || p.OBJECTID}`,
+    title: p.Description,
+    category: "linkedCity",
+    sourceKind: "boisbriand-arcgis",
+    responsible: "Ville de Boisbriand",
+    borough: "Boisbriand",
+    startDate: dateOnlyFromTimestamp(p.DateDebut),
+    endDate,
+    impact,
+    trafficLabel: severity === "critical" ? "Fermeture complète" : "Voie touchée",
+    severity,
+    roadType: roadTypeFromText(`${p.Description} ${impact}`),
+    roadSearchText: impact,
+    periods: ["day", "night"],
+    direction: "Direction non publiée.",
+    streets: p.Description,
+    source: "Ville de Boisbriand - Travaux",
+    sourceUrl: "https://www.arcgis.com/apps/mapviewer/index.html?url=https://services3.arcgis.com/x2965icj4V1l01th/ArcGIS/rest/services/Info_travaux_2026/FeatureServer/2&source=sd",
+    color: SEVERITY_META[severity].color,
+    geometry,
+    point: representativePoint(geometry),
+    details: [["Période", p.PeriodeTravaux], ["Détour", p.Detour]]
+  };
+}
+
+function esriGeometryToGeoJson(geometry) {
+  if (!geometry) return null;
+  if (typeof geometry.x === "number" && typeof geometry.y === "number") {
+    return { type: "Point", coordinates: [geometry.x, geometry.y] };
+  }
+  if (Array.isArray(geometry.paths)) {
+    return geometry.paths.length === 1
+      ? { type: "LineString", coordinates: geometry.paths[0] }
+      : { type: "MultiLineString", coordinates: geometry.paths };
+  }
+  if (Array.isArray(geometry.rings)) {
+    return { type: "Polygon", coordinates: geometry.rings };
+  }
+  return null;
+}
+
+async function enrichMunicipalPointGeometry(closure) {
+  const roadQueries = namedRoadQueries(closure.roadSearchText || closure.streets);
+  if (!new Set(["dorval-arcgis", "boisbriand-arcgis", "assomption-arcgis"]).has(closure.sourceKind)
+    || closure.geometry?.type !== "Point"
+    || !closure.roadType
+    || roadQueries.length === 0) {
+    return closure;
+  }
+
+  const city = closure.borough || "Greater Montreal";
+  const bounds = [
+    closure.geometry.coordinates[0] - 0.02,
+    closure.geometry.coordinates[1] - 0.02,
+    closure.geometry.coordinates[0] + 0.02,
+    closure.geometry.coordinates[1] + 0.02
+  ];
+
+  try {
+    for (const roadQuery of roadQueries) {
+      try {
+        const geometry = await fetchNamedStreetGeometry(`${roadQuery}, ${city}, Quebec`, bounds);
+        return {
+          ...closure,
+          geometry,
+          point: representativePoint(geometry),
+          geometrySource: "named-street-geometry"
+        };
+      } catch {
+        // Try the next explicitly published road name.
+      }
+    }
+  } catch (error) {
+    return closure;
+  }
+  return closure;
+}
+
+function namedRoadQueries(value) {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+  const queries = [];
+  const streetList = text.match(/\brues?\s+(.+?)(?=\s+-|\s+entre\b|\.)/i)?.[1];
+  if (streetList) {
+    streetList
+      .split(/,\s*|\s+et\s+/i)
+      .map((name) => name.trim())
+      .filter(Boolean)
+      .forEach((name) => queries.push(`Rue ${name}`));
+  }
+  const compoundRoads = text.match(/\bchemin\s+de\s+(?:la|l')\s+[A-Za-zÀ-ÿ0-9'’-]+(?:\s+[A-Za-zÀ-ÿ0-9'’-]+){0,2}/gi) || [];
+  queries.push(...compoundRoads.map((query) => query.replace(/\s+(ainsi|entre|près|et)\b.*$/i, "").trim()));
+  const pattern = /\b(rues?|avenues?|boulevards?|chemins?|routes?|autoroutes?|A[- ]?\d{1,3}|R[- ]?\d{1,3})\s+([A-Za-zÀ-ÿ0-9'’-]+(?:\s+[A-Za-zÀ-ÿ0-9'’-]+){0,2})/gi;
+  for (const match of text.matchAll(pattern)) {
+    let query = `${match[1]} ${match[2]}`.replace(/\s+(entre|près|et|sur|du|de)\b.*$/i, "").trim();
+    query = query.replace(/^rues\b/i, "Rue").replace(/^avenues\b/i, "Avenue").replace(/^boulevards\b/i, "Boulevard");
+    if (/^A[- ]?520$/i.test(query)) query = "Autoroute 520";
+    if (/^rues?$/i.test(query) || /^chemins?$/i.test(query)) continue;
+    if (query.length > match[1].length && !queries.includes(query)) queries.push(query);
+  }
+  return queries;
+}
+
+function municipalSeverity(text) {
+  const value = String(text || "").toLowerCase();
+  if (/fermeture complète|fermeture complete|toutes les voies sont fermées|toutes les voies sont fermees|rue fermée|rue fermee/.test(value)) return "critical";
+  if (/certaines voies|voie fermée|voie fermee|alternée|alternee|entrave partielle/.test(value)) return "major";
+  return "moderate";
+}
+
+function normalizeSaintEustacheFeature(feature) {
+  const p = feature.attributes || {};
+  const geometry = esriGeometryToGeoJson(feature.geometry);
+  const endDate = dateOnlyFromTimestamp(p.DateFinReelle || p.DateFinAnticipee);
+  const impact = [p.ImpactCirculation, p.Alternative, p.NoteExterne].filter(Boolean).join(" - ");
+  if (!geometry || !p.Localisation || /travaux terminés|travaux termines/i.test(p.TypeContrainte || "") || /toutes les voies sont ouvertes|aucune entrave/i.test(impact)) return null;
+  if (endDate && endDate < new Date().toISOString().slice(0, 10)) return null;
+  const severity = municipalSeverity(`${p.TypeContrainte} ${impact}`);
+  return {
+    id: `saint-eustache-${p.GlobalID || p.OBJECTID}`,
+    title: `${p.TITRE || "Entrave routière"} - ${p.Localisation}`,
+    category: "linkedCity",
+    sourceKind: "saint-eustache-arcgis",
+    responsible: p.Responsable || "Ville de Saint-Eustache",
+    borough: "Saint-Eustache",
+    startDate: dateOnlyFromTimestamp(p.DateDebutReelle || p.DateDebutAnticipee),
+    endDate,
+    impact: impact || "Impact automobile publié par la Ville de Saint-Eustache.",
+    trafficLabel: severity === "critical" ? "Fermeture complète" : "Voie touchée",
+    severity,
+    roadType: roadTypeFromText(`${p.TITRE} ${p.Localisation}`),
+    periods: ["day", "night"],
+    direction: "Direction non publiée.",
+    streets: p.Localisation,
+    source: "Ville de Saint-Eustache - Entraves routières",
+    sourceUrl: "https://www.saint-eustache.ca/info-travaux",
+    color: SEVERITY_META[severity].color,
+    geometry,
+    point: representativePoint(geometry),
+    details: [["Référence", p.NumeroDossier], ["Type", p.TypeTravaux]]
+  };
+}
+
+function dateFromQuebecText(value) {
+  const match = String(value || "").match(/(\d{1,2})\s+(janvier|février|fevrier|mars|avril|mai|juin|juillet|août|aout|septembre|octobre|novembre|décembre|decembre)\s+(\d{4})/i);
+  if (!match) return "";
+  const months = { janvier: 0, février: 1, fevrier: 1, mars: 2, avril: 3, mai: 4, juin: 5, juillet: 6, août: 7, aout: 7, septembre: 8, octobre: 9, novembre: 10, décembre: 11, decembre: 11 };
+  return `${match[3]}-${String(months[match[2].toLowerCase()] + 1).padStart(2, "0")}-${String(match[1]).padStart(2, "0")}`;
+}
+
+function normalizeChateauguayFeature(feature) {
+  const p = feature.attributes || {};
+  const geometry = esriGeometryToGeoJson(feature.geometry);
+  const startDate = dateFromQuebecText(p.Deb_Trav);
+  const endDate = dateFromQuebecText(p.Fin_Trav);
+  if (!geometry || !p.NOM || /^terminé|^termine$/i.test(String(p.Légende || "")) || (endDate && endDate < new Date().toISOString().slice(0, 10))) return null;
+  const severity = municipalSeverity(`${p.NOM} ${p.Comment}`);
+  return {
+    id: `chateauguay-${p.FID}`,
+    title: p.NOM,
+    category: "linkedCity",
+    sourceKind: "chateauguay-arcgis",
+    responsible: "Ville de Châteauguay",
+    borough: "Châteauguay",
+    startDate,
+    endDate,
+    impact: p.Comment || "Travaux routiers publiés par la Ville de Châteauguay.",
+    trafficLabel: severity === "critical" ? "Fermeture complète" : "Voie touchée",
+    severity,
+    roadType: roadTypeFromText(p.NOM),
+    periods: ["day", "night"],
+    direction: "Direction non publiée.",
+    streets: p.NOM,
+    source: "Ville de Châteauguay - Travaux en cours",
+    sourceUrl: "https://ville.chateauguay.qc.ca/info-travaux/travaux-en-cours-et-a-venir/",
+    color: SEVERITY_META[severity].color,
+    geometry,
+    point: representativePoint(geometry),
+    details: [["Entrepreneur", p.NOM_ENT], ["Urgence", p.NUM_URG]]
+  };
+}
+
+function normalizeAssomptionFeature(feature) {
+  const p = feature.attributes || {};
+  const geometry = esriGeometryToGeoJson(feature.geometry);
+  const impactText = [p.entrave_la_circulation, p.d_tour_de_la_circulation, p.fermeture_partielle].filter(Boolean).join(" - ");
+  const startDate = dateOnlyFromTimestamp(p.d_but_des_travaux);
+  const endDate = dateOnlyFromTimestamp(p.fin_des_travaux);
+  if (!geometry || !p.adresse || !impactText || /aucune entrave/i.test(impactText) || (endDate && endDate < new Date().toISOString().slice(0, 10))) return null;
+  const severity = municipalSeverity(impactText);
+  return {
+    id: `assomption-${p.globalid || p.objectid}`,
+    title: `${p.type_de_travaux || "Travaux routiers"} - ${p.adresse}`,
+    category: "linkedCity",
+    sourceKind: "assomption-arcgis",
+    responsible: p.personne_ressource || "Ville de L'Assomption",
+    borough: "L'Assomption",
+    startDate,
+    endDate,
+    impact: impactText,
+    trafficLabel: severity === "critical" ? "Fermeture complète" : "Voie touchée",
+    severity,
+    roadType: roadTypeFromText(p.adresse),
+    periods: ["day", "night"],
+    direction: "Direction non publiée.",
+    streets: p.adresse,
+    source: "Ville de L'Assomption - Info-travaux",
+    sourceUrl: "https://www.lassomption.ca/",
+    color: SEVERITY_META[severity].color,
+    geometry,
+    point: representativePoint(geometry),
+    details: [["Détour", p.d_tour_de_la_circulation], ["Information", p.informations_suppl_mentaires]]
+  };
+}
+
 function intersectsGreaterMontreal(feature) {
   const bounds = Array.isArray(feature?.bbox) && feature.bbox.length >= 4
     ? feature.bbox
@@ -1982,7 +2386,11 @@ async function loadBackgroundOfficialData() {
     loadSeasonalPedestrianStreets(),
     loadLongueuilClosures(),
     loadLavalClosures(),
-    loadQuebec511Closures()
+    loadQuebec511Closures(),
+    loadRepentignyClosures(),
+    loadMunicipalArcgisClosures(),
+    loadDorvalAndBoisbriandClosures(),
+    loadTerrebonneClosures()
   ]);
 
   const additions = [];
@@ -2079,7 +2487,8 @@ function openMapPopup(latLng, content, maxWidth) {
 
   const popup = L.popup({
     maxWidth,
-    autoPan: false
+    autoPan: false,
+    closeButton: false
   })
     .setLatLng(latLng)
     .setContent(content);

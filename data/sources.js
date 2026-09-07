@@ -1,4 +1,4 @@
-window.SOURCE_CATALOG = [
+const SOURCE_CATALOG = [
   // Sources regionales et provinciales
   { name: "MTMD - Carte interactive des chantiers", url: "https://geoegl.msp.gouv.qc.ca/igo2/apercu-qc/?context=mtq&visiblelayers=chantiers_mtmdet" },
   { name: "MTMD - Chantiers WFS GeoJSON", url: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&outfile=TravauxRoutiers&srsname=EPSG:4326&outputformat=geojson" },
@@ -15,7 +15,13 @@ window.SOURCE_CATALOG = [
   { name: "Cote-Saint-Luc - Avis de fermeture routiere", url: "https://cotesaintluc.org/en/announcements/road-work/closure-cote-saint-luc-randall/" },
   { name: "Dollard-des-Ormeaux - Info-travaux", url: "https://ville.ddo.qc.ca/info-travaux/" },
   { name: "Dorval - Info-travaux", url: "https://www.ville.dorval.qc.ca/fr/environnement-et-voirie/infrastructures-urbaines/info-travaux" },
-  { name: "Dorval - Carte interactive des travaux", url: "https://experience.arcgis.com/experience/d300f88779ef4c918efb68684ada4710" },
+  { name: "Dorval - Plan des travaux d'infrastructure 2026 (PDF)", url: "https://www.ville.dorval.qc.ca/storage/app/media/environnement-et-voirie/infrastructures-urbaines/info-travaux/2026/travaux_infrastructure_2026.pdf" },
+  { name: "Dorval - Info-travaux Hydro-Québec août 2026 (PDF)", url: "https://www.ville.dorval.qc.ca/storage/app/media/environnement-et-voirie/infrastructures-urbaines/info-travaux/2026/202608_hq-info_travaux-aout2026_fr.pdf" },
+  { name: "Dorval - Travaux routiers sur le chemin Herron", url: "https://www.ville.dorval.qc.ca/fr/actualites/info-travaux/travaux-routiers-sur-le-chemin-herron" },
+  { name: "Dorval - Resurfaçage du chemin Herron", url: "https://www.ville.dorval.qc.ca/fr/actualites/info-travaux/resurfacage-du-chemin-herron-entre-les-avenues-oakville-et-elmridge" },
+  { name: "Dorval - Travaux de réhabilitation du collecteur Smith", url: "https://www.ville.dorval.qc.ca/fr/actualites/info-travaux/travaux-de-rehabilitation-du-collecteur-smith" },
+  { name: "Dorval - Carte Experience des travaux", url: "https://experience.arcgis.com/experience/d300f88779ef4c918efb68684ada4710" },
+  { name: "Dorval - Carte interactive des travaux", url: "https://www.arcgis.com/apps/mapviewer/index.html?url=https://services2.arcgis.com/UfBk83iw7IIXzPRW/ArcGIS/rest/services/Entraves2410_Vue/FeatureServer/34&source=sd" },
   { name: "Dorval - Entraves FeatureServer", url: "https://services2.arcgis.com/UfBk83iw7IIXzPRW/arcgis/rest/services/Entraves2410_Vue/FeatureServer/34" },
   { name: "Kirkland - Info-travaux", url: "https://www.ville.kirkland.qc.ca/services-aux-citoyens/gestion-des--infrastructures/info-travaux" },
   { name: "Montreal-Est - Info-travaux", url: "https://ville.montreal-est.qc.ca/entretien-et-circulation/info-travaux/" },
@@ -33,6 +39,7 @@ window.SOURCE_CATALOG = [
   { name: "Boucherville - Chantiers et projets", url: "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/" },
   { name: "Brossard - Travaux et entraves", url: "https://brossard.ca/sujets/travaux-et-entraves/" },
   { name: "Brossard - Carte interactive Info-travaux", url: "https://brossard.ca/informations-travaux/" },
+  { name: "Brossard - Programme triennal d'immobilisation 2024-2025-2026 (PDF)", url: "https://brossard.ca/app/uploads/2025/04/attach_cmsUpload_32cd2f38-f18d-4ed0-a468-396f1030dd26.pdf" },
   { name: "Longueuil - Info-travaux", url: "https://www.longueuil.quebec/fr/info-travaux" },
   { name: "Longueuil - Carte interactive des travaux", url: "https://experience.arcgis.com/experience/e35bec0d7e0641e6beb1dda771f238ae" },
   { name: "Saint-Lambert - Info-travaux", url: "https://www.saint-lambert.ca/fr/info-travaux" },
@@ -44,15 +51,13 @@ window.SOURCE_CATALOG = [
   { name: "Bois-des-Filion - Info-travaux", url: "https://villebdf.ca/info-travaux" },
   { name: "Bois-des-Filion - Actualites circulation et transport", url: "https://villebdf.ca/category/transport" },
   { name: "Boisbriand - Info-travaux", url: "https://www.ville.boisbriand.qc.ca/services/info-travaux" },
-  { name: "Boisbriand - Carte interactive des travaux", url: "https://experience.arcgis.com/experience/6529e834c30d4f9fb92e208bebcd3feb/" },
+  { name: "Boisbriand - Carte interactive des travaux", url: "https://www.arcgis.com/apps/mapviewer/index.html?url=https://services3.arcgis.com/x2965icj4V1l01th/ArcGIS/rest/services/Info_travaux_2026/FeatureServer/2&source=sd" },
   { name: "Boisbriand - Travaux FeatureServer", url: "https://services3.arcgis.com/x2965icj4V1l01th/arcgis/rest/services/Info_travaux_2026/FeatureServer/2" },
   { name: "Charlemagne - Info-circulation", url: "https://www.charlemagne.ca/services-territoriaux/services-aux-citoyens/info-circulation" },
   { name: "Deux-Montagnes - Actualites Info-travaux", url: "https://www.ville.deux-montagnes.qc.ca/actualites/info-travaux" },
   { name: "Deux-Montagnes - Actualites travaux routiers", url: "https://www.ville.deux-montagnes.qc.ca/actualites/travaux-routiers" },
   { name: "L'Assomption - Carte Info-travaux", url: "https://lassomption.maps.arcgis.com/apps/instant/minimalist/index.html?appid=24f572e787444c20987ddf33f463d955" },
-  { name: "L'Assomption - Info-travaux FeatureServer", url: "https://services9.arcgis.com/hcaJWZHFtN5aFHXa/arcgis/rest/services/survey123_29ac3e6ad9884942a73f9263441cda51/FeatureServer/0" },
   { name: "L'Assomption - Travaux et incidents FeatureServer", url: "https://services9.arcgis.com/hcaJWZHFtN5aFHXa/arcgis/rest/services/survey123_35de01d903b74a05a2e2396b74f2cb14_results/FeatureServer" },
-  { name: "L'Assomption - Travaux RBLS FeatureServer", url: "https://services9.arcgis.com/hcaJWZHFtN5aFHXa/arcgis/rest/services/Travaux_RBLS_ete2024/FeatureServer/0" },
   { name: "Lorraine - Avis de travaux", url: "https://avis.lorraine.ca/avis/travaux-de-refection-des-placettes" },
   { name: "Mascouche - Travaux et entraves", url: "https://www.mascouche.ca/info-travaux" },
   { name: "Mirabel - Info-travaux", url: "https://www.mirabel.ca/travaux" },
@@ -70,6 +75,11 @@ window.SOURCE_CATALOG = [
   { name: "Saint-Joseph-du-Lac - Avis Info-travaux", url: "https://www.sjdl.qc.ca/nouvelles/info-travaux-1/" },
   { name: "Terrebonne - Avis de travaux", url: "https://terrebonne.ca/avis-de-travaux/" },
   { name: "Terrebonne - Carte des travaux", url: "https://cartographie.ville.terrebonne.qc.ca/travaux/" },
+  { name: "Terrebonne - Entraves linéaires FeatureServer", url: "https://services3.arcgis.com/kKl4g5Ltuw8RvFq1/arcgis/rest/services/entrave_vue_publique/FeatureServer/1" },
+  { name: "Terrebonne - Entraves ponctuelles FeatureServer", url: "https://services3.arcgis.com/kKl4g5Ltuw8RvFq1/arcgis/rest/services/entrave_vue_publique/FeatureServer/0" },
+  { name: "Terrebonne - Travaux linéaires FeatureServer", url: "https://services3.arcgis.com/kKl4g5Ltuw8RvFq1/arcgis/rest/services/debut_travaux_vue_citoyens/FeatureServer/1" },
+  { name: "Terrebonne - Travaux surfaciques FeatureServer", url: "https://services3.arcgis.com/kKl4g5Ltuw8RvFq1/arcgis/rest/services/debut_travaux_vue_citoyens/FeatureServer/2" },
+  { name: "Terrebonne - Travaux ponctuels FeatureServer", url: "https://services3.arcgis.com/kKl4g5Ltuw8RvFq1/arcgis/rest/services/debut_travaux_vue_citoyens/FeatureServer/0" },
 
   // Couronne Sud
   { name: "Beauharnois - Carte interactive des travaux", url: "https://ville.beauharnois.qc.ca/carte-interactive" },
@@ -107,3 +117,43 @@ window.SOURCE_CATALOG = [
   { name: "Varennes - Info-travaux", url: "https://www.ville.varennes.qc.ca/services/services-municipaux/info-travaux" },
   { name: "Vaudreuil-Dorion - Info-travaux", url: "https://www.ville.vaudreuil-dorion.qc.ca/fr/services-aux-citoyens/routes-egouts-et-aqueduc/info-travaux" }
 ];
+
+const MAP_SOURCE_NAMES = new Set([
+  "MTMD - Chantiers WFS GeoJSON",
+  "Mobilite Montreal - Fermetures majeures",
+  "Montreal - Carte des entraves",
+  "Baie-d'Urfe - Info-travaux",
+  "Dollard-des-Ormeaux - Info-travaux",
+  "Dorval - Info-travaux",
+  "Dorval - Carte interactive des travaux",
+  "Dorval - Entraves FeatureServer",
+  "Kirkland - Info-travaux",
+  "Pointe-Claire - Grands chantiers",
+  "Westmount - Carte interactive des chantiers",
+  "Longueuil - Info-travaux",
+  "Longueuil - Carte interactive des travaux",
+  "Laval - Carte Info-Travaux",
+  "Laval - Entraves MapServer",
+  "Boisbriand - Travaux FeatureServer",
+  "L'Assomption - Carte Info-travaux",
+  "L'Assomption - Travaux et incidents FeatureServer",
+  "Repentigny - Carte Info-travaux",
+  "Repentigny - Open511 evenements",
+  "Saint-Eustache - Info-travaux",
+  "Saint-Eustache - Entraves lineaires FeatureServer",
+  "Saint-Eustache - Entraves ponctuelles FeatureServer",
+  "Terrebonne - Carte des travaux",
+  "Terrebonne - Entraves linéaires FeatureServer",
+  "Terrebonne - Entraves ponctuelles FeatureServer",
+  "Terrebonne - Travaux linéaires FeatureServer",
+  "Terrebonne - Travaux surfaciques FeatureServer",
+  "Terrebonne - Travaux ponctuels FeatureServer",
+  "Chateauguay - Travaux en cours et a venir",
+  "Chateauguay - Carte interactive des travaux",
+  "Chateauguay - Travaux FeatureServer"
+]);
+
+window.SOURCE_CATALOG = SOURCE_CATALOG.map((source) => ({
+  ...source,
+  inMap: MAP_SOURCE_NAMES.has(source.name)
+}));

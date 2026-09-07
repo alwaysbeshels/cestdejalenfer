@@ -27,6 +27,7 @@ npm run serve
 GitHub Pages publie directement `index.html`, `faq.html`, les dossiers `css`, `js`, `data`, `languages`, `fr`, `en` et `404.html`. Aucun serveur Python ou Node.js n'est requis. La page `404.html` redirige les chemins inconnus vers l'application.
 
 Le catalogue partagé des sources se trouve dans `data/sources.js`. Il alimente le panneau Sources de la carte et le tableau de la section Sources du FAQ; toute nouvelle source ajoutée à ce catalogue apparaît automatiquement dans les deux endroits.
+Chaque entrée possède aussi le drapeau `inMap`; le FAQ n'affiche dans sa section des sources utilisées que les entrées dont `inMap` vaut `true`. Les pages, PDF et sources candidates conservés pour documentation restent à `false` jusqu'à leur intégration réelle dans la carte.
 
 ## Langues
 
@@ -48,6 +49,12 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 - Chargement en direct des entraves de Longueuil depuis son FeatureServer public, avec surfaces et localisations filtrees pour les impacts auto.
 - Ajout des fermetures majeures Mobilité Montréal pour les ponts, tunnels et grands axes lorsque ces entraves ne sont pas dans le flux municipal.
 - Chargement en direct du GeoJSON MTMD publie sur Donnees Quebec pour les travaux routiers Quebec 511, avec géométries lineaires, directions, dates, entraves et détours officiels. Le flux est relu a chaque rafraichissement de la page.
+- Chargement en direct des événements Open511 de Repentigny, avec événements actifs dates, limites routieres, impacts, detours et geometries LineString officielles.
+- Chargement en direct des entraves ArcGIS de Saint-Eustache (lignes et points), de Châteauguay (polygones) et de L'Assomption (incidents ponctuels), avec filtrage des travaux termines, expires ou sans impact automobile.
+- Chargement en direct des entraves actives de Dorval et des travaux dates de Boisbriand depuis leurs couches ArcGIS officielles, avec geometries ponctuelles et filtrage des enregistrements historiques ou de test.
+- Chargement en direct des entraves Terrebonne depuis ses couches ArcGIS publiques de lignes et points, avec statut actif, dates, types d'entrave, horaires, circulation et détours publiés.
+- Quand une source municipale ne publie qu'un point mais fournit explicitement un nom de rue, la carte tente de récupérer uniquement les segments nommés correspondants et conserve une MultiLineString; les points sans axe publié restent des points officiels plutôt qu'une diagonale inventée.
+- Les descriptions qui publient plusieurs rues (par exemple « rues A, B et C ») sont séparées en requêtes de rues nommées indépendantes; les segments retournés restent séparés dans une MultiLineString.
 - Chargement en direct des attributs Laval Info-Travaux et affichage des lignes officielles depuis son MapServer public.
 - Filtres Jour/Nuit, avec la nuit definie comme toute entrave qui touche la plage 23 h à 5 h.
 - Section de sources travaux pour les 15 municipalites independantes de l'ile de Montreal qui ne sont pas toujours couvertes par le WFS de la Ville de Montreal.
@@ -56,6 +63,8 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 - Les fleches sont reduites automatiquement sur les vues tres denses, puis reapparaissent au zoom pour garder la carte lisible.
 - Affichage des zones de travaux en polygones lorsque la Ville publie une zone d'occupation plutot qu'un axe lineaire.
 - Donnees exemples dans `data/closures.js` utilisees seulement comme secours si les APIs publiques ne repondent pas.
+- Les autres liens municipaux du catalogue `data/sources.js` documentent des pages, cartes ou services candidats; ils ne sont pas charges automatiquement tant qu'une reponse structuree, datee, automobile et geometrique n'a pas ete verifiee.
+- Les pages HTML et PDF municipales sont conservees comme sources documentaires lorsqu'elles publient des avis officiels; elles ne deviennent pas automatiquement des entraves cartographiques sans dates, impact automobile et geometrie verifiables.
 
 ## Sources publiques a brancher
 

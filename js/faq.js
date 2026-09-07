@@ -8,7 +8,8 @@ function renderFaqSources() {
 
   sourceList.replaceChildren();
 
-  [...window.SOURCE_CATALOG]
+  window.SOURCE_CATALOG
+    .filter((source) => source.inMap === true)
     .sort((first, second) => first.name.localeCompare(second.name, "fr", { sensitivity: "base" }))
     .forEach((source) => {
     const row = document.createElement("tr");
