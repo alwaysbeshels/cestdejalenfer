@@ -1239,6 +1239,12 @@ button:hover {
   line-height: 1.35;
 }
 
+/* Leaflet's own ".leaflet-popup-content p" rule (17px/1.3em margin) otherwise outranks .popup-meta/.popup-title. */
+.leaflet-popup-content p.popup-meta,
+.leaflet-popup-content p.popup-title {
+  margin: 0 0 6px;
+}
+
 .popup-card {
   display: grid;
   gap: 2px;

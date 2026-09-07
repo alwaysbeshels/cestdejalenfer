@@ -35,10 +35,10 @@ const LAVAL_LAYERS = [
 ];
 
 const GREATER_MONTREAL_BOUNDS = {
-  west: -74.1,
-  south: 45.25,
-  east: -73.2,
-  north: 45.9
+  west: -74.8,
+  south: 45.0,
+  east: -72.8,
+  north: 46.3
 };
 
 const REGIONAL_MAJOR_CLOSURES = [
@@ -831,14 +831,14 @@ const mapFirstVisitHint = document.querySelector("#mapFirstVisitHint");
 const mapFirstVisitClose = document.querySelector("#mapFirstVisitClose");
 const panelResizeHandle = document.querySelector("#panelResizeHandle");
 
+// Regional/pedestrian/linked-city entries are (re)loaded with routed geometry on startup;
+// seeding their un-routed static versions here would let dedupeClosures keep the stale copy.
 let allClosures = [
-  ...window.CLOSURES.map(normalizeLegacyClosure),
-  ...REGIONAL_MAJOR_CLOSURES.map(normalizeRegionalClosure),
-  ...SEASONAL_PEDESTRIAN_STREETS.map(normalizePedestrianStreet),
-  ...LINKED_CITY_WORKS.map(normalizeLinkedCityWork)
+  ...window.CLOSURES.map(normalizeLegacyClosure)
 ];
 let currentClosures = [];
 let selectedClosureId = null;
+let activeMapPopup = null;
 
 const map = L.map("map", {
   preferCanvas: true,
@@ -1220,7 +1220,7 @@ function categoryFromAuthority(authority) {
 function trafficDetailsFromImpact(impactType) {
   switch (impactType) {
     case "blocked":
-      return { severity: "critical", label: "Rue bloquee", impact: "Circulation automobile bloquee sur le segment indique; détour probable." };
+      return { severity: "critical", label: "Autoroute fermée", impact: "Circulation automobile bloquee sur le segment indique; détour probable." };
     case "trafficLane":
       return { severity: "major", label: "Voie de circulation retranchee", impact: "Une voie de circulation est touchée; ralentissements et détours locaux possibles." };
     case "trafficLaneAndParkingLane":
@@ -1235,7 +1235,7 @@ function trafficDetailsFromImpact(impactType) {
 function trafficDetailsFromUciType(type) {
   switch (type) {
     case "Rue fermée":
-      return { severity: "critical", label: "Rue fermée UCI", impact: "Circulation interdite pendant la periode indiquee." };
+      return { severity: "critical", label: "Autoroute fermée UCI", impact: "Circulation interdite pendant la periode indiquee." };
     case "Circulation locale":
       return { severity: "moderate", label: "Circulation locale", impact: "Accès limite aux residents et besoins locaux." };
     case "Double sens":
@@ -1559,20 +1559,41 @@ async function loadLavalClosures() {
 async function loadQuebec511Closures() {
   const data = await fetchJson(LIVE_SOURCES.quebec511);
   return (data.features || [])
-    .filter((feature) => feature.geometry?.coordinates?.length && intersectsGreaterMontreal(feature.bbox))
+    .filter((feature) => feature.geometry?.coordinates?.length && intersectsGreaterMontreal(feature))
     .map(normalizeQuebec511Feature);
 }
 
-function intersectsGreaterMontreal(bbox) {
-  if (!Array.isArray(bbox) || bbox.length < 4) {
+function intersectsGreaterMontreal(feature) {
+  const bounds = Array.isArray(feature?.bbox) && feature.bbox.length >= 4
+    ? feature.bbox
+    : geometryBounds(feature?.geometry?.coordinates);
+
+  if (!Array.isArray(bounds) || bounds.length < 4) {
     return false;
   }
 
-  const [west, south, east, north] = bbox;
+  const [west, south, east, north] = bounds;
   return east >= GREATER_MONTREAL_BOUNDS.west
     && west <= GREATER_MONTREAL_BOUNDS.east
     && north >= GREATER_MONTREAL_BOUNDS.south
     && south <= GREATER_MONTREAL_BOUNDS.north;
+}
+
+function geometryBounds(coordinates) {
+  const flattened = flattenCoordinates(coordinates);
+  if (!flattened.length) {
+    return null;
+  }
+
+  const longitudes = flattened.map(([lon]) => lon);
+  const latitudes = flattened.map(([, lat]) => lat);
+
+  return [
+    Math.min(...longitudes),
+    Math.min(...latitudes),
+    Math.max(...longitudes),
+    Math.max(...latitudes)
+  ];
 }
 
 async function fetchRouteGeometry(routeEndpoints) {
@@ -1828,73 +1849,72 @@ async function fetchJson(url) {
 async function loadOfficialData() {
   showMapStatus(t("map.loading"), "loading");
 
-  const [montrealResult, uciResult, regionalResult, linkedCityResult, longueuilResult, lavalResult, quebec511Result, pedestrianStreetResult] = await Promise.allSettled([
+  const primarySources = await Promise.allSettled([
     fetchJson(LIVE_SOURCES.montreal),
     fetchJson(LIVE_SOURCES.uciRestrictions),
-    loadRegionalClosures(),
-    loadLinkedCityWorks(),
-    loadLongueuilClosures(),
-    loadLavalClosures(),
-    loadQuebec511Closures(),
-    loadSeasonalPedestrianStreets()
+    loadRegionalClosures()
   ]);
 
-  const officialClosures = [];
+  const primaryClosures = [];
   const sourceCounts = [];
+
+  const montrealResult = primarySources[0];
+  const uciResult = primarySources[1];
+  const regionalResult = primarySources[2];
 
   if (montrealResult.status === "fulfilled") {
     const montrealClosures = montrealResult.value.features.flatMap(normalizeMontrealFeature);
-    officialClosures.push(...montrealClosures);
+    primaryClosures.push(...montrealClosures);
     sourceCounts.push(`${montrealClosures.length} entraves auto Montreal`);
   }
 
   if (uciResult.status === "fulfilled") {
     const uciClosures = uciResult.value.features.map(normalizeUciFeature);
-    officialClosures.push(...uciClosures);
+    primaryClosures.push(...uciClosures);
     sourceCounts.push(`${uciClosures.length} segments UCI`);
   }
 
   if (regionalResult.status === "fulfilled") {
-    officialClosures.push(...regionalResult.value);
+    primaryClosures.push(...regionalResult.value);
     sourceCounts.push(`${regionalResult.value.length} fermetures ponts/grands axes alignees aux routes`);
   }
 
-  const pedestrianStreets = pedestrianStreetResult.status === "fulfilled"
-    ? pedestrianStreetResult.value
-    : SEASONAL_PEDESTRIAN_STREETS.map(normalizePedestrianStreet);
-  officialClosures.push(...pedestrianStreets);
-  sourceCounts.push(`${pedestrianStreets.length} rues piétonnes saisonnières`);
-
-  if (quebec511Result.status === "fulfilled") {
-    officialClosures.push(...quebec511Result.value);
-    sourceCounts.push(`${quebec511Result.value.length} entraves Quebec 511 / MTMD`);
-  }
-
-  if (lavalResult.status === "fulfilled") {
-    officialClosures.push(...lavalResult.value);
-    sourceCounts.push(`${lavalResult.value.length} entraves Laval`);
-  }
-
-  if (linkedCityResult.status === "fulfilled") {
-    officialClosures.push(...linkedCityResult.value);
-    sourceCounts.push(`${linkedCityResult.value.length} travaux de villes liées alignes aux rues`);
-  }
-
-  if (longueuilResult.status === "fulfilled") {
-    officialClosures.push(...longueuilResult.value);
-    sourceCounts.push(`${longueuilResult.value.length} entraves Longueuil`);
-  }
-
-  if (officialClosures.length === 0) {
-    showMapStatus(t("map.apiUnavailable"), "error");
+  if (primaryClosures.length > 0) {
+    allClosures = dedupeClosures([...allClosures.filter((closure) => closure.sourceKind !== "fallback"), ...primaryClosures]);
+    showMapStatus(`Donnees initiales chargees: ${sourceCounts.join(" + ")}.`, "ready");
   } else {
-    allClosures = dedupeClosures(officialClosures);
-    showMapStatus(`Donnees chargees: ${sourceCounts.join(" + ")}.`, "ready");
+    showMapStatus(t("map.apiUnavailable"), "error");
   }
 
   map.invalidateSize(true);
   updateView({ fit: true });
   scheduleLavalViewportRefresh();
+
+  loadBackgroundOfficialData();
+}
+
+async function loadBackgroundOfficialData() {
+  const backgroundSources = await Promise.allSettled([
+    loadLinkedCityWorks(),
+    loadSeasonalPedestrianStreets(),
+    loadLongueuilClosures(),
+    loadLavalClosures(),
+    loadQuebec511Closures()
+  ]);
+
+  const additions = [];
+
+  for (const result of backgroundSources) {
+    if (result.status === "fulfilled") {
+      additions.push(...result.value);
+    }
+  }
+
+  if (additions.length > 0) {
+    allClosures = dedupeClosures([...allClosures, ...additions]);
+    updateView({ fit: false });
+    showMapStatus(`Donnees chargees: ${allClosures.length} entraves actives dans la region.`, "ready");
+  }
 }
 
 function dedupeClosures(closures) {
@@ -1970,13 +1990,25 @@ function openGroupedPopup(primaryClosure, latLng) {
 }
 
 function openMapPopup(latLng, content, maxWidth) {
+  if (activeMapPopup && map.hasLayer(activeMapPopup)) {
+    map.closePopup(activeMapPopup);
+  }
+
   const popup = L.popup({
     maxWidth,
     autoPan: false
   })
     .setLatLng(latLng)
-    .setContent(content)
-    .openOn(map);
+    .setContent(content);
+
+  activeMapPopup = popup;
+  popup.on("remove", () => {
+    if (activeMapPopup === popup) {
+      activeMapPopup = null;
+    }
+  });
+
+  popup.openOn(map);
 
   requestAnimationFrame(() => {
     const popupElement = popup.getElement();

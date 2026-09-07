@@ -22,14 +22,21 @@ You are the maintenance engineer for the static web application **Carte des entr
 - A script that throws early kills everything after it. When a feature "does nothing", check whether the whole script crashed before the feature's listener was attached. Look for `ReferenceError` and similar fatal errors first.
 - Consider browser caching: after a fix, the user may still run the old cached file. State when a hard refresh (Cmd+Shift+R) is required, and never claim success before the user can actually load the new file.
 - Report findings honestly: what was proven, what was assumed, and what still needs user-side verification.
+- Prefer a real headless browser (e.g. `npx playwright` with Chromium) over `curl`/`node --check` alone to validate map/UI/popup behavior. Serve the project with `python3 -m http.server 5500`, load `http://localhost:5500/index.html`, and inspect the live Leaflet map instance and rendered layers/popups instead of guessing from source code. Note that `const map = L.map("map", ...)` is shadowed by `window.map` resolving to the `#map` DOM element (named window access); intercept `L.map`/`L.circleMarker`/`L.polyline` via an injected script to capture the real instance when you need to inspect it externally.
+- When a fix does not visibly work, add a single-line temporary `console.log` at the exact branch in question, reproduce with the real browser, read the evidence, then remove the temporary log before finishing. Never leave debug logging in delivered code.
 
 ## Project Contract
 
 - This is a static GitHub Pages application. The deployable project must contain only static assets: HTML, CSS, JavaScript, and data files.
 - Do not add a backend, Python, Node.js server, server-side framework, credentials, API keys, or build pipeline unless the user explicitly requests one.
+- `package.json` exists only for optional local dev tooling (Playwright, for real-browser validation) via `npm install`. It has no production dependencies and must never be required to serve or deploy the site. `node_modules/` is gitignored and never published.
 - `404.html` is the GitHub Pages fallback and must redirect unknown routes to `index.html` while supporting a repository project path such as `https://owner.github.io/repository/`.
-- Use a temporary static server only for local validation. Do not make a runtime server a production dependency. For this project the standard local validation URL is `http://localhost:5500/index.html` and the command is `python3 -m http.server 5500`.
+- Use a temporary static server only for local validation. Do not make a runtime server a production dependency. For this project the standard local validation URL is `http://localhost:5500/index.html` and the command is `python3 -m http.server 5500` (or `npm run serve`).
 - Keep the visual language compact and operational: this is a traffic cockpit, not a marketing page.
+- Cover the entire Greater Montreal metropolitan region, not only the City of Montreal. The map is for road and highway impacts across the metro area, including Montreal, Laval, Longueuil, the South Shore, the North Shore, bridges, viaducts, autoroutes, and road segments affecting motorists in surrounding municipalities.
+- Prioritize official roadwork and traffic-impact sources from MTMD / Quebec 511, Mobilité Montréal, municipal GIS feeds, and regional infrastructure authorities. Do not exclude highways, bridges, access ramps, or route-level work simply because they are outside the city core.
+- Treat road, highway, bridge, viaduct, and access restrictions as first-class entries when they affect automotive circulation in the broader metro area.
+- Any external CDN resource loaded with a Subresource Integrity `integrity` attribute (e.g. `leaflet.css`, `leaflet.js` from unpkg) must have a hash that actually matches the served file. A stale or mistyped hash silently blocks the resource in every browser with no visible error except in devtools/console, breaking marker icons, popup styling, and controls without breaking `node --check` or `curl`. Verify with `curl -s <url> | openssl dgst -sha256 -binary | openssl base64 -A` whenever an `integrity` attribute is added or the linked file's version changes.
 
 ## Primary Files
 
@@ -101,13 +108,15 @@ You are the maintenance engineer for the static web application **Carte des entr
 - Use the official public MTMD GeoJSON supplied through Donnees Quebec in `LIVE_SOURCES.quebec511`:
   `https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson`
 - This source is live: reload it every page refresh. Do not add a daily job or cache unless explicitly requested.
-- Limit records to `GREATER_MONTREAL_BOUNDS` so the traffic map stays focused on Montreal, Laval, Longueuil, and the surrounding metropolitan area. Do not fit the map to province-wide data.
+- Limit records to a deliberately wider `GREATER_MONTREAL_BOUNDS` covering the full Greater Montreal metropolitan region, including surrounding municipalities and regional expressways. Do not fit the map to province-wide data, but do not artificially exclude the wider metro area to the City of Montreal only.
 - Normalize `identificationDesTravaux`, `debut`, `fin`, `miseAJour`, `entrave`, `detoursEtItinerairesFacultatifs`, `localisation`, `direction`, `entraveType`, and the original geometry. Preserve the source direction.
+- If `feature.bbox` is missing or incomplete, calculate geometric bounds from the published coordinates before filtering so the regional coverage does not silently drop valid roadwork records.
 
 ### Mobilite Montreal And Linked Cities
 
 - Retain the curated major-axis restrictions and linked-city works only when their sources remain credible and date-bounded.
 - OSRM is a last resort only for existing linked-city records that have a street axis but no official geometry. Do not use it for highways, bridges, Laval, Longueuil, Montreal WFS, or MTMD GeoJSON records.
+- Never scrape the Mobilité Montréal HTML page (`mobilitemontreal.gouv.qc.ca/fermetures-majeures/`) to synthesize new records. A prior regression parsed its `<h3>` headings and mapped titles to hardcoded guessed coordinates (e.g. a hand-built title-to-lat/lon lookup table with a generic fallback point) — this is exactly the invented-geometry practice this project forbids, and it produced stray unexplained point markers on the map. Only `REGIONAL_MAJOR_CLOSURES` entries with hand-verified, source-checked `geometry`/`routeEndpoints` may represent Mobilité Montréal closures.
 
 ## Map And Filtering Behavior
 
@@ -147,6 +156,13 @@ You are the maintenance engineer for the static web application **Carte des entr
 - Do not commit, create branches, add secrets, or publish to GitHub unless explicitly asked.
 - Do not silently replace an official source with sample data when a live request fails. Show a clear status message and retain the available layers.
 - Keep code ASCII unless the relevant source data or existing file intentionally contains accented French text.
+
+## Known Regression Traps (from past incidents)
+
+- `allClosures` must **not** be seeded at declaration time with the raw, un-routed static versions of any source that also gets reloaded asynchronously with real geometry (`REGIONAL_MAJOR_CLOSURES`, `SEASONAL_PEDESTRIAN_STREETS`, `LINKED_CITY_WORKS`). `dedupeClosures` keeps the first-seen id per closure, so a synchronous seed of the crude/static version permanently blocks the properly OSRM-routed or OSM-geometry version loaded moments later in `loadOfficialData`/`loadBackgroundOfficialData`, producing diagonal lines that ignore real streets. Only `window.CLOSURES` (the documented last-resort fallback) belongs in the initial seed.
+- The `window.CLOSURES` fallback records must be removed from `allClosures` (filter out `sourceKind === "fallback"`) as soon as any live primary source loads successfully. Leaving them merged permanently displays fabricated demo paths (hand-picked 2-3 point lines with no relation to real streets) side by side with real data.
+- `openMapPopup` must both close the previous popup (`activeMapPopup`) AND call `centerPopupInMap` (`requestAnimationFrame` + `panBy` with a second pass on `moveend`) with `L.popup({ autoPan: false })`. Removing the centering call while keeping `autoPan: false` silently reintroduces off-screen/misplaced popups.
+- Leaflet's own `.leaflet-popup-content p { margin: 17px 0; margin: 1.3em 0; }` rule has higher CSS specificity than a bare `.popup-meta`/`.popup-title` class and will win once `leaflet.css` actually loads. Scope popup paragraph spacing overrides as `.leaflet-popup-content p.popup-meta` (or equivalent) rather than the bare class alone.
 
 ## Internationalization
 

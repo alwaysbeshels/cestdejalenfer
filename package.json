@@ -1,0 +1,12 @@
+{
+  "name": "carte-entraves-metro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Outils de developpement local pour la Carte des entraves auto du Grand Montreal (site statique, aucune dependance de production).",
+  "scripts": {
+    "serve": "python3 -m http.server 5500"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

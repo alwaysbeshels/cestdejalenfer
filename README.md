@@ -1,10 +1,22 @@
 # Carte des entraves auto du Grand Montreal
 
-Application statique pour visualiser les fermetures de rues, voies retranchees et restrictions qui compliquent les déplacements en auto dans la region de Montreal, Laval et Longueuil.
+Application statique pour visualiser les fermetures de rues, voies retranchees, autoroutes, ponts, viaducs et restrictions qui compliquent les déplacements en auto dans la region metropolitaine de Montreal, y compris Montreal, Laval, Longueuil, la Rive-Sud, la Rive-Nord et les grands axes de la grande region.
 
 ## Utilisation
 
 La carte est une application statique. Depuis la racine du projet, démarrez le serveur local avec `python3 -m http.server 5500`, puis ouvrez `http://localhost:5500/index.html`. Vous pouvez aussi utiliser l'extension Live Server de VS Code en configurant son port sur `5500`. La commande standard du projet est donc `python3 -m http.server 5500`, et il faut tester sur `localhost:5500`, pas sur un autre port. Elle utilise Leaflet avec le fond OpenStreetMap standard et des données GeoJSON officielles.
+
+## Développement local (optionnel)
+
+Le site lui-même ne nécessite ni Node.js ni installation: c'est du HTML/CSS/JS statique servi tel quel. Un `package.json` est fourni uniquement pour les outils de développement (validation par navigateur automatisé). Si vous clonez le projet et voulez ces outils:
+
+```bash
+npm install
+npx playwright install chromium
+npm run serve
+```
+
+`npm run serve` démarre le même serveur statique local (`python3 -m http.server 5500`) sur `http://localhost:5500`. Le dossier `node_modules/` n'est jamais publié ni requis en production; il est exclu par `.gitignore`.
 
 ## Publication avec GitHub Pages
 
@@ -28,7 +40,7 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 
 ## Ce qui est inclus
 
-- Vraie carte interactive centrée sur Montreal.
+- Vraie carte interactive couvrant la grande region metropolitaine de Montreal.
 - Pan/zoom fluide avec les controles natifs de Leaflet.
 - Filtres par date, recherche texte et categories.
 - Chargement en direct du WFS officiel des entraves de la Ville de Montreal.
