@@ -3282,7 +3282,7 @@ const renderedClosureLayers = new Map();
 function scheduleMapRender() {
   cancelAnimationFrame(mapRenderFrame);
   mapRenderFrame = requestAnimationFrame(() => {
-    renderMap(filterClosuresToViewport(currentClosures));
+    renderMap(currentClosures);
   });
 }
 
@@ -5077,7 +5077,7 @@ function groupedPopupContent(closures) {
 
 function openGroupedPopup(primaryClosure, latLng) {
   selectedClosureId = primaryClosure.id;
-  renderMap(filterClosuresToViewport(currentClosures));
+  renderMap(currentClosures);
   const nearbyClosures = closuresNearLatLng(latLng, primaryClosure);
   openMapPopup(latLng, groupedPopupContent(nearbyClosures), 420);
 }
@@ -5573,7 +5573,7 @@ function updateView({ fit = false } = {}) {
   currentClosures = getFilteredClosures();
   updateImpactCounts();
   updateMapLegend();
-  renderMap(filterClosuresToViewport(currentClosures));
+  renderMap(currentClosures);
   updateLavalOfficialLines();
   updateViewportList();
   setTimeout(() => map.invalidateSize(true), 0);
@@ -5588,7 +5588,7 @@ window.addEventListener("languagechange", () => {
   setSourceSectionOpen(!sourceFilters.hidden);
   menuToggle.setAttribute("aria-label", t(menuToggle.classList.contains("is-open") ? "menu.close" : "menu.open"));
   updateMapLegend();
-  renderMap(filterClosuresToViewport(currentClosures));
+  renderMap(currentClosures);
   updateViewportList();
   updateLavalOfficialLines();
 });
