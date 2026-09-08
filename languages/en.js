@@ -105,6 +105,28 @@ window.TRANSLATIONS.en = {
   "popup.dayNight": "Day and night",
   "popup.night": "Night (11 p.m. to 5 a.m.)",
   "popup.day": "Day",
+  "abbreviation.MTMD": "Ministry of Transport and Sustainable Mobility",
+  "abbreviation.VM": "Ville-Marie",
+  "abbreviation.SO": "Le Sud-Ouest",
+  "abbreviation.RPP": "Rosemont–La Petite-Patrie",
+  "abbreviation.AC": "Ahuntsic-Cartierville",
+  "abbreviation.CDNNDG": "Côte-des-Neiges–Notre-Dame-de-Grâce",
+  "abbreviation.SLR": "Saint-Laurent",
+  "abbreviation.LCH": "LaSalle",
+  "abbreviation.SLN": "Saint-Léonard",
+  "abbreviation.VRD": "Verdun",
+  "abbreviation.VSMPE": "Villeray–Saint-Michel–Parc-Extension",
+  "abbreviation.MHM": "Mercier–Hochelaga-Maisonneuve",
+  "abbreviation.MTN": "Montréal-Nord",
+  "abbreviation.PMR": "Le Plateau-Mont-Royal",
+  "abbreviation.UCI": "Union Cycliste Internationale",
+  "abbreviation.BIXI": "public bike-sharing network",
+  "abbreviation.OSRM": "Open Source Routing Machine",
+  "abbreviation.WFS": "Web Feature Service",
+  "abbreviation.API": "application programming interface",
+  "abbreviation.Open511": "open traffic-event format",
+  "abbreviation.ArcGIS": "geographic services platform",
+  "abbreviation.CKAN": "open-data cataloguing platform",
   "faq.eyebrow": "Road restrictions map",
   "faq.title": "Frequently asked questions",
   "faq.intro": "Useful pointers for using the map and understanding what the displayed restrictions mean for your trip.",
@@ -112,11 +134,19 @@ window.TRANSLATIONS.en = {
   "faq.use": "Using the map",
   "faq.data": "Data and freshness",
   "faq.travel": "Planning a trip",
+  "faq.sectionNav": "FAQ sections",
   "faq.openMap": "Open the road restrictions map",
   "faq.publicNote": "The displayed data is public, but on-site conditions and road signs always take priority.",
   "faq.sourcesCaption": "Sources used by the map",
   "faq.sourcesHeader": "Source",
+  "faq.municipalityHeader": "Municipality",
+  "faq.typeHeader": "Data type",
+  "faq.sourceRegional": "Network / regional",
+  "faq.sourceProvincial": "Provincial",
+  "faq.metroRegion": "Greater Montreal area",
   "faq.linkHeader": "Link",
+  "faq.live": "Live",
+  "faq.snapshot": "Snapshot",
   "faq.top": "Back to top",
   "faq.profile": "My LinkedIn:",
   "faq.feedbackLink": "Comments & Improvements",
@@ -133,31 +163,38 @@ window.TRANSLATIONS.en = {
   ,"faq.q.aboutFeedback": "Would you like to leave feedback or suggest an improvement?"
   ,"faq.a.aboutFeedback": "You can share your comments and ideas through the form"
   ,"faq.q.colors": "What do the colors mean?"
-  ,"faq.a.colors": "Red indicates a closed street or access. Orange indicates an affected traffic lane. Yellow indicates limited access, local traffic or a temporary direction. Pink indicates a parking restriction."
+  ,"faq.a.colors": "<p>The colors represent the traffic impact assigned by the map:</p><ul><li><strong><span class=\"impact-word critical\">Red</span> - Full closure:</strong> motor-vehicle traffic is prohibited on the published segment or access.</li><li><strong><span class=\"impact-word major\">Orange</span> - Lane affected:</strong> at least one traffic lane is removed, closed or reorganized, while the street generally remains open.</li><li><strong><span class=\"impact-word moderate\">Yellow</span> - Limited access:</strong> local traffic, the direction of travel or access conditions are temporarily restricted.</li><li><strong><span class=\"impact-word parking\">Pink</span> - Parking:</strong> car parking spaces are removed or prohibited for a defined period, without a full street closure.</li></ul><p>These are the map's colors; they are not an interpretation of colors used by the original data sources.</p>"
+  ,"faq.q.parkingImpact": "What does the « Parking » impact type mean?"
+  ,"faq.a.parkingImpact": "<p>This category is used when the street remains open, but car parking spaces are removed or prohibited for a defined period. It can include:</p><ul><li><strong>Road work:</strong> parking spaces removed or reserved during construction, even when no traffic lane is closed.</li><li><strong>Temporary restrictions:</strong> parking prohibited for an event, delivery, maintenance operation or other published intervention.</li><li><strong>On-street BIXI stations:</strong> parking spaces occupied by a station that official data identifies as installed in curbside parking. BIXI stations located on a sidewalk, in a park or in an off-street parking facility are not shown as an impact on car parking.</li></ul>"
   ,"faq.q.legend": "Why are some colors missing from the legend?"
   ,"faq.a.legend": "The legend at the bottom of the map follows the choices in the Traffic impact filter. An unchecked category is hidden from the map and removed from the legend."
   ,"faq.q.viewport": "Why does the restriction list change when I move the map?"
   ,"faq.a.viewport": "The Active restrictions section shows only restrictions that intersect the currently visible area. Dates, sources, traffic impact, work period and search are added to this geographic filter."
   ,"faq.q.seeWork": "How can I see the work at a location?"
-  ,"faq.a.seeWork": "You can use the filters and the Active restrictions list in the menu. You can also click a colored line on the map to display the work details, dates and published information."
+  ,"faq.a.seeWork": "You can use the filters and the Active restrictions list in the menu. On the map, click a line, area or marker to open the published details. Points represent official locations when a source does not publish a trace; they do not necessarily show the full length of the worksite."
   ,"faq.q.search": "How can I search for a street or area?"
   ,"faq.a.search": "Use the search field above the restriction list. It searches streets, boroughs, municipalities, authorities, impacts and published directions."
   ,"faq.q.arrows": "Why does an arrow appear on some segments?"
-  ,"faq.a.arrows": "The arrow shows the direction of the published geometry for a segment. It helps distinguish directional restrictions when the source provides a line. At low zoom, some arrows are intentionally hidden to keep the map readable."
+  ,"faq.a.arrows": "The arrow shows the orientation of the displayed geometry for a segment, not necessarily the legal direction of traffic. It helps distinguish directional restrictions when the source provides a line. Arrows are used only for line geometries, and some are hidden at low zoom or in very dense views to keep the map readable."
   ,"faq.q.freshness": "When is the data updated?"
-  ,"faq.a.freshness": "Montreal, Laval, Longueuil and MTMD data are reloaded whenever the page opens or refreshes. Availability and update frequency still depend on each public organization."
+  ,"faq.a.freshness": "<p><strong>Whenever the page opens or refreshes:</strong> live public feeds are requested again from the organizations that publish them. This includes Montreal, Laval, Longueuil, MTMD/Quebec 511 and the available municipal integrations.</p><p><strong>Snapshots:</strong> some sources do not provide a feed that can be used by a static application. Their latest extraction is kept in a local file and marked as “Snapshot” in the source table. These files are updated regularly, but they are not reloaded automatically on every visit.</p><p><strong>Geometry:</strong> OSRM and Overpass may be used to align or complete some geometries. These deterministic results are kept in the browser session cache to avoid repeating the same calculation during the session; restriction data itself is still requested again on a new page load or refresh.</p><p><strong>Limits:</strong> publication frequency, delays and outages depend on each organization. On-site conditions and road signs always take priority.</p>"
   ,"faq.q.sources": "Which sources are used?"
-  ,"faq.a.sources": "The map combines official feeds and public work pages. The table below lists the sources currently used or consulted, with a direct link to each one. It is generated from the app's shared catalog so any new source added to that catalog also appears here."
+  ,"faq.a.sources": "The table below contains only sources that currently contribute data loaded or drawn by the map, including snapshot files used by the application. Documentary pages and candidate sources in the catalog are not shown here until a map loader uses them."
+  ,"faq.a.snapshotNote": "Snapshots are dated extracts from official sources. They are updated very regularly, but they are not live feeds: the last extraction date determines their freshness."
+  ,"faq.q.snapshots": "What are snapshot data, and how often are they updated?"
+  ,"faq.a.snapshots": "Snapshots are dated extracts from official sources kept in local files when their service cannot be loaded directly by a static application. They keep those restrictions available on the map despite that technical limitation. They are updated very regularly, but not automatically on every map visit. The Data type column in the table under the “Which sources are used?” question identifies snapshot sources; to assess their freshness, check the last extraction date associated with the file or the official source."
   ,"faq.q.mtmd": "Why are Quebec 511 restrictions attributed to MTMD?"
   ,"faq.a.mtmd": "Road work comes from the Ministry of Transport and Sustainable Mobility's public GeoJSON, published on Données Québec. This feed provides dates, direction, detours, restriction type and official segment geometry."
   ,"faq.q.laval": "Where does the Laval data come from?"
   ,"faq.a.laval": "It comes from the City of Laval's official Info-Travaux service, the same one behind its public map. That service's standard search does not return geometry, but its identify operation covering the whole territory provides each restriction with its official geometry, dates, restriction type, traffic impact, work type, authority and reference number. Laval restrictions therefore display like every other source, with the same colours, the same list and the same detail cards."
-  ,"faq.q.coverage": "Does the data cover every street?"
+  ,"faq.q.abbreviations": "What do the abbreviations used in the map mean?"
+  ,"faq.a.abbreviations": "<p><strong>MTMD:</strong> Quebec's Ministry of Transport and Sustainable Mobility.</p><p><strong>UCI:</strong> Union Cycliste Internationale, the organization associated with the 2026 cycling world championships.</p><p><strong>BIXI:</strong> Montreal's public bike-sharing network.</p><p><strong>OSRM:</strong> Open Source Routing Machine, used to align some axes with the road network.</p><p><strong>WFS:</strong> Web Feature Service, a standard service for providing geographic data.</p><p><strong>Open511:</strong> an open format and service for publishing traffic-related events.</p><p><strong>ArcGIS:</strong> a geographic services platform used by several public organizations.</p><p><strong>CKAN:</strong> a platform for cataloguing and distributing open data.</p>"
+  ,"faq.q.coverage": "Does the data cover every road?"
   ,"faq.a.coverage": "No. The map depends on restrictions published by the responsible organizations. An urgent closure, private restriction, one-time event or very recent change may appear with a delay or may not be available in public feeds."
   ,"faq.q.navigation": "Does the map replace a navigation app?"
   ,"faq.a.navigation": "No. It helps identify areas at risk and understand restrictions before leaving. Check your route in your usual navigation tool and always follow on-site signs."
-  ,"faq.q.continuous": "Do the dates indicate a continuous closure?"
-  ,"faq.a.continuous": "Not necessarily. A date defines the period during which a restriction may be active. Check the restriction details for hours, direction, affected lanes, detours or exceptions."
+  ,"faq.q.continuous": "Do the dates indicate a continuous restriction?"
+  ,"faq.a.continuous": "Not necessarily. The map also shows temporary restrictions, daytime or nighttime work, lane removals, limited access, parking restrictions and closures that apply only during certain hours. Dates define the general period during which a restriction may apply; they do not automatically mean that the road is closed without interruption. Check the published details for hours, direction, affected lanes, detours and exceptions."
   ,"faq.q.dayNight": "What do the Day and Night filters mean?"
   ,"faq.a.dayNight": "The Night filter keeps restrictions affecting 11 p.m. to 5 a.m. The Day filter shows other restrictions active during the day. A continuous restriction can appear in both categories."
   ,"faq.q.dateFilter": "Why does a restriction not appear after I choose a date?"

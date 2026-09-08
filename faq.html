@@ -12,7 +12,6 @@
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Questions fréquentes | Carte des entraves</title>
   <link rel="icon" href="favicon.ico" sizes="48x48">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="favicon-192.png">
@@ -30,7 +29,7 @@
         <a href="index.html" data-language-page="map" data-i18n="nav.map"></a>
         <button id="languageToggle" class="language-toggle" type="button" aria-label="Passer à l'anglais">EN</button>
       </nav>
-      <nav class="faq-section-nav" aria-label="Sections du FAQ" aria-label="FAQ sections">
+      <nav class="faq-section-nav" data-i18n-aria-label="faq.sectionNav">
         <a href="#about-title" class="faq-section-link" data-i18n="faq.about"></a>
         <a href="#use-title" class="faq-section-link" data-i18n="faq.use"></a>
         <a href="#data-title" class="faq-section-link" data-i18n="faq.data"></a>
@@ -70,7 +69,11 @@
       <div class="faq-list">
         <details>
           <summary data-i18n="faq.q.colors"></summary>
-          <p data-i18n="faq.a.colors"></p>
+          <div class="faq-answer" data-i18n="faq.a.colors"></div>
+        </details>
+        <details>
+          <summary data-i18n="faq.q.parkingImpact"></summary>
+          <div class="faq-answer" data-i18n="faq.a.parkingImpact"></div>
         </details>
         <details>
           <summary data-i18n="faq.q.legend"></summary>
@@ -81,10 +84,14 @@
           <p data-i18n="faq.a.viewport"></p>
         </details>
         <details>
+          <summary data-i18n="faq.q.dayNight"></summary>
+          <p data-i18n="faq.a.dayNight"></p>
+        </details>
+        <details>
           <summary data-i18n="faq.q.seeWork"></summary>
           <p data-i18n="faq.a.seeWork"></p>
         </details>
-        <details>
+        <details hidden>
           <summary data-i18n="faq.q.search"></summary>
           <p data-i18n="faq.a.search"></p>
         </details>
@@ -100,26 +107,35 @@
       <div class="faq-list">
         <details>
           <summary data-i18n="faq.q.freshness"></summary>
-          <p data-i18n="faq.a.freshness"></p>
+          <div class="faq-answer" data-i18n="faq.a.freshness"></div>
         </details>
         <details id="sources-utilisees">
           <summary data-i18n="faq.q.sources"></summary>
           <p data-i18n="faq.a.sources"></p>
+          <p data-i18n="faq.a.snapshotNote"></p>
           <div class="source-table-wrap">
             <table class="source-table">
-              <caption class="visually-hidden" data-i18n="faq.sourcesCaption"></caption>
-              <thead><tr><th scope="col" data-i18n="faq.sourcesHeader"></th><th scope="col" data-i18n="faq.linkHeader"></th></tr></thead>
+              <colgroup><col class="source-col-municipality"><col class="source-col-name"><col class="source-col-type"><col class="source-col-link"></colgroup>
+              <thead><tr><th scope="col" data-source-filter="municipality"></th><th scope="col" data-i18n="faq.sourcesHeader"></th><th scope="col" data-source-filter="dataType"></th><th scope="col" data-i18n="faq.linkHeader"></th></tr></thead>
               <tbody id="faqSourceList"></tbody>
             </table>
           </div>
         </details>
         <details>
+          <summary data-i18n="faq.q.snapshots"></summary>
+          <p data-i18n="faq.a.snapshots"></p>
+        </details>
+        <details hidden>
           <summary data-i18n="faq.q.mtmd"></summary>
           <p data-i18n="faq.a.mtmd"></p>
         </details>
-        <details>
+        <details hidden>
           <summary data-i18n="faq.q.laval"></summary>
           <p data-i18n="faq.a.laval"></p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q.abbreviations"></summary>
+          <div class="faq-answer" data-i18n="faq.a.abbreviations"></div>
         </details>
         <details>
           <summary data-i18n="faq.q.coverage"></summary>
@@ -138,10 +154,6 @@
         <details>
           <summary data-i18n="faq.q.continuous"></summary>
           <p data-i18n="faq.a.continuous"></p>
-        </details>
-        <details>
-          <summary data-i18n="faq.q.dayNight"></summary>
-          <p data-i18n="faq.a.dayNight"></p>
         </details>
         <details>
           <summary data-i18n="faq.q.dateFilter"></summary>

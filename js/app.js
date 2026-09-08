@@ -3686,7 +3686,7 @@ function normalizeLinkedCityWork(closure) {
   const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.moderate;
   return {
     ...closure,
-    category: "linkedCity",
+    category: "municipal",
     sourceKind: "linked-city-work",
     roadType: closure.roadType || roadTypeFromText(`${closure.title} ${closure.streets}`),
     color: severity.color
@@ -3838,7 +3838,7 @@ function normalizeLongueuilFeature(feature, layerKind) {
   return {
     id: `longueuil-${layerKind}-${properties.OBJECTID || properties.GLOBALID}`,
     title: `${roadImpact.label} - ${title}`,
-    category: "longueuil",
+    category: "municipal",
     sourceKind: `longueuil-${layerKind}`,
     responsible: longueuilResponsibleLabel(properties),
     borough: "Longueuil",
@@ -4064,7 +4064,7 @@ function normalizeRepentignyEvent(event) {
   return {
     id: `repentigny-open511-${event.id || event.url}`,
     title: event.headline || event.description || "Entrave routière à Repentigny",
-    category: "linkedCity",
+    category: "municipal",
     sourceKind: "repentigny-open511",
     responsible: "Ville de Repentigny",
     borough: "Repentigny",
@@ -4191,7 +4191,7 @@ async function loadMontRoyalSnapshotClosures() {
     const trafficLabel = hasClosure ? "Fermeture complète" : hasParkingImpact && !hasLaneImpact ? "Stationnement interdit" : hasLaneImpact ? "Voie touchée" : "Accès limité";
     return {
       ...record,
-      category: "linkedCity",
+      category: "municipal",
       sourceKind: "mont-royal-snapshot",
       responsible: "Ville de Mont-Royal",
       borough: "Mont-Royal",
@@ -4218,7 +4218,7 @@ async function loadBeaconsfieldSnapshotClosures() {
     const trafficLabel = hasClosure ? "Fermeture complète" : hasMajor ? "Entrave majeure" : hasLaneImpact ? "Entrave partielle" : "Travaux municipaux";
     return {
       ...record,
-      category: "linkedCity",
+      category: "municipal",
       sourceKind: "beaconsfield-snapshot",
       responsible: "Ville de Beaconsfield",
       borough: "Beaconsfield",
@@ -4302,7 +4302,7 @@ function normalizeMontSaintHilaireFeature(feature) {
   return {
     id: `mont-saint-hilaire-${p.OBJECTID || p.FID}-${p.PROJET}`,
     title: p.PROJET,
-    category: "linkedCity",
+    category: "municipal",
     sourceKind: "mont-saint-hilaire-arcgis",
     responsible: "Ville de Mont-Saint-Hilaire",
     borough: "Mont-Saint-Hilaire",
@@ -4336,7 +4336,7 @@ function normalizeTerrebonneFeature(feature) {
   return {
     id: `terrebonne-${p.globalid || p.OBJECTID}`,
     title: `${p.type_entrave || "Entrave routière"} - ${p.localisation}`,
-    category: "linkedCity",
+    category: "municipal",
     sourceKind: "terrebonne-arcgis",
     responsible: "Ville de Terrebonne",
     borough: "Terrebonne",
@@ -4368,7 +4368,7 @@ function normalizeDorvalFeature(feature) {
   return {
     id: `dorval-${p.FID}`,
     title: `${p.NO_ENTRAVE || "Entrave routière"} - ${description}`,
-    category: "linkedCity",
+    category: "municipal",
     sourceKind: "dorval-arcgis",
     responsible: "Ville de Dorval",
     borough: "Dorval",
@@ -4401,7 +4401,7 @@ function normalizeBoisbriandFeature(feature) {
   return {
     id: `boisbriand-${p.GlobalID || p.OBJECTID}`,
     title: p.Description,
-    category: "linkedCity",
+    category: "municipal",
     sourceKind: "boisbriand-arcgis",
     responsible: "Ville de Boisbriand",
     borough: "Boisbriand",
@@ -4829,7 +4829,7 @@ function normalizeSaintEustacheFeature(feature) {
   return {
     id: `saint-eustache-${p.GlobalID || p.OBJECTID}`,
     title: `${p.TITRE || "Entrave routière"} - ${p.Localisation}`,
-    category: "linkedCity",
+    category: "municipal",
     sourceKind: "saint-eustache-arcgis",
     responsible: p.Responsable || "Ville de Saint-Eustache",
     borough: "Saint-Eustache",
@@ -4868,7 +4868,7 @@ function normalizeChateauguayFeature(feature) {
   return {
     id: `chateauguay-${p.FID}`,
     title: p.NOM,
-    category: "linkedCity",
+    category: "municipal",
     sourceKind: "chateauguay-arcgis",
     responsible: "Ville de Châteauguay",
     borough: "Châteauguay",
@@ -4901,7 +4901,7 @@ function normalizeAssomptionFeature(feature) {
   return {
     id: `assomption-${p.globalid || p.objectid}`,
     title: `${p.type_de_travaux || "Travaux routiers"} - ${p.adresse}`,
-    category: "linkedCity",
+    category: "municipal",
     sourceKind: "assomption-arcgis",
     responsible: p.personne_ressource || "Ville de L'Assomption",
     borough: "L'Assomption",
@@ -5722,7 +5722,7 @@ function normalizeLavalIdentifyResult(result) {
   return {
     id: `laval-${layerId}-${properties.OBJECTID || lavalAttribute(properties, "NO_OBSTRUCTION", "Obstruction # :") || location}`,
     title: `${entrave || result.layerName || "Entrave"} - ${location}`,
-    category: "laval",
+    category: "municipal",
     sourceKind: "laval-mapserver",
     responsible: responsible || "Ville de Laval",
     borough: "Laval",
@@ -5826,6 +5826,121 @@ function radiansToDegrees(value) {
   return value * 180 / Math.PI;
 }
 
+const ABBREVIATION_KEYS = {
+  VM: "abbreviation.VM",
+  SO: "abbreviation.SO",
+  RPP: "abbreviation.RPP",
+  AC: "abbreviation.AC",
+  CDNNDG: "abbreviation.CDNNDG",
+  SLR: "abbreviation.SLR",
+  LCH: "abbreviation.LCH",
+  SLN: "abbreviation.SLN",
+  VRD: "abbreviation.VRD",
+  VSMPE: "abbreviation.VSMPE",
+  MHM: "abbreviation.MHM",
+  MTN: "abbreviation.MTN",
+  PMR: "abbreviation.PMR",
+  MTMD: "abbreviation.MTMD",
+  UCI: "abbreviation.UCI",
+  BIXI: "abbreviation.BIXI",
+  OSRM: "abbreviation.OSRM",
+  WFS: "abbreviation.WFS",
+  API: "abbreviation.API",
+  Open511: "abbreviation.Open511",
+  ArcGIS: "abbreviation.ArcGIS",
+  CKAN: "abbreviation.CKAN"
+};
+
+const MONTREAL_BOROUGH_NAMES = {
+  VM: "Ville-Marie",
+  SO: "Le Sud-Ouest",
+  RPP: "Rosemont–La Petite-Patrie",
+  AC: "Ahuntsic-Cartierville",
+  CDNNDG: "Côte-des-Neiges–Notre-Dame-de-Grâce",
+  SLR: "Saint-Laurent",
+  LCH: "LaSalle",
+  SLN: "Saint-Léonard",
+  VRD: "Verdun",
+  VSMPE: "Villeray–Saint-Michel–Parc-Extension",
+  MHM: "Mercier–Hochelaga-Maisonneuve",
+  MTN: "Montréal-Nord",
+  PMR: "Le Plateau-Mont-Royal"
+};
+
+function closureBoroughLabel(closure) {
+  return MONTREAL_BOROUGH_NAMES[closure.borough] || closure.borough || t("popup.notPublished");
+}
+
+function closureMunicipalityLabel(closure) {
+  const source = String(closure.source || "");
+  const text = `${closure.title || ""} ${closure.streets || ""} ${closure.borough || ""}`;
+  if (/Montréal|Montreal|UCI|Quartier des spectacles|Mobilité Montréal/.test(source)) return "Montréal";
+  if (/Laval/.test(source)) return "Laval";
+  if (/Longueuil/.test(source)) return "Longueuil";
+  if (/Repentigny/.test(source)) return "Repentigny";
+  if (/Mont-Royal/.test(source)) return "Mont-Royal";
+  if (/Beaconsfield/.test(source)) return "Beaconsfield";
+  if (/Saint-Eustache/.test(source)) return "Saint-Eustache";
+  if (/Châteauguay/.test(source)) return "Châteauguay";
+  if (/Assomption/.test(source)) return "L'Assomption";
+  if (/Terrebonne/.test(source)) return "Terrebonne";
+  if (/Mont-Saint-Hilaire/.test(source)) return "Mont-Saint-Hilaire";
+  if (/Dorval/.test(source)) return "Dorval";
+  if (/Boisbriand/.test(source)) return "Boisbriand";
+  if (/Dollard-des-Ormeaux|DDO/.test(source)) return "Dollard-des-Ormeaux";
+  if (/Baie-d'Urfe/.test(source)) return "Baie-d'Urfe";
+  if (/Hampstead/.test(source)) return "Hampstead";
+  if (/Westmount/.test(source)) return "Westmount";
+  if (/Pointe-Claire/.test(source)) return "Pointe-Claire";
+  if (/Kirkland/.test(source)) return "Kirkland";
+  if (/MTMD|Quebec 511/.test(source)) return municipalityFromPublishedText(text);
+  if (/OpenStreetMap|OSRM|Overpass/.test(source)) return t("faq.sourceRegional");
+  return closure.responsible || t("popup.notPublished");
+}
+
+function municipalityFromPublishedText(text) {
+  const municipalities = [
+    "Montréal", "Montreal", "Laval", "Longueuil", "Brossard", "Boucherville", "Dorval",
+    "Pointe-Claire", "Kirkland", "Westmount", "Hampstead", "Dollard-des-Ormeaux", "Repentigny",
+    "Terrebonne", "Boisbriand", "Saint-Eustache", "Châteauguay", "L'Assomption", "Mascouche",
+    "Mont-Saint-Hilaire", "Saint-Lambert", "Beloeil", "La Prairie", "Mirabel", "Blainville"
+  ];
+  const match = municipalities.find((municipality) => text.toLocaleLowerCase("fr").includes(municipality.toLocaleLowerCase("fr")));
+  return match ? match.replace("Montreal", "Montréal") : t("faq.metroRegion");
+}
+
+function addAbbreviationTooltips(container) {
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  let node;
+  while ((node = walker.nextNode())) {
+    if (node.parentElement?.closest(".abbr-tooltip")) continue;
+    if (Object.keys(ABBREVIATION_KEYS).some((abbreviation) => node.nodeValue.includes(abbreviation))) {
+      textNodes.push(node);
+    }
+  }
+
+  const pattern = new RegExp(`\\b(${Object.keys(ABBREVIATION_KEYS).sort((a, b) => b.length - a.length).join("|")})\\b`, "g");
+  textNodes.forEach((textNode) => {
+    const fragment = document.createDocumentFragment();
+    let lastIndex = 0;
+    textNode.nodeValue.replace(pattern, (match, abbreviation, offset) => {
+      fragment.append(document.createTextNode(textNode.nodeValue.slice(lastIndex, offset)));
+      const label = document.createElement("span");
+      label.className = "abbr-tooltip";
+      label.tabIndex = 0;
+      label.dataset.tooltip = t(ABBREVIATION_KEYS[abbreviation]);
+      label.textContent = match;
+      label.setAttribute("aria-label", `${match}: ${label.dataset.tooltip}`);
+      fragment.append(label);
+      lastIndex = offset + match.length;
+      return match;
+    });
+    fragment.append(document.createTextNode(textNode.nodeValue.slice(lastIndex)));
+    textNode.replaceWith(fragment);
+  });
+}
+
 function renderList(closures) {
   if (closures.length === 0) {
     const emptyCard = document.createElement("article");
@@ -5847,8 +5962,9 @@ function renderList(closures) {
     card.innerHTML = `
       <div class="badge-row">
         <span class="badge severity-badge">${escapeHtml(closureImpactLabel(closure))}</span>
+        <span class="badge">${escapeHtml(closureMunicipalityLabel(closure))}</span>
         <span class="badge">${escapeHtml(meta.label())}</span>
-        <span class="badge">${escapeHtml(closure.borough)}</span>
+        ${closureBoroughLabel(closure) !== closureMunicipalityLabel(closure) ? `<span class="badge">${escapeHtml(closureBoroughLabel(closure))}</span>` : ""}
       </div>
       <h3>${escapeHtml(closure.title)}</h3>
       <p class="meta">${escapeHtml(closure.streets)}</p>
@@ -5857,6 +5973,7 @@ function renderList(closures) {
       <p class="meta"><strong>Impact auto:</strong> ${escapeHtml(closure.impact)}</p>
       <p class="meta"><strong>Direction:</strong> ${escapeHtml(closure.direction)}</p>
     `;
+    addAbbreviationTooltips(card);
     card.addEventListener("click", () => focusClosure(closure, { openPopup: true }));
     card.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
