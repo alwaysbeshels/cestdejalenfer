@@ -6070,23 +6070,23 @@ dateStart.addEventListener("change", () => {
   if (parseDate(dateStart.value) > parseDate(dateEnd.value)) {
     dateEnd.value = dateStart.value;
   }
-  updateView({ fit: true });
+  updateView({ fit: false });
 });
-dateEnd.addEventListener("change", () => updateView({ fit: true }));
+dateEnd.addEventListener("change", () => updateView({ fit: false }));
 todayDates.addEventListener("click", () => {
   const today = formatInputDate(new Date());
   dateStart.value = today;
   dateEnd.value = today;
-  updateView({ fit: true });
+  updateView({ fit: false });
 });
 let searchFilterTimer = null;
 searchFilter.addEventListener("input", () => {
   clearTimeout(searchFilterTimer);
-  searchFilterTimer = setTimeout(() => updateView({ fit: true }), 160);
+  searchFilterTimer = setTimeout(() => updateView({ fit: false }), 160);
 });
-categoryFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: true })));
-impactFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: true })));
-timeFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: true })));
+categoryFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: false })));
+impactFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: false })));
+timeFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: false })));
 dateHelp.addEventListener("click", () => {
   dateHelpBubble.hidden = !dateHelpBubble.hidden;
 });
