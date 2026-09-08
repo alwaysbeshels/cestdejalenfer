@@ -77,6 +77,15 @@ Consequence : l'enrichissement des geometries ne peut pas etre valide en direct 
 - Une entree passe a `true` uniquement si elle est chargee par `js/app.js`, ou si elle est citee comme `sourceUrl` d'une entrave reellement affichee, ou s'il s'agit du fond de carte ou d'un service de geometrie utilise.
 - Verifier la verite terrain en listant a l'execution les valeurs distinctes de `source` et `sourceUrl` dans `allClosures`, plutot qu'en se fiant au catalogue.
 
+### 2.7 Classification des categories: jamais par la couleur
+
+- **NE JAMAIS** deduire la gravite, la categorie ou le type d'impact d'une couleur publiee par une source: `couleurLigne`, `drawingInfo` ou symboles ArcGIS, styles KML, pastilles de legende, classes CSS d'un site, couleurs lues dans une image rendue. Une couleur est un choix d'affichage, elle change sans preavis et plusieurs sources emploient la meme couleur pour des impacts differents.
+- Classer uniquement a partir des champs publies, typés ou textuels, ou de l'identite de la couche.
+- La palette `SEVERITY_META` s'applique **apres** la decision de gravite. On ne relit jamais une couleur pour en deduire une categorie.
+- Une ampleur n'est pas un type d'impact: `entraveType` du MTMD ne dit que `Mineure` ou `Majeure`, c'est le texte `entrave` qui indique ce qui est ferme.
+- Une voie n'est pas une route: « Fermeture de 1 voie sur 2 » est `major`, pas `critical`.
+- Quand une source publie une gravite enumeree, mapper explicitement chaque valeur documentee et ne jamais laisser une valeur inconnue retomber sur `critical`.
+
 ---
 
 ## 3. Etat exact du depot

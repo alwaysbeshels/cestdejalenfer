@@ -24,6 +24,12 @@ You maintain static municipal roadwork snapshots for **Carte des entraves auto d
 - Use per-source failure isolation. One municipal source failure must not discard snapshots or records from other municipalities.
 - Never commit, push, add secrets, add a backend, or install dependencies unless explicitly requested by the user.
 
+## Severity classification: never from colours
+
+- **NEVER** derive severity, category, or impact type from a colour found in the source: map pin colours, KML styles, legend swatches, CSS classes, or colours sampled from a screenshot or rendered tile. Colours are presentation choices and carry no data contract.
+- Classify only from published textual or typed fields, such as the published impact labels, work type, or status.
+- Distinguish a lane closure from a road closure: a single lane closed is `major`, not `critical`.
+
 ## Required snapshot schema
 
 Each snapshot should be valid JSON with this shape:

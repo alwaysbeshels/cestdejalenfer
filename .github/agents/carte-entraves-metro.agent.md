@@ -99,6 +99,15 @@ You are the maintenance engineer for the static web application **Carte des entr
 - Deliberately use surfaces only. Do not add the `Localisation` point layer without a deduplication design, because it duplicates most surface records and creates markers on the coloured zones.
 - Normalize only dated records with a meaningful automobile impact. Preserve polygons and use `representativePoint` only for focusing/popup positioning.
 
+### Severity And Category Classification
+
+- **NEVER** derive severity, category, impact type, or any classification from a colour published by a source. This includes `couleurLigne`, ArcGIS `drawingInfo` and symbol colours, legend swatches, KML/KMZ styles, CSS classes of a source website, and colours read from a rendered image or tile. A colour is a presentation choice: it changes without notice, it is not part of any data contract, and different sources reuse the same colour for different impacts.
+- Always classify from published structured or textual fields: typed enumerations such as `streetImpactType`, published severity fields, layer identity, or the published description text.
+- Colour flows in one direction only. Our own `SEVERITY_META` palette is applied **after** severity has been decided. Never read a colour back to infer a category.
+- Do not classify from an aggregate magnitude field when it does not describe the impact type. MTMD's `entraveType` only says `Mineure` or `Majeure`; the text in `entrave` is what states whether a road, an access or a single lane is closed.
+- Distinguish a lane closure from a road closure. `Fermeture de 1 voie sur 2` is `major`, not `critical`. A regression here classified 114 minor worksites as full closures.
+- When a source publishes an enumerated severity, map every documented value explicitly and never let an unmapped or unknown value fall through to `critical`.
+
 ### Laval
 
 - Laval's MapServer `query` endpoint returns `geometry: null` for every record, verified in both `f=json` and `f=geojson` with `returnGeometry=true`. This is a source constraint, not a reason to invent route geometry.

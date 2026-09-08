@@ -3723,16 +3723,32 @@ function normalizeQuebec511Feature(feature) {
 }
 
 function quebec511TrafficDetails(properties) {
-  const text = `${properties.entraveType || ""} ${properties.entrave || ""}`.toLowerCase();
-  if (/ferm|fermeture compl|route barr|autoroute barr/.test(text)) {
-    return { severity: "critical", label: "Fermeture routière" };
-  }
-  if (/stationnement/.test(text)) {
+  // entraveType ne publie que l'ampleur des travaux (Mineure/Majeure); seul le
+  // texte d'entrave decrit ce qui est reellement ferme.
+  const entrave = String(properties.entrave || "").toLowerCase();
+
+  if (/stationnement/.test(entrave)) {
     return { severity: "parking", label: "Stationnement touche" };
   }
-  if (/alternance|voie|entrave|circulation/.test(text)) {
+
+  if (/fermeture\s+compl[eè]te|route\s+barr|autoroute\s+barr/.test(entrave)) {
+    return { severity: "critical", label: "Fermeture routière" };
+  }
+
+  // "Fermeture de 1 voie sur 2" ou "voie de virage fermee" laissent la route ouverte.
+  if (/\bvoies?\b/.test(entrave) && /ferm/.test(entrave) && !/voie\s+de\s+desserte/.test(entrave)) {
+    return { severity: "major", label: "Voie fermée" };
+  }
+
+  if (/\b(?:route|autoroute|pont|tunnel|viaduc|chauss[eé]e|chemin|rue|avenue|boulevard|acc[eè]s|sortie|entr[eé]e|bretelles?|desserte|traverse)\b[^]{0,40}?ferm/.test(entrave)
+    || /\bferm[ée]e?s?\b/.test(entrave)) {
+    return { severity: "critical", label: "Fermeture routière" };
+  }
+
+  if (/alternance|contresens|d[eé]vi|r[eé]tr[eé]ci|\bvoies?\b|circulation/.test(entrave)) {
     return { severity: "major", label: "Voie touchée" };
   }
+
   return { severity: "moderate", label: "Accès limite" };
 }
 
@@ -4036,7 +4052,10 @@ function normalizeRepentignyEvent(event) {
     return null;
   }
 
-  const severity = event.severity === "MAJOR" ? "major" : event.severity === "MINOR" ? "moderate" : "critical";
+  // Open511 publie UNKNOWN, MINOR, MODERATE ou MAJOR: aucune de ces valeurs ne
+  // signifie une fermeture complete, seul le texte publie l'indique.
+  const traffic = repentignyTrafficDetails(event);
+  const severity = traffic.severity;
   const geometry = event.geography;
   const sourceUrl = event.url?.startsWith("http")
     ? event.url
@@ -4052,7 +4071,7 @@ function normalizeRepentignyEvent(event) {
     startDate: startDate.slice(0, 10),
     endDate: endDate.split("T")[0],
     impact: [event.description, event.detour].filter(Boolean).join(" - ") || "Impact automobile publié par la Ville de Repentigny.",
-    trafficLabel: event.severity === "MAJOR" ? "Voie touchée" : "Accès limité",
+    trafficLabel: traffic.label,
     severity,
     roadType: roadTypeFromText(`${road.name} ${event.headline || ""}`),
     periods: ["day", "night"],
@@ -4065,6 +4084,29 @@ function normalizeRepentignyEvent(event) {
     point: representativePoint(geometry),
     rawType: event.event_type
   };
+}
+
+function repentignyTrafficDetails(event) {
+  const text = `${event.headline || ""} ${event.description || ""}`.toLowerCase();
+  const published = String(event.severity || "").toUpperCase();
+
+  if (/\bvoies?\b/.test(text) && /ferm/.test(text)) {
+    return { severity: "major", label: "Voie fermée" };
+  }
+
+  if (/fermeture\s+compl[eè]te|\b(?:route|rue|chemin|pont|boulevard|avenue|acc[eè]s|bretelle)\b[^]{0,40}?ferm|\bbarr[ée]e?s?\b/.test(text)) {
+    return { severity: "critical", label: "Fermeture complète" };
+  }
+
+  if (published === "MAJOR") {
+    return { severity: "major", label: "Voie touchée" };
+  }
+
+  if (published === "MODERATE" || published === "MINOR") {
+    return { severity: "moderate", label: "Accès limité" };
+  }
+
+  return { severity: "major", label: "Voie touchée" };
 }
 
 async function loadMunicipalArcgisClosures() {

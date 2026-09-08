@@ -88,6 +88,13 @@ Cette app est un **cockpit de trafic** pour le Grand Montreal (métro + villes l
 
 ## 🎯 Points d'Attention Connus
 
+### Classification des catégories: JAMAIS par la couleur
+**Interdit**: déduire la gravité ou la catégorie d'une couleur publiée par une source (`couleurLigne`, `drawingInfo`, symboles ArcGIS, styles KML, pastilles de légende, pixels d'une image rendue). Une couleur est un choix d'affichage: elle change sans préavis et n'a aucune valeur contractuelle.
+**Obligatoire**: classer à partir des champs publiés, typés ou textuels, ou de l'identité de la couche.
+**Sens unique**: notre palette `SEVERITY_META` s'applique APRES la décision de gravité; on ne relit jamais une couleur pour en déduire une catégorie.
+**Ampleur n'est pas type d'impact**: `entraveType` du MTMD ne dit que `Mineure` ou `Majeure`; c'est le texte `entrave` qui indique ce qui est fermé.
+**Voie ≠ route**: « Fermeture de 1 voie sur 2 » est `major`, pas `critical`.
+
 ### Flicker Panning/Zoom
 **Cause**: Canvas renderer padding trop bas clipe geometry aux bordures de viewport
 **Fix**: `L.canvas({ padding: 2.0 })` ligne 3278
