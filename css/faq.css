@@ -220,6 +220,26 @@ details p {
   line-height: 1.55;
 }
 
+.faq-answer {
+  padding: 0 16px 16px;
+  color: var(--muted);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.faq-answer p {
+  padding: 0;
+}
+
+.faq-answer ul {
+  margin: 0.25rem 0 0.9rem;
+  padding-left: 1.25rem;
+}
+
+.faq-answer li + li {
+  margin-top: 0.55rem;
+}
+
 details .profile-link {
   margin-top: -8px;
   color: var(--ink);

@@ -51,7 +51,7 @@ window.TRANSLATIONS.en = {
   "filters.sourceGroupLabel": "Restriction authority or source",
   "filters.impact": "Traffic impact",
   "filters.impactHelpLabel": "Information about traffic impact types",
-  "filters.impactHelp": "<p><strong>Full closure:</strong> traffic is prohibited on the published segment.</p><p><strong>Lane affected:</strong> a traffic lane is removed.</p><p><strong>Limited access:</strong> local traffic or a temporary direction.</p><p><strong>Parking:</strong> the street remains open, but parking is removed or prohibited.</p>",
+  "filters.impactHelp": "<p><strong>Full closure:</strong> traffic is prohibited on the published segment.</p><p><strong>Lane affected:</strong> a traffic lane is removed.</p><p><strong>Limited access:</strong> local traffic or a temporary direction.</p><p><strong>Parking:</strong> car parking spaces are removed or prohibited for a defined period while the street remains open.</p>",
   "filters.impactGroupLabel": "Traffic impact types",
   "filters.critical": "Full closure",
   "filters.major": "Lane affected",
@@ -89,6 +89,7 @@ window.TRANSLATIONS.en = {
   "category.laval": "Laval",
   "category.longueuil": "Longueuil",
   "category.strike": "Strikes / demonstrations",
+  "category.bixi": "BIXI stations on-street",
   "laval.closed": "Closed streets",
   "laval.partial": "Partial restriction",
   "laval.planned": "Planned restriction",
@@ -133,7 +134,9 @@ window.TRANSLATIONS.en = {
   ,"faq.q.aboutFeedback": "Would you like to leave feedback or suggest an improvement?"
   ,"faq.a.aboutFeedback": "You can share your comments and ideas through the form"
   ,"faq.q.colors": "What do the colors mean?"
-  ,"faq.a.colors": "Red indicates a closed street or access. Orange indicates an affected traffic lane. Yellow indicates limited access, local traffic or a temporary direction. Pink indicates a parking restriction."
+  ,"faq.a.colors": "<p>The colors represent the traffic impact assigned by the map:</p><ul><li><strong>Red - Full closure:</strong> motor-vehicle traffic is prohibited on the published segment or access.</li><li><strong>Orange - Lane affected:</strong> at least one traffic lane is removed, closed or reorganized, while the street generally remains open.</li><li><strong>Yellow - Limited access:</strong> local traffic, the direction of travel or access conditions are temporarily restricted.</li><li><strong>Pink - Parking:</strong> car parking spaces are removed or prohibited for a defined period, without a full street closure.</li></ul><p>These are the map's colors; they are not an interpretation of colors used by the original data sources.</p>"
+  ,"faq.q.parkingImpact": "What does the « Parking » impact type mean?"
+  ,"faq.a.parkingImpact": "<p>This category is used when the street remains open, but car parking spaces are removed or prohibited for a defined period. It can include:</p><ul><li><strong>Road work:</strong> parking spaces removed or reserved during construction, even when no traffic lane is closed.</li><li><strong>Temporary restrictions:</strong> parking prohibited for an event, delivery, maintenance operation or other published intervention.</li><li><strong>On-street BIXI stations:</strong> parking spaces occupied by a station that official data identifies as installed in curbside parking. BIXI stations located on a sidewalk, in a park or in an off-street parking facility are not shown as an impact on car parking.</li></ul>"
   ,"faq.q.legend": "Why are some colors missing from the legend?"
   ,"faq.a.legend": "The legend at the bottom of the map follows the choices in the Traffic impact filter. An unchecked category is hidden from the map and removed from the legend."
   ,"faq.q.viewport": "Why does the restriction list change when I move the map?"

@@ -1,6 +1,7 @@
 const SOURCE_CATALOG = [
   // Fond de carte et services de geometrie
   { name: "OpenStreetMap - Fond de carte", url: "https://www.openstreetmap.org/copyright" },
+  { name: "BIXI Montréal - état des stations GBFS", url: "https://bixi.com/fr/donnees-ouvertes/" },
   { name: "OSRM - Alignement des trajets sur le reseau routier", url: "https://router.project-osrm.org/" },
   { name: "Overpass / OpenStreetMap - Geometrie des rues nommees", url: "https://overpass-api.de/" },
 
@@ -166,6 +167,7 @@ const SOURCE_CATALOG = [
 // Sources reellement chargees ou affichees comme origine d'une entrave sur la carte.
 const MAP_SOURCE_NAMES = new Set([
   "OpenStreetMap - Fond de carte",
+  "BIXI Montréal - état des stations GBFS",
   "OSRM - Alignement des trajets sur le reseau routier",
   "Overpass / OpenStreetMap - Geometrie des rues nommees",
   "MTMD - Chantiers WFS GeoJSON",

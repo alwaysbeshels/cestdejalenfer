@@ -8,7 +8,8 @@ const CATEGORY_META = {
   q511: { label: () => t("category.q511") },
   laval: { label: () => t("category.laval") },
   longueuil: { label: () => t("category.longueuil") },
-  strike: { label: () => t("category.strike") }
+  strike: { label: () => t("category.strike") },
+  bixi: { label: () => t("category.bixi") }
 };
 
 const SEVERITY_META = {
@@ -74,7 +75,8 @@ const LIVE_SOURCES = {
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
   // WFS MTMD Quebec 511 - evenements (fermetures, incidents, restrictions)
-  quebec511Events: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:evenements&srsname=EPSG:4326&outputformat=geojson"
+  quebec511Events: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:evenements&srsname=EPSG:4326&outputformat=geojson",
+  bixiGbfs: "https://gbfs.velobixi.com/gbfs/2-2/gbfs.json"
 };
 
 // Phase 2 Validé - 3 couches ArcGIS Laval confirmées
@@ -3682,6 +3684,98 @@ function normalizePedestrianStreet(closure) {
   };
 }
 
+function localizedGbfsText(value) {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (!Array.isArray(value)) {
+    return "";
+  }
+
+  return value.find((item) => item?.language === currentLanguage())?.text
+    || value.find((item) => item?.language === "fr")?.text
+    || value[0]?.text
+    || "";
+}
+
+function normalizeBixiStation(station, status) {
+  if (station.parking_type !== "street_parking") {
+    return null;
+  }
+
+  const latitude = Number(station.lat);
+  const longitude = Number(station.lon);
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+    return null;
+  }
+
+  const name = localizedGbfsText(station.name) || `Station ${station.station_id}`;
+  const address = station.address || station.cross_street || "Localisation publiée par BIXI";
+  const capacity = Number.isFinite(Number(station.capacity)) ? Number(station.capacity) : null;
+  const availableBikes = Number.isFinite(Number(status?.num_vehicles_available))
+    ? Number(status.num_vehicles_available)
+    : null;
+  const availableDocks = Number.isFinite(Number(status?.num_docks_available))
+    ? Number(status.num_docks_available)
+    : null;
+  const statusText = status?.is_installed === false ? "Station non installée actuellement."
+    : status?.is_renting === false && status?.is_returning === false ? "Station temporairement inactive."
+      : "Station installée sur le bord de rue.";
+
+  return {
+    id: `bixi-street-parking-${station.station_id}`,
+    title: `Station BIXI - ${name}`,
+    category: "bixi",
+    sourceKind: "bixi-street-parking",
+    responsible: "BIXI Montréal",
+    borough: station.city || "Montréal",
+    startDate: "",
+    endDate: "",
+    impact: "Emprise de stationnement en bordure de rue publiée par BIXI.",
+    trafficLabel: "Stationnement retiré",
+    severity: "parking",
+    roadType: "street",
+    periods: ["day", "night"],
+    direction: "La rue demeure ouverte; des places de stationnement sont occupées par la station BIXI.",
+    streets: address,
+    source: "BIXI Montréal - état des stations GBFS",
+    sourceUrl: "https://bixi.com/fr/donnees-ouvertes/",
+    color: SEVERITY_META.parking.color,
+    geometry: { type: "Point", coordinates: [longitude, latitude] },
+    point: [longitude, latitude],
+    details: [
+      ["Type d'emprise publié", "street_parking (stationnement en bordure de rue)"],
+      ["Capacité de la station", capacity === null ? "Non publiée" : capacity],
+      ["Vélos disponibles", availableBikes === null ? "Non publié" : availableBikes],
+      ["Bornes disponibles", availableDocks === null ? "Non publiées" : availableDocks],
+      ["État", statusText]
+    ]
+  };
+}
+
+async function loadBixiStations() {
+  const discovery = await fetchJson(LIVE_SOURCES.bixiGbfs, { cache: false });
+  const feedGroups = discovery.data?.feeds
+    ? [discovery.data.feeds]
+    : Object.values(discovery.data || {}).filter(Array.isArray);
+  const feeds = feedGroups.flat();
+  const informationUrl = feeds.find((feed) => feed.name === "station_information")?.url;
+  const statusUrl = feeds.find((feed) => feed.name === "station_status")?.url;
+  if (!informationUrl || !statusUrl) {
+    throw new Error("Flux GBFS BIXI incomplet: station_information ou station_status absent");
+  }
+
+  const [information, status] = await Promise.all([
+    fetchJson(informationUrl, { cache: false }),
+    fetchJson(statusUrl, { cache: false })
+  ]);
+  const statusById = new Map((status.data?.stations || []).map((item) => [String(item.station_id), item]));
+  return (information.data?.stations || [])
+    .map((station) => normalizeBixiStation(station, statusById.get(String(station.station_id))))
+    .filter(Boolean);
+}
+
 function normalizeLinkedCityWork(closure) {
   const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.moderate;
   return {
@@ -5394,7 +5488,8 @@ async function loadBackgroundOfficialData() {
     loadMontSaintHilaireClosures(),
     loadMontRoyalSnapshotClosures(),
     loadBeaconsfieldSnapshotClosures(),
-    loadMontrealPedestrianSnapshotClosures()
+    loadMontrealPedestrianSnapshotClosures(),
+    loadBixiStations()
   ]);
 
   const additions = [];

@@ -51,7 +51,7 @@ window.TRANSLATIONS.fr = {
   "filters.sourceGroupLabel": "Responsable ou source des entraves",
   "filters.impact": "Type d'impact",
   "filters.impactHelpLabel": "Information sur les types d'impact",
-  "filters.impactHelp": "<p><strong>Fermeture complète:</strong> circulation interdite sur le segment publié.</p><p><strong>Voie touchée:</strong> une voie de circulation est retranchée.</p><p><strong>Accès limité:</strong> circulation locale ou sens temporaire.</p><p><strong>Stationnement:</strong> la rue reste ouverte, mais le stationnement est retiré ou interdit.</p>",
+  "filters.impactHelp": "<p><strong>Fermeture complète:</strong> circulation interdite sur le segment publié.</p><p><strong>Voie touchée:</strong> une voie de circulation est retranchée.</p><p><strong>Accès limité:</strong> circulation locale ou sens temporaire.</p><p><strong>Stationnement:</strong> des places de stationnement pour voitures sont retirées ou interdites pour une période déterminée, tandis que la rue demeure ouverte.</p>",
   "filters.impactGroupLabel": "Types d'impact sur la circulation",
   "filters.critical": "Fermeture complète",
   "filters.major": "Voie touchée",
@@ -89,6 +89,7 @@ window.TRANSLATIONS.fr = {
   "category.laval": "Laval",
   "category.longueuil": "Longueuil",
   "category.strike": "Grèves / manifestations",
+  "category.bixi": "Stations BIXI sur rue",
   "laval.closed": "Rues barrées",
   "laval.partial": "Entrave partielle",
   "laval.planned": "Entrave planifiée",
@@ -133,7 +134,9 @@ window.TRANSLATIONS.fr = {
   ,"faq.q.aboutFeedback": "Vous aimeriez laisser un commentaire ou proposer une amélioration?"
   ,"faq.a.aboutFeedback": "Vous pouvez partager vos commentaires et vos idées dans le formulaire"
   ,"faq.q.colors": "Que signifient les couleurs?"
-  ,"faq.a.colors": "Le rouge indique une rue ou un accès fermé. L'orange signale une voie de circulation touchée. Le jaune correspond à un accès limité, à une circulation locale ou à un sens temporaire. Le rose indique une entrave de stationnement."
+  ,"faq.a.colors": "<p>Les couleurs représentent le type d'impact automobile attribué par la carte:</p><ul><li><strong>Rouge - Fermeture complète:</strong> la circulation automobile est interdite sur le segment ou l'accès publié.</li><li><strong>Orange - Voie touchée:</strong> au moins une voie de circulation est retranchée, fermée ou réorganisée, mais la rue demeure généralement ouverte.</li><li><strong>Jaune - Accès limité:</strong> la circulation locale, le sens de circulation ou les conditions d'accès sont temporairement restreints.</li><li><strong>Rose - Stationnement:</strong> des places de stationnement pour voitures sont retirées ou interdites pour une période déterminée, sans fermeture complète de la rue.</li></ul><p>Ces couleurs sont celles de la carte et ne servent pas à interpréter les couleurs utilisées par les sources originales.</p>"
+  ,"faq.q.parkingImpact": "Que signifie le type d'impact « Stationnement »?"
+  ,"faq.a.parkingImpact": "<p>Cette catégorie est utilisée lorsque la rue demeure ouverte, mais que des places de stationnement pour voitures sont retirées ou interdites pour une période déterminée. Elle peut notamment signaler:</p><ul><li><strong>Des travaux routiers:</strong> des places de stationnement supprimées ou réservées pendant un chantier, même si aucune voie de circulation n'est fermée.</li><li><strong>Des entraves temporaires:</strong> du stationnement interdit pour un événement, une livraison, une opération d'entretien ou une autre intervention publiée.</li><li><strong>Des stations BIXI sur rue:</strong> des places de stationnement occupées par une station que les données officielles identifient comme installée dans du stationnement en bordure de rue. Les stations BIXI situées sur un trottoir, dans un parc ou dans un stationnement hors rue ne sont pas affichées comme un impact sur le stationnement automobile.</li></ul>"
   ,"faq.q.legend": "Pourquoi certaines couleurs ne figurent-elles pas dans la légende?"
   ,"faq.a.legend": "La légende au bas de la carte suit les choix du filtre « Type d'impact ». Une catégorie décochée est masquée sur la carte et retirée de la légende."
   ,"faq.q.viewport": "Pourquoi la liste des entraves change-t-elle lorsque je déplace la carte?"
