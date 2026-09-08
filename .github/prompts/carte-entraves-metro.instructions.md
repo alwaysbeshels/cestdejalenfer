@@ -72,12 +72,13 @@ Cette app est un **cockpit de trafic** pour le Grand Montreal (métro + villes l
 
 ### Sources Officielles Actuelles
 - Montreal WFS
-- Quebec 511 / MTMD GeoJSON
+- Quebec 511 / MTMD GeoJSON (chantiers et evenements)
 - UCI restrictions
 - Longueuil surfaces
-- Laval MapServer
+- Laval MapServer, via `identify` sur une enveloppe couvrant tout le territoire avec `returnGeometry=true`
 - Repentigny Open511
-- ArcGIS municipal: Dorval, Boisbriand, Saint-Eustache, Chateauguay, Terrebonne, etc.
+- ArcGIS municipal: Dorval, Boisbriand, Saint-Eustache, Chateauguay, L'Assomption, Terrebonne, Mont-Saint-Hilaire
+- Fond de carte OpenStreetMap; OSRM et Overpass comme services de geometrie
 
 ### Données de Fallback
 - Closures.js (dernier recours, marqué "fallback")
@@ -87,18 +88,26 @@ Cette app est un **cockpit de trafic** pour le Grand Montreal (métro + villes l
 
 ## 🎯 Points d'Attention Connus
 
+### Classification des catégories: JAMAIS par la couleur
+**Interdit**: déduire la gravité ou la catégorie d'une couleur publiée par une source (`couleurLigne`, `drawingInfo`, symboles ArcGIS, styles KML, pastilles de légende, pixels d'une image rendue). Une couleur est un choix d'affichage: elle change sans préavis et n'a aucune valeur contractuelle.
+**Obligatoire**: classer à partir des champs publiés, typés ou textuels, ou de l'identité de la couche.
+**Sens unique**: notre palette `SEVERITY_META` s'applique APRES la décision de gravité; on ne relit jamais une couleur pour en déduire une catégorie.
+**Ampleur n'est pas type d'impact**: `entraveType` du MTMD ne dit que `Mineure` ou `Majeure`; c'est le texte `entrave` qui indique ce qui est fermé.
+**Voie ≠ route**: « Fermeture de 1 voie sur 2 » est `major`, pas `critical`.
+
 ### Flicker Panning/Zoom
 **Cause**: Canvas renderer padding trop bas clipe geometry aux bordures de viewport
 **Fix**: `L.canvas({ padding: 2.0 })` ligne 3278
 **Validation**: Layers stables avant/après pan/zoom
 
 ### Points → Lines Enrichissement
-**Processus**: Point municipal + Nominatim query → MultiLineString
-**Vitesse**: 50ms throttle entre requêtes (10 Points ≈ 2-3 sec)
-**Problèmes connus**:
-- Nominatim cherche noms de rue, pas descriptions ("Reconstruction de l'A-520" fail)
-- 19/29 Points non-enrichissables (pas noms extractibles)
-- 10 Points réussis (Assomption, Saint-Eustache, Dorval, Terrebonne, Boisbriand)
+**Processus**: Point municipal + limites publiees → geometrie de rue nommee via Overpass → LineString decoupee ou MultiLineString
+**Service**: Overpass en GET, avec bascule entre instances. Nominatim est retire: bloque par CORS depuis un site statique
+**Regroupement**: une requete par municipalite, pas une par entrave
+**Problemes connus**:
+- une description sans nom de voie n'est pas enrichissable ("Reconstruction de l'A-520")
+- une adresse civique sans limites publiees reste un point officiel
+- un echec reseau ne doit jamais desactiver l'enrichissement pour toute la session
 
 **Re-render Logic**:
 - Track `_geometryType` sur chaque couche rendue
@@ -116,14 +125,14 @@ Cette app est un **cockpit de trafic** pour le Grand Montreal (métro + villes l
 **Problèmes résolus**:
 1. ✅ Flicker panning/zoom → Canvas padding + geometry type tracking
 2. ✅ Parking checked by default → Attribut `checked` retiré
-3. ✅ Points non enrichis → Nominatim with query variations (rue/avenue/montée)
-
-**Temps réduit**:
-- 1100ms throttle → 50ms
-- 10 Points: 11 sec → 2-3 sec
+3. ✅ Enrichissement des points désactivé dès le premier échec réseau → compteur d'échecs, et passage de Nominatim (bloqué par CORS) à Overpass
+4. ✅ Rendu limité au viewport, debounce de recherche, cache de session pour OSRM et Overpass
+5. ✅ Laval passée en source native: `identify` sur enveloppe avec `returnGeometry=true`, une requête, géométrie par entrave, plus d'image serveur ni de requête au déplacement
+6. ✅ Catalogue `data/sources.js` aligné sur les sources réellement chargées
 
 **Fichiers changés**:
-- `js/app.js`: Canvas, fetchNamedStreetGeometry improvements, renderMap logic
+- `js/app.js`: rendu viewport, cache de session, géométrie Laval, enrichissement Overpass
+- `data/sources.js`, `languages/fr.js`, `languages/en.js`, `README.md`
 - `index.html`: Parking checkbox fix
 
 **Fichiers de test supprimés** (37× .cjs):

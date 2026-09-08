@@ -91,6 +91,11 @@ The user has approved a static snapshot architecture. The current snapshot is `d
 
 When refreshing the approved snapshot, use a real Chromium session against the official Mont-Royal map, intercept the successful same-origin `POST /public/get_projects` response, preserve published project dates, impact flags, descriptions and Web Mercator paths, convert those paths to WGS84, retain only records whose end date is on or after the extraction date, and replace `data/mont-royal-snapshot.json`. Update `extractedAt` and run the browser validation. Do not refresh it from a guessed GET URL or rendered map pixels.
 
+## Severity classification: never from colours
+
+- **NEVER** derive severity, category, or impact type from a colour published by the source, including map pin colours, legend swatches, CSS classes, or colours sampled from a rendered map. Classify only from the published impact labels and textual fields.
+- Distinguish a lane closure from a road closure: a single lane closed is `major`, not `critical`.
+
 ## Geometry and safety rules
 
 - Never replace Mont-Royal's published geometry with a guessed point, straight line, driving route, or map-center fallback.

@@ -3219,7 +3219,6 @@ const MAX_LIST_ITEMS = 220;
 const MAX_AUTO_FIT_ITEMS = 350;
 const ARROW_ZOOM_THRESHOLD = 14;
 const ARROW_DENSE_LIMIT = 250;
-const LAVAL_OVERLAY_PADDING = 0.5;
 const DATE_FORMATTER = new Intl.DateTimeFormat("fr-CA", {
   day: "2-digit",
   month: "short",
@@ -3293,12 +3292,21 @@ const arrowLayer = L.layerGroup().addTo(map);
 const fastRenderer = L.canvas({ padding: 2.0 });
 let mapRenderFrame = null;
 const renderedClosureLayers = new Map();
+// Les entraves hors ecran restent en memoire et sont dessinees des qu'elles entrent dans la vue.
+const RENDER_VIEWPORT_PADDING = 0.35;
+
+function closuresToRender() {
+  const bounds = map.getBounds().pad(RENDER_VIEWPORT_PADDING);
+  return currentClosures.filter((closure) => closureIntersectsBounds(closure, bounds));
+}
+
+function renderVisibleClosures() {
+  renderMap(closuresToRender());
+}
 
 function scheduleMapRender() {
   cancelAnimationFrame(mapRenderFrame);
-  mapRenderFrame = requestAnimationFrame(() => {
-    renderMap(currentClosures);
-  });
+  mapRenderFrame = requestAnimationFrame(renderVisibleClosures);
 }
 
 function dismissMapFirstVisitHint() {
@@ -3312,15 +3320,18 @@ function mapLineWidth(width) {
   return Math.max(1, Math.round(width * scale));
 }
 
-let lavalOfficialLines = null;
-let lavalOfficialLineBounds = null;
-let lavalOfficialLineZoom = null;
-let lavalOverlayTimer = null;
-let lavalOverlayRequestId = 0;
-let lavalViewportIds = null;
-let lavalViewportTimer = null;
-let lavalViewportRequestId = 0;
-let namedStreetGeometryUnavailable = false;
+// Overpass est utilise en GET: Nominatim est bloque par CORS depuis un site statique.
+const OVERPASS_ENDPOINTS = [
+  "https://overpass-api.de/api/interpreter",
+  "https://overpass.private.coffee/api/interpreter",
+  "https://overpass.kumi.systems/api/interpreter"
+];
+const NAMED_STREET_SEARCH_RADIUS = 800;
+const NAMED_STREET_CLAUSE_CHUNK = 12;
+const NAMED_STREET_FAILURE_LIMIT = 6;
+const STREET_TYPE_WORDS = "rues?|ruelles?|avenues?|boulevards?|chemins?|routes?|autoroutes?|mont[ée]es?|c[ôo]tes?|rangs?|places?|impasses?|croissants?|terrasses?";
+let namedStreetGeometryFailures = 0;
+let overpassEndpointIndex = 0;
 L.control.scale({ metric: true, imperial: false }).addTo(map);
 
 baseLayer.on("load", () => {
@@ -3330,10 +3341,9 @@ baseLayer.on("load", () => {
   map.invalidateSize();
 });
 baseLayer.on("tileerror", () => showMapStatus(t("map.tileError"), "error"));
-map.on("moveend zoomend", () => scheduleLavalOfficialLines());
 map.on("moveend", () => {
+  renderVisibleClosures();
   updateViewportList();
-  scheduleLavalViewportRefresh();
 });
 
 function escapeHtml(value) {
@@ -3451,7 +3461,8 @@ function parseDate(value) {
 function formatDate(value) {
   const key = dateOnly(value);
   if (!formattedDateCache.has(key)) {
-    formattedDateCache.set(key, DATE_FORMATTER.format(parseDate(key)));
+    const parsed = parseDate(key);
+    formattedDateCache.set(key, Number.isNaN(parsed.valueOf()) ? (key || t("popup.notPublished")) : DATE_FORMATTER.format(parsed));
   }
   return formattedDateCache.get(key);
 }
@@ -3559,9 +3570,7 @@ function getClosuresInViewport() {
 
 function filterClosuresToViewport(closures) {
   const bounds = map.getBounds();
-  return closures.filter((closure) => closure.category === "laval"
-    ? !lavalViewportIds || lavalViewportIds.has(closure.id)
-    : closureIntersectsBounds(closure, bounds));
+  return closures.filter((closure) => closureIntersectsBounds(closure, bounds));
 }
 
 function closureIntersectsBounds(closure, bounds) {
@@ -3589,56 +3598,6 @@ function updateViewportList() {
   renderList(viewportClosures);
   visibleCount.textContent = String(viewportClosures.length);
   updateImpactCounts();
-}
-
-function scheduleLavalViewportRefresh() {
-  clearTimeout(lavalViewportTimer);
-  lavalViewportTimer = setTimeout(refreshLavalViewportEntries, 120);
-}
-
-async function refreshLavalViewportEntries() {
-  if (!getActiveCategories().has("laval")) {
-    lavalViewportIds = new Set();
-    updateViewportList();
-    return;
-  }
-
-  const bounds = map.getBounds();
-  if (!mapBoundsIntersectEnvelope(bounds, LAVAL_OFFICIAL_BOUNDS)) {
-    lavalViewportIds = new Set();
-    updateViewportList();
-    return;
-  }
-
-  const southWest = map.options.crs.project(bounds.getSouthWest());
-  const northEast = map.options.crs.project(bounds.getNorthEast());
-  const requestId = ++lavalViewportRequestId;
-
-  try {
-    const results = await Promise.all(LAVAL_LAYERS.map(async (layer) => {
-      const params = new URLSearchParams({
-        f: "json",
-        where: "1=1",
-        outFields: "OBJECTID",
-        returnGeometry: "false",
-        geometry: `${southWest.x},${southWest.y},${northEast.x},${northEast.y}`,
-        geometryType: "esriGeometryEnvelope",
-        inSR: "3857",
-        spatialRel: "esriSpatialRelIntersects"
-      });
-      const data = await fetchJson(`${LIVE_SOURCES.lavalMapService}/${layer.id}/query?${params}`);
-      return (data.features || []).map((feature) => `laval-${layer.id}-${feature.attributes.OBJECTID}`);
-    }));
-
-    if (requestId !== lavalViewportRequestId) {
-      return;
-    }
-
-    lavalViewportIds = new Set(results.flat());
-    updateViewportList();
-  } catch (error) {
-    console.warn("Laval viewport filtering failed", error);
-  }
 }
 
 function updateImpactCounts() {
@@ -3764,16 +3723,32 @@ function normalizeQuebec511Feature(feature) {
 }
 
 function quebec511TrafficDetails(properties) {
-  const text = `${properties.entraveType || ""} ${properties.entrave || ""}`.toLowerCase();
-  if (/ferm|fermeture compl|route barr|autoroute barr/.test(text)) {
-    return { severity: "critical", label: "Fermeture routière" };
-  }
-  if (/stationnement/.test(text)) {
+  // entraveType ne publie que l'ampleur des travaux (Mineure/Majeure); seul le
+  // texte d'entrave decrit ce qui est reellement ferme.
+  const entrave = String(properties.entrave || "").toLowerCase();
+
+  if (/stationnement/.test(entrave)) {
     return { severity: "parking", label: "Stationnement touche" };
   }
-  if (/alternance|voie|entrave|circulation/.test(text)) {
+
+  if (/fermeture\s+compl[eè]te|route\s+barr|autoroute\s+barr/.test(entrave)) {
+    return { severity: "critical", label: "Fermeture routière" };
+  }
+
+  // "Fermeture de 1 voie sur 2" ou "voie de virage fermee" laissent la route ouverte.
+  if (/\bvoies?\b/.test(entrave) && /ferm/.test(entrave) && !/voie\s+de\s+desserte/.test(entrave)) {
+    return { severity: "major", label: "Voie fermée" };
+  }
+
+  if (/\b(?:route|autoroute|pont|tunnel|viaduc|chauss[eé]e|chemin|rue|avenue|boulevard|acc[eè]s|sortie|entr[eé]e|bretelles?|desserte|traverse)\b[^]{0,40}?ferm/.test(entrave)
+    || /\bferm[ée]e?s?\b/.test(entrave)) {
+    return { severity: "critical", label: "Fermeture routière" };
+  }
+
+  if (/alternance|contresens|d[eé]vi|r[eé]tr[eé]ci|\bvoies?\b|circulation/.test(entrave)) {
     return { severity: "major", label: "Voie touchée" };
   }
+
   return { severity: "moderate", label: "Accès limite" };
 }
 
@@ -3842,32 +3817,6 @@ function normalizeQuebec511Event(feature) {
     geometry,
     point: representativePoint(geometry),
     details: [["Cause", cause], ["Conséquence", consequence], ["Durée", p.duree], ["Détour", p.detour], ["Référence", p.identifiant]]
-  };
-}
-
-function normalizeLavalFeature(feature, layer) {
-  const properties = feature.attributes ?? {};
-  const severity = SEVERITY_META[layer.severity] ?? SEVERITY_META.major;
-  return {
-    id: `laval-${layer.id}-${properties.OBJECTID}`,
-    category: "laval",
-    sourceKind: "laval-mapserver",
-    title: `${properties.ENTRAVE || t(layer.labelKey)} - ${properties.LOCALISATION || t("popup.notPublished")}`,
-    responsible: properties.RESPONSABLE || "Ville de Laval",
-    borough: "Laval",
-    startDate: dateOnlyFromTimestamp(properties.DATE_DEBUT),
-    endDate: dateOnlyFromTimestamp(properties.DATE_FIN),
-    impact: [properties.ENTRAVE, properties.CIRCULATION, properties.REMARQUE].filter(isMeaningfulLavalValue).join(" - ") || "Details de circulation non publies.",
-    trafficLabel: properties.ENTRAVE || t(layer.labelKey),
-    severity: layer.severity,
-    roadType: roadTypeFromText(`${properties.ENTRAVE || ""} ${properties.LOCALISATION || ""}`),
-    direction: properties.DIRECTION || t("popup.notPublished"),
-    streets: properties.LOCALISATION || t("popup.notPublished"),
-    source: `Laval Info-Travaux - ${t(layer.labelKey)}`,
-    sourceUrl: "https://vl.maps.arcgis.com/apps/instant/sidebar/index.html?appid=729ff9eeb851437b9a4cf365efadfe8f",
-    periods: ["day", "night"],
-    color: severity.color,
-    details: [["Nature", properties.NATURE], ["Reference", properties.NO_REFERENCE]]
   };
 }
 
@@ -4043,14 +3992,33 @@ async function loadLongueuilClosures() {
     .filter(Boolean);
 }
 
+// Le query de Laval renvoie geometry:null, mais identify sur une enveloppe couvrant
+// tout le territoire retourne chaque entrave avec sa geometrie officielle.
 async function loadLavalClosures() {
-  const results = await Promise.all(LAVAL_LAYERS.map(async (layer) => {
-    const url = `${LIVE_SOURCES.lavalMapService}/${layer.id}/query?f=json&where=1%3D1&outFields=*&returnGeometry=false`;
-    const data = await fetchJson(url);
-    return (data.features || []).map((feature) => normalizeLavalFeature(feature, layer));
-  }));
+  const southWest = map.options.crs.project(L.latLng(LAVAL_OFFICIAL_BOUNDS.south, LAVAL_OFFICIAL_BOUNDS.west));
+  const northEast = map.options.crs.project(L.latLng(LAVAL_OFFICIAL_BOUNDS.north, LAVAL_OFFICIAL_BOUNDS.east));
+  const envelope = {
+    xmin: southWest.x,
+    ymin: southWest.y,
+    xmax: northEast.x,
+    ymax: northEast.y,
+    spatialReference: { wkid: 102100 }
+  };
+  const params = new URLSearchParams({
+    f: "json",
+    geometry: JSON.stringify(envelope),
+    geometryType: "esriGeometryEnvelope",
+    sr: "3857",
+    mapExtent: `${envelope.xmin},${envelope.ymin},${envelope.xmax},${envelope.ymax}`,
+    imageDisplay: "2000,1400,96",
+    tolerance: "1",
+    layers: `all:${LAVAL_LAYERS.map((layer) => layer.id).join(",")}`,
+    returnGeometry: "true",
+    maxAllowableOffset: "1"
+  });
 
-  return results.flat();
+  const data = await fetchJson(`${LIVE_SOURCES.lavalMapService}/identify?${params}`, { timeout: 30000 });
+  return (data.results || []).map(normalizeLavalIdentifyResult).filter(Boolean);
 }
 
 async function loadQuebec511Closures() {
@@ -4084,7 +4052,10 @@ function normalizeRepentignyEvent(event) {
     return null;
   }
 
-  const severity = event.severity === "MAJOR" ? "major" : event.severity === "MINOR" ? "moderate" : "critical";
+  // Open511 publie UNKNOWN, MINOR, MODERATE ou MAJOR: aucune de ces valeurs ne
+  // signifie une fermeture complete, seul le texte publie l'indique.
+  const traffic = repentignyTrafficDetails(event);
+  const severity = traffic.severity;
   const geometry = event.geography;
   const sourceUrl = event.url?.startsWith("http")
     ? event.url
@@ -4100,7 +4071,7 @@ function normalizeRepentignyEvent(event) {
     startDate: startDate.slice(0, 10),
     endDate: endDate.split("T")[0],
     impact: [event.description, event.detour].filter(Boolean).join(" - ") || "Impact automobile publié par la Ville de Repentigny.",
-    trafficLabel: event.severity === "MAJOR" ? "Voie touchée" : "Accès limité",
+    trafficLabel: traffic.label,
     severity,
     roadType: roadTypeFromText(`${road.name} ${event.headline || ""}`),
     periods: ["day", "night"],
@@ -4113,6 +4084,29 @@ function normalizeRepentignyEvent(event) {
     point: representativePoint(geometry),
     rawType: event.event_type
   };
+}
+
+function repentignyTrafficDetails(event) {
+  const text = `${event.headline || ""} ${event.description || ""}`.toLowerCase();
+  const published = String(event.severity || "").toUpperCase();
+
+  if (/\bvoies?\b/.test(text) && /ferm/.test(text)) {
+    return { severity: "major", label: "Voie fermée" };
+  }
+
+  if (/fermeture\s+compl[eè]te|\b(?:route|rue|chemin|pont|boulevard|avenue|acc[eè]s|bretelle)\b[^]{0,40}?ferm|\bbarr[ée]e?s?\b/.test(text)) {
+    return { severity: "critical", label: "Fermeture complète" };
+  }
+
+  if (published === "MAJOR") {
+    return { severity: "major", label: "Voie touchée" };
+  }
+
+  if (published === "MODERATE" || published === "MINOR") {
+    return { severity: "moderate", label: "Accès limité" };
+  }
+
+  return { severity: "major", label: "Voie touchée" };
 }
 
 async function loadMunicipalArcgisClosures() {
@@ -4453,63 +4447,215 @@ function municipalSeverity(text) {
   return "moderate";
 }
 
-async function fetchNamedStreetGeometry(query, [west, south, east, north]) {
-  if (namedStreetGeometryUnavailable) {
-    throw new Error("Named street geometry service unavailable");
+function overpassNamePattern(value) {
+  return String(value).replace(/[\\.^$|()[\]{}*+?]/g, "\\$&");
+}
+
+function streetNameMatches(candidate, wanted) {
+  const first = String(candidate || "").toLowerCase();
+  const second = String(wanted || "").toLowerCase();
+  return Boolean(first) && Boolean(second) && (first.includes(second) || second.includes(first));
+}
+
+function metersBetween([lonA, latA], [lonB, latB]) {
+  const radius = 6371000;
+  const firstLat = (latA * Math.PI) / 180;
+  const secondLat = (latB * Math.PI) / 180;
+  const deltaLat = ((latB - latA) * Math.PI) / 180;
+  const deltaLon = ((lonB - lonA) * Math.PI) / 180;
+  const value = Math.sin(deltaLat / 2) ** 2 + Math.cos(firstLat) * Math.cos(secondLat) * Math.sin(deltaLon / 2) ** 2;
+  return 2 * radius * Math.asin(Math.sqrt(value));
+}
+
+// Raccorde les troncons OSM contigus sans jamais relier deux extremites eloignees.
+function stitchStreetSegments(segments) {
+  const remaining = segments.filter((segment) => segment.length >= 2).map((segment) => segment.slice());
+  if (remaining.length === 0) {
+    return [];
   }
 
-  // Try different query variations to handle type mismatches (rue→avenue, etc)
-  const queries = [
-    query,
-    // Strip street type and city, let Nominatim figure it out
-    query.replace(/,\s*Quebec\s*$/i, '').replace(/^\s*(rue|avenue|boulevard|chemin|street|montée)\s+/i, ''),
-    // Try with just city name
-    query.split(',').slice(0, 2).join(',')
-  ];
-
-  for (const q of queries) {
-    try {
-      const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=50&polygon_geojson=1&q=${encodeURIComponent(q)}`;
-      const data = await fetchJson(url);
-      
-      // Try LineString first
-      let segments = data
-        .filter((item) => item.geojson?.type === "LineString")
-        .map((item) => item.geojson.coordinates)
-        .filter((coordinates) => coordinates.length > 1 && coordinates.some(([longitude, latitude]) => {
-          return longitude >= west && longitude <= east && latitude >= south && latitude <= north;
-        }));
-
-      if (segments.length > 0) {
-        return { type: "MultiLineString", coordinates: segments };
+  let polyline = remaining.shift();
+  let joined = true;
+  while (remaining.length > 0 && joined) {
+    joined = false;
+    for (let index = 0; index < remaining.length; index += 1) {
+      const segment = remaining[index];
+      const head = polyline[0];
+      const tail = polyline[polyline.length - 1];
+      if (metersBetween(tail, segment[0]) < 8) {
+        polyline = polyline.concat(segment.slice(1));
+      } else if (metersBetween(tail, segment[segment.length - 1]) < 8) {
+        polyline = polyline.concat(segment.slice().reverse().slice(1));
+      } else if (metersBetween(head, segment[segment.length - 1]) < 8) {
+        polyline = segment.concat(polyline.slice(1));
+      } else if (metersBetween(head, segment[0]) < 8) {
+        polyline = segment.slice().reverse().concat(polyline.slice(1));
+      } else {
+        continue;
       }
-
-      // Fallback to polygons if no LineStrings found
-      const polygons = data
-        .filter((item) => item.geojson?.type === "Polygon")
-        .map((item) => {
-          const ring = item.geojson.coordinates[0];
-          return ring.filter(([lon, lat]) => lon >= west && lon <= east && lat >= south && lat <= north);
-        })
-        .filter((ring) => ring.length > 1);
-
-      if (polygons.length > 0) {
-        return { type: "MultiLineString", coordinates: polygons };
-      }
-    } catch (error) {
-      if (isFetchUnavailableError(error)) {
-        namedStreetGeometryUnavailable = true;
-        throw error;
-      }
-      // Try next variation
+      remaining.splice(index, 1);
+      joined = true;
+      break;
     }
   }
 
-  throw new Error("No named street geometry returned");
+  return polyline;
 }
 
-function isFetchUnavailableError(error) {
-  return error?.name === "AbortError" || error instanceof TypeError;
+function distanceToSegment(point, start, end) {
+  const scale = Math.cos((point[1] * Math.PI) / 180) || 1;
+  const projectedX = (coordinate) => coordinate[0] * scale;
+  const deltaX = projectedX(end) - projectedX(start);
+  const deltaY = end[1] - start[1];
+  const lengthSquared = deltaX * deltaX + deltaY * deltaY;
+  const ratio = lengthSquared === 0
+    ? 0
+    : Math.max(0, Math.min(1, ((projectedX(point) - projectedX(start)) * deltaX + (point[1] - start[1]) * deltaY) / lengthSquared));
+  return metersBetween(point, [(projectedX(start) + ratio * deltaX) / scale, start[1] + ratio * deltaY]);
+}
+
+function closestIndexOnPolyline(polyline, segments) {
+  let bestIndex = 0;
+  let bestDistance = Number.POSITIVE_INFINITY;
+  polyline.forEach((vertex, index) => {
+    segments.forEach((segment) => {
+      for (let position = 0; position < segment.length - 1; position += 1) {
+        const distance = distanceToSegment(vertex, segment[position], segment[position + 1]);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestIndex = index;
+        }
+      }
+    });
+  });
+  return [bestIndex, bestDistance];
+}
+
+async function fetchOverpassChunk(clauseSpecs) {
+  const clauses = clauseSpecs
+    .map(({ name, latitude, longitude }) => `way(around:${NAMED_STREET_SEARCH_RADIUS},${latitude},${longitude})["highway"]["name"~"${overpassNamePattern(name)}",i];`)
+    .join("");
+  const query = `[out:json][timeout:45];(${clauses});out geom;`;
+  let lastError = new Error("No Overpass endpoint available");
+
+  for (let attempt = 0; attempt < OVERPASS_ENDPOINTS.length; attempt += 1) {
+    const endpoint = OVERPASS_ENDPOINTS[(overpassEndpointIndex + attempt) % OVERPASS_ENDPOINTS.length];
+    try {
+      const data = await fetchJson(`${endpoint}?data=${encodeURIComponent(query)}`, { timeout: 25000 });
+      overpassEndpointIndex = (overpassEndpointIndex + attempt) % OVERPASS_ENDPOINTS.length;
+      return (data.elements || []).filter((element) => element.type === "way" && Array.isArray(element.geometry));
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  overpassEndpointIndex = (overpassEndpointIndex + 1) % OVERPASS_ENDPOINTS.length;
+  throw lastError;
+}
+
+async function fetchOverpassWays(clauseSpecs) {
+  if (namedStreetGeometryFailures >= NAMED_STREET_FAILURE_LIMIT) {
+    throw new Error("Named street geometry service unavailable");
+  }
+
+  const ways = [];
+  let succeeded = false;
+  let lastError = null;
+
+  for (let index = 0; index < clauseSpecs.length; index += NAMED_STREET_CLAUSE_CHUNK) {
+    try {
+      ways.push(...await fetchOverpassChunk(clauseSpecs.slice(index, index + NAMED_STREET_CLAUSE_CHUNK)));
+      succeeded = true;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  if (!succeeded) {
+    namedStreetGeometryFailures += 1;
+    throw lastError ?? new Error("No named street geometry returned");
+  }
+
+  namedStreetGeometryFailures = 0;
+  return ways;
+}
+
+function waysNamedNear(ways, wanted, point) {
+  return ways
+    .filter((way) => streetNameMatches(way.tags?.name, wanted))
+    .map((way) => way.geometry.map((vertex) => [vertex.lon, vertex.lat]))
+    .filter((coordinates) => coordinates.length > 1
+      && coordinates.some((coordinate) => metersBetween(coordinate, point) <= NAMED_STREET_SEARCH_RADIUS));
+}
+
+function streetGeometryFromWays(ways, streetName, limitNames, point) {
+  const streetSegments = waysNamedNear(ways, streetName, point);
+  if (streetSegments.length === 0) {
+    return null;
+  }
+
+  if (limitNames.length === 2) {
+    const polyline = stitchStreetSegments(streetSegments);
+    const firstLimit = waysNamedNear(ways, limitNames[0], point);
+    const secondLimit = waysNamedNear(ways, limitNames[1], point);
+
+    if (polyline.length > 1 && firstLimit.length > 0 && secondLimit.length > 0) {
+      const [startIndex, startDistance] = closestIndexOnPolyline(polyline, firstLimit);
+      const [endIndex, endDistance] = closestIndexOnPolyline(polyline, secondLimit);
+      if (startDistance <= 45 && endDistance <= 45 && startIndex !== endIndex) {
+        const [low, high] = startIndex < endIndex ? [startIndex, endIndex] : [endIndex, startIndex];
+        const trimmed = polyline.slice(low, high + 1);
+        if (trimmed.length > 1) {
+          return { type: "LineString", coordinates: trimmed };
+        }
+      }
+    }
+  }
+
+  return { type: "MultiLineString", coordinates: streetSegments };
+}
+
+function cleanLimitName(value) {
+  const stripArticle = (text) => text.replace(/^(?:les|la|le)\s+|^l'\s*/i, "");
+  return stripArticle(
+    stripArticle(String(value || "").replace(/\s+/g, " "))
+      .replace(new RegExp(`^(?:${STREET_TYPE_WORDS})\\s+`, "i"), "")
+  )
+    .replace(/[.,;:]+$/, "")
+    .trim();
+}
+
+function isUsableLimitName(value) {
+  return value.length >= 3 && /[A-Za-zÀ-ÿ]{3}/.test(value) && !/^\d/.test(value);
+}
+
+// Les sources publient souvent "entre X et Y" ou "de X a Y": ces bornes servent a couper le troncon.
+function publishedRoadLimits(value) {
+  const text = String(value || "").replace(/\s+/g, " ");
+  const name = "[A-Za-zÀ-ÿ0-9'’-]+(?:\\s+[A-Za-zÀ-ÿ0-9'’-]+){0,3}";
+  const patterns = [
+    new RegExp(`\\bentre\\s+(${name})\\s+et\\s+(${name})`, "i"),
+    new RegExp(`\\b(?:de|du)\\s+(${name})\\s+(?:à|au|jusqu'à|jusqu'au)\\s+(${name})`, "i")
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    // Sans type de voie explicite, la phrase decrit de la prose et non des limites de chantier.
+    if (!match || !new RegExp(`\\b(?:${STREET_TYPE_WORDS})\\b`, "i").test(match[0])) {
+      continue;
+    }
+
+    const limits = [cleanLimitName(match[1]), cleanLimitName(match[2])];
+    if (limits.every(isUsableLimitName) && limits[0].toLowerCase() !== limits[1].toLowerCase()) {
+      return limits;
+    }
+  }
+
+  return [];
+}
+
+function hasCivicAddressOnly(value) {
+  return /(^|\s)(?:devant\s+le\s+|face\s+au\s+|du\s+)?\d{1,5}\s*,?\s*(?:rue|av|ave|avenue|boul|boulevard|ch|chemin|mont[ée]e|route)\b/i.test(String(value || ""));
 }
 
 function namedRoadQueries(value) {
@@ -4525,7 +4671,9 @@ function namedRoadQueries(value) {
   }
   const compoundRoads = text.match(/\bchemin\s+de\s+(?:la|l')\s+[A-Za-zÀ-ÿ0-9'’-]+(?:\s+[A-Za-zÀ-ÿ0-9'’-]+){0,2}/gi) || [];
   queries.push(...compoundRoads.map((query) => query.replace(/\s+(ainsi|entre|près|et)\b.*$/i, "").trim()));
-  const pattern = /\b(rues?|avenues?|boulevards?|chemins?|routes?|autoroutes?|A[- ]?\d{1,3}|R[- ]?\d{1,3})\s+([A-Za-zÀ-ÿ0-9'’-]+(?:\s+[A-Za-zÀ-ÿ0-9'’-]+){0,2})/gi;
+  const ordinalStreets = text.match(/\b\d{1,3}\s*(?:e|re|er|ère)\s+(?:avenue|av\.?|rue|ruelle)\b/gi) || [];
+  queries.push(...ordinalStreets.map((query) => query.replace(/\s+/g, " ").trim()));
+  const pattern = new RegExp(`\\b(${STREET_TYPE_WORDS}|A[- ]?\\d{1,3}|R[- ]?\\d{1,3})\\s+([A-Za-zÀ-ÿ0-9'’-]+(?:\\s+[A-Za-zÀ-ÿ0-9'’-]+){0,2})`, "gi");
   for (const match of text.matchAll(pattern)) {
     let query = `${match[1]} ${match[2]}`.replace(/\s+(entre|près|et|sur|du|de)\b.*$/i, "").trim();
     query = query.replace(/^rues\b/i, "Rue").replace(/^avenues\b/i, "Avenue").replace(/^boulevards\b/i, "Boulevard");
@@ -4546,62 +4694,128 @@ const MUNICIPAL_ENRICH_KINDS = new Set([
   "terrebonne-arcgis"
 ]);
 
-async function enrichMunicipalPointGeometry(closure) {
-  const roadQueries = namedRoadQueries(closure.roadSearchText || closure.streets);
+function enrichmentSourceText(closure) {
+  // Le separateur evite qu'une limite deborde sur la phrase suivante.
+  return [closure.roadSearchText, closure.streets, closure.impact].filter(Boolean).join(" ; ");
+}
+
+function canEnrichToStreetGeometry(closure) {
   if (!MUNICIPAL_ENRICH_KINDS.has(closure.sourceKind)
     || closure.geometry?.type !== "Point"
     || !closure.roadType
-    || roadQueries.length === 0) {
-    return closure;
+    || namedRoadQueries(closure.roadSearchText || closure.streets).length === 0) {
+    return false;
   }
 
-  const city = closure.borough || "Greater Montreal";
-  const bounds = [
-    closure.geometry.coordinates[0] - 0.02,
-    closure.geometry.coordinates[1] - 0.02,
-    closure.geometry.coordinates[0] + 0.02,
-    closure.geometry.coordinates[1] + 0.02
-  ];
+  // Une adresse civique sans limites publiees reste un point officiel.
+  return publishedRoadLimits(enrichmentSourceText(closure)).length === 2
+    || !hasCivicAddressOnly(closure.streets);
+}
 
-  for (const roadQuery of roadQueries) {
-    try {
-      // Use Nominatim to find street geometry
-      const geometry = await fetchNamedStreetGeometry(`${roadQuery}, ${city}, Quebec`, bounds);
+function enrichmentPlan(closure) {
+  const limits = publishedRoadLimits(enrichmentSourceText(closure));
+  return {
+    closure,
+    point: closure.geometry.coordinates,
+    roadQueries: namedRoadQueries(closure.roadSearchText || closure.streets),
+    limits
+  };
+}
+
+function applyStreetGeometry(plan, ways) {
+  for (const roadQuery of plan.roadQueries) {
+    const limitNames = plan.limits.filter((limit) => !streetNameMatches(limit, roadQuery));
+    const geometry = streetGeometryFromWays(ways, roadQuery, limitNames.length === 2 ? limitNames : [], plan.point);
+    if (geometry) {
       return {
-        ...closure,
+        ...plan.closure,
         geometry,
         point: representativePoint(geometry),
         geometrySource: "named-street-geometry"
       };
-    } catch {
-      // Try the next explicitly published road name.
     }
   }
-  return closure;
+
+  return null;
 }
 
-// Upgrade municipal point closures to real street geometry after the initial
-// render, throttled to respect Nominatim usage limits and keep loading fast.
+// Une seule requete Overpass par municipalite: le service repond en plusieurs secondes
+// et limite le debit, donc une requete par entrave serait trop lente.
 async function enrichMunicipalGeometriesInBackground() {
-  const targets = allClosures.filter((closure) =>
-    MUNICIPAL_ENRICH_KINDS.has(closure.sourceKind)
-    && closure.geometry?.type === "Point"
-    && closure.roadType
-    && namedRoadQueries(closure.roadSearchText || closure.streets).length > 0);
   const currentBounds = map.getBounds();
-  targets.sort((first, second) => Number(closureIntersectsBounds(second, currentBounds)) - Number(closureIntersectsBounds(first, currentBounds)));
+  const plans = allClosures
+    .filter(canEnrichToStreetGeometry)
+    .map(enrichmentPlan)
+    .filter((plan) => plan.roadQueries.length > 0);
+  plans.sort((first, second) => Number(closureIntersectsBounds(second.closure, currentBounds)) - Number(closureIntersectsBounds(first.closure, currentBounds)));
 
-  for (const closure of targets) {
-    const enriched = await enrichMunicipalPointGeometry(closure);
-    if (enriched.geometry && enriched.geometry.type !== "Point") {
-      const index = allClosures.findIndex((item) => item.id === closure.id);
+  const groups = new Map();
+  plans.forEach((plan) => {
+    const key = plan.closure.borough || "region";
+    if (!groups.has(key)) {
+      groups.set(key, []);
+    }
+    groups.get(key).push(plan);
+  });
+
+  for (const groupPlans of groups.values()) {
+    const specs = new Map();
+    groupPlans.forEach((plan) => {
+      [...plan.roadQueries, ...plan.limits].forEach((name) => {
+        const latitude = plan.point[1];
+        const longitude = plan.point[0];
+        specs.set(`${name}|${latitude.toFixed(3)}|${longitude.toFixed(3)}`, { name, latitude, longitude });
+      });
+    });
+
+    let ways;
+    try {
+      ways = await fetchOverpassWays([...specs.values()]);
+    } catch (error) {
+      console.warn("Named street geometry lookup failed", error);
+      continue;
+    }
+
+    groupPlans.forEach((plan) => {
+      const enriched = applyStreetGeometry(plan, ways);
+      if (!enriched) {
+        return;
+      }
+
+      const index = allClosures.findIndex((item) => item.id === plan.closure.id);
       if (index !== -1) {
         allClosures[index] = prepareClosureForRuntime(enriched, { force: true });
-        updateView({ fit: false });
+        scheduleEnrichedGeometryUpdate();
       }
-    }
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 1200));
   }
+
+  flushEnrichedGeometryUpdate();
+}
+
+let enrichedGeometryTimer = null;
+
+function scheduleEnrichedGeometryUpdate() {
+  if (enrichedGeometryTimer) {
+    return;
+  }
+
+  enrichedGeometryTimer = setTimeout(() => {
+    enrichedGeometryTimer = null;
+    updateView({ fit: false });
+  }, 500);
+}
+
+function flushEnrichedGeometryUpdate() {
+  if (!enrichedGeometryTimer) {
+    return;
+  }
+
+  clearTimeout(enrichedGeometryTimer);
+  enrichedGeometryTimer = null;
+  updateView({ fit: false });
 }
 
 function normalizeSaintEustacheFeature(feature) {
@@ -5029,18 +5243,93 @@ function toLatLngs(coordinates) {
   return coordinates.map(toLatLngs);
 }
 
-async function fetchJson(url, { timeout = 15000 } = {}) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeout);
-  try {
-    const response = await fetch(url, { signal: controller.signal });
-    if (!response.ok) {
-      throw new Error(`${response.status} ${response.statusText}`);
-    }
-    return await response.json();
-  } finally {
-    clearTimeout(timer);
+// Les flux d'entraves restent relus a chaque ouverture de page; seules les geometries
+// deterministes (OSRM, Nominatim) sont conservees pour toute la session du navigateur.
+const GEOMETRY_CACHE_PREFIX = "entraves-geometry:";
+const GEOMETRY_CACHE_MAX_CHARS = 400000;
+const memoryFetchCache = new Map();
+const pendingFetches = new Map();
+
+function isGeometryHelperUrl(url) {
+  return url.includes("router.project-osrm.org") || url.includes("/api/interpreter");
+}
+
+function readCachedResponse(url) {
+  if (memoryFetchCache.has(url)) {
+    return memoryFetchCache.get(url);
   }
+
+  if (!isGeometryHelperUrl(url)) {
+    return undefined;
+  }
+
+  try {
+    const stored = window.sessionStorage.getItem(GEOMETRY_CACHE_PREFIX + url);
+    if (stored === null) {
+      return undefined;
+    }
+    const value = JSON.parse(stored);
+    memoryFetchCache.set(url, value);
+    return value;
+  } catch {
+    return undefined;
+  }
+}
+
+function writeCachedResponse(url, value) {
+  memoryFetchCache.set(url, value);
+
+  if (!isGeometryHelperUrl(url)) {
+    return;
+  }
+
+  try {
+    const serialized = JSON.stringify(value);
+    if (serialized.length <= GEOMETRY_CACHE_MAX_CHARS) {
+      window.sessionStorage.setItem(GEOMETRY_CACHE_PREFIX + url, serialized);
+    }
+  } catch {
+    // Quota atteint ou stockage indisponible: le cache memoire suffit.
+  }
+}
+
+async function fetchJson(url, { timeout = 15000, cache = true } = {}) {
+  if (cache) {
+    const cached = readCachedResponse(url);
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    const pending = pendingFetches.get(url);
+    if (pending) {
+      return pending;
+    }
+  }
+
+  const request = (async () => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeout);
+    try {
+      const response = await fetch(url, { signal: controller.signal });
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      if (cache) {
+        writeCachedResponse(url, data);
+      }
+      return data;
+    } finally {
+      clearTimeout(timer);
+      pendingFetches.delete(url);
+    }
+  })();
+
+  if (cache) {
+    pendingFetches.set(url, request);
+  }
+
+  return request;
 }
 
 async function loadOfficialData() {
@@ -5086,7 +5375,6 @@ async function loadOfficialData() {
 
   map.invalidateSize(true);
   updateView({ fit: true });
-  scheduleLavalViewportRefresh();
 
   loadBackgroundOfficialData();
 }
@@ -5194,7 +5482,7 @@ function groupedPopupContent(closures) {
 
 function openGroupedPopup(primaryClosure, latLng) {
   selectedClosureId = primaryClosure.id;
-  renderMap(currentClosures);
+  renderVisibleClosures();
   const nearbyClosures = closuresNearLatLng(latLng, primaryClosure);
   openMapPopup(latLng, groupedPopupContent(nearbyClosures), 420);
 }
@@ -5312,9 +5600,7 @@ function minDistanceMeters(center, closure) {
 }
 
 function renderMap(closures) {
-  const visibleClosureIds = new Set(closures
-    .filter((closure) => closure.category !== "laval")
-    .map((closure) => closure.id));
+  const visibleClosureIds = new Set(closures.map((closure) => closure.id));
 
   renderedClosureLayers.forEach((layers, closureId) => {
     if (!visibleClosureIds.has(closureId)) {
@@ -5325,10 +5611,6 @@ function renderMap(closures) {
   });
 
   [...closures].sort((a, b) => layerRank(a) - layerRank(b)).forEach((closure) => {
-    if (closure.category === "laval") {
-      return;
-    }
-
     // If closure is already rendered, check if geometry type changed via enrichment
     if (renderedClosureLayers.has(closure.id)) {
       const existing = renderedClosureLayers.get(closure.id);
@@ -5417,141 +5699,6 @@ function updateRenderedLineWidths() {
   });
 }
 
-function scheduleLavalOfficialLines() {
-  clearTimeout(lavalOverlayTimer);
-  lavalOverlayTimer = setTimeout(updateLavalOfficialLines, 100);
-}
-
-function updateLavalOfficialLines() {
-  if (!getActiveCategories().has("laval")) {
-    lavalOverlayRequestId += 1;
-    if (lavalOfficialLines) {
-      map.removeLayer(lavalOfficialLines);
-      lavalOfficialLines = null;
-      lavalOfficialLineBounds = null;
-      lavalOfficialLineZoom = null;
-    }
-    return;
-  }
-
-  const bounds = map.getBounds();
-  if (!mapBoundsIntersectEnvelope(bounds, LAVAL_OFFICIAL_BOUNDS)) {
-    lavalOverlayRequestId += 1;
-    if (lavalOfficialLines) {
-      map.removeLayer(lavalOfficialLines);
-      lavalOfficialLines = null;
-      lavalOfficialLineBounds = null;
-      lavalOfficialLineZoom = null;
-    }
-    return;
-  }
-
-  const zoom = map.getZoom();
-  if (lavalOfficialLineBounds?.contains(bounds) && lavalOfficialLineZoom === zoom) {
-    return;
-  }
-
-  const exportBounds = bounds.pad(LAVAL_OVERLAY_PADDING);
-  const southWest = map.options.crs.project(exportBounds.getSouthWest());
-  const northEast = map.options.crs.project(exportBounds.getNorthEast());
-  const size = map.getSize();
-  const exportScale = 1 + LAVAL_OVERLAY_PADDING * 2;
-  const params = new URLSearchParams({
-    f: "image",
-    bbox: `${southWest.x},${southWest.y},${northEast.x},${northEast.y}`,
-    bboxSR: "3857",
-    imageSR: "3857",
-    size: `${Math.min(Math.round(size.x * exportScale), 2048)},${Math.min(Math.round(size.y * exportScale), 2048)}`,
-    format: "png32",
-    transparent: "true",
-    dynamicLayers: JSON.stringify(lavalDynamicLayers())
-  });
-  const url = `${LIVE_SOURCES.lavalMapService}/export?${params}`;
-
-  const requestId = ++lavalOverlayRequestId;
-  const nextOverlay = L.imageOverlay(url, exportBounds, {
-    interactive: false,
-    opacity: 0,
-    zIndex: 450
-  }).addTo(map);
-
-  nextOverlay.once("load", () => {
-    if (requestId !== lavalOverlayRequestId || !getActiveCategories().has("laval")) {
-      map.removeLayer(nextOverlay);
-      return;
-    }
-
-    const previousOverlay = lavalOfficialLines;
-    lavalOfficialLines = nextOverlay;
-    lavalOfficialLineBounds = exportBounds;
-    lavalOfficialLineZoom = zoom;
-    nextOverlay.setOpacity(1);
-    if (previousOverlay) {
-      map.removeLayer(previousOverlay);
-    }
-  });
-}
-
-function lavalDynamicLayers() {
-  return [
-    lavalDynamicLayer(0, SEVERITY_META.critical.color, mapLineWidth(SEVERITY_META.critical.width)),
-    lavalDynamicLayer(2, SEVERITY_META.major.color, mapLineWidth(SEVERITY_META.major.width)),
-    lavalDynamicLayer(3, SEVERITY_META.moderate.color, mapLineWidth(SEVERITY_META.moderate.width))
-  ];
-}
-
-function lavalDynamicLayer(layerId, color, width) {
-  const [red, green, blue] = color.match(/[\da-f]{2}/gi).map((value) => Number.parseInt(value, 16));
-  return {
-    id: layerId,
-    source: { type: "mapLayer", mapLayerId: layerId },
-    drawingInfo: {
-      renderer: {
-        type: "simple",
-        symbol: { type: "esriSLS", style: "esriSLSSolid", color: [red, green, blue, 255], width }
-      }
-    }
-  };
-}
-
-async function identifyLavalClosure(latLng) {
-  if (!getActiveCategories().has("laval")) {
-    return false;
-  }
-
-  const bounds = map.getBounds();
-  const southWest = map.options.crs.project(bounds.getSouthWest());
-  const northEast = map.options.crs.project(bounds.getNorthEast());
-  const size = map.getSize();
-  const projectedPoint = map.options.crs.project(latLng);
-  const params = new URLSearchParams({
-    f: "json",
-    geometry: `${projectedPoint.x},${projectedPoint.y}`,
-    geometryType: "esriGeometryPoint",
-    sr: "3857",
-    mapExtent: `${southWest.x},${southWest.y},${northEast.x},${northEast.y}`,
-    imageDisplay: `${size.x},${size.y},96`,
-    tolerance: "12",
-    layers: "visible:0,2,3",
-    returnGeometry: "false"
-  });
-
-  try {
-    const data = await fetchJson(`${LIVE_SOURCES.lavalMapService}/identify?${params}`);
-    const result = data.results?.[0];
-    if (!result) {
-      return false;
-    }
-
-    const closure = normalizeLavalIdentifyResult(result);
-    openMapPopup(latLng, popupContent(closure), 420);
-    return true;
-  } catch (error) {
-    console.warn("Laval identify failed", error);
-    return false;
-  }
-}
-
 function normalizeLavalIdentifyResult(result) {
   const properties = result.attributes ?? {};
   const layerId = Number(result.layerId);
@@ -5567,10 +5714,16 @@ function normalizeLavalIdentifyResult(result) {
   const reference = lavalAttribute(properties, "NO_REFERENCE", "Numéro de référence :");
   const impact = [entrave, circulation, remark].filter(isMeaningfulLavalValue).join(" - ");
 
+  const geometry = lavalPathsToGeometry(result.geometry?.paths);
+  if (!geometry) {
+    return null;
+  }
+
   return {
-    id: `laval-identify-${layerId}-${properties.OBJECTID || lavalAttribute(properties, "NO_OBSTRUCTION", "Obstruction # :") || location}`,
+    id: `laval-${layerId}-${properties.OBJECTID || lavalAttribute(properties, "NO_OBSTRUCTION", "Obstruction # :") || location}`,
     title: `${entrave || result.layerName || "Entrave"} - ${location}`,
     category: "laval",
+    sourceKind: "laval-mapserver",
     responsible: responsible || "Ville de Laval",
     borough: "Laval",
     startDate: dateOnlyFromTimestamp(startDate),
@@ -5578,14 +5731,39 @@ function normalizeLavalIdentifyResult(result) {
     impact: impact || "Details de circulation non publies.",
     trafficLabel: entrave || result.layerName || "Entrave Laval",
     severity,
+    roadType: roadTypeFromText(`${entrave || ""} ${location}`),
     periods: ["day", "night"],
     direction: "Direction precise non publiée dans les attributs Laval.",
     streets: location,
     source: "Laval Info-Travaux - details officiels",
     sourceUrl: "https://vl.maps.arcgis.com/apps/instant/sidebar/index.html?appid=729ff9eeb851437b9a4cf365efadfe8f",
     color: SEVERITY_META[severity].color,
+    geometry,
+    point: representativePoint(geometry),
     details: [["Nature", nature], ["Reference", reference]]
   };
+}
+
+// Les chemins d'identify sont projetes en EPSG:3857; la carte attend du GeoJSON en degres.
+function lavalPathsToGeometry(paths) {
+  if (!Array.isArray(paths) || paths.length === 0) {
+    return null;
+  }
+
+  const lines = paths
+    .map((path) => path.map(([x, y]) => {
+      const latLng = map.options.crs.unproject(L.point(x, y));
+      return [latLng.lng, latLng.lat];
+    }))
+    .filter((line) => line.length > 1);
+
+  if (lines.length === 0) {
+    return null;
+  }
+
+  return lines.length === 1
+    ? { type: "LineString", coordinates: lines[0] }
+    : { type: "MultiLineString", coordinates: lines };
 }
 
 function lavalAttribute(properties, technicalName, label) {
@@ -5740,8 +5918,7 @@ function focusClosure(closure, { openPopup = false } = {}) {
 function updateView({ fit = false } = {}) {
   currentClosures = getFilteredClosures();
   updateMapLegend();
-  renderMap(currentClosures);
-  updateLavalOfficialLines();
+  renderVisibleClosures();
   updateViewportList();
   setTimeout(() => map.invalidateSize(true), 0);
   setTimeout(() => map.invalidateSize(true), 180);
@@ -5755,9 +5932,8 @@ window.addEventListener("languagechange", () => {
   setSourceSectionOpen(!sourceFilters.hidden);
   menuToggle.setAttribute("aria-label", t(menuToggle.classList.contains("is-open") ? "menu.close" : "menu.open"));
   updateMapLegend();
-  renderMap(currentClosures);
+  renderVisibleClosures();
   updateViewportList();
-  updateLavalOfficialLines();
 });
 
 function showMapStatus(message, mode = "loading") {
@@ -5783,7 +5959,11 @@ todayDates.addEventListener("click", () => {
   dateEnd.value = today;
   updateView({ fit: true });
 });
-searchFilter.addEventListener("input", () => updateView({ fit: true }));
+let searchFilterTimer = null;
+searchFilter.addEventListener("input", () => {
+  clearTimeout(searchFilterTimer);
+  searchFilterTimer = setTimeout(() => updateView({ fit: true }), 160);
+});
 categoryFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: true })));
 impactFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: true })));
 timeFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: true })));
@@ -5834,12 +6014,9 @@ map.on("zoomend", () => {
 });
 map.on("click", (event) => {
   const closure = nearestClosure(event.latlng);
-  if (closure && closure.category !== "laval") {
+  if (closure) {
     openGroupedPopup(closure, event.latlng);
-    return;
   }
-
-  identifyLavalClosure(event.latlng);
 });
 
 function setMobileMenuOpen(isOpen) {

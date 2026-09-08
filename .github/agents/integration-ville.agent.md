@@ -70,6 +70,14 @@ A source URL must take the user directly to the relevant page, map, layer, endpo
 - Named-road enrichment is allowed only for point records that publish an explicit road name. Query only the named road, keep matching segments as a `MultiLineString`, and retain the original point when no verified segment is returned.
 - Do not add a city-wide road network as roadwork. A road-centerline service is reference geometry only until an official dated closure/work record is joined to it.
 
+## Severity classification: never from colours
+
+- **NEVER** derive severity, category, or impact type from a colour published by a source: `couleurLigne`, ArcGIS `drawingInfo` or symbol colours, KML styles, legend swatches, website CSS classes, or colours sampled from a rendered image. Colours are presentation choices, they change without notice, and different sources reuse the same colour for different impacts.
+- Classify only from published structured or textual fields: typed enumerations, published severity fields, layer identity, or the published description text.
+- Our `SEVERITY_META` palette is applied **after** severity is decided. Never read a colour back to infer a category.
+- An aggregate magnitude field is not an impact type. Distinguish a lane closure from a road closure: "Fermeture de 1 voie sur 2" is `major`, not `critical`.
+- When a source publishes an enumerated severity, map every documented value explicitly; never let an unknown value fall through to `critical`.
+
 ## Catalog quality rules
 
 - One URL per source. Do not duplicate a map's landing page and the same map under another label.
