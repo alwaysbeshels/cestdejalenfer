@@ -4645,10 +4645,11 @@ function streetGeometryFromWays(ways, streetName, limitNames, point) {
 }
 
 function cleanLimitName(value) {
-  return String(value || "")
-    .replace(/\s+/g, " ")
-    .replace(/^(?:les|la|le|l')\s*/i, "")
-    .replace(new RegExp(`^(?:${STREET_TYPE_WORDS})\\s+`, "i"), "")
+  const stripArticle = (text) => text.replace(/^(?:les|la|le)\s+|^l'\s*/i, "");
+  return stripArticle(
+    stripArticle(String(value || "").replace(/\s+/g, " "))
+      .replace(new RegExp(`^(?:${STREET_TYPE_WORDS})\\s+`, "i"), "")
+  )
     .replace(/[.,;:]+$/, "")
     .trim();
 }
@@ -4660,14 +4661,16 @@ function isUsableLimitName(value) {
 // Les sources publient souvent "entre X et Y" ou "de X a Y": ces bornes servent a couper le troncon.
 function publishedRoadLimits(value) {
   const text = String(value || "").replace(/\s+/g, " ");
+  const name = "[A-Za-zÀ-ÿ0-9'’-]+(?:\\s+[A-Za-zÀ-ÿ0-9'’-]+){0,3}";
   const patterns = [
-    /\bentre\s+(.+?)\s+et\s+([^,.;]+)/i,
-    /\b(?:de|du)\s+(?:la\s+|l')?([A-Za-zÀ-ÿ][^,.;]*?)\s+(?:à|au|jusqu'à|jusqu'au)\s+([^,.;]+)/i
+    new RegExp(`\\bentre\\s+(${name})\\s+et\\s+(${name})`, "i"),
+    new RegExp(`\\b(?:de|du)\\s+(${name})\\s+(?:à|au|jusqu'à|jusqu'au)\\s+(${name})`, "i")
   ];
 
   for (const pattern of patterns) {
     const match = text.match(pattern);
-    if (!match) {
+    // Sans type de voie explicite, la phrase decrit de la prose et non des limites de chantier.
+    if (!match || !new RegExp(`\\b(?:${STREET_TYPE_WORDS})\\b`, "i").test(match[0])) {
       continue;
     }
 
@@ -4721,7 +4724,8 @@ const MUNICIPAL_ENRICH_KINDS = new Set([
 ]);
 
 function enrichmentSourceText(closure) {
-  return [closure.roadSearchText, closure.streets, closure.impact].filter(Boolean).join(" ");
+  // Le separateur evite qu'une limite deborde sur la phrase suivante.
+  return [closure.roadSearchText, closure.streets, closure.impact].filter(Boolean).join(" ; ");
 }
 
 function canEnrichToStreetGeometry(closure) {
