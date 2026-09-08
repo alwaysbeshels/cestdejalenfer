@@ -3757,7 +3757,7 @@ function quebec511TrafficDetails(properties) {
 
 function quebec511Periods(entrave) {
   const text = String(entrave || "").toLowerCase();
-  if (/nuit|23 h|0 h|tous les jours|en tout temps/.test(text)) {
+  if (/nuit|22 h|23 h|0 h|tous les jours|en tout temps/.test(text)) {
     return ["day", "night"];
   }
   return ["day"];
@@ -5036,11 +5036,11 @@ function overlapsRange(ranges, targetStart, targetEnd) {
 
 function touchesNight(start, end) {
   const ranges = timeRanges(start, end);
-  return overlapsRange(ranges, 23 * 60, 1440) || overlapsRange(ranges, 0, 5 * 60);
+  return overlapsRange(ranges, 22 * 60, 1440) || overlapsRange(ranges, 0, 5 * 60);
 }
 
 function touchesDay(start, end) {
-  return overlapsRange(timeRanges(start, end), 5 * 60, 23 * 60);
+  return overlapsRange(timeRanges(start, end), 5 * 60, 22 * 60);
 }
 
 function normalizeLegacyClosure(closure) {

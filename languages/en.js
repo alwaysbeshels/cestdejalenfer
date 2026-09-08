@@ -40,7 +40,7 @@ window.TRANSLATIONS.en = {
   "filters.dateHelp": "The period shows restrictions that affect at least one day between the two dates, even if they last only a few hours or days.",
   "filters.time": "Work period",
   "filters.timeHelpLabel": "Information about daytime and nighttime work",
-  "filters.timeHelp": "<p><strong>Day:</strong> restrictions outside the nighttime period.</p><p><strong>Night:</strong> any restriction affecting 11 p.m. to 5 a.m., even if it starts before 11 p.m. or ends after 5 a.m.</p>",
+  "filters.timeHelp": "<p><strong>Day:</strong> restrictions outside the nighttime period.</p><p><strong>Night:</strong> any restriction affecting 10 p.m. to 5 a.m., even if it starts before 10 p.m. or ends after 5 a.m.</p>",
   "filters.day": "Day",
   "filters.night": "Night",
   "filters.source": "Authority / source",
@@ -103,7 +103,7 @@ window.TRANSLATIONS.en = {
   "popup.direction": "Direction",
   "popup.notPublished": "not published",
   "popup.dayNight": "Day and night",
-  "popup.night": "Night (11 p.m. to 5 a.m.)",
+  "popup.night": "Night (10 p.m. to 5 a.m.)",
   "popup.day": "Day",
   "abbreviation.MTMD": "Ministry of Transport and Sustainable Mobility",
   "abbreviation.VM": "Ville-Marie",
@@ -197,7 +197,7 @@ window.TRANSLATIONS.en = {
   ,"faq.q.continuous": "Do the dates indicate a continuous restriction?"
   ,"faq.a.continuous": "Not necessarily. The map also shows temporary restrictions, daytime or nighttime work, lane removals, limited access, parking restrictions and closures that apply only during certain hours. Dates define the general period during which a restriction may apply; they do not automatically mean that the road is closed without interruption. Check the published details for hours, direction, affected lanes, detours and exceptions."
   ,"faq.q.dayNight": "What do the Day and Night filters mean?"
-  ,"faq.a.dayNight": "The Night filter keeps restrictions affecting 11 p.m. to 5 a.m. The Day filter shows other restrictions active during the day. A continuous restriction can appear in both categories."
+  ,"faq.a.dayNight": "The Night filter keeps restrictions affecting 10 p.m. to 5 a.m. The Day filter shows other restrictions active during the day. A continuous restriction can appear in both categories."
   ,"faq.q.dateFilter": "Why does a restriction not appear after I choose a date?"
   ,"faq.a.dateFilter": "First check the visible map area, selected sources and traffic impact. The list shows only restrictions matching all filters and located within the current map view."
 };

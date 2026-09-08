@@ -40,7 +40,7 @@ window.TRANSLATIONS.fr = {
   "filters.dateHelp": "La période affiche toutes les entraves qui touchent au moins une journée entre les deux dates, même si elles ne durent que quelques heures ou quelques jours.",
   "filters.time": "Moment des travaux",
   "filters.timeHelpLabel": "Information sur les travaux de jour et de nuit",
-  "filters.timeHelp": "<p><strong>Jour:</strong> entraves hors de la plage de nuit.</p><p><strong>Nuit:</strong> toute entrave qui touche la période de 23 h à 5 h, même si elle commence avant 23 h ou finit après 5 h.</p>",
+  "filters.timeHelp": "<p><strong>Jour:</strong> entraves hors de la plage de nuit.</p><p><strong>Nuit:</strong> toute entrave qui touche la période de 22 h à 5 h, même si elle commence avant 22 h ou finit après 5 h.</p>",
   "filters.day": "Jour",
   "filters.night": "Nuit",
   "filters.source": "Responsable / source",
@@ -103,7 +103,7 @@ window.TRANSLATIONS.fr = {
   "popup.direction": "Direction",
   "popup.notPublished": "non publiée",
   "popup.dayNight": "Jour et nuit",
-  "popup.night": "Nuit (23 h à 5 h)",
+  "popup.night": "Nuit (22 h à 5 h)",
   "popup.day": "Jour",
   "abbreviation.MTMD": "ministère des Transports et de la Mobilité durable",
   "abbreviation.VM": "Ville-Marie",
@@ -197,7 +197,7 @@ window.TRANSLATIONS.fr = {
   ,"faq.q.continuous": "Les dates indiquent-elles une entrave continue?"
   ,"faq.a.continuous": "Pas nécessairement. La carte affiche aussi des entraves temporaires, des travaux de jour ou de nuit, des retraits de voie, des accès limités, des restrictions de stationnement et des fermetures qui ne sont actives qu'à certaines heures. Les dates indiquent la période générale pendant laquelle l'entrave peut s'appliquer; elles ne signifient pas automatiquement que la route est fermée sans interruption. Consultez le détail publié pour les horaires, la direction, les voies touchées, les détours et les exceptions."
   ,"faq.q.dayNight": "Que signifient les filtres Jour et Nuit?"
-  ,"faq.a.dayNight": "Le filtre Nuit retient les entraves qui touchent la plage de 23 h à 5 h. Le filtre Jour affiche les autres entraves actives durant la journée. Une entrave continue peut être visible dans les deux catégories."
+  ,"faq.a.dayNight": "Le filtre Nuit retient les entraves qui touchent la plage de 22 h à 5 h. Le filtre Jour affiche les autres entraves actives durant la journée. Une entrave continue peut être visible dans les deux catégories."
   ,"faq.q.dateFilter": "Pourquoi une entrave n'apparaît-elle pas après avoir choisi une date?"
   ,"faq.a.dateFilter": "Vérifiez d'abord la zone visible de la carte, les sources sélectionnées et le type d'impact. La liste n'affiche que les entraves qui correspondent à tous les filtres et qui se trouvent dans le cadrage actuel."
 };
