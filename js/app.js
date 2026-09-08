@@ -3277,11 +3277,12 @@ const closureLayer = L.layerGroup().addTo(map);
 const arrowLayer = L.layerGroup().addTo(map);
 const fastRenderer = L.canvas({ padding: 0.5 });
 let mapRenderFrame = null;
+const renderedClosureLayers = new Map();
 
 function scheduleMapRender() {
   cancelAnimationFrame(mapRenderFrame);
   mapRenderFrame = requestAnimationFrame(() => {
-    renderMap(currentClosures);
+    renderMap(filterClosuresToViewport(currentClosures));
   });
 }
 
@@ -4521,6 +4522,8 @@ async function enrichMunicipalGeometriesInBackground() {
   }
 
   if (changed) {
+    // Les donnees ont change (points -> lignes), force re-rendu meme dans les anciennes limites.
+    lastRenderBounds = null;
     updateView({ fit: false });
   }
 }
@@ -4909,13 +4912,18 @@ function toLatLngs(coordinates) {
   return coordinates.map(toLatLngs);
 }
 
-async function fetchJson(url) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`${response.status} ${response.statusText}`);
+async function fetchJson(url, { timeout = 15000 } = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeout);
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) {
+      throw new Error(`${response.status} ${response.statusText}`);
+    }
+    return await response.json();
+  } finally {
+    clearTimeout(timer);
   }
-
-  return response.json();
 }
 
 async function loadOfficialData() {
@@ -4953,7 +4961,8 @@ async function loadOfficialData() {
 
   if (primaryClosures.length > 0) {
     allClosures = dedupeClosures([...allClosures.filter((closure) => closure.sourceKind !== "fallback"), ...primaryClosures]);
-    showMapStatus(`Donnees initiales chargees: ${sourceCounts.join(" + ")}.`, "ready");
+    // Garder le spinner: le chargement de fond n'est pas encore termine.
+    showMapStatus(t("map.loading"), "loading");
   } else {
     showMapStatus(t("map.apiUnavailable"), "error");
   }
@@ -4994,8 +5003,9 @@ async function loadBackgroundOfficialData() {
   if (additions.length > 0) {
     allClosures = dedupeClosures([...allClosures, ...additions]);
     updateView({ fit: false });
-    showMapStatus(`Donnees chargees: ${allClosures.length} entraves actives dans la region.`, "ready");
   }
+  // Toujours retirer l'indicateur de chargement une fois le fond charge.
+  showMapStatus(`Donnees chargees: ${allClosures.length} entraves actives dans la region.`, "ready");
 
   enrichMunicipalGeometriesInBackground();
 }
@@ -5067,7 +5077,7 @@ function groupedPopupContent(closures) {
 
 function openGroupedPopup(primaryClosure, latLng) {
   selectedClosureId = primaryClosure.id;
-  renderMap(currentClosures);
+  renderMap(filterClosuresToViewport(currentClosures));
   const nearbyClosures = closuresNearLatLng(latLng, primaryClosure);
   openMapPopup(latLng, groupedPopupContent(nearbyClosures), 420);
 }
@@ -5185,13 +5195,26 @@ function minDistanceMeters(center, closure) {
 }
 
 function renderMap(closures) {
-  closureLayer.clearLayers();
-  arrowLayer.clearLayers();
+  const visibleClosureIds = new Set(closures
+    .filter((closure) => closure.category !== "laval")
+    .map((closure) => closure.id));
+
+  renderedClosureLayers.forEach((layers, closureId) => {
+    if (!visibleClosureIds.has(closureId)) {
+      closureLayer.removeLayer(layers.closures);
+      arrowLayer.removeLayer(layers.arrows);
+      renderedClosureLayers.delete(closureId);
+    }
+  });
 
   [...closures].sort((a, b) => layerRank(a) - layerRank(b)).forEach((closure) => {
-    if (closure.category === "laval") {
+    if (closure.category === "laval" || renderedClosureLayers.has(closure.id)) {
       return;
     }
+
+    const closureLayers = L.layerGroup().addTo(closureLayer);
+    const closureArrows = L.layerGroup().addTo(arrowLayer);
+    renderedClosureLayers.set(closure.id, { closures: closureLayers, arrows: closureArrows });
 
     const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
     const lineWidth = mapLineWidth(severity.width);
@@ -5201,21 +5224,23 @@ function renderMap(closures) {
 
     if (closure.geometry?.type === "LineString") {
       const latLngs = toLatLngs(closure.geometry.coordinates);
-      mainLayer = L.polyline(latLngs, commonStyle).addTo(closureLayer);
+      mainLayer = L.polyline(latLngs, commonStyle).addTo(closureLayers);
+      mainLayer._mapLineBaseWidth = severity.width;
       L.polyline(latLngs, hitStyle).on("click", (event) => {
         dismissMapFirstVisitHint();
         openGroupedPopup(closure, event.latlng);
-      }).addTo(closureLayer);
-      addDirectionArrows(latLngs, closure);
+      }).addTo(closureLayers);
+      addDirectionArrows(latLngs, closure, closureArrows);
     } else if (closure.geometry?.type === "MultiLineString") {
       closure.geometry.coordinates.forEach((lineCoordinates) => {
         const latLngs = toLatLngs(lineCoordinates);
-        mainLayer = L.polyline(latLngs, commonStyle).addTo(closureLayer);
+        mainLayer = L.polyline(latLngs, commonStyle).addTo(closureLayers);
+        mainLayer._mapLineBaseWidth = severity.width;
         L.polyline(latLngs, hitStyle).on("click", (event) => {
           dismissMapFirstVisitHint();
           openGroupedPopup(closure, event.latlng);
-        }).addTo(closureLayer);
-        addDirectionArrows(latLngs, closure);
+        }).addTo(closureLayers);
+        addDirectionArrows(latLngs, closure, closureArrows);
       });
     } else if (closure.geometry?.type === "Polygon") {
       mainLayer = L.polygon(toLatLngs(closure.geometry.coordinates), {
@@ -5225,7 +5250,8 @@ function renderMap(closures) {
         fillColor: closure.color,
         fillOpacity: closure.severity === "critical" ? 0.32 : 0.2,
         renderer: fastRenderer
-      }).addTo(closureLayer);
+      }).addTo(closureLayers);
+      mainLayer._mapLineBaseWidth = severity.width;
     } else if (closure.point) {
       mainLayer = L.circleMarker([closure.point[1], closure.point[0]], {
         radius: closure.severity === "critical" ? 8 : 6,
@@ -5234,7 +5260,7 @@ function renderMap(closures) {
         fillColor: closure.color,
         fillOpacity: 1,
         renderer: fastRenderer
-      }).addTo(closureLayer);
+      }).addTo(closureLayers);
     }
 
     if (mainLayer) {
@@ -5243,6 +5269,16 @@ function renderMap(closures) {
         openGroupedPopup(closure, event.latlng);
       });
     }
+  });
+}
+
+function updateRenderedLineWidths() {
+  renderedClosureLayers.forEach(({ closures }) => {
+    closures.eachLayer((layer) => {
+      if (layer._mapLineBaseWidth) {
+        layer.setStyle({ weight: mapLineWidth(layer._mapLineBaseWidth) });
+      }
+    });
   });
 }
 
@@ -5405,7 +5441,7 @@ function isMeaningfulLavalValue(value) {
   return value && !/^null$/i.test(String(value).trim());
 }
 
-function addDirectionArrows(latLngs, closure) {
+function addDirectionArrows(latLngs, closure, targetLayer) {
   if (latLngs.length < 2) {
     return;
   }
@@ -5418,24 +5454,24 @@ function addDirectionArrows(latLngs, closure) {
   const from = latLngs[midpointIndex - 1];
   const to = latLngs[midpointIndex];
   const bearing = bearingDegrees(from, to);
-  addArrowMarker(to, bearing, closure.color);
+  addArrowMarker(to, bearing, closure.color, targetLayer);
 
   if (closure.rawType === "Double sens") {
     const reversed = [...latLngs].reverse();
     const middle = reversed[Math.floor(reversed.length / 2)];
     const bearing = bearingDegrees(reversed[0], reversed[reversed.length - 1]);
-    addArrowMarker(middle, bearing, closure.color);
+    addArrowMarker(middle, bearing, closure.color, targetLayer);
   }
 }
 
-function addArrowMarker(latLng, bearing, color) {
+function addArrowMarker(latLng, bearing, color, targetLayer) {
   L.marker(latLng, {
     interactive: false,
     icon: L.divIcon({
       className: "traffic-arrow",
       html: `<span style="--arrow-color: ${color}; transform: rotate(${bearing}deg)"></span>`
     })
-  }).addTo(arrowLayer);
+  }).addTo(targetLayer);
 }
 
 function bearingDegrees(from, to) {
@@ -5537,7 +5573,7 @@ function updateView({ fit = false } = {}) {
   currentClosures = getFilteredClosures();
   updateImpactCounts();
   updateMapLegend();
-  renderMap(currentClosures);
+  renderMap(filterClosuresToViewport(currentClosures));
   updateLavalOfficialLines();
   updateViewportList();
   setTimeout(() => map.invalidateSize(true), 0);
@@ -5552,7 +5588,7 @@ window.addEventListener("languagechange", () => {
   setSourceSectionOpen(!sourceFilters.hidden);
   menuToggle.setAttribute("aria-label", t(menuToggle.classList.contains("is-open") ? "menu.close" : "menu.open"));
   updateMapLegend();
-  renderMap(currentClosures);
+  renderMap(filterClosuresToViewport(currentClosures));
   updateViewportList();
   updateLavalOfficialLines();
 });
@@ -5626,7 +5662,9 @@ menuBackdrop.addEventListener("click", () => setMobileMenuOpen(false));
 sourcesToggle.addEventListener("click", () => setSourcesOpen(true));
 sourcesClose.addEventListener("click", () => setSourcesOpen(false));
 mapFirstVisitClose.addEventListener("click", dismissMapFirstVisitHint);
-map.on("zoomend", () => scheduleMapRender());
+map.on("zoomend", () => {
+  updateRenderedLineWidths();
+});
 map.on("click", (event) => {
   const closure = nearestClosure(event.latlng);
   if (closure && closure.category !== "laval") {
