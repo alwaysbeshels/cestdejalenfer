@@ -149,6 +149,7 @@ window.TRANSLATIONS.en = {
   "faq.snapshot": "Snapshot",
   "faq.top": "Back to top",
   "faq.profile": "My LinkedIn:",
+  "faq.instagram": "My Instagram:",
   "faq.feedbackLink": "Comments & Improvements",
   "faq.sourceLink": "Open source"
   ,"faq.q.aboutCreated": "Why was this map created?"

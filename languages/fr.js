@@ -149,6 +149,7 @@ window.TRANSLATIONS.fr = {
   "faq.snapshot": "Snapshot",
   "faq.top": "Remonter en haut de la page",
   "faq.profile": "Mon LinkedIn:",
+  "faq.instagram": "Mon Instagram:",
   "faq.feedbackLink": "Commentaires & Améliorations",
   "faq.sourceLink": "Ouvrir la source"
   ,"faq.q.aboutCreated": "Pourquoi cette carte a-t-elle été créée?"
