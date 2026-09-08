@@ -71,6 +71,12 @@ Consequence : l'enrichissement des geometries ne peut pas etre valide en direct 
 - Ne pas empiler de correctifs speculatifs. Si une correction ne marche pas, enqueter plus profondement.
 - Retirer tout `console.log` temporaire avant de livrer.
 
+### 2.6 Catalogue des sources
+
+- `data/sources.js` porte un drapeau `inMap` par entree, et le FAQ n'affiche que les entrees `inMap: true`.
+- Une entree passe a `true` uniquement si elle est chargee par `js/app.js`, ou si elle est citee comme `sourceUrl` d'une entrave reellement affichee, ou s'il s'agit du fond de carte ou d'un service de geometrie utilise.
+- Verifier la verite terrain en listant a l'execution les valeurs distinctes de `source` et `sourceUrl` dans `allClosures`, plutot qu'en se fiant au catalogue.
+
 ---
 
 ## 3. Etat exact du depot
@@ -83,10 +89,13 @@ Commits deja pousses :
 |---|---|
 | `d0ebb93` | Performance de la carte et geometries de rue publiees |
 | `3378a4b` | Fiabiliser l'extraction des limites de chantier publiees |
+| `d7ecb20` | Ajout de cet agent temporaire |
 
 `main` est reste sur `79ffb32` et ne doit pas bouger.
 
-Fichiers modifies par rapport a `main` : `js/app.js` et `README.md`.
+Travail local non encore commite au moment de la redaction : integration native de Laval, mise a jour du catalogue de sources et de la documentation. Verifier `git status` avant de commencer.
+
+Fichiers concernes : `js/app.js`, `data/sources.js`, `languages/fr.js`, `languages/en.js` et `README.md`.
 
 ---
 
@@ -97,10 +106,10 @@ Fichiers modifies par rapport a `main` : `js/app.js` et `README.md`.
 | Element | Detail |
 |---|---|
 | `closuresToRender()` / `renderVisibleClosures()` | Ne dessine que les entraves qui intersectent la vue courante elargie de `RENDER_VIEWPORT_PADDING = 0.35`. Toutes les donnees restent en memoire dans `allClosures`. |
-| `map.on("moveend")` | Appelle `renderVisibleClosures()`, `updateViewportList()` et `scheduleLavalViewportRefresh()`. |
+| `map.on("moveend")` | Appelle `renderVisibleClosures()` et `updateViewportList()`. |
 | `searchFilter` | Debounce de 160 ms avant `updateView({ fit: true })`. |
 | `scheduleEnrichedGeometryUpdate()` / `flushEnrichedGeometryUpdate()` | Regroupe les rerenders apres enrichissement (fenetre de 500 ms) au lieu d'un rerendu par geometrie trouvee. |
-| `lavalOverlayPendingUrl` | Empeche de relancer une exportation Laval identique deja en attente. Remis a `null` sur `load`, sur `error` et quand la couche est retiree. |
+| `loadLavalClosures()` | Une seule requete `identify` sur une enveloppe couvrant tout Laval avec `returnGeometry=true`. Retourne chaque entrave avec sa geometrie officielle et ses attributs. |
 | `formatDate()` | Tolere les dates invalides des flux live et retourne la valeur brute ou `popup.notPublished` au lieu de lever `RangeError: Invalid time value`. |
 
 ### 4.2 Reseau et cache de session
@@ -113,7 +122,27 @@ Fichiers modifies par rapport a `main` : `js/app.js` et `README.md`.
 
 Comportement mesure sur le poste d'origine : 30 appels OSRM au premier chargement, **0** au rechargement dans la meme session, tandis que MTMD, Montreal et Laval restent rappeles.
 
-### 4.3 Geometrie de rue nommee
+### 4.3 Laval, desormais traitee comme les autres sources
+
+Le `query` du MapServer de Laval retourne `geometry: null`, verifie en `f=json` comme en `f=geojson`. La solution retenue est l'operation `identify` appliquee a une enveloppe couvrant `LAVAL_OFFICIAL_BOUNDS`, avec `returnGeometry=true` et `layers=all:0,2,3`.
+
+| Mesure | Valeur |
+|---|---|
+| Requetes Laval par session | 1 |
+| Taille de la reponse | environ 128 Ko |
+| Entraves obtenues | environ 178, avec geometrie et attributs |
+| Ecart avec la geometrie officielle publiee sur Donnees Quebec | 1 m median, 7 m maximum |
+| Requetes supplementaires au deplacement ou au zoom | 0 |
+
+`lavalPathsToGeometry()` convertit les `paths` EPSG:3857 en GeoJSON en degres. `normalizeLavalIdentifyResult()` produit une entrave complete. Aucun code specifique ne subsiste : plus d'image serveur, plus d'analyse SVG, plus de filtrage par fenetre cote serveur, plus d'identification au clic.
+
+Pistes deja explorees et ecartees, a ne pas refaire sans raison nouvelle :
+
+- le GeoJSON `Chantiers routiers` de Laval sur Donnees Quebec contient bien la geometrie par entrave, mais pese 41 Mo (10,6 Mo compresses), inclut tout l'historique depuis 2017 et son datastore CKAN est desactive, donc aucun filtrage cote serveur;
+- l'export SVG du MapServer fonctionne et donne une geometrie a 4-7 m, mais sans attribution par enregistrement, donc inferieur a `identify`;
+- reconstruire la geometrie a partir du texte `LOCALISATION` et du reseau routier officiel de Laval donne une mediane de 1 552 m et un maximum de 20 930 m par entrave, donc une surrepresentation inacceptable.
+
+### 4.4 Geometrie de rue nommee
 
 | Fonction | Role |
 |---|---|

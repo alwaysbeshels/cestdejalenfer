@@ -1,4 +1,9 @@
 const SOURCE_CATALOG = [
+  // Fond de carte et services de geometrie
+  { name: "OpenStreetMap - Fond de carte", url: "https://www.openstreetmap.org/copyright" },
+  { name: "OSRM - Alignement des trajets sur le reseau routier", url: "https://router.project-osrm.org/" },
+  { name: "Overpass / OpenStreetMap - Geometrie des rues nommees", url: "https://overpass-api.de/" },
+
   // Sources regionales et provinciales
   { name: "MTMD - Carte interactive des chantiers", url: "https://geoegl.msp.gouv.qc.ca/igo2/apercu-qc/?context=mtq&visiblelayers=chantiers_mtmdet" },
   { name: "MTMD - Chantiers WFS GeoJSON", url: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&outfile=TravauxRoutiers&srsname=EPSG:4326&outputformat=geojson" },
@@ -8,6 +13,10 @@ const SOURCE_CATALOG = [
 
   // Agglomeration de Montreal
   { name: "Montreal - Carte des entraves", url: "https://services.montreal.ca/cartes/entraves/" },
+  { name: "Montreal - Restrictions de circulation UCI 2026 (WFS)", url: "https://services.montreal.ca/cartes/uci" },
+  { name: "Montreal - Pietonnisation de l'avenue du Mont-Royal", url: "https://montreal.ca/lieux/avenue-du-mont-royal" },
+  { name: "Montreal - Rues pietonnes saisonnieres", url: "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE" },
+  { name: "Quartier des spectacles - Rues et espaces publics", url: "https://www.quartierdesspectacles.com/" },
   { name: "Montreal - Rues piétonnes et partagées (GeoJSON)", url: "https://donnees.montreal.ca/fr/dataset/1e153f9f-3930-4133-8d35-ade2e8f7e7e3/resource/dfe003f6-2dd1-4c50-af68-154a914421cc/download/projetpietonnisation2017.geojson" },
   { name: "Montreal - API CKAN des rues piétonnes", url: "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=ef2a8162-0644-47e7-bd03-bea33f14a5d2" },
   { name: "Montreal - API CKAN des rues piétonnes (SQL)", url: "https://donnees.montreal.ca/api/3/action/datastore_search_sql?sql=SELECT%20*%20from%20%22ef2a8162-0644-47e7-bd03-bea33f14a5d2%22" },
@@ -28,6 +37,7 @@ const SOURCE_CATALOG = [
   { name: "Beaconsfield - KML réhabilitation de conduites d'aqueduc", url: "https://www.beaconsfield.ca/storage/app/uploads/public/6a0/625/297/6a0625297fba0547640170.kml" },
   { name: "Cote-Saint-Luc - Avis de fermeture routiere", url: "https://cotesaintluc.org/en/announcements/road-work/closure-cote-saint-luc-randall/" },
   { name: "Dollard-des-Ormeaux - Info-travaux", url: "https://ville.ddo.qc.ca/info-travaux/" },
+  { name: "Hampstead - Chantiers dans ma rue", url: "https://www.hampstead.qc.ca/fr/services/entretien-et-circulation/chantiers-dans-ma-rue/" },
   { name: "Dorval - Info-travaux", url: "https://www.ville.dorval.qc.ca/fr/environnement-et-voirie/infrastructures-urbaines/info-travaux" },
   { name: "Dorval - Plan des travaux d'infrastructure 2026 (PDF)", url: "https://www.ville.dorval.qc.ca/storage/app/media/environnement-et-voirie/infrastructures-urbaines/info-travaux/2026/travaux_infrastructure_2026.pdf" },
   { name: "Dorval - Info-travaux Hydro-Québec août 2026 (PDF)", url: "https://www.ville.dorval.qc.ca/storage/app/media/environnement-et-voirie/infrastructures-urbaines/info-travaux/2026/202608_hq-info_travaux-aout2026_fr.pdf" },
@@ -50,6 +60,8 @@ const SOURCE_CATALOG = [
   { name: "Saint-Bruno-de-Montarville - Info-travaux", url: "https://stbruno.ca/citoyens/info-travaux/" },
   { name: "Senneville - Info-travaux", url: "https://www.senneville.ca/publications/info-travaux/" },
   { name: "Westmount - Carte interactive des chantiers", url: "https://experience.arcgis.com/experience/1b1382f04cfa4befabafd3e084eee7b6" },
+  { name: "Westmount - Roadwork and Projects", url: "https://westmount.org/en/urban-planning-and-infrastructure/roads-and-public-works/roadwork-and-projects" },
+  { name: "Westmount - Avis en cours", url: "https://citoyen.westmount.org/en/notices" },
 
   // Agglomeration de Longueuil et Laval
   { name: "Boucherville - Chantiers et projets", url: "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/" },
@@ -59,10 +71,14 @@ const SOURCE_CATALOG = [
   { name: "Brossard - Carte interactive Info-travaux (carte)", url: "https://brossard.ca/informations-travaux/#carte" },
   { name: "Brossard - Programme triennal d'immobilisation 2024-2025-2026 (PDF)", url: "https://brossard.ca/app/uploads/2025/04/attach_cmsUpload_32cd2f38-f18d-4ed0-a468-396f1030dd26.pdf" },
   { name: "Longueuil - Info-travaux", url: "https://www.longueuil.quebec/fr/info-travaux" },
+  { name: "Longueuil - Travaux routiers", url: "https://www.longueuil.quebec/fr/travaux-routiers" },
   { name: "Longueuil - Carte interactive des travaux", url: "https://experience.arcgis.com/experience/e35bec0d7e0641e6beb1dda771f238ae" },
+  { name: "Longueuil - Gestion des entraves FeatureServer", url: "https://geomatique.longueuil.quebec/public/rest/services/Communication/Gestion_des_entraves_Diffusion/FeatureServer" },
   { name: "Saint-Lambert - Info-travaux", url: "https://www.saint-lambert.ca/fr/info-travaux" },
   { name: "Laval - Carte Info-Travaux", url: "https://vl.maps.arcgis.com/apps/instant/sidebar/index.html?appid=729ff9eeb851437b9a4cf365efadfe8f" },
   { name: "Laval - Entraves MapServer", url: "https://gis.laval.ca/arcgis/rest/services/ing/Obstruction_14_jours/MapServer" },
+  { name: "Laval - Chantiers routiers (Donnees Quebec)", url: "https://www.donneesquebec.ca/recherche/dataset/chantiers-routiers-laval" },
+  { name: "Laval - Reseau routier (Donnees Quebec)", url: "https://www.donneesquebec.ca/recherche/dataset/reseau-routier-laval" },
 
   // Couronne Nord
   { name: "Blainville - Entraves routieres", url: "https://blainville.ca/services/environnement-et-voirie/entraves-routieres" },
@@ -147,21 +163,35 @@ const SOURCE_CATALOG = [
   { name: "Vaudreuil-Dorion - Info-travaux", url: "https://www.ville.vaudreuil-dorion.qc.ca/fr/services-aux-citoyens/routes-egouts-et-aqueduc/info-travaux" }
 ];
 
+// Sources reellement chargees ou affichees comme origine d'une entrave sur la carte.
 const MAP_SOURCE_NAMES = new Set([
+  "OpenStreetMap - Fond de carte",
+  "OSRM - Alignement des trajets sur le reseau routier",
+  "Overpass / OpenStreetMap - Geometrie des rues nommees",
   "MTMD - Chantiers WFS GeoJSON",
   "MTMD - Événements WFS GeoJSON",
+  "Quebec 511 - Carte travaux et fermetures",
   "Mobilite Montreal - Fermetures majeures",
   "Montreal - Carte des entraves",
+  "Montreal - Restrictions de circulation UCI 2026 (WFS)",
+  "Montreal - Pietonnisation de l'avenue du Mont-Royal",
+  "Montreal - Rues pietonnes saisonnieres",
+  "Quartier des spectacles - Rues et espaces publics",
   "Baie-d'Urfe - Info-travaux",
   "Dollard-des-Ormeaux - Info-travaux",
+  "Hampstead - Chantiers dans ma rue",
   "Dorval - Info-travaux",
   "Dorval - Carte interactive des travaux",
   "Dorval - Entraves FeatureServer",
   "Kirkland - Info-travaux",
   "Pointe-Claire - Grands chantiers",
   "Westmount - Carte interactive des chantiers",
+  "Westmount - Roadwork and Projects",
+  "Westmount - Avis en cours",
   "Longueuil - Info-travaux",
+  "Longueuil - Travaux routiers",
   "Longueuil - Carte interactive des travaux",
+  "Longueuil - Gestion des entraves FeatureServer",
   "Laval - Carte Info-Travaux",
   "Laval - Entraves MapServer",
   "Boisbriand - Travaux FeatureServer",
@@ -175,15 +205,14 @@ const MAP_SOURCE_NAMES = new Set([
   "Terrebonne - Carte des travaux",
   "Terrebonne - Entraves linéaires FeatureServer",
   "Terrebonne - Entraves ponctuelles FeatureServer",
-  "Terrebonne - Travaux linéaires FeatureServer",
-  "Terrebonne - Travaux surfaciques FeatureServer",
-  "Terrebonne - Travaux ponctuels FeatureServer",
   "Chateauguay - Travaux en cours et a venir",
   "Chateauguay - Carte interactive des travaux",
   "Chateauguay - Travaux FeatureServer",
   "Mont-Saint-Hilaire - Carte Experience des travaux",
   "Mont-Saint-Hilaire - Travaux FeatureServer",
+  "Mont-Royal - Carte entraves, fermetures et detours",
   "Mont-Royal - Snapshot statique des entraves",
+  "Beaconsfield - Carte interactive Info-travaux",
   "Beaconsfield - Snapshot statique des entraves",
   "Montreal - Rues piétonnes (snapshot API + géométrie OSM validée)"
 ]);

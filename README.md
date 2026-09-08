@@ -59,7 +59,7 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 - Chargement en direct des projets publics de Mont-Royal via son endpoint officiel `public/get_projects`, avec dates, descriptions d'impact et géométries polyline publiées par la carte.
 - Quand une source municipale ne publie qu'un point mais fournit explicitement un nom de rue, la carte tente de récupérer uniquement les segments nommés correspondants et conserve une MultiLineString; les points sans axe publié restent des points officiels plutôt qu'une diagonale inventée.
 - Les descriptions qui publient plusieurs rues (par exemple « rues A, B et C ») sont séparées en requêtes de rues nommées indépendantes; les segments retournés restent séparés dans une MultiLineString.
-- Chargement en direct des attributs Laval Info-Travaux et affichage des lignes officielles depuis son MapServer public.
+- Chargement en direct des entraves de Laval avec leur géométrie officielle. La recherche standard de son MapServer retourne `geometry: null`, mais son opération `identify` appliquée à une enveloppe couvrant tout le territoire renvoie chaque entrave avec son tracé, ses dates, son type d'entrave, la circulation, la nature des travaux, le responsable et la référence, en une seule requête. Laval est donc affichée, filtrée et consultée exactement comme les autres sources, sans image serveur ni requête supplémentaire au déplacement.
 - Filtres Jour/Nuit, avec la nuit definie comme toute entrave qui touche la plage 23 h à 5 h.
 - Section de sources travaux pour les 15 municipalites independantes de l'ile de Montreal qui ne sont pas toujours couvertes par le WFS de la Ville de Montreal.
 - Travaux concrets extraits des pages accèssibles de certaines villes liées, dont Baie-d'Urfe, Dollard-des-Ormeaux, Dorval, Hampstead, Kirkland, Pointe-Claire et Westmount, puis alignes aux rues avec OSRM quand une rue ou un axe est exploitable.
@@ -114,7 +114,7 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 2. **Montreal UCI:** https://api.montreal.ca/api/it-platforms/geomatic/wfs-feature/v1/ls-montreal/ (restrictions 2026)
 3. **Montreal CKAN:** https://donnees.montreal.ca/api/3 (portail de données)
 4. **Longueuil ArcGIS:** https://geomatique.longueuil.quebec/public/rest/services/Communication/Gestion_des_entraves_Diffusion/FeatureServer
-5. **Laval ArcGIS:** https://gis.laval.ca/arcgis/rest/services/ing/Obstruction_14_jours/MapServer
+5. **Laval ArcGIS:** https://gis.laval.ca/arcgis/rest/services/ing/Obstruction_14_jours/MapServer (operation `identify` avec `returnGeometry=true` pour obtenir les traces officiels)
 6. **Quebec 511 WFS:** https://ws.mapserver.transports.gouv.qc.ca/swtq (travaux routiers provinciaux)
 7. **Données Québec API:** https://www.donneesquebec.ca/api/3 (accès provincial aux datasets)
 
@@ -141,6 +141,10 @@ Règles appliquées pour ne rien inventer:
 - si la rue nommée est introuvable, le point officiel de la source est conservé;
 - une adresse civique sans limites publiées reste un point, car la source décrit un lieu précis et non un tronçon;
 - si le service de géométrie est indisponible, la carte conserve les points officiels et continue de fonctionner normalement.
+
+## Sources affichees dans le FAQ
+
+Le catalogue partage `data/sources.js` porte un drapeau `inMap` par entree. Le FAQ n'affiche dans son tableau que les entrees `inMap: true`, c'est-a-dire les services reellement charges par la carte et les pages officielles citees comme origine d'une entrave affichee. Le fond de carte OpenStreetMap et les services de geometrie OSRM et Overpass y figurent aussi, puisqu'ils contribuent a ce qui est dessine. Les pages, PDF, KML et services candidats restent catalogues avec `inMap: false` tant qu'ils ne sont pas charges.
 
 ## Note importante
 

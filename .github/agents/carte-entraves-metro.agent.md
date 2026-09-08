@@ -54,7 +54,8 @@ You are the maintenance engineer for the static web application **Carte des entr
 
 ### Source Catalog And Active Map Sources
 
-- Every `SOURCE_CATALOG` entry receives an `inMap` boolean. `inMap: true` means the source is actively loaded or represents a verified active map source; `inMap: false` means it is documentary, a candidate, a page/PDF, an unverified interactive map, or a service not loaded by `js/app.js`.
+- Every `SOURCE_CATALOG` entry receives an `inMap` boolean. `inMap: true` means the source is actively loaded, is cited as the `sourceUrl` of a closure actually displayed, or is the base map or a geometry service that contributes to what is drawn. `inMap: false` means it is documentary, a candidate, a page/PDF, an unverified interactive map, or a service not loaded by `js/app.js`.
+- Establish the truth by listing, at runtime, the distinct `source` and `sourceUrl` values in `allClosures` plus the hosts actually contacted. Do not trust the catalog as the source of truth.
 - `js/faq.js` must display only catalog entries where `source.inMap === true` in the FAQ sources-used table. Do not describe the full catalog as active map coverage.
 - HTML pages, PDFs, search widgets, Google Maps scripts, reCAPTCHA, WordPress/Elementor APIs, and generic road-network layers may remain catalogued with `inMap: false`, but must not be converted into map closures without dated automobile impact and official geometry or a verified named-road geometry.
 
@@ -100,13 +101,15 @@ You are the maintenance engineer for the static web application **Carte des entr
 
 ### Laval
 
-- Laval's MapServer exposes attributes through `query`, but withholds individual line geometries. This is a known source constraint, not a reason to invent route geometry.
-- Load Laval record attributes live on every page refresh from layers `0`, `2`, and `3` defined in `LAVAL_LAYERS`.
-- Draw its official lines through the MapServer `/export` image endpoint with `dynamicLayers`, recolored with the shared severity palette.
-- Never resize an existing Laval export image to new bounds while a fresh export is loading. Keep the previous image in place and swap only after the new overlay `load` event. Use request IDs to discard stale requests.
-- On a map click that did not hit another local geometry, use the MapServer `/identify` endpoint. Laval returns display aliases such as `Début :`, `Fin :`, `Entrave :`, and `Localisation :`; use `lavalAttribute` to handle aliases and technical field names.
+- Laval's MapServer `query` endpoint returns `geometry: null` for every record, verified in both `f=json` and `f=geojson` with `returnGeometry=true`. This is a source constraint, not a reason to invent route geometry.
+- The working solution is the MapServer `/identify` endpoint applied to an envelope covering `LAVAL_OFFICIAL_BOUNDS`, with `returnGeometry=true`, `layers=all:0,2,3` and `maxAllowableOffset=1`. A single request returns every obstruction with its official `paths` geometry and its full attributes, in roughly 128 KB. Measured against the official geometry Laval publishes on Donnees Quebec, the median deviation is 1 m and the maximum is 7 m.
+- Convert the returned EPSG:3857 `paths` to GeoJSON degrees with `lavalPathsToGeometry`, then normalize with `normalizeLavalIdentifyResult`. Laval returns display aliases such as `Début :`, `Fin :`, `Entrave :` and `Localisation :`; keep using `lavalAttribute` to handle both aliases and technical field names.
+- Laval must behave exactly like every other source: rendered by `renderMap`, filtered by the shared viewport logic, and opened through the standard grouped popup. Do not reintroduce a raster image overlay, an SVG export, a per-viewport spatial `query`, or an `identify` call on click.
 - A Laval popup must display current official work details: type of entrave, location, start/end date, impact/circulation, work nature, reference, responsible party, and link to Laval Info-Travaux.
-- Laval list filtering by viewport must use a live spatial `query` with an envelope and `esriSpatialRelIntersects`, because the line coordinates remain server-side.
+- Options already investigated and rejected, with evidence; do not redo them without a new reason:
+  - the `Chantiers routiers` GeoJSON on Donnees Quebec does carry per-record geometry, but weighs 41 MB (10.6 MB compressed), contains every record since 2017, and its CKAN datastore is disabled, so no server-side filtering is possible;
+  - the MapServer SVG export returns the official geometry at 4-7 m accuracy but without per-record attribution, so it is strictly inferior to `identify`;
+  - rebuilding geometry from the `LOCALISATION` text against Laval's official road network yields a median length of 1 552 m and a maximum of 20 930 m per obstruction, which grossly overstates the worksite.
 
 ### Quebec 511 / MTMD
 
@@ -129,13 +132,17 @@ You are the maintenance engineer for the static web application **Carte des entr
 - Current municipal live loaders include Repentigny Open511, Dorval ArcGIS, Boisbriand ArcGIS, L'Assomption ArcGIS incidents, Saint-Eustache ArcGIS lines/points, Chateauguay ArcGIS polygons, and Terrebonne ArcGIS entrave lines/points. Preserve their official fields, dates, status, impact, source URLs, and geometry types.
 - Terrebonne's public layers are `entrave_vue_publique/FeatureServer/1` (lines) and `/0` (points). Filter to active, non-expired records and preserve `type_entrave`, circulation notes, schedules, detours, and official geometry.
 - Dorval and Boisbriand publish many point geometries. Convert a point to named street geometry only when the record explicitly publishes a road name and a verified named-street geometry service returns matching segments. Otherwise retain the official point; never draw a route from its coordinates.
+- The named-street geometry service is Overpass over OpenStreetMap, requested in GET with endpoint fallback. Nominatim must not be used: it is blocked by CORS from a static site and returns `TypeError: Failed to fetch`.
+- When a record publishes limits such as `entre X et Y`, `de X a Y` or `du X au Y`, trim the named street between the two cross streets. Require an explicit street-type word in the phrase so prose does not produce fake limits, join OSM segments only when they actually touch, and keep the official point when nothing is validated.
+- A single network failure must never disable enrichment for the whole session; use a consecutive-failure counter.
 - For municipal ArcGIS layers, filter terminated, expired, test, empty, or no-automobile-impact records. One failed municipal endpoint must not discard other fulfilled municipal sources; use per-source failure isolation.
 
 ## Map And Filtering Behavior
 
 - Use Leaflet with OpenStreetMap and the Canvas renderer for performance. Do not replace the working Leaflet map with an SVG-only map or another map stack without user approval.
 - `renderMap` supports `LineString`, `MultiLineString`, `Polygon`, and point fallback. Preserve this behavior.
-- Clicking a published vector geometry opens its grouped popup. Laval is exceptional and uses `identify` because its official geometry is rendered server-side.
+- Keep every loaded closure in `allClosures`, but draw only those intersecting the current view padded by `RENDER_VIEWPORT_PADDING`. Off-screen closures must appear as soon as the map moves to their area; filters, counters and the list still apply to the whole dataset.
+- Clicking a published vector geometry opens its grouped popup. Every source, Laval included, uses the same popup shell.
 - Direction arrows are only for line geometries and should remain suppressed on very dense/low-zoom map views according to the existing thresholds.
 - The active-work list and the visible count must always follow the current Leaflet viewport, in addition to date, search, source, impact, and time filters.
 - When the user pans or zooms, update the list only after `moveend`; do not rerender it continuously during drag.
@@ -176,6 +183,10 @@ You are the maintenance engineer for the static web application **Carte des entr
 - The `window.CLOSURES` fallback records must be removed from `allClosures` (filter out `sourceKind === "fallback"`) as soon as any live primary source loads successfully. Leaving them merged permanently displays fabricated demo paths (hand-picked 2-3 point lines with no relation to real streets) side by side with real data.
 - `openMapPopup` must both close the previous popup (`activeMapPopup`) AND call `centerPopupInMap` (`requestAnimationFrame` + `panBy` with a second pass on `moveend`) with `L.popup({ autoPan: false })`. Removing the centering call while keeping `autoPan: false` silently reintroduces off-screen/misplaced popups.
 - Leaflet's own `.leaflet-popup-content p { margin: 17px 0; margin: 1.3em 0; }` rule has higher CSS specificity than a bare `.popup-meta`/`.popup-title` class and will win once `leaflet.css` actually loads. Scope popup paragraph spacing overrides as `.leaflet-popup-content p.popup-meta` (or equivalent) rather than the bare class alone.
+- When requesting an ArcGIS `export` image, apply any pixel cap to both axes together and keep the requested image aspect ratio equal to the requested extent. Capping each axis independently makes the server draw the extent into a distorted image; a measured factor of 1.348 shifted every Laval line off the roads and made clicks miss the features.
+- Removing a function is not enough: search for its remaining call sites. An orphan call to a deleted Laval helper threw inside `loadOfficialData` and silently killed the entire background loading, dropping the map from 7 479 to 6 800 closures with no visible error.
+- Never disable a whole feature on the first network error. A single `namedStreetGeometryUnavailable = true` disabled every named-street enrichment for the session and produced exactly zero converted geometries.
+- `formatDate` must tolerate invalid dates coming from live feeds; an unguarded `Intl.DateTimeFormat` call threw `RangeError: Invalid time value` and broke rendering.
 
 ## Internationalization
 
