@@ -84,6 +84,13 @@ const LAVAL_LAYERS = [
   { id: 3, labelKey: "laval.planned", severity: "moderate" }   // Travaux prévus
 ];
 
+const LAVAL_OFFICIAL_BOUNDS = {
+  west: -73.87869698387716,
+  south: 45.521186071730654,
+  east: -73.53037009894052,
+  north: 45.69758406388658
+};
+
 const GREATER_MONTREAL_BOUNDS = {
   west: -74.8,
   south: 45.0,
@@ -3212,6 +3219,13 @@ const MAX_LIST_ITEMS = 220;
 const MAX_AUTO_FIT_ITEMS = 350;
 const ARROW_ZOOM_THRESHOLD = 14;
 const ARROW_DENSE_LIMIT = 250;
+const LAVAL_OVERLAY_PADDING = 0.5;
+const DATE_FORMATTER = new Intl.DateTimeFormat("fr-CA", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric"
+});
+const formattedDateCache = new Map();
 
 const dateStart = document.querySelector("#dateStart");
 const dateEnd = document.querySelector("#dateEnd");
@@ -3233,6 +3247,7 @@ const searchFilter = document.querySelector("#searchFilter");
 const categoryFilters = [...document.querySelectorAll(".source-filters input[type='checkbox']")];
 const impactFilters = [...document.querySelectorAll(".impact-filters input[type='checkbox']")];
 const timeFilters = [...document.querySelectorAll(".time-filters input[type='checkbox']")];
+const impactCountElements = [...document.querySelectorAll("[data-impact-count]")];
 const closureList = document.querySelector("#closureList");
 const visibleCount = document.querySelector("#visibleCount");
 const resetView = document.querySelector("#resetView");
@@ -3252,7 +3267,7 @@ const panelResizeHandle = document.querySelector("#panelResizeHandle");
 // Regional/pedestrian/linked-city entries are (re)loaded with routed geometry on startup;
 // seeding their un-routed static versions here would let dedupeClosures keep the stale copy.
 let allClosures = [
-  ...window.CLOSURES.map(normalizeLegacyClosure)
+  ...window.CLOSURES.map(normalizeLegacyClosure).map(prepareClosureForRuntime)
 ];
 let currentClosures = [];
 let selectedClosureId = null;
@@ -3298,11 +3313,14 @@ function mapLineWidth(width) {
 }
 
 let lavalOfficialLines = null;
+let lavalOfficialLineBounds = null;
+let lavalOfficialLineZoom = null;
 let lavalOverlayTimer = null;
 let lavalOverlayRequestId = 0;
 let lavalViewportIds = null;
 let lavalViewportTimer = null;
 let lavalViewportRequestId = 0;
+let namedStreetGeometryUnavailable = false;
 L.control.scale({ metric: true, imperial: false }).addTo(map);
 
 baseLayer.on("load", () => {
@@ -3431,11 +3449,11 @@ function parseDate(value) {
 }
 
 function formatDate(value) {
-  return new Intl.DateTimeFormat("fr-CA", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric"
-  }).format(parseDate(value));
+  const key = dateOnly(value);
+  if (!formattedDateCache.has(key)) {
+    formattedDateCache.set(key, DATE_FORMATTER.format(parseDate(key)));
+  }
+  return formattedDateCache.get(key);
 }
 
 function formatInputDate(date) {
@@ -3452,15 +3470,15 @@ function getDateRange() {
 }
 
 function overlapsDateRange(closure, range) {
-  const start = parseDate(closure.startDate);
-  const end = parseDate(closure.endDate);
-  const hasStart = !Number.isNaN(start.valueOf());
-  const hasEnd = !Number.isNaN(end.valueOf());
+  const startTime = closure._startTime ?? parseDate(closure.startDate).valueOf();
+  const endTime = closure._endTime ?? parseDate(closure.endDate).valueOf();
+  const hasStart = !Number.isNaN(startTime);
+  const hasEnd = !Number.isNaN(endTime);
   // Entraves sans aucune date: toujours affichees, meme avec un range selectionne.
   if (!hasStart && !hasEnd) return true;
-  const lower = hasStart ? start : new Date(-8640000000000000);
-  const upper = hasEnd ? end : new Date(8640000000000000);
-  return lower <= range.end && upper >= range.start;
+  const lower = hasStart ? startTime : -8640000000000000;
+  const upper = hasEnd ? endTime : 8640000000000000;
+  return lower <= range.end.valueOf() && upper >= range.start.valueOf();
 }
 
 function getActiveCategories() {
@@ -3483,18 +3501,7 @@ function matchesSearch(closure, query) {
   if (!query) {
     return true;
   }
-
-  const haystack = [
-    closure.title,
-    closure.responsible,
-    closure.borough,
-    closure.impact,
-    closure.streets,
-    closure.direction,
-    closure.source
-  ].join(" ").toLowerCase();
-
-  return haystack.includes(query.toLowerCase());
+  return (closure._searchText || prepareClosureForRuntime(closure)._searchText).includes(query);
 }
 
 function severityRank(severity) {
@@ -3511,28 +3518,39 @@ function getFilteredClosures() {
   const impacts = getActiveImpacts();
   const timePeriods = getActiveTimePeriods();
   const dateRange = getDateRange();
-  const query = searchFilter.value.trim();
+  const query = searchFilter.value.trim().toLowerCase();
 
-  return allClosures
-    .filter((closure) => categories.has(closure.category))
-    .filter((closure) => impacts.has(closure.severity))
-    .filter((closure) => matchesTimePeriod(closure, timePeriods))
-    .filter((closure) => overlapsDateRange(closure, dateRange))
-    .filter((closure) => matchesSearch(closure, query))
-    .sort((a, b) => severityRank(a.severity) - severityRank(b.severity));
+  const filteredClosures = [];
+  allClosures.forEach((closure) => {
+    if (categories.has(closure.category)
+      && impacts.has(closure.severity)
+      && matchesTimePeriod(closure, timePeriods)
+      && overlapsDateRange(closure, dateRange)
+      && matchesSearch(closure, query)) {
+      filteredClosures.push(closure);
+    }
+  });
+
+  return filteredClosures.sort((a, b) => severityRank(a.severity) - severityRank(b.severity));
 }
 
 function getFilterBaseClosures() {
   const categories = getActiveCategories();
   const timePeriods = getActiveTimePeriods();
   const dateRange = getDateRange();
-  const query = searchFilter.value.trim();
+  const query = searchFilter.value.trim().toLowerCase();
 
-  return allClosures
-    .filter((closure) => categories.has(closure.category))
-    .filter((closure) => matchesTimePeriod(closure, timePeriods))
-    .filter((closure) => overlapsDateRange(closure, dateRange))
-    .filter((closure) => matchesSearch(closure, query));
+  const filteredClosures = [];
+  allClosures.forEach((closure) => {
+    if (categories.has(closure.category)
+      && matchesTimePeriod(closure, timePeriods)
+      && overlapsDateRange(closure, dateRange)
+      && matchesSearch(closure, query)) {
+      filteredClosures.push(closure);
+    }
+  });
+
+  return filteredClosures;
 }
 
 function getClosuresInViewport() {
@@ -3547,17 +3565,23 @@ function filterClosuresToViewport(closures) {
 }
 
 function closureIntersectsBounds(closure, bounds) {
-  const coordinates = flattenCoordinates(closure.geometry?.coordinates);
-  if (coordinates.length === 0 && closure.point) {
-    coordinates.push(closure.point);
-  }
-
-  if (coordinates.length === 0) {
+  const closureBounds = closure._bounds || prepareClosureForRuntime(closure)._bounds;
+  if (!closureBounds) {
     return false;
   }
 
-  const closureBounds = L.latLngBounds(coordinates.map(([longitude, latitude]) => [latitude, longitude]));
-  return closureBounds.isValid() && bounds.intersects(closureBounds);
+  const [west, south, east, north] = closureBounds;
+  return east >= bounds.getWest()
+    && west <= bounds.getEast()
+    && north >= bounds.getSouth()
+    && south <= bounds.getNorth();
+}
+
+function mapBoundsIntersectEnvelope(bounds, envelope) {
+  return envelope.east >= bounds.getWest()
+    && envelope.west <= bounds.getEast()
+    && envelope.north >= bounds.getSouth()
+    && envelope.south <= bounds.getNorth();
 }
 
 function updateViewportList() {
@@ -3580,6 +3604,12 @@ async function refreshLavalViewportEntries() {
   }
 
   const bounds = map.getBounds();
+  if (!mapBoundsIntersectEnvelope(bounds, LAVAL_OFFICIAL_BOUNDS)) {
+    lavalViewportIds = new Set();
+    updateViewportList();
+    return;
+  }
+
   const southWest = map.options.crs.project(bounds.getSouthWest());
   const northEast = map.options.crs.project(bounds.getNorthEast());
   const requestId = ++lavalViewportRequestId;
@@ -3617,7 +3647,7 @@ function updateImpactCounts() {
     return result;
   }, {});
 
-  document.querySelectorAll("[data-impact-count]").forEach((element) => {
+  impactCountElements.forEach((element) => {
     const impact = element.dataset.impactCount;
     const count = counts[impact] || 0;
     element.textContent = `(${count} ${count === 1 ? "visible" : "visibles"})`;
@@ -4424,6 +4454,10 @@ function municipalSeverity(text) {
 }
 
 async function fetchNamedStreetGeometry(query, [west, south, east, north]) {
+  if (namedStreetGeometryUnavailable) {
+    throw new Error("Named street geometry service unavailable");
+  }
+
   // Try different query variations to handle type mismatches (rue→avenue, etc)
   const queries = [
     query,
@@ -4462,12 +4496,20 @@ async function fetchNamedStreetGeometry(query, [west, south, east, north]) {
       if (polygons.length > 0) {
         return { type: "MultiLineString", coordinates: polygons };
       }
-    } catch {
+    } catch (error) {
+      if (isFetchUnavailableError(error)) {
+        namedStreetGeometryUnavailable = true;
+        throw error;
+      }
       // Try next variation
     }
   }
 
   throw new Error("No named street geometry returned");
+}
+
+function isFetchUnavailableError(error) {
+  return error?.name === "AbortError" || error instanceof TypeError;
 }
 
 function namedRoadQueries(value) {
@@ -4546,24 +4588,19 @@ async function enrichMunicipalGeometriesInBackground() {
     && closure.geometry?.type === "Point"
     && closure.roadType
     && namedRoadQueries(closure.roadSearchText || closure.streets).length > 0);
+  const currentBounds = map.getBounds();
+  targets.sort((first, second) => Number(closureIntersectsBounds(second, currentBounds)) - Number(closureIntersectsBounds(first, currentBounds)));
 
-  let changed = false;
   for (const closure of targets) {
     const enriched = await enrichMunicipalPointGeometry(closure);
     if (enriched.geometry && enriched.geometry.type !== "Point") {
       const index = allClosures.findIndex((item) => item.id === closure.id);
       if (index !== -1) {
-        allClosures[index] = enriched;
-        changed = true;
+        allClosures[index] = prepareClosureForRuntime(enriched, { force: true });
+        updateView({ fit: false });
       }
     }
     await new Promise((resolve) => setTimeout(resolve, 50));
-  }
-
-  if (changed) {
-    // Les donnees ont change (points -> lignes), force re-rendu meme dans les anciennes limites.
-    lastRenderBounds = null;
-    updateView({ fit: false });
   }
 }
 
@@ -4927,6 +4964,47 @@ function representativePoint(geometry) {
   return coordinates[Math.floor(coordinates.length / 2)];
 }
 
+function prepareClosureForRuntime(closure, { force = false } = {}) {
+  if (!force && closure._runtimePrepared) {
+    return closure;
+  }
+
+  const coordinates = flattenCoordinates(closure.geometry?.coordinates)
+    .filter((item) => typeof item[0] === "number" && typeof item[1] === "number");
+  if (coordinates.length === 0 && Array.isArray(closure.point)) {
+    coordinates.push(closure.point);
+  }
+
+  let bounds = null;
+  coordinates.forEach(([longitude, latitude]) => {
+    if (!bounds) {
+      bounds = [longitude, latitude, longitude, latitude];
+      return;
+    }
+    bounds[0] = Math.min(bounds[0], longitude);
+    bounds[1] = Math.min(bounds[1], latitude);
+    bounds[2] = Math.max(bounds[2], longitude);
+    bounds[3] = Math.max(bounds[3], latitude);
+  });
+
+  return {
+    ...closure,
+    _runtimePrepared: true,
+    _searchText: [
+      closure.title,
+      closure.responsible,
+      closure.borough,
+      closure.impact,
+      closure.streets,
+      closure.direction,
+      closure.source
+    ].join(" ").toLowerCase(),
+    _startTime: parseDate(closure.startDate).valueOf(),
+    _endTime: parseDate(closure.endDate).valueOf(),
+    _bounds: bounds
+  };
+}
+
 function flattenCoordinates(coordinates) {
   if (!Array.isArray(coordinates)) {
     return [];
@@ -5051,7 +5129,7 @@ async function loadBackgroundOfficialData() {
 
 function dedupeClosures(closures) {
   const seen = new Set();
-  return closures.filter((closure) => {
+  return closures.map(prepareClosureForRuntime).filter((closure) => {
     if (seen.has(closure.id)) {
       return false;
     }
@@ -5350,20 +5428,40 @@ function updateLavalOfficialLines() {
     if (lavalOfficialLines) {
       map.removeLayer(lavalOfficialLines);
       lavalOfficialLines = null;
+      lavalOfficialLineBounds = null;
+      lavalOfficialLineZoom = null;
     }
     return;
   }
 
   const bounds = map.getBounds();
-  const southWest = map.options.crs.project(bounds.getSouthWest());
-  const northEast = map.options.crs.project(bounds.getNorthEast());
+  if (!mapBoundsIntersectEnvelope(bounds, LAVAL_OFFICIAL_BOUNDS)) {
+    lavalOverlayRequestId += 1;
+    if (lavalOfficialLines) {
+      map.removeLayer(lavalOfficialLines);
+      lavalOfficialLines = null;
+      lavalOfficialLineBounds = null;
+      lavalOfficialLineZoom = null;
+    }
+    return;
+  }
+
+  const zoom = map.getZoom();
+  if (lavalOfficialLineBounds?.contains(bounds) && lavalOfficialLineZoom === zoom) {
+    return;
+  }
+
+  const exportBounds = bounds.pad(LAVAL_OVERLAY_PADDING);
+  const southWest = map.options.crs.project(exportBounds.getSouthWest());
+  const northEast = map.options.crs.project(exportBounds.getNorthEast());
   const size = map.getSize();
+  const exportScale = 1 + LAVAL_OVERLAY_PADDING * 2;
   const params = new URLSearchParams({
     f: "image",
     bbox: `${southWest.x},${southWest.y},${northEast.x},${northEast.y}`,
     bboxSR: "3857",
     imageSR: "3857",
-    size: `${Math.min(size.x, 2048)},${Math.min(size.y, 2048)}`,
+    size: `${Math.min(Math.round(size.x * exportScale), 2048)},${Math.min(Math.round(size.y * exportScale), 2048)}`,
     format: "png32",
     transparent: "true",
     dynamicLayers: JSON.stringify(lavalDynamicLayers())
@@ -5371,7 +5469,7 @@ function updateLavalOfficialLines() {
   const url = `${LIVE_SOURCES.lavalMapService}/export?${params}`;
 
   const requestId = ++lavalOverlayRequestId;
-  const nextOverlay = L.imageOverlay(url, bounds, {
+  const nextOverlay = L.imageOverlay(url, exportBounds, {
     interactive: false,
     opacity: 0,
     zIndex: 450
@@ -5385,6 +5483,8 @@ function updateLavalOfficialLines() {
 
     const previousOverlay = lavalOfficialLines;
     lavalOfficialLines = nextOverlay;
+    lavalOfficialLineBounds = exportBounds;
+    lavalOfficialLineZoom = zoom;
     nextOverlay.setOpacity(1);
     if (previousOverlay) {
       map.removeLayer(previousOverlay);
@@ -5549,13 +5649,15 @@ function radiansToDegrees(value) {
 }
 
 function renderList(closures) {
-  closureList.innerHTML = "";
-
   if (closures.length === 0) {
-    closureList.innerHTML = `<article class="closure-card"><h3>Aucune entrave auto trouvee</h3><p class="meta">Change la date, la recherche ou les types d'entraves. Les fermetures UCI commencent le 19 septembre 2026.</p></article>`;
+    const emptyCard = document.createElement("article");
+    emptyCard.className = "closure-card";
+    emptyCard.innerHTML = `<h3>Aucune entrave auto trouvee</h3><p class="meta">Change la date, la recherche ou les types d'entraves. Les fermetures UCI commencent le 19 septembre 2026.</p>`;
+    closureList.replaceChildren(emptyCard);
     return;
   }
 
+  const fragment = document.createDocumentFragment();
   closures.slice(0, MAX_LIST_ITEMS).forEach((closure) => {
     const meta = CATEGORY_META[closure.category] ?? CATEGORY_META.event;
     const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
@@ -5584,15 +5686,17 @@ function renderList(closures) {
         focusClosure(closure, { openPopup: true });
       }
     });
-    closureList.appendChild(card);
+    fragment.appendChild(card);
   });
 
   if (closures.length > MAX_LIST_ITEMS) {
     const note = document.createElement("article");
     note.className = "closure-card list-note";
     note.innerHTML = `<h3>${closures.length - MAX_LIST_ITEMS} autres segments affiches sur la carte</h3><p class="meta">Affinez par date, rue ou responsable pour reduire la liste.</p>`;
-    closureList.appendChild(note);
+    fragment.appendChild(note);
   }
+
+  closureList.replaceChildren(fragment);
 }
 
 function fitMapToClosures(closures) {
@@ -5604,7 +5708,14 @@ function fitMapToClosures(closures) {
   }
 
   const bounds = L.latLngBounds([]);
-  closures.forEach((closure) => flattenCoordinates(closure.geometry?.coordinates).forEach(([lon, lat]) => bounds.extend([lat, lon])));
+  closures.forEach((closure) => {
+    const closureBounds = closure._bounds || prepareClosureForRuntime(closure)._bounds;
+    if (closureBounds) {
+      const [west, south, east, north] = closureBounds;
+      bounds.extend([south, west]);
+      bounds.extend([north, east]);
+    }
+  });
 
   if (bounds.isValid()) {
     map.fitBounds(bounds.pad(0.12), { maxZoom: 15 });
@@ -5628,7 +5739,6 @@ function focusClosure(closure, { openPopup = false } = {}) {
 
 function updateView({ fit = false } = {}) {
   currentClosures = getFilteredClosures();
-  updateImpactCounts();
   updateMapLegend();
   renderMap(currentClosures);
   updateLavalOfficialLines();
