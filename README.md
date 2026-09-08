@@ -124,6 +124,24 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 - **Solution Phase 3:** Recherche Données Québec par MRC (nécessite recherche individuelle par municipalité)
 - Les APIs CKAN disposent de fallback inclus dans le code pour résilience
 
+## Performance et cache de session
+
+La carte conserve en mémoire toutes les entraves chargées, mais ne dessine que celles qui touchent la vue courante (avec une marge autour de l'écran). Les entraves hors écran restent disponibles et apparaissent dès que la carte se déplace vers leur secteur; les filtres, les compteurs et la liste continuent de porter sur l'ensemble des données chargées.
+
+Les flux officiels d'entraves (Montréal, Laval, Longueuil, MTMD, municipalités) restent relus à chaque ouverture ou actualisation de la page afin de préserver la fraîcheur des données. Seules les géométries déterministes retournées par les services d'appui (OSRM et Overpass/OpenStreetMap) sont conservées dans le `sessionStorage` du navigateur pour éviter de refaire les mêmes calculs pendant la session. Ce cache est propre à chaque session du navigateur: une nouvelle session repart sans cache et recharge les géométries.
+
+## Géométrie des entraves publiées en points
+
+Plusieurs sources municipales publient un point accompagné d'un texte qui précise les limites du chantier, par exemple « entre la rue A et la rue B » ou « de la rue A à la rue B ». Quand ces limites sont publiées, la carte récupère la géométrie de la rue nommée dans OpenStreetMap (Overpass) et conserve uniquement le tronçon situé entre les deux rues transversales. Nominatim n'est plus utilisé: il est bloqué par CORS depuis un site statique.
+
+Règles appliquées pour ne rien inventer:
+
+- les tronçons OSM ne sont raccordés que lorsqu'ils se touchent réellement, donc jamais de diagonale entre deux extrémités éloignées;
+- si une seule limite est trouvée, les segments de la rue nommée sont conservés en `MultiLineString` sans découpage;
+- si la rue nommée est introuvable, le point officiel de la source est conservé;
+- une adresse civique sans limites publiées reste un point, car la source décrit un lieu précis et non un tronçon;
+- si le service de géométrie est indisponible, la carte conserve les points officiels et continue de fonctionner normalement.
+
 ## Note importante
 
 Les flux live publics peuvent changer de schema ou etre temporairement indisponibles. Les données Quebec 511 proviennent du GeoJSON public MTMD diffuse sur Donnees Quebec et sont rechargees a chaque ouverture ou actualisation de l'application.
