@@ -53,6 +53,10 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 - Chargement en direct des entraves ArcGIS de Saint-Eustache (lignes et points), de Châteauguay (polygones) et de L'Assomption (incidents ponctuels), avec filtrage des travaux termines, expires ou sans impact automobile.
 - Chargement en direct des entraves actives de Dorval et des travaux dates de Boisbriand depuis leurs couches ArcGIS officielles, avec geometries ponctuelles et filtrage des enregistrements historiques ou de test.
 - Chargement en direct des entraves Terrebonne depuis ses couches ArcGIS publiques de lignes et points, avec statut actif, dates, types d'entrave, horaires, circulation et détours publiés.
+- Chargement en direct des travaux Mont-Saint-Hilaire depuis ses couches ArcGIS publiques de lignes, polygones et points, avec projets, tronçons, nature, échéanciers saisonniers et géométries officielles.
+- La carte Mont-Royal expose bien des projets publiés, mais son endpoint `POST /public/get_projects` refuse les requêtes cross-origin depuis ce site statique (CORS/preflight); il reste documentaire tant qu'une couche publique CORS-compatible n'est pas fournie.
+- Un snapshot statique Mont-Royal est conservé dans `data/mont-royal-snapshot.json`, extrait le 7 septembre 2026 depuis la réponse officielle. Il conserve uniquement les entraves actives ou futures à la date d'extraction; il n'est pas temps réel et doit être régénéré pour refléter les nouveaux projets. Les impacts publiés (fermeture, voie, stationnement, circulation locale, détour) sont conservés.
+- Chargement en direct des projets publics de Mont-Royal via son endpoint officiel `public/get_projects`, avec dates, descriptions d'impact et géométries polyline publiées par la carte.
 - Quand une source municipale ne publie qu'un point mais fournit explicitement un nom de rue, la carte tente de récupérer uniquement les segments nommés correspondants et conserve une MultiLineString; les points sans axe publié restent des points officiels plutôt qu'une diagonale inventée.
 - Les descriptions qui publient plusieurs rues (par exemple « rues A, B et C ») sont séparées en requêtes de rues nommées indépendantes; les segments retournés restent séparés dans une MultiLineString.
 - Chargement en direct des attributs Laval Info-Travaux et affichage des lignes officielles depuis son MapServer public.
@@ -65,6 +69,7 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 - Donnees exemples dans `data/closures.js` utilisees seulement comme secours si les APIs publiques ne repondent pas.
 - Les autres liens municipaux du catalogue `data/sources.js` documentent des pages, cartes ou services candidats; ils ne sont pas charges automatiquement tant qu'une reponse structuree, datee, automobile et geometrique n'a pas ete verifiee.
 - Les pages HTML et PDF municipales sont conservees comme sources documentaires lorsqu'elles publient des avis officiels; elles ne deviennent pas automatiquement des entraves cartographiques sans dates, impact automobile et geometrie verifiables.
+- Les KML Beaconsfield et McMasterville sont catalogues comme sources geographiques documentaires; ils ne sont pas actifs dans la carte tant que leurs dates/statuts d'entrave ne sont pas publies de facon exploitable.
 
 ## Sources publiques a brancher
 

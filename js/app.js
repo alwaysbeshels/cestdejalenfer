@@ -67,8 +67,14 @@ const LIVE_SOURCES = {
   assomptionIncidents: "https://services9.arcgis.com/hcaJWZHFtN5aFHXa/arcgis/rest/services/survey123_35de01d903b74a05a2e2396b74f2cb14_results/FeatureServer/0",
   terrebonneEntraveLines: "https://services3.arcgis.com/kKl4g5Ltuw8RvFq1/arcgis/rest/services/entrave_vue_publique/FeatureServer/1",
   terrebonneEntravePoints: "https://services3.arcgis.com/kKl4g5Ltuw8RvFq1/arcgis/rest/services/entrave_vue_publique/FeatureServer/0",
+  montRoyalSnapshot: "data/mont-royal-snapshot.json",
+  beaconsfieldSnapshot: "data/beaconsfield-snapshot.json",
+  montrealPedestrianSnapshot: "data/montreal-pedestrian-snapshot.json",
+  montSaintHilaireWorks: "https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_4Septembre2026_WFL1/FeatureServer",
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
-  quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson"
+  quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
+  // WFS MTMD Quebec 511 - evenements (fermetures, incidents, restrictions)
+  quebec511Events: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:evenements&srsname=EPSG:4326&outputformat=geojson"
 };
 
 // Phase 2 Validé - 3 couches ArcGIS Laval confirmées
@@ -290,94 +296,2424 @@ const REGIONAL_MAJOR_CLOSURES = [
 
 const SEASONAL_PEDESTRIAN_STREETS = [
   {
-    id: "pedestrian-mont-royal-saint-laurent-resther",
-    title: "Avenue du Mont-Royal piétonne - Saint-Laurent à Resther",
-    category: "commercial",
-    responsible: "Arrondissement du Plateau-Mont-Royal",
-    borough: "Le Plateau-Mont-Royal",
-    startDate: "2026-05-28",
-    endDate: "2026-10-12",
-    impact: "Rue réservée aux piétons; circulation automobile fermée durant la piétonnisation estivale.",
-    trafficLabel: "Rue piétonne saisonnière",
-    severity: "critical",
-    direction: "Fermée à la circulation automobile dans les deux directions.",
-    streets: "Avenue du Mont-Royal, entre le boulevard Saint-Laurent et la rue Resther",
-    source: "Ville de Montréal - Piétonnisation de l'avenue du Mont-Royal",
-    sourceUrl: "https://montreal.ca/lieux/avenue-du-mont-royal",
-    periods: ["day", "night"],
-    osmQuery: "Avenue du Mont-Royal, Montréal, Québec",
-    streetBounds: [-73.591, 45.515, -73.5785, 45.528],
-    geometry: { type: "LineString", coordinates: [[-73.5901, 45.5243], [-73.5849, 45.5260], [-73.5791, 45.5275]] },
-    point: [-73.5849, 45.5260]
+    "id": "pedestrian-mont-royal-saint-laurent-resther",
+    "title": "Avenue du Mont-Royal piétonne - Saint-Laurent à Resther",
+    "category": "commercial",
+    "responsible": "Arrondissement du Plateau-Mont-Royal",
+    "borough": "Le Plateau-Mont-Royal",
+    "startDate": "2026-05-28",
+    "endDate": "2026-10-12",
+    "impact": "Rue réservée aux piétons; circulation automobile fermée durant la piétonnisation estivale.",
+    "trafficLabel": "Rue piétonne saisonnière",
+    "severity": "critical",
+    "direction": "Fermée à la circulation automobile dans les deux directions.",
+    "streets": "Avenue du Mont-Royal, entre le boulevard Saint-Laurent et la rue Resther",
+    "source": "Ville de Montréal - Piétonnisation de l'avenue du Mont-Royal",
+    "sourceUrl": "https://montreal.ca/lieux/avenue-du-mont-royal",
+    "periods": [
+      "day",
+      "night"
+    ],
+    "routeEndpoints": [
+      [
+        -73.5901,
+        45.5243
+      ],
+      [
+        -73.5791,
+        45.5275
+      ]
+    ],
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.590329,
+          45.524402
+        ],
+        [
+          -73.590104,
+          45.52465
+        ],
+        [
+          -73.590039,
+          45.524697
+        ],
+        [
+          -73.589653,
+          45.524522
+        ],
+        [
+          -73.589625,
+          45.52451
+        ],
+        [
+          -73.589561,
+          45.52448
+        ],
+        [
+          -73.589436,
+          45.524423
+        ],
+        [
+          -73.588835,
+          45.52509
+        ],
+        [
+          -73.58843,
+          45.525545
+        ],
+        [
+          -73.588395,
+          45.525582
+        ],
+        [
+          -73.588196,
+          45.525801
+        ],
+        [
+          -73.587929,
+          45.526099
+        ],
+        [
+          -73.587908,
+          45.526124
+        ],
+        [
+          -73.587892,
+          45.526143
+        ],
+        [
+          -73.587831,
+          45.526212
+        ],
+        [
+          -73.587781,
+          45.526267
+        ],
+        [
+          -73.587763,
+          45.526287
+        ],
+        [
+          -73.587425,
+          45.526666
+        ],
+        [
+          -73.587374,
+          45.526722
+        ],
+        [
+          -73.587328,
+          45.526773
+        ],
+        [
+          -73.586869,
+          45.527287
+        ],
+        [
+          -73.586847,
+          45.527311
+        ],
+        [
+          -73.58679,
+          45.527375
+        ],
+        [
+          -73.586748,
+          45.52742
+        ],
+        [
+          -73.586477,
+          45.527709
+        ],
+        [
+          -73.586456,
+          45.527731
+        ],
+        [
+          -73.586422,
+          45.527766
+        ],
+        [
+          -73.586391,
+          45.527799
+        ],
+        [
+          -73.586089,
+          45.528123
+        ],
+        [
+          -73.586065,
+          45.528148
+        ],
+        [
+          -73.58603,
+          45.528187
+        ],
+        [
+          -73.585995,
+          45.528223
+        ],
+        [
+          -73.585612,
+          45.528631
+        ],
+        [
+          -73.585581,
+          45.528662
+        ],
+        [
+          -73.585554,
+          45.528691
+        ],
+        [
+          -73.585088,
+          45.529187
+        ],
+        [
+          -73.585074,
+          45.529202
+        ],
+        [
+          -73.585032,
+          45.529247
+        ],
+        [
+          -73.584996,
+          45.529286
+        ],
+        [
+          -73.584761,
+          45.529538
+        ],
+        [
+          -73.584721,
+          45.529581
+        ],
+        [
+          -73.584682,
+          45.529622
+        ],
+        [
+          -73.584179,
+          45.530153
+        ],
+        [
+          -73.584161,
+          45.530171
+        ],
+        [
+          -73.584143,
+          45.53019
+        ],
+        [
+          -73.58411,
+          45.530226
+        ],
+        [
+          -73.584044,
+          45.530196
+        ],
+        [
+          -73.583692,
+          45.530037
+        ],
+        [
+          -73.583123,
+          45.529781
+        ],
+        [
+          -73.582794,
+          45.529631
+        ],
+        [
+          -73.582743,
+          45.529607
+        ],
+        [
+          -73.58268,
+          45.529579
+        ],
+        [
+          -73.582602,
+          45.529544
+        ],
+        [
+          -73.582209,
+          45.529365
+        ],
+        [
+          -73.579646,
+          45.528204
+        ],
+        [
+          -73.579329,
+          45.528061
+        ],
+        [
+          -73.579284,
+          45.528041
+        ],
+        [
+          -73.579208,
+          45.528007
+        ],
+        [
+          -73.579127,
+          45.527971
+        ],
+        [
+          -73.57873,
+          45.527796
+        ],
+        [
+          -73.578765,
+          45.527757
+        ],
+        [
+          -73.578782,
+          45.527738
+        ],
+        [
+          -73.579028,
+          45.527471
+        ],
+        [
+          -73.579031,
+          45.527468
+        ]
+      ]
+    },
+    "point": [
+      -73.5846,
+      45.5259
+    ]
   },
   {
-    id: "pedestrian-mont-royal-resther-lorimier",
-    title: "Avenue du Mont-Royal piétonne - Resther à De Lorimier",
-    category: "commercial",
-    responsible: "Arrondissement du Plateau-Mont-Royal",
-    borough: "Le Plateau-Mont-Royal",
-    startDate: "2026-05-28",
-    endDate: "2026-09-07",
-    impact: "Rue réservée aux piétons; circulation automobile fermée durant la piétonnisation estivale.",
-    trafficLabel: "Rue piétonne saisonnière",
-    severity: "critical",
-    direction: "Fermée à la circulation automobile dans les deux directions.",
-    streets: "Avenue du Mont-Royal, entre la rue Resther et l'avenue De Lorimier",
-    source: "Ville de Montréal - Piétonnisation de l'avenue du Mont-Royal",
-    sourceUrl: "https://montreal.ca/lieux/avenue-du-mont-royal",
-    periods: ["day", "night"],
-    osmQuery: "Avenue du Mont-Royal, Montréal, Québec",
-    streetBounds: [-73.580, 45.527, -73.567, 45.532],
-    geometry: { type: "LineString", coordinates: [[-73.5791, 45.5275], [-73.5738, 45.5290], [-73.5686, 45.5307]] },
-    point: [-73.5738, 45.5290]
+    "id": "pedestrian-mont-royal-resther-lorimier",
+    "title": "Avenue du Mont-Royal piétonne - Resther à De Lorimier",
+    "category": "commercial",
+    "responsible": "Arrondissement du Plateau-Mont-Royal",
+    "borough": "Le Plateau-Mont-Royal",
+    "startDate": "2026-05-28",
+    "endDate": "2026-09-07",
+    "impact": "Rue réservée aux piétons; circulation automobile fermée durant la piétonnisation estivale.",
+    "trafficLabel": "Rue piétonne saisonnière",
+    "severity": "critical",
+    "direction": "Fermée à la circulation automobile dans les deux directions.",
+    "streets": "Avenue du Mont-Royal, entre la rue Resther et l'avenue De Lorimier",
+    "source": "Ville de Montréal - Piétonnisation de l'avenue du Mont-Royal",
+    "sourceUrl": "https://montreal.ca/lieux/avenue-du-mont-royal",
+    "periods": [
+      "day",
+      "night"
+    ],
+    "routeEndpoints": [
+      [
+        -73.5791,
+        45.5275
+      ],
+      [
+        -73.5686,
+        45.5307
+      ]
+    ],
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.579031,
+          45.527468
+        ],
+        [
+          -73.579028,
+          45.527471
+        ],
+        [
+          -73.578782,
+          45.527738
+        ],
+        [
+          -73.578765,
+          45.527757
+        ],
+        [
+          -73.57873,
+          45.527796
+        ],
+        [
+          -73.577321,
+          45.527175
+        ],
+        [
+          -73.576967,
+          45.52701
+        ],
+        [
+          -73.576924,
+          45.526991
+        ],
+        [
+          -73.576852,
+          45.526959
+        ],
+        [
+          -73.576786,
+          45.526929
+        ],
+        [
+          -73.576401,
+          45.526755
+        ],
+        [
+          -73.574894,
+          45.526071
+        ],
+        [
+          -73.574581,
+          45.525933
+        ],
+        [
+          -73.574511,
+          45.525896
+        ],
+        [
+          -73.574454,
+          45.525856
+        ],
+        [
+          -73.574421,
+          45.525825
+        ],
+        [
+          -73.574384,
+          45.525769
+        ],
+        [
+          -73.57437,
+          45.525745
+        ],
+        [
+          -73.574357,
+          45.525721
+        ],
+        [
+          -73.57431,
+          45.52564
+        ],
+        [
+          -73.57424,
+          45.525663
+        ],
+        [
+          -73.574202,
+          45.525675
+        ],
+        [
+          -73.574135,
+          45.525702
+        ],
+        [
+          -73.574051,
+          45.525744
+        ],
+        [
+          -73.573983,
+          45.5258
+        ],
+        [
+          -73.57355,
+          45.526289
+        ],
+        [
+          -73.573532,
+          45.526309
+        ],
+        [
+          -73.573465,
+          45.526384
+        ],
+        [
+          -73.573423,
+          45.526429
+        ],
+        [
+          -73.573399,
+          45.526454
+        ],
+        [
+          -73.573378,
+          45.526474
+        ],
+        [
+          -73.573009,
+          45.526876
+        ],
+        [
+          -73.572995,
+          45.52689
+        ],
+        [
+          -73.572971,
+          45.526914
+        ],
+        [
+          -73.572933,
+          45.526954
+        ],
+        [
+          -73.572884,
+          45.526999
+        ],
+        [
+          -73.572864,
+          45.527021
+        ],
+        [
+          -73.572459,
+          45.527449
+        ],
+        [
+          -73.572417,
+          45.527494
+        ],
+        [
+          -73.572124,
+          45.527787
+        ],
+        [
+          -73.572099,
+          45.527816
+        ],
+        [
+          -73.572046,
+          45.52787
+        ],
+        [
+          -73.571992,
+          45.527923
+        ],
+        [
+          -73.571971,
+          45.527944
+        ],
+        [
+          -73.571435,
+          45.5285
+        ],
+        [
+          -73.571399,
+          45.528536
+        ],
+        [
+          -73.570844,
+          45.529117
+        ],
+        [
+          -73.570807,
+          45.529153
+        ],
+        [
+          -73.570248,
+          45.529717
+        ],
+        [
+          -73.570227,
+          45.529739
+        ],
+        [
+          -73.570194,
+          45.529778
+        ],
+        [
+          -73.57017,
+          45.529806
+        ],
+        [
+          -73.570116,
+          45.529864
+        ],
+        [
+          -73.570075,
+          45.529916
+        ],
+        [
+          -73.569583,
+          45.530439
+        ],
+        [
+          -73.569548,
+          45.530481
+        ],
+        [
+          -73.569492,
+          45.530543
+        ],
+        [
+          -73.569359,
+          45.530481
+        ],
+        [
+          -73.569323,
+          45.530464
+        ],
+        [
+          -73.569257,
+          45.530433
+        ],
+        [
+          -73.568123,
+          45.529899
+        ],
+        [
+          -73.568057,
+          45.529982
+        ],
+        [
+          -73.567803,
+          45.530301
+        ],
+        [
+          -73.56862,
+          45.530679
+        ]
+      ]
+    },
+    "point": [
+      -73.5738,
+      45.5291
+    ]
   },
   {
-    id: "pedestrian-wellington-verdun",
-    title: "Rue Wellington piétonne",
-    category: "commercial",
-    responsible: "Arrondissement de Verdun / SDC Wellington",
-    borough: "Verdun",
-    startDate: "2026-06-01",
-    endDate: "2026-09-21",
-    impact: "Rue réservée aux piétons; circulation automobile fermée pour la saison estivale.",
-    trafficLabel: "Rue piétonne saisonnière",
-    severity: "critical",
-    direction: "Fermée à la circulation automobile dans les deux directions.",
-    streets: "Rue Wellington, entre les rues Regina et de la 6e Avenue",
-    source: "Ville de Montréal - Rues piétonnes saisonnières",
-    sourceUrl: "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
-    periods: ["day", "night"],
-    osmQuery: "Rue Wellington, Verdun, Montréal, Québec",
-    streetBounds: [-73.5685, 45.456, -73.5668, 45.4638],
-    geometry: { type: "LineString", coordinates: [[-73.5712, 45.4565], [-73.5676, 45.4597], [-73.5634, 45.4633]] },
-    point: [-73.5676, 45.4597]
+    "id": "pedestrian-wellington-verdun",
+    "title": "Rue Wellington piétonne",
+    "category": "commercial",
+    "responsible": "Arrondissement de Verdun / SDC Wellington",
+    "borough": "Verdun",
+    "startDate": "2026-06-01",
+    "endDate": "2026-09-21",
+    "impact": "Rue réservée aux piétons; circulation automobile fermée pour la saison estivale.",
+    "trafficLabel": "Rue piétonne saisonnière",
+    "severity": "critical",
+    "direction": "Fermée à la circulation automobile dans les deux directions.",
+    "streets": "Rue Wellington, entre les rues Regina et de la 6e Avenue",
+    "source": "Ville de Montréal - Rues piétonnes saisonnières",
+    "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
+    "periods": [
+      "day",
+      "night"
+    ],
+    "routeEndpoints": [
+      [
+        -73.5712,
+        45.4565
+      ],
+      [
+        -73.5634,
+        45.4633
+      ]
+    ],
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.571194,
+          45.456567
+        ],
+        [
+          -73.571424,
+          45.456577
+        ],
+        [
+          -73.571432,
+          45.456512
+        ],
+        [
+          -73.571458,
+          45.456288
+        ],
+        [
+          -73.571463,
+          45.456244
+        ],
+        [
+          -73.57126,
+          45.456237
+        ],
+        [
+          -73.57107,
+          45.456228
+        ],
+        [
+          -73.569716,
+          45.456169
+        ],
+        [
+          -73.568104,
+          45.456098
+        ],
+        [
+          -73.567794,
+          45.456082
+        ],
+        [
+          -73.567762,
+          45.45608
+        ],
+        [
+          -73.567709,
+          45.456078
+        ],
+        [
+          -73.567614,
+          45.456074
+        ],
+        [
+          -73.567527,
+          45.456069
+        ],
+        [
+          -73.567124,
+          45.456052
+        ],
+        [
+          -73.565108,
+          45.455963
+        ],
+        [
+          -73.564822,
+          45.455949
+        ],
+        [
+          -73.564379,
+          45.455926
+        ],
+        [
+          -73.56434,
+          45.455923
+        ],
+        [
+          -73.564245,
+          45.455915
+        ],
+        [
+          -73.564137,
+          45.456062
+        ],
+        [
+          -73.564068,
+          45.45616
+        ],
+        [
+          -73.564008,
+          45.456255
+        ],
+        [
+          -73.563941,
+          45.456393
+        ],
+        [
+          -73.563923,
+          45.45643
+        ],
+        [
+          -73.563881,
+          45.456521
+        ],
+        [
+          -73.563854,
+          45.45658
+        ],
+        [
+          -73.5637,
+          45.456912
+        ],
+        [
+          -73.563625,
+          45.457087
+        ],
+        [
+          -73.563477,
+          45.457415
+        ],
+        [
+          -73.563445,
+          45.457502
+        ],
+        [
+          -73.563423,
+          45.457578
+        ],
+        [
+          -73.563412,
+          45.457669
+        ],
+        [
+          -73.563352,
+          45.458159
+        ],
+        [
+          -73.563348,
+          45.458188
+        ],
+        [
+          -73.56334,
+          45.458245
+        ],
+        [
+          -73.563335,
+          45.458301
+        ],
+        [
+          -73.563332,
+          45.458341
+        ],
+        [
+          -73.563303,
+          45.458606
+        ],
+        [
+          -73.563297,
+          45.458663
+        ],
+        [
+          -73.563258,
+          45.459061
+        ],
+        [
+          -73.563186,
+          45.459729
+        ],
+        [
+          -73.563176,
+          45.459799
+        ],
+        [
+          -73.563158,
+          45.459938
+        ],
+        [
+          -73.563118,
+          45.460281
+        ],
+        [
+          -73.563067,
+          45.460686
+        ],
+        [
+          -73.563056,
+          45.460774
+        ],
+        [
+          -73.563051,
+          45.460822
+        ],
+        [
+          -73.563033,
+          45.460999
+        ],
+        [
+          -73.562969,
+          45.461638
+        ],
+        [
+          -73.562967,
+          45.461657
+        ],
+        [
+          -73.562974,
+          45.461733
+        ],
+        [
+          -73.563001,
+          45.461824
+        ],
+        [
+          -73.563019,
+          45.461863
+        ],
+        [
+          -73.563178,
+          45.462151
+        ],
+        [
+          -73.563381,
+          45.462464
+        ],
+        [
+          -73.563405,
+          45.462501
+        ],
+        [
+          -73.563475,
+          45.462618
+        ],
+        [
+          -73.563543,
+          45.462698
+        ],
+        [
+          -73.563596,
+          45.462776
+        ],
+        [
+          -73.563819,
+          45.463094
+        ],
+        [
+          -73.563854,
+          45.463143
+        ]
+      ]
+    },
+    "point": [
+      -73.5673,
+      45.4599
+    ]
   },
   {
-    id: "pedestrian-sainte-catherine-quartier-spectacles",
-    title: "Rue Sainte-Catherine Est piétonne - Quartier des spectacles",
-    category: "commercial",
-    responsible: "Quartier des spectacles / Ville de Montréal",
-    borough: "Ville-Marie",
-    startDate: "2026-05-15",
-    endDate: "2026-10-15",
-    impact: "Secteur piétonnier saisonnier; circulation automobile fermée selon la programmation du Quartier des spectacles.",
-    trafficLabel: "Rue piétonne saisonnière",
-    severity: "critical",
-    direction: "Fermée à la circulation automobile dans les deux directions.",
-    streets: "Rue Sainte-Catherine Est, entre les rues De Bleury et Saint-Laurent",
-    source: "Quartier des spectacles - Rues et espaces publics",
-    sourceUrl: "https://www.quartierdesspectacles.com/",
-    periods: ["day", "night"],
-    osmQuery: "Rue Sainte-Catherine Est, Montréal, Québec",
-    streetBounds: [-73.567, 45.508, -73.558, 45.511],
-    geometry: { type: "LineString", coordinates: [[-73.5664, 45.5088], [-73.5629, 45.5094], [-73.5595, 45.5099]] },
-    point: [-73.5629, 45.5094]
+    "id": "pedestrian-sainte-catherine-quartier-spectacles",
+    "title": "Rue Sainte-Catherine Est piétonne - Quartier des spectacles",
+    "category": "commercial",
+    "responsible": "Quartier des spectacles / Ville de Montréal",
+    "borough": "Ville-Marie",
+    "startDate": "2026-05-15",
+    "endDate": "2026-10-15",
+    "impact": "Secteur piétonnier saisonnier; circulation automobile fermée selon la programmation du Quartier des spectacles.",
+    "trafficLabel": "Rue piétonne saisonnière",
+    "severity": "critical",
+    "direction": "Fermée à la circulation automobile dans les deux directions.",
+    "streets": "Rue Sainte-Catherine Est, entre les rues De Bleury et Saint-Laurent",
+    "source": "Quartier des spectacles - Rues et espaces publics",
+    "sourceUrl": "https://www.quartierdesspectacles.com/",
+    "periods": [
+      "day",
+      "night"
+    ],
+    "routeEndpoints": [
+      [
+        -73.5664,
+        45.5088
+      ],
+      [
+        -73.5595,
+        45.5099
+      ]
+    ],
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.566065,
+          45.508989
+        ],
+        [
+          -73.566065,
+          45.508989
+        ],
+        [
+          -73.565995,
+          45.509004
+        ],
+        [
+          -73.565951,
+          45.509049
+        ],
+        [
+          -73.565857,
+          45.509148
+        ],
+        [
+          -73.565839,
+          45.509167
+        ],
+        [
+          -73.565801,
+          45.509208
+        ],
+        [
+          -73.56562,
+          45.509122
+        ],
+        [
+          -73.565353,
+          45.508993
+        ],
+        [
+          -73.564923,
+          45.508786
+        ],
+        [
+          -73.564887,
+          45.508767
+        ],
+        [
+          -73.564811,
+          45.508731
+        ],
+        [
+          -73.564724,
+          45.50869
+        ],
+        [
+          -73.563869,
+          45.508303
+        ],
+        [
+          -73.563803,
+          45.508273
+        ],
+        [
+          -73.56375,
+          45.508249
+        ],
+        [
+          -73.563602,
+          45.508181
+        ],
+        [
+          -73.562764,
+          45.507801
+        ],
+        [
+          -73.562737,
+          45.507789
+        ],
+        [
+          -73.562629,
+          45.50774
+        ],
+        [
+          -73.562494,
+          45.507671
+        ],
+        [
+          -73.562454,
+          45.507722
+        ],
+        [
+          -73.562043,
+          45.508177
+        ],
+        [
+          -73.561827,
+          45.508394
+        ],
+        [
+          -73.561562,
+          45.508707
+        ],
+        [
+          -73.561542,
+          45.508733
+        ],
+        [
+          -73.561497,
+          45.508794
+        ],
+        [
+          -73.561448,
+          45.508855
+        ],
+        [
+          -73.561093,
+          45.509264
+        ],
+        [
+          -73.560377,
+          45.510074
+        ],
+        [
+          -73.560292,
+          45.510191
+        ],
+        [
+          -73.560138,
+          45.510402
+        ],
+        [
+          -73.559983,
+          45.510612
+        ],
+        [
+          -73.559965,
+          45.510637
+        ],
+        [
+          -73.559931,
+          45.510681
+        ],
+        [
+          -73.559829,
+          45.510633
+        ],
+        [
+          -73.559453,
+          45.510471
+        ],
+        [
+          -73.55862,
+          45.510099
+        ],
+        [
+          -73.558597,
+          45.510089
+        ],
+        [
+          -73.558557,
+          45.510071
+        ],
+        [
+          -73.558509,
+          45.510049
+        ],
+        [
+          -73.557435,
+          45.509561
+        ],
+        [
+          -73.557404,
+          45.509546
+        ],
+        [
+          -73.557379,
+          45.50953
+        ],
+        [
+          -73.557322,
+          45.509493
+        ],
+        [
+          -73.557344,
+          45.509447
+        ],
+        [
+          -73.557462,
+          45.509202
+        ],
+        [
+          -73.557516,
+          45.509069
+        ],
+        [
+          -73.557584,
+          45.508931
+        ],
+        [
+          -73.557618,
+          45.508873
+        ],
+        [
+          -73.55764,
+          45.508836
+        ],
+        [
+          -73.557724,
+          45.508867
+        ],
+        [
+          -73.557758,
+          45.508879
+        ],
+        [
+          -73.557905,
+          45.508946
+        ],
+        [
+          -73.558242,
+          45.509103
+        ],
+        [
+          -73.558828,
+          45.509375
+        ],
+        [
+          -73.558917,
+          45.509416
+        ],
+        [
+          -73.558939,
+          45.509426
+        ],
+        [
+          -73.558953,
+          45.509432
+        ],
+        [
+          -73.558998,
+          45.509451
+        ],
+        [
+          -73.559041,
+          45.509472
+        ],
+        [
+          -73.559052,
+          45.509477
+        ],
+        [
+          -73.559644,
+          45.50974
+        ]
+      ]
+    },
+    "point": [
+      -73.5629,
+      45.5094
+    ]
+  },
+  {
+    "id": "pedestrian-sainte-catherine-village",
+    "title": "Rue Sainte-Catherine Est piétonne - Le Village",
+    "category": "commercial",
+    "responsible": "SDC Village Montréal / Ville de Montréal",
+    "borough": "Ville-Marie",
+    "startDate": "2026-05-15",
+    "endDate": "2026-10-15",
+    "impact": "Rue réservée aux piétons; circulation automobile fermée pour la saison estivale dans le Village.",
+    "trafficLabel": "Rue piétonne saisonnière",
+    "severity": "critical",
+    "direction": "Fermée à la circulation automobile dans les deux directions.",
+    "streets": "Rue Sainte-Catherine Est, entre la rue Saint-Hubert et l'avenue Papineau",
+    "source": "Ville de Montréal - Rues piétonnes",
+    "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
+    "periods": [
+      "day",
+      "night"
+    ],
+    "routeEndpoints": [
+      [
+        -73.5595,
+        45.5158
+      ],
+      [
+        -73.5524,
+        45.5218
+      ]
+    ],
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.55955,
+          45.515746
+        ],
+        [
+          -73.559617,
+          45.515777
+        ],
+        [
+          -73.56024,
+          45.516059
+        ],
+        [
+          -73.560278,
+          45.516076
+        ],
+        [
+          -73.560305,
+          45.516088
+        ],
+        [
+          -73.560363,
+          45.516113
+        ],
+        [
+          -73.560431,
+          45.516143
+        ],
+        [
+          -73.56046,
+          45.516157
+        ],
+        [
+          -73.560737,
+          45.516283
+        ],
+        [
+          -73.561044,
+          45.516422
+        ],
+        [
+          -73.562287,
+          45.516985
+        ],
+        [
+          -73.563758,
+          45.517655
+        ],
+        [
+          -73.563787,
+          45.517668
+        ],
+        [
+          -73.56398,
+          45.517758
+        ],
+        [
+          -73.564207,
+          45.517857
+        ],
+        [
+          -73.564285,
+          45.517893
+        ],
+        [
+          -73.564251,
+          45.517957
+        ],
+        [
+          -73.564235,
+          45.517981
+        ],
+        [
+          -73.563977,
+          45.518401
+        ],
+        [
+          -73.563739,
+          45.518819
+        ],
+        [
+          -73.563724,
+          45.518842
+        ],
+        [
+          -73.563692,
+          45.518901
+        ],
+        [
+          -73.563609,
+          45.518861
+        ],
+        [
+          -73.561879,
+          45.518088
+        ],
+        [
+          -73.561846,
+          45.518074
+        ],
+        [
+          -73.561789,
+          45.518048
+        ],
+        [
+          -73.561419,
+          45.517888
+        ],
+        [
+          -73.560606,
+          45.517526
+        ],
+        [
+          -73.559862,
+          45.517186
+        ],
+        [
+          -73.559735,
+          45.517127
+        ],
+        [
+          -73.559642,
+          45.517085
+        ],
+        [
+          -73.559606,
+          45.517066
+        ],
+        [
+          -73.55955,
+          45.517036
+        ],
+        [
+          -73.559483,
+          45.516998
+        ],
+        [
+          -73.559458,
+          45.516985
+        ],
+        [
+          -73.558863,
+          45.516707
+        ],
+        [
+          -73.558565,
+          45.516575
+        ],
+        [
+          -73.558206,
+          45.516412
+        ],
+        [
+          -73.55817,
+          45.516397
+        ],
+        [
+          -73.558101,
+          45.516367
+        ],
+        [
+          -73.558066,
+          45.516405
+        ],
+        [
+          -73.557539,
+          45.516975
+        ],
+        [
+          -73.557504,
+          45.517013
+        ],
+        [
+          -73.557468,
+          45.517052
+        ],
+        [
+          -73.557159,
+          45.517385
+        ],
+        [
+          -73.557133,
+          45.517412
+        ],
+        [
+          -73.557111,
+          45.517435
+        ],
+        [
+          -73.557076,
+          45.51747
+        ],
+        [
+          -73.557025,
+          45.517526
+        ],
+        [
+          -73.556702,
+          45.517876
+        ],
+        [
+          -73.55667,
+          45.517913
+        ],
+        [
+          -73.556635,
+          45.517951
+        ],
+        [
+          -73.556287,
+          45.518329
+        ],
+        [
+          -73.556255,
+          45.518366
+        ],
+        [
+          -73.556225,
+          45.518401
+        ],
+        [
+          -73.555875,
+          45.518773
+        ],
+        [
+          -73.555844,
+          45.518807
+        ],
+        [
+          -73.555812,
+          45.518843
+        ],
+        [
+          -73.555473,
+          45.519215
+        ],
+        [
+          -73.555466,
+          45.519223
+        ],
+        [
+          -73.555434,
+          45.519259
+        ],
+        [
+          -73.555403,
+          45.519294
+        ],
+        [
+          -73.554853,
+          45.519902
+        ],
+        [
+          -73.55482,
+          45.519939
+        ],
+        [
+          -73.55479,
+          45.519971
+        ],
+        [
+          -73.554325,
+          45.520465
+        ],
+        [
+          -73.554275,
+          45.520517
+        ],
+        [
+          -73.554231,
+          45.520564
+        ],
+        [
+          -73.553992,
+          45.520826
+        ],
+        [
+          -73.553723,
+          45.52111
+        ],
+        [
+          -73.553714,
+          45.52112
+        ],
+        [
+          -73.553665,
+          45.521176
+        ],
+        [
+          -73.553617,
+          45.521229
+        ],
+        [
+          -73.553103,
+          45.521789
+        ],
+        [
+          -73.553075,
+          45.52182
+        ],
+        [
+          -73.553054,
+          45.521844
+        ],
+        [
+          -73.552979,
+          45.521809
+        ],
+        [
+          -73.552964,
+          45.521802
+        ],
+        [
+          -73.552643,
+          45.521654
+        ],
+        [
+          -73.552569,
+          45.52162
+        ]
+      ]
+    },
+    "point": [
+      -73.5559,
+      45.5188
+    ]
+  },
+  {
+    "id": "pedestrian-duluth-est",
+    "title": "Avenue Duluth Est piétonne",
+    "category": "commercial",
+    "responsible": "Arrondissement du Plateau-Mont-Royal",
+    "borough": "Le Plateau-Mont-Royal",
+    "startDate": "2026-06-01",
+    "endDate": "2026-10-15",
+    "impact": "Rue piétonne estivale; circulation automobile fermée entre Saint-Laurent et Saint-Denis.",
+    "trafficLabel": "Rue piétonne saisonnière",
+    "severity": "critical",
+    "direction": "Fermée à la circulation automobile dans les deux directions.",
+    "streets": "Avenue Duluth Est, entre le boulevard Saint-Laurent et la rue Saint-Denis",
+    "source": "Ville de Montréal - Rues piétonnes",
+    "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
+    "periods": [
+      "day",
+      "night"
+    ],
+    "routeEndpoints": [
+      [
+        -73.5815,
+        45.5173
+      ],
+      [
+        -73.5746,
+        45.5204
+      ]
+    ],
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.581595,
+          45.517198
+        ],
+        [
+          -73.581346,
+          45.517084
+        ],
+        [
+          -73.580683,
+          45.516783
+        ],
+        [
+          -73.580461,
+          45.516682
+        ],
+        [
+          -73.579952,
+          45.51645
+        ],
+        [
+          -73.579894,
+          45.516423
+        ],
+        [
+          -73.579844,
+          45.516462
+        ],
+        [
+          -73.579649,
+          45.516682
+        ],
+        [
+          -73.579477,
+          45.516877
+        ],
+        [
+          -73.579454,
+          45.516903
+        ],
+        [
+          -73.579396,
+          45.516966
+        ],
+        [
+          -73.57934,
+          45.517023
+        ],
+        [
+          -73.578989,
+          45.517396
+        ],
+        [
+          -73.57895,
+          45.517438
+        ],
+        [
+          -73.578908,
+          45.517482
+        ],
+        [
+          -73.578588,
+          45.517832
+        ],
+        [
+          -73.57856,
+          45.517862
+        ],
+        [
+          -73.578536,
+          45.517889
+        ],
+        [
+          -73.578505,
+          45.517922
+        ],
+        [
+          -73.57817,
+          45.518283
+        ],
+        [
+          -73.57813,
+          45.518329
+        ],
+        [
+          -73.578087,
+          45.518377
+        ],
+        [
+          -73.577751,
+          45.518744
+        ],
+        [
+          -73.577709,
+          45.518788
+        ],
+        [
+          -73.57768,
+          45.518818
+        ],
+        [
+          -73.577513,
+          45.51899
+        ],
+        [
+          -73.577322,
+          45.519192
+        ],
+        [
+          -73.577281,
+          45.519235
+        ],
+        [
+          -73.577234,
+          45.519285
+        ],
+        [
+          -73.577093,
+          45.519437
+        ],
+        [
+          -73.577043,
+          45.519493
+        ],
+        [
+          -73.576868,
+          45.519689
+        ],
+        [
+          -73.576837,
+          45.519723
+        ],
+        [
+          -73.576804,
+          45.519758
+        ],
+        [
+          -73.576621,
+          45.519946
+        ],
+        [
+          -73.576443,
+          45.520144
+        ],
+        [
+          -73.576412,
+          45.520175
+        ],
+        [
+          -73.576379,
+          45.52021
+        ],
+        [
+          -73.57619,
+          45.520404
+        ],
+        [
+          -73.575965,
+          45.520649
+        ],
+        [
+          -73.575954,
+          45.520661
+        ],
+        [
+          -73.575932,
+          45.520686
+        ],
+        [
+          -73.575873,
+          45.520752
+        ],
+        [
+          -73.575856,
+          45.520744
+        ],
+        [
+          -73.575815,
+          45.520725
+        ],
+        [
+          -73.575786,
+          45.520712
+        ],
+        [
+          -73.575225,
+          45.520457
+        ],
+        [
+          -73.57475,
+          45.520239
+        ]
+      ]
+    },
+    "point": [
+      -73.578,
+      45.5188
+    ]
+  },
+  {
+    "id": "pedestrian-de-castelnau",
+    "title": "Rue De Castelnau Est piétonne",
+    "category": "commercial",
+    "responsible": "Arrondissement de Villeray–Saint-Michel–Parc-Extension",
+    "borough": "Villeray–Saint-Michel–Parc-Extension",
+    "startDate": "2026-05-15",
+    "endDate": "2026-10-15",
+    "impact": "Place et rue piétonne estivale; circulation automobile fermée entre Saint-Denis et De Gaspé.",
+    "trafficLabel": "Rue piétonne saisonnière",
+    "severity": "critical",
+    "direction": "Fermée à la circulation automobile dans les deux directions.",
+    "streets": "Rue De Castelnau Est, entre la rue Saint-Denis et l'avenue De Gaspé",
+    "source": "Ville de Montréal - Rues piétonnes",
+    "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
+    "periods": [
+      "day",
+      "night"
+    ],
+    "routeEndpoints": [
+      [
+        -73.618,
+        45.5348
+      ],
+      [
+        -73.6152,
+        45.5365
+      ]
+    ],
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.618054,
+          45.534853
+        ],
+        [
+          -73.617955,
+          45.534902
+        ],
+        [
+          -73.617521,
+          45.535116
+        ],
+        [
+          -73.617491,
+          45.535131
+        ],
+        [
+          -73.617395,
+          45.535182
+        ],
+        [
+          -73.617278,
+          45.535129
+        ],
+        [
+          -73.617241,
+          45.535113
+        ],
+        [
+          -73.616918,
+          45.534967
+        ],
+        [
+          -73.616402,
+          45.534734
+        ],
+        [
+          -73.616374,
+          45.534722
+        ],
+        [
+          -73.616345,
+          45.534709
+        ],
+        [
+          -73.616256,
+          45.534667
+        ],
+        [
+          -73.616179,
+          45.534631
+        ],
+        [
+          -73.61612,
+          45.534603
+        ],
+        [
+          -73.616095,
+          45.534591
+        ],
+        [
+          -73.615626,
+          45.534381
+        ],
+        [
+          -73.615244,
+          45.534209
+        ],
+        [
+          -73.615211,
+          45.534195
+        ],
+        [
+          -73.615128,
+          45.534158
+        ],
+        [
+          -73.615071,
+          45.534219
+        ],
+        [
+          -73.615046,
+          45.534245
+        ],
+        [
+          -73.61481,
+          45.534498
+        ],
+        [
+          -73.614694,
+          45.534622
+        ],
+        [
+          -73.614675,
+          45.534642
+        ],
+        [
+          -73.614626,
+          45.534695
+        ],
+        [
+          -73.614715,
+          45.534735
+        ],
+        [
+          -73.615123,
+          45.534919
+        ],
+        [
+          -73.615142,
+          45.534927
+        ],
+        [
+          -73.615411,
+          45.535049
+        ],
+        [
+          -73.615476,
+          45.535078
+        ],
+        [
+          -73.615648,
+          45.535155
+        ],
+        [
+          -73.615687,
+          45.535173
+        ],
+        [
+          -73.615788,
+          45.535219
+        ],
+        [
+          -73.615849,
+          45.535246
+        ],
+        [
+          -73.616277,
+          45.53544
+        ],
+        [
+          -73.616382,
+          45.535486
+        ],
+        [
+          -73.616327,
+          45.535546
+        ],
+        [
+          -73.615994,
+          45.535909
+        ],
+        [
+          -73.615897,
+          45.536014
+        ],
+        [
+          -73.615806,
+          45.536113
+        ],
+        [
+          -73.615714,
+          45.536213
+        ],
+        [
+          -73.615621,
+          45.536314
+        ],
+        [
+          -73.615525,
+          45.536419
+        ],
+        [
+          -73.615429,
+          45.536523
+        ],
+        [
+          -73.615377,
+          45.53658
+        ]
+      ]
+    },
+    "point": [
+      -73.6166,
+      45.5356
+    ]
+  },
+  {
+    "id": "pedestrian-bernard-outremont",
+    "title": "Avenue Bernard piétonne",
+    "category": "commercial",
+    "responsible": "Arrondissement d'Outremont",
+    "borough": "Outremont",
+    "startDate": "2026-05-15",
+    "endDate": "2026-10-15",
+    "impact": "Rue piétonne estivale; circulation automobile fermée entre Wiseman et Bloomfield.",
+    "trafficLabel": "Rue piétonne saisonnière",
+    "severity": "critical",
+    "direction": "Fermée à la circulation automobile dans les deux directions.",
+    "streets": "Avenue Bernard, entre l'avenue Wiseman et l'avenue Bloomfield",
+    "source": "Ville de Montréal - Rues piétonnes",
+    "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
+    "periods": [
+      "day",
+      "night"
+    ],
+    "routeEndpoints": [
+      [
+        -73.6095,
+        45.5186
+      ],
+      [
+        -73.6048,
+        45.5215
+      ]
+    ],
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.609902,
+          45.518775
+        ],
+        [
+          -73.609773,
+          45.51892
+        ],
+        [
+          -73.609568,
+          45.51915
+        ],
+        [
+          -73.609538,
+          45.519184
+        ],
+        [
+          -73.609494,
+          45.519232
+        ],
+        [
+          -73.609403,
+          45.519192
+        ],
+        [
+          -73.609056,
+          45.519036
+        ],
+        [
+          -73.608522,
+          45.518797
+        ],
+        [
+          -73.60764,
+          45.518395
+        ],
+        [
+          -73.606304,
+          45.51781
+        ],
+        [
+          -73.606249,
+          45.517789
+        ],
+        [
+          -73.606175,
+          45.517757
+        ],
+        [
+          -73.606141,
+          45.517794
+        ],
+        [
+          -73.606117,
+          45.517822
+        ],
+        [
+          -73.605641,
+          45.518355
+        ],
+        [
+          -73.605625,
+          45.518372
+        ],
+        [
+          -73.605589,
+          45.518412
+        ],
+        [
+          -73.605555,
+          45.51845
+        ],
+        [
+          -73.60553,
+          45.518479
+        ],
+        [
+          -73.605088,
+          45.518974
+        ],
+        [
+          -73.605054,
+          45.519012
+        ],
+        [
+          -73.605004,
+          45.519068
+        ],
+        [
+          -73.604962,
+          45.519115
+        ],
+        [
+          -73.60494,
+          45.51914
+        ],
+        [
+          -73.604717,
+          45.51939
+        ],
+        [
+          -73.604508,
+          45.519624
+        ],
+        [
+          -73.60448,
+          45.519655
+        ],
+        [
+          -73.60444,
+          45.519699
+        ],
+        [
+          -73.604395,
+          45.51975
+        ],
+        [
+          -73.60438,
+          45.519767
+        ],
+        [
+          -73.604012,
+          45.52018
+        ],
+        [
+          -73.60397,
+          45.520226
+        ],
+        [
+          -73.603929,
+          45.520273
+        ],
+        [
+          -73.60348,
+          45.520775
+        ],
+        [
+          -73.603437,
+          45.520824
+        ],
+        [
+          -73.603503,
+          45.520853
+        ],
+        [
+          -73.604848,
+          45.521446
+        ]
+      ]
+    },
+    "point": [
+      -73.6071,
+      45.52
+    ]
+  },
+  {
+    "id": "pedestrian-place-marche-nord",
+    "title": "Place du Marché-du-Nord (Marché Jean-Talon)",
+    "category": "commercial",
+    "responsible": "Arrondissement de Rosemont–La Petite-Patrie",
+    "borough": "Rosemont–La Petite-Patrie",
+    "startDate": "2026-05-15",
+    "endDate": "2026-10-15",
+    "impact": "Zone piétonne du Marché Jean-Talon; circulation automobile fermée aux abords du marché.",
+    "trafficLabel": "Rue piétonne saisonnière",
+    "severity": "critical",
+    "direction": "Fermée à la circulation automobile.",
+    "streets": "Place du Marché-du-Nord, entre l'avenue Casgrain et l'avenue Henri-Julien",
+    "source": "Ville de Montréal - Rues piétonnes",
+    "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
+    "periods": [
+      "day",
+      "night"
+    ],
+    "routeEndpoints": [
+      [
+        -73.6163,
+        45.5363
+      ],
+      [
+        -73.6142,
+        45.5376
+      ]
+    ],
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.616305,
+          45.536303
+        ],
+        [
+          -73.616087,
+          45.536534
+        ],
+        [
+          -73.615632,
+          45.537023
+        ],
+        [
+          -73.615603,
+          45.537055
+        ],
+        [
+          -73.615546,
+          45.537115
+        ],
+        [
+          -73.615497,
+          45.537164
+        ],
+        [
+          -73.61548,
+          45.537185
+        ],
+        [
+          -73.615301,
+          45.537378
+        ],
+        [
+          -73.615221,
+          45.537461
+        ],
+        [
+          -73.615197,
+          45.537486
+        ],
+        [
+          -73.615163,
+          45.537522
+        ],
+        [
+          -73.615147,
+          45.537539
+        ],
+        [
+          -73.615124,
+          45.537562
+        ],
+        [
+          -73.615107,
+          45.537581
+        ],
+        [
+          -73.614835,
+          45.537876
+        ],
+        [
+          -73.614718,
+          45.537825
+        ],
+        [
+          -73.614618,
+          45.537779
+        ],
+        [
+          -73.614584,
+          45.537763
+        ],
+        [
+          -73.614402,
+          45.53768
+        ],
+        [
+          -73.614208,
+          45.537591
+        ]
+      ]
+    },
+    "point": [
+      -73.6152,
+      45.5369
+    ]
+  },
+  {
+    "id": "pedestrian-ontario-est",
+    "title": "Rue Ontario Est piétonne",
+    "category": "commercial",
+    "responsible": "Arrondissement de Mercier–Hochelaga-Maisonneuve / SDC Hochelaga",
+    "borough": "Mercier–Hochelaga-Maisonneuve",
+    "startDate": "2026-06-01",
+    "endDate": "2026-09-15",
+    "impact": "Rue piétonne estivale; circulation automobile fermée entre Pie-IX et Darling.",
+    "trafficLabel": "Rue piétonne saisonnière",
+    "severity": "critical",
+    "direction": "Fermée à la circulation automobile dans les deux directions.",
+    "streets": "Rue Ontario Est, entre le boulevard Pie-IX et la rue Darling",
+    "source": "Ville de Montréal - Rues piétonnes",
+    "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
+    "periods": [
+      "day",
+      "night"
+    ],
+    "routeEndpoints": [
+      [
+        -73.5482,
+        45.5452
+      ],
+      [
+        -73.5435,
+        45.5473
+      ]
+    ],
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.548218,
+          45.545205
+        ],
+        [
+          -73.548237,
+          45.545174
+        ],
+        [
+          -73.545846,
+          45.544444
+        ],
+        [
+          -73.545438,
+          45.544319
+        ],
+        [
+          -73.545395,
+          45.544306
+        ],
+        [
+          -73.54533,
+          45.544287
+        ],
+        [
+          -73.545306,
+          45.544327
+        ],
+        [
+          -73.545009,
+          45.544814
+        ],
+        [
+          -73.544997,
+          45.544834
+        ],
+        [
+          -73.544974,
+          45.544871
+        ],
+        [
+          -73.544943,
+          45.544921
+        ],
+        [
+          -73.544922,
+          45.544955
+        ],
+        [
+          -73.544509,
+          45.545631
+        ],
+        [
+          -73.544488,
+          45.545667
+        ],
+        [
+          -73.544464,
+          45.545705
+        ],
+        [
+          -73.54401,
+          45.546425
+        ],
+        [
+          -73.543988,
+          45.546461
+        ],
+        [
+          -73.543972,
+          45.546488
+        ],
+        [
+          -73.543798,
+          45.546764
+        ],
+        [
+          -73.543581,
+          45.547108
+        ],
+        [
+          -73.543556,
+          45.547148
+        ],
+        [
+          -73.543524,
+          45.547201
+        ],
+        [
+          -73.54347,
+          45.547291
+        ]
+      ]
+    },
+    "point": [
+      -73.5458,
+      45.5462
+    ]
   }
 ];
 
 const LINKED_MUNICIPALITIES = [
   { name: "Baie-d'Urfe", coordinates: [-73.916, 45.414], url: "https://baie-durfe.qc.ca/fr/nos-departements/page/info-travaux", detail: "Info-travaux avec dates et impacts", quality: "detaillee", links: [{ label: "Info-travaux", url: "https://baie-durfe.qc.ca/fr/nos-departements/page/info-travaux" }] },
-  { name: "Beaconsfield", coordinates: [-73.865, 45.433], url: "https://portail.beaconsfield.ca/fr/avis", detail: "Portail citoyen et avis municipaux", links: [{ label: "Avis municipaux", url: "https://portail.beaconsfield.ca/fr/avis" }, { label: "Site principal", url: "https://www.beaconsfield.ca/" }] },
+  { name: "Beaconsfield", coordinates: [-73.865, 45.433], url: "https://www.beaconsfield.ca/fr/carte-interactive/info-travaux", detail: "Carte interactive et info-travaux", quality: "detaillee", links: [{ label: "Carte interactive Info-travaux", url: "https://www.beaconsfield.ca/fr/carte-interactive/info-travaux" }, { label: "Avis municipaux", url: "https://portail.beaconsfield.ca/fr/avis" }] },
   { name: "Cote-Saint-Luc", coordinates: [-73.666, 45.468], url: "https://cotesaintluc.org/en/municipal-documents/projects-and-plans/", detail: "Projects and plans", quality: "detaillee", links: [{ label: "Projects and plans", url: "https://cotesaintluc.org/en/municipal-documents/projects-and-plans/" }, { label: "Infrastructure projects", url: "https://cotesaintluc.org/en/projects/2025-infrastructure-projects-in-cote-saint%E2%80%91luc/" }] },
   { name: "Dollard-des-Ormeaux", coordinates: [-73.821, 45.494], url: "https://ville.ddo.qc.ca/info-travaux/", detail: "Info-travaux", links: [{ label: "Info-travaux", url: "https://ville.ddo.qc.ca/info-travaux/" }] },
   { name: "Dorval", coordinates: [-73.750, 45.447], url: "https://www.ville.dorval.qc.ca/fr/environnement-et-voirie/infrastructures-urbaines/info-travaux", detail: "Travaux et infrastructures", links: [{ label: "Info-travaux", url: "https://www.ville.dorval.qc.ca/fr/environnement-et-voirie/infrastructures-urbaines/info-travaux" }] },
@@ -1115,7 +3451,15 @@ function getDateRange() {
 }
 
 function overlapsDateRange(closure, range) {
-  return parseDate(closure.startDate) <= range.end && parseDate(closure.endDate) >= range.start;
+  const start = parseDate(closure.startDate);
+  const end = parseDate(closure.endDate);
+  const hasStart = !Number.isNaN(start.valueOf());
+  const hasEnd = !Number.isNaN(end.valueOf());
+  // Entraves sans aucune date: toujours affichees, meme avec un range selectionne.
+  if (!hasStart && !hasEnd) return true;
+  const lower = hasStart ? start : new Date(-8640000000000000);
+  const upper = hasEnd ? end : new Date(8640000000000000);
+  return lower <= range.end && upper >= range.start;
 }
 
 function getActiveCategories() {
@@ -1415,6 +3759,61 @@ function quebec511LocationLabel(location) {
   return match ? match[1] : "Quebec";
 }
 
+function normalizeQuebec511Event(feature) {
+  const p = feature.properties ?? {};
+  const geometry = feature.geometry;
+  if (!geometry?.coordinates?.length) return null;
+
+  const localisation = String(p.localisation || "").replace(/<br\s*\/?>/gi, " ").replace(/\s+/g, " ").trim();
+  const entrave = String(p.entrave || "").trim();
+  const cause = String(p.cause || "").trim();
+  const consequence = String(p.consequence || "").trim();
+  const combined = `${entrave} ${consequence} ${localisation}`.toLowerCase();
+
+  let severity;
+  let trafficLabel;
+  if (/(?:pont|route|autoroute|voie)\s+ferm|fermeture(?!\s+de\s+\d)/.test(combined) || /\bferm[ée]e?\b/.test(combined) && !/1 voie|une voie/.test(combined)) {
+    severity = "critical";
+    trafficLabel = "Fermeture";
+  } else if (/alternance|contresens|1 voie|une voie|voie de gauche|voie de droite|fermeture de \d/.test(combined)) {
+    severity = "major";
+    trafficLabel = entrave || "Voie touchée";
+  } else {
+    severity = "moderate";
+    trafficLabel = entrave || "Restriction routière";
+  }
+
+  const road = p.numeroRoute ? (/^\d/.test(String(p.numeroRoute)) ? `Route ${p.numeroRoute}` : String(p.numeroRoute)) : "";
+  const title = [road, localisation].filter(Boolean).join(" - ").slice(0, 90) || "Événement routier MTMD";
+  const startDate = /^\d{4}-\d{2}-\d{2}/.test(p.enVigueurDepuis || "") ? p.enVigueurDepuis.slice(0, 10) : new Date().toISOString().slice(0, 10);
+  // Les evenements MTMD sont de duree indeterminee: on les traite comme en cours.
+  const endDate = "2099-12-31";
+
+  return {
+    id: `q511-event-${p.identifiant}`,
+    category: "q511",
+    sourceKind: "quebec511-event",
+    title,
+    responsible: "Transports Québec (MTMD) / Quebec 511",
+    borough: p.municipalite || quebec511LocationLabel(localisation),
+    startDate,
+    endDate,
+    impact: [localisation, cause && `Cause : ${cause}`, consequence && `Conséquence : ${consequence}`, p.duree && `Durée : ${p.duree}`].filter(Boolean).join(" | ") || "Détails non publiés.",
+    trafficLabel,
+    severity,
+    roadType: roadTypeFromText(`${road} ${localisation}`),
+    color: SEVERITY_META[severity].color,
+    direction: p.direction ? `En direction ${p.direction}.` : "Direction non précisée.",
+    streets: localisation || road || "Localisation non publiée",
+    source: "MTMD / Quebec 511 - Événements",
+    sourceUrl: "https://www.quebec511.info/fr/Carte/Default.aspx",
+    periods: ["day", "night"],
+    geometry,
+    point: representativePoint(geometry),
+    details: [["Cause", cause], ["Conséquence", consequence], ["Durée", p.duree], ["Détour", p.detour], ["Référence", p.identifiant]]
+  };
+}
+
 function normalizeLavalFeature(feature, layer) {
   const properties = feature.attributes ?? {};
   const severity = SEVERITY_META[layer.severity] ?? SEVERITY_META.major;
@@ -1525,9 +3924,18 @@ function cleanLongueuilText(value) {
 }
 
 function dateOnlyFromTimestamp(value) {
+  if (value === null || value === undefined || value === "") return "";
+  // Dates MTMD locales "AAAA/MM/JJ HH:MM:SS" ou ISO: prendre la date telle quelle sans conversion UTC.
+  const match = String(value).match(/^(\d{4})[\/-](\d{2})[\/-](\d{2})/);
+  if (match) return `${match[1]}-${match[2]}-${match[3]}`;
   const timestamp = Number(value);
   const date = Number.isFinite(timestamp) && timestamp > 0 ? new Date(timestamp) : new Date(value);
-  return Number.isNaN(date.valueOf()) ? dateOnly(value) : date.toISOString().slice(0, 10);
+  if (Number.isNaN(date.valueOf())) return dateOnly(value);
+  // Composantes locales pour eviter un decalage de jour en UTC.
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function cleanQuebec511Direction(direction, text) {
@@ -1593,37 +4001,7 @@ async function loadRegionalClosures() {
 }
 
 async function loadSeasonalPedestrianStreets() {
-  return Promise.all(SEASONAL_PEDESTRIAN_STREETS.map(async (street) => {
-    try {
-      const geometry = await fetchNamedStreetGeometry(street.osmQuery, street.streetBounds);
-      return normalizePedestrianStreet({
-        ...street,
-        geometry,
-        point: representativePoint(geometry),
-        geometryFromOsm: true
-      });
-    } catch (error) {
-      console.warn("Pedestrian street geometry failed", street.id, error);
-      return normalizePedestrianStreet(street);
-    }
-  }));
-}
-
-async function fetchNamedStreetGeometry(query, [west, south, east, north]) {
-  const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=50&polygon_geojson=1&q=${encodeURIComponent(query)}`;
-  const data = await fetchJson(url);
-  const segments = data
-    .filter((item) => item.geojson?.type === "LineString")
-    .map((item) => item.geojson.coordinates)
-    .filter((coordinates) => coordinates.length > 1 && coordinates.some(([longitude, latitude]) => {
-      return longitude >= west && longitude <= east && latitude >= south && latitude <= north;
-    }));
-
-  if (segments.length === 0) {
-    throw new Error("No named street geometry returned");
-  }
-
-  return { type: "MultiLineString", coordinates: segments };
+  return SEASONAL_PEDESTRIAN_STREETS.map((street) => normalizePedestrianStreet(street));
 }
 
 async function loadLongueuilClosures() {
@@ -1649,6 +4027,14 @@ async function loadQuebec511Closures() {
   return (data.features || [])
     .filter((feature) => feature.geometry?.coordinates?.length && intersectsGreaterMontreal(feature))
     .map(normalizeQuebec511Feature);
+}
+
+async function loadQuebec511Events() {
+  const data = await fetchJson(LIVE_SOURCES.quebec511Events);
+  return (data.features || [])
+    .filter((feature) => feature.geometry?.coordinates?.length && intersectsGreaterMontreal(feature))
+    .map(normalizeQuebec511Event)
+    .filter(Boolean);
 }
 
 async function loadRepentignyClosures() {
@@ -1709,8 +4095,7 @@ async function loadMunicipalArcgisClosures() {
     try {
       const params = new URLSearchParams({ f: "json", where: "1=1", outFields: "*", returnGeometry: "true", outSR: "4326", resultRecordCount: "2000" });
       const data = await fetchJson(`${endpoint}/query?${params}`);
-      const closures = (data.features || []).map((feature) => normalizer(feature)).filter(Boolean);
-      return Promise.all(closures.map((closure) => enrichMunicipalPointGeometry(closure)));
+      return (data.features || []).map((feature) => normalizer(feature)).filter(Boolean);
     } catch (error) {
       console.warn("Municipal ArcGIS source failed", endpoint, error);
       return [];
@@ -1728,8 +4113,7 @@ async function loadDorvalAndBoisbriandClosures() {
     try {
       const params = new URLSearchParams({ f: "json", where: "1=1", outFields: "*", returnGeometry: "true", outSR: "4326", resultRecordCount: "2000" });
       const data = await fetchJson(`${endpoint}/query?${params}`);
-      const closures = (data.features || []).map((feature) => normalizer(feature)).filter(Boolean);
-      return Promise.all(closures.map((closure) => enrichMunicipalPointGeometry(closure)));
+      return (data.features || []).map((feature) => normalizer(feature)).filter(Boolean);
     } catch (error) {
       console.warn("Dorval/Boisbriand source failed", endpoint, error);
       return [];
@@ -1754,6 +4138,165 @@ async function loadTerrebonneClosures() {
     }
   }));
   return results.flat();
+}
+
+async function loadMontSaintHilaireClosures() {
+  const layers = [3, 4, 5, 6, 15];
+  const results = await Promise.all(layers.map(async (layerId) => {
+    try {
+      const params = new URLSearchParams({ f: "json", where: "1=1", outFields: "*", returnGeometry: "true", outSR: "4326", resultRecordCount: "2000" });
+      const data = await fetchJson(`${LIVE_SOURCES.montSaintHilaireWorks}/${layerId}/query?${params}`);
+      return (data.features || []).map((feature) => normalizeMontSaintHilaireFeature(feature)).filter(Boolean);
+    } catch (error) {
+      console.warn("Mont-Saint-Hilaire ArcGIS source failed", layerId, error);
+      return [];
+    }
+  }));
+  return results.flat();
+}
+
+async function loadMontRoyalSnapshotClosures() {
+  const snapshot = await fetchJson(LIVE_SOURCES.montRoyalSnapshot);
+  return (snapshot.records || []).map((record) => {
+    const labels = record.trafficLabels || [];
+    const hasClosure = labels.some((label) => /fermeture complète|fermeture complete/i.test(label));
+    const hasLaneImpact = labels.some((label) => /entrave partielle|voie|circulation locale/i.test(label));
+    const hasParkingImpact = labels.some((label) => /stationnement/i.test(label));
+    const severity = hasClosure ? "critical" : hasParkingImpact && !hasLaneImpact ? "parking" : hasLaneImpact ? "major" : "moderate";
+    const trafficLabel = hasClosure ? "Fermeture complète" : hasParkingImpact && !hasLaneImpact ? "Stationnement interdit" : hasLaneImpact ? "Voie touchée" : "Accès limité";
+    return {
+      ...record,
+      category: "linkedCity",
+      sourceKind: "mont-royal-snapshot",
+      responsible: "Ville de Mont-Royal",
+      borough: "Mont-Royal",
+      trafficLabel,
+      severity,
+      roadType: roadTypeFromText(`${record.title} ${record.streets}`),
+      periods: ["day", "night"],
+      source: "Ville de Mont-Royal - Snapshot statique",
+      color: SEVERITY_META[severity].color,
+      point: representativePoint(record.geometry),
+      details: [["Extraction", snapshot.extractedAt], ["Impacts publiés", labels.join(", ")], ["Référence", record.reference]]
+    };
+  });
+}
+
+async function loadBeaconsfieldSnapshotClosures() {
+  const snapshot = await fetchJson(LIVE_SOURCES.beaconsfieldSnapshot);
+  return (snapshot.records || []).map((record) => {
+    const labels = record.trafficLabels || [];
+    const hasClosure = labels.some((label) => /fermeture complète|fermeture complete/i.test(label));
+    const hasMajor = labels.some((label) => /entrave majeure|reconfiguration/i.test(label));
+    const hasLaneImpact = labels.some((label) => /entrave partielle|voie|circulation locale/i.test(label));
+    const severity = hasClosure ? "critical" : hasMajor ? "critical" : hasLaneImpact ? "major" : "moderate";
+    const trafficLabel = hasClosure ? "Fermeture complète" : hasMajor ? "Entrave majeure" : hasLaneImpact ? "Entrave partielle" : "Travaux municipaux";
+    return {
+      ...record,
+      category: "linkedCity",
+      sourceKind: "beaconsfield-snapshot",
+      responsible: "Ville de Beaconsfield",
+      borough: "Beaconsfield",
+      trafficLabel,
+      severity,
+      roadType: roadTypeFromText(`${record.title} ${record.streets}`),
+      periods: ["day", "night"],
+      source: "Ville de Beaconsfield - Snapshot statique",
+      color: SEVERITY_META[severity].color,
+      point: representativePoint(record.geometry),
+      details: [["Extraction", snapshot.extractedAt], ["Nature des travaux", labels.join(", ")], ["Référence", record.reference]]
+    };
+  });
+}
+
+async function loadMontrealPedestrianSnapshotClosures() {
+  const snapshot = await fetchJson(LIVE_SOURCES.montrealPedestrianSnapshot);
+  // Projets dont le trace est deja fourni a la main dans SEASONAL_PEDESTRIAN_STREETS.
+  const duplicateProjects = new Set(["RP0004", "RP0029", "RP0047"]);
+  const currentYear = new Date().getFullYear();
+  return (snapshot.records || [])
+    .filter((record) => record.geometry?.type === "LineString" && !duplicateProjects.has(record.projectId))
+    .map((record) => {
+      const title = String(record.title || record.streetName || "Rue piétonne").replace(/\s+/g, " ").trim();
+      const limits = (record.limits || []).filter(Boolean).map((value) => value.trim()).join(" et ");
+      const streets = limits ? `${record.streetName} (entre ${limits})` : record.streetName;
+      const seasonal = /saisonn|estival/i.test(record.modeImplantation || "");
+      const startDate = seasonal ? `${currentYear}-05-15` : (/^\d{4}-\d{2}-\d{2}$/.test(record.dateOuverture || "") ? record.dateOuverture : `${currentYear}-01-01`);
+      const endDate = seasonal ? `${currentYear}-10-31` : "2099-12-31";
+      return {
+        id: record.id,
+        title: `${title} (rue piétonne)`,
+        category: "commercial",
+        sourceKind: "montreal-pedestrian-opendata",
+        responsible: `Ville de Montréal (${record.borough || "Montréal"})`,
+        borough: record.borough || "Montréal",
+        startDate,
+        endDate,
+        impact: `${record.typeRepartage || "Rue piétonne ou partagée."} Implantation: ${record.modeImplantation || "Non précisé"}.`,
+        trafficLabel: "Rue piétonne",
+        severity: "critical",
+        roadType: "street",
+        direction: "Fermée ou restreinte à la circulation automobile.",
+        streets,
+        source: "Ville de Montréal - Rues piétonnes et partagées (API)",
+        sourceUrl: record.sourceUrl,
+        periods: ["day", "night"],
+        color: SEVERITY_META.critical.color,
+        geometry: record.geometry,
+        point: record.point || representativePoint(record.geometry),
+        details: [
+          ["Référence projet", record.projectId],
+          ["Limites", (record.limits || []).filter(Boolean).map((value) => value.trim()).join(" à ")],
+          ["Longueur publiée", record.publishedLengthMeters ? `${record.publishedLengthMeters} m` : "Non publiée"],
+          ["Implantation", record.modeImplantation || "Non précisé"],
+          ["Géométrie", record.geometryStatus]
+        ]
+      };
+    });
+}
+
+function montSaintHilaireScheduleDates(schedule) {
+  const value = String(schedule || "").toLowerCase();
+  if (!value) return ["", ""];
+  const year = value.match(/20\d{2}/)?.[0] || "";
+  if (!year) return ["", ""];
+  const startsSummer = /été|ete/.test(value);
+  const startsAutumn = /automne/.test(value);
+  if (startsSummer && startsAutumn) return [`${year}-06-01`, `${year}-11-30`];
+  if (startsSummer) return [`${year}-06-01`, `${year}-08-31`];
+  if (startsAutumn) return [`${year}-09-01`, `${year}-11-30`];
+  return ["", ""];
+}
+
+function normalizeMontSaintHilaireFeature(feature) {
+  const p = feature.attributes || {};
+  const geometry = esriGeometryToGeoJson(feature.geometry);
+  const [startDate, endDate] = montSaintHilaireScheduleDates(p.ECHEANCIER);
+  if (!geometry || !p.PROJET || !startDate || !endDate) return null;
+  const severity = "major";
+  return {
+    id: `mont-saint-hilaire-${p.OBJECTID || p.FID}-${p.PROJET}`,
+    title: p.PROJET,
+    category: "linkedCity",
+    sourceKind: "mont-saint-hilaire-arcgis",
+    responsible: "Ville de Mont-Saint-Hilaire",
+    borough: "Mont-Saint-Hilaire",
+    startDate,
+    endDate,
+    impact: `${p.Nature || "Travaux routiers"}${p.TRONÇON ? ` - ${p.TRONÇON}` : ""}`,
+    trafficLabel: "Voie touchée",
+    severity,
+    roadType: roadTypeFromText(`${p.PROJET} ${p.TRONÇON || ""}`),
+    periods: ["day", "night"],
+    direction: "Direction non publiée.",
+    streets: p.TRONÇON || p.PROJET,
+    source: "Ville de Mont-Saint-Hilaire - Carte Info-travaux",
+    sourceUrl: "https://experience.arcgis.com/experience/f6ea6c5a42f5440c970ec7a8bb5b17d4",
+    color: SEVERITY_META[severity].color,
+    geometry,
+    point: representativePoint(geometry),
+    details: [["Échéancier publié", p.ECHEANCIER], ["Entrepreneur", p.ENTRE], ["Nature", p.Nature]]
+  };
 }
 
 function normalizeTerrebonneFeature(feature) {
@@ -1872,41 +4415,28 @@ function esriGeometryToGeoJson(geometry) {
   return null;
 }
 
-async function enrichMunicipalPointGeometry(closure) {
-  const roadQueries = namedRoadQueries(closure.roadSearchText || closure.streets);
-  if (!new Set(["dorval-arcgis", "boisbriand-arcgis", "assomption-arcgis"]).has(closure.sourceKind)
-    || closure.geometry?.type !== "Point"
-    || !closure.roadType
-    || roadQueries.length === 0) {
-    return closure;
+function municipalSeverity(text) {
+  const value = String(text || "").toLowerCase();
+  if (/fermeture complète|fermeture complete|toutes les voies sont fermées|toutes les voies sont fermees|rue fermée|rue fermee/.test(value)) return "critical";
+  if (/certaines voies|voie fermée|voie fermee|alternée|alternee|entrave partielle/.test(value)) return "major";
+  return "moderate";
+}
+
+async function fetchNamedStreetGeometry(query, [west, south, east, north]) {
+  const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=50&polygon_geojson=1&q=${encodeURIComponent(query)}`;
+  const data = await fetchJson(url);
+  const segments = data
+    .filter((item) => item.geojson?.type === "LineString")
+    .map((item) => item.geojson.coordinates)
+    .filter((coordinates) => coordinates.length > 1 && coordinates.some(([longitude, latitude]) => {
+      return longitude >= west && longitude <= east && latitude >= south && latitude <= north;
+    }));
+
+  if (segments.length === 0) {
+    throw new Error("No named street geometry returned");
   }
 
-  const city = closure.borough || "Greater Montreal";
-  const bounds = [
-    closure.geometry.coordinates[0] - 0.02,
-    closure.geometry.coordinates[1] - 0.02,
-    closure.geometry.coordinates[0] + 0.02,
-    closure.geometry.coordinates[1] + 0.02
-  ];
-
-  try {
-    for (const roadQuery of roadQueries) {
-      try {
-        const geometry = await fetchNamedStreetGeometry(`${roadQuery}, ${city}, Quebec`, bounds);
-        return {
-          ...closure,
-          geometry,
-          point: representativePoint(geometry),
-          geometrySource: "named-street-geometry"
-        };
-      } catch {
-        // Try the next explicitly published road name.
-      }
-    }
-  } catch (error) {
-    return closure;
-  }
-  return closure;
+  return { type: "MultiLineString", coordinates: segments };
 }
 
 function namedRoadQueries(value) {
@@ -1933,11 +4463,66 @@ function namedRoadQueries(value) {
   return queries;
 }
 
-function municipalSeverity(text) {
-  const value = String(text || "").toLowerCase();
-  if (/fermeture complète|fermeture complete|toutes les voies sont fermées|toutes les voies sont fermees|rue fermée|rue fermee/.test(value)) return "critical";
-  if (/certaines voies|voie fermée|voie fermee|alternée|alternee|entrave partielle/.test(value)) return "major";
-  return "moderate";
+const MUNICIPAL_ENRICH_KINDS = new Set(["dorval-arcgis", "boisbriand-arcgis", "assomption-arcgis"]);
+
+async function enrichMunicipalPointGeometry(closure) {
+  const roadQueries = namedRoadQueries(closure.roadSearchText || closure.streets);
+  if (!MUNICIPAL_ENRICH_KINDS.has(closure.sourceKind)
+    || closure.geometry?.type !== "Point"
+    || !closure.roadType
+    || roadQueries.length === 0) {
+    return closure;
+  }
+
+  const city = closure.borough || "Greater Montreal";
+  const bounds = [
+    closure.geometry.coordinates[0] - 0.02,
+    closure.geometry.coordinates[1] - 0.02,
+    closure.geometry.coordinates[0] + 0.02,
+    closure.geometry.coordinates[1] + 0.02
+  ];
+
+  for (const roadQuery of roadQueries) {
+    try {
+      const geometry = await fetchNamedStreetGeometry(`${roadQuery}, ${city}, Quebec`, bounds);
+      return {
+        ...closure,
+        geometry,
+        point: representativePoint(geometry),
+        geometrySource: "named-street-geometry"
+      };
+    } catch {
+      // Try the next explicitly published road name.
+    }
+  }
+  return closure;
+}
+
+// Upgrade municipal point closures to real street geometry after the initial
+// render, throttled to respect Nominatim usage limits and keep loading fast.
+async function enrichMunicipalGeometriesInBackground() {
+  const targets = allClosures.filter((closure) =>
+    MUNICIPAL_ENRICH_KINDS.has(closure.sourceKind)
+    && closure.geometry?.type === "Point"
+    && closure.roadType
+    && namedRoadQueries(closure.roadSearchText || closure.streets).length > 0);
+
+  let changed = false;
+  for (const closure of targets) {
+    const enriched = await enrichMunicipalPointGeometry(closure);
+    if (enriched.geometry && enriched.geometry.type !== "Point") {
+      const index = allClosures.findIndex((item) => item.id === closure.id);
+      if (index !== -1) {
+        allClosures[index] = enriched;
+        changed = true;
+      }
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1100));
+  }
+
+  if (changed) {
+    updateView({ fit: false });
+  }
 }
 
 function normalizeSaintEustacheFeature(feature) {
@@ -2387,10 +4972,15 @@ async function loadBackgroundOfficialData() {
     loadLongueuilClosures(),
     loadLavalClosures(),
     loadQuebec511Closures(),
+    loadQuebec511Events(),
     loadRepentignyClosures(),
     loadMunicipalArcgisClosures(),
     loadDorvalAndBoisbriandClosures(),
-    loadTerrebonneClosures()
+    loadTerrebonneClosures(),
+    loadMontSaintHilaireClosures(),
+    loadMontRoyalSnapshotClosures(),
+    loadBeaconsfieldSnapshotClosures(),
+    loadMontrealPedestrianSnapshotClosures()
   ]);
 
   const additions = [];
@@ -2406,6 +4996,8 @@ async function loadBackgroundOfficialData() {
     updateView({ fit: false });
     showMapStatus(`Donnees chargees: ${allClosures.length} entraves actives dans la region.`, "ready");
   }
+
+  enrichMunicipalGeometriesInBackground();
 }
 
 function dedupeClosures(closures) {
