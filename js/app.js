@@ -3275,9 +3275,12 @@ let activeMapPopup = null;
 const map = L.map("map", {
   preferCanvas: true,
   fadeAnimation: false,
-  zoomAnimation: false,
-  markerZoomAnimation: false,
+  zoomAnimation: true,
+  zoomAnimationThreshold: 8,
+  markerZoomAnimation: true,
   zoomControl: true,
+  zoomSnap: 0.25,
+  zoomDelta: 0.25,
   minZoom: 10,
   maxZoom: 19
 }).setView(MONTREAL_CENTER, 12);
