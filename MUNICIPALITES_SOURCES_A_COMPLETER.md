@@ -1,16 +1,3 @@
-
-## Agglomération de Montréal
-
-### Beaconsfield
-- https://www.beaconsfield.ca/fr/carte-interactive/info-travaux
-    - Pourrais-tu regarder toutes les requetes faits pour obtenir les points de travaux sur la map? Parce que clairement les donnees geographiques a mettre sur la carte qu'on voit doivent venir de quelque part
-
-
-### Mont-Royal
-- https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr
-  - pourquoi n'es-tu pas capable d'extraire les données de ce site? il s'agit letteralement d'une carte interactive qu'on voit tres biens les travaux et on peut meme cliquer sur les travaux pour savoir c'Est quoi et les date...
-
-
 ## Agglomération de Longueuil
 
 ### Boucherville

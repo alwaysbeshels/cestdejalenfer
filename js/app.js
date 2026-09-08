@@ -3275,7 +3275,7 @@ const baseLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", 
 
 const closureLayer = L.layerGroup().addTo(map);
 const arrowLayer = L.layerGroup().addTo(map);
-const fastRenderer = L.canvas({ padding: 0.5 });
+const fastRenderer = L.canvas({ padding: 2.0 });
 let mapRenderFrame = null;
 const renderedClosureLayers = new Map();
 
@@ -4424,20 +4424,50 @@ function municipalSeverity(text) {
 }
 
 async function fetchNamedStreetGeometry(query, [west, south, east, north]) {
-  const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=50&polygon_geojson=1&q=${encodeURIComponent(query)}`;
-  const data = await fetchJson(url);
-  const segments = data
-    .filter((item) => item.geojson?.type === "LineString")
-    .map((item) => item.geojson.coordinates)
-    .filter((coordinates) => coordinates.length > 1 && coordinates.some(([longitude, latitude]) => {
-      return longitude >= west && longitude <= east && latitude >= south && latitude <= north;
-    }));
+  // Try different query variations to handle type mismatches (rue→avenue, etc)
+  const queries = [
+    query,
+    // Strip street type and city, let Nominatim figure it out
+    query.replace(/,\s*Quebec\s*$/i, '').replace(/^\s*(rue|avenue|boulevard|chemin|street|montée)\s+/i, ''),
+    // Try with just city name
+    query.split(',').slice(0, 2).join(',')
+  ];
 
-  if (segments.length === 0) {
-    throw new Error("No named street geometry returned");
+  for (const q of queries) {
+    try {
+      const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=50&polygon_geojson=1&q=${encodeURIComponent(q)}`;
+      const data = await fetchJson(url);
+      
+      // Try LineString first
+      let segments = data
+        .filter((item) => item.geojson?.type === "LineString")
+        .map((item) => item.geojson.coordinates)
+        .filter((coordinates) => coordinates.length > 1 && coordinates.some(([longitude, latitude]) => {
+          return longitude >= west && longitude <= east && latitude >= south && latitude <= north;
+        }));
+
+      if (segments.length > 0) {
+        return { type: "MultiLineString", coordinates: segments };
+      }
+
+      // Fallback to polygons if no LineStrings found
+      const polygons = data
+        .filter((item) => item.geojson?.type === "Polygon")
+        .map((item) => {
+          const ring = item.geojson.coordinates[0];
+          return ring.filter(([lon, lat]) => lon >= west && lon <= east && lat >= south && lat <= north);
+        })
+        .filter((ring) => ring.length > 1);
+
+      if (polygons.length > 0) {
+        return { type: "MultiLineString", coordinates: polygons };
+      }
+    } catch {
+      // Try next variation
+    }
   }
 
-  return { type: "MultiLineString", coordinates: segments };
+  throw new Error("No named street geometry returned");
 }
 
 function namedRoadQueries(value) {
@@ -4464,7 +4494,15 @@ function namedRoadQueries(value) {
   return queries;
 }
 
-const MUNICIPAL_ENRICH_KINDS = new Set(["dorval-arcgis", "boisbriand-arcgis", "assomption-arcgis"]);
+const MUNICIPAL_ENRICH_KINDS = new Set([
+  "dorval-arcgis",
+  "boisbriand-arcgis",
+  "assomption-arcgis",
+  "saint-eustache-arcgis",
+  "chateauguay-arcgis",
+  "mont-saint-hilaire-arcgis",
+  "terrebonne-arcgis"
+]);
 
 async function enrichMunicipalPointGeometry(closure) {
   const roadQueries = namedRoadQueries(closure.roadSearchText || closure.streets);
@@ -4485,6 +4523,7 @@ async function enrichMunicipalPointGeometry(closure) {
 
   for (const roadQuery of roadQueries) {
     try {
+      // Use Nominatim to find street geometry
       const geometry = await fetchNamedStreetGeometry(`${roadQuery}, ${city}, Quebec`, bounds);
       return {
         ...closure,
@@ -4518,7 +4557,7 @@ async function enrichMunicipalGeometriesInBackground() {
         changed = true;
       }
     }
-    await new Promise((resolve) => setTimeout(resolve, 1100));
+    await new Promise((resolve) => setTimeout(resolve, 50));
   }
 
   if (changed) {
@@ -5208,13 +5247,31 @@ function renderMap(closures) {
   });
 
   [...closures].sort((a, b) => layerRank(a) - layerRank(b)).forEach((closure) => {
-    if (closure.category === "laval" || renderedClosureLayers.has(closure.id)) {
+    if (closure.category === "laval") {
       return;
+    }
+
+    // If closure is already rendered, check if geometry type changed via enrichment
+    if (renderedClosureLayers.has(closure.id)) {
+      const existing = renderedClosureLayers.get(closure.id);
+      const newGeometryType = closure.geometry?.type;
+      const oldGeometryType = existing._geometryType;
+      
+      // Only remove and re-render if geometry type actually changed (e.g., Point→MultiLineString)
+      if (newGeometryType === oldGeometryType) {
+        return; // Same geometry type, no need to re-render
+      }
+      
+      // Geometry type changed, remove the old layer
+      closureLayer.removeLayer(existing.closures);
+      arrowLayer.removeLayer(existing.arrows);
+      renderedClosureLayers.delete(closure.id);
     }
 
     const closureLayers = L.layerGroup().addTo(closureLayer);
     const closureArrows = L.layerGroup().addTo(arrowLayer);
-    renderedClosureLayers.set(closure.id, { closures: closureLayers, arrows: closureArrows });
+    const layerData = { closures: closureLayers, arrows: closureArrows, _geometryType: closure.geometry?.type };
+    renderedClosureLayers.set(closure.id, layerData);
 
     const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
     const lineWidth = mapLineWidth(severity.width);
