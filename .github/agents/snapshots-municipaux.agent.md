@@ -24,6 +24,21 @@ You maintain static municipal roadwork snapshots for **Carte des entraves auto d
 - Use per-source failure isolation. One municipal source failure must not discard snapshots or records from other municipalities.
 - Never commit, push, add secrets, add a backend, or install dependencies unless explicitly requested by the user.
 
+## Montreal pedestrian-street snapshot policy
+
+For `data/montreal-pedestrian-snapshot.json`, the source is the official Montreal pedestrian-street dataset published through Données Québec / Montréal CKAN. This snapshot serves a driving-focused map, so retain only records that represent an automobile road becoming pedestrian-only temporarily:
+
+- Keep records whose official `MODE_IMPLANTATION` is `Temporaire` or `Temporaire saisonnière`.
+- Exclude records whose official `MODE_IMPLANTATION` is `Permanent`.
+- Exclude records whose official `MODE_IMPLANTATION` is `Temporaire à permanent`; these are not temporary driving restrictions because the pedestrian treatment becomes permanent.
+- Apply this filter before geocoding, Overpass requests, geometry reconstruction, and snapshot output. Excluded records must not create points, lines, or map entries.
+- Keep official `TYPE_REPARTAGE`, `TOPONYME`, `LIMITES_1`, `LIMITES_2`, dates, borough, project ID, and source metadata for retained records.
+- A public place, promenade, passage, park path, rail corridor, or pedestrian-only facility is not sufficient by itself to include a record. Retain it only when the official record's temporary mode and published street context establish an automobile-road restriction.
+- The seven curated temporary street closures stored in `data/montreal-pedestrian-curated.json` are merged into the same final snapshot. Their source metadata and exact supplied geometries are authoritative and must not be replaced by OSM or geobase reconstruction.
+- `js/app.js` must load the final snapshot only. It must not contain the pedestrian records or issue CKAN, geocoder, or Overpass requests to build this snapshot at page load.
+
+The generator is `tools/build-montreal-pedestrian-snapshot.mjs`. Its output must report the number of CKAN records received, records retained after the temporary-automobile filter, curated records merged, and final `LineString` versus `Point` counts.
+
 ## Severity classification: never from colours
 
 - **NEVER** derive severity, category, or impact type from a colour found in the source: map pin colours, KML styles, legend swatches, CSS classes, or colours sampled from a screenshot or rendered tile. Colours are presentation choices and carry no data contract.

@@ -303,338 +303,6 @@ const REGIONAL_MAJOR_CLOSURES = [
   }
 ];
 
-const SEASONAL_PEDESTRIAN_STREETS = [
-  {
-    "id": "pedestrian-mont-royal-saint-laurent-resther",
-    "title": "Avenue du Mont-Royal piétonne - Saint-Laurent à Resther",
-    "category": "commercial",
-    "responsible": "Arrondissement du Plateau-Mont-Royal",
-    "borough": "Le Plateau-Mont-Royal",
-    "startDate": "2026-05-28",
-    "endDate": "2026-10-12",
-    "impact": "Rue réservée aux piétons; circulation automobile fermée durant la piétonnisation estivale.",
-    "trafficLabel": "Rue piétonne saisonnière",
-    "severity": "critical",
-    "direction": "Fermée à la circulation automobile dans les deux directions.",
-    "streets": "Avenue du Mont-Royal, entre le boulevard Saint-Laurent et la rue Resther",
-    "source": "Ville de Montréal - Piétonnisation de l'avenue du Mont-Royal",
-    "sourceUrl": "https://montreal.ca/lieux/avenue-du-mont-royal",
-    "periods": [
-      "day",
-      "night"
-    ],
-    "routeEndpoints": [
-      [
-        -73.58622,
-        45.520102
-      ],
-      [
-        -73.5815065,
-        45.5254529
-      ]
-    ],
-    "geometry": {
-      "type": "LineString",
-      "coordinates": [
-        [
-          -73.58622,
-          45.520102
-        ],
-        [
-          -73.5815065,
-          45.5254529
-        ]
-      ]
-    },
-    "point": [
-      -73.583863,
-      45.522777
-    ]
-  },
-  {
-    "id": "pedestrian-mont-royal-resther-lorimier",
-    "title": "Avenue du Mont-Royal piétonne - Resther à De Lorimier",
-    "category": "commercial",
-    "responsible": "Arrondissement du Plateau-Mont-Royal",
-    "borough": "Le Plateau-Mont-Royal",
-    "startDate": "2026-05-28",
-    "endDate": "2026-09-07",
-    "impact": "Rue réservée aux piétons; circulation automobile fermée durant la piétonnisation estivale.",
-    "trafficLabel": "Rue piétonne saisonnière",
-    "severity": "critical",
-    "direction": "Fermée à la circulation automobile dans les deux directions.",
-    "streets": "Avenue du Mont-Royal, entre la rue Resther et l'avenue De Lorimier",
-    "source": "Ville de Montréal - Piétonnisation de l'avenue du Mont-Royal",
-    "sourceUrl": "https://montreal.ca/lieux/avenue-du-mont-royal",
-    "periods": [
-      "day",
-      "night"
-    ],
-    "routeEndpoints": [
-      [
-        -73.5815065,
-        45.5254529
-      ],
-      [
-        -73.572233,
-        45.535135
-      ]
-    ],
-    "geometry": {
-      "type": "LineString",
-      "coordinates": [
-        [
-          -73.5815065,
-          45.5254529
-        ],
-        [
-          -73.572233,
-          45.535135
-        ]
-      ]
-    },
-    "point": [
-      -73.57687,
-      45.530294
-    ]
-  },
-  {
-    "id": "pedestrian-wellington-verdun",
-    "title": "Rue Wellington piétonne",
-    "category": "commercial",
-    "responsible": "Arrondissement de Verdun / SDC Wellington",
-    "borough": "Verdun",
-    "startDate": "2026-06-01",
-    "endDate": "2026-09-21",
-    "impact": "Rue réservée aux piétons; circulation automobile fermée pour la saison estivale.",
-    "trafficLabel": "Rue piétonne saisonnière",
-    "severity": "critical",
-    "direction": "Fermée à la circulation automobile dans les deux directions.",
-    "streets": "Rue Wellington, entre les rues Regina et de la 6e Avenue",
-    "source": "Ville de Montréal - Rues piétonnes saisonnières",
-    "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
-    "periods": [
-      "day",
-      "night"
-    ],
-    "routeEndpoints": [
-      [
-        -73.5664646,
-        45.4673353
-      ],
-      [
-        -73.5678636,
-        45.4554309
-      ]
-    ],
-    "geometry": {
-      "type": "LineString",
-      "coordinates": [
-        [
-          -73.5664646,
-          45.4673353
-        ],
-        [
-          -73.5678636,
-          45.4554309
-        ]
-      ]
-    },
-    "point": [
-      -73.567164,
-      45.461383
-    ]
-  },
-  {
-    "id": "pedestrian-sainte-catherine-quartier-spectacles",
-    "title": "Rue Sainte-Catherine Est piétonne - Quartier des spectacles",
-    "category": "commercial",
-    "responsible": "Quartier des spectacles / Ville de Montréal",
-    "borough": "Ville-Marie",
-    "startDate": "2026-05-15",
-    "endDate": "2026-10-15",
-    "impact": "Secteur piétonnier saisonnier; circulation automobile fermée selon la programmation du Quartier des spectacles.",
-    "trafficLabel": "Rue piétonne saisonnière",
-    "severity": "critical",
-    "direction": "Fermée à la circulation automobile dans les deux directions.",
-    "streets": "Rue Sainte-Catherine Est, entre les rues De Bleury et Saint-Laurent",
-    "source": "Quartier des spectacles - Rues et espaces publics",
-    "sourceUrl": "https://www.quartierdesspectacles.com/",
-    "periods": [
-      "day",
-      "night"
-    ],
-    "routeEndpoints": [
-      [
-        -73.5671764,
-        45.5063348
-      ],
-      [
-        -73.563637,
-        45.509852
-      ]
-    ],
-    "geometry": {
-      "type": "LineString",
-      "coordinates": [
-        [
-          -73.5671764,
-          45.5063348
-        ],
-        [
-          -73.563637,
-          45.509852
-        ]
-      ]
-    },
-    "point": [
-      -73.565407,
-      45.508093
-    ]
-  },
-  {
-    "id": "pedestrian-sainte-catherine-village",
-    "title": "Rue Sainte-Catherine Est piétonne - Le Village",
-    "category": "commercial",
-    "responsible": "SDC Village Montréal / Ville de Montréal",
-    "borough": "Ville-Marie",
-    "startDate": "2026-05-15",
-    "endDate": "2026-10-15",
-    "impact": "Rue réservée aux piétons; circulation automobile fermée pour la saison estivale dans le Village.",
-    "trafficLabel": "Rue piétonne saisonnière",
-    "severity": "critical",
-    "direction": "Fermée à la circulation automobile dans les deux directions.",
-    "streets": "Rue Sainte-Catherine Est, entre la rue Saint-Hubert et l'avenue Papineau",
-    "source": "Ville de Montréal - Rues piétonnes",
-    "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
-    "periods": [
-      "day",
-      "night"
-    ],
-    "routeEndpoints": [
-      [
-        -73.563637,
-        45.509852
-      ],
-      [
-        -73.552565,
-        45.522614
-      ]
-    ],
-    "geometry": {
-      "type": "LineString",
-      "coordinates": [
-        [
-          -73.563637,
-          45.509852
-        ],
-        [
-          -73.552565,
-          45.522614
-        ]
-      ]
-    },
-    "point": [
-      -73.558101,
-      45.516233
-    ]
-  },
-  {
-    "id": "pedestrian-duluth-est",
-    "title": "Avenue Duluth Est piétonne",
-    "category": "commercial",
-    "responsible": "Arrondissement du Plateau-Mont-Royal",
-    "borough": "Le Plateau-Mont-Royal",
-    "startDate": "2026-06-01",
-    "endDate": "2026-10-15",
-    "impact": "Rue piétonne estivale; circulation automobile fermée entre Saint-Laurent et Saint-Denis.",
-    "trafficLabel": "Rue piétonne saisonnière",
-    "severity": "critical",
-    "direction": "Fermée à la circulation automobile dans les deux directions.",
-    "streets": "Avenue Duluth Est, entre le boulevard Saint-Laurent et la rue Saint-Denis",
-    "source": "Ville de Montréal - Rues piétonnes",
-    "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
-    "periods": [
-      "day",
-      "night"
-    ],
-    "routeEndpoints": [
-      [
-        -73.579262,
-        45.516967
-      ],
-      [
-        -73.575704,
-        45.520574
-      ]
-    ],
-    "geometry": {
-      "type": "LineString",
-      "coordinates": [
-        [
-          -73.579262,
-          45.516967
-        ],
-        [
-          -73.575704,
-          45.520574
-        ]
-      ]
-    },
-    "point": [
-      -73.577483,
-      45.518771
-    ]
-  },
-  {
-    "id": "pedestrian-bernard-outremont",
-    "title": "Avenue Bernard piétonne",
-    "category": "commercial",
-    "responsible": "Arrondissement d'Outremont",
-    "borough": "Outremont",
-    "startDate": "2026-05-15",
-    "endDate": "2026-10-15",
-    "impact": "Rue piétonne estivale; circulation automobile fermée entre Wiseman et Bloomfield.",
-    "trafficLabel": "Rue piétonne saisonnière",
-    "severity": "critical",
-    "direction": "Fermée à la circulation automobile dans les deux directions.",
-    "streets": "Avenue Bernard, entre l'avenue Wiseman et l'avenue Bloomfield",
-    "source": "Ville de Montréal - Rues piétonnes",
-    "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
-    "periods": [
-      "day",
-      "night"
-    ],
-    "routeEndpoints": [
-      [
-        -73.61309,
-        45.5195508
-      ],
-      [
-        -73.608307,
-        45.520671
-      ]
-    ],
-    "geometry": {
-      "type": "LineString",
-      "coordinates": [
-        [
-          -73.61309,
-          45.5195508
-        ],
-        [
-          -73.608307,
-          45.520671
-        ]
-      ]
-    },
-    "point": [
-      -73.610698,
-      45.520111
-    ]
-  }
-];
-
 const LINKED_MUNICIPALITIES = [
   { name: "Baie-d'Urfe", coordinates: [-73.916, 45.414], url: "https://baie-durfe.qc.ca/fr/nos-departements/page/info-travaux", detail: "Info-travaux avec dates et impacts", quality: "detaillee", links: [{ label: "Info-travaux", url: "https://baie-durfe.qc.ca/fr/nos-departements/page/info-travaux" }] },
   { name: "Beaconsfield", coordinates: [-73.865, 45.433], url: "https://www.beaconsfield.ca/fr/carte-interactive/info-travaux", detail: "Carte interactive et info-travaux", quality: "detaillee", links: [{ label: "Carte interactive Info-travaux", url: "https://www.beaconsfield.ca/fr/carte-interactive/info-travaux" }, { label: "Avis municipaux", url: "https://portail.beaconsfield.ca/fr/avis" }] },
@@ -1936,10 +1604,6 @@ async function loadRegionalClosures() {
   return routedClosures;
 }
 
-async function loadSeasonalPedestrianStreets() {
-  return SEASONAL_PEDESTRIAN_STREETS.map((street) => normalizePedestrianStreet(street));
-}
-
 async function loadLongueuilClosures() {
   const surfaceData = await fetchJson(LIVE_SOURCES.longueuilSurfaces);
 
@@ -2192,10 +1856,10 @@ async function loadBeaconsfieldSnapshotClosures() {
 
 async function loadMontrealPedestrianSnapshotClosures() {
   const snapshot = await fetchJson(LIVE_SOURCES.montrealPedestrianSnapshot);
-  // Projets dont le trace est deja fourni a la main dans SEASONAL_PEDESTRIAN_STREETS.
+  const curatedClosures = (snapshot.curatedRecords || []).map(normalizePedestrianStreet);
   const duplicateProjects = new Set(["RP0004", "RP0029", "RP0047"]);
   const currentYear = new Date().getFullYear();
-  return (snapshot.records || [])
+  const snapshotClosures = (snapshot.records || [])
     .filter((record) => record.geometry?.type === "LineString" && !duplicateProjects.has(record.projectId))
     .map((record) => {
       const title = String(record.title || record.streetName || "Rue piétonne").replace(/\s+/g, " ").trim();
@@ -2234,6 +1898,7 @@ async function loadMontrealPedestrianSnapshotClosures() {
         ]
       };
     });
+  return [...curatedClosures, ...snapshotClosures];
 }
 
 async function loadNoovoRoadClosuresSnapshot() {
@@ -3451,7 +3116,6 @@ async function loadOfficialData() {
 async function loadBackgroundOfficialData() {
   const backgroundSources = await Promise.allSettled([
     loadLinkedCityWorks(),
-    loadSeasonalPedestrianStreets(),
     loadLongueuilClosures(),
     loadLavalClosures(),
     loadQuebec511Closures(),
