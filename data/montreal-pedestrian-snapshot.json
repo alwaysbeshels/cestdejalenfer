@@ -1,9 +1,9 @@
 {
-  "extractedAt": "2026-09-09T19:06:06.170Z",
+  "extractedAt": "2026-09-09T21:40:59.000Z",
   "sourceApi": "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=ef2a8162-0644-47e7-bd03-bea33f14a5d2&limit=100",
   "geometrySource": "OpenStreetMap (Overpass) - rue nommee entre limites publiees, validee par LONGUEUR_TRONCON",
-  "validatedLineCount": 1,
-  "pointOnlyCount": 9,
+  "validatedLineCount": 7,
+  "pointOnlyCount": 3,
   "records": [
     {
       "id": "montreal-pieton-rp0005",
@@ -20,7 +20,7 @@
       "borough": "Mercier–Hochelaga-Maisonneuve",
       "dateOuverture": "Période estivale",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "point (intersections too far after geocoding (3497,0m))",
+      "geometryStatus": "point (same intersection index)",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -48,7 +48,7 @@
       "borough": "Le Sud-Ouest",
       "dateOuverture": "",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "point (intersections too far after geocoding (98,0m))",
+      "geometryStatus": "point (intersections too far after geocoding (289,169m))",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -76,12 +76,74 @@
       "borough": "Le Sud-Ouest",
       "dateOuverture": "",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "point (intersections too far after geocoding (25,81m))",
+      "geometryStatus": "validated (143m vs 138.91m)",
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          -73.587034,
-          45.476416
+          [
+            -73.586532,
+            45.476918
+          ],
+          [
+            -73.586532,
+            45.476918
+          ],
+          [
+            -73.586568,
+            45.476867
+          ],
+          [
+            -73.586579,
+            45.476849
+          ],
+          [
+            -73.58696,
+            45.476455
+          ],
+          [
+            -73.586991,
+            45.47643
+          ],
+          [
+            -73.587027,
+            45.476402
+          ],
+          [
+            -73.587054,
+            45.476379
+          ],
+          [
+            -73.587091,
+            45.476353
+          ],
+          [
+            -73.587288,
+            45.476218
+          ],
+          [
+            -73.587473,
+            45.476097
+          ],
+          [
+            -73.587573,
+            45.476039
+          ],
+          [
+            -73.587662,
+            45.475988
+          ],
+          [
+            -73.587698,
+            45.47597
+          ],
+          [
+            -73.587716,
+            45.475963
+          ],
+          [
+            -73.587732,
+            45.475957
+          ]
         ]
       },
       "point": [
@@ -104,12 +166,206 @@
       "borough": "Ville-Marie",
       "dateOuverture": "Période estivale",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "point (intersections too far after geocoding (15553,1325m))",
+      "geometryStatus": "validated (943m vs 934.66m)",
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          -73.555254,
-          45.519516
+          [
+            -73.558922,
+            45.51546
+          ],
+          [
+            -73.558922,
+            45.51546
+          ],
+          [
+            -73.558875,
+            45.515515
+          ],
+          [
+            -73.558555,
+            45.515859
+          ],
+          [
+            -73.558511,
+            45.515906
+          ],
+          [
+            -73.558468,
+            45.515955
+          ],
+          [
+            -73.558158,
+            45.516302
+          ],
+          [
+            -73.558135,
+            45.516329
+          ],
+          [
+            -73.558101,
+            45.516367
+          ],
+          [
+            -73.558066,
+            45.516405
+          ],
+          [
+            -73.557539,
+            45.516975
+          ],
+          [
+            -73.557504,
+            45.517013
+          ],
+          [
+            -73.557468,
+            45.517052
+          ],
+          [
+            -73.557159,
+            45.517385
+          ],
+          [
+            -73.557132,
+            45.517412
+          ],
+          [
+            -73.557111,
+            45.517435
+          ],
+          [
+            -73.557076,
+            45.51747
+          ],
+          [
+            -73.557025,
+            45.517526
+          ],
+          [
+            -73.556702,
+            45.517876
+          ],
+          [
+            -73.55667,
+            45.517913
+          ],
+          [
+            -73.556635,
+            45.517951
+          ],
+          [
+            -73.556287,
+            45.518329
+          ],
+          [
+            -73.556255,
+            45.518366
+          ],
+          [
+            -73.556225,
+            45.518401
+          ],
+          [
+            -73.555875,
+            45.518773
+          ],
+          [
+            -73.555844,
+            45.518807
+          ],
+          [
+            -73.555812,
+            45.518843
+          ],
+          [
+            -73.555473,
+            45.519215
+          ],
+          [
+            -73.555466,
+            45.519223
+          ],
+          [
+            -73.555434,
+            45.519259
+          ],
+          [
+            -73.555403,
+            45.519294
+          ],
+          [
+            -73.554852,
+            45.519902
+          ],
+          [
+            -73.55482,
+            45.519939
+          ],
+          [
+            -73.554789,
+            45.519971
+          ],
+          [
+            -73.554325,
+            45.520465
+          ],
+          [
+            -73.554275,
+            45.520517
+          ],
+          [
+            -73.554231,
+            45.520564
+          ],
+          [
+            -73.553992,
+            45.520826
+          ],
+          [
+            -73.553723,
+            45.52111
+          ],
+          [
+            -73.553714,
+            45.52112
+          ],
+          [
+            -73.553665,
+            45.521176
+          ],
+          [
+            -73.553617,
+            45.521229
+          ],
+          [
+            -73.553103,
+            45.521789
+          ],
+          [
+            -73.553075,
+            45.52182
+          ],
+          [
+            -73.553054,
+            45.521844
+          ],
+          [
+            -73.553005,
+            45.521895
+          ],
+          [
+            -73.552448,
+            45.522489
+          ],
+          [
+            -73.552415,
+            45.522525
+          ],
+          [
+            -73.552359,
+            45.522589
+          ]
         ]
       },
       "point": [
@@ -132,7 +388,7 @@
       "borough": "Ville-Marie",
       "dateOuverture": "",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "point (intersections too far after geocoding (0,239m))",
+      "geometryStatus": "length mismatch (466m vs 303.06m)",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -160,12 +416,98 @@
       "borough": "Ville-Marie",
       "dateOuverture": "",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "point (intersections too far after geocoding (1029,84m))",
+      "geometryStatus": "validated (325m vs 315.97m)",
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          -73.552709,
-          45.507006
+          [
+            -73.552164,
+            45.508237
+          ],
+          [
+            -73.552164,
+            45.508237
+          ],
+          [
+            -73.552198,
+            45.508169
+          ],
+          [
+            -73.552397,
+            45.507744
+          ],
+          [
+            -73.552409,
+            45.507718
+          ],
+          [
+            -73.55242,
+            45.507696
+          ],
+          [
+            -73.552482,
+            45.507566
+          ],
+          [
+            -73.552492,
+            45.507544
+          ],
+          [
+            -73.552504,
+            45.507519
+          ],
+          [
+            -73.552678,
+            45.507154
+          ],
+          [
+            -73.552804,
+            45.506903
+          ],
+          [
+            -73.552947,
+            45.506672
+          ],
+          [
+            -73.553009,
+            45.506595
+          ],
+          [
+            -73.55331,
+            45.506241
+          ],
+          [
+            -73.553328,
+            45.506218
+          ],
+          [
+            -73.553354,
+            45.506188
+          ],
+          [
+            -73.553561,
+            45.505924
+          ],
+          [
+            -73.553623,
+            45.505843
+          ],
+          [
+            -73.553639,
+            45.505819
+          ],
+          [
+            -73.553653,
+            45.505796
+          ],
+          [
+            -73.553762,
+            45.505626
+          ],
+          [
+            -73.553803,
+            45.505561
+          ]
         ]
       },
       "point": [
@@ -188,12 +530,26 @@
       "borough": "Ville-Marie",
       "dateOuverture": "Période estivale",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "point (intersections too far after geocoding (9768,9700m))",
+      "geometryStatus": "validated (96m vs 88.59m)",
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          -73.573579,
-          45.504135
+          [
+            -73.574078,
+            45.504365
+          ],
+          [
+            -73.573988,
+            45.504323
+          ],
+          [
+            -73.573148,
+            45.503919
+          ],
+          [
+            -73.573058,
+            45.503877
+          ]
         ]
       },
       "point": [
@@ -216,12 +572,42 @@
       "borough": "Ville-Marie",
       "dateOuverture": "",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "point (intersections too far after geocoding (4145,1010m))",
+      "geometryStatus": "validated (90m vs 101.47m)",
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          -73.580181,
-          45.499108
+          [
+            -73.579638,
+            45.498835
+          ],
+          [
+            -73.579638,
+            45.498835
+          ],
+          [
+            -73.579669,
+            45.49885
+          ],
+          [
+            -73.57998,
+            45.498997
+          ],
+          [
+            -73.580241,
+            45.499124
+          ],
+          [
+            -73.580276,
+            45.499152
+          ],
+          [
+            -73.580308,
+            45.499178
+          ],
+          [
+            -73.58058,
+            45.499306
+          ]
         ]
       },
       "point": [
@@ -286,12 +672,42 @@
       "borough": "Ville-Marie",
       "dateOuverture": "Période estivale",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "length mismatch (53m vs 111.63m)",
+      "geometryStatus": "validated (120m vs 111.63m)",
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          -73.554053,
-          45.503186
+          [
+            -73.554744,
+            45.50246
+          ],
+          [
+            -73.554744,
+            45.50246
+          ],
+          [
+            -73.554711,
+            45.502499
+          ],
+          [
+            -73.55437,
+            45.502863
+          ],
+          [
+            -73.554189,
+            45.503063
+          ],
+          [
+            -73.554163,
+            45.503097
+          ],
+          [
+            -73.554023,
+            45.503278
+          ],
+          [
+            -73.553877,
+            45.503331
+          ]
         ]
       },
       "point": [
