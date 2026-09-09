@@ -49,6 +49,7 @@ function normalizeSearchName(value) {
     .replace(/\brte\.?\b/gi, "route")
     .replace(/\bE\b/g, "Est")
     .replace(/\bO\b/g, "Ouest")
+    .replace(/\./g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -70,6 +71,14 @@ async function geocodeStreet(name, lat, lon, cache) {
     limit: "10",
     q: `${normalized}, Montréal, Québec`
   });
+  if (lat && lon) {
+    // Sans viewbox, Nominatim ne retourne que 10 segments au hasard parmi tous ceux
+    // d'une longue rue (elle est decoupee par quartier) et peut rater celui qui
+    // croise reellement la fermeture. Le bounded force le segment geographiquement pertinent.
+    const delta = 0.01;
+    params.set("viewbox", `${lon - delta},${lat + delta},${lon + delta},${lat - delta}`);
+    params.set("bounded", "1");
+  }
   try {
     const response = await fetch(`${NOMINATIM}?${params}`, {
       headers: { "User-Agent": "CestDejaLEnfer/1.0 (snapshot builder)" }
@@ -82,10 +91,13 @@ async function geocodeStreet(name, lat, lon, cache) {
         displayName: result.display_name,
         type: result.type,
         geometry: result.geojson || null,
-        distance: lat && lon ? haversine([lon, lat], [Number(result.lon), Number(result.lat)]) : 0
+        distance: lat && lon ? haversine([lon, lat], [Number(result.lon), Number(result.lat)]) : 0,
+        // Un candidat rue (LineString) prime toujours sur un POI ponctuel
+        // (commerce, station, arrondissement) meme s'il est plus proche.
+        isLine: result.geojson && (result.geojson.type === "LineString" || result.geojson.type === "MultiLineString")
       }))
       .filter((result) => Number.isFinite(result.point[0]) && Number.isFinite(result.point[1]))
-      .sort((a, b) => a.distance - b.distance);
+      .sort((a, b) => (a.isLine === b.isLine ? a.distance - b.distance : a.isLine ? -1 : 1));
     cache[key] = candidates[0] || null;
     await sleep(1100);
     return cache[key];
@@ -134,9 +146,11 @@ async function prefetchGeocodes(records, cache) {
   const names = new Map();
   for (const record of records) {
     const street = coreName(record.TOPONYME);
-    const cross1 = cleanCross(record.LIMITES_1);
-    const cross2 = cleanCross(record.LIMITES_2);
-    for (const name of [street, cross1, cross2]) {
+    // Garder le prefixe de type de rue (rue/boul./place) dans la requete Nominatim:
+    // sans lui, Nominatim matche un POI generique au lieu de la vraie rue.
+    const cross1Raw = String(record.LIMITES_1 || "").trim();
+    const cross2Raw = String(record.LIMITES_2 || "").trim();
+    for (const name of [street, cross1Raw, cross2Raw]) {
       const normalized = normalizeSearchName(name);
       if (normalized) names.set(normalized.toLowerCase(), { name: normalized, lat: record.LATITUDE, lon: record.LONGITUDE });
     }
@@ -150,7 +164,7 @@ async function prefetchGeocodes(records, cache) {
   console.log(`Geocoding cache ready: ${Object.keys(cache).length} entries`);
 }
 
-async function overpass(query, tries = 1) {
+async function overpass(query, tries = 2) {
   let last;
   for (let attempt = 0; attempt < tries; attempt += 1) {
     for (const endpoint of OVERPASS) {
@@ -295,7 +309,11 @@ function polylineIntersections(first, second) {
   return intersections;
 }
 
-async function reconstruct(street, cross1, cross2, lat, lon, geocodeCache) {
+async function reconstruct(street, cross1, cross2, lat, lon, geocodeCache, cross1GeocodeName, cross2GeocodeName) {
+  // Geocoder avec le prefixe de type de rue conserve (rue/boul./place...): le retirer
+  // fait matcher Nominatim sur un POI generique au lieu de la vraie rue.
+  cross1GeocodeName = cross1GeocodeName || cross1;
+  cross2GeocodeName = cross2GeocodeName || cross2;
   const s = escapeRegex(street);
   const c1 = escapeRegex(cross1);
   const c2 = escapeRegex(cross2);
@@ -351,7 +369,7 @@ out geom;`, 1);
   if (poly.length < 2) return [null, "stitch failed"];
 
   const crossPoints = [];
-  for (const [cross, segments] of [[cross1, cross1Segs], [cross2, cross2Segs]]) {
+  for (const [cross, crossGeocodeName, segments] of [[cross1, cross1GeocodeName, cross1Segs], [cross2, cross2GeocodeName, cross2Segs]]) {
     if (segments.length) {
       let nearest = null;
       for (const segment of segments) {
@@ -362,7 +380,7 @@ out geom;`, 1);
       }
       crossPoints.push(nearest);
     } else {
-      const result = await geocodeStreet(cross, lat, lon, geocodeCache);
+      const result = await geocodeStreet(crossGeocodeName, lat, lon, geocodeCache);
       if (!result) return [null, `cross missing after geocoding (${cross})`];
       const crossGeometry = result.geometry?.type === "LineString" ? result.geometry.coordinates
         : result.geometry?.type === "MultiLineString" ? result.geometry.coordinates.flat() : null;
@@ -420,6 +438,8 @@ async function main() {
     const streetFull = typeAxe ? `${typeAxe} ${street}`.trim() : street;
     const cross1 = cleanCross(r.LIMITES_1);
     const cross2 = cleanCross(r.LIMITES_2);
+    const cross1Raw = String(r.LIMITES_1 || "").trim();
+    const cross2Raw = String(r.LIMITES_2 || "").trim();
     const lat = r.LATITUDE;
     const lon = r.LONGITUDE;
     const published = r.LONGUEUR_TRONCON;
@@ -431,7 +451,7 @@ async function main() {
       let sub;
       let info;
       try {
-        [sub, info] = await reconstruct(streetFull, cross1, cross2, lat, lon, geocodeCache);
+        [sub, info] = await reconstruct(streetFull, cross1, cross2, lat, lon, geocodeCache, cross1Raw, cross2Raw);
       } catch (error) {
         sub = null;
         info = String(error);
