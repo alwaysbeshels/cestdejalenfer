@@ -92,6 +92,11 @@ You are the maintenance engineer for the static web application **Carte des entr
 - Load the official WFS point/line work restrictions from `LIVE_SOURCES.montreal`.
 - Load UCI restrictions from `LIVE_SOURCES.uciRestrictions`.
 - Use their official geometry and existing normalizers. Do not downgrade lines or polygons to markers.
+- The Montreal WFS almost never publishes `lineGeometry` (4 of ~1 700 impacts). For every other impact, the published work-zone polygon (`locationOccupancyZoneGeometryCoordinates`) is NOT the street segment: drawing it as-is produces the misleading "rectangle around the block" (e.g. Berri between Jean-Talon and Faillon).
+- The approved resolution is `data/montreal-entraves-geometries-snapshot.json`, built by `tools/build-montreal-resolved-geometries.mjs`: each impact's published `spatialAnalysis` street/from/to is resolved offline against the official `montreal:geobase` WFS layer (fields `sur`/`de`/`a`, requested with `srsname=EPSG:4326`), chaining the real adjacent street segments between the two published intersections via shortest path. No geometry is ever invented: every emitted coordinate comes from a published geobase segment.
+- In `normalizeMontrealFeature`, geometry priority is: published `lineGeometry` → resolved geobase line (`geometryStatus: "resolved-geobase"`) → published work-zone polygon (`geometryStatus: "occupancy-zone"`, drawn dashed with a popup `geometryNote` stating it is the work-zone footprint) → point.
+- The two CKAN CSV resources of the `info-travaux` dataset (`cc41b532` entraves, `a2bc8014` impacts) carry attributes only — no geometry. The JSON resource `535c090c` is server-blocked (`RBAC: access denied`). Geobase `roadSectionIds` from the permit do NOT join to geobase `id`/`noTronconSq` fields; only street-name + intersections resolution works.
+- Refresh the snapshot by running `node tools/build-montreal-resolved-geometries.mjs`; it uses a local cache (`tools/geobase-cache.json`) so re-runs are fast. Keep `data/sources.js` extractedAt in sync with the snapshot's extractedAt.
 
 ### Longueuil
 

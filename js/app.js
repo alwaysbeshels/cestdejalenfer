@@ -70,6 +70,7 @@ const LIVE_SOURCES = {
   montRoyalSnapshot: "data/mont-royal-snapshot.json",
   beaconsfieldSnapshot: "data/beaconsfield-snapshot.json",
   montrealPedestrianSnapshot: "data/montreal-pedestrian-snapshot.json",
+  montrealResolvedGeometries: "data/montreal-entraves-geometries-snapshot.json",
   noovoRoadClosuresSnapshot: "data/uci-road-closures-snapshot.json",
   montSaintHilaireWorks: "https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_4Septembre2026_WFL1/FeatureServer",
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
@@ -3755,6 +3756,9 @@ function normalizeQuebec511Feature(feature) {
     periods: quebec511Periods(properties.entrave),
     geometry: feature.geometry,
     point: representativePoint(feature.geometry),
+    tunnelNote: /tunnel/i.test(`${properties.localisation || ""} ${properties.descriptionFrancais || ""} ${properties.identificationDesTravaux || ""}`)
+      ? t("popup.tunnelNote")
+      : null,
     details: [["Type", properties.entraveType], ["Détour", properties.detoursEtItinerairesFacultatifs], ["Mise à jour MTMD", properties.miseAJour]]
   };
 }
@@ -5186,6 +5190,17 @@ function normalizeLegacyClosure(closure) {
   };
 }
 
+let montrealResolvedGeometries = new Map();
+
+async function loadMontrealResolvedGeometries() {
+  try {
+    const snapshot = await fetchJson(LIVE_SOURCES.montrealResolvedGeometries);
+    montrealResolvedGeometries = new Map((snapshot.impacts || []).map((impact) => [impact.requestId, impact]));
+  } catch {
+    montrealResolvedGeometries = new Map();
+  }
+}
+
 function normalizeMontrealFeature(feature, index) {
   const properties = feature.properties ?? {};
   const impacts = parseJson(properties.occupancyImpactImpactsOfSection, []);
@@ -5209,10 +5224,18 @@ function normalizeMontrealFeature(feature, index) {
     const street = impact.spatialAnalysis?.shortName || impact.streetId || properties.occupancyName || "Rue non précisée";
     const category = pedestrianStreet ? "commercial" : categoryFromAuthority(properties.siteAuthority || properties.occupancySubmitterDetailsSubmitterCategory);
     const severity = SEVERITY_META[displayTraffic.severity] ?? SEVERITY_META.major;
-    const geometry = lineGeometry || (polygonCoordinates ? { type: "Polygon", coordinates: polygonCoordinates } : feature.geometry);
+    const recordId = `mtl-${properties.id || index}-${impactIndex}`;
+    const resolved = montrealResolvedGeometries.get(recordId);
+    const resolvedLine = resolved?.geometryStatus === "resolved-geobase" && (resolved.geometry?.type === "LineString" || resolved.geometry?.type === "MultiLineString")
+      ? resolved.geometry
+      : null;
+    const geometry = lineGeometry || resolvedLine || (polygonCoordinates ? { type: "Polygon", coordinates: polygonCoordinates } : feature.geometry);
+    const geometryNote = resolvedLine
+      ? "Tracé du tronçon reconstruit sur la géobase officielle (montreal:geobase), entre les intersections publiées."
+      : (!lineGeometry && polygonCoordinates ? "Emprise de chantier publiée par la Ville (aucune géométrie de tronçon officielle n'est publiée pour cette entrave)." : null);
 
     return {
-      id: `mtl-${properties.id || index}-${impactIndex}`,
+      id: recordId,
       title: `${displayTraffic.label} - ${street}`,
       category,
       sourceKind: "montreal-wfs",
@@ -5233,6 +5256,7 @@ function normalizeMontrealFeature(feature, index) {
       sourceUrl: "https://services.montreal.ca/cartes/entraves",
       color: severity.color,
       geometry,
+      geometryNote,
       point,
       rawType: impact.streetImpactType,
       width: impact.streetImpactWidth
@@ -5467,7 +5491,8 @@ async function loadOfficialData() {
   const primarySources = await Promise.allSettled([
     fetchJson(LIVE_SOURCES.montreal),
     fetchJson(LIVE_SOURCES.uciRestrictions),
-    loadRegionalClosures()
+    loadRegionalClosures(),
+    loadMontrealResolvedGeometries()
   ]);
 
   const primaryClosures = [];
@@ -5575,6 +5600,8 @@ function popupContent(closure) {
       <p class="popup-meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
       <p class="popup-meta"><strong>${t("popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
       <p class="popup-meta"><strong>${t("popup.direction")}:</strong> ${escapeHtml(closure.direction)}</p>
+      ${closure.tunnelNote ? `<p class="popup-meta popup-geometry-note"><strong>🚇 ${escapeHtml(closure.tunnelNote)}</strong></p>` : ""}
+      ${closure.geometryNote ? `<p class="popup-meta popup-geometry-note"><strong>${t("popup.geometryNote")}:</strong> ${escapeHtml(closure.geometryNote)}</p>` : ""}
       <a href="${escapeHtml(closure.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(closure.source)}</a>
     </div>
   `;
@@ -5821,6 +5848,7 @@ function renderMap(closures) {
         opacity: severity.opacity,
         fillColor: closure.color,
         fillOpacity: closure.severity === "critical" ? 0.32 : 0.2,
+        dashArray: closure.geometryNote ? "6 6" : null,
         renderer: fastRenderer
       }).addTo(closureLayers);
       mainLayer._mapLineBaseWidth = severity.width;

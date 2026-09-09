@@ -194,6 +194,50 @@ Snapshot path:
 data/beaconsfield-snapshot.json
 ```
 
+## Montréal — géométries d'entraves résolues
+
+This section concerns the **City of Montreal (Ville de Montréal)** and only the geometry of its roadwork restrictions, not the restriction attributes themselves (those stay live from the WFS).
+
+Why this snapshot exists:
+
+- The official WFS `montreal:entraves-ponctuelles` publishes almost no segment lines (4 of ~1 700 impacts carry `lineGeometry`).
+- For every other impact, the only published geometry is the work-zone polygon (`locationOccupancyZoneGeometryCoordinates`), which is the worksite footprint — drawing it as the restriction produces a misleading block-sized rectangle.
+- The permit's `roadSectionIds` do not join to the geobase `id`/`noTronconSq` fields, and the CKAN CSV/JSON resources of the `info-travaux` dataset carry no geometry at all.
+
+Official sources used:
+
+```text
+GET https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal:entraves-ponctuelles&outputFormat=application/json&CQL_FILTER=affectedArea like '%street%'
+GET https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal:geobase&outputFormat=application/json&srsname=EPSG:4326&CQL_FILTER=sur ILIKE '%<street>%'
+```
+
+Build method (no invented geometry):
+
+1. For each published impact, read `spatialAnalysis.shortName` (street), `fromShortName`/`fromName`, `toShortName`/`toName`.
+2. Fetch the official geobase segments of that street (field `sur`). The geobase is **accent-sensitive**: `sur ILIKE '%Peloquin%'` returns 12 segments while `sur ILIKE '%peloquin%'` returns 0 — query with the exact accented published name, then fall back to the name without the street-type prefix. Match names normalized (lowercase, no accents, no ordinal suffix, no street-type prefix), exact match first, then controlled inclusion (short numbered names like `5e` only match segments starting with `5e `, never the reverse, to avoid pulling `15e`/`25e`/`35e`).
+3. Locate segments touching the two published intersections (fields `de`/`a`, with tolerant partial matching).
+4. Chain adjacent geobase segments between them via shortest path (Dijkstra over the segment adjacency graph); orient coordinates by endpoint proximity (8 m tolerance).
+5. Keep `lineGeometry` untouched when the WFS publishes it.
+6. When resolution fails (missing intersection, disconnected graph), keep the published work-zone polygon with `geometryStatus: "occupancy-zone"`; the app draws it dashed and labels it in the popup.
+
+Snapshot path:
+
+```text
+data/montreal-entraves-geometries-snapshot.json
+```
+
+Refresh procedure:
+
+1. Run `node tools/build-montreal-resolved-geometries.mjs` (a local geobase cache in `tools/geobase-cache.json` makes re-runs fast; delete it to force a full re-fetch).
+2. The script writes `extractedAt`, counts (`resolvedLineCount`, `publishedLineCount`, `occupancyZoneCount`, `pointOrNoneCount`) and one entry per impact keyed by `requestId` (`mtl-<permit-id>-<impact-index>`), which `js/app.js` joins at load time.
+3. Update the matching `data/sources.js` catalog entry (`Ville de Montréal - Géométries d'entraves résolues (snapshot géobase)`) so its `extractedAt` matches the snapshot.
+4. Validate: `node --check` on the tool and `js/app.js`, load the local site, and confirm a known segment (e.g. Berri between Jean-Talon and Faillon) renders as a street line, not a block polygon.
+
+Known limitations:
+
+- Coverage is about 94.5% resolved lines (1 626 of 1 721 impacts); the rest stays as honestly-labelled work-zone footprints. The remaining cases are: disconnected geobase graphs (intersections found but no chained path), intersection names absent from the geobase, and permits published with no street name ("Non-nommée"). Resolution improves only when the permit's intersection names can be matched to the geobase.
+- The geobase is reprojected server-side via the WFS `srsname=EPSG:4326` parameter; never hand-convert coordinates.
+
 ## Other municipality sections
 
 When a new municipality snapshot is added, create a section here with:
