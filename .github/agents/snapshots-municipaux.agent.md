@@ -198,6 +198,8 @@ data/beaconsfield-snapshot.json
 
 This section concerns the **City of Montreal (Ville de Montréal)** and only the geometry of its roadwork restrictions, not the restriction attributes themselves (those stay live from the WFS).
 
+**Exception à la règle de résolution géobase**: quand l'utilisateur fournit les coordonnées exactes des deux intersections d'une entrave (ex. la rue piétonne Mont-Royal entre Saint-Laurent et Resther), cette géométrie en ligne droite est la référence officielle et ne doit jamais être remplacée par une résolution géobase. La géobase peut placer le coin à une position différente de la réalité terrain; la position fournie par l'utilisateur est prioritaire.
+
 Why this snapshot exists:
 
 - The official WFS `montreal:entraves-ponctuelles` publishes almost no segment lines (4 of ~1 700 impacts carry `lineGeometry`).
