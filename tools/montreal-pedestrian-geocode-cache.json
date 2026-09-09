@@ -1,0 +1,1470 @@
+{
+  "desjardins": {
+    "point": [
+      -73.5729066,
+      45.5510794
+    ],
+    "displayName": "Desjardins, 3250, Rue Masson, Rosemont, Rosemont–La Petite-Patrie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H1X 1R2, Canada",
+    "type": "bank",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -73.5729066,
+        45.5510794
+      ]
+    },
+    "distance": 2535.0189655799522
+  },
+  "ontario est": {
+    "point": [
+      -73.5610736,
+      45.5230629
+    ],
+    "displayName": "Parti Marxiste-Léniniste du Québec, 1360, Rue Ontario Est, Village gai, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2L 2W4, Canada",
+    "type": "political_party",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -73.5610736,
+        45.5230629
+      ]
+    },
+    "distance": 3500.5358818008376
+  },
+  "ernest gendreau": {
+    "point": [
+      -73.5404403,
+      45.5505646
+    ],
+    "displayName": "Place Ernest-Gendreau, Maisonneuve, Mercier–Hochelaga-Maisonneuve, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H1V 1J9, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5402031,
+          45.5509254
+        ],
+        [
+          -73.540234,
+          45.5508784
+        ],
+        [
+          -73.540423,
+          45.5505909
+        ],
+        [
+          -73.5406551,
+          45.5502378
+        ],
+        [
+          -73.5406784,
+          45.5502043
+        ]
+      ]
+    },
+    "distance": 48.69095588525916
+  },
+  "eadie": {
+    "point": [
+      -73.5905171,
+      45.4577828
+    ],
+    "displayName": "Rue Eadie, Côte-St-Paul, Le Sud-Ouest, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H4E 4M2, Canada",
+    "type": "construction",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5905009,
+          45.4579542
+        ],
+        [
+          -73.5905284,
+          45.4576625
+        ],
+        [
+          -73.590535,
+          45.4576117
+        ]
+      ]
+    },
+    "distance": 19.380456156379392
+  },
+  "de maricourt": {
+    "point": [
+      -73.5916704,
+      45.45828
+    ],
+    "displayName": "Rue De Maricourt, Côte-St-Paul, Le Sud-Ouest, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H4E 3P2, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.594976,
+          45.4583522
+        ],
+        [
+          -73.5948822,
+          45.4583665
+        ],
+        [
+          -73.5946902,
+          45.4583938
+        ],
+        [
+          -73.5945918,
+          45.4584054
+        ],
+        [
+          -73.5944933,
+          45.4584079
+        ],
+        [
+          -73.5944211,
+          45.4584059
+        ],
+        [
+          -73.5938918,
+          45.4583772
+        ],
+        [
+          -73.5932432,
+          45.458348
+        ],
+        [
+          -73.5928901,
+          45.4583357
+        ],
+        [
+          -73.5927992,
+          45.458332
+        ],
+        [
+          -73.5927152,
+          45.4583291
+        ],
+        [
+          -73.5923659,
+          45.4583143
+        ],
+        [
+          -73.5913631,
+          45.4582648
+        ],
+        [
+          -73.5909274,
+          45.4582441
+        ],
+        [
+          -73.590561,
+          45.4582279
+        ],
+        [
+          -73.5904761,
+          45.4582249
+        ],
+        [
+          -73.590408,
+          45.458222
+        ],
+        [
+          -73.5900408,
+          45.4582101
+        ],
+        [
+          -73.5897738,
+          45.4581987
+        ],
+        [
+          -73.5891291,
+          45.4581705
+        ],
+        [
+          -73.5888158,
+          45.4581513
+        ],
+        [
+          -73.5885019,
+          45.4581422
+        ],
+        [
+          -73.5884518,
+          45.4581392
+        ],
+        [
+          -73.5883613,
+          45.4581357
+        ]
+      ]
+    },
+    "distance": 97.44441460818
+  },
+  "dubois": {
+    "point": [
+      -73.5898723,
+      45.4575753
+    ],
+    "displayName": "Rue Dubois, Côte-St-Paul, Le Sud-Ouest, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H4E 3X6, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5897942,
+          45.4569997
+        ],
+        [
+          -73.5897865,
+          45.4570699
+        ],
+        [
+          -73.589753,
+          45.4574304
+        ],
+        [
+          -73.5897485,
+          45.4574719
+        ],
+        [
+          -73.5897536,
+          45.4575282
+        ],
+        [
+          -73.5897894,
+          45.4575612
+        ],
+        [
+          -73.5898573,
+          45.4575742
+        ],
+        [
+          -73.5900407,
+          45.457588
+        ],
+        [
+          -73.5904626,
+          45.4576083
+        ],
+        [
+          -73.590535,
+          45.4576117
+        ]
+      ]
+    },
+    "distance": 65.32639230990215
+  },
+  "charlebois": {
+    "point": [
+      -73.5873702,
+      45.4761641
+    ],
+    "displayName": "Rue Charlebois, Saint-Henri, Le Sud-Ouest, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H4C 1J5, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5870271,
+          45.4764019
+        ],
+        [
+          -73.5870543,
+          45.4763791
+        ],
+        [
+          -73.5870908,
+          45.4763533
+        ],
+        [
+          -73.5872877,
+          45.4762179
+        ],
+        [
+          -73.5874731,
+          45.476097
+        ],
+        [
+          -73.587573,
+          45.4760395
+        ],
+        [
+          -73.5876616,
+          45.4759885
+        ],
+        [
+          -73.5876981,
+          45.4759704
+        ],
+        [
+          -73.5877159,
+          45.4759633
+        ],
+        [
+          -73.5877322,
+          45.4759569
+        ]
+      ]
+    },
+    "distance": 38.36293788614317
+  },
+  "sainte-marguerite": {
+    "point": [
+      -73.5876231,
+      45.4757494
+    ],
+    "displayName": "Rue Sainte-Marguerite, Saint-Henri, Le Sud-Ouest, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H4C 1S2, Canada",
+    "type": "tertiary",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5874128,
+          45.4756617
+        ],
+        [
+          -73.5878334,
+          45.4758371
+        ]
+      ]
+    },
+    "distance": 87.2006097923708
+  },
+  "saint-ferdinand": {
+    "point": [
+      -73.5864897,
+      45.4770209
+    ],
+    "displayName": "Saint-Ferdinand, Rue Saint-Ferdinand, Saint-Henri, Le Sud-Ouest, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H4C 1J5, Canada",
+    "type": "subway_entrance",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -73.5864897,
+        45.4770209
+      ]
+    },
+    "distance": 79.53122384769144
+  },
+  "sainte-catherine est": {
+    "point": [
+      -73.5432361,
+      45.5354329
+    ],
+    "displayName": "Rue Sainte-Catherine Est, Hochelaga-Maisonneuve, Mercier–Hochelaga-Maisonneuve, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H1W 2L4, Canada",
+    "type": "tertiary",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5437151,
+          45.5340792
+        ],
+        [
+          -73.5435897,
+          45.5344354
+        ],
+        [
+          -73.5434099,
+          45.5349349
+        ],
+        [
+          -73.5430225,
+          45.536045
+        ],
+        [
+          -73.5428011,
+          45.5367025
+        ],
+        [
+          -73.5427943,
+          45.5367228
+        ],
+        [
+          -73.5427712,
+          45.5367914
+        ]
+      ]
+    },
+    "distance": 2002.2285160902861
+  },
+  "saint-hubert": {
+    "point": [
+      -73.6929836,
+      45.4412658
+    ],
+    "displayName": "Saint-Hubert, 665, 32e Avenue, Lachine, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H8T 3G6, Canada",
+    "type": "restaurant",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -73.6931855,
+            45.4411658
+          ],
+          [
+            -73.693175,
+            45.4410955
+          ],
+          [
+            -73.6928155,
+            45.441122
+          ],
+          [
+            -73.6928545,
+            45.441382
+          ],
+          [
+            -73.6931444,
+            45.4413607
+          ],
+          [
+            -73.693116,
+            45.4411709
+          ],
+          [
+            -73.6931855,
+            45.4411658
+          ]
+        ]
+      ]
+    },
+    "distance": 13820.758658783707
+  },
+  "papineau": {
+    "point": [
+      -73.5521686,
+      45.5237396
+    ],
+    "displayName": "Papineau, Rue Dorion, Village gai, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2K 2H5, Canada",
+    "type": "station",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -73.5521686,
+        45.5237396
+      ]
+    },
+    "distance": 527.5842456975377
+  },
+  "sainte-catherine ouest": {
+    "point": [
+      -73.5658692,
+      45.5075174
+    ],
+    "displayName": "Rue Sainte-Catherine Ouest, Quartier des Spectacles, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H5B 1E5, Canada",
+    "type": "pedestrian",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5669287,
+          45.5063045
+        ],
+        [
+          -73.5668868,
+          45.5063566
+        ],
+        [
+          -73.5665569,
+          45.5067411
+        ],
+        [
+          -73.5665181,
+          45.5067853
+        ],
+        [
+          -73.5664719,
+          45.506838
+        ],
+        [
+          -73.5662928,
+          45.5070421
+        ],
+        [
+          -73.5662369,
+          45.5071058
+        ],
+        [
+          -73.5662018,
+          45.5071457
+        ],
+        [
+          -73.566154,
+          45.5071991
+        ],
+        [
+          -73.5661434,
+          45.507211
+        ],
+        [
+          -73.5661367,
+          45.5072185
+        ],
+        [
+          -73.5661084,
+          45.5072501
+        ],
+        [
+          -73.5658443,
+          45.5075453
+        ],
+        [
+          -73.5656144,
+          45.507808
+        ],
+        [
+          -73.5654964,
+          45.5079424
+        ],
+        [
+          -73.5654869,
+          45.5079532
+        ],
+        [
+          -73.5653835,
+          45.508081
+        ],
+        [
+          -73.5648939,
+          45.5086363
+        ],
+        [
+          -73.5648912,
+          45.5086394
+        ],
+        [
+          -73.5648717,
+          45.5086617
+        ],
+        [
+          -73.5648368,
+          45.5087015
+        ],
+        [
+          -73.5648107,
+          45.5087312
+        ]
+      ]
+    },
+    "distance": 85.74435666048487
+  },
+  "de bleury": {
+    "point": [
+      -73.5669927,
+      45.506334
+    ],
+    "displayName": "Rue De Bleury, Quartier des Spectacles, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2X 2A3, Canada",
+    "type": "tertiary",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5670569,
+          45.5063628
+        ],
+        [
+          -73.5670511,
+          45.5063607
+        ],
+        [
+          -73.5670101,
+          45.506342
+        ],
+        [
+          -73.5669287,
+          45.5063045
+        ]
+      ]
+    },
+    "distance": 243.6582039744083
+  },
+  "saint-laurent": {
+    "point": [
+      -73.5648092,
+      45.5108831
+    ],
+    "displayName": "Saint-Laurent, Rue Saint-Dominique, Quartier Chinois, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2X 1K3, Canada",
+    "type": "station",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -73.5648092,
+        45.5108831
+      ]
+    },
+    "distance": 1036.7925211695779
+  },
+  "saint-paul est": {
+    "point": [
+      -73.5530808,
+      45.5065104
+    ],
+    "displayName": "Rue Saint-Paul Est, Vieux-Montréal, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2Y 1J1, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5524925,
+          45.5075439
+        ],
+        [
+          -73.5525042,
+          45.5075192
+        ],
+        [
+          -73.5526784,
+          45.5071536
+        ],
+        [
+          -73.5528044,
+          45.5069027
+        ],
+        [
+          -73.5529469,
+          45.5066716
+        ],
+        [
+          -73.5530085,
+          45.5065953
+        ],
+        [
+          -73.5533105,
+          45.5062409
+        ],
+        [
+          -73.5533283,
+          45.5062179
+        ],
+        [
+          -73.5533535,
+          45.5061882
+        ],
+        [
+          -73.5535612,
+          45.5059242
+        ],
+        [
+          -73.553623,
+          45.5058433
+        ],
+        [
+          -73.5536387,
+          45.505819
+        ],
+        [
+          -73.553653,
+          45.5057961
+        ],
+        [
+          -73.5537623,
+          45.5056257
+        ],
+        [
+          -73.5538028,
+          45.5055615
+        ]
+      ]
+    },
+    "distance": 57.303781284883414
+  },
+  "du marché bonsecours": {
+    "point": [
+      -73.5519003,
+      45.5081775
+    ],
+    "displayName": "Rue du Marché-Bonsecours, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2Y 1H1, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5521642,
+          45.5082368
+        ],
+        [
+          -73.5521135,
+          45.5082259
+        ],
+        [
+          -73.5517525,
+          45.508144
+        ],
+        [
+          -73.5517086,
+          45.508134
+        ],
+        [
+          -73.5516372,
+          45.5081146
+        ]
+      ]
+    },
+    "distance": 144.7079921527139
+  },
+  "victoria": {
+    "point": [
+      -73.6354682,
+      45.493074
+    ],
+    "displayName": "Grand Rabbinat du Québec, 5850, Avenue Victoria, Côte-des-Neiges–Notre-Dame-de-Grâce, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H3W 2R5, Canada",
+    "type": "place_of_worship",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -73.6358466,
+            45.4931278
+          ],
+          [
+            -73.635632,
+            45.4930303
+          ],
+          [
+            -73.6355475,
+            45.4929929
+          ],
+          [
+            -73.6355374,
+            45.4929544
+          ],
+          [
+            -73.6353138,
+            45.4928632
+          ],
+          [
+            -73.6351552,
+            45.4930362
+          ],
+          [
+            -73.6352184,
+            45.493063
+          ],
+          [
+            -73.6351982,
+            45.493085
+          ],
+          [
+            -73.6352603,
+            45.4931132
+          ],
+          [
+            -73.6352469,
+            45.4931294
+          ],
+          [
+            -73.6352823,
+            45.4931458
+          ],
+          [
+            -73.6352675,
+            45.4931628
+          ],
+          [
+            -73.6354211,
+            45.493234
+          ],
+          [
+            -73.6354539,
+            45.493195
+          ],
+          [
+            -73.6356732,
+            45.4932935
+          ],
+          [
+            -73.6356987,
+            45.4932647
+          ],
+          [
+            -73.6357364,
+            45.493222
+          ],
+          [
+            -73.6357541,
+            45.4932299
+          ],
+          [
+            -73.6358466,
+            45.4931278
+          ]
+        ]
+      ]
+    },
+    "distance": 4977.946971825754
+  },
+  "sherbrooke ouest": {
+    "point": [
+      -73.5721802,
+      45.5062658
+    ],
+    "displayName": "Loto-Québec, 500, Rue Sherbrooke Ouest, Le Plateau-Mont-Royal, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H3A 3C6, Canada",
+    "type": "company",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -73.5721802,
+        45.5062658
+      ]
+    },
+    "distance": 1011.0726113257235
+  },
+  "du président-kennedy": {
+    "point": [
+      -73.5718484,
+      45.5052392
+    ],
+    "displayName": "du Président-Kennedy / Union, Avenue du Président-Kennedy, Quartier des Spectacles, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H3A 2C1, Canada",
+    "type": "bicycle_rental",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -73.5718484,
+        45.5052392
+      ]
+    },
+    "distance": 182.3856486453477
+  },
+  "du musée": {
+    "point": [
+      -73.5799335,
+      45.4989753
+    ],
+    "displayName": "Avenue du Musée, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H3G 1K3, Canada",
+    "type": "pedestrian",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.580308,
+          45.4991777
+        ],
+        [
+          -73.5802762,
+          45.4991522
+        ],
+        [
+          -73.5802413,
+          45.4991241
+        ],
+        [
+          -73.57998,
+          45.4989973
+        ],
+        [
+          -73.5796687,
+          45.4988496
+        ],
+        [
+          -73.5796376,
+          45.4988353
+        ],
+        [
+          -73.5795471,
+          45.4987926
+        ]
+      ]
+    },
+    "distance": 24.286332590476153
+  },
+  "ontario": {
+    "point": [
+      -73.5270654,
+      45.504841
+    ],
+    "displayName": "Jardin de l'Ontario, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H3C 4W7, Canada",
+    "type": "garden",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -73.5270654,
+        45.504841
+      ]
+    },
+    "distance": 4188.352242263703
+  },
+  "saint-vincent": {
+    "point": [
+      -73.5531858,
+      45.5070597
+    ],
+    "displayName": "Rue Saint-Vincent, Vieux-Montréal, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2Y 3A5, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5535687,
+          45.5072131
+        ],
+        [
+          -73.5532423,
+          45.507083
+        ],
+        [
+          -73.552858,
+          45.5069247
+        ],
+        [
+          -73.5528044,
+          45.5069027
+        ]
+      ]
+    },
+    "distance": 14.668438236847651
+  },
+  "saint-amable": {
+    "point": [
+      -73.5530242,
+      45.5073767
+    ],
+    "displayName": "Rue Saint-Amable, Vieux-Montréal, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2Y 1E7, Canada",
+    "type": "pedestrian",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5528062,
+          45.5076705
+        ],
+        [
+          -73.5528234,
+          45.5076474
+        ],
+        [
+          -73.5532245,
+          45.5071069
+        ],
+        [
+          -73.5532423,
+          45.507083
+        ]
+      ]
+    },
+    "distance": 39.358095264701944
+  },
+  "d'youville": {
+    "point": [
+      -73.5545579,
+      45.5026626
+    ],
+    "displayName": "Place d'Youville, Vieux-Montréal, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2Y 3Y5, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5543703,
+          45.5028633
+        ],
+        [
+          -73.5547109,
+          45.502499
+        ],
+        [
+          -73.5547436,
+          45.5024602
+        ]
+      ]
+    },
+    "distance": 70.25302481482417
+  },
+  "saint-françois-xavier": {
+    "point": [
+      -73.5550187,
+      45.502599
+    ],
+    "displayName": "Rue Saint-François-Xavier, Vieux-Montréal, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2Y 1Z9, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5547436,
+          45.5024602
+        ],
+        [
+          -73.5548007,
+          45.5024856
+        ],
+        [
+          -73.5548207,
+          45.5024945
+        ],
+        [
+          -73.5550293,
+          45.5026046
+        ],
+        [
+          -73.5552525,
+          45.5027257
+        ],
+        [
+          -73.5552897,
+          45.5027459
+        ]
+      ]
+    },
+    "distance": 99.62173844715677
+  },
+  "de la commune ouest": {
+    "point": [
+      -73.553972,
+      45.502957
+    ],
+    "displayName": "Musée Pointe-à-Callière (de la Commune/D'Youville), Rue de la Commune Ouest, Vieux-Montréal, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2Y 2B4, Canada",
+    "type": "bus_stop",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -73.553972,
+        45.502957
+      ]
+    },
+    "distance": 26.23443839043807
+  },
+  "avenue desjardins": {
+    "point": [
+      -73.5403857,
+      45.5509837
+    ],
+    "displayName": "Avenue Desjardins, Maisonneuve, Mercier–Hochelaga-Maisonneuve, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H1V 1J9, Canada",
+    "type": "pedestrian",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5402031,
+          45.5509254
+        ],
+        [
+          -73.5405683,
+          45.551042
+        ]
+      ]
+    },
+    "distance": 3.135137863849312
+  },
+  "rue eadie": {
+    "point": [
+      -73.5905171,
+      45.4577828
+    ],
+    "displayName": "Rue Eadie, Côte-St-Paul, Le Sud-Ouest, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H4E 4M2, Canada",
+    "type": "construction",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5905009,
+          45.4579542
+        ],
+        [
+          -73.5905284,
+          45.4576625
+        ],
+        [
+          -73.590535,
+          45.4576117
+        ]
+      ]
+    },
+    "distance": 19.380456156379392
+  },
+  "rue charlebois": {
+    "point": [
+      -73.5873702,
+      45.4761641
+    ],
+    "displayName": "Rue Charlebois, Saint-Henri, Le Sud-Ouest, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H4C 1J5, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5870271,
+          45.4764019
+        ],
+        [
+          -73.5870543,
+          45.4763791
+        ],
+        [
+          -73.5870908,
+          45.4763533
+        ],
+        [
+          -73.5872877,
+          45.4762179
+        ],
+        [
+          -73.5874731,
+          45.476097
+        ],
+        [
+          -73.587573,
+          45.4760395
+        ],
+        [
+          -73.5876616,
+          45.4759885
+        ],
+        [
+          -73.5876981,
+          45.4759704
+        ],
+        [
+          -73.5877159,
+          45.4759633
+        ],
+        [
+          -73.5877322,
+          45.4759569
+        ]
+      ]
+    },
+    "distance": 38.36293788614317
+  },
+  "rue sainte-catherine est": {
+    "point": [
+      -73.5432361,
+      45.5354329
+    ],
+    "displayName": "Rue Sainte-Catherine Est, Hochelaga-Maisonneuve, Mercier–Hochelaga-Maisonneuve, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H1W 2L4, Canada",
+    "type": "tertiary",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5437151,
+          45.5340792
+        ],
+        [
+          -73.5435897,
+          45.5344354
+        ],
+        [
+          -73.5434099,
+          45.5349349
+        ],
+        [
+          -73.5430225,
+          45.536045
+        ],
+        [
+          -73.5428011,
+          45.5367025
+        ],
+        [
+          -73.5427943,
+          45.5367228
+        ],
+        [
+          -73.5427712,
+          45.5367914
+        ]
+      ]
+    },
+    "distance": 2002.2285160902861
+  },
+  "rue sainte-catherine ouest": {
+    "point": [
+      -73.5658692,
+      45.5075174
+    ],
+    "displayName": "Rue Sainte-Catherine Ouest, Quartier des Spectacles, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H5B 1E5, Canada",
+    "type": "pedestrian",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5669287,
+          45.5063045
+        ],
+        [
+          -73.5668868,
+          45.5063566
+        ],
+        [
+          -73.5665569,
+          45.5067411
+        ],
+        [
+          -73.5665181,
+          45.5067853
+        ],
+        [
+          -73.5664719,
+          45.506838
+        ],
+        [
+          -73.5662928,
+          45.5070421
+        ],
+        [
+          -73.5662369,
+          45.5071058
+        ],
+        [
+          -73.5662018,
+          45.5071457
+        ],
+        [
+          -73.566154,
+          45.5071991
+        ],
+        [
+          -73.5661434,
+          45.507211
+        ],
+        [
+          -73.5661367,
+          45.5072185
+        ],
+        [
+          -73.5661084,
+          45.5072501
+        ],
+        [
+          -73.5658443,
+          45.5075453
+        ],
+        [
+          -73.5656144,
+          45.507808
+        ],
+        [
+          -73.5654964,
+          45.5079424
+        ],
+        [
+          -73.5654869,
+          45.5079532
+        ],
+        [
+          -73.5653835,
+          45.508081
+        ],
+        [
+          -73.5648939,
+          45.5086363
+        ],
+        [
+          -73.5648912,
+          45.5086394
+        ],
+        [
+          -73.5648717,
+          45.5086617
+        ],
+        [
+          -73.5648368,
+          45.5087015
+        ],
+        [
+          -73.5648107,
+          45.5087312
+        ]
+      ]
+    },
+    "distance": 85.74435666048487
+  },
+  "rue saint-paul est": {
+    "point": [
+      -73.5530808,
+      45.5065104
+    ],
+    "displayName": "Rue Saint-Paul Est, Vieux-Montréal, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2Y 1J1, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5524925,
+          45.5075439
+        ],
+        [
+          -73.5525042,
+          45.5075192
+        ],
+        [
+          -73.5526784,
+          45.5071536
+        ],
+        [
+          -73.5528044,
+          45.5069027
+        ],
+        [
+          -73.5529469,
+          45.5066716
+        ],
+        [
+          -73.5530085,
+          45.5065953
+        ],
+        [
+          -73.5533105,
+          45.5062409
+        ],
+        [
+          -73.5533283,
+          45.5062179
+        ],
+        [
+          -73.5533535,
+          45.5061882
+        ],
+        [
+          -73.5535612,
+          45.5059242
+        ],
+        [
+          -73.553623,
+          45.5058433
+        ],
+        [
+          -73.5536387,
+          45.505819
+        ],
+        [
+          -73.553653,
+          45.5057961
+        ],
+        [
+          -73.5537623,
+          45.5056257
+        ],
+        [
+          -73.5538028,
+          45.5055615
+        ]
+      ]
+    },
+    "distance": 62.26066071328498
+  },
+  "rue victoria": {
+    "point": [
+      -73.6552136,
+      45.4403075
+    ],
+    "displayName": "Rue Victoria, Saint-Pierre, Lachine, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H8S 1B4, Canada",
+    "type": "secondary",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.6549833,
+          45.4403513
+        ],
+        [
+          -73.6554439,
+          45.4402636
+        ]
+      ]
+    },
+    "distance": 9533.711491886308
+  },
+  "avenue du musée": {
+    "point": [
+      -73.5799335,
+      45.4989753
+    ],
+    "displayName": "Avenue du Musée, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H3G 1K3, Canada",
+    "type": "pedestrian",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.580308,
+          45.4991777
+        ],
+        [
+          -73.5802762,
+          45.4991522
+        ],
+        [
+          -73.5802413,
+          45.4991241
+        ],
+        [
+          -73.57998,
+          45.4989973
+        ],
+        [
+          -73.5796687,
+          45.4988496
+        ],
+        [
+          -73.5796376,
+          45.4988353
+        ],
+        [
+          -73.5795471,
+          45.4987926
+        ]
+      ]
+    },
+    "distance": 24.286332590476153
+  },
+  "rue saint-vincent": {
+    "point": [
+      -73.5531858,
+      45.5070597
+    ],
+    "displayName": "Rue Saint-Vincent, Vieux-Montréal, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2Y 3A5, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5535687,
+          45.5072131
+        ],
+        [
+          -73.5532423,
+          45.507083
+        ],
+        [
+          -73.552858,
+          45.5069247
+        ],
+        [
+          -73.5528044,
+          45.5069027
+        ]
+      ]
+    },
+    "distance": 14.668438236847651
+  },
+  "place d'youville": {
+    "point": [
+      -73.5545579,
+      45.5026626
+    ],
+    "displayName": "Place d'Youville, Vieux-Montréal, Ville-Marie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2Y 3Y5, Canada",
+    "type": "residential",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -73.5543703,
+          45.5028633
+        ],
+        [
+          -73.5547109,
+          45.502499
+        ],
+        [
+          -73.5547436,
+          45.5024602
+        ]
+      ]
+    },
+    "distance": 70.25302481482417
+  }
+}

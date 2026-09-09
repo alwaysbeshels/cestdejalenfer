@@ -174,7 +174,7 @@ const SOURCE_CATALOG = [
   { name: "Ville de Repentigny - Open511", url: "https://info-travaux.ville.repentigny.qc.ca/api/events/" },
   { name: "Ville de Mont-Royal - Snapshot statique", url: "data/mont-royal-snapshot.json", dataType: "snapshot", extractedAt: "2026-09-09T01:49:01.094Z" },
   { name: "Ville de Beaconsfield - Snapshot statique", url: "data/beaconsfield-snapshot.json", dataType: "snapshot", extractedAt: "2026-09-09T01:49:01.094Z" },
-  { name: "Ville de Montréal - Rues piétonnes et partagées (API)", url: "data/montreal-pedestrian-snapshot.json", dataType: "snapshot", extractedAt: "2026-09-08T00:00:00.000Z" },
+  { name: "Ville de Montréal - Rues piétonnes et partagées (API)", url: "data/montreal-pedestrian-snapshot.json", dataType: "snapshot", extractedAt: "2026-09-09T17:47:42.788Z" },
   { name: "Ville de Mont-Saint-Hilaire - Carte Info-travaux", url: "https://experience.arcgis.com/experience/f6ea6c5a42f5440c970ec7a8bb5b17d4" },
   { name: "Ville de Terrebonne - Carte des travaux", url: "https://cartographie.ville.terrebonne.qc.ca/travaux/" },
   { name: "Ville de Dorval - Entraves", url: "https://www.arcgis.com/apps/mapviewer/index.html?url=https://services2.arcgis.com/UfBk83iw7IIXzPRW/ArcGIS/rest/services/Entraves2410_Vue/FeatureServer/34&source=sd" },
