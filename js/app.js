@@ -3484,6 +3484,20 @@ function getDateRange() {
   return start <= end ? { start, end } : { start: end, end: start };
 }
 
+function hasExpiredToday(closure, now = new Date()) {
+  if (!closure.endTime || closure.endDate !== formatInputDate(now)) {
+    return false;
+  }
+
+  const match = String(closure.endTime).match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) {
+    return false;
+  }
+
+  const endMinutes = Number(match[1]) * 60 + Number(match[2]);
+  return now.getHours() * 60 + now.getMinutes() >= endMinutes;
+}
+
 function overlapsDateRange(closure, range) {
   const startTime = closure._startTime ?? parseDate(closure.startDate).valueOf();
   const endTime = closure._endTime ?? parseDate(closure.endDate).valueOf();
@@ -3491,6 +3505,7 @@ function overlapsDateRange(closure, range) {
   const hasEnd = !Number.isNaN(endTime);
   // Entraves sans aucune date: toujours affichees, meme avec un range selectionne.
   if (!hasStart && !hasEnd) return true;
+  if (hasExpiredToday(closure)) return false;
   const lower = hasStart ? startTime : -8640000000000000;
   const upper = hasEnd ? endTime : 8640000000000000;
   return lower <= range.end.valueOf() && upper >= range.start.valueOf();
@@ -3537,6 +3552,7 @@ function getFilteredClosures() {
 
   const filteredClosures = [];
   allClosures.forEach((closure) => {
+    if (isCoveredByComplementaryClosure(closure)) return;
     if (categories.has(closure.category)
       && impacts.has(closure.severity)
       && matchesTimePeriod(closure, timePeriods)
@@ -3557,6 +3573,7 @@ function getFilterBaseClosures() {
 
   const filteredClosures = [];
   allClosures.forEach((closure) => {
+    if (isCoveredByComplementaryClosure(closure)) return;
     if (categories.has(closure.category)
       && matchesTimePeriod(closure, timePeriods)
       && overlapsDateRange(closure, dateRange)
@@ -3566,6 +3583,22 @@ function getFilterBaseClosures() {
   });
 
   return filteredClosures;
+}
+
+function isCoveredByComplementaryClosure(closure) {
+  if (closure.sourceKind !== "uci-wfs") return false;
+  const complementary = allClosures.find((item) => item.hideOverlappingUci);
+  if (!complementary || !overlapsDateRange(closure, {
+    start: parseDate(complementary.startDate),
+    end: parseDate(complementary.endDate)
+  })) return false;
+  const bridgeBounds = complementary._bounds || prepareClosureForRuntime(complementary)._bounds;
+  const closureBounds = closure._bounds || prepareClosureForRuntime(closure)._bounds;
+  if (!bridgeBounds || !closureBounds) return false;
+  return closureBounds[0] <= bridgeBounds[2]
+    && closureBounds[2] >= bridgeBounds[0]
+    && closureBounds[1] <= bridgeBounds[3]
+    && closureBounds[3] >= bridgeBounds[1];
 }
 
 function getClosuresInViewport() {
@@ -4295,6 +4328,8 @@ async function loadNoovoRoadClosuresSnapshot() {
     borough: "Grand Montréal",
     startDate: record.startDate,
     endDate: record.endDate,
+    startTime: record.startTime,
+    endTime: record.endTime,
     impact: record.impact,
     trafficLabel: "Fermeture complète",
     severity: "critical",
@@ -4307,6 +4342,8 @@ async function loadNoovoRoadClosuresSnapshot() {
     roadQueries: record.roadQueries,
     searchRadius: record.searchRadius,
     limitCoordinates: record.limitCoordinates,
+    directionFilter: record.directionFilter,
+    hideOverlappingUci: record.hideOverlappingUci,
     geometryDisplay: record.geometryDisplay,
     source: snapshot.source,
     sourceUrl: snapshot.sourceUrl,
@@ -4618,16 +4655,24 @@ async function fetchOverpassWays(clauseSpecs) {
   return ways;
 }
 
-function waysNamedNear(ways, wanted, point, radius = NAMED_STREET_SEARCH_RADIUS) {
+function wayMatchesDirection(way, directionFilter) {
+  if (directionFilter !== "to-montreal") return true;
+  const first = way.geometry?.[0];
+  const last = way.geometry?.at(-1);
+  return Boolean(first && last && last.lon < first.lon && last.lat >= first.lat - 0.001);
+}
+
+function waysNamedNear(ways, wanted, point, radius = NAMED_STREET_SEARCH_RADIUS, directionFilter = "") {
   return ways
     .filter((way) => streetNameMatches(way.tags?.name, wanted))
+    .filter((way) => wayMatchesDirection(way, directionFilter))
     .map((way) => way.geometry.map((vertex) => [vertex.lon, vertex.lat]))
     .filter((coordinates) => coordinates.length > 1
       && coordinates.some((coordinate) => metersBetween(coordinate, point) <= radius));
 }
 
-function streetGeometryFromWays(ways, streetName, limitNames, point, radius = NAMED_STREET_SEARCH_RADIUS, limitCoordinates = []) {
-  const streetSegments = waysNamedNear(ways, streetName, point, radius);
+function streetGeometryFromWays(ways, streetName, limitNames, point, radius = NAMED_STREET_SEARCH_RADIUS, limitCoordinates = [], directionFilter = "") {
+  const streetSegments = waysNamedNear(ways, streetName, point, radius, directionFilter);
   if (streetSegments.length === 0) {
     return null;
   }
@@ -4651,10 +4696,10 @@ function streetGeometryFromWays(ways, streetName, limitNames, point, radius = NA
     const polyline = stitchStreetSegments(streetSegments);
     const firstLimit = limitCoordinates.length === 2
       ? [limitCoordinates[0], limitCoordinates[0]]
-      : waysNamedNear(ways, limitNames[0], point, radius);
+      : waysNamedNear(ways, limitNames[0], point, radius, directionFilter);
     const secondLimit = limitCoordinates.length === 2
       ? [limitCoordinates[1], limitCoordinates[1]]
-      : waysNamedNear(ways, limitNames[1], point, radius);
+      : waysNamedNear(ways, limitNames[1], point, radius, directionFilter);
 
     if (polyline.length > 1 && firstLimit.length > 0 && secondLimit.length > 0) {
       const [startIndex, startDistance] = closestIndexOnPolyline(polyline, firstLimit);
@@ -4795,14 +4840,15 @@ function enrichmentPlan(closure) {
     roadQueries: closure.roadQueries || namedRoadQueries(closure.roadSearchText || closure.streets),
     limits,
     searchRadius: closure.searchRadius || NAMED_STREET_SEARCH_RADIUS,
-    limitCoordinates: closure.limitCoordinates || []
+    limitCoordinates: closure.limitCoordinates || [],
+    directionFilter: closure.directionFilter || ""
   };
 }
 
 function applyStreetGeometry(plan, ways) {
   for (const roadQuery of plan.roadQueries) {
     const limitNames = plan.limits.filter((limit) => !streetNameMatches(limit, roadQuery));
-    const geometry = streetGeometryFromWays(ways, roadQuery, limitNames.length === 2 ? limitNames : [], plan.point, plan.searchRadius, plan.limitCoordinates);
+    const geometry = streetGeometryFromWays(ways, roadQuery, limitNames.length === 2 ? limitNames : [], plan.point, plan.searchRadius, plan.limitCoordinates, plan.directionFilter);
     if (geometry) {
       return {
         ...plan.closure,
