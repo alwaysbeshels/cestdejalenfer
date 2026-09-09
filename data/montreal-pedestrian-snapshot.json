@@ -1,10 +1,164 @@
 {
-  "extractedAt": "2026-09-09T21:40:59.000Z",
+  "extractedAt": "2026-09-08T01:26:13.714887+00:00",
   "sourceApi": "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=ef2a8162-0644-47e7-bd03-bea33f14a5d2&limit=100",
   "geometrySource": "OpenStreetMap (Overpass) - rue nommee entre limites publiees, validee par LONGUEUR_TRONCON",
-  "validatedLineCount": 7,
-  "pointOnlyCount": 3,
+  "validatedLineCount": 13,
+  "pointOnlyCount": 40,
   "records": [
+    {
+      "id": "montreal-pieton-rp0001",
+      "projectId": "RP0001",
+      "title": "Avenue Park Stanley",
+      "streetName": "Avenue Park Stanley",
+      "limits": [
+        "rue Basile Routhier",
+        "ave Durham"
+      ],
+      "publishedLengthMeters": 181.23,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Ahuntsic-Cartierville",
+      "dateOuverture": "2017-06-01",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (cross missing (c1=0 c2=14))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.672874,
+          45.55834
+        ]
+      },
+      "point": [
+        -73.672874,
+        45.55834
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0002",
+      "projectId": "RP0002",
+      "title": "Placette de la Côte-des-Neiges",
+      "streetName": "Chemin Frère André",
+      "limits": [
+        "ch Queen Mary",
+        "rue du Frère André"
+      ],
+      "publishedLengthMeters": 49.68,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Temporaire à permanent",
+      "borough": "Côte-des-Neiges–Notre-Dame-de-Grâce",
+      "dateOuverture": "2017-06-19",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (street not found)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.618346,
+          45.494668
+        ]
+      },
+      "point": [
+        -73.618346,
+        45.494668
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0003",
+      "projectId": "RP0003",
+      "title": "Promenade Luc-Larivée",
+      "streetName": "Voie ferrée Promenade Luc Larivée et Place Valois",
+      "limits": [
+        "rue de Chambly",
+        "ave Charlemagne"
+      ],
+      "publishedLengthMeters": 557.54,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Mercier–Hochelaga-Maisonneuve",
+      "dateOuverture": "Permanent",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (street not found)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.543845,
+          45.547953
+        ]
+      },
+      "point": [
+        -73.543845,
+        45.547953
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0004",
+      "projectId": "RP0004",
+      "title": "Rue Ontario",
+      "streetName": "Rue Ontario Est",
+      "limits": [
+        "rue Nicolet",
+        "ave Bourbonnière"
+      ],
+      "publishedLengthMeters": 182.11,
+      "typeRepartage": "2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Temporaire à permanent",
+      "borough": "Mercier–Hochelaga-Maisonneuve",
+      "dateOuverture": "2017-06-12",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "validated (175m vs 182.11m)",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.543988,
+            45.546461
+          ],
+          [
+            -73.543972,
+            45.546488
+          ],
+          [
+            -73.543798,
+            45.546764
+          ],
+          [
+            -73.543581,
+            45.547108
+          ],
+          [
+            -73.543556,
+            45.547148
+          ],
+          [
+            -73.543524,
+            45.547201
+          ],
+          [
+            -73.543349,
+            45.547492
+          ],
+          [
+            -73.543331,
+            45.547522
+          ],
+          [
+            -73.543353,
+            45.547659
+          ],
+          [
+            -73.543166,
+            45.547891
+          ],
+          [
+            -73.543166,
+            45.547902
+          ]
+        ]
+      },
+      "point": [
+        -73.54354,
+        45.547314
+      ]
+    },
     {
       "id": "montreal-pieton-rp0005",
       "projectId": "RP0005",
@@ -20,7 +174,7 @@
       "borough": "Mercier–Hochelaga-Maisonneuve",
       "dateOuverture": "Période estivale",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "point (same intersection index)",
+      "geometryStatus": "point (cross missing (c1=51 c2=0))",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -31,6 +185,594 @@
       "point": [
         -73.540351,
         45.550998
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0006",
+      "projectId": "RP0006",
+      "title": "Carré Notre-Dame-des-Victoires",
+      "streetName": "Rues Monsabré et Lacordaire, Louis-Veuillot",
+      "limits": [
+        "rue Boileau",
+        "ave Pierre-De Coubertin"
+      ],
+      "publishedLengthMeters": 164.45,
+      "typeRepartage": "1. Piétonnisation complète de la rue & 2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Temporaire à permanent",
+      "borough": "Mercier–Hochelaga-Maisonneuve",
+      "dateOuverture": "2017-06-16",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (street not found)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.54094,
+          45.572326
+        ]
+      },
+      "point": [
+        -73.54094,
+        45.572326
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0007",
+      "projectId": "RP0007",
+      "title": "Station Amos",
+      "streetName": "Rue Amos",
+      "limits": [
+        "boul. Pie-IX",
+        "ave Saint-Julien"
+      ],
+      "publishedLengthMeters": 68.32,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Montréal-Nord",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "validated (86m vs 68.32m)",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.641428,
+            45.59452
+          ],
+          [
+            -73.641428,
+            45.59452
+          ],
+          [
+            -73.641389,
+            45.594541
+          ],
+          [
+            -73.641359,
+            45.594558
+          ],
+          [
+            -73.64132,
+            45.594579
+          ],
+          [
+            -73.641311,
+            45.594584
+          ],
+          [
+            -73.64132,
+            45.594579
+          ],
+          [
+            -73.641269,
+            45.594606
+          ],
+          [
+            -73.641178,
+            45.594652
+          ],
+          [
+            -73.641145,
+            45.594668
+          ],
+          [
+            -73.641133,
+            45.594675
+          ],
+          [
+            -73.641109,
+            45.594687
+          ],
+          [
+            -73.640953,
+            45.594726
+          ],
+          [
+            -73.640848,
+            45.59478
+          ],
+          [
+            -73.640727,
+            45.594843
+          ],
+          [
+            -73.640536,
+            45.594943
+          ]
+        ]
+      },
+      "point": [
+        -73.640724,
+        45.594799
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0008",
+      "projectId": "RP0008",
+      "title": "Rue de Dijon",
+      "streetName": "Rue Dijon",
+      "limits": [
+        "ave P.-M.- Favier",
+        " ave Hurteau"
+      ],
+      "publishedLengthMeters": 107.81,
+      "typeRepartage": "2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Temporaire à permanent",
+      "borough": "Montréal-Nord",
+      "dateOuverture": "2017-06-11",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (cross missing (c1=0 c2=1))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.616415,
+          45.6107
+        ]
+      },
+      "point": [
+        -73.616415,
+        45.6107
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0009",
+      "projectId": "RP0009",
+      "title": "Prince-Arthur Est",
+      "streetName": "Rue Prince-Arthur Est",
+      "limits": [
+        "boul. Saint-Laurent",
+        " ave Laval"
+      ],
+      "publishedLengthMeters": 286.96,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Le Plateau-Mont-Royal",
+      "dateOuverture": "Permanent",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "validated (288m vs 286.96m)",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.572548,
+            45.513984
+          ],
+          [
+            -73.572211,
+            45.514339
+          ],
+          [
+            -73.572197,
+            45.514354
+          ],
+          [
+            -73.572171,
+            45.514383
+          ],
+          [
+            -73.572148,
+            45.514408
+          ],
+          [
+            -73.572024,
+            45.51455
+          ],
+          [
+            -73.571912,
+            45.514679
+          ],
+          [
+            -73.571829,
+            45.514775
+          ],
+          [
+            -73.571794,
+            45.514814
+          ],
+          [
+            -73.571759,
+            45.514854
+          ],
+          [
+            -73.57144,
+            45.515214
+          ],
+          [
+            -73.571394,
+            45.515261
+          ],
+          [
+            -73.571356,
+            45.515305
+          ],
+          [
+            -73.571198,
+            45.515471
+          ],
+          [
+            -73.571018,
+            45.515663
+          ],
+          [
+            -73.570988,
+            45.515696
+          ],
+          [
+            -73.570953,
+            45.515737
+          ],
+          [
+            -73.570842,
+            45.515858
+          ],
+          [
+            -73.570604,
+            45.51611
+          ],
+          [
+            -73.570553,
+            45.516162
+          ]
+        ]
+      },
+      "point": [
+        -73.571494,
+        45.515177
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0010",
+      "projectId": "RP0010",
+      "title": "Rue Saint-Dominique",
+      "streetName": "Rue Saint-Dominique",
+      "limits": [
+        "ave Laurier E",
+        " boul Saint-Joseph"
+      ],
+      "publishedLengthMeters": 117.19,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Le Plateau-Mont-Royal",
+      "dateOuverture": "Permanent",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (intersections too far (d1=178m d2=302m))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.591701,
+          45.523263
+        ]
+      },
+      "point": [
+        -73.591701,
+        45.523263
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0011",
+      "projectId": "RP0011",
+      "title": "Rue Franchère",
+      "streetName": "Rue Franchère",
+      "limits": [
+        "terrasse Mercure",
+        " rue Rachel E"
+      ],
+      "publishedLengthMeters": 74.63,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Le Plateau-Mont-Royal",
+      "dateOuverture": "Permanent",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (intersections too far (d1=305m d2=378m))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.565079,
+          45.535893
+        ]
+      },
+      "point": [
+        -73.565079,
+        45.535893
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0012",
+      "projectId": "RP0012",
+      "title": "Place du Coteau-Saint-Louis",
+      "streetName": "Avenue Laurier E",
+      "limits": [
+        "rue Saint-Denis",
+        " rue Saint-Hubert "
+      ],
+      "publishedLengthMeters": 245.37,
+      "typeRepartage": "2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Permanent",
+      "borough": "Le Plateau-Mont-Royal",
+      "dateOuverture": "Permanent",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "length mismatch (913m vs 245.37m)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.588699,
+          45.527932
+        ]
+      },
+      "point": [
+        -73.588699,
+        45.527932
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0013",
+      "projectId": "RP0013",
+      "title": "Rue Marie-Anne",
+      "streetName": "Rue Marie-Anne",
+      "limits": [
+        "rue Fullum",
+        " rue Chapleau"
+      ],
+      "publishedLengthMeters": 139.46,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Le Plateau-Mont-Royal",
+      "dateOuverture": "Permanent",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (intersections too far (d1=0m d2=140m))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.567387,
+          45.536993
+        ]
+      },
+      "point": [
+        -73.567387,
+        45.536993
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0014",
+      "projectId": "RP0014",
+      "title": "Place du Village-de-la-Pointe-aux-Trembles",
+      "streetName": "Boulevard Saint-Jean-Baptiste",
+      "limits": [
+        "rue Notre-Dame E",
+        " rue Bellerive"
+      ],
+      "publishedLengthMeters": 164.43,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Rivière-des-Prairies–Pointe-aux-Trembles",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (cross missing (c1=5 c2=0))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.489118,
+          45.639747
+        ]
+      },
+      "point": [
+        -73.489118,
+        45.639747
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0015",
+      "projectId": "RP0015",
+      "title": "Place du Marché-du-Nord et du-Sud",
+      "streetName": "Rue Place du Marché-du-Nord",
+      "limits": [
+        "ave Casgrain",
+        " ave Henri-Julien"
+      ],
+      "publishedLengthMeters": 369.25,
+      "typeRepartage": "1. Piétonnisation complète de la rue & 2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Permanent",
+      "borough": "Rosemont–La Petite-Patrie",
+      "dateOuverture": "Période estivale",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "length mismatch (183m vs 369.25m)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.615722,
+          45.536217
+        ]
+      },
+      "point": [
+        -73.615722,
+        45.536217
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0016",
+      "projectId": "RP0016",
+      "title": "6ème avenue",
+      "streetName": "Avenue 6ème avenue",
+      "limits": [
+        "rue Saint-Zotique E",
+        " 6ème avenue"
+      ],
+      "publishedLengthMeters": 85.22,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Rosemont–La Petite-Patrie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (street not found)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.591884,
+          45.553199
+        ]
+      },
+      "point": [
+        -73.591884,
+        45.553199
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0017",
+      "projectId": "RP0017",
+      "title": "Place Shamrock",
+      "streetName": "Avenue Shamrock",
+      "limits": [
+        "rue Saint-Dominique",
+        " ave Casgrain"
+      ],
+      "publishedLengthMeters": 150.9,
+      "typeRepartage": "2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Permanent",
+      "borough": "Rosemont–La Petite-Patrie",
+      "dateOuverture": "2017-06-20",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "length mismatch (72m vs 150.9m)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.615958,
+          45.534948
+        ]
+      },
+      "point": [
+        -73.615958,
+        45.534948
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0018",
+      "projectId": "RP0018",
+      "title": "Woonerf Saint-Pierre",
+      "streetName": "Ruelle Saint-Pierre",
+      "limits": [
+        "ch de la Côte-Saint-Paul",
+        " rue Saint-Rémi"
+      ],
+      "publishedLengthMeters": 398.3,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Le Sud-Ouest",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (intersections too far (d1=322m d2=39m))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.591448,
+          45.468824
+        ]
+      },
+      "point": [
+        -73.591448,
+        45.468824
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0019",
+      "projectId": "RP0019",
+      "title": "Dominion",
+      "streetName": "Rue Dominion",
+      "limits": [
+        "rue Quesnel",
+        " rue Saint-Jacques"
+      ],
+      "publishedLengthMeters": 66.86,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Le Sud-Ouest",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (intersections too far (d1=162m d2=85m))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.57596,
+          45.486473
+        ]
+      },
+      "point": [
+        -73.57596,
+        45.486473
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0020",
+      "projectId": "RP0020",
+      "title": "Workman",
+      "streetName": "Rue Workman",
+      "limits": [
+        "parc Vinet",
+        " rue Vinet"
+      ],
+      "publishedLengthMeters": 34.08,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Le Sud-Ouest",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (cross missing (c1=0 c2=75))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.575202,
+          45.483793
+        ]
+      },
+      "point": [
+        -73.575202,
+        45.483793
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0021",
+      "projectId": "RP0021",
+      "title": "Mullins",
+      "streetName": "Rue Mullins",
+      "limits": [
+        "rue d'Hibernia",
+        " rue Shearer"
+      ],
+      "publishedLengthMeters": 84.74,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Le Sud-Ouest",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "length mismatch (368m vs 84.74m)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.561876,
+          45.48058
+        ]
+      },
+      "point": [
+        -73.561876,
+        45.48058
       ]
     },
     {
@@ -48,7 +790,7 @@
       "borough": "Le Sud-Ouest",
       "dateOuverture": "",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "point (intersections too far after geocoding (289,169m))",
+      "geometryStatus": "point (intersections too far (d1=289m d2=169m))",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -76,79 +818,289 @@
       "borough": "Le Sud-Ouest",
       "dateOuverture": "",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "validated (143m vs 138.91m)",
+      "geometryStatus": "length mismatch (290m vs 138.91m)",
       "geometry": {
-        "type": "LineString",
+        "type": "Point",
         "coordinates": [
-          [
-            -73.586532,
-            45.476918
-          ],
-          [
-            -73.586532,
-            45.476918
-          ],
-          [
-            -73.586568,
-            45.476867
-          ],
-          [
-            -73.586579,
-            45.476849
-          ],
-          [
-            -73.58696,
-            45.476455
-          ],
-          [
-            -73.586991,
-            45.47643
-          ],
-          [
-            -73.587027,
-            45.476402
-          ],
-          [
-            -73.587054,
-            45.476379
-          ],
-          [
-            -73.587091,
-            45.476353
-          ],
-          [
-            -73.587288,
-            45.476218
-          ],
-          [
-            -73.587473,
-            45.476097
-          ],
-          [
-            -73.587573,
-            45.476039
-          ],
-          [
-            -73.587662,
-            45.475988
-          ],
-          [
-            -73.587698,
-            45.47597
-          ],
-          [
-            -73.587716,
-            45.475963
-          ],
-          [
-            -73.587732,
-            45.475957
-          ]
+          -73.587034,
+          45.476416
         ]
       },
       "point": [
         -73.587034,
         45.476416
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0024",
+      "projectId": "RP0024",
+      "title": "Parvis de Biencourt",
+      "streetName": "Rue de Biencourt",
+      "limits": [
+        "boul. Monk",
+        " rue Briand"
+      ],
+      "publishedLengthMeters": 64.66,
+      "typeRepartage": "2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Temporaire à permanent",
+      "borough": "Le Sud-Ouest",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "validated (72m vs 64.66m)",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.595218,
+            45.458914
+          ],
+          [
+            -73.595312,
+            45.458897
+          ],
+          [
+            -73.595431,
+            45.458874
+          ],
+          [
+            -73.595653,
+            45.458832
+          ],
+          [
+            -73.595978,
+            45.458771
+          ],
+          [
+            -73.596003,
+            45.458767
+          ],
+          [
+            -73.596112,
+            45.458746
+          ]
+        ]
+      },
+      "point": [
+        -73.595713,
+        45.458851
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0025",
+      "projectId": "RP0025",
+      "title": "Place Jacques Cartier",
+      "streetName": "Rue Place Jacques-Cartier",
+      "limits": [
+        "rue Notre-Dame E",
+        " rue de la Commune E"
+      ],
+      "publishedLengthMeters": 339.68,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "length mismatch (178m vs 339.68m)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.553264,
+          45.507993
+        ]
+      },
+      "point": [
+        -73.553264,
+        45.507993
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0026",
+      "projectId": "RP0026",
+      "title": "Rue de la Gauchetière",
+      "streetName": "Rue de la Gauchetière",
+      "limits": [
+        "rue Jeanne-Mance",
+        " rue Saint-Dominique"
+      ],
+      "publishedLengthMeters": 290.74,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "validated (418m vs 290.74m)",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.561974,
+            45.505251
+          ],
+          [
+            -73.56195,
+            45.505278
+          ],
+          [
+            -73.561756,
+            45.50553
+          ],
+          [
+            -73.561692,
+            45.505569
+          ],
+          [
+            -73.561726,
+            45.505871
+          ],
+          [
+            -73.561714,
+            45.505895
+          ],
+          [
+            -73.561602,
+            45.506019
+          ],
+          [
+            -73.561461,
+            45.506179
+          ],
+          [
+            -73.561416,
+            45.506224
+          ],
+          [
+            -73.561385,
+            45.506243
+          ],
+          [
+            -73.56138,
+            45.506304
+          ],
+          [
+            -73.560911,
+            45.506839
+          ],
+          [
+            -73.560901,
+            45.50685
+          ],
+          [
+            -73.560863,
+            45.506892
+          ],
+          [
+            -73.560837,
+            45.50692
+          ],
+          [
+            -73.560806,
+            45.506963
+          ],
+          [
+            -73.560792,
+            45.506983
+          ],
+          [
+            -73.5603,
+            45.507649
+          ],
+          [
+            -73.560279,
+            45.507678
+          ],
+          [
+            -73.560247,
+            45.507726
+          ],
+          [
+            -73.560155,
+            45.507866
+          ],
+          [
+            -73.560051,
+            45.508015
+          ],
+          [
+            -73.560033,
+            45.508038
+          ],
+          [
+            -73.559982,
+            45.508105
+          ],
+          [
+            -73.559935,
+            45.508167
+          ],
+          [
+            -73.559922,
+            45.508185
+          ],
+          [
+            -73.559641,
+            45.508566
+          ]
+        ]
+      },
+      "point": [
+        -73.56073,
+        45.507044
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0027",
+      "projectId": "RP0027",
+      "title": "Passage Charlotte",
+      "streetName": "Ruelle Charlotte",
+      "limits": [
+        "ave de l'Hôtel de Ville",
+        " rue Sainte-Élisabeth"
+      ],
+      "publishedLengthMeters": 51.77,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (cross missing (c1=0 c2=16))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.560875,
+          45.511457
+        ]
+      },
+      "point": [
+        -73.560875,
+        45.511457
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0028",
+      "projectId": "RP0028",
+      "title": "Passage reliant la rue St-Denis à la bibliothèque nationale du Québec",
+      "streetName": "Passage Passage reliant la rue St-Denis à la bibliothèque nationale du Québec",
+      "limits": [
+        "rue Saint-Denis",
+        " ave Savoie"
+      ],
+      "publishedLengthMeters": 46.57,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (street not found)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.563178,
+          45.515254
+        ]
+      },
+      "point": [
+        -73.563178,
+        45.515254
       ]
     },
     {
@@ -170,10 +1122,6 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [
-            -73.558922,
-            45.51546
-          ],
           [
             -73.558922,
             45.51546
@@ -388,7 +1336,7 @@
       "borough": "Ville-Marie",
       "dateOuverture": "",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "length mismatch (466m vs 303.06m)",
+      "geometryStatus": "length mismatch (474m vs 303.06m)",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -416,103 +1364,45 @@
       "borough": "Ville-Marie",
       "dateOuverture": "",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "validated (325m vs 315.97m)",
+      "geometryStatus": "point (cross missing (c1=24 c2=0))",
       "geometry": {
-        "type": "LineString",
+        "type": "Point",
         "coordinates": [
-          [
-            -73.552164,
-            45.508237
-          ],
-          [
-            -73.552164,
-            45.508237
-          ],
-          [
-            -73.552198,
-            45.508169
-          ],
-          [
-            -73.552397,
-            45.507744
-          ],
-          [
-            -73.552409,
-            45.507718
-          ],
-          [
-            -73.55242,
-            45.507696
-          ],
-          [
-            -73.552482,
-            45.507566
-          ],
-          [
-            -73.552492,
-            45.507544
-          ],
-          [
-            -73.552504,
-            45.507519
-          ],
-          [
-            -73.552678,
-            45.507154
-          ],
-          [
-            -73.552804,
-            45.506903
-          ],
-          [
-            -73.552947,
-            45.506672
-          ],
-          [
-            -73.553009,
-            45.506595
-          ],
-          [
-            -73.55331,
-            45.506241
-          ],
-          [
-            -73.553328,
-            45.506218
-          ],
-          [
-            -73.553354,
-            45.506188
-          ],
-          [
-            -73.553561,
-            45.505924
-          ],
-          [
-            -73.553623,
-            45.505843
-          ],
-          [
-            -73.553639,
-            45.505819
-          ],
-          [
-            -73.553653,
-            45.505796
-          ],
-          [
-            -73.553762,
-            45.505626
-          ],
-          [
-            -73.553803,
-            45.505561
-          ]
+          -73.552709,
+          45.507006
         ]
       },
       "point": [
         -73.552709,
         45.507006
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0032",
+      "projectId": "RP0032",
+      "title": "McTavish",
+      "streetName": "Rue McTavish",
+      "limits": [
+        "ave du Docteur-Penfield",
+        " rue Sherbrooke O"
+      ],
+      "publishedLengthMeters": 238.08,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (intersections too far (d1=0m d2=271m))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.577075,
+          45.503338
+        ]
+      },
+      "point": [
+        -73.577075,
+        45.503338
       ]
     },
     {
@@ -572,13 +1462,13 @@
       "borough": "Ville-Marie",
       "dateOuverture": "",
       "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
-      "geometryStatus": "validated (90m vs 101.47m)",
+      "geometryStatus": "validated (115m vs 101.47m)",
       "geometry": {
         "type": "LineString",
         "coordinates": [
           [
-            -73.579638,
-            45.498835
+            -73.579547,
+            45.498793
           ],
           [
             -73.579638,
@@ -605,14 +1495,152 @@
             45.499178
           ],
           [
-            -73.58058,
-            45.499306
+            -73.580747,
+            45.499384
           ]
         ]
       },
       "point": [
         -73.580181,
         45.499108
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0035",
+      "projectId": "RP0035",
+      "title": "Cours le Royer",
+      "streetName": "Rue le Royer O",
+      "limits": [
+        "rue Saint-Sulpice",
+        " rue Saint-Dizier"
+      ],
+      "publishedLengthMeters": 147.03,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (intersections too far (d1=0m d2=54m))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.554811,
+          45.504948
+        ]
+      },
+      "point": [
+        -73.554811,
+        45.504948
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0036",
+      "projectId": "RP0036",
+      "title": "Dalcourt",
+      "streetName": "Rue Dalcourt",
+      "limits": [
+        "rue Sainte-Catherine E",
+        " boul René-Lévesque E"
+      ],
+      "publishedLengthMeters": 223.73,
+      "typeRepartage": "3. Places publiques sur rue en empiétant sur les voies de stationnement en rive et maintien d’une ou de deux voie(s) de circulation au centre de la chaussée",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "validated (220m vs 223.73m)",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.553992,
+            45.520826
+          ],
+          [
+            -73.553909,
+            45.520787
+          ],
+          [
+            -73.552832,
+            45.520287
+          ],
+          [
+            -73.552779,
+            45.520261
+          ],
+          [
+            -73.551973,
+            45.519882
+          ],
+          [
+            -73.551665,
+            45.519739
+          ],
+          [
+            -73.551638,
+            45.519726
+          ]
+        ]
+      },
+      "point": [
+        -73.552877,
+        45.520294
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0037",
+      "projectId": "RP0037",
+      "title": "Place Royale",
+      "streetName": "Rue de la Capitale",
+      "limits": [
+        "place Royale",
+        " place Royale"
+      ],
+      "publishedLengthMeters": 28.8,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (same intersection index)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.554395,
+          45.503317
+        ]
+      },
+      "point": [
+        -73.554395,
+        45.503317
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0038",
+      "projectId": "RP0038",
+      "title": "Saint-Amable",
+      "streetName": "Rue Saint-Amable",
+      "limits": [
+        "rue Saint-Vincent",
+        " place Jacques-Cartier"
+      ],
+      "publishedLengthMeters": 32.08,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "length mismatch (74m vs 32.08m)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.553008,
+          45.507369
+        ]
+      },
+      "point": [
+        -73.553008,
+        45.507369
       ]
     },
     {
@@ -639,10 +1667,6 @@
             45.507083
           ],
           [
-            -73.553242,
-            45.507083
-          ],
-          [
             -73.552858,
             45.506925
           ],
@@ -655,6 +1679,398 @@
       "point": [
         -73.553005,
         45.507023
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0040",
+      "projectId": "RP0040",
+      "title": "Place Norman-Bethune",
+      "streetName": "Rue de Maisonneuve O",
+      "limits": [
+        "rue Guy",
+        " rue Mackay"
+      ],
+      "publishedLengthMeters": 41.42,
+      "typeRepartage": "2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "length mismatch (112m vs 41.42m)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.579269,
+          45.496062
+        ]
+      },
+      "point": [
+        -73.579269,
+        45.496062
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0041",
+      "projectId": "RP0041",
+      "title": "Sainte-Rose",
+      "streetName": "Rue Sainte-Rose",
+      "limits": [
+        "rue Panet",
+        " rue de Champlain"
+      ],
+      "publishedLengthMeters": 257.07,
+      "typeRepartage": "3. Places publiques sur rue en empiétant sur les voies de stationnement en rive et maintien d’une ou de deux voie(s) de circulation au centre de la chaussée",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (intersections too far (d1=0m d2=252m))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.55301,
+          45.520195
+        ]
+      },
+      "point": [
+        -73.55301,
+        45.520195
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0042",
+      "projectId": "RP0042",
+      "title": "Lonergan",
+      "streetName": "Rue Lonergan",
+      "limits": [
+        "rue Dalcourt",
+        " rue Alexandre de Sève"
+      ],
+      "publishedLengthMeters": 40.76,
+      "typeRepartage": "3. Places publiques sur rue en empiétant sur les voies de stationnement en rive et maintien d’une ou de deux voie(s) de circulation au centre de la chaussée",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (cross missing (c1=1 c2=0))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.551815,
+          45.520031
+        ]
+      },
+      "point": [
+        -73.551815,
+        45.520031
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0043",
+      "projectId": "RP0043",
+      "title": "Kimberly",
+      "streetName": "Rue Kimberly",
+      "limits": [
+        "rue Sherbrooke E",
+        " ave du Président-Kennedy"
+      ],
+      "publishedLengthMeters": 216.84,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (street not found)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.569181,
+          45.509884
+        ]
+      },
+      "point": [
+        -73.569181,
+        45.509884
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0044",
+      "projectId": "RP0044",
+      "title": "Émery \nQuartier Latin (cinéma)",
+      "streetName": "Rue Émery",
+      "limits": [
+        "rue Sanguinet",
+        " rue Saint-Denis"
+      ],
+      "publishedLengthMeters": 116.38,
+      "typeRepartage": "2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Permanent",
+      "borough": "Ville-Marie",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "validated (111m vs 116.38m)",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.563264,
+            45.51492
+          ],
+          [
+            -73.563275,
+            45.514919
+          ],
+          [
+            -73.563283,
+            45.514917
+          ],
+          [
+            -73.563293,
+            45.514914
+          ],
+          [
+            -73.563302,
+            45.514905
+          ],
+          [
+            -73.56334,
+            45.514864
+          ],
+          [
+            -73.563558,
+            45.514622
+          ],
+          [
+            -73.563637,
+            45.514536
+          ],
+          [
+            -73.563909,
+            45.51424
+          ],
+          [
+            -73.564015,
+            45.514124
+          ],
+          [
+            -73.564024,
+            45.514112
+          ],
+          [
+            -73.564031,
+            45.514099
+          ],
+          [
+            -73.564034,
+            45.514086
+          ]
+        ]
+      },
+      "point": [
+        -73.563655,
+        45.514556
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0045",
+      "projectId": "RP0045",
+      "title": "Rue Stanislas",
+      "streetName": "Rue Stanislas",
+      "limits": [
+        "rue de Londres",
+        " rue Stanislas"
+      ],
+      "publishedLengthMeters": 72.81,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Villeray–Saint-Michel–Parc-Extension",
+      "dateOuverture": "Permanent",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (intersections too far (d1=79m d2=0m))",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.698307,
+          45.522789
+        ]
+      },
+      "point": [
+        -73.698307,
+        45.522789
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0046",
+      "projectId": "RP0046",
+      "title": "Place Villeray",
+      "streetName": "Rue Villeray",
+      "limits": [
+        "rue Lajeunesse",
+        " rue Saint-Gérard"
+      ],
+      "publishedLengthMeters": 35.95,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Villeray–Saint-Michel–Parc-Extension",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "length mismatch (52m vs 35.95m)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.622578,
+          45.542231
+        ]
+      },
+      "point": [
+        -73.622578,
+        45.542231
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0047",
+      "projectId": "RP0047",
+      "title": "Place De Castelnau",
+      "streetName": "Rue De Castelnau E",
+      "limits": [
+        "ave de Gaspé",
+        " rue Drolet "
+      ],
+      "publishedLengthMeters": 134.98,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Temporaire à permanent",
+      "borough": "Villeray–Saint-Michel–Parc-Extension",
+      "dateOuverture": "2017-05-01",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "validated (159m vs 134.98m)",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.617717,
+            45.538499
+          ],
+          [
+            -73.617747,
+            45.538448
+          ],
+          [
+            -73.617805,
+            45.538464
+          ],
+          [
+            -73.617779,
+            45.538515
+          ],
+          [
+            -73.617784,
+            45.538394
+          ],
+          [
+            -73.617792,
+            45.538375
+          ],
+          [
+            -73.617917,
+            45.538161
+          ],
+          [
+            -73.618013,
+            45.537986
+          ],
+          [
+            -73.618027,
+            45.53796
+          ],
+          [
+            -73.618044,
+            45.537934
+          ],
+          [
+            -73.618071,
+            45.537879
+          ],
+          [
+            -73.618111,
+            45.537811
+          ],
+          [
+            -73.618138,
+            45.537769
+          ],
+          [
+            -73.618256,
+            45.53757
+          ],
+          [
+            -73.618386,
+            45.537351
+          ],
+          [
+            -73.618401,
+            45.537323
+          ]
+        ]
+      },
+      "point": [
+        -73.618023,
+        45.537931
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0048",
+      "projectId": "RP0048",
+      "title": "Prince Albert Square",
+      "streetName": "Avenue Prince-Albert",
+      "limits": [
+        "rue Sherbrooke O",
+        " ave Winchester"
+      ],
+      "publishedLengthMeters": 14.69,
+      "typeRepartage": "1. Piétonnisation complète de la rue",
+      "modeImplantation": "Permanent",
+      "borough": "Ville de Westmount",
+      "dateOuverture": "",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (street not found)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.603815,
+          45.47809
+        ]
+      },
+      "point": [
+        -73.603815,
+        45.47809
+      ]
+    },
+    {
+      "id": "montreal-pieton-rp0049",
+      "projectId": "RP0049",
+      "title": "Place Guilbault",
+      "streetName": "Rue Guilbault E",
+      "limits": [
+        "boul Saint-Laurent",
+        " rue Saint-Dominique"
+      ],
+      "publishedLengthMeters": 49.8,
+      "typeRepartage": "",
+      "modeImplantation": "Permanent",
+      "borough": "Le Plateau-Mont-Royal",
+      "dateOuverture": "Permanent",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (street not found)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.574081,
+          45.514869
+        ]
+      },
+      "point": [
+        -73.574081,
+        45.514869
       ]
     },
     {
@@ -677,36 +2093,32 @@
         "type": "LineString",
         "coordinates": [
           [
-            -73.554744,
-            45.50246
-          ],
-          [
-            -73.554744,
-            45.50246
-          ],
-          [
-            -73.554711,
-            45.502499
-          ],
-          [
-            -73.55437,
-            45.502863
-          ],
-          [
-            -73.554189,
-            45.503063
-          ],
-          [
-            -73.554163,
-            45.503097
+            -73.553877,
+            45.503331
           ],
           [
             -73.554023,
             45.503278
           ],
           [
-            -73.553877,
-            45.503331
+            -73.554163,
+            45.503097
+          ],
+          [
+            -73.554189,
+            45.503063
+          ],
+          [
+            -73.55437,
+            45.502863
+          ],
+          [
+            -73.554711,
+            45.502499
+          ],
+          [
+            -73.554744,
+            45.50246
           ]
         ]
       },
@@ -714,337 +2126,89 @@
         -73.554053,
         45.503186
       ]
-    }
-  ],
-  "filteredRecordCount": 10,
-  "curatedRecords": [
+    },
     {
-      "id": "pedestrian-mont-royal-saint-laurent-resther",
-      "title": "Avenue du Mont-Royal piétonne - Saint-Laurent à Resther",
-      "category": "commercial",
-      "responsible": "Arrondissement du Plateau-Mont-Royal",
-      "borough": "Le Plateau-Mont-Royal",
-      "startDate": "2026-05-28",
-      "endDate": "2026-10-12",
-      "impact": "Rue réservée aux piétons; circulation automobile fermée durant la piétonnisation estivale.",
-      "trafficLabel": "Rue piétonne saisonnière",
-      "severity": "critical",
-      "direction": "Fermée à la circulation automobile dans les deux directions.",
-      "streets": "Avenue du Mont-Royal, entre le boulevard Saint-Laurent et la rue Resther",
-      "source": "Ville de Montréal - Piétonnisation de l'avenue du Mont-Royal",
-      "sourceUrl": "https://montreal.ca/lieux/avenue-du-mont-royal",
-      "periods": [
-        "day",
-        "night"
+      "id": "montreal-pieton-rp0051",
+      "projectId": "RP0051",
+      "title": "Place du Marché",
+      "streetName": "Rue Saint-Ambroise et Atwater",
+      "limits": [
+        "ave Greene",
+        " rue Rufus Rockhead"
       ],
-      "routeEndpoints": [
-        [
-          -73.58622,
-          45.520102
-        ],
-        [
-          -73.5815065,
-          45.5254529
-        ]
-      ],
+      "publishedLengthMeters": 55.81,
+      "typeRepartage": "2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Temporaire à permanent",
+      "borough": "Le Sud-Ouest",
+      "dateOuverture": "2017-06-20",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (street not found)",
       "geometry": {
-        "type": "LineString",
+        "type": "Point",
         "coordinates": [
-          [
-            -73.58622,
-            45.520102
-          ],
-          [
-            -73.5815065,
-            45.5254529
-          ]
+          -73.575638,
+          45.479192
         ]
       },
       "point": [
-        -73.583863,
-        45.522777
+        -73.575638,
+        45.479192
       ]
     },
     {
-      "id": "pedestrian-mont-royal-resther-lorimier",
-      "title": "Avenue du Mont-Royal piétonne - Resther à De Lorimier",
-      "category": "commercial",
-      "responsible": "Arrondissement du Plateau-Mont-Royal",
+      "id": "montreal-pieton-rp0052",
+      "projectId": "RP0052",
+      "title": "Les Terrasses Roy",
+      "streetName": "Rue Roy",
+      "limits": [
+        "ave Coloniale",
+        " rue de Bullion"
+      ],
+      "publishedLengthMeters": 53.51,
+      "typeRepartage": "2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Temporaire à permanent",
       "borough": "Le Plateau-Mont-Royal",
-      "startDate": "2026-05-28",
-      "endDate": "2026-09-07",
-      "impact": "Rue réservée aux piétons; circulation automobile fermée durant la piétonnisation estivale.",
-      "trafficLabel": "Rue piétonne saisonnière",
-      "severity": "critical",
-      "direction": "Fermée à la circulation automobile dans les deux directions.",
-      "streets": "Avenue du Mont-Royal, entre la rue Resther et l'avenue De Lorimier",
-      "source": "Ville de Montréal - Piétonnisation de l'avenue du Mont-Royal",
-      "sourceUrl": "https://montreal.ca/lieux/avenue-du-mont-royal",
-      "periods": [
-        "day",
-        "night"
-      ],
-      "routeEndpoints": [
-        [
-          -73.5815065,
-          45.5254529
-        ],
-        [
-          -73.572233,
-          45.535135
-        ]
-      ],
+      "dateOuverture": "2017-06-22",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (intersections too far (d1=298m d2=245m))",
       "geometry": {
-        "type": "LineString",
+        "type": "Point",
         "coordinates": [
-          [
-            -73.5815065,
-            45.5254529
-          ],
-          [
-            -73.572233,
-            45.535135
-          ]
+          -73.574977,
+          45.51659
         ]
       },
       "point": [
-        -73.57687,
-        45.530294
+        -73.574977,
+        45.51659
       ]
     },
     {
-      "id": "pedestrian-wellington-verdun",
-      "title": "Rue Wellington piétonne",
-      "category": "commercial",
-      "responsible": "Arrondissement de Verdun / SDC Wellington",
+      "id": "montreal-pieton-rp0053",
+      "projectId": "RP0053",
+      "title": "Place Wellington",
+      "streetName": "Rue Wellington",
+      "limits": [
+        " rue de l’Église",
+        " rue Galt"
+      ],
+      "publishedLengthMeters": 86.71,
+      "typeRepartage": "2. Place publique sur rue en empiétant sur les voies de stationnement et de circulation et maintien d’une voie de circulation peu large en rive",
+      "modeImplantation": "Temporaire à permanent",
       "borough": "Verdun",
-      "startDate": "2026-06-01",
-      "endDate": "2026-09-21",
-      "impact": "Rue réservée aux piétons; circulation automobile fermée pour la saison estivale.",
-      "trafficLabel": "Rue piétonne saisonnière",
-      "severity": "critical",
-      "direction": "Fermée à la circulation automobile dans les deux directions.",
-      "streets": "Rue Wellington, entre les rues Regina et de la 6e Avenue",
-      "source": "Ville de Montréal - Rues piétonnes saisonnières",
-      "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
-      "periods": [
-        "day",
-        "night"
-      ],
-      "routeEndpoints": [
-        [
-          -73.5664646,
-          45.4673353
-        ],
-        [
-          -73.5678636,
-          45.4554309
-        ]
-      ],
+      "dateOuverture": "2017-06-29",
+      "sourceUrl": "https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees",
+      "geometryStatus": "point (cross missing (c1=0 c2=78))",
       "geometry": {
-        "type": "LineString",
+        "type": "Point",
         "coordinates": [
-          [
-            -73.5664646,
-            45.4673353
-          ],
-          [
-            -73.5678636,
-            45.4554309
-          ]
+          -73.567061,
+          45.462431
         ]
       },
       "point": [
-        -73.567164,
-        45.461383
-      ]
-    },
-    {
-      "id": "pedestrian-sainte-catherine-quartier-spectacles",
-      "title": "Rue Sainte-Catherine Est piétonne - Quartier des spectacles",
-      "category": "commercial",
-      "responsible": "Quartier des spectacles / Ville de Montréal",
-      "borough": "Ville-Marie",
-      "startDate": "2026-05-15",
-      "endDate": "2026-10-15",
-      "impact": "Secteur piétonnier saisonnier; circulation automobile fermée selon la programmation du Quartier des spectacles.",
-      "trafficLabel": "Rue piétonne saisonnière",
-      "severity": "critical",
-      "direction": "Fermée à la circulation automobile dans les deux directions.",
-      "streets": "Rue Sainte-Catherine Est, entre les rues De Bleury et Saint-Laurent",
-      "source": "Quartier des spectacles - Rues et espaces publics",
-      "sourceUrl": "https://www.quartierdesspectacles.com/",
-      "periods": [
-        "day",
-        "night"
-      ],
-      "routeEndpoints": [
-        [
-          -73.5671764,
-          45.5063348
-        ],
-        [
-          -73.563637,
-          45.509852
-        ]
-      ],
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -73.5671764,
-            45.5063348
-          ],
-          [
-            -73.563637,
-            45.509852
-          ]
-        ]
-      },
-      "point": [
-        -73.565407,
-        45.508093
-      ]
-    },
-    {
-      "id": "pedestrian-sainte-catherine-village",
-      "title": "Rue Sainte-Catherine Est piétonne - Le Village",
-      "category": "commercial",
-      "responsible": "SDC Village Montréal / Ville de Montréal",
-      "borough": "Ville-Marie",
-      "startDate": "2026-05-15",
-      "endDate": "2026-10-15",
-      "impact": "Rue réservée aux piétons; circulation automobile fermée pour la saison estivale dans le Village.",
-      "trafficLabel": "Rue piétonne saisonnière",
-      "severity": "critical",
-      "direction": "Fermée à la circulation automobile dans les deux directions.",
-      "streets": "Rue Sainte-Catherine Est, entre la rue Saint-Hubert et l'avenue Papineau",
-      "source": "Ville de Montréal - Rues piétonnes",
-      "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
-      "periods": [
-        "day",
-        "night"
-      ],
-      "routeEndpoints": [
-        [
-          -73.563637,
-          45.509852
-        ],
-        [
-          -73.552565,
-          45.522614
-        ]
-      ],
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -73.563637,
-            45.509852
-          ],
-          [
-            -73.552565,
-            45.522614
-          ]
-        ]
-      },
-      "point": [
-        -73.558101,
-        45.516233
-      ]
-    },
-    {
-      "id": "pedestrian-duluth-est",
-      "title": "Avenue Duluth Est piétonne",
-      "category": "commercial",
-      "responsible": "Arrondissement du Plateau-Mont-Royal",
-      "borough": "Le Plateau-Mont-Royal",
-      "startDate": "2026-06-01",
-      "endDate": "2026-10-15",
-      "impact": "Rue piétonne estivale; circulation automobile fermée entre Saint-Laurent et Saint-Denis.",
-      "trafficLabel": "Rue piétonne saisonnière",
-      "severity": "critical",
-      "direction": "Fermée à la circulation automobile dans les deux directions.",
-      "streets": "Avenue Duluth Est, entre le boulevard Saint-Laurent et la rue Saint-Denis",
-      "source": "Ville de Montréal - Rues piétonnes",
-      "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
-      "periods": [
-        "day",
-        "night"
-      ],
-      "routeEndpoints": [
-        [
-          -73.579262,
-          45.516967
-        ],
-        [
-          -73.575704,
-          45.520574
-        ]
-      ],
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -73.579262,
-            45.516967
-          ],
-          [
-            -73.575704,
-            45.520574
-          ]
-        ]
-      },
-      "point": [
-        -73.577483,
-        45.518771
-      ]
-    },
-    {
-      "id": "pedestrian-bernard-outremont",
-      "title": "Avenue Bernard piétonne",
-      "category": "commercial",
-      "responsible": "Arrondissement d'Outremont",
-      "borough": "Outremont",
-      "startDate": "2026-05-15",
-      "endDate": "2026-10-15",
-      "impact": "Rue piétonne estivale; circulation automobile fermée entre Wiseman et Bloomfield.",
-      "trafficLabel": "Rue piétonne saisonnière",
-      "severity": "critical",
-      "direction": "Fermée à la circulation automobile dans les deux directions.",
-      "streets": "Avenue Bernard, entre l'avenue Wiseman et l'avenue Bloomfield",
-      "source": "Ville de Montréal - Rues piétonnes",
-      "sourceUrl": "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE",
-      "periods": [
-        "day",
-        "night"
-      ],
-      "routeEndpoints": [
-        [
-          -73.61309,
-          45.5195508
-        ],
-        [
-          -73.608307,
-          45.520671
-        ]
-      ],
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -73.61309,
-            45.5195508
-          ],
-          [
-            -73.608307,
-            45.520671
-          ]
-        ]
-      },
-      "point": [
-        -73.610698,
-        45.520111
+        -73.567061,
+        45.462431
       ]
     }
   ]
