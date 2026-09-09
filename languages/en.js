@@ -147,6 +147,8 @@ window.TRANSLATIONS.en = {
   "faq.linkHeader": "Link",
   "faq.live": "Live",
   "faq.snapshot": "Snapshot",
+  "faq.snapshotUpdated": "Last updated",
+  "faq.all": "All",
   "faq.top": "Back to top",
   "faq.profile": "My LinkedIn:",
   "faq.instagram": "My Instagram:",

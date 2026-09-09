@@ -1,5 +1,5 @@
 {
-  "extractedAt": "2026-09-08T00:25:36.772361+00:00",
+  "extractedAt": "2026-09-09T01:49:01.094Z",
   "sourceUrl": "https://www.beaconsfield.ca/fr/carte-interactive/info-travaux",
   "records": [
     {
@@ -2846,5 +2846,6 @@
       },
       "sourceUrl": "https://www.beaconsfield.ca/fr/carte-interactive/info-travaux/travaux-divers"
     }
-  ]
+  ],
+  "municipality": "Ville de Beaconsfield"
 }

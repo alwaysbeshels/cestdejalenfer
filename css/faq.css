@@ -353,6 +353,13 @@ details a {
   text-transform: none;
 }
 
+.source-filter-all {
+  padding-bottom: 7px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 800;
+}
+
 .source-table {
   width: 100%;
   table-layout: fixed;
@@ -420,6 +427,43 @@ details a {
 .source-table td:nth-child(3),
 .source-table td:nth-child(4) {
   white-space: nowrap;
+}
+
+.snapshot-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.source-tooltip {
+  position: fixed;
+  z-index: 30;
+  left: 0;
+  top: 0;
+  max-width: 200px;
+  padding: 6px 8px;
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.96);
+  color: #f8fafc;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  pointer-events: none;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
+}
+
+.source-tooltip[hidden] {
+  display: none;
 }
 
 @media (max-width: 900px) {

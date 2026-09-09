@@ -1,20 +1,81 @@
 {
-  "extractedAt": "2026-09-07T23:59:08.195Z",
+  "extractedAt": "2026-09-09T01:49:01.094Z",
   "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
+  "municipality": "Ville de Mont-Royal",
   "records": [
     {
-      "id": "mont-royal-ced63e50-c067-435a-bccd-88507293b805-d48d4a40-94ef-11f1-b0fc-13375023d346",
+      "id": "9aad84af-62b7-4cb5-8a68-ecd61b8639e2",
+      "title": "Côte-de-Liesse (Acadie.Rockland) - Installation MDI",
+      "startDate": "2026-09-10",
+      "endDate": "2026-09-10",
+      "impact": "Remplacement de toile au Centre Rockland Présence de grue/nacelle sur place",
+      "trafficLabels": [
+        "Entrave partielle",
+        "Fermeture de trottoir"
+      ],
+      "streets": "[object Object]",
+      "direction": "Direction non publiée.",
+      "reference": "2026-03018",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.64841756260883,
+            45.52987173109747
+          ],
+          [
+            -73.64851581943628,
+            45.52983248898417
+          ],
+          [
+            -73.64862439071983,
+            45.52977867907748
+          ],
+          [
+            -73.64874543241616,
+            45.529709971579734
+          ],
+          [
+            -73.64885625308119,
+            45.52961335553087
+          ],
+          [
+            -73.64891826917514,
+            45.52954511414765
+          ],
+          [
+            -73.64895968869627,
+            45.529485803817124
+          ],
+          [
+            -73.64903673629986,
+            45.52936069730936
+          ],
+          [
+            -73.64966143373161,
+            45.52830737758296
+          ],
+          [
+            -73.64991421605929,
+            45.52799755262356
+          ]
+        ]
+      },
+      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
+    },
+    {
+      "id": "ced63e50-c067-435a-bccd-88507293b805",
       "title": "Travaux de chaussées et de trottoirs - Graham Est - Entre Appin et Brookfield",
       "startDate": "2026-08-12",
       "endDate": "2026-09-11",
-      "impact": "À partir du 12 août, la Ville de Mont-Royal effectuera des travaux de resurfaçage de chaussée et de reconstruction de trottoirs, bordures. Des perturbations sont à prévoir dans le secteur. À partir du 12 août, la Ville de Mont-Royal effectuera des travaux de resurfaçage de chaussée et de reconstruction de trottoirs, bordures. Des perturbations sont à prévoir dans le secteur.",
+      "impact": "À partir du 12 août, la Ville de Mont-Royal effectuera des travaux de resurfaçage de chaussée et de reconstruction de trottoirs, bordures. Des perturbations sont à prévoir dans le secteur.",
       "trafficLabels": [
         "Fermeture complète",
         "Modification de stationnement",
         "Trajet de détour",
         "Fermeture de trottoir"
       ],
-      "streets": "Travaux de chaussées et de trottoirs - Graham Est - Entre Appin et Brookfield",
+      "streets": "[object Object]",
       "direction": "Direction non publiée.",
       "reference": "C-2026-21",
       "geometry": {
@@ -103,108 +164,90 @@
       "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
     },
     {
-      "id": "mont-royal-ee5981ed-c1a8-4879-8052-28bf14da97aa-47e99210-4edb-11f1-909e-0fd3545016d7",
+      "id": "ee5981ed-c1a8-4879-8052-28bf14da97aa",
       "title": "Laird.Revere - HQ",
       "startDate": "2026-10-06",
       "endDate": "2026-10-06",
-      "impact": "Réparation de poteaux Réparation de poteaux",
+      "impact": "Réparation de poteaux",
       "trafficLabels": [
         "Fermeture complète",
         "Trajet de détour",
         "Présence de signaleurs",
         "Fermeture de trottoir"
       ],
-      "streets": "Laird.Revere - HQ",
+      "streets": "[object Object], [object Object]",
       "direction": "Direction non publiée.",
       "reference": "",
       "geometry": {
-        "type": "LineString",
+        "type": "MultiLineString",
         "coordinates": [
           [
-            -73.64804069419431,
-            45.52434704651958
+            [
+              -73.64804069419431,
+              45.52434704651958
+            ],
+            [
+              -73.64806746309145,
+              45.52439536160503
+            ],
+            [
+              -73.64809788813182,
+              45.52444148772062
+            ],
+            [
+              -73.64813562456025,
+              45.524497234879135
+            ],
+            [
+              -73.64819652853988,
+              45.52456941967958
+            ],
+            [
+              -73.64824195454719,
+              45.52461777611197
+            ],
+            [
+              -73.6482896856315,
+              45.524660011331434
+            ],
+            [
+              -73.6483577285227,
+              45.524716168616806
+            ],
+            [
+              -73.64842669128872,
+              45.52475844404148
+            ]
           ],
           [
-            -73.64806746309145,
-            45.52439536160503
-          ],
-          [
-            -73.64809788813182,
-            45.52444148772062
-          ],
-          [
-            -73.64813562456025,
-            45.524497234879135
-          ],
-          [
-            -73.64819652853988,
-            45.52456941967958
-          ],
-          [
-            -73.64824195454719,
-            45.52461777611197
-          ],
-          [
-            -73.6482896856315,
-            45.524660011331434
-          ],
-          [
-            -73.6483577285227,
-            45.524716168616806
-          ],
-          [
-            -73.64842669128872,
-            45.52475844404148
+            [
+              -73.64647259999876,
+              45.52603289999922
+            ],
+            [
+              -73.64646340616605,
+              45.52604843403424
+            ],
+            [
+              -73.64620323094326,
+              45.52649401922565
+            ]
           ]
         ]
       },
       "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
     },
     {
-      "id": "mont-royal-ee5981ed-c1a8-4879-8052-28bf14da97aa-63a94cc0-4edb-11f1-909e-0fd3545016d7",
-      "title": "Laird.Revere - HQ",
-      "startDate": "2026-10-06",
-      "endDate": "2026-10-06",
-      "impact": "Réparation de poteaux Réparation de poteaux",
-      "trafficLabels": [
-        "Fermeture complète",
-        "Trajet de détour",
-        "Présence de signaleurs",
-        "Fermeture de trottoir"
-      ],
-      "streets": "Laird.Revere - HQ",
-      "direction": "Direction non publiée.",
-      "reference": "",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -73.64647259999876,
-            45.52603289999922
-          ],
-          [
-            -73.64646340616605,
-            45.52604843403424
-          ],
-          [
-            -73.64620323094326,
-            45.52649401922565
-          ]
-        ]
-      },
-      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
-    },
-    {
-      "id": "mont-royal-09c0b395-d574-4f63-ba53-5df7f3532901-44f7d410-7611-11f1-bca5-6feaadc4e497",
+      "id": "09c0b395-d574-4f63-ba53-5df7f3532901",
       "title": "Roosevelt (Dunkirk.Moyle) - VMR",
       "startDate": "2026-07-06",
       "endDate": "2027-01-01",
-      "impact": "Travaux de pavage Fermeture complète de Roosevelt, entre Dunkirk et Moyle Travaux de pavage Fermeture complète de Roosevelt, entre Dunkirk et Moyle",
+      "impact": "Travaux de pavage Fermeture complète de Roosevelt, entre Dunkirk et Moyle",
       "trafficLabels": [
         "Fermeture complète",
         "Trajet de détour"
       ],
-      "streets": "Roosevelt (Dunkirk.Moyle) - VMR",
+      "streets": "[object Object]",
       "direction": "Direction non publiée.",
       "reference": "2026-02125",
       "geometry": {
@@ -223,18 +266,18 @@
       "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
     },
     {
-      "id": "mont-royal-1939d03c-b4b2-4c2d-b3a6-871f2dba4a6c-bf94d810-94f4-11f1-ba6b-6dd88a0fef4f",
+      "id": "1939d03c-b4b2-4c2d-b3a6-871f2dba4a6c",
       "title": "Travaux de chaussées et de trottoirs - Graham Ouest - Entre Appin et Brookfield",
       "startDate": "2026-08-12",
       "endDate": "2026-10-02",
-      "impact": "À partir du 12 août, la Ville de Mont-Royal effectuera des travaux de resurfaçage de chaussée et de reconstruction de trottoirs, bordures. Des perturbations sont à prévoir dans le secteur. À partir du 12 août, la Ville de Mont-Royal effectuera des travaux de resurfaçage de chaussée et de reconstruction de trottoirs, bordures. Des perturbations sont à prévoir dans le secteur.",
+      "impact": "À partir du 12 août, la Ville de Mont-Royal effectuera des travaux de resurfaçage de chaussée et de reconstruction de trottoirs, bordures. Des perturbations sont à prévoir dans le secteur.",
       "trafficLabels": [
         "Fermeture complète",
         "Modification de stationnement",
         "Trajet de détour",
         "Fermeture de trottoir"
       ],
-      "streets": "Travaux de chaussées et de trottoirs - Graham Ouest - Entre Appin et Brookfield",
+      "streets": "[object Object]",
       "direction": "Direction non publiée.",
       "reference": "C-2026-21",
       "geometry": {
@@ -313,18 +356,18 @@
       "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
     },
     {
-      "id": "mont-royal-e86502c4-6bd7-4bf1-afd8-3740eb940e18-e4d214f0-8f43-11f1-82db-d98670f38205",
+      "id": "e86502c4-6bd7-4bf1-afd8-3740eb940e18",
       "title": "CIRCULATION ALTERNANCE ROYALMOUNT - TRAVAUX MAJEURS - HQ",
       "startDate": "2026-08-08",
       "endDate": "2026-09-17",
-      "impact": "Fermeture direction Est sur Royalmount, entre Montview et Paré -Circulation en alternance, avec signaleurs de jour; et feux de circulation en soirée Fermeture direction Est sur Royalmount, entre Montview et Paré -Circulation en alternance, avec signaleurs de jour; et feux de circulation en soirée",
+      "impact": "Fermeture direction Est sur Royalmount, entre Montview et Paré -Circulation en alternance, avec signaleurs de jour; et feux de circulation en soirée",
       "trafficLabels": [
         "Entrave partielle",
         "Modification de stationnement",
         "Présence de signaleurs",
         "Fermeture de trottoir"
       ],
-      "streets": "CIRCULATION ALTERNANCE ROYALMOUNT - TRAVAUX MAJEURS - HQ",
+      "streets": "[object Object]",
       "direction": "Direction non publiée.",
       "reference": "",
       "geometry": {
@@ -343,7 +386,7 @@
       "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
     },
     {
-      "id": "mont-royal-0454cfd2-6eae-4a9b-ab51-d8ad79e4d290-f689f510-97e4-11f1-8975-8746be7b160c",
+      "id": "0454cfd2-6eae-4a9b-ab51-d8ad79e4d290",
       "title": "Dunraven (Jasper.Beverley) - HQ",
       "startDate": "2026-09-16",
       "endDate": "2026-09-16",
@@ -353,7 +396,7 @@
         "Présence de signaleurs",
         "Fermeture de trottoir"
       ],
-      "streets": "Dunraven (Jasper.Beverley) - HQ",
+      "streets": "[object Object]",
       "direction": "Direction non publiée.",
       "reference": "",
       "geometry": {
@@ -380,17 +423,17 @@
       "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
     },
     {
-      "id": "mont-royal-fab6214f-3596-4a51-9bb5-6b470788c789-ed589370-01cb-11f1-a326-ad8886c4bb71",
+      "id": "fab6214f-3596-4a51-9bb5-6b470788c789",
       "title": "Roosevelt (Moyle Dunkirk) 30-40 Roosevelt ",
       "startDate": "2026-02-10",
       "endDate": "2026-12-31",
-      "impact": "Travaux pour le 30-40 Roosevelt : Caserne et bureaux administratifs: Geyser avec glissière de béton Entrave: pour entreposage sur la voir publique -Fermeture de trottoir (direction Est) utiliser l'autre trottoir -Entrave de 2.4 m sur la voie (direction Est) Voie réduite reste circulable dans les deux directions. Travaux pour le 30-40 Roosevelt : Caserne et bureaux administratifs: Entrave: pour entreposage sur la voir publique -Fermeture de trottoir (direction Est) utiliser l'autre trottoir -Entrave de 2.4 m sur la voie (direction Est) Voie réduite reste circulable dans les deux directions.",
+      "impact": "Travaux pour le 30-40 Roosevelt : Caserne et bureaux administratifs: Geyser avec glissière de béton Entrave: pour entreposage sur la voir publique -Fermeture de trottoir (direction Est) utiliser l'autre trottoir -Entrave de 2.4 m sur la voie (direction Est) Voie réduite reste circulable dans les deux directions.",
       "trafficLabels": [
         "Entrave partielle",
         "Modification de stationnement",
         "Fermeture de trottoir"
       ],
-      "streets": "Roosevelt (Moyle Dunkirk) 30-40 Roosevelt ",
+      "streets": "[object Object]",
       "direction": "Direction non publiée.",
       "reference": "2026-00255",
       "geometry": {
@@ -409,18 +452,18 @@
       "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
     },
     {
-      "id": "mont-royal-4c56fa48-cd44-475a-9c16-b627b50f80ea-1c8da180-6419-11f1-8735-49cd7f102f99",
+      "id": "4c56fa48-cd44-475a-9c16-b627b50f80ea",
       "title": "Réaménagement Avenue Plymouth",
       "startDate": "2026-06-12",
       "endDate": "2026-10-16",
-      "impact": "Installation de Bassin de rétention sur l'avenue. Reconstruction de l'avenue. Reconstruction des trottoirs. Fermeture de l'avenue. Circulation local seulement. Réhabilitation de l'avenue Plymouth. Installation de bassins de rétention.",
+      "impact": "Installation de Bassin de rétention sur l'avenue. Reconstruction de l'avenue. Reconstruction des trottoirs.",
       "trafficLabels": [
         "Fermeture complète",
         "Circulation locale seulement",
         "Présence de signaleurs",
         "Fermeture de trottoir"
       ],
-      "streets": "Réaménagement Avenue Plymouth",
+      "streets": "[object Object]",
       "direction": "Direction non publiée.",
       "reference": "",
       "geometry": {
@@ -483,13 +526,13 @@
       "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
     },
     {
-      "id": "mont-royal-1ac0b1ac-800d-45b5-885b-b7db4884a1d7-d51889b0-7637-11f1-98bc-cf3f1d8faedd",
+      "id": "1ac0b1ac-800d-45b5-885b-b7db4884a1d7",
       "title": "Lucerne (Kindersley.Lanark) - HQ",
       "startDate": "2026-07-13",
       "endDate": "2026-09-12",
-      "impact": "Une voie de circulation dans chaque sens Une voie de circulation dans chaque sens",
+      "impact": "Une voie de circulation dans chaque sens",
       "trafficLabels": [],
-      "streets": "Lucerne (Kindersley.Lanark) - HQ",
+      "streets": "[object Object]",
       "direction": "Direction non publiée.",
       "reference": "",
       "geometry": {
@@ -536,18 +579,18 @@
       "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
     },
     {
-      "id": "mont-royal-20997cea-2f56-462c-92ee-92d693478dae-27f93810-7943-11f1-8dc9-991606ba49ff",
+      "id": "20997cea-2f56-462c-92ee-92d693478dae",
       "title": "FERMETURE ANDOVER - TRAVAUX MAJEURS - HYDRO-QUEBEC",
       "startDate": "2026-06-01",
       "endDate": "2026-09-11",
-      "impact": "Fermeture complète en direction Est de Andover, entre Darnley et Delmeade Fermeture complète en direction Est de Andover, entre Darnley et Delmeade",
+      "impact": "Fermeture complète en direction Est de Andover, entre Darnley et Delmeade",
       "trafficLabels": [
         "Fermeture complète",
         "Modification de stationnement",
         "Trajet de détour",
         "Accès aux commerces maintenu"
       ],
-      "streets": "FERMETURE ANDOVER - TRAVAUX MAJEURS - HYDRO-QUEBEC",
+      "streets": "[object Object]",
       "direction": "Direction non publiée.",
       "reference": "",
       "geometry": {
@@ -590,70 +633,53 @@
       "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
     },
     {
-      "id": "mont-royal-30372d0d-4701-45b1-b66b-a35fa8c95aa8-24f83300-9711-11f1-aec6-45b05be16b54",
+      "id": "30372d0d-4701-45b1-b66b-a35fa8c95aa8",
       "title": "Fleming (Franklin.Highfield) - HQ",
       "startDate": "2026-09-11",
       "endDate": "2026-09-12",
-      "impact": "",
+      "impact": "Fermeture complète, Trajet de détour, Fermeture de trottoir",
       "trafficLabels": [
         "Fermeture complète",
         "Trajet de détour",
         "Fermeture de trottoir"
       ],
-      "streets": "Fleming (Franklin.Highfield) - HQ",
+      "streets": "[object Object], [object Object]",
       "direction": "Direction non publiée.",
       "reference": "",
       "geometry": {
-        "type": "LineString",
+        "type": "MultiLineString",
         "coordinates": [
           [
-            -73.64829066030357,
-            45.52097168623135
+            [
+              -73.64829066030357,
+              45.52097168623135
+            ],
+            [
+              -73.64836811035242,
+              45.520993427692986
+            ],
+            [
+              -73.6491527887531,
+              45.52121890635212
+            ],
+            [
+              -73.64922024234947,
+              45.52123822956355
+            ]
           ],
           [
-            -73.64836811035242,
-            45.520993427692986
-          ],
-          [
-            -73.6491527887531,
-            45.52121890635212
-          ],
-          [
-            -73.64922024234947,
-            45.52123822956355
-          ]
-        ]
-      },
-      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr"
-    },
-    {
-      "id": "mont-royal-30372d0d-4701-45b1-b66b-a35fa8c95aa8-5f916b80-9711-11f1-aec6-45b05be16b54",
-      "title": "Fleming (Franklin.Highfield) - HQ",
-      "startDate": "2026-09-11",
-      "endDate": "2026-09-12",
-      "impact": "",
-      "trafficLabels": [
-        "Fermeture complète",
-        "Trajet de détour",
-        "Fermeture de trottoir"
-      ],
-      "streets": "Fleming (Franklin.Highfield) - HQ",
-      "direction": "Direction non publiée.",
-      "reference": "",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -73.64933999999874,
-            45.52103169999924
-          ],
-          [
-            -73.64925045179292,
-            45.52118513272774
-          ],
-          [
-            -73.64922756048968,
-            45.521225367028734
+            [
+              -73.64933999999874,
+              45.52103169999924
+            ],
+            [
+              -73.64925045179292,
+              45.52118513272774
+            ],
+            [
+              -73.64922756048968,
+              45.521225367028734
+            ]
           ]
         ]
       },

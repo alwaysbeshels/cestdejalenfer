@@ -1,8 +1,69 @@
 const sourceList = document.querySelector("#faqSourceList");
 const sourceTable = document.querySelector(".source-table");
 const backToTop = document.querySelector("#backToTop");
+const snapshotTooltip = document.createElement("div");
+
+snapshotTooltip.className = "source-tooltip";
+snapshotTooltip.hidden = true;
+document.body.append(snapshotTooltip);
 
 let sourceFilterState = { municipality: null, dataType: null };
+
+function showSnapshotTooltip(event) {
+  const tooltipText = event.currentTarget.dataset.snapshotTooltip;
+  if (!tooltipText) {
+    return;
+  }
+
+  snapshotTooltip.textContent = tooltipText;
+  snapshotTooltip.hidden = false;
+
+  const offsetX = 12;
+  const offsetY = 12;
+  const left = Math.min(event.clientX + offsetX, window.innerWidth - 220);
+  const top = Math.min(event.clientY + offsetY, window.innerHeight - 52);
+  snapshotTooltip.style.left = `${left}px`;
+  snapshotTooltip.style.top = `${top}px`;
+}
+
+function hideSnapshotTooltip() {
+  snapshotTooltip.hidden = true;
+}
+
+function attachSnapshotTooltip(element, text) {
+  if (!text) {
+    return;
+  }
+
+  element.dataset.snapshotTooltip = text;
+  element.addEventListener("mouseenter", showSnapshotTooltip, { passive: true });
+  element.addEventListener("mousemove", showSnapshotTooltip, { passive: true });
+  element.addEventListener("mouseleave", hideSnapshotTooltip, { passive: true });
+  element.addEventListener("focus", showSnapshotTooltip, { passive: true });
+  element.addEventListener("blur", hideSnapshotTooltip, { passive: true });
+}
+
+function formatSnapshotUpdate(source) {
+  const extractedAt = source.extractedAt || source.updatedAt;
+  if (!extractedAt) {
+    return "";
+  }
+
+  const date = new Date(extractedAt);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = date.toLocaleString(currentLanguage() === "en" ? "en-CA" : "fr-CA", {
+    month: "long",
+    timeZone: "UTC",
+  }).slice(0, 4);
+  const year = date.getUTCFullYear();
+  const formatted = `${day} ${month} ${year}`;
+
+  return `${t("faq.snapshotUpdated")}: ${formatted}`;
+}
 
 function sourceMunicipality(source) {
   if (source.municipality) {
@@ -35,20 +96,41 @@ function renderSourceFilter(key, values) {
   const menu = document.createElement("div");
   menu.className = "source-filter-options";
   menu.hidden = true;
-  values.forEach((value) => {
+
+  const allLabel = document.createElement("label");
+  const allInput = document.createElement("input");
+  allInput.type = "checkbox";
+  allInput.value = "__all__";
+  allInput.checked = sourceFilterState[key] === null || sourceFilterState[key].size === values.length;
+  allLabel.className = "source-filter-all";
+  allLabel.append(allInput, document.createTextNode(t("faq.all")));
+  menu.append(allLabel);
+
+  const optionInputs = values.map((value) => {
     const label = document.createElement("label");
     const input = document.createElement("input");
     input.type = "checkbox";
     input.value = value;
     input.checked = sourceFilterState[key] === null || sourceFilterState[key].has(value);
     input.addEventListener("change", () => {
-      const checked = [...menu.querySelectorAll("input:checked")].map((item) => item.value);
+      const checked = optionInputs.filter((item) => item.checked).map((item) => item.value);
       sourceFilterState[key] = new Set(checked);
-      renderFaqSources();
+      allInput.checked = checked.length === values.length;
+      renderFaqSources(key);
     });
     label.append(input, document.createTextNode(key === "dataType" ? t(value === "snapshot" ? "faq.snapshot" : "faq.live") : value));
     menu.append(label);
+    return input;
   });
+
+  allInput.addEventListener("change", () => {
+    optionInputs.forEach((input) => {
+      input.checked = allInput.checked;
+    });
+    sourceFilterState[key] = allInput.checked ? null : new Set();
+    renderFaqSources(key);
+  });
+
   button.addEventListener("click", () => {
     document.querySelectorAll(".source-filter-menu").forEach((otherWrapper) => {
       if (otherWrapper !== wrapper) {
@@ -65,14 +147,25 @@ function renderSourceFilter(key, values) {
   return wrapper;
 }
 
-function renderSourceFilters(sources) {
+function renderSourceFilters(sources, openKey = null) {
   const municipalityHeader = document.querySelector('[data-source-filter="municipality"]');
   const typeHeader = document.querySelector('[data-source-filter="dataType"]');
   if (!municipalityHeader || !typeHeader) return;
   municipalityHeader.querySelector(".source-filter-menu")?.remove();
   typeHeader.querySelector(".source-filter-menu")?.remove();
-  municipalityHeader.append(renderSourceFilter("municipality", [...new Set(sources.map(sourceMunicipality))].sort((a, b) => a.localeCompare(b, currentLanguage()))));
-  typeHeader.append(renderSourceFilter("dataType", ["live", "snapshot"]));
+
+  const municipalityFilter = renderSourceFilter("municipality", [...new Set(sources.map(sourceMunicipality))].sort((a, b) => a.localeCompare(b, currentLanguage())));
+  const typeFilter = renderSourceFilter("dataType", ["live", "snapshot"]);
+  municipalityHeader.append(municipalityFilter);
+  typeHeader.append(typeFilter);
+
+  if (openKey) {
+    const openWrapper = openKey === "municipality" ? municipalityFilter : typeFilter;
+    const openMenu = openWrapper.querySelector(".source-filter-options");
+    const openButton = openWrapper.querySelector(".source-filter-button");
+    openMenu.hidden = false;
+    openButton.setAttribute("aria-expanded", "true");
+  }
 }
 
 document.addEventListener("click", (event) => {
@@ -84,17 +177,9 @@ document.addEventListener("click", (event) => {
       button.setAttribute("aria-expanded", "false");
     }
   });
-}, true);
-
-sourceTable?.addEventListener("click", (event) => {
-  if (event.target.closest(".source-filter-menu")) return;
-  document.querySelectorAll(".source-filter-options").forEach((menu) => {
-    menu.hidden = true;
-    menu.previousElementSibling?.setAttribute("aria-expanded", "false");
-  });
 });
 
-function renderFaqSources() {
+function renderFaqSources(openKey = null) {
   if (!sourceList || !Array.isArray(window.SOURCE_CATALOG)) {
     return;
   }
@@ -102,12 +187,12 @@ function renderFaqSources() {
   const activeSources = window.SOURCE_CATALOG
     .filter((source) => source.inMap === true)
     .map((source) => ({ ...source, municipality: sourceMunicipality(source) }))
-    .filter((source) => (sourceFilterState.municipality === null || sourceFilterState.municipality.has(source.municipality))
-      && (sourceFilterState.dataType === null || sourceFilterState.dataType.has(sourceType(source))))
+    .filter((source) => (sourceFilterState.municipality === null || sourceFilterState.municipality.size === 0 || sourceFilterState.municipality.has(source.municipality))
+      && (sourceFilterState.dataType === null || sourceFilterState.dataType.size === 0 || sourceFilterState.dataType.has(sourceType(source))))
     .sort((first, second) => first.municipality.localeCompare(second.municipality, currentLanguage(), { sensitivity: "base" })
       || first.name.localeCompare(second.name, currentLanguage(), { sensitivity: "base" }));
 
-  renderSourceFilters(window.SOURCE_CATALOG.filter((source) => source.inMap === true).map((source) => ({ ...source, municipality: sourceMunicipality(source) })));
+  renderSourceFilters(window.SOURCE_CATALOG.filter((source) => source.inMap === true).map((source) => ({ ...source, municipality: sourceMunicipality(source) })), openKey);
   sourceList.replaceChildren();
 
   activeSources
@@ -118,14 +203,27 @@ function renderFaqSources() {
     const typeCell = document.createElement("td");
     const linkCell = document.createElement("td");
     const link = document.createElement("a");
+    const snapshotUpdate = formatSnapshotUpdate(source);
 
     municipalityCell.textContent = source.municipality;
     nameCell.textContent = currentLanguage() === "en" && source.nameEn ? source.nameEn : source.name;
     typeCell.textContent = t(source.dataType === "snapshot" ? "faq.snapshot" : "faq.live");
+    if (source.dataType === "snapshot") {
+      const indicator = document.createElement("span");
+      indicator.className = "snapshot-indicator";
+      indicator.setAttribute("aria-hidden", "true");
+      indicator.textContent = "i";
+      typeCell.append(indicator);
+    }
     link.href = currentLanguage() === "en" && source.enUrl ? source.enUrl : source.url;
     link.target = "_blank";
     link.rel = "noreferrer";
     link.textContent = t("faq.sourceLink");
+
+    if (snapshotUpdate) {
+      attachSnapshotTooltip(typeCell, snapshotUpdate);
+    }
+
     linkCell.append(link);
     row.append(municipalityCell, nameCell, typeCell, linkCell);
       sourceList.append(row);

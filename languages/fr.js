@@ -147,6 +147,8 @@ window.TRANSLATIONS.fr = {
   "faq.linkHeader": "Lien",
   "faq.live": "En direct",
   "faq.snapshot": "Snapshot",
+  "faq.snapshotUpdated": "Dernière mise à jour",
+  "faq.all": "Tout",
   "faq.top": "Remonter en haut de la page",
   "faq.profile": "Mon LinkedIn:",
   "faq.instagram": "Mon Instagram:",
