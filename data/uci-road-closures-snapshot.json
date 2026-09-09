@@ -19,6 +19,7 @@
       "searchRadius": 1000,
       "limitCoordinates": [[-73.578204, 45.511609], [-73.589351, 45.516821]],
       "focus": [-73.58378, 45.514215],
+      "geometryDisplay": "straight-corridor",
       "geometry": {
         "type": "LineString",
         "coordinates": [

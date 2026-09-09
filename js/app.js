@@ -4307,6 +4307,7 @@ async function loadNoovoRoadClosuresSnapshot() {
     roadQueries: record.roadQueries,
     searchRadius: record.searchRadius,
     limitCoordinates: record.limitCoordinates,
+    geometryDisplay: record.geometryDisplay,
     source: snapshot.source,
     sourceUrl: snapshot.sourceUrl,
     periods: ["day", "night"],
@@ -5724,7 +5725,32 @@ function renderMap(closures) {
 
     if (closure.geometry?.type === "LineString") {
       const latLngs = toLatLngs(closure.geometry.coordinates);
-      mainLayer = L.polyline(latLngs, commonStyle).addTo(closureLayers);
+      if (closure.geometryDisplay === "corridor") {
+        mainLayer = L.polygon(corridorPolygon(latLngs, 8), {
+          color: closure.color,
+          weight: lineWidth,
+          opacity: severity.opacity,
+          fillColor: closure.color,
+          fillOpacity: 0.42,
+          renderer: fastRenderer
+        }).addTo(closureLayers);
+      } else if (closure.geometryDisplay === "straight-corridor") {
+        mainLayer = L.polygon(corridorPolygon([latLngs[0], latLngs[latLngs.length - 1]], 14), {
+          color: closure.color,
+          weight: lineWidth,
+          opacity: severity.opacity,
+          fillColor: closure.color,
+          fillOpacity: 0.42,
+          renderer: fastRenderer
+        }).addTo(closureLayers);
+      } else {
+        const displayLines = closure.geometryDisplay === "two-sides" ? offsetPolylineSides(latLngs, 5) : [latLngs];
+        displayLines.forEach((displayLine) => {
+          const line = L.polyline(displayLine, commonStyle).addTo(closureLayers);
+          line._mapLineBaseWidth = severity.width;
+          mainLayer ||= line;
+        });
+      }
       mainLayer._mapLineBaseWidth = severity.width;
       L.polyline(latLngs, hitStyle).on("click", (event) => {
         dismissMapFirstVisitHint();
@@ -5780,6 +5806,28 @@ function updateRenderedLineWidths() {
       }
     });
   });
+}
+
+function offsetPolylineSides(latLngs, offsetMeters) {
+  return [-offsetMeters, offsetMeters].map((offset) => latLngs.map((point, index) => {
+    const previous = latLngs[Math.max(0, index - 1)];
+    const next = latLngs[Math.min(latLngs.length - 1, index + 1)];
+    const latitudeScale = Math.cos((point[0] * Math.PI) / 180) || 1;
+    const deltaX = (next[1] - previous[1]) * latitudeScale * 111320;
+    const deltaY = (next[0] - previous[0]) * 111320;
+    const length = Math.hypot(deltaX, deltaY) || 1;
+    const normalX = (-deltaY / length) * offset;
+    const normalY = (deltaX / length) * offset;
+    return [
+      point[0] + normalY / 111320,
+      point[1] + normalX / (111320 * latitudeScale)
+    ];
+  }));
+}
+
+function corridorPolygon(latLngs, widthMeters) {
+  const sides = offsetPolylineSides(latLngs, widthMeters);
+  return [...sides[0], ...sides[1].reverse()];
 }
 
 function normalizeLavalIdentifyResult(result) {
