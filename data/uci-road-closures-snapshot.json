@@ -1,0 +1,65 @@
+{
+  "extractedAt": "2026-09-08",
+  "source": "Noovo Moi et image fournie - fermetures complementaires aux donnees UCI",
+  "sourceUrl": "https://www.noovomoi.ca/tendances/infos-pratiques/article/cyclisme-a-montreal-voici-les-rues-et-secteurs-a-eviter-en-septembre/",
+  "officialMapUrl": "https://services.montreal.ca/cartes/uci",
+  "note": "Ce snapshot exclut les fermetures et parcours deja fournis par la couche officielle UCI. Il conserve uniquement les fermetures complementaires publiees dans l'article et l'image.",
+  "records": [
+    {
+      "id": "noovo-extra-parc-installations",
+      "title": "Avenue du Parc fermee pour les installations",
+      "startDate": "2026-09-07",
+      "endDate": "2026-10-04",
+      "streets": "Avenue du Parc, entre l'avenue des Pins et l'avenue du Mont-Royal",
+      "impact": "Fermeture automobile liee au site principal et au Village des Fans.",
+      "geometryStatus": "geometry OSM du nom de rue, decoupee entre les limites publiees",
+      "roadSearchText": "Avenue du Parc",
+      "roadQueries": ["Avenue du Parc"],
+      "limits": ["Avenue des Pins", "Avenue du Mont-Royal"],
+      "searchRadius": 1000,
+      "limitCoordinates": [[-73.578204, 45.511609], [-73.589351, 45.516821]],
+      "focus": [-73.58378, 45.514215],
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.578204, 45.511609],
+          [-73.5793386, 45.5122521],
+          [-73.5821873, 45.5134038],
+          [-73.5847199, 45.514763],
+          [-73.5870711, 45.5158215],
+          [-73.5887759, 45.5164565],
+          [-73.5893161, 45.5167861],
+          [-73.589351, 45.516821]
+        ]
+      }
+    },
+    {
+      "id": "noovo-extra-a10-centre-ville",
+      "title": "Autoroute 10 fermee vers le centre-ville",
+      "startDate": "2026-09-19",
+      "endDate": "2026-09-22",
+      "startTime": "06:30",
+      "endTime": "16:30",
+      "streets": "Autoroute 10, direction du centre-ville",
+      "impact": "Fermeture complete les 19, 20, 21 et 22 septembre entre 6 h 30 et 16 h 30.",
+      "geometryStatus": "geometry OSM de l'axe autoroutier nomme",
+      "roadSearchText": "Autoroute Bonaventure",
+      "roadQueries": ["Autoroute Bonaventure"],
+      "limits": [],
+      "focus": [-73.551, 45.490]
+    },
+    {
+      "id": "noovo-extra-pont-champlain",
+      "title": "Pont Samuel-De Champlain ferme vers Montreal",
+      "startDate": "2026-09-26",
+      "endDate": "2026-09-27",
+      "streets": "Pont Samuel-De Champlain, direction Montreal",
+      "impact": "Fermeture complete les matinees des 26 et 27 septembre.",
+      "geometryStatus": "geometry OSM du pont nomme",
+      "roadSearchText": "Pont Samuel-De Champlain",
+      "roadQueries": ["Pont Samuel-De Champlain"],
+      "limits": [],
+      "focus": [-73.508, 45.468]
+    }
+  ]
+}

@@ -70,6 +70,7 @@ const LIVE_SOURCES = {
   montRoyalSnapshot: "data/mont-royal-snapshot.json",
   beaconsfieldSnapshot: "data/beaconsfield-snapshot.json",
   montrealPedestrianSnapshot: "data/montreal-pedestrian-snapshot.json",
+  noovoRoadClosuresSnapshot: "data/uci-road-closures-snapshot.json",
   montSaintHilaireWorks: "https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_4Septembre2026_WFL1/FeatureServer",
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
@@ -4283,6 +4284,39 @@ async function loadMontrealPedestrianSnapshotClosures() {
     });
 }
 
+async function loadNoovoRoadClosuresSnapshot() {
+  const snapshot = await fetchJson(LIVE_SOURCES.noovoRoadClosuresSnapshot);
+  return (snapshot.records || []).map((record) => ({
+    id: record.id,
+    title: record.title,
+    category: "regional",
+    sourceKind: "noovo-road-snapshot",
+    responsible: "Noovo / sources publiques",
+    borough: "Grand Montréal",
+    startDate: record.startDate,
+    endDate: record.endDate,
+    impact: record.impact,
+    trafficLabel: "Fermeture complète",
+    severity: "critical",
+    roadType: roadTypeFromText(record.roadSearchText || record.streets),
+    direction: /direction Montreal|direction du centre-ville/i.test(record.streets)
+      ? record.streets
+      : "Direction non publiée.",
+    streets: record.streets,
+    roadSearchText: record.roadSearchText,
+    roadQueries: record.roadQueries,
+    searchRadius: record.searchRadius,
+    limitCoordinates: record.limitCoordinates,
+    source: snapshot.source,
+    sourceUrl: snapshot.sourceUrl,
+    periods: ["day", "night"],
+    color: SEVERITY_META.critical.color,
+    geometry: record.geometry || { type: "Point", coordinates: record.focus },
+    point: record.focus,
+    details: [["Source complémentaire", snapshot.sourceUrl], ["Géométrie", record.geometryStatus]]
+  }));
+}
+
 function montSaintHilaireScheduleDates(schedule) {
   const value = String(schedule || "").toLowerCase();
   if (!value) return ["", ""];
@@ -4536,7 +4570,7 @@ function closestIndexOnPolyline(polyline, segments) {
 
 async function fetchOverpassChunk(clauseSpecs) {
   const clauses = clauseSpecs
-    .map(({ name, latitude, longitude }) => `way(around:${NAMED_STREET_SEARCH_RADIUS},${latitude},${longitude})["highway"]["name"~"${overpassNamePattern(name)}",i];`)
+    .map(({ name, latitude, longitude, radius = NAMED_STREET_SEARCH_RADIUS }) => `way(around:${radius},${latitude},${longitude})["highway"]["name"~"${overpassNamePattern(name)}",i];`)
     .join("");
   const query = `[out:json][timeout:45];(${clauses});out geom;`;
   let lastError = new Error("No Overpass endpoint available");
@@ -4583,24 +4617,43 @@ async function fetchOverpassWays(clauseSpecs) {
   return ways;
 }
 
-function waysNamedNear(ways, wanted, point) {
+function waysNamedNear(ways, wanted, point, radius = NAMED_STREET_SEARCH_RADIUS) {
   return ways
     .filter((way) => streetNameMatches(way.tags?.name, wanted))
     .map((way) => way.geometry.map((vertex) => [vertex.lon, vertex.lat]))
     .filter((coordinates) => coordinates.length > 1
-      && coordinates.some((coordinate) => metersBetween(coordinate, point) <= NAMED_STREET_SEARCH_RADIUS));
+      && coordinates.some((coordinate) => metersBetween(coordinate, point) <= radius));
 }
 
-function streetGeometryFromWays(ways, streetName, limitNames, point) {
-  const streetSegments = waysNamedNear(ways, streetName, point);
+function streetGeometryFromWays(ways, streetName, limitNames, point, radius = NAMED_STREET_SEARCH_RADIUS, limitCoordinates = []) {
+  const streetSegments = waysNamedNear(ways, streetName, point, radius);
   if (streetSegments.length === 0) {
     return null;
   }
 
+  if (limitCoordinates.length === 2) {
+    const polyline = stitchStreetSegments(streetSegments);
+    const firstLimit = [limitCoordinates[0]];
+    const secondLimit = [limitCoordinates[1]];
+    const [startIndex, startDistance] = closestIndexOnPolyline(polyline, firstLimit);
+    const [endIndex, endDistance] = closestIndexOnPolyline(polyline, secondLimit);
+    if (startDistance <= 100 && endDistance <= 100 && startIndex !== endIndex) {
+      const [low, high] = startIndex < endIndex ? [startIndex, endIndex] : [endIndex, startIndex];
+      const trimmed = polyline.slice(low, high + 1);
+      if (trimmed.length > 1) {
+        return { type: "LineString", coordinates: trimmed };
+      }
+    }
+  }
+
   if (limitNames.length === 2) {
     const polyline = stitchStreetSegments(streetSegments);
-    const firstLimit = waysNamedNear(ways, limitNames[0], point);
-    const secondLimit = waysNamedNear(ways, limitNames[1], point);
+    const firstLimit = limitCoordinates.length === 2
+      ? [limitCoordinates[0], limitCoordinates[0]]
+      : waysNamedNear(ways, limitNames[0], point, radius);
+    const secondLimit = limitCoordinates.length === 2
+      ? [limitCoordinates[1], limitCoordinates[1]]
+      : waysNamedNear(ways, limitNames[1], point, radius);
 
     if (polyline.length > 1 && firstLimit.length > 0 && secondLimit.length > 0) {
       const [startIndex, startDistance] = closestIndexOnPolyline(polyline, firstLimit);
@@ -4612,6 +4665,23 @@ function streetGeometryFromWays(ways, streetName, limitNames, point) {
           return { type: "LineString", coordinates: trimmed };
         }
       }
+    }
+  }
+
+  if (limitCoordinates.length === 2) {
+    const longitudes = limitCoordinates.map(([longitude]) => longitude);
+    const latitudes = limitCoordinates.map(([, latitude]) => latitude);
+    const west = Math.min(...longitudes);
+    const east = Math.max(...longitudes);
+    const south = Math.min(...latitudes);
+    const north = Math.max(...latitudes);
+    const boundedSegments = streetSegments
+      .map((segment) => segment.filter(([longitude, latitude]) => (
+        longitude >= west && longitude <= east && latitude >= south && latitude <= north
+      )))
+      .filter((segment) => segment.length > 1);
+    if (boundedSegments.length > 0) {
+      return { type: "MultiLineString", coordinates: boundedSegments };
     }
   }
 
@@ -4694,7 +4764,8 @@ const MUNICIPAL_ENRICH_KINDS = new Set([
   "saint-eustache-arcgis",
   "chateauguay-arcgis",
   "mont-saint-hilaire-arcgis",
-  "terrebonne-arcgis"
+  "terrebonne-arcgis",
+  "noovo-road-snapshot"
 ]);
 
 function enrichmentSourceText(closure) {
@@ -4706,7 +4777,7 @@ function canEnrichToStreetGeometry(closure) {
   if (!MUNICIPAL_ENRICH_KINDS.has(closure.sourceKind)
     || closure.geometry?.type !== "Point"
     || !closure.roadType
-    || namedRoadQueries(closure.roadSearchText || closure.streets).length === 0) {
+    || (closure.roadQueries || namedRoadQueries(closure.roadSearchText || closure.streets)).length === 0) {
     return false;
   }
 
@@ -4720,15 +4791,17 @@ function enrichmentPlan(closure) {
   return {
     closure,
     point: closure.geometry.coordinates,
-    roadQueries: namedRoadQueries(closure.roadSearchText || closure.streets),
-    limits
+    roadQueries: closure.roadQueries || namedRoadQueries(closure.roadSearchText || closure.streets),
+    limits,
+    searchRadius: closure.searchRadius || NAMED_STREET_SEARCH_RADIUS,
+    limitCoordinates: closure.limitCoordinates || []
   };
 }
 
 function applyStreetGeometry(plan, ways) {
   for (const roadQuery of plan.roadQueries) {
     const limitNames = plan.limits.filter((limit) => !streetNameMatches(limit, roadQuery));
-    const geometry = streetGeometryFromWays(ways, roadQuery, limitNames.length === 2 ? limitNames : [], plan.point);
+    const geometry = streetGeometryFromWays(ways, roadQuery, limitNames.length === 2 ? limitNames : [], plan.point, plan.searchRadius, plan.limitCoordinates);
     if (geometry) {
       return {
         ...plan.closure,
@@ -4764,10 +4837,16 @@ async function enrichMunicipalGeometriesInBackground() {
   for (const groupPlans of groups.values()) {
     const specs = new Map();
     groupPlans.forEach((plan) => {
-      [...plan.roadQueries, ...plan.limits].forEach((name) => {
+      const names = plan.limitCoordinates.length === 2 ? plan.roadQueries : [...plan.roadQueries, ...plan.limits];
+      names.forEach((name) => {
         const latitude = plan.point[1];
         const longitude = plan.point[0];
-        specs.set(`${name}|${latitude.toFixed(3)}|${longitude.toFixed(3)}`, { name, latitude, longitude });
+        specs.set(`${name}|${latitude.toFixed(3)}|${longitude.toFixed(3)}`, {
+          name,
+          latitude,
+          longitude,
+          radius: plan.searchRadius
+        });
       });
     });
 
@@ -5397,7 +5476,8 @@ async function loadBackgroundOfficialData() {
     loadMontSaintHilaireClosures(),
     loadMontRoyalSnapshotClosures(),
     loadBeaconsfieldSnapshotClosures(),
-    loadMontrealPedestrianSnapshotClosures()
+    loadMontrealPedestrianSnapshotClosures(),
+    loadNoovoRoadClosuresSnapshot()
   ]);
 
   const additions = [];
