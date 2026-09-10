@@ -76,7 +76,8 @@ const LIVE_SOURCES = {
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
   // WFS MTMD Quebec 511 - evenements (fermetures, incidents, restrictions)
-  quebec511Events: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:evenements&srsname=EPSG:4326&outputformat=geojson"
+  quebec511Events: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:evenements&srsname=EPSG:4326&outputformat=geojson",
+  pjcciSnapshot: "data/pjcci-work-advisories-snapshot.json"
 };
 
 // Phase 2 Validé - 3 couches ArcGIS Laval confirmées
@@ -813,6 +814,7 @@ const formattedDateCache = new Map();
 
 const dateStart = document.querySelector("#dateStart");
 const dateEnd = document.querySelector("#dateEnd");
+let dateEndUsesOpenDefault = true;
 const todayDates = document.querySelector("#todayDates");
 const dateHelp = document.querySelector("#dateHelp");
 const dateHelpBubble = document.querySelector("#dateHelpBubble");
@@ -1046,6 +1048,20 @@ function parseDate(value) {
   return new Date(`${dateOnly(value)}T12:00:00`);
 }
 
+function parseDateTime(date, time, fallbackHour = "12:00") {
+  const dateKey = dateOnly(date);
+  const timeKey = String(time || fallbackHour).trim();
+  if (!dateKey || !/^\d{1,2}:\d{2}$/.test(timeKey)) return parseDate(date);
+  if (timeKey === "24:00") {
+    const nextDay = parseDate(dateKey);
+    nextDay.setDate(nextDay.getDate() + 1);
+    return new Date(`${formatInputDate(nextDay)}T00:00:00`);
+  }
+  const [hours, minutes] = timeKey.split(":").map(Number);
+  if (hours > 23 || minutes > 59) return parseDate(date);
+  return new Date(`${dateKey}T${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:00`);
+}
+
 function formatDate(value) {
   const key = dateOnly(value);
   if (!formattedDateCache.has(key)) {
@@ -1064,22 +1080,13 @@ function formatInputDate(date) {
 
 function getDateRange() {
   const start = parseDate(dateStart.value);
-  const end = parseDate(dateEnd.value || dateStart.value);
+  const end = dateEndUsesOpenDefault ? parseDate("2099-12-31") : parseDate(dateEnd.value || "2099-12-31");
   return start <= end ? { start, end } : { start: end, end: start };
 }
 
 function hasExpiredToday(closure, now = new Date()) {
-  if (!closure.endTime || closure.endDate !== formatInputDate(now)) {
-    return false;
-  }
-
-  const match = String(closure.endTime).match(/^(\d{1,2}):(\d{2})$/);
-  if (!match) {
-    return false;
-  }
-
-  const endMinutes = Number(match[1]) * 60 + Number(match[2]);
-  return now.getHours() * 60 + now.getMinutes() >= endMinutes;
+  const end = closure._endTime ?? parseDateTime(closure.endDate, closure.endTime, "23:59").valueOf();
+  return Number.isFinite(end) && end <= now.valueOf();
 }
 
 function overlapsDateRange(closure, range) {
@@ -1216,7 +1223,8 @@ function mapBoundsIntersectEnvelope(bounds, envelope) {
 
 function updateViewportList() {
   const viewportClosures = getClosuresInViewport();
-  renderList(viewportClosures);
+  const offscreenPjcci = currentClosures.filter((closure) => closure.sourceKind === "pjcci" && !viewportClosures.includes(closure));
+  renderList([...viewportClosures, ...offscreenPjcci]);
   visibleCount.textContent = String(viewportClosures.length);
   updateImpactCounts();
 }
@@ -1654,6 +1662,70 @@ async function loadQuebec511Events() {
     .filter((feature) => feature.geometry?.coordinates?.length && intersectsGreaterMontreal(feature))
     .map(normalizeQuebec511Event)
     .filter(Boolean);
+}
+
+function normalizePjcciNotice(notice) {
+  const text = [notice.title, ...(notice.tags || [])].join(" ");
+  const coordinates = /honor[eé]-mercier/i.test(text)
+    ? [-73.641, 45.43]
+    : /bonaventure/i.test(text)
+      ? [-73.55, 45.493]
+      : /samuel.?de.?champlain/i.test(text)
+        ? [-73.497, 45.468]
+        : [-73.535, 45.505];
+  const decode = (value) => {
+    const element = document.createElement("div");
+    element.innerHTML = String(value || "")
+      .replace(/<br\s*\/?>(?=\S)/gi, "\n")
+      .replace(/<\/p>|<\/li>/gi, "\n")
+      .replace(/<li\b[^>]*>/gi, "• ");
+    return (element.textContent || "")
+      .split(/\r?\n/)
+      .map((line) => line.replace(/[ \t]+/g, " ").trim())
+      .filter(Boolean)
+      .join("\n");
+  };
+  const title = decode(notice.title);
+  const impact = (decode(notice.description)
+    .replace(/\s*Pour toute information concernant[\s\S]*$/i, "")
+    .trim()) || "Avis de travaux publié par PJCCI.";
+  const honoreMercier = /honor[eé]-mercier/i.test(text);
+  const severity = /fermeture complète|fermeture permanente|fermeture des accès/i.test(`${title} ${impact}`)
+    ? "critical"
+    : "major";
+  const today = new Date().toISOString().slice(0, 10);
+  const startDate = String(notice.datedebut || notice.anneDebut || "").slice(0, 10) || today;
+  const endDate = String(notice.datefin || notice.anneFin || "").slice(0, 10);
+  if (!endDate || endDate < today) return null;
+
+  return {
+    id: `pjcci-${notice.url}`,
+    title,
+    category: "regional",
+    sourceKind: "pjcci",
+    responsible: "PJCCI",
+    borough: notice.tags?.[0] || "Structures PJCCI",
+    startDate,
+    endDate,
+    impact,
+    trafficLabel: severity === "critical" ? "Fermeture ou entrave majeure" : "Travaux",
+    severity,
+    roadType: "bridge",
+    periods: ["day", "night"],
+    direction: honoreMercier ? "Vers la Rive-Sud; une voie sur deux fermée sur la partie centrale du pont." : "Voir l'avis officiel PJCCI.",
+    streets: notice.tags?.join(" / ") || "Structure PJCCI",
+    source: "PJCCI - Avis de travaux et chantiers",
+    sourceUrl: `https://jacquescartierchamplain.ca${notice.url}`,
+    color: SEVERITY_META[severity].color,
+    geometry: notice.geometry || { type: "Point", coordinates },
+    point: notice.geometry ? representativePoint(notice.geometry) : coordinates
+  };
+}
+
+async function loadPjcciClosures() {
+  const snapshot = await fetchJson(LIVE_SOURCES.pjcciSnapshot);
+  const normalized = (snapshot.notices || []).map(normalizePjcciNotice);
+  return normalized.filter(Boolean);
 }
 
 async function loadRepentignyClosures() {
@@ -2946,8 +3018,8 @@ function prepareClosureForRuntime(closure, { force = false } = {}) {
       closure.direction,
       closure.source
     ].join(" ").toLowerCase(),
-    _startTime: parseDate(closure.startDate).valueOf(),
-    _endTime: parseDate(closure.endDate).valueOf(),
+    _startTime: parseDateTime(closure.startDate, closure.startTime, "00:00").valueOf(),
+    _endTime: parseDateTime(closure.endDate, closure.endTime, "23:59").valueOf(),
     _bounds: bounds
   };
 }
@@ -3072,7 +3144,8 @@ async function loadOfficialData() {
     fetchJson(LIVE_SOURCES.montreal),
     fetchJson(LIVE_SOURCES.uciRestrictions),
     loadRegionalClosures(),
-    loadMontrealResolvedGeometries()
+    loadMontrealResolvedGeometries(),
+    loadPjcciClosures()
   ]);
 
   const primaryClosures = [];
@@ -3081,6 +3154,7 @@ async function loadOfficialData() {
   const montrealResult = primarySources[0];
   const uciResult = primarySources[1];
   const regionalResult = primarySources[2];
+  const pjcciResult = primarySources[4];
 
   if (montrealResult.status === "fulfilled") {
     const montrealClosures = montrealResult.value.features.flatMap(normalizeMontrealFeature);
@@ -3097,6 +3171,11 @@ async function loadOfficialData() {
   if (regionalResult.status === "fulfilled") {
     primaryClosures.push(...regionalResult.value);
     sourceCounts.push(`${regionalResult.value.length} fermetures ponts/grands axes alignees aux routes`);
+  }
+
+  if (pjcciResult.status === "fulfilled") {
+    primaryClosures.push(...pjcciResult.value);
+    sourceCounts.push(`${pjcciResult.value.length} avis PJCCI actifs ou futurs`);
   }
 
   if (primaryClosures.length > 0) {
@@ -3173,7 +3252,7 @@ function popupContent(closure) {
       <p class="popup-title">${escapeHtml(closure.title)}</p>
       <p class="popup-meta"><strong>${escapeHtml(closureImpactLabel(closure))}</strong> - ${escapeHtml(meta.label())}</p>
       <p class="popup-meta">${escapeHtml(closure.streets)}</p>
-      <p class="popup-meta">${formatDate(closure.startDate)} ${t("popup.to")} ${formatDate(closure.endDate)}</p>
+      <p class="popup-meta">${formatDate(closure.startDate)}${closure.startTime ? ` à ${escapeHtml(closure.startTime)}` : ""} ${t("popup.to")} ${formatDate(closure.endDate)}${closure.endTime ? ` à ${escapeHtml(closure.endTime)}` : ""}</p>
       ${details}
       <p class="popup-meta"><strong>${t("popup.responsible")}:</strong> ${escapeHtml(closure.responsible)}</p>
       <p class="popup-meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
@@ -3752,7 +3831,7 @@ function renderList(closures) {
       </div>
       <h3>${escapeHtml(closure.title)}</h3>
       <p class="meta">${escapeHtml(closure.streets)}</p>
-      <p class="meta"><strong>${formatDate(closure.startDate)}</strong> au <strong>${formatDate(closure.endDate)}</strong></p>
+      <p class="meta"><strong>${formatDate(closure.startDate)}${closure.startTime ? ` à ${escapeHtml(closure.startTime)}` : ""}</strong> au <strong>${formatDate(closure.endDate)}${closure.endTime ? ` à ${escapeHtml(closure.endTime)}` : ""}</strong></p>
       <p class="meta"><strong>Moment:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
       <p class="meta"><strong>Impact auto:</strong> ${escapeHtml(closure.impact)}</p>
       <p class="meta"><strong>Direction:</strong> ${escapeHtml(closure.direction)}</p>
@@ -3848,16 +3927,20 @@ function showMapStatus(message, mode = "loading") {
 }
 
 dateStart.addEventListener("change", () => {
-  if (parseDate(dateStart.value) > parseDate(dateEnd.value)) {
+  if (!dateEndUsesOpenDefault && parseDate(dateStart.value) > parseDate(dateEnd.value)) {
     dateEnd.value = dateStart.value;
   }
   updateView({ fit: false });
 });
-dateEnd.addEventListener("change", () => updateView({ fit: false }));
+dateEnd.addEventListener("change", () => {
+  dateEndUsesOpenDefault = false;
+  updateView({ fit: false });
+});
 todayDates.addEventListener("click", () => {
   const today = formatInputDate(new Date());
   dateStart.value = today;
   dateEnd.value = today;
+  dateEndUsesOpenDefault = false;
   updateView({ fit: false });
 });
 let searchFilterTimer = null;
@@ -4003,3 +4086,6 @@ loadOfficialData().catch((error) => {
   showMapStatus(t("map.loadError"), "error");
   updateView({ fit: true });
 });
+
+// Recalcule les heures de fin sans attendre un rechargement de la page.
+setInterval(() => updateView({ fit: false }), 30000);

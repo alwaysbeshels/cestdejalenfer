@@ -4,7 +4,7 @@ Application statique pour visualiser les fermetures de rues, voies retranchees, 
 
 ## Utilisation
 
-La carte est une application statique. Depuis la racine du projet, démarrez le serveur local avec `python3 -m http.server 5500`, puis ouvrez `http://localhost:5500/index.html`. Vous pouvez aussi utiliser l'extension Live Server de VS Code en configurant son port sur `5500`. La commande standard du projet est donc `python3 -m http.server 5500`, et il faut tester sur `localhost:5500`, pas sur un autre port. Elle utilise Leaflet avec le fond OpenStreetMap standard et des données GeoJSON officielles.
+La carte est une application statique. Depuis la racine du projet, démarrez le serveur local avec `python -m http.server 5500`, puis ouvrez `http://localhost:5500/index.html`. Vous pouvez aussi utiliser l'extension Live Server de VS Code en configurant son port sur `5500`. La commande standard du projet est donc `python -m http.server 5500`, et il faut tester sur `localhost:5500`, pas sur un autre port. Elle utilise Leaflet avec le fond OpenStreetMap standard et des données GeoJSON officielles.
 
 ## Développement local (optionnel)
 
@@ -16,7 +16,7 @@ npx playwright install chromium
 npm run serve
 ```
 
-`npm run serve` démarre le même serveur statique local (`python3 -m http.server 5500`) sur `http://localhost:5500`. Le dossier `node_modules/` n'est jamais publié ni requis en production; il est exclu par `.gitignore`.
+`npm run serve` démarre le même serveur statique local (`python -m http.server 5500`) sur `http://localhost:5500`. Le dossier `node_modules/` n'est jamais publié ni requis en production; il est exclu par `.gitignore`.
 
 ## Publication avec GitHub Pages
 
@@ -67,6 +67,7 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 - Les fleches sont reduites automatiquement sur les vues tres denses, puis reapparaissent au zoom pour garder la carte lisible.
 - Affichage des zones de travaux en polygones lorsque la Ville publie une zone d'occupation plutot qu'un axe lineaire.
 - Donnees exemples dans `data/closures.js` utilisees seulement comme secours si les APIs publiques ne repondent pas.
+- PJCCI publie des avis structures pour les ponts Jacques-Cartier, Samuel-De Champlain, Honoré-Mercier et le secteur Bonaventure. Le générateur conserve uniquement les avis dont la date de fin est aujourd'hui ou future; les avis expirés ne sont pas chargés dans la carte.
 - Les autres liens municipaux du catalogue `data/sources.js` documentent des pages, cartes ou services candidats; ils ne sont pas charges automatiquement tant qu'une reponse structuree, datee, automobile et geometrique n'a pas ete verifiee.
 - Les pages HTML et PDF municipales sont conservees comme sources documentaires lorsqu'elles publient des avis officiels; elles ne deviennent pas automatiquement des entraves cartographiques sans dates, impact automobile et geometrie verifiables.
 - Les KML Beaconsfield et McMasterville sont catalogues comme sources geographiques documentaires; ils ne sont pas actifs dans la carte tant que leurs dates/statuts d'entrave ne sont pas publies de facon exploitable.

@@ -22,7 +22,7 @@ You are the maintenance engineer for the static web application **Carte des entr
 - A script that throws early kills everything after it. When a feature "does nothing", check whether the whole script crashed before the feature's listener was attached. Look for `ReferenceError` and similar fatal errors first.
 - Consider browser caching: after a fix, the user may still run the old cached file. State when a hard refresh (Cmd+Shift+R) is required, and never claim success before the user can actually load the new file.
 - Report findings honestly: what was proven, what was assumed, and what still needs user-side verification.
-- Prefer a real headless browser (e.g. `npx playwright` with Chromium) over `curl`/`node --check` alone to validate map/UI/popup behavior. Serve the project with `python3 -m http.server 5500`, load `http://localhost:5500/index.html`, and inspect the live Leaflet map instance and rendered layers/popups instead of guessing from source code. Note that `const map = L.map("map", ...)` is shadowed by `window.map` resolving to the `#map` DOM element (named window access); intercept `L.map`/`L.circleMarker`/`L.polyline` via an injected script to capture the real instance when you need to inspect it externally.
+- Prefer a real headless browser (e.g. `npx playwright` with Chromium) over `curl`/`node --check` alone to validate map/UI/popup behavior. Serve the project with `python -m http.server 5500`, load `http://localhost:5500/index.html`, and inspect the live Leaflet map instance and rendered layers/popups instead of guessing from source code. Note that `const map = L.map("map", ...)` is shadowed by `window.map` resolving to the `#map` DOM element (named window access); intercept `L.map`/`L.circleMarker`/`L.polyline` via an injected script to capture the real instance when you need to inspect it externally.
 - When a fix does not visibly work, add a single-line temporary `console.log` at the exact branch in question, reproduce with the real browser, read the evidence, then remove the temporary log before finishing. Never leave debug logging in delivered code.
 
 ## Project Contract
@@ -31,7 +31,7 @@ You are the maintenance engineer for the static web application **Carte des entr
 - Do not add a backend, Python, Node.js server, server-side framework, credentials, API keys, or build pipeline unless the user explicitly requests one.
 - `package.json` exists only for optional local dev tooling (Playwright, for real-browser validation) via `npm install`. It has no production dependencies and must never be required to serve or deploy the site. `node_modules/` is gitignored and never published.
 - `404.html` is the GitHub Pages fallback and must redirect unknown routes to `index.html` while supporting a repository project path such as `https://owner.github.io/repository/`.
-- Use a temporary static server only for local validation. Do not make a runtime server a production dependency. For this project the standard local validation URL is `http://localhost:5500/index.html` and the command is `python3 -m http.server 5500` (or `npm run serve`).
+- Use a temporary static server only for local validation. Do not make a runtime server a production dependency. For this project the standard local validation URL is `http://localhost:5500/index.html` and the command is `python -m http.server 5500` (or `npm run serve`).
 - Keep the visual language compact and operational: this is a traffic cockpit, not a marketing page.
 - Cover the entire Greater Montreal metropolitan region, not only the City of Montreal. The map is for road and highway impacts across the metro area, including Montreal, Laval, Longueuil, the South Shore, the North Shore, bridges, viaducts, autoroutes, and road segments affecting motorists in surrounding municipalities.
 - Prioritize official roadwork and traffic-impact sources from MTMD / Quebec 511, Mobilité Montréal, municipal GIS feeds, and regional infrastructure authorities. Do not exclude highways, bridges, access ramps, or route-level work simply because they are outside the city core.
@@ -136,10 +136,28 @@ You are the maintenance engineer for the static web application **Carte des entr
 - Normalize `identificationDesTravaux`, `debut`, `fin`, `miseAJour`, `entrave`, `detoursEtItinerairesFacultatifs`, `localisation`, `direction`, `entraveType`, and the original geometry. Preserve the source direction.
 - If `feature.bbox` is missing or incomplete, calculate geometric bounds from the published coordinates before filtering so the regional coverage does not silently drop valid roadwork records.
 
+### PJCCI - Avis de travaux et chantiers
+
+- PJCCI's official archive is `https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/`. The page exposes a structured POST endpoint used by its `Charger plus` button, not a public JSON URL. The request fields are `request=loadmore`, `articlelimit`, and `all`; the response contains `archive` records with `datedebut`, `datefin`, `title`, `description`, `tags`, and `url`.
+- The PJCCI endpoint has no usable CORS headers. Never make the static browser application POST directly to PJCCI and never claim the archive is live in the browser. Refresh the local snapshot with `node tools/build-pjcci-work-advisories-snapshot.mjs`, which is allowed to fetch the endpoint from Node.
+- The generator must retrieve all pages, deduplicate by notice URL, and keep only notices whose published end date is today or later. Expired archive notices must not enter `data/pjcci-work-advisories-snapshot.json` or the map.
+- Every retained PJCCI notice must receive a real `LineString` in the snapshot. Do not use a generic bridge point when a corridor can be resolved. The generator uses OSRM only for the Bonaventure corridor fallback after identifying the corridor from the official PJCCI title/tags/description and must save the returned GeoJSON line in the snapshot. Honoré-Mercier must use the exact OSM one-way bridge ways documented below, never OSRM.
+- PJCCI currently does not publish start/end coordinates or official road geometry in the archive records. Never pretend OSRM coordinates are PJCCI-published coordinates. Document the corridor anchors in the generator and validate them against OpenStreetMap before changing them.
+- Current corridor anchors:
+  - the PEPSC / Pointe-Saint-Charles Bonaventure notice uses `[-73.56, 45.479]` to `[-73.542, 45.49]`;
+  - the broader Bonaventure works notice uses `[-73.561, 45.478]` to `[-73.521, 45.503]`;
+  - the Honoré-Mercier notice uses the OSM bridge anchors `[-73.6521, 45.4228]` to `[-73.6601, 45.4060]`.
+- The Honoré-Mercier anchors were checked against OSM ways named `Pont Honoré-Mercier`. Do not extend this line east toward unrelated streets or use a generic LaSalle point. Recheck the OSM geometry if the bridge layout or source notice changes.
+- For the current Honoré-Mercier one-lane notice, use only OSM way `567465771`, named `Pont Honoré-Mercier`, tagged `bridge=yes` and `oneway=yes`, and already oriented from Montréal toward the Rive-Sud. Do not include Saint-Isidore, approach streets, the opposite carriageway, or an OSRM shortest-path detour.
+- Normalize PJCCI records as `sourceKind: "pjcci"`, `category: "regional"`, and preserve the official title, description, dates, tags, and detail URL. A single-lane closure is `major`; complete/permanent/access closures can be `critical`. Never label a one-lane closure as a completely closed bridge.
+- Use `geometry` from the snapshot and `representativePoint(geometry)` for focusing/popups. Do not overwrite the stored line with the fallback point. The map may list off-screen PJCCI notices so clicking one recenters the map on its line.
+- After every PJCCI refresh, verify: snapshot count, zero expired notices, every notice has `geometry.type === "LineString"`, line coordinate counts greater than one, endpoints near the intended corridor, `node tools/build-pjcci-work-advisories-snapshot.mjs`, `node --check js/app.js`, and one browser popup/line for Honoré-Mercier and one Bonaventure notice.
+- Keep `data/sources.js` synchronized with the PJCCI archive and snapshot entries. The local snapshot is a generated artifact, not a substitute for rerunning the generator when the user asks for an update.
+
 ### Mobilite Montreal And Linked Cities
 
 - Retain the curated major-axis restrictions and linked-city works only when their sources remain credible and date-bounded.
-- OSRM is a last resort only for existing linked-city records that have a street axis but no official geometry. Do not use it for highways, bridges, Laval, Longueuil, Montreal WFS, or MTMD GeoJSON records.
+- OSRM is a last resort only for existing linked-city records that have a street axis but no official geometry. Do not use it for highways, bridges, Laval, Longueuil, Montreal WFS, or MTMD GeoJSON records, except for the explicit PJCCI corridor procedure documented above.
 - Never scrape the Mobilité Montréal HTML page (`mobilitemontreal.gouv.qc.ca/fermetures-majeures/`) to synthesize new records. A prior regression parsed its `<h3>` headings and mapped titles to hardcoded guessed coordinates (e.g. a hand-built title-to-lat/lon lookup table with a generic fallback point) — this is exactly the invented-geometry practice this project forbids, and it produced stray unexplained point markers on the map. Only `REGIONAL_MAJOR_CLOSURES` entries with hand-verified, source-checked `geometry`/`routeEndpoints` may represent Mobilité Montréal closures.
 
 ### Verified Municipal Integrations

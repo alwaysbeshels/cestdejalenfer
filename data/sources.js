@@ -10,6 +10,8 @@ const SOURCE_CATALOG = [
   { name: "MTMD - Événements WFS GeoJSON", url: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:evenements&srsname=EPSG:4326&outputformat=geojson" },
   { name: "Quebec 511 - Carte travaux et fermetures", url: "https://www.quebec511.info/fr/Carte/Default.aspx" },
   { name: "Mobilite Montreal - Fermetures majeures", url: "https://mobilitemontreal.gouv.qc.ca/fermetures-majeures/" },
+  { name: "PJCCI - Avis de travaux et chantiers", url: "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/" },
+  { name: "PJCCI - Snapshot des avis actifs ou futurs", url: "data/pjcci-work-advisories-snapshot.json", dataType: "snapshot", extractedAt: "2026-09-10T20:44:53.771Z" },
 
   // Agglomeration de Montreal
   { name: "Montreal - Carte des entraves", url: "https://services.montreal.ca/cartes/entraves/" },
@@ -200,6 +202,7 @@ const MAP_SOURCE_NAMES = new Set([
   "Quebec 511 - carte interactive",
   "Quebec 511 / Mobilité Montréal - fermetures à prévoir",
   "Mobilité Montréal - fermetures majeures",
+  "PJCCI - Avis de travaux et chantiers",
   "Quartier des spectacles - Rues et espaces publics",
   "Baie-d'Urfe - Info-travaux",
   "DDO - Info-travaux",

@@ -1271,6 +1271,13 @@ button:hover {
   margin: 0 0 6px;
   color: #52615b;
   line-height: 1.35;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+.closure-card .meta {
+  overflow-wrap: anywhere;
+  white-space: pre-line;
 }
 
 /* Leaflet's own ".leaflet-popup-content p" rule (17px/1.3em margin) otherwise outranks .popup-meta/.popup-title. */
@@ -1421,6 +1428,10 @@ button:hover {
   padding: 2px 8px 2px 4px;
   background: #fffdf8;
   box-sizing: border-box;
+}
+
+.leaflet-popup-content p.popup-meta {
+  max-width: 100%;
 }
 
 .leaflet-popup-tip {

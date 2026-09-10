@@ -165,7 +165,8 @@ async function loadGeobaseStreet(streetRaw, cache) {
 function resolveImpactGeometry(street, from, to, segments) {
   const fromN = normName(from);
   const toN = normName(to);
-  if (!street || !fromN || !toN || segments.length === 0) return null;
+  // Une borne identique ne localise pas un tronçon; conserver l'emprise publiée.
+  if (!street || !fromN || !toN || fromN === toN || segments.length === 0) return null;
 
   // Indexe les segments par intersection normalisee (de/a sont symetriques).
   const byCross = new Map();
