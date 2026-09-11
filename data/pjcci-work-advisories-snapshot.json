@@ -1,8 +1,139 @@
 {
-  "extractedAt": "2026-09-10T21:04:55.391Z",
+  "extractedAt": "2026-09-11T17:39:43.537Z",
   "sourceUrl": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
-  "asOf": "2026-09-10",
-  "total": 3,
+  "interactiveMapUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
+  "asOf": "2026-09-11",
+  "total": 10,
+  "parentNoticeTotal": 3,
+  "interactiveMapEntraves": {
+    "34": {
+      "id": 1062,
+      "title": "Fermeture de la sortie 3 de l'autoroute en direction du pont Samuel-De Champlain",
+      "startDate": "2025-11-24",
+      "endDate": "2026-12-31",
+      "point": [
+        -73.541451,
+        45.488342
+      ],
+      "raw": {
+        "lat": "45.488342",
+        "lng": "-73.541451",
+        "datedebut": "2025-11-24  10:01:00",
+        "datefin": "2026-12-31  23:59:00",
+        "comment": "",
+        "titre": "Fermeture de la sortie 3 de l&#039;autoroute en direction du pont Samuel-De Champlain",
+        "lang": "fr",
+        "voie_name": "sb-vers-pont-samuel-de-champlain-et-a-15",
+        "voie_id": 1930,
+        "type": "evenement",
+        "title": "Fermeture",
+        "id": 1062,
+        "color": "#ED1C23",
+        "color_txt": "#FFFFFF",
+        "img": "/site/assets/files/1062/pjcci_fermeturecomplete-1.svg",
+        "txtLink": "Voir carte de détour",
+        "link": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-complete-de-longue-duree-de-la-sortie-3-en-direction-du-pont-samuel-de-champlain/",
+        "linktype": "internal"
+      }
+    },
+    "64": {
+      "id": 1082,
+      "title": "Boul. Gaétan-Laberge - 1 voie ouverte par direction",
+      "startDate": "2026-03-03",
+      "endDate": "2026-12-31",
+      "point": [
+        -73.543877,
+        45.475708
+      ],
+      "raw": {
+        "lat": "45.475708",
+        "lng": "-73.543877",
+        "datedebut": "2026-03-03  09:33:00",
+        "datefin": "2026-12-31  23:59:00",
+        "comment": "",
+        "titre": "Boul. Gaétan-Laberge - 1 voie ouverte par direction",
+        "lang": "fr",
+        "voie_name": "sb-vers-pont-samuel-de-champlain-et-a-15-et-vers-centre-ville",
+        "voie_id": 1931,
+        "type": "1-voie-ouverte",
+        "title": "1 voie ouverte",
+        "id": 1082,
+        "color": "#F7BA03",
+        "color_txt": "#171B25",
+        "img": "/site/assets/files/1082/pjcci_fermeturepartielle-1.svg",
+        "txtLink": "En savoir plus",
+        "link": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+        "linktype": "internal"
+      }
+    },
+    "65": {
+      "id": 1083,
+      "title": "Secteur des voies entre le pont Victoria et le pont Clément - 2 voies sur 3 ouvertes direction pont Samuel-De Champlain",
+      "startDate": "2026-03-03",
+      "endDate": "2026-12-31",
+      "point": [
+        -73.538406,
+        45.482822
+      ],
+      "raw": {
+        "lat": "45.482822",
+        "lng": "-73.538406",
+        "datedebut": "2026-03-03  09:37:00",
+        "datefin": "2026-12-31  23:59:00",
+        "comment": "",
+        "titre": "Secteur des voies entre le pont Victoria et le pont Clément - 2 voies sur 3 ouvertes direction pont Samuel-De Champlain",
+        "lang": "fr",
+        "voie_name": "sb-vers-pont-samuel-de-champlain-et-a-15",
+        "voie_id": 1930,
+        "type": "2-voies-ouvertes",
+        "title": "2 voies ouvertes",
+        "id": 1083,
+        "color": "#F7BA03",
+        "color_txt": "#171B25",
+        "img": "/site/assets/files/1083/pjcci_fermeturepartielle-1.svg",
+        "txtLink": "En savoir plus",
+        "link": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+        "linktype": "internal"
+      }
+    },
+    "66": {
+      "id": 1082,
+      "title": "Secteur du pont Clément - 1 voie ouverte direction centre-ville, 2 voies ouvertes direction Samuel-De Champlain",
+      "startDate": "2026-03-16",
+      "endDate": "2026-11-30",
+      "point": [
+        -73.541153,
+        45.475586
+      ],
+      "raw": {
+        "lat": "45.475586",
+        "lng": "-73.541153",
+        "datedebut": "2026-03-16  01:00:00",
+        "datefin": "2026-11-30  23:59:00",
+        "comment": "",
+        "titre": "Secteur du pont Clément - 1 voie ouverte direction centre-ville, 2 voies ouvertes direction Samuel-De Champlain",
+        "lang": "fr",
+        "voie_name": "sb-vers-centre-ville",
+        "voie_id": 1929,
+        "type": "1-voie-ouverte",
+        "title": "1 voie ouverte",
+        "id": 1082,
+        "color": "#F7BA03",
+        "color_txt": "#171B25",
+        "img": "/site/assets/files/1082/pjcci_fermeturepartielle-1.svg",
+        "txtLink": "En savoir plus",
+        "link": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+        "linktype": "internal"
+      }
+    }
+  },
+  "validation": {
+    "geometryPolicy": "Aucune coordonnee inventee; geometrie publiee, OSM verifiee ou point de la carte PJCCI seulement.",
+    "archiveAvis": 3,
+    "interactiveMapEntraves": 4,
+    "segmentsMatchedToMap": 6,
+    "unmatchedMapKeys": []
+  },
   "notices": [
     {
       "dateAffichageTravaux": "Du 27 novembre 2025 au 31 décembre 2026",
@@ -21,727 +152,27 @@
       "tagId": [
         1155
       ],
-      "geometry": {
-        "coordinates": [
-          [
-            -73.559877,
-            45.478978
-          ],
-          [
-            -73.559814,
-            45.479149
-          ],
-          [
-            -73.559809,
-            45.479165
-          ],
-          [
-            -73.559803,
-            45.479186
-          ],
-          [
-            -73.5598,
-            45.479212
-          ],
-          [
-            -73.559798,
-            45.479244
-          ],
-          [
-            -73.559702,
-            45.479243
-          ],
-          [
-            -73.559322,
-            45.479241
-          ],
-          [
-            -73.558981,
-            45.479239
-          ],
-          [
-            -73.558942,
-            45.479238
-          ],
-          [
-            -73.558898,
-            45.479238
-          ],
-          [
-            -73.558815,
-            45.479237
-          ],
-          [
-            -73.558804,
-            45.479301
-          ],
-          [
-            -73.558798,
-            45.479328
-          ],
-          [
-            -73.558738,
-            45.479658
-          ],
-          [
-            -73.558696,
-            45.479863
-          ],
-          [
-            -73.558685,
-            45.479922
-          ],
-          [
-            -73.55867,
-            45.479996
-          ],
-          [
-            -73.558627,
-            45.480224
-          ],
-          [
-            -73.558609,
-            45.480316
-          ],
-          [
-            -73.558564,
-            45.480555
-          ],
-          [
-            -73.558552,
-            45.480622
-          ],
-          [
-            -73.558543,
-            45.480665
-          ],
-          [
-            -73.558504,
-            45.48087
-          ],
-          [
-            -73.558472,
-            45.481037
-          ],
-          [
-            -73.558438,
-            45.48121
-          ],
-          [
-            -73.558435,
-            45.48123
-          ],
-          [
-            -73.558424,
-            45.48129
-          ],
-          [
-            -73.558419,
-            45.481321
-          ],
-          [
-            -73.558377,
-            45.481359
-          ],
-          [
-            -73.558362,
-            45.481381
-          ],
-          [
-            -73.558297,
-            45.481729
-          ],
-          [
-            -73.55823,
-            45.482105
-          ],
-          [
-            -73.558211,
-            45.482194
-          ],
-          [
-            -73.558146,
-            45.482577
-          ],
-          [
-            -73.558193,
-            45.482665
-          ],
-          [
-            -73.558148,
-            45.482816
-          ],
-          [
-            -73.558119,
-            45.482911
-          ],
-          [
-            -73.558113,
-            45.48294
-          ],
-          [
-            -73.558064,
-            45.483221
-          ],
-          [
-            -73.557985,
-            45.483673
-          ],
-          [
-            -73.557975,
-            45.483738
-          ],
-          [
-            -73.557969,
-            45.483772
-          ],
-          [
-            -73.557961,
-            45.483823
-          ],
-          [
-            -73.55795,
-            45.483902
-          ],
-          [
-            -73.557935,
-            45.483992
-          ],
-          [
-            -73.557904,
-            45.484189
-          ],
-          [
-            -73.557866,
-            45.484405
-          ],
-          [
-            -73.557839,
-            45.484565
-          ],
-          [
-            -73.557823,
-            45.48466
-          ],
-          [
-            -73.557815,
-            45.484705
-          ],
-          [
-            -73.557806,
-            45.484749
-          ],
-          [
-            -73.557785,
-            45.484859
-          ],
-          [
-            -73.557744,
-            45.485072
-          ],
-          [
-            -73.557732,
-            45.485133
-          ],
-          [
-            -73.557713,
-            45.485224
-          ],
-          [
-            -73.557701,
-            45.485282
-          ],
-          [
-            -73.557682,
-            45.485382
-          ],
-          [
-            -73.557658,
-            45.485502
-          ],
-          [
-            -73.557641,
-            45.485593
-          ],
-          [
-            -73.557623,
-            45.485689
-          ],
-          [
-            -73.557608,
-            45.485768
-          ],
-          [
-            -73.557586,
-            45.485893
-          ],
-          [
-            -73.557463,
-            45.486578
-          ],
-          [
-            -73.557412,
-            45.486874
-          ],
-          [
-            -73.557307,
-            45.48716
-          ],
-          [
-            -73.557299,
-            45.487208
-          ],
-          [
-            -73.557295,
-            45.48723
-          ],
-          [
-            -73.557333,
-            45.487318
-          ],
-          [
-            -73.55716,
-            45.487303
-          ],
-          [
-            -73.557059,
-            45.487294
-          ],
-          [
-            -73.556833,
-            45.487273
-          ],
-          [
-            -73.55665,
-            45.487256
-          ],
-          [
-            -73.556451,
-            45.487239
-          ],
-          [
-            -73.556327,
-            45.487227
-          ],
-          [
-            -73.556219,
-            45.487216
-          ],
-          [
-            -73.556123,
-            45.487205
-          ],
-          [
-            -73.555994,
-            45.487193
-          ],
-          [
-            -73.555773,
-            45.487172
-          ],
-          [
-            -73.555688,
-            45.487164
-          ],
-          [
-            -73.555416,
-            45.48714
-          ],
-          [
-            -73.555335,
-            45.487133
-          ],
-          [
-            -73.555244,
-            45.487124
-          ],
-          [
-            -73.554596,
-            45.487064
-          ],
-          [
-            -73.554424,
-            45.487048
-          ],
-          [
-            -73.553893,
-            45.486998
-          ],
-          [
-            -73.553666,
-            45.486977
-          ],
-          [
-            -73.553178,
-            45.486931
-          ],
-          [
-            -73.552536,
-            45.48687
-          ],
-          [
-            -73.552406,
-            45.486858
-          ],
-          [
-            -73.552307,
-            45.486849
-          ],
-          [
-            -73.552059,
-            45.486828
-          ],
-          [
-            -73.5514,
-            45.486769
-          ],
-          [
-            -73.550699,
-            45.486706
-          ],
-          [
-            -73.550513,
-            45.486688
-          ],
-          [
-            -73.55021,
-            45.486661
-          ],
-          [
-            -73.550026,
-            45.486644
-          ],
-          [
-            -73.549916,
-            45.486634
-          ],
-          [
-            -73.549813,
-            45.486624
-          ],
-          [
-            -73.549258,
-            45.486576
-          ],
-          [
-            -73.548747,
-            45.486532
-          ],
-          [
-            -73.548659,
-            45.486511
-          ],
-          [
-            -73.548602,
-            45.486498
-          ],
-          [
-            -73.548538,
-            45.486484
-          ],
-          [
-            -73.548477,
-            45.486477
-          ],
-          [
-            -73.548345,
-            45.486468
-          ],
-          [
-            -73.548212,
-            45.486463
-          ],
-          [
-            -73.548094,
-            45.48646
-          ],
-          [
-            -73.547984,
-            45.486459
-          ],
-          [
-            -73.547874,
-            45.486462
-          ],
-          [
-            -73.547759,
-            45.486467
-          ],
-          [
-            -73.54764,
-            45.486474
-          ],
-          [
-            -73.547506,
-            45.486486
-          ],
-          [
-            -73.547407,
-            45.486497
-          ],
-          [
-            -73.547303,
-            45.486509
-          ],
-          [
-            -73.547199,
-            45.486525
-          ],
-          [
-            -73.547085,
-            45.486543
-          ],
-          [
-            -73.546968,
-            45.486567
-          ],
-          [
-            -73.545923,
-            45.486803
-          ],
-          [
-            -73.545598,
-            45.486876
-          ],
-          [
-            -73.545473,
-            45.486906
-          ],
-          [
-            -73.545356,
-            45.486933
-          ],
-          [
-            -73.545333,
-            45.487041
-          ],
-          [
-            -73.545321,
-            45.487096
-          ],
-          [
-            -73.545312,
-            45.487137
-          ],
-          [
-            -73.545356,
-            45.487307
-          ],
-          [
-            -73.545393,
-            45.487367
-          ],
-          [
-            -73.545481,
-            45.487508
-          ],
-          [
-            -73.545557,
-            45.488022
-          ],
-          [
-            -73.545565,
-            45.488069
-          ],
-          [
-            -73.545623,
-            45.488374
-          ],
-          [
-            -73.545656,
-            45.488554
-          ],
-          [
-            -73.545665,
-            45.488614
-          ],
-          [
-            -73.545674,
-            45.488677
-          ],
-          [
-            -73.545678,
-            45.488733
-          ],
-          [
-            -73.545684,
-            45.488798
-          ],
-          [
-            -73.545652,
-            45.488943
-          ],
-          [
-            -73.545641,
-            45.488979
-          ],
-          [
-            -73.545635,
-            45.488999
-          ],
-          [
-            -73.545619,
-            45.489031
-          ],
-          [
-            -73.545607,
-            45.489046
-          ],
-          [
-            -73.545573,
-            45.489087
-          ],
-          [
-            -73.545362,
-            45.489042
-          ],
-          [
-            -73.545145,
-            45.489
-          ],
-          [
-            -73.544795,
-            45.488929
-          ],
-          [
-            -73.544452,
-            45.488858
-          ],
-          [
-            -73.54432,
-            45.488832
-          ],
-          [
-            -73.544277,
-            45.488823
-          ],
-          [
-            -73.5442,
-            45.488887
-          ],
-          [
-            -73.544178,
-            45.488907
-          ],
-          [
-            -73.544162,
-            45.48893
-          ],
-          [
-            -73.544045,
-            45.489237
-          ],
-          [
-            -73.544013,
-            45.489332
-          ],
-          [
-            -73.544003,
-            45.489358
-          ],
-          [
-            -73.543994,
-            45.489387
-          ],
-          [
-            -73.543988,
-            45.489407
-          ],
-          [
-            -73.543985,
-            45.48943
-          ],
-          [
-            -73.54399,
-            45.489453
-          ],
-          [
-            -73.544021,
-            45.489541
-          ],
-          [
-            -73.544119,
-            45.489674
-          ],
-          [
-            -73.544257,
-            45.490061
-          ],
-          [
-            -73.54433,
-            45.490255
-          ],
-          [
-            -73.544355,
-            45.490323
-          ],
-          [
-            -73.544248,
-            45.49033
-          ],
-          [
-            -73.544215,
-            45.490335
-          ],
-          [
-            -73.543767,
-            45.490643
-          ],
-          [
-            -73.543063,
-            45.491144
-          ],
-          [
-            -73.54302,
-            45.491173
-          ],
-          [
-            -73.542547,
-            45.49149
-          ],
-          [
-            -73.542222,
-            45.491273
-          ],
-          [
-            -73.541896,
-            45.491033
-          ],
-          [
-            -73.541484,
-            45.490761
-          ],
-          [
-            -73.541447,
-            45.490723
-          ],
-          [
-            -73.541426,
-            45.490691
-          ],
-          [
-            -73.541411,
-            45.490647
-          ],
-          [
-            -73.541355,
-            45.490369
-          ],
-          [
-            -73.541441,
-            45.490291
-          ],
-          [
-            -73.541512,
-            45.49024
-          ],
-          [
-            -73.541919,
-            45.489945
-          ]
+      "segmentId": "pepsc-access-bonaventure",
+      "segmentTitle": "PEPSC - accès à l'autoroute Bonaventure fermé",
+      "segmentStreets": "Accès à l'autoroute Bonaventure depuis le parc d'entreprises de la Pointe-Saint-Charles",
+      "segmentImpact": "Circulation réservée aux entreprises locales; tout accès à l'autoroute Bonaventure depuis le PEPSC est fermé.",
+      "segmentDirection": "Accès du PEPSC vers l'autoroute Bonaventure.",
+      "segmentDateStart": "2025-11-27",
+      "segmentDateEnd": "2026-12-31",
+      "segmentDateText": "Avis en vigueur dès novembre 2025; fin publiée au 31 décembre 2026.",
+      "noGeometry": true,
+      "analysis": {
+        "sections": [
+          "Secteur du PEPSC"
         ],
-        "type": "LineString"
-      }
+        "bullets": [
+          "Circulation réservée aux entreprises locales",
+          "Accès à l'A-Bonaventure fermé"
+        ],
+        "sourceText": "Dès novembre 2025&#160;: SECTEUR DU PARC D&#8217;ENTREPRISES DE LA POINTE-SAINT-CHARLES (PEPSC) En raison des travaux de reconfiguration de l&#8217;autoroute Bonaventure en boulevard, la circulation dans le secteur du PEPSC est réservée aux entreprises locales uniquement. Tout accès à l&#8217;A-Bonaventure depuis le PEPSC est actuellement fermé. Pour tout savoir sur le projet de reconfiguration de l&#8217;autoroute Bonaventure en boulevard, cliquez ici. Suivez notre compte X dédié au secteur Bonaventure pour être informé sur les entraves en temps réel. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet."
+      },
+      "geometry": null,
+      "geometryNote": "Aucune geometrie verifiee n'est publiee pour cet avis; aucune coordonnee n'est inventee."
     },
     {
       "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
@@ -760,1303 +191,2793 @@
       "tagId": [
         1155
       ],
-      "geometry": {
+      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
+      "analysis": {
+        "sections": [
+          "Secteur du pont Clément"
+        ],
+        "bullets": [
+          "1 voie sur 2 ouverte par direction",
+          "2 voies ouvertes vers le pont Samuel-De Champlain",
+          "1 voie sur 2 ouverte vers le centre-ville"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
+      },
+      "segmentId": "pont-clement",
+      "segmentTitle": "Pont Clément - voies réduites par direction",
+      "segmentStreets": "Secteur du pont Clément",
+      "segmentImpact": "Du 3 au 15 mars: 1 voie sur 2 ouverte par direction. Du 15 mars jusqu'à l'automne 2026: 2 voies ouvertes vers le pont Samuel-De Champlain et 1 voie sur 2 ouverte vers le centre-ville.",
+      "segmentDirection": "Deux directions concernées; les voies restantes demeurent ouvertes.",
+      "segmentDateStart": "2026-03-03",
+      "segmentDateEnd": "2026-10-31",
+      "segmentDateText": "Du 3 mars à l'automne 2026 (dates de fin exactes non publiées).",
+      "segmentEndpoints": [
+        [
+          -73.561,
+          45.478
+        ],
+        [
+          -73.548,
+          45.493
+        ]
+      ],
+      "segmentGeometry": {
+        "type": "MultiLineString",
         "coordinates": [
           [
-            -73.561169,
-            45.47807
-          ],
-          [
-            -73.561169,
-            45.47807
-          ],
-          [
-            -73.561195,
-            45.478045
-          ],
-          [
-            -73.561223,
-            45.478021
-          ],
-          [
-            -73.561245,
-            45.478006
-          ],
-          [
-            -73.561268,
-            45.477991
-          ],
-          [
-            -73.56132,
-            45.478057
-          ],
-          [
-            -73.561346,
-            45.478086
-          ],
-          [
-            -73.56161,
-            45.478403
-          ],
-          [
-            -73.562205,
-            45.479121
-          ],
-          [
-            -73.562228,
-            45.479145
-          ],
-          [
-            -73.562243,
-            45.479158
-          ],
-          [
-            -73.562261,
-            45.479173
-          ],
-          [
-            -73.562206,
-            45.479215
-          ],
-          [
-            -73.562171,
-            45.479239
-          ],
-          [
-            -73.562138,
-            45.479255
-          ],
-          [
-            -73.562102,
-            45.479264
-          ],
-          [
-            -73.562079,
-            45.479268
-          ],
-          [
-            -73.562056,
-            45.479269
-          ],
-          [
-            -73.562028,
-            45.479268
-          ],
-          [
-            -73.561283,
-            45.47926
-          ],
-          [
-            -73.561229,
-            45.479259
-          ],
-          [
-            -73.560844,
-            45.479255
-          ],
-          [
-            -73.560745,
-            45.479254
-          ],
-          [
-            -73.560651,
-            45.479252
-          ],
-          [
-            -73.560273,
-            45.479249
-          ],
-          [
-            -73.5599,
-            45.479245
-          ],
-          [
-            -73.559798,
-            45.479244
-          ],
-          [
-            -73.559702,
-            45.479243
-          ],
-          [
-            -73.559322,
-            45.479241
-          ],
-          [
-            -73.558981,
-            45.479239
-          ],
-          [
-            -73.558942,
-            45.479238
-          ],
-          [
-            -73.558898,
-            45.479238
-          ],
-          [
-            -73.558815,
-            45.479237
-          ],
-          [
-            -73.558804,
-            45.479301
-          ],
-          [
-            -73.558798,
-            45.479328
-          ],
-          [
-            -73.558738,
-            45.479658
-          ],
-          [
-            -73.558696,
-            45.479863
-          ],
-          [
-            -73.558685,
-            45.479922
-          ],
-          [
-            -73.55867,
-            45.479996
-          ],
-          [
-            -73.558627,
-            45.480224
-          ],
-          [
-            -73.558609,
-            45.480316
-          ],
-          [
-            -73.558564,
-            45.480555
-          ],
-          [
-            -73.558552,
-            45.480622
-          ],
-          [
-            -73.558543,
-            45.480665
-          ],
-          [
-            -73.558504,
-            45.48087
-          ],
-          [
-            -73.558472,
-            45.481037
-          ],
-          [
-            -73.558438,
-            45.48121
-          ],
-          [
-            -73.558435,
-            45.48123
-          ],
-          [
-            -73.558424,
-            45.48129
-          ],
-          [
-            -73.558419,
-            45.481321
-          ],
-          [
-            -73.558377,
-            45.481359
-          ],
-          [
-            -73.558362,
-            45.481381
-          ],
-          [
-            -73.558297,
-            45.481729
-          ],
-          [
-            -73.55823,
-            45.482105
-          ],
-          [
-            -73.558211,
-            45.482194
-          ],
-          [
-            -73.558146,
-            45.482577
-          ],
-          [
-            -73.558193,
-            45.482665
-          ],
-          [
-            -73.558148,
-            45.482816
-          ],
-          [
-            -73.558119,
-            45.482911
-          ],
-          [
-            -73.558113,
-            45.48294
-          ],
-          [
-            -73.558064,
-            45.483221
-          ],
-          [
-            -73.557985,
-            45.483673
-          ],
-          [
-            -73.557975,
-            45.483738
-          ],
-          [
-            -73.557969,
-            45.483772
-          ],
-          [
-            -73.557961,
-            45.483823
-          ],
-          [
-            -73.55795,
-            45.483902
-          ],
-          [
-            -73.557935,
-            45.483992
-          ],
-          [
-            -73.557904,
-            45.484189
-          ],
-          [
-            -73.557866,
-            45.484405
-          ],
-          [
-            -73.557839,
-            45.484565
-          ],
-          [
-            -73.557823,
-            45.48466
-          ],
-          [
-            -73.557815,
-            45.484705
-          ],
-          [
-            -73.557806,
-            45.484749
-          ],
-          [
-            -73.557785,
-            45.484859
-          ],
-          [
-            -73.557744,
-            45.485072
-          ],
-          [
-            -73.557732,
-            45.485133
-          ],
-          [
-            -73.557713,
-            45.485224
-          ],
-          [
-            -73.557701,
-            45.485282
-          ],
-          [
-            -73.557682,
-            45.485382
-          ],
-          [
-            -73.557658,
-            45.485502
-          ],
-          [
-            -73.557641,
-            45.485593
-          ],
-          [
-            -73.557623,
-            45.485689
-          ],
-          [
-            -73.557608,
-            45.485768
-          ],
-          [
-            -73.557586,
-            45.485893
-          ],
-          [
-            -73.557463,
-            45.486578
-          ],
-          [
-            -73.557412,
-            45.486874
-          ],
-          [
-            -73.557307,
-            45.48716
-          ],
-          [
-            -73.557299,
-            45.487208
-          ],
-          [
-            -73.557295,
-            45.48723
-          ],
-          [
-            -73.557333,
-            45.487318
-          ],
-          [
-            -73.55716,
-            45.487303
-          ],
-          [
-            -73.557059,
-            45.487294
-          ],
-          [
-            -73.556833,
-            45.487273
-          ],
-          [
-            -73.55665,
-            45.487256
-          ],
-          [
-            -73.556451,
-            45.487239
-          ],
-          [
-            -73.556327,
-            45.487227
-          ],
-          [
-            -73.556219,
-            45.487216
-          ],
-          [
-            -73.556123,
-            45.487205
-          ],
-          [
-            -73.555994,
-            45.487193
-          ],
-          [
-            -73.555773,
-            45.487172
-          ],
-          [
-            -73.555688,
-            45.487164
-          ],
-          [
-            -73.555416,
-            45.48714
-          ],
-          [
-            -73.555335,
-            45.487133
-          ],
-          [
-            -73.555244,
-            45.487124
-          ],
-          [
-            -73.554596,
-            45.487064
-          ],
-          [
-            -73.554424,
-            45.487048
-          ],
-          [
-            -73.553893,
-            45.486998
-          ],
-          [
-            -73.553666,
-            45.486977
-          ],
-          [
-            -73.553178,
-            45.486931
-          ],
-          [
-            -73.552536,
-            45.48687
-          ],
-          [
-            -73.552406,
-            45.486858
-          ],
-          [
-            -73.552307,
-            45.486849
-          ],
-          [
-            -73.552059,
-            45.486828
-          ],
-          [
-            -73.5514,
-            45.486769
-          ],
-          [
-            -73.550699,
-            45.486706
-          ],
-          [
-            -73.550513,
-            45.486688
-          ],
-          [
-            -73.55021,
-            45.486661
-          ],
-          [
-            -73.550026,
-            45.486644
-          ],
-          [
-            -73.549916,
-            45.486634
-          ],
-          [
-            -73.549813,
-            45.486624
-          ],
-          [
-            -73.549258,
-            45.486576
-          ],
-          [
-            -73.548747,
-            45.486532
-          ],
-          [
-            -73.548659,
-            45.486511
-          ],
-          [
-            -73.548602,
-            45.486498
-          ],
-          [
-            -73.548538,
-            45.486484
-          ],
-          [
-            -73.548477,
-            45.486477
-          ],
-          [
-            -73.548345,
-            45.486468
-          ],
-          [
-            -73.548212,
-            45.486463
-          ],
-          [
-            -73.548094,
-            45.48646
-          ],
-          [
-            -73.547984,
-            45.486459
-          ],
-          [
-            -73.547874,
-            45.486462
-          ],
-          [
-            -73.547759,
-            45.486467
-          ],
-          [
-            -73.54764,
-            45.486474
-          ],
-          [
-            -73.547506,
-            45.486486
-          ],
-          [
-            -73.547407,
-            45.486497
-          ],
-          [
-            -73.547303,
-            45.486509
-          ],
-          [
-            -73.547199,
-            45.486525
-          ],
-          [
-            -73.547085,
-            45.486543
-          ],
-          [
-            -73.546968,
-            45.486567
-          ],
-          [
-            -73.545923,
-            45.486803
-          ],
-          [
-            -73.545598,
-            45.486876
-          ],
-          [
-            -73.545473,
-            45.486906
-          ],
-          [
-            -73.545356,
-            45.486933
-          ],
-          [
-            -73.545333,
-            45.487041
-          ],
-          [
-            -73.545321,
-            45.487096
-          ],
-          [
-            -73.545312,
-            45.487137
-          ],
-          [
-            -73.545356,
-            45.487307
-          ],
-          [
-            -73.545393,
-            45.487367
-          ],
-          [
-            -73.545481,
-            45.487508
-          ],
-          [
-            -73.545557,
-            45.488022
-          ],
-          [
-            -73.545565,
-            45.488069
-          ],
-          [
-            -73.545623,
-            45.488374
-          ],
-          [
-            -73.545656,
-            45.488554
-          ],
-          [
-            -73.545665,
-            45.488614
-          ],
-          [
-            -73.545674,
-            45.488677
-          ],
-          [
-            -73.545678,
-            45.488733
-          ],
-          [
-            -73.545684,
-            45.488798
-          ],
-          [
-            -73.545652,
-            45.488943
-          ],
-          [
-            -73.545641,
-            45.488979
-          ],
-          [
-            -73.545635,
-            45.488999
-          ],
-          [
-            -73.545619,
-            45.489031
-          ],
-          [
-            -73.545607,
-            45.489046
-          ],
-          [
-            -73.545573,
-            45.489087
-          ],
-          [
-            -73.545362,
-            45.489042
-          ],
-          [
-            -73.545145,
-            45.489
-          ],
-          [
-            -73.544795,
-            45.488929
-          ],
-          [
-            -73.544452,
-            45.488858
-          ],
-          [
-            -73.54432,
-            45.488832
-          ],
-          [
-            -73.544277,
-            45.488823
-          ],
-          [
-            -73.5442,
-            45.488887
-          ],
-          [
-            -73.544178,
-            45.488907
-          ],
-          [
-            -73.544162,
-            45.48893
-          ],
-          [
-            -73.544045,
-            45.489237
-          ],
-          [
-            -73.544013,
-            45.489332
-          ],
-          [
-            -73.544003,
-            45.489358
-          ],
-          [
-            -73.543994,
-            45.489387
-          ],
-          [
-            -73.543988,
-            45.489407
-          ],
-          [
-            -73.543985,
-            45.48943
-          ],
-          [
-            -73.54399,
-            45.489453
-          ],
-          [
-            -73.544021,
-            45.489541
-          ],
-          [
-            -73.544119,
-            45.489674
-          ],
-          [
-            -73.544257,
-            45.490061
-          ],
-          [
-            -73.54433,
-            45.490255
-          ],
-          [
-            -73.544355,
-            45.490323
-          ],
-          [
-            -73.544404,
-            45.49043
-          ],
-          [
-            -73.544486,
-            45.490668
-          ],
-          [
-            -73.54462,
-            45.49101
-          ],
-          [
-            -73.544733,
-            45.491314
-          ],
-          [
-            -73.544894,
-            45.491746
-          ],
-          [
-            -73.544944,
-            45.491886
-          ],
-          [
-            -73.544981,
-            45.491986
-          ],
-          [
-            -73.545028,
-            45.492127
-          ],
-          [
-            -73.545066,
-            45.492295
-          ],
-          [
-            -73.545095,
-            45.492445
-          ],
-          [
-            -73.545117,
-            45.492607
-          ],
-          [
-            -73.545129,
-            45.492743
-          ],
-          [
-            -73.545136,
-            45.492879
-          ],
-          [
-            -73.545135,
-            45.493067
-          ],
-          [
-            -73.545131,
-            45.493139
-          ],
-          [
-            -73.545116,
-            45.493298
-          ],
-          [
-            -73.545052,
-            45.493838
-          ],
-          [
-            -73.545028,
-            45.49404
-          ],
-          [
-            -73.545014,
-            45.494158
-          ],
-          [
-            -73.544985,
-            45.49438
-          ],
-          [
-            -73.544947,
-            45.494742
-          ],
-          [
-            -73.544893,
-            45.495436
-          ],
-          [
-            -73.544833,
-            45.496008
-          ],
-          [
-            -73.54474,
-            45.496858
-          ],
-          [
-            -73.544728,
-            45.496987
-          ],
-          [
-            -73.544673,
-            45.497446
-          ],
-          [
-            -73.544615,
-            45.497904
-          ],
-          [
-            -73.54461,
-            45.497948
-          ],
-          [
-            -73.544585,
-            45.498147
-          ],
-          [
-            -73.544575,
-            45.498234
-          ],
-          [
-            -73.544202,
-            45.501428
-          ],
-          [
-            -73.544186,
-            45.501575
-          ],
-          [
-            -73.544178,
-            45.501646
-          ],
-          [
-            -73.544122,
-            45.502149
-          ],
-          [
-            -73.544069,
-            45.502693
-          ],
-          [
-            -73.54401,
-            45.502797
-          ],
-          [
-            -73.543983,
-            45.502953
-          ],
-          [
-            -73.54392,
-            45.503647
-          ],
-          [
-            -73.543892,
-            45.503824
-          ],
-          [
-            -73.543844,
-            45.503994
-          ],
-          [
-            -73.543773,
-            45.504116
-          ],
-          [
-            -73.543682,
-            45.504224
-          ],
-          [
-            -73.543562,
-            45.504324
-          ],
-          [
-            -73.543408,
-            45.504415
-          ],
-          [
-            -73.54301,
-            45.504573
-          ],
-          [
-            -73.535084,
-            45.507499
-          ],
-          [
-            -73.534946,
-            45.507549
-          ],
-          [
-            -73.533263,
-            45.508164
-          ],
-          [
-            -73.533059,
-            45.508227
-          ],
-          [
-            -73.532902,
-            45.50826
-          ],
-          [
-            -73.532853,
-            45.50827
-          ],
-          [
-            -73.532592,
-            45.508299
-          ],
-          [
-            -73.532593,
-            45.508284
-          ],
-          [
-            -73.532617,
-            45.507862
-          ],
-          [
-            -73.532631,
-            45.507799
-          ],
-          [
-            -73.532674,
-            45.50774
-          ],
-          [
-            -73.532735,
-            45.507694
-          ],
-          [
-            -73.532804,
-            45.507664
-          ],
-          [
-            -73.532882,
-            45.507644
-          ],
-          [
-            -73.532955,
-            45.507637
-          ],
-          [
-            -73.533018,
-            45.507641
-          ],
-          [
-            -73.533082,
-            45.507652
-          ],
-          [
-            -73.533141,
-            45.507671
-          ],
-          [
-            -73.533192,
-            45.507698
-          ],
-          [
-            -73.533236,
-            45.507739
-          ],
-          [
-            -73.533267,
-            45.507788
-          ],
-          [
-            -73.533285,
-            45.507838
-          ],
-          [
-            -73.53329,
-            45.507887
-          ],
-          [
-            -73.533275,
-            45.507941
-          ],
-          [
-            -73.53322,
-            45.508017
-          ],
-          [
-            -73.533138,
-            45.508066
-          ],
-          [
-            -73.533082,
-            45.508092
-          ],
-          [
-            -73.533026,
-            45.508107
-          ],
-          [
-            -73.532901,
-            45.508106
-          ],
-          [
-            -73.532717,
-            45.508094
-          ],
-          [
-            -73.532522,
-            45.50809
-          ],
-          [
-            -73.532453,
-            45.508098
-          ],
-          [
-            -73.532389,
-            45.508118
-          ],
-          [
-            -73.532342,
-            45.508144
-          ],
-          [
-            -73.532319,
-            45.508171
-          ],
-          [
-            -73.532291,
-            45.508217
-          ],
-          [
-            -73.532205,
-            45.508466
-          ],
-          [
-            -73.532171,
-            45.508571
-          ],
-          [
-            -73.532131,
-            45.508712
-          ],
-          [
-            -73.53211,
-            45.508816
-          ],
-          [
-            -73.532059,
-            45.508958
-          ],
-          [
-            -73.531781,
-            45.509632
-          ],
-          [
-            -73.531766,
-            45.509668
-          ],
-          [
-            -73.531312,
-            45.510782
-          ],
-          [
-            -73.530991,
-            45.511813
-          ],
-          [
-            -73.530913,
-            45.51233
-          ],
-          [
-            -73.530911,
-            45.512342
-          ],
-          [
-            -73.530793,
-            45.512851
-          ],
-          [
-            -73.530761,
-            45.512931
-          ],
-          [
-            -73.530744,
-            45.512975
-          ],
-          [
-            -73.530618,
-            45.512971
-          ],
-          [
-            -73.52799,
-            45.512965
-          ],
-          [
-            -73.527882,
-            45.512967
-          ],
-          [
-            -73.527845,
-            45.512933
-          ],
-          [
-            -73.527823,
-            45.512913
-          ],
-          [
-            -73.527752,
-            45.512892
-          ],
-          [
-            -73.52764,
-            45.512885
-          ],
-          [
-            -73.527567,
-            45.512894
-          ],
-          [
-            -73.527473,
-            45.51294
-          ],
-          [
-            -73.527401,
-            45.513005
-          ],
-          [
-            -73.527376,
-            45.513027
-          ],
-          [
-            -73.527088,
-            45.513076
-          ],
-          [
-            -73.527039,
-            45.513074
-          ],
-          [
-            -73.527004,
-            45.513067
-          ],
-          [
-            -73.526969,
-            45.513039
-          ],
-          [
-            -73.526706,
-            45.512687
-          ],
-          [
-            -73.526553,
-            45.512437
-          ],
-          [
-            -73.526487,
-            45.512319
-          ],
-          [
-            -73.526044,
-            45.511522
-          ],
-          [
-            -73.525412,
-            45.510326
-          ],
-          [
-            -73.525328,
-            45.510167
-          ],
-          [
-            -73.525239,
-            45.509926
-          ],
-          [
-            -73.52514,
-            45.509583
-          ],
-          [
-            -73.524976,
-            45.509012
-          ],
-          [
-            -73.524641,
-            45.507875
-          ],
-          [
-            -73.524598,
-            45.507733
-          ],
-          [
-            -73.524536,
-            45.507531
-          ],
-          [
-            -73.524134,
-            45.506206
-          ],
-          [
-            -73.523954,
-            45.505601
-          ],
-          [
-            -73.52389,
-            45.505387
-          ],
-          [
-            -73.523573,
-            45.504322
-          ],
-          [
-            -73.523504,
-            45.504078
-          ],
-          [
-            -73.523498,
-            45.504012
-          ],
-          [
-            -73.523531,
-            45.503963
-          ],
-          [
-            -73.523581,
-            45.503935
-          ],
-          [
-            -73.523704,
-            45.503894
-          ],
-          [
-            -73.523759,
-            45.503868
-          ],
-          [
-            -73.523796,
-            45.503834
-          ],
-          [
-            -73.523831,
-            45.503789
-          ],
-          [
-            -73.523844,
-            45.503753
-          ],
-          [
-            -73.523839,
-            45.503685
-          ],
-          [
-            -73.523624,
-            45.502982
-          ],
-          [
-            -73.523518,
-            45.502629
+            [
+              -73.5421026,
+              45.4744163
+            ],
+            [
+              -73.5420396,
+              45.4743964
+            ],
+            [
+              -73.5419258,
+              45.4743587
+            ],
+            [
+              -73.5418663,
+              45.474333
+            ],
+            [
+              -73.5416034,
+              45.4747523
+            ],
+            [
+              -73.5412258,
+              45.4753789
+            ],
+            [
+              -73.5410235,
+              45.4757322
+            ],
+            [
+              -73.5408235,
+              45.4760905
+            ],
+            [
+              -73.5406319,
+              45.4764477
+            ],
+            [
+              -73.5404574,
+              45.4767893
+            ],
+            [
+              -73.5402614,
+              45.4771833
+            ],
+            [
+              -73.5401957,
+              45.4773121
+            ],
+            [
+              -73.5402677,
+              45.4773277
+            ],
+            [
+              -73.5403903,
+              45.4773573
+            ],
+            [
+              -73.5404536,
+              45.4773706
+            ],
+            [
+              -73.5405521,
+              45.4771591
+            ],
+            [
+              -73.5407023,
+              45.4768522
+            ],
+            [
+              -73.5408836,
+              45.4765007
+            ],
+            [
+              -73.5410756,
+              45.4761424
+            ],
+            [
+              -73.5413835,
+              45.4755925
+            ],
+            [
+              -73.5417431,
+              45.4749955
+            ],
+            [
+              -73.5421026,
+              45.4744163
+            ]
+          ],
+          [
+            [
+              -73.5419258,
+              45.4743587
+            ],
+            [
+              -73.5417612,
+              45.4746175
+            ],
+            [
+              -73.5415989,
+              45.474879
+            ],
+            [
+              -73.5412892,
+              45.4753994
+            ],
+            [
+              -73.5409893,
+              45.4759311
+            ],
+            [
+              -73.5408365,
+              45.4762063
+            ],
+            [
+              -73.5406968,
+              45.4764762
+            ],
+            [
+              -73.5404765,
+              45.4769033
+            ],
+            [
+              -73.5402677,
+              45.4773277
+            ]
+          ],
+          [
+            [
+              -73.5403903,
+              45.4773573
+            ],
+            [
+              -73.5404943,
+              45.4771404
+            ],
+            [
+              -73.540594,
+              45.4769357
+            ],
+            [
+              -73.5407773,
+              45.4765717
+            ],
+            [
+              -73.5409633,
+              45.4762221
+            ],
+            [
+              -73.5412117,
+              45.4757692
+            ],
+            [
+              -73.5413914,
+              45.4754565
+            ],
+            [
+              -73.5416286,
+              45.4750555
+            ]
+          ],
+          [
+            [
+              -73.5416286,
+              45.4750555
+            ],
+            [
+              -73.5417646,
+              45.4748311
+            ],
+            [
+              -73.541891,
+              45.4746289
+            ],
+            [
+              -73.5420396,
+              45.4743964
+            ]
           ]
+        ]
+      },
+      "segmentGeometrySource": "OpenStreetMap ways 700832388, 39180620, 677782935, 567717682",
+      "noGeometry": true,
+      "mapEntryKey": "66",
+      "mapEntryId": 1082,
+      "mapSourceTitle": "Secteur du pont Clément - 1 voie ouverte direction centre-ville, 2 voies ouvertes direction Samuel-De Champlain",
+      "mapStartDate": "2026-03-16",
+      "mapEndDate": "2026-11-30",
+      "mapPoint": [
+        -73.541153,
+        45.475586
+      ],
+      "segmentPoint": [
+        -73.541153,
+        45.475586
+      ],
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.5421026,
+              45.4744163
+            ],
+            [
+              -73.5420396,
+              45.4743964
+            ],
+            [
+              -73.5419258,
+              45.4743587
+            ],
+            [
+              -73.5418663,
+              45.474333
+            ],
+            [
+              -73.5416034,
+              45.4747523
+            ],
+            [
+              -73.5412258,
+              45.4753789
+            ],
+            [
+              -73.5410235,
+              45.4757322
+            ],
+            [
+              -73.5408235,
+              45.4760905
+            ],
+            [
+              -73.5406319,
+              45.4764477
+            ],
+            [
+              -73.5404574,
+              45.4767893
+            ],
+            [
+              -73.5402614,
+              45.4771833
+            ],
+            [
+              -73.5401957,
+              45.4773121
+            ],
+            [
+              -73.5402677,
+              45.4773277
+            ],
+            [
+              -73.5403903,
+              45.4773573
+            ],
+            [
+              -73.5404536,
+              45.4773706
+            ],
+            [
+              -73.5405521,
+              45.4771591
+            ],
+            [
+              -73.5407023,
+              45.4768522
+            ],
+            [
+              -73.5408836,
+              45.4765007
+            ],
+            [
+              -73.5410756,
+              45.4761424
+            ],
+            [
+              -73.5413835,
+              45.4755925
+            ],
+            [
+              -73.5417431,
+              45.4749955
+            ],
+            [
+              -73.5421026,
+              45.4744163
+            ]
+          ],
+          [
+            [
+              -73.5419258,
+              45.4743587
+            ],
+            [
+              -73.5417612,
+              45.4746175
+            ],
+            [
+              -73.5415989,
+              45.474879
+            ],
+            [
+              -73.5412892,
+              45.4753994
+            ],
+            [
+              -73.5409893,
+              45.4759311
+            ],
+            [
+              -73.5408365,
+              45.4762063
+            ],
+            [
+              -73.5406968,
+              45.4764762
+            ],
+            [
+              -73.5404765,
+              45.4769033
+            ],
+            [
+              -73.5402677,
+              45.4773277
+            ]
+          ],
+          [
+            [
+              -73.5403903,
+              45.4773573
+            ],
+            [
+              -73.5404943,
+              45.4771404
+            ],
+            [
+              -73.540594,
+              45.4769357
+            ],
+            [
+              -73.5407773,
+              45.4765717
+            ],
+            [
+              -73.5409633,
+              45.4762221
+            ],
+            [
+              -73.5412117,
+              45.4757692
+            ],
+            [
+              -73.5413914,
+              45.4754565
+            ],
+            [
+              -73.5416286,
+              45.4750555
+            ]
+          ],
+          [
+            [
+              -73.5416286,
+              45.4750555
+            ],
+            [
+              -73.5417646,
+              45.4748311
+            ],
+            [
+              -73.541891,
+              45.4746289
+            ],
+            [
+              -73.5420396,
+              45.4743964
+            ]
+          ]
+        ]
+      },
+      "geometrySource": "OpenStreetMap ways 700832388, 39180620, 677782935, 567717682",
+      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
+    },
+    {
+      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
+      "anneDebut": "2026-03-03T15:34:00.000000Z",
+      "anneFin": "2027-01-01T04:59:00.000000Z",
+      "datedebut": "2026-03-03 10:34:00",
+      "datefin": "2026-12-31 23:59:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
+      "tags": [
+        "Secteur Bonaventure"
+      ],
+      "tagId": [
+        1155
+      ],
+      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
+      "analysis": {
+        "sections": [
+          "Secteur des voies surélevées"
         ],
-        "type": "LineString"
-      }
+        "bullets": [
+          "2 voies sur 3 ouvertes dans cette direction"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
+      },
+      "segmentId": "voies-surelevees-vers-sud",
+      "segmentTitle": "Voies surélevées - vers le pont Samuel-De Champlain",
+      "segmentStreets": "Voies surélevées, entre le pont Victoria et la rue Wellington",
+      "segmentImpact": "2 voies sur 3 ouvertes par direction; une voie est retranchée dans cette direction.",
+      "segmentDirection": "Vers le pont Samuel-De Champlain.",
+      "segmentDateStart": "2026-03-06",
+      "segmentDateEnd": "2026-05-31",
+      "segmentDateText": "Du 6 mars jusqu'à mai 2026 (date exacte de fin non publiée).",
+      "segmentEndpoints": [
+        [
+          -73.562,
+          45.478
+        ],
+        [
+          -73.55,
+          45.49
+        ]
+      ],
+      "geometry": null,
+      "noGeometry": true,
+      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
+    },
+    {
+      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
+      "anneDebut": "2026-03-03T15:34:00.000000Z",
+      "anneFin": "2027-01-01T04:59:00.000000Z",
+      "datedebut": "2026-03-03 10:34:00",
+      "datefin": "2026-12-31 23:59:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
+      "tags": [
+        "Secteur Bonaventure"
+      ],
+      "tagId": [
+        1155
+      ],
+      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
+      "analysis": {
+        "sections": [
+          "Secteur des voies surélevées"
+        ],
+        "bullets": [
+          "2 voies sur 3 ouvertes dans cette direction"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
+      },
+      "segmentId": "voies-surelevees-vers-centre-ville",
+      "segmentTitle": "Voies surélevées - vers le centre-ville",
+      "segmentStreets": "Voies surélevées, entre le pont Victoria et la rue Wellington",
+      "segmentImpact": "2 voies sur 3 ouvertes par direction; une voie est retranchée dans cette direction.",
+      "segmentDirection": "Vers le centre-ville.",
+      "segmentDateStart": "2026-03-06",
+      "segmentDateEnd": "2026-05-31",
+      "segmentDateText": "Du 6 mars jusqu'à mai 2026 (date exacte de fin non publiée).",
+      "segmentEndpoints": [
+        [
+          -73.55,
+          45.49
+        ],
+        [
+          -73.562,
+          45.478
+        ]
+      ],
+      "geometry": null,
+      "noGeometry": true,
+      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
+    },
+    {
+      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
+      "anneDebut": "2026-03-03T15:34:00.000000Z",
+      "anneFin": "2027-01-01T04:59:00.000000Z",
+      "datedebut": "2026-03-03 10:34:00",
+      "datefin": "2026-12-31 23:59:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
+      "tags": [
+        "Secteur Bonaventure"
+      ],
+      "tagId": [
+        1155
+      ],
+      "segmentGeometryNote": "Ligne OSM verifiee et recoupee avec le point officiel de la carte interactive PJCCI (entrave 34).",
+      "analysis": {
+        "sections": [
+          "Secteur des voies surélevées"
+        ],
+        "bullets": [
+          "Fermeture de la sortie 3 en direction du pont Samuel-De Champlain"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
+      },
+      "segmentId": "sortie-3-vers-sud",
+      "segmentTitle": "Sortie 3 - fermeture vers le pont Samuel-De Champlain",
+      "segmentStreets": "Sortie 3 de l'autoroute Bonaventure",
+      "segmentImpact": "Fermeture de la sortie 3 de l'autoroute en direction du pont Samuel-De Champlain.",
+      "segmentDirection": "Vers le pont Samuel-De Champlain.",
+      "segmentDateStart": "2026-01-01",
+      "segmentDateEnd": "2026-12-31",
+      "segmentDateText": "Entrave de longue durée pendant l'année 2026.",
+      "segmentPoint": [
+        -73.541451,
+        45.488342
+      ],
+      "noGeometry": true,
+      "segmentGeometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.5501271,
+            45.4901595
+          ],
+          [
+            -73.5496889,
+            45.4899399
+          ]
+        ]
+      },
+      "segmentGeometrySource": "OpenStreetMap ways 23027179",
+      "mapEntryKey": "34",
+      "mapEntryId": 1062,
+      "mapSourceTitle": "Fermeture de la sortie 3 de l'autoroute en direction du pont Samuel-De Champlain",
+      "mapStartDate": "2025-11-24",
+      "mapEndDate": "2026-12-31",
+      "mapPoint": [
+        -73.541451,
+        45.488342
+      ],
+      "mapPointSource": "PJCCI carte interactive, entrave 1062",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.5501271,
+            45.4901595
+          ],
+          [
+            -73.5496889,
+            45.4899399
+          ]
+        ]
+      },
+      "geometrySource": "OpenStreetMap ways 23027179",
+      "geometryNote": "Ligne OSM verifiee et recoupee avec le point officiel de la carte interactive PJCCI (entrave 34)."
+    },
+    {
+      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
+      "anneDebut": "2026-03-03T15:34:00.000000Z",
+      "anneFin": "2027-01-01T04:59:00.000000Z",
+      "datedebut": "2026-03-03 10:34:00",
+      "datefin": "2026-12-31 23:59:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
+      "tags": [
+        "Secteur Bonaventure"
+      ],
+      "tagId": [
+        1155
+      ],
+      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
+      "analysis": {
+        "sections": [
+          "Secteur du boulevard Gaétan-Laberge"
+        ],
+        "bullets": [
+          "1 voie sur 2 ouverte dans cette direction"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
+      },
+      "segmentId": "gaetan-laberge-vers-sud",
+      "segmentTitle": "Boulevard Gaétan-Laberge - vers le pont Samuel-De Champlain",
+      "segmentStreets": "Boulevard Gaétan-Laberge",
+      "segmentImpact": "1 voie sur 2 ouverte par direction; une voie est retranchée dans cette direction.",
+      "segmentDirection": "Vers le pont Samuel-De Champlain.",
+      "segmentDateStart": "2026-01-01",
+      "segmentDateEnd": "2026-12-31",
+      "segmentDateText": "Entrave de longue durée pendant l'année 2026.",
+      "segmentEndpoints": [
+        [
+          -73.562,
+          45.466
+        ],
+        [
+          -73.541,
+          45.49
+        ]
+      ],
+      "segmentGeometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.5624665,
+              45.4699244
+            ],
+            [
+              -73.562495,
+              45.4698818
+            ],
+            [
+              -73.5625896,
+              45.4697127
+            ],
+            [
+              -73.5627101,
+              45.4695107
+            ],
+            [
+              -73.56275,
+              45.4694407
+            ],
+            [
+              -73.5627779,
+              45.4693793
+            ],
+            [
+              -73.5628659,
+              45.4691703
+            ],
+            [
+              -73.5629362,
+              45.4689057
+            ],
+            [
+              -73.5629462,
+              45.4688186
+            ],
+            [
+              -73.5629724,
+              45.4685452
+            ],
+            [
+              -73.5629784,
+              45.4683824
+            ],
+            [
+              -73.5629723,
+              45.468244
+            ],
+            [
+              -73.562955,
+              45.4681135
+            ],
+            [
+              -73.5629435,
+              45.4680291
+            ],
+            [
+              -73.5629076,
+              45.4678761
+            ],
+            [
+              -73.5628963,
+              45.467821
+            ],
+            [
+              -73.5628817,
+              45.4677639
+            ],
+            [
+              -73.5628631,
+              45.4677154
+            ],
+            [
+              -73.5626227,
+              45.4670892
+            ],
+            [
+              -73.5625596,
+              45.4669303
+            ],
+            [
+              -73.5625004,
+              45.4667836
+            ],
+            [
+              -73.562475,
+              45.4666869
+            ],
+            [
+              -73.5624561,
+              45.4665971
+            ],
+            [
+              -73.5624366,
+              45.4664155
+            ],
+            [
+              -73.5624474,
+              45.4662371
+            ]
+          ],
+          [
+            [
+              -73.5628389,
+              45.4647339
+            ],
+            [
+              -73.562832,
+              45.464791
+            ],
+            [
+              -73.5627415,
+              45.4650918
+            ],
+            [
+              -73.5624626,
+              45.4656595
+            ],
+            [
+              -73.5624176,
+              45.4657816
+            ],
+            [
+              -73.562375,
+              45.4659284
+            ],
+            [
+              -73.5623464,
+              45.4660739
+            ],
+            [
+              -73.5623405,
+              45.466126
+            ],
+            [
+              -73.562332,
+              45.4661921
+            ],
+            [
+              -73.5623311,
+              45.4662336
+            ]
+          ],
+          [
+            [
+              -73.5619382,
+              45.4703349
+            ],
+            [
+              -73.5618702,
+              45.4704059
+            ],
+            [
+              -73.5618341,
+              45.4704413
+            ],
+            [
+              -73.5617637,
+              45.4705077
+            ],
+            [
+              -73.5616587,
+              45.4705988
+            ],
+            [
+              -73.5615747,
+              45.4706639
+            ],
+            [
+              -73.5614899,
+              45.4707271
+            ],
+            [
+              -73.5613862,
+              45.4707985
+            ],
+            [
+              -73.5613003,
+              45.4708544
+            ],
+            [
+              -73.5612197,
+              45.4709052
+            ],
+            [
+              -73.5611047,
+              45.4709758
+            ],
+            [
+              -73.5609978,
+              45.471037
+            ],
+            [
+              -73.5608947,
+              45.4710937
+            ],
+            [
+              -73.5608012,
+              45.4711398
+            ],
+            [
+              -73.5607564,
+              45.4711678
+            ],
+            [
+              -73.5605423,
+              45.4712745
+            ]
+          ],
+          [
+            [
+              -73.5594669,
+              45.4718356
+            ],
+            [
+              -73.5595301,
+              45.471816
+            ],
+            [
+              -73.5596101,
+              45.4717893
+            ],
+            [
+              -73.5597577,
+              45.4717353
+            ],
+            [
+              -73.5598848,
+              45.4716844
+            ],
+            [
+              -73.5600977,
+              45.4715968
+            ]
+          ],
+          [
+            [
+              -73.5579883,
+              45.4722301
+            ],
+            [
+              -73.5578202,
+              45.472305
+            ],
+            [
+              -73.5574626,
+              45.4724655
+            ]
+          ],
+          [
+            [
+              -73.5499757,
+              45.4746104
+            ],
+            [
+              -73.5494186,
+              45.4745176
+            ],
+            [
+              -73.5492768,
+              45.4744944
+            ]
+          ]
+        ]
+      },
+      "segmentGeometrySource": "OpenStreetMap ways 1164875653, 1417416796, 429919712, 1074363189, 1074363198, 1074363830",
+      "noGeometry": true,
+      "mapEntryKey": "64",
+      "mapEntryId": 1082,
+      "mapSourceTitle": "Boul. Gaétan-Laberge - 1 voie ouverte par direction",
+      "mapStartDate": "2026-03-03",
+      "mapEndDate": "2026-12-31",
+      "mapPoint": [
+        -73.543877,
+        45.475708
+      ],
+      "segmentPoint": [
+        -73.543877,
+        45.475708
+      ],
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.5624665,
+              45.4699244
+            ],
+            [
+              -73.562495,
+              45.4698818
+            ],
+            [
+              -73.5625896,
+              45.4697127
+            ],
+            [
+              -73.5627101,
+              45.4695107
+            ],
+            [
+              -73.56275,
+              45.4694407
+            ],
+            [
+              -73.5627779,
+              45.4693793
+            ],
+            [
+              -73.5628659,
+              45.4691703
+            ],
+            [
+              -73.5629362,
+              45.4689057
+            ],
+            [
+              -73.5629462,
+              45.4688186
+            ],
+            [
+              -73.5629724,
+              45.4685452
+            ],
+            [
+              -73.5629784,
+              45.4683824
+            ],
+            [
+              -73.5629723,
+              45.468244
+            ],
+            [
+              -73.562955,
+              45.4681135
+            ],
+            [
+              -73.5629435,
+              45.4680291
+            ],
+            [
+              -73.5629076,
+              45.4678761
+            ],
+            [
+              -73.5628963,
+              45.467821
+            ],
+            [
+              -73.5628817,
+              45.4677639
+            ],
+            [
+              -73.5628631,
+              45.4677154
+            ],
+            [
+              -73.5626227,
+              45.4670892
+            ],
+            [
+              -73.5625596,
+              45.4669303
+            ],
+            [
+              -73.5625004,
+              45.4667836
+            ],
+            [
+              -73.562475,
+              45.4666869
+            ],
+            [
+              -73.5624561,
+              45.4665971
+            ],
+            [
+              -73.5624366,
+              45.4664155
+            ],
+            [
+              -73.5624474,
+              45.4662371
+            ]
+          ],
+          [
+            [
+              -73.5628389,
+              45.4647339
+            ],
+            [
+              -73.562832,
+              45.464791
+            ],
+            [
+              -73.5627415,
+              45.4650918
+            ],
+            [
+              -73.5624626,
+              45.4656595
+            ],
+            [
+              -73.5624176,
+              45.4657816
+            ],
+            [
+              -73.562375,
+              45.4659284
+            ],
+            [
+              -73.5623464,
+              45.4660739
+            ],
+            [
+              -73.5623405,
+              45.466126
+            ],
+            [
+              -73.562332,
+              45.4661921
+            ],
+            [
+              -73.5623311,
+              45.4662336
+            ]
+          ],
+          [
+            [
+              -73.5619382,
+              45.4703349
+            ],
+            [
+              -73.5618702,
+              45.4704059
+            ],
+            [
+              -73.5618341,
+              45.4704413
+            ],
+            [
+              -73.5617637,
+              45.4705077
+            ],
+            [
+              -73.5616587,
+              45.4705988
+            ],
+            [
+              -73.5615747,
+              45.4706639
+            ],
+            [
+              -73.5614899,
+              45.4707271
+            ],
+            [
+              -73.5613862,
+              45.4707985
+            ],
+            [
+              -73.5613003,
+              45.4708544
+            ],
+            [
+              -73.5612197,
+              45.4709052
+            ],
+            [
+              -73.5611047,
+              45.4709758
+            ],
+            [
+              -73.5609978,
+              45.471037
+            ],
+            [
+              -73.5608947,
+              45.4710937
+            ],
+            [
+              -73.5608012,
+              45.4711398
+            ],
+            [
+              -73.5607564,
+              45.4711678
+            ],
+            [
+              -73.5605423,
+              45.4712745
+            ]
+          ],
+          [
+            [
+              -73.5594669,
+              45.4718356
+            ],
+            [
+              -73.5595301,
+              45.471816
+            ],
+            [
+              -73.5596101,
+              45.4717893
+            ],
+            [
+              -73.5597577,
+              45.4717353
+            ],
+            [
+              -73.5598848,
+              45.4716844
+            ],
+            [
+              -73.5600977,
+              45.4715968
+            ]
+          ],
+          [
+            [
+              -73.5579883,
+              45.4722301
+            ],
+            [
+              -73.5578202,
+              45.472305
+            ],
+            [
+              -73.5574626,
+              45.4724655
+            ]
+          ],
+          [
+            [
+              -73.5499757,
+              45.4746104
+            ],
+            [
+              -73.5494186,
+              45.4745176
+            ],
+            [
+              -73.5492768,
+              45.4744944
+            ]
+          ]
+        ]
+      },
+      "geometrySource": "OpenStreetMap ways 1164875653, 1417416796, 429919712, 1074363189, 1074363198, 1074363830",
+      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
+    },
+    {
+      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
+      "anneDebut": "2026-03-03T15:34:00.000000Z",
+      "anneFin": "2027-01-01T04:59:00.000000Z",
+      "datedebut": "2026-03-03 10:34:00",
+      "datefin": "2026-12-31 23:59:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
+      "tags": [
+        "Secteur Bonaventure"
+      ],
+      "tagId": [
+        1155
+      ],
+      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
+      "analysis": {
+        "sections": [
+          "Secteur du boulevard Gaétan-Laberge"
+        ],
+        "bullets": [
+          "1 voie sur 2 ouverte dans cette direction"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
+      },
+      "segmentId": "gaetan-laberge-vers-centre-ville",
+      "segmentTitle": "Boulevard Gaétan-Laberge - vers le centre-ville",
+      "segmentStreets": "Boulevard Gaétan-Laberge",
+      "segmentImpact": "1 voie sur 2 ouverte par direction; une voie est retranchée dans cette direction.",
+      "segmentDirection": "Vers le centre-ville.",
+      "segmentDateStart": "2026-01-01",
+      "segmentDateEnd": "2026-12-31",
+      "segmentDateText": "Entrave de longue durée pendant l'année 2026.",
+      "segmentEndpoints": [
+        [
+          -73.541,
+          45.49
+        ],
+        [
+          -73.562,
+          45.466
+        ]
+      ],
+      "segmentGeometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.5624665,
+              45.4699244
+            ],
+            [
+              -73.562495,
+              45.4698818
+            ],
+            [
+              -73.5625896,
+              45.4697127
+            ],
+            [
+              -73.5627101,
+              45.4695107
+            ],
+            [
+              -73.56275,
+              45.4694407
+            ],
+            [
+              -73.5627779,
+              45.4693793
+            ],
+            [
+              -73.5628659,
+              45.4691703
+            ],
+            [
+              -73.5629362,
+              45.4689057
+            ],
+            [
+              -73.5629462,
+              45.4688186
+            ],
+            [
+              -73.5629724,
+              45.4685452
+            ],
+            [
+              -73.5629784,
+              45.4683824
+            ],
+            [
+              -73.5629723,
+              45.468244
+            ],
+            [
+              -73.562955,
+              45.4681135
+            ],
+            [
+              -73.5629435,
+              45.4680291
+            ],
+            [
+              -73.5629076,
+              45.4678761
+            ],
+            [
+              -73.5628963,
+              45.467821
+            ],
+            [
+              -73.5628817,
+              45.4677639
+            ],
+            [
+              -73.5628631,
+              45.4677154
+            ],
+            [
+              -73.5626227,
+              45.4670892
+            ],
+            [
+              -73.5625596,
+              45.4669303
+            ],
+            [
+              -73.5625004,
+              45.4667836
+            ],
+            [
+              -73.562475,
+              45.4666869
+            ],
+            [
+              -73.5624561,
+              45.4665971
+            ],
+            [
+              -73.5624366,
+              45.4664155
+            ],
+            [
+              -73.5624474,
+              45.4662371
+            ]
+          ],
+          [
+            [
+              -73.5628389,
+              45.4647339
+            ],
+            [
+              -73.562832,
+              45.464791
+            ],
+            [
+              -73.5627415,
+              45.4650918
+            ],
+            [
+              -73.5624626,
+              45.4656595
+            ],
+            [
+              -73.5624176,
+              45.4657816
+            ],
+            [
+              -73.562375,
+              45.4659284
+            ],
+            [
+              -73.5623464,
+              45.4660739
+            ],
+            [
+              -73.5623405,
+              45.466126
+            ],
+            [
+              -73.562332,
+              45.4661921
+            ],
+            [
+              -73.5623311,
+              45.4662336
+            ]
+          ],
+          [
+            [
+              -73.5619382,
+              45.4703349
+            ],
+            [
+              -73.5618702,
+              45.4704059
+            ],
+            [
+              -73.5618341,
+              45.4704413
+            ],
+            [
+              -73.5617637,
+              45.4705077
+            ],
+            [
+              -73.5616587,
+              45.4705988
+            ],
+            [
+              -73.5615747,
+              45.4706639
+            ],
+            [
+              -73.5614899,
+              45.4707271
+            ],
+            [
+              -73.5613862,
+              45.4707985
+            ],
+            [
+              -73.5613003,
+              45.4708544
+            ],
+            [
+              -73.5612197,
+              45.4709052
+            ],
+            [
+              -73.5611047,
+              45.4709758
+            ],
+            [
+              -73.5609978,
+              45.471037
+            ],
+            [
+              -73.5608947,
+              45.4710937
+            ],
+            [
+              -73.5608012,
+              45.4711398
+            ],
+            [
+              -73.5607564,
+              45.4711678
+            ],
+            [
+              -73.5605423,
+              45.4712745
+            ]
+          ],
+          [
+            [
+              -73.5594669,
+              45.4718356
+            ],
+            [
+              -73.5595301,
+              45.471816
+            ],
+            [
+              -73.5596101,
+              45.4717893
+            ],
+            [
+              -73.5597577,
+              45.4717353
+            ],
+            [
+              -73.5598848,
+              45.4716844
+            ],
+            [
+              -73.5600977,
+              45.4715968
+            ]
+          ],
+          [
+            [
+              -73.5579883,
+              45.4722301
+            ],
+            [
+              -73.5578202,
+              45.472305
+            ],
+            [
+              -73.5574626,
+              45.4724655
+            ]
+          ],
+          [
+            [
+              -73.5499757,
+              45.4746104
+            ],
+            [
+              -73.5494186,
+              45.4745176
+            ],
+            [
+              -73.5492768,
+              45.4744944
+            ]
+          ]
+        ]
+      },
+      "segmentGeometrySource": "OpenStreetMap ways 1164875653, 1417416796, 429919712, 1074363189, 1074363198, 1074363830",
+      "noGeometry": true,
+      "mapEntryKey": "64",
+      "mapEntryId": 1082,
+      "mapSourceTitle": "Boul. Gaétan-Laberge - 1 voie ouverte par direction",
+      "mapStartDate": "2026-03-03",
+      "mapEndDate": "2026-12-31",
+      "mapPoint": [
+        -73.543877,
+        45.475708
+      ],
+      "segmentPoint": [
+        -73.543877,
+        45.475708
+      ],
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.5624665,
+              45.4699244
+            ],
+            [
+              -73.562495,
+              45.4698818
+            ],
+            [
+              -73.5625896,
+              45.4697127
+            ],
+            [
+              -73.5627101,
+              45.4695107
+            ],
+            [
+              -73.56275,
+              45.4694407
+            ],
+            [
+              -73.5627779,
+              45.4693793
+            ],
+            [
+              -73.5628659,
+              45.4691703
+            ],
+            [
+              -73.5629362,
+              45.4689057
+            ],
+            [
+              -73.5629462,
+              45.4688186
+            ],
+            [
+              -73.5629724,
+              45.4685452
+            ],
+            [
+              -73.5629784,
+              45.4683824
+            ],
+            [
+              -73.5629723,
+              45.468244
+            ],
+            [
+              -73.562955,
+              45.4681135
+            ],
+            [
+              -73.5629435,
+              45.4680291
+            ],
+            [
+              -73.5629076,
+              45.4678761
+            ],
+            [
+              -73.5628963,
+              45.467821
+            ],
+            [
+              -73.5628817,
+              45.4677639
+            ],
+            [
+              -73.5628631,
+              45.4677154
+            ],
+            [
+              -73.5626227,
+              45.4670892
+            ],
+            [
+              -73.5625596,
+              45.4669303
+            ],
+            [
+              -73.5625004,
+              45.4667836
+            ],
+            [
+              -73.562475,
+              45.4666869
+            ],
+            [
+              -73.5624561,
+              45.4665971
+            ],
+            [
+              -73.5624366,
+              45.4664155
+            ],
+            [
+              -73.5624474,
+              45.4662371
+            ]
+          ],
+          [
+            [
+              -73.5628389,
+              45.4647339
+            ],
+            [
+              -73.562832,
+              45.464791
+            ],
+            [
+              -73.5627415,
+              45.4650918
+            ],
+            [
+              -73.5624626,
+              45.4656595
+            ],
+            [
+              -73.5624176,
+              45.4657816
+            ],
+            [
+              -73.562375,
+              45.4659284
+            ],
+            [
+              -73.5623464,
+              45.4660739
+            ],
+            [
+              -73.5623405,
+              45.466126
+            ],
+            [
+              -73.562332,
+              45.4661921
+            ],
+            [
+              -73.5623311,
+              45.4662336
+            ]
+          ],
+          [
+            [
+              -73.5619382,
+              45.4703349
+            ],
+            [
+              -73.5618702,
+              45.4704059
+            ],
+            [
+              -73.5618341,
+              45.4704413
+            ],
+            [
+              -73.5617637,
+              45.4705077
+            ],
+            [
+              -73.5616587,
+              45.4705988
+            ],
+            [
+              -73.5615747,
+              45.4706639
+            ],
+            [
+              -73.5614899,
+              45.4707271
+            ],
+            [
+              -73.5613862,
+              45.4707985
+            ],
+            [
+              -73.5613003,
+              45.4708544
+            ],
+            [
+              -73.5612197,
+              45.4709052
+            ],
+            [
+              -73.5611047,
+              45.4709758
+            ],
+            [
+              -73.5609978,
+              45.471037
+            ],
+            [
+              -73.5608947,
+              45.4710937
+            ],
+            [
+              -73.5608012,
+              45.4711398
+            ],
+            [
+              -73.5607564,
+              45.4711678
+            ],
+            [
+              -73.5605423,
+              45.4712745
+            ]
+          ],
+          [
+            [
+              -73.5594669,
+              45.4718356
+            ],
+            [
+              -73.5595301,
+              45.471816
+            ],
+            [
+              -73.5596101,
+              45.4717893
+            ],
+            [
+              -73.5597577,
+              45.4717353
+            ],
+            [
+              -73.5598848,
+              45.4716844
+            ],
+            [
+              -73.5600977,
+              45.4715968
+            ]
+          ],
+          [
+            [
+              -73.5579883,
+              45.4722301
+            ],
+            [
+              -73.5578202,
+              45.472305
+            ],
+            [
+              -73.5574626,
+              45.4724655
+            ]
+          ],
+          [
+            [
+              -73.5499757,
+              45.4746104
+            ],
+            [
+              -73.5494186,
+              45.4745176
+            ],
+            [
+              -73.5492768,
+              45.4744944
+            ]
+          ]
+        ]
+      },
+      "geometrySource": "OpenStreetMap ways 1164875653, 1417416796, 429919712, 1074363189, 1074363198, 1074363830",
+      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
+    },
+    {
+      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
+      "anneDebut": "2026-03-03T15:34:00.000000Z",
+      "anneFin": "2027-01-01T04:59:00.000000Z",
+      "datedebut": "2026-03-03 10:34:00",
+      "datefin": "2026-12-31 23:59:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
+      "tags": [
+        "Secteur Bonaventure"
+      ],
+      "tagId": [
+        1155
+      ],
+      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
+      "analysis": {
+        "sections": [
+          "Secteur des voies entre le pont Victoria et le pont Clément"
+        ],
+        "bullets": [
+          "2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain",
+          "Attention: respecter la signalisation"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
+      },
+      "segmentId": "voies-victoria-clement-vers-sud",
+      "segmentTitle": "Voies entre les ponts Victoria et Clément - vers le pont Samuel-De Champlain",
+      "segmentStreets": "Voies entre le pont Victoria et le pont Clément",
+      "segmentImpact": "2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain.",
+      "segmentDirection": "Vers le pont Samuel-De Champlain.",
+      "segmentDateStart": "2026-01-01",
+      "segmentDateEnd": "2026-12-31",
+      "segmentDateText": "Entrave de longue durée pendant l'année 2026.",
+      "segmentComplement": "Attention: les travaux de reconfiguration imposent certaines modifications de la configuration des voies. Circulez prudemment et respectez la signalisation.",
+      "segmentEndpoints": [
+        [
+          -73.562,
+          45.478
+        ],
+        [
+          -73.548,
+          45.493
+        ]
+      ],
+      "segmentGeometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.5464572,
+              45.4895408
+            ],
+            [
+              -73.5478694,
+              45.4898088
+            ],
+            [
+              -73.5488425,
+              45.4899941
+            ]
+          ],
+          [
+            [
+              -73.540311,
+              45.4883166
+            ],
+            [
+              -73.5404371,
+              45.4883579
+            ],
+            [
+              -73.5405394,
+              45.4883888
+            ],
+            [
+              -73.5406414,
+              45.4884184
+            ],
+            [
+              -73.5407583,
+              45.4884491
+            ],
+            [
+              -73.5408867,
+              45.4884816
+            ],
+            [
+              -73.5409881,
+              45.4885042
+            ],
+            [
+              -73.5411162,
+              45.4885309
+            ],
+            [
+              -73.5414526,
+              45.488594
+            ]
+          ],
+          [
+            [
+              -73.5399654,
+              45.4880475
+            ],
+            [
+              -73.5398551,
+              45.4879975
+            ],
+            [
+              -73.5397619,
+              45.4879548
+            ],
+            [
+              -73.5396799,
+              45.4879137
+            ],
+            [
+              -73.5395933,
+              45.4878694
+            ],
+            [
+              -73.539506,
+              45.4878228
+            ],
+            [
+              -73.5394209,
+              45.4877762
+            ],
+            [
+              -73.5393283,
+              45.4877213
+            ],
+            [
+              -73.5392516,
+              45.4876735
+            ],
+            [
+              -73.5391631,
+              45.4876165
+            ],
+            [
+              -73.5390939,
+              45.4875698
+            ],
+            [
+              -73.5390115,
+              45.4875119
+            ],
+            [
+              -73.5389405,
+              45.4874595
+            ],
+            [
+              -73.5388623,
+              45.4873979
+            ],
+            [
+              -73.5387923,
+              45.4873406
+            ],
+            [
+              -73.5387144,
+              45.4872746
+            ],
+            [
+              -73.5386421,
+              45.4872088
+            ],
+            [
+              -73.5385801,
+              45.4871494
+            ],
+            [
+              -73.5385096,
+              45.4870807
+            ],
+            [
+              -73.5384482,
+              45.4870152
+            ],
+            [
+              -73.5383855,
+              45.4869489
+            ],
+            [
+              -73.5383341,
+              45.4868922
+            ],
+            [
+              -73.5382807,
+              45.4868265
+            ],
+            [
+              -73.538233,
+              45.4867664
+            ],
+            [
+              -73.5381763,
+              45.4866908
+            ],
+            [
+              -73.538124,
+              45.4866136
+            ],
+            [
+              -73.5380728,
+              45.4865357
+            ],
+            [
+              -73.5380275,
+              45.4864625
+            ],
+            [
+              -73.5379821,
+              45.4863821
+            ],
+            [
+              -73.5379425,
+              45.4863097
+            ],
+            [
+              -73.5379052,
+              45.4862317
+            ],
+            [
+              -73.5378699,
+              45.4861541
+            ],
+            [
+              -73.537837,
+              45.4860748
+            ],
+            [
+              -73.5378117,
+              45.4860052
+            ],
+            [
+              -73.5377865,
+              45.4859373
+            ],
+            [
+              -73.5377562,
+              45.4858474
+            ],
+            [
+              -73.537735,
+              45.485768
+            ],
+            [
+              -73.5377152,
+              45.4856858
+            ],
+            [
+              -73.5377036,
+              45.4856326
+            ]
+          ]
+        ]
+      },
+      "segmentGeometrySource": "OpenStreetMap ways 1173070237, 1166103970, 111771062",
+      "noGeometry": true,
+      "mapEntryKey": "65",
+      "mapEntryId": 1083,
+      "mapSourceTitle": "Secteur des voies entre le pont Victoria et le pont Clément - 2 voies sur 3 ouvertes direction pont Samuel-De Champlain",
+      "mapStartDate": "2026-03-03",
+      "mapEndDate": "2026-12-31",
+      "mapPoint": [
+        -73.538406,
+        45.482822
+      ],
+      "segmentPoint": [
+        -73.538406,
+        45.482822
+      ],
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.5464572,
+              45.4895408
+            ],
+            [
+              -73.5478694,
+              45.4898088
+            ],
+            [
+              -73.5488425,
+              45.4899941
+            ]
+          ],
+          [
+            [
+              -73.540311,
+              45.4883166
+            ],
+            [
+              -73.5404371,
+              45.4883579
+            ],
+            [
+              -73.5405394,
+              45.4883888
+            ],
+            [
+              -73.5406414,
+              45.4884184
+            ],
+            [
+              -73.5407583,
+              45.4884491
+            ],
+            [
+              -73.5408867,
+              45.4884816
+            ],
+            [
+              -73.5409881,
+              45.4885042
+            ],
+            [
+              -73.5411162,
+              45.4885309
+            ],
+            [
+              -73.5414526,
+              45.488594
+            ]
+          ],
+          [
+            [
+              -73.5399654,
+              45.4880475
+            ],
+            [
+              -73.5398551,
+              45.4879975
+            ],
+            [
+              -73.5397619,
+              45.4879548
+            ],
+            [
+              -73.5396799,
+              45.4879137
+            ],
+            [
+              -73.5395933,
+              45.4878694
+            ],
+            [
+              -73.539506,
+              45.4878228
+            ],
+            [
+              -73.5394209,
+              45.4877762
+            ],
+            [
+              -73.5393283,
+              45.4877213
+            ],
+            [
+              -73.5392516,
+              45.4876735
+            ],
+            [
+              -73.5391631,
+              45.4876165
+            ],
+            [
+              -73.5390939,
+              45.4875698
+            ],
+            [
+              -73.5390115,
+              45.4875119
+            ],
+            [
+              -73.5389405,
+              45.4874595
+            ],
+            [
+              -73.5388623,
+              45.4873979
+            ],
+            [
+              -73.5387923,
+              45.4873406
+            ],
+            [
+              -73.5387144,
+              45.4872746
+            ],
+            [
+              -73.5386421,
+              45.4872088
+            ],
+            [
+              -73.5385801,
+              45.4871494
+            ],
+            [
+              -73.5385096,
+              45.4870807
+            ],
+            [
+              -73.5384482,
+              45.4870152
+            ],
+            [
+              -73.5383855,
+              45.4869489
+            ],
+            [
+              -73.5383341,
+              45.4868922
+            ],
+            [
+              -73.5382807,
+              45.4868265
+            ],
+            [
+              -73.538233,
+              45.4867664
+            ],
+            [
+              -73.5381763,
+              45.4866908
+            ],
+            [
+              -73.538124,
+              45.4866136
+            ],
+            [
+              -73.5380728,
+              45.4865357
+            ],
+            [
+              -73.5380275,
+              45.4864625
+            ],
+            [
+              -73.5379821,
+              45.4863821
+            ],
+            [
+              -73.5379425,
+              45.4863097
+            ],
+            [
+              -73.5379052,
+              45.4862317
+            ],
+            [
+              -73.5378699,
+              45.4861541
+            ],
+            [
+              -73.537837,
+              45.4860748
+            ],
+            [
+              -73.5378117,
+              45.4860052
+            ],
+            [
+              -73.5377865,
+              45.4859373
+            ],
+            [
+              -73.5377562,
+              45.4858474
+            ],
+            [
+              -73.537735,
+              45.485768
+            ],
+            [
+              -73.5377152,
+              45.4856858
+            ],
+            [
+              -73.5377036,
+              45.4856326
+            ]
+          ]
+        ]
+      },
+      "geometrySource": "OpenStreetMap ways 1173070237, 1166103970, 111771062",
+      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
+    },
+    {
+      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
+      "anneDebut": "2026-03-03T15:34:00.000000Z",
+      "anneFin": "2027-01-01T04:59:00.000000Z",
+      "datedebut": "2026-03-03 10:34:00",
+      "datefin": "2026-12-31 23:59:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
+      "tags": [
+        "Secteur Bonaventure"
+      ],
+      "tagId": [
+        1155
+      ],
+      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
+      "analysis": {
+        "sections": [
+          "Secteur des voies entre le pont Victoria et le pont Clément"
+        ],
+        "bullets": [
+          "3 voies ouvertes en direction du centre-ville",
+          "Attention: respecter la signalisation"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
+      },
+      "segmentId": "voies-victoria-clement-vers-centre-ville",
+      "segmentTitle": "Voies entre les ponts Victoria et Clément - vers le centre-ville",
+      "segmentStreets": "Voies entre le pont Victoria et le pont Clément",
+      "segmentImpact": "3 voies ouvertes en direction du centre-ville, avec possibles exceptions selon les travaux.",
+      "segmentDirection": "Vers le centre-ville.",
+      "segmentDateStart": "2026-01-01",
+      "segmentDateEnd": "2026-12-31",
+      "segmentDateText": "Entrave de longue durée pendant l'année 2026.",
+      "segmentComplement": "Attention: les travaux de reconfiguration imposent certaines modifications de la configuration des voies. Circulez prudemment et respectez la signalisation.",
+      "segmentEndpoints": [
+        [
+          -73.548,
+          45.493
+        ],
+        [
+          -73.562,
+          45.478
+        ]
+      ],
+      "segmentGeometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.5464572,
+              45.4895408
+            ],
+            [
+              -73.5478694,
+              45.4898088
+            ],
+            [
+              -73.5488425,
+              45.4899941
+            ]
+          ],
+          [
+            [
+              -73.540311,
+              45.4883166
+            ],
+            [
+              -73.5404371,
+              45.4883579
+            ],
+            [
+              -73.5405394,
+              45.4883888
+            ],
+            [
+              -73.5406414,
+              45.4884184
+            ],
+            [
+              -73.5407583,
+              45.4884491
+            ],
+            [
+              -73.5408867,
+              45.4884816
+            ],
+            [
+              -73.5409881,
+              45.4885042
+            ],
+            [
+              -73.5411162,
+              45.4885309
+            ],
+            [
+              -73.5414526,
+              45.488594
+            ]
+          ],
+          [
+            [
+              -73.5399654,
+              45.4880475
+            ],
+            [
+              -73.5398551,
+              45.4879975
+            ],
+            [
+              -73.5397619,
+              45.4879548
+            ],
+            [
+              -73.5396799,
+              45.4879137
+            ],
+            [
+              -73.5395933,
+              45.4878694
+            ],
+            [
+              -73.539506,
+              45.4878228
+            ],
+            [
+              -73.5394209,
+              45.4877762
+            ],
+            [
+              -73.5393283,
+              45.4877213
+            ],
+            [
+              -73.5392516,
+              45.4876735
+            ],
+            [
+              -73.5391631,
+              45.4876165
+            ],
+            [
+              -73.5390939,
+              45.4875698
+            ],
+            [
+              -73.5390115,
+              45.4875119
+            ],
+            [
+              -73.5389405,
+              45.4874595
+            ],
+            [
+              -73.5388623,
+              45.4873979
+            ],
+            [
+              -73.5387923,
+              45.4873406
+            ],
+            [
+              -73.5387144,
+              45.4872746
+            ],
+            [
+              -73.5386421,
+              45.4872088
+            ],
+            [
+              -73.5385801,
+              45.4871494
+            ],
+            [
+              -73.5385096,
+              45.4870807
+            ],
+            [
+              -73.5384482,
+              45.4870152
+            ],
+            [
+              -73.5383855,
+              45.4869489
+            ],
+            [
+              -73.5383341,
+              45.4868922
+            ],
+            [
+              -73.5382807,
+              45.4868265
+            ],
+            [
+              -73.538233,
+              45.4867664
+            ],
+            [
+              -73.5381763,
+              45.4866908
+            ],
+            [
+              -73.538124,
+              45.4866136
+            ],
+            [
+              -73.5380728,
+              45.4865357
+            ],
+            [
+              -73.5380275,
+              45.4864625
+            ],
+            [
+              -73.5379821,
+              45.4863821
+            ],
+            [
+              -73.5379425,
+              45.4863097
+            ],
+            [
+              -73.5379052,
+              45.4862317
+            ],
+            [
+              -73.5378699,
+              45.4861541
+            ],
+            [
+              -73.537837,
+              45.4860748
+            ],
+            [
+              -73.5378117,
+              45.4860052
+            ],
+            [
+              -73.5377865,
+              45.4859373
+            ],
+            [
+              -73.5377562,
+              45.4858474
+            ],
+            [
+              -73.537735,
+              45.485768
+            ],
+            [
+              -73.5377152,
+              45.4856858
+            ],
+            [
+              -73.5377036,
+              45.4856326
+            ]
+          ]
+        ]
+      },
+      "segmentGeometrySource": "OpenStreetMap ways 1173070237, 1166103970, 111771062",
+      "noGeometry": true,
+      "mapEntryKey": "65",
+      "mapEntryId": 1083,
+      "mapSourceTitle": "Secteur des voies entre le pont Victoria et le pont Clément - 2 voies sur 3 ouvertes direction pont Samuel-De Champlain",
+      "mapStartDate": "2026-03-03",
+      "mapEndDate": "2026-12-31",
+      "mapPoint": [
+        -73.538406,
+        45.482822
+      ],
+      "segmentPoint": [
+        -73.538406,
+        45.482822
+      ],
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.5464572,
+              45.4895408
+            ],
+            [
+              -73.5478694,
+              45.4898088
+            ],
+            [
+              -73.5488425,
+              45.4899941
+            ]
+          ],
+          [
+            [
+              -73.540311,
+              45.4883166
+            ],
+            [
+              -73.5404371,
+              45.4883579
+            ],
+            [
+              -73.5405394,
+              45.4883888
+            ],
+            [
+              -73.5406414,
+              45.4884184
+            ],
+            [
+              -73.5407583,
+              45.4884491
+            ],
+            [
+              -73.5408867,
+              45.4884816
+            ],
+            [
+              -73.5409881,
+              45.4885042
+            ],
+            [
+              -73.5411162,
+              45.4885309
+            ],
+            [
+              -73.5414526,
+              45.488594
+            ]
+          ],
+          [
+            [
+              -73.5399654,
+              45.4880475
+            ],
+            [
+              -73.5398551,
+              45.4879975
+            ],
+            [
+              -73.5397619,
+              45.4879548
+            ],
+            [
+              -73.5396799,
+              45.4879137
+            ],
+            [
+              -73.5395933,
+              45.4878694
+            ],
+            [
+              -73.539506,
+              45.4878228
+            ],
+            [
+              -73.5394209,
+              45.4877762
+            ],
+            [
+              -73.5393283,
+              45.4877213
+            ],
+            [
+              -73.5392516,
+              45.4876735
+            ],
+            [
+              -73.5391631,
+              45.4876165
+            ],
+            [
+              -73.5390939,
+              45.4875698
+            ],
+            [
+              -73.5390115,
+              45.4875119
+            ],
+            [
+              -73.5389405,
+              45.4874595
+            ],
+            [
+              -73.5388623,
+              45.4873979
+            ],
+            [
+              -73.5387923,
+              45.4873406
+            ],
+            [
+              -73.5387144,
+              45.4872746
+            ],
+            [
+              -73.5386421,
+              45.4872088
+            ],
+            [
+              -73.5385801,
+              45.4871494
+            ],
+            [
+              -73.5385096,
+              45.4870807
+            ],
+            [
+              -73.5384482,
+              45.4870152
+            ],
+            [
+              -73.5383855,
+              45.4869489
+            ],
+            [
+              -73.5383341,
+              45.4868922
+            ],
+            [
+              -73.5382807,
+              45.4868265
+            ],
+            [
+              -73.538233,
+              45.4867664
+            ],
+            [
+              -73.5381763,
+              45.4866908
+            ],
+            [
+              -73.538124,
+              45.4866136
+            ],
+            [
+              -73.5380728,
+              45.4865357
+            ],
+            [
+              -73.5380275,
+              45.4864625
+            ],
+            [
+              -73.5379821,
+              45.4863821
+            ],
+            [
+              -73.5379425,
+              45.4863097
+            ],
+            [
+              -73.5379052,
+              45.4862317
+            ],
+            [
+              -73.5378699,
+              45.4861541
+            ],
+            [
+              -73.537837,
+              45.4860748
+            ],
+            [
+              -73.5378117,
+              45.4860052
+            ],
+            [
+              -73.5377865,
+              45.4859373
+            ],
+            [
+              -73.5377562,
+              45.4858474
+            ],
+            [
+              -73.537735,
+              45.485768
+            ],
+            [
+              -73.5377152,
+              45.4856858
+            ],
+            [
+              -73.5377036,
+              45.4856326
+            ]
+          ]
+        ]
+      },
+      "geometrySource": "OpenStreetMap ways 1173070237, 1166103970, 111771062",
+      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
     },
     {
       "dateAffichageTravaux": "Du 10 au 14 septembre 2026",
@@ -2074,6 +2995,23 @@
       "tagId": [
         1152
       ],
+      "segmentId": "honore-mercier-rive-sud",
+      "segmentTitle": "Pont Honoré-Mercier - une voie fermée vers la Rive-Sud",
+      "segmentStreets": "Pont Honoré-Mercier, partie centrale",
+      "segmentImpact": "Fermeture d'une voie sur deux en direction de la Rive-Sud.",
+      "segmentDirection": "Vers la Rive-Sud.",
+      "segmentDateStart": "2026-09-12",
+      "segmentDateEnd": "2026-09-14",
+      "segmentDateText": "Du 12 septembre à 3 h au 14 septembre à 5 h.",
+      "analysis": {
+        "sections": [
+          "Partie centrale du pont"
+        ],
+        "bullets": [
+          "Fermeture d'une voie sur deux vers la Rive-Sud"
+        ],
+        "sourceText": "Du samedi 12 septembre, 3 h, au lundi 14 septembre, 5 h&#160;: Fermeture d&#8217;une voie sur deux, sur la partie centrale du pont, en direction de la Rive-Sud Travaux d&#8217;acier Les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
+      },
       "geometry": {
         "type": "LineString",
         "coordinates": [

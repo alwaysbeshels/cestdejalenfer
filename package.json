@@ -5,6 +5,8 @@
   "description": "Outils de developpement local pour la Carte des entraves auto du Grand Montreal (site statique, aucune dependance de production).",
   "scripts": {
     "serve": "python -m http.server 5500",
+    "snapshot:montreal": "node tools/build-montreal-resolved-geometries.mjs",
+    "snapshot:pjcci": "node tools/build-pjcci-work-advisories-snapshot.mjs",
     "snapshot:montreal-uci": "node tools/build-montreal-uci-snapshot.mjs",
     "snapshot:montreal-uci:date": "node tools/build-montreal-uci-snapshot.mjs --date=2026-09-22"
   },

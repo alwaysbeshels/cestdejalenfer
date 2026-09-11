@@ -77,7 +77,7 @@ const LIVE_SOURCES = {
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
   // WFS MTMD Quebec 511 - evenements (fermetures, incidents, restrictions)
   quebec511Events: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:evenements&srsname=EPSG:4326&outputformat=geojson",
-  pjcciSnapshot: "data/pjcci-work-advisories-snapshot.json"
+  pjcciSnapshot: "data/pjcci-work-advisories-snapshot.json?v=20260911-pjcci-map-source"
 };
 
 // Phase 2 Validé - 3 couches ArcGIS Laval confirmées
@@ -1277,6 +1277,26 @@ function trafficDetailsFromImpact(impactType) {
   }
 }
 
+function montrealTrafficDetails(properties, impact, snapshotAnalysis = null) {
+  if (snapshotAnalysis?.classification?.key === "localDoubleSense") {
+    return {
+      severity: "moderate",
+      label: "Circulation locale / double sens",
+      impact: "La circulation locale reste permise dans les deux sens; la fermeture complète concerne Hickson."
+    };
+  }
+  const permitId = String(properties.permitPermitId || "");
+  const street = impact.spatialAnalysis?.shortName || impact.streetId || "";
+  if (permitId === "OCC-2608DH26336020" && /^(Gertrude|Evelyn)$/i.test(street)) {
+    return {
+      severity: "moderate",
+      label: "Circulation locale / double sens",
+      impact: "La circulation locale reste permise dans les deux sens; la fermeture complète concerne Hickson."
+    };
+  }
+  return trafficDetailsFromImpact(impact.streetImpactType);
+}
+
 function trafficDetailsFromUciType(type) {
   switch (type) {
     case "Rue fermée":
@@ -1665,14 +1685,15 @@ async function loadQuebec511Events() {
 }
 
 function normalizePjcciNotice(notice) {
+  if (notice.noGeometry && !notice.segmentPoint) return null;
   const text = [notice.title, ...(notice.tags || [])].join(" ");
-  const coordinates = /honor[eé]-mercier/i.test(text)
+  const coordinates = notice.segmentPoint || (/honor[eé]-mercier/i.test(text)
     ? [-73.641, 45.43]
     : /bonaventure/i.test(text)
       ? [-73.55, 45.493]
       : /samuel.?de.?champlain/i.test(text)
         ? [-73.497, 45.468]
-        : [-73.535, 45.505];
+        : [-73.535, 45.505]);
   const decode = (value) => {
     const element = document.createElement("div");
     element.innerHTML = String(value || "")
@@ -1685,21 +1706,21 @@ function normalizePjcciNotice(notice) {
       .filter(Boolean)
       .join("\n");
   };
-  const title = decode(notice.title);
-  const impact = (decode(notice.description)
+  const title = decode(notice.segmentTitle || notice.title);
+  const impact = notice.segmentImpact || (decode(notice.description)
     .replace(/\s*Pour toute information concernant[\s\S]*$/i, "")
     .trim()) || "Avis de travaux publié par PJCCI.";
   const honoreMercier = /honor[eé]-mercier/i.test(text);
-  const severity = /fermeture complète|fermeture permanente|fermeture des accès/i.test(`${title} ${impact}`)
+  const severity = /fermeture complète|fermeture permanente|fermeture des accès|fermeture de la sortie/i.test(`${title} ${impact}`)
     ? "critical"
     : "major";
   const today = new Date().toISOString().slice(0, 10);
-  const startDate = String(notice.datedebut || notice.anneDebut || "").slice(0, 10) || today;
-  const endDate = String(notice.datefin || notice.anneFin || "").slice(0, 10);
+  const startDate = notice.segmentDateStart || String(notice.datedebut || notice.anneDebut || "").slice(0, 10) || today;
+  const endDate = notice.segmentDateEnd || String(notice.datefin || notice.anneFin || "").slice(0, 10);
   if (!endDate || endDate < today) return null;
 
   return {
-    id: `pjcci-${notice.url}`,
+    id: `pjcci-${notice.url}-${notice.segmentId || "notice"}`,
     title,
     category: "regional",
     sourceKind: "pjcci",
@@ -1707,18 +1728,20 @@ function normalizePjcciNotice(notice) {
     borough: notice.tags?.[0] || "Structures PJCCI",
     startDate,
     endDate,
-    impact,
+    impact: notice.segmentDateText ? `${notice.segmentDateText} ${impact}` : impact,
     trafficLabel: severity === "critical" ? "Fermeture ou entrave majeure" : "Travaux",
     severity,
     roadType: "bridge",
     periods: ["day", "night"],
-    direction: honoreMercier ? "Vers la Rive-Sud; une voie sur deux fermée sur la partie centrale du pont." : "Voir l'avis officiel PJCCI.",
-    streets: notice.tags?.join(" / ") || "Structure PJCCI",
+    direction: notice.segmentDirection || (honoreMercier ? "Vers la Rive-Sud; une voie sur deux fermée sur la partie centrale du pont." : "Voir l'avis officiel PJCCI."),
+    streets: notice.segmentStreets || notice.tags?.join(" / ") || "Structure PJCCI",
     source: "PJCCI - Avis de travaux et chantiers",
     sourceUrl: `https://jacquescartierchamplain.ca${notice.url}`,
     color: SEVERITY_META[severity].color,
     geometry: notice.geometry || { type: "Point", coordinates },
-    point: notice.geometry ? representativePoint(notice.geometry) : coordinates
+    point: notice.geometry ? representativePoint(notice.geometry) : coordinates,
+    geometryNote: notice.geometryNote || notice.segmentGeometryNote || null,
+    details: notice.segmentComplement ? [["Information complémentaire", notice.segmentComplement]] : []
   };
 }
 
@@ -2860,24 +2883,22 @@ function normalizeMontrealFeature(feature, index) {
   const point = feature.geometry?.type === "Point" ? feature.geometry.coordinates : parseJson(properties.locationSummaryGeometryPin, null);
 
   return impacts.flatMap((impact, impactIndex) => {
-    const traffic = trafficDetailsFromImpact(impact.streetImpactType);
-    if (!traffic) {
-      return [];
-    }
-
-    const pedestrianStreet = isPedestrianStreetFeature(properties, impact);
-    const displayTraffic = pedestrianStreet
-      ? { severity: "critical", label: "Rue piétonne temporaire", impact: "Circulation automobile fermée pour une piétonnisation ou une rue partagée publiée par Montréal." }
-      : traffic;
-
     const lineGeometry = parseJson(impact.spatialAnalysis?.lineGeometry, null);
     const from = impact.spatialAnalysis?.fromShortName || impact.spatialAnalysis?.fromName || "origine non précisée";
     const to = impact.spatialAnalysis?.toShortName || impact.spatialAnalysis?.toName || "destination non précisée";
     const street = impact.spatialAnalysis?.shortName || impact.streetId || properties.occupancyName || "Rue non précisée";
-    const category = pedestrianStreet ? "commercial" : categoryFromAuthority(properties.siteAuthority || properties.occupancySubmitterDetailsSubmitterCategory);
-    const severity = SEVERITY_META[displayTraffic.severity] ?? SEVERITY_META.major;
     const recordId = `mtl-${properties.id || index}-${impactIndex}`;
     const resolved = montrealResolvedGeometries.get(recordId);
+    const traffic = montrealTrafficDetails(properties, impact, resolved?.analysis);
+    if (!traffic) {
+      return [];
+    }
+    const pedestrianStreet = isPedestrianStreetFeature(properties, impact);
+    const displayTraffic = pedestrianStreet
+      ? { severity: "critical", label: "Rue piétonne temporaire", impact: "Circulation automobile fermée pour une piétonnisation ou une rue partagée publiée par Montréal." }
+      : traffic;
+    const category = pedestrianStreet ? "commercial" : categoryFromAuthority(properties.siteAuthority || properties.occupancySubmitterDetailsSubmitterCategory);
+    const severity = SEVERITY_META[displayTraffic.severity] ?? SEVERITY_META.major;
     const resolvedLine = resolved?.geometryStatus === "resolved-geobase" && (resolved.geometry?.type === "LineString" || resolved.geometry?.type === "MultiLineString")
       ? resolved.geometry
       : null;
@@ -2903,7 +2924,9 @@ function normalizeMontrealFeature(feature, index) {
         : roadTypeFromText(`${street} ${properties.occupancyName || ""} ${impact.spatialAnalysis?.name || ""}`),
       periods: periodsFromMontrealSchedule(properties),
       direction: `Segment ${from} vers ${to}. Direction exacte de voie non publiée dans ce flux si une seule direction est touchée.`,
-      streets: properties.occupancyName || `${street}, entre ${from} et ${to}`,
+      streets: street && from && to
+        ? `${street}, entre ${from} et ${to}`
+        : properties.occupancyName || `${street || "Rue non précisée"}`,
       source: "Ville de Montreal - Info entraves et travaux",
       sourceUrl: "https://services.montreal.ca/cartes/entraves",
       color: severity.color,
@@ -2960,6 +2983,12 @@ function normalizeUciFeature(feature) {
     point,
     rawType: properties.type
   };
+}
+
+async function loadUciSnapshotClosures() {
+  const snapshot = await fetchJson(LIVE_SOURCES.uciSnapshot);
+  const features = snapshot.layers?.restrictions?.geojson?.features;
+  return Array.isArray(features) ? features.map(normalizeUciFeature) : [];
 }
 
 function siteAuthorityLabel(authority) {
@@ -3140,21 +3169,35 @@ async function fetchJson(url, { timeout = 15000, cache = true } = {}) {
 async function loadOfficialData() {
   showMapStatus(t("map.loading"), "loading");
 
+  const localSnapshotResults = await Promise.allSettled([
+    loadUciSnapshotClosures(),
+    loadMontRoyalSnapshotClosures(),
+    loadBeaconsfieldSnapshotClosures(),
+    loadMontrealPedestrianSnapshotClosures(),
+    loadNoovoRoadClosuresSnapshot(),
+    loadPjcciClosures()
+  ]);
+  const localSnapshotClosures = localSnapshotResults
+    .filter((result) => result.status === "fulfilled")
+    .flatMap((result) => result.value);
+  if (localSnapshotClosures.length > 0) {
+    allClosures = dedupeClosures([...allClosures, ...localSnapshotClosures]);
+    updateView({ fit: false });
+    showMapStatus(`Snapshots locaux charges: ${allClosures.length} entraves`, "loading");
+  }
+
   const primarySources = await Promise.allSettled([
     fetchJson(LIVE_SOURCES.montreal),
-    fetchJson(LIVE_SOURCES.uciSnapshot),
     loadRegionalClosures(),
     loadMontrealResolvedGeometries(),
-    loadPjcciClosures()
+    Promise.resolve([])
   ]);
 
   const primaryClosures = [];
   const sourceCounts = [];
 
   const montrealResult = primarySources[0];
-  const uciResult = primarySources[1];
-  const regionalResult = primarySources[2];
-  const pjcciResult = primarySources[4];
+  const regionalResult = primarySources[1];
 
   if (montrealResult.status === "fulfilled") {
     const montrealClosures = montrealResult.value.features.flatMap(normalizeMontrealFeature);
@@ -3162,21 +3205,9 @@ async function loadOfficialData() {
     sourceCounts.push(`${montrealClosures.length} entraves auto Montreal`);
   }
 
-  if (uciResult.status === "fulfilled") {
-    const uciFeatures = uciResult.value.layers?.restrictions?.geojson?.features;
-    const uciClosures = Array.isArray(uciFeatures) ? uciFeatures.map(normalizeUciFeature) : [];
-    primaryClosures.push(...uciClosures);
-    sourceCounts.push(`${uciClosures.length} segments UCI`);
-  }
-
   if (regionalResult.status === "fulfilled") {
     primaryClosures.push(...regionalResult.value);
     sourceCounts.push(`${regionalResult.value.length} fermetures ponts/grands axes alignees aux routes`);
-  }
-
-  if (pjcciResult.status === "fulfilled") {
-    primaryClosures.push(...pjcciResult.value);
-    sourceCounts.push(`${pjcciResult.value.length} avis PJCCI actifs ou futurs`);
   }
 
   if (primaryClosures.length > 0) {
@@ -3205,10 +3236,6 @@ async function loadBackgroundOfficialData() {
     loadDorvalAndBoisbriandClosures(),
     loadTerrebonneClosures(),
     loadMontSaintHilaireClosures(),
-    loadMontRoyalSnapshotClosures(),
-    loadBeaconsfieldSnapshotClosures(),
-    loadMontrealPedestrianSnapshotClosures(),
-    loadNoovoRoadClosuresSnapshot()
   ]);
 
   const additions = [];
@@ -3388,6 +3415,9 @@ function centerPopupInMap(popup, pass = 0) {
 }
 
 function closuresNearLatLng(latLng, primaryClosure) {
+  if (primaryClosure.sourceKind === "pjcci") {
+    return [primaryClosure];
+  }
   const center = L.latLng(latLng.lat, latLng.lng);
   return currentClosures
     .filter((closure) => closure.id === primaryClosure.id || minDistanceMeters(center, closure) <= 45)

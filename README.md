@@ -36,6 +36,26 @@ node tools/build-montreal-uci-snapshot.mjs --date=2026-09-22
 
 Une restriction est incluse lorsque cette date est comprise entre sa date de debut et sa date de fin inclusivement; un parcours est inclus lorsque sa date correspond. Comme la carte officielle, le generateur exclut les entites sans dates publiees: elles ne sont affichees par aucune journee du selecteur UCI. `selectedDate` indique la date appliquee dans le snapshot. La commande `npm run snapshot:montreal-uci` sans argument conserve toutes les donnees datees affichees par la carte.
 
+### Snapshot Montréal analysé
+
+Le snapshot Montréal est mis a jour avec:
+
+```bash
+npm run snapshot:montreal
+```
+
+Cette commande relit le flux officiel des entraves, analyse chaque impact de rue individuellement, conserve les bornes publiees, la largeur, la longueur, le caractere arteriel, les impacts trottoir/velo/transport collectif et le nombre de places touchees, puis resout la geometrie. Les lignes reconstruites sont acceptees seulement si elles touchent l'emprise officielle; sinon, l'emprise polygonale est conservee.
+
+Le champ `analysis` du fichier `data/montreal-entraves-geometries-snapshot.json` fournit les compteurs par type brut et par classification automobile, ainsi que les avertissements a relire avant publication. Une classification corrigee par un detail officiel est explicitement marquee dans `analysis.warnings`; elle ne doit pas etre assimilee automatiquement a une fermeture complete.
+
+Au demarrage de la carte, les snapshots locaux UCI, Montréal, PJCCI, Noovo, piétonnisation, Mont-Royal et Beaconsfield sont charges en premier comme base de secours locale. Les APIs en direct sont ensuite appelees pour ajouter les donnees regionales et les mises a jour disponibles. Ainsi, une indisponibilite reseau ne vide pas la carte et ne remplace pas les snapshots par le seul jeu historique de `data/closures.js`.
+
+Les avis PJCCI sont analyses par sous-sections: un segment distinct est cree pour chaque entrave decrite, et les directions sont separees lorsqu'elles ont un impact different. Un commentaire commun a plusieurs bullet points est conserve dans chaque popup concerne. Les dates d'une sous-section sont conservees independamment des dates generales de l'avis; une date de fin approximative reste explicitement indiquee comme telle dans le detail.
+
+Chaque mise a jour PJCCI croise deux sources: l'archive des avis pour le texte, les secteurs, les directions et les dates detaillees, et la carte interactive du secteur Bonaventure pour les coordonnees, identifiants et dates generales des entraves geolocalisees. Le snapshot conserve les entrees brutes de la carte dans `interactiveMapEntraves` et les controles dans `validation`; une entrave de la carte non appariee est signalee au lieu d'etre ignoree silencieusement.
+
+Politique geometrique PJCCI: aucune coordonnee n'est devinee a partir d'un titre, d'un secteur ou d'un itineraire OSRM generique. Une geometrie est acceptee seulement si elle est publiee par la source, provient d'un axe OSM nomme et verifie, ou correspond a un point fourni par la carte interactive PJCCI. Sinon, l'avis est marque sans geometrie et n'est pas dessine sur la carte.
+
 ## Publication avec GitHub Pages
 
 1. Creez un depot GitHub et envoyez le contenu de ce dossier a sa racine.

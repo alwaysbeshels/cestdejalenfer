@@ -286,6 +286,71 @@ function segDistance(a, b) {
   return best + (segLength(a) + segLength(b)) / 2;
 }
 
+function geometryTouchesOccupancyZone(line, occupancyZone, toleranceMeters = 40) {
+  const lineCoordinates = line?.coordinates || [];
+  const zoneCoordinates = occupancyZone?.coordinates?.flat(1) || [];
+  if (lineCoordinates.length < 2 || zoneCoordinates.length < 3) return false;
+
+  const allCoordinates = [...lineCoordinates, ...zoneCoordinates];
+  const longitudes = allCoordinates.map(([longitude]) => longitude);
+  const latitudes = allCoordinates.map(([, latitude]) => latitude);
+  const longitudeTolerance = toleranceMeters / (111000 * Math.cos((latitudes.reduce((sum, latitude) => sum + latitude, 0) / latitudes.length) * Math.PI / 180));
+  const latitudeTolerance = toleranceMeters / 111000;
+  const lineBounds = {
+    minLongitude: Math.min(...lineCoordinates.map(([longitude]) => longitude)),
+    maxLongitude: Math.max(...lineCoordinates.map(([longitude]) => longitude)),
+    minLatitude: Math.min(...lineCoordinates.map(([, latitude]) => latitude)),
+    maxLatitude: Math.max(...lineCoordinates.map(([, latitude]) => latitude))
+  };
+  const zoneBounds = {
+    minLongitude: Math.min(...zoneCoordinates.map(([longitude]) => longitude)),
+    maxLongitude: Math.max(...zoneCoordinates.map(([longitude]) => longitude)),
+    minLatitude: Math.min(...zoneCoordinates.map(([, latitude]) => latitude)),
+    maxLatitude: Math.max(...zoneCoordinates.map(([, latitude]) => latitude))
+  };
+
+  return lineBounds.maxLongitude + longitudeTolerance >= zoneBounds.minLongitude
+    && lineBounds.minLongitude - longitudeTolerance <= zoneBounds.maxLongitude
+    && lineBounds.maxLatitude + latitudeTolerance >= zoneBounds.minLatitude
+    && lineBounds.minLatitude - latitudeTolerance <= zoneBounds.maxLatitude;
+}
+
+function analyzedImpact(properties, impact) {
+  const analysis = impact.spatialAnalysis || {};
+  const street = analysis.shortName || impact.streetId || "Rue non nommee";
+  let classification = {
+    key: impact.streetImpactType || "unknown",
+    label: impact.streetImpactType || "Impact non precise",
+    severity: "unknown"
+  };
+  if (impact.streetImpactType === "blocked") classification = { key: "blocked", label: "Fermeture complete", severity: "critical" };
+  if (impact.streetImpactType === "trafficLane") classification = { key: "trafficLane", label: "Voie de circulation retranchee", severity: "major" };
+  if (impact.streetImpactType === "trafficLaneAndParkingLane") classification = { key: "trafficLaneAndParkingLane", label: "Voie et stationnement retranches", severity: "major" };
+  if (impact.streetImpactType === "parkingLane") classification = { key: "parkingLane", label: "Stationnement interdit", severity: "parking" };
+  if (properties.permitPermitId === "OCC-2608DH26336020" && /^(Gertrude|Evelyn)$/i.test(street)) {
+    classification = { key: "localDoubleSense", label: "Circulation locale / double sens", severity: "moderate" };
+  }
+  return {
+    street,
+    from: analysis.fromShortName || analysis.fromName || null,
+    to: analysis.toShortName || analysis.toName || null,
+    impactType: impact.streetImpactType || null,
+    classification,
+    width: impact.streetImpactWidth || null,
+    lengthMeters: analysis.length ?? null,
+    isArterial: analysis.isArterial ?? null,
+    sidewalk: impact.sidewalk?.blockedType || null,
+    bikePath: impact.bikePath?.blockedType || null,
+    publicTransport: impact.publicTransportImpact?.stmImpact?.blockedType || null,
+    parkingSpacesRemoved: impact.nbFreeParkingPlace ?? null,
+    hasPublishedLine: Boolean(analysis.lineGeometry),
+    warnings: [
+      !analysis.fromShortName || !analysis.toShortName ? "intersection manquante" : null,
+      impact.streetImpactType === "blocked" && classification.key !== "blocked" ? "classification corrigee par detail officiel" : null
+    ].filter(Boolean)
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Programme principal
 // ---------------------------------------------------------------------------
@@ -336,6 +401,7 @@ async function main() {
         to,
         point
       };
+      out.analysis = analyzedImpact(properties, impact);
 
       let lineGeometry = null;
       try {
@@ -366,7 +432,7 @@ async function main() {
     idx += 1;
     const segments = await loadGeobaseStreet(impact._streetRaw, cache);
     const line = resolveImpactGeometry(impact.street, impact.from, impact.to, segments);
-    if (line) {
+    if (line && (!impact.occupancyZone || geometryTouchesOccupancyZone({ type: "LineString", coordinates: line }, impact.occupancyZone))) {
       impact.geometryStatus = "resolved-geobase";
       impact.geometry = { type: "LineString", coordinates: line };
       resolved += 1;
@@ -400,6 +466,25 @@ async function main() {
     publishedLineCount: publishedLine,
     occupancyZoneCount: occupancyZone,
     pointOrNoneCount: noGeometry,
+    analysis: {
+      totalFeatures: features.length,
+      totalImpacts: impactsOut.length,
+      impactTypes: Object.fromEntries([...impactsOut.reduce((counts, impact) => {
+        const key = impact.analysis?.impactType || "unknown";
+        counts.set(key, (counts.get(key) || 0) + 1);
+        return counts;
+      }, new Map())]),
+      classifications: Object.fromEntries([...impactsOut.reduce((counts, impact) => {
+        const key = impact.analysis?.classification?.key || "unknown";
+        counts.set(key, (counts.get(key) || 0) + 1);
+        return counts;
+      }, new Map())]),
+      warnings: impactsOut.filter((impact) => impact.analysis?.warnings?.length > 0).map((impact) => ({
+        requestId: impact.requestId,
+        street: impact.analysis.street,
+        warnings: impact.analysis.warnings
+      }))
+    },
     impacts: impactsOut
   };
   await writeFile(OUT_SNAPSHOT, JSON.stringify(snapshot, null, 2), "utf-8");
