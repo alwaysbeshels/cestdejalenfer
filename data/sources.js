@@ -16,6 +16,7 @@ const SOURCE_CATALOG = [
   // Agglomeration de Montreal
   { name: "Montreal - Carte des entraves", url: "https://services.montreal.ca/cartes/entraves/" },
   { name: "Montreal - Restrictions de circulation UCI 2026 (WFS)", url: "https://services.montreal.ca/cartes/uci" },
+  { name: "Montreal - Snapshot UCI 2026 (restrictions et parcours)", url: "data/montreal-uci-closures-snapshot.json", dataType: "snapshot" },
   { name: "Montreal - Pietonnisation de l'avenue du Mont-Royal", url: "https://montreal.ca/lieux/avenue-du-mont-royal" },
   { name: "Montreal - Rues pietonnes saisonnieres", url: "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE" },
   { name: "Quartier des spectacles - Rues et espaces publics", url: "https://www.quartierdesspectacles.com/" },

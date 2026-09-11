@@ -18,6 +18,24 @@ npm run serve
 
 `npm run serve` démarre le même serveur statique local (`python -m http.server 5500`) sur `http://localhost:5500`. Le dossier `node_modules/` n'est jamais publié ni requis en production; il est exclu par `.gitignore`.
 
+### Snapshot UCI 2026
+
+Pour conserver une copie locale de toutes les restrictions, fermetures et segments de parcours publies dans la [carte UCI de Montreal](https://services.montreal.ca/cartes/uci), executez:
+
+```bash
+npm run snapshot:montreal-uci
+```
+
+La commande ecrit `data/montreal-uci-closures-snapshot.json`. Le fichier conserve les deux couches WFS officielles brutes: `restrictions` et `routes`, avec leurs attributs et geometries GeoJSON. Il doit etre regenere pour refleter toute mise a jour de la Ville.
+
+Pour reproduire le filtre par date de la carte UCI, passez la date voulue au generateur:
+
+```bash
+node tools/build-montreal-uci-snapshot.mjs --date=2026-09-22
+```
+
+Une restriction est incluse lorsque cette date est comprise entre sa date de debut et sa date de fin inclusivement; un parcours est inclus lorsque sa date correspond. Comme la carte officielle, le generateur exclut les entites sans dates publiees: elles ne sont affichees par aucune journee du selecteur UCI. `selectedDate` indique la date appliquee dans le snapshot. La commande `npm run snapshot:montreal-uci` sans argument conserve toutes les donnees datees affichees par la carte.
+
 ## Publication avec GitHub Pages
 
 1. Creez un depot GitHub et envoyez le contenu de ce dossier a sa racine.

@@ -49,8 +49,8 @@ function closureImpactLabel(closure) {
 const LIVE_SOURCES = {
   // ✓ Phase 2 Validé - WFS Montreal (entraves ponctuelles)
   montreal: "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal:entraves-ponctuelles&outputFormat=application/json&CQL_FILTER=affectedArea%20like%20%27%25street%25%27",
-  // ✓ Phase 2 Validé - WFS Montreal (restrictions UCI 2026)
-  uciRestrictions: "https://api.montreal.ca/api/it-platforms/geomatic/wfs-feature/v1/ls-montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ls-montreal:uci-2026-vdm-restrictions-circulation_v2&outputFormat=application/json",
+  // Snapshot local des restrictions UCI 2026
+  uciSnapshot: "data/montreal-uci-closures-snapshot.json",
   // ✓ Phase 2 Validé - ArcGIS Longueuil (points d'entraves)
   longueuilPoints: "https://geomatique.longueuil.quebec/public/rest/services/Communication/Gestion_des_entraves_Diffusion/FeatureServer/0/query?f=geojson&where=1%3D1&outFields=*&outSR=4326",
   // ✓ Phase 2 Validé - ArcGIS Longueuil (surfaces d'entraves)
@@ -71,7 +71,7 @@ const LIVE_SOURCES = {
   beaconsfieldSnapshot: "data/beaconsfield-snapshot.json",
   montrealPedestrianSnapshot: "data/montreal-pedestrian-snapshot.json",
   montrealResolvedGeometries: "data/montreal-entraves-geometries-snapshot.json",
-  noovoRoadClosuresSnapshot: "data/uci-road-closures-snapshot.json",
+  noovoRoadClosuresSnapshot: "data/noovo-road-closures-snapshot.json",
   montSaintHilaireWorks: "https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_4Septembre2026_WFL1/FeatureServer",
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
@@ -814,7 +814,7 @@ const formattedDateCache = new Map();
 
 const dateStart = document.querySelector("#dateStart");
 const dateEnd = document.querySelector("#dateEnd");
-let dateEndUsesOpenDefault = true;
+let dateEndUsesOpenDefault = false;
 const todayDates = document.querySelector("#todayDates");
 const dateHelp = document.querySelector("#dateHelp");
 const dateHelpBubble = document.querySelector("#dateHelpBubble");
@@ -3142,7 +3142,7 @@ async function loadOfficialData() {
 
   const primarySources = await Promise.allSettled([
     fetchJson(LIVE_SOURCES.montreal),
-    fetchJson(LIVE_SOURCES.uciRestrictions),
+    fetchJson(LIVE_SOURCES.uciSnapshot),
     loadRegionalClosures(),
     loadMontrealResolvedGeometries(),
     loadPjcciClosures()
@@ -3163,7 +3163,8 @@ async function loadOfficialData() {
   }
 
   if (uciResult.status === "fulfilled") {
-    const uciClosures = uciResult.value.features.map(normalizeUciFeature);
+    const uciFeatures = uciResult.value.layers?.restrictions?.geojson?.features;
+    const uciClosures = Array.isArray(uciFeatures) ? uciFeatures.map(normalizeUciFeature) : [];
     primaryClosures.push(...uciClosures);
     sourceCounts.push(`${uciClosures.length} segments UCI`);
   }
