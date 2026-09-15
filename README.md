@@ -81,9 +81,10 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 
 - Vraie carte interactive couvrant la grande region metropolitaine de Montreal.
 - Pan/zoom fluide avec les controles natifs de Leaflet.
+- Bouton de localisation près du zoom (icône Lucide Locate Fixed) : demande ponctuelle au clic, avec autorisation du navigateur, recentrage animé au zoom 16 (échelle affichée de 100 m dans la région de Montréal), point et cercle de précision réelle. Une position de moins de 30 secondes peut être réutilisée par le navigateur pour réduire l'attente; la haute précision reste demandée. Le déplacement dure environ 0,8 seconde et respecte la préférence de réduction des animations. Le zoom manuel reste libre. Aucun suivi continu ni stockage des coordonnées par l'application. HTTPS ou localhost requis; les tuiles OpenStreetMap sont chargées pour la zone affichée. Les refus et erreurs sont indiqués en FR/EN.
 - Filtres par date, recherche texte et categories.
-- Sections du menu repliables au clic ou au clavier (dates, moment des travaux, sources, impacts et liste), sans réinitialiser les filtres. Les sources sont repliées par défaut.
-- Recherche visible par rue, quartier/arrondissement et municipalité dans les entraves chargées, sans distinction d'accents ou de tirets, avec combinaison des mots et recentrage des résultats. Les filtres de date et d'impact restent appliqués; aucun géocodage de lieux sans entrave n'est effectué.
+- Sections du menu repliables au clic ou au clavier (dates, moment des travaux, sources, impacts et liste), sans réinitialiser les filtres. Les sections Type d'impact et Entraves actives sont ouvertes par défaut.
+- Recherche visible au-dessus des dates, par rue, quartier/arrondissement et municipalité dans les entraves chargées, sans distinction d'accents ou de tirets, avec combinaison des mots et recentrage des résultats. Les filtres de date et d'impact restent appliqués; aucun géocodage de lieux sans entrave n'est effectué.
 - Hauteur mobile adaptée à la zone visible du navigateur (`100dvh`) et recalcul de la taille Leaflet lors des changements de dimensions.
 - Lien « Commentaires? » / « Comments? » dans les menus de la carte et de la FAQ, vers le formulaire de commentaires existant.
 - Chargement en direct du WFS officiel des entraves de la Ville de Montreal.

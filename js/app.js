@@ -878,6 +878,94 @@ const baseLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", 
 const closureLayer = L.layerGroup().addTo(map);
 const arrowLayer = L.layerGroup().addTo(map);
 const fastRenderer = L.canvas({ padding: 2.0 });
+let locationPending = false;
+let locationHasCentered = false;
+let locationMessageKey = "";
+let locationMarker = null;
+let locationAccuracy = null;
+let locationZoomInProgress = false;
+map.on("zoomstart", () => { locationZoomInProgress = true; });
+map.on("zoomend", () => { locationZoomInProgress = false; });
+const locationControl = L.control({ position: "topleft" });
+const locationContainer = L.DomUtil.create("div", "location-control");
+const locateButton = L.DomUtil.create("button", "location-button", locationContainer);
+locateButton.id = "locateButton";
+locateButton.type = "button";
+locateButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="2" x2="5" y1="12" y2="12"/><line x1="19" x2="22" y1="12" y2="12"/><line x1="12" x2="12" y1="2" y2="5"/><line x1="12" x2="12" y1="19" y2="22"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/></svg>';
+const locationStatus = L.DomUtil.create("div", "location-status", locationContainer);
+locationStatus.id = "locationStatus";
+locationStatus.setAttribute("role", "status");
+locationStatus.setAttribute("aria-live", "polite");
+locationStatus.setAttribute("aria-atomic", "true");
+L.DomEvent.disableClickPropagation(locationContainer);
+L.DomEvent.disableScrollPropagation(locationContainer);
+locationControl.onAdd = () => locationContainer;
+locationControl.addTo(map);
+locateButton.addEventListener("click", locateUser);
+updateLocationControl();
+
+function updateLocationControl() {
+  const label = t(locationPending ? "location.loading" : "location.button");
+  locateButton.title = label;
+  locateButton.setAttribute("aria-label", label);
+  locateButton.setAttribute("aria-busy", String(locationPending));
+  locateButton.disabled = locationPending;
+  locationStatus.textContent = locationMessageKey ? t(locationMessageKey) : "";
+  locationStatus.hidden = !locationMessageKey;
+  locationStatus.classList.toggle("visually-hidden", locationMessageKey === "location.found");
+}
+
+function locateUser() {
+  if (locationPending) return;
+  if (!window.isSecureContext || !navigator.geolocation) {
+    locationMessageKey = "location.unsupported";
+    updateLocationControl();
+    return;
+  }
+  locationPending = true;
+  locationMessageKey = "location.loading";
+  updateLocationControl();
+  const fail = (error) => {
+    locationPending = false;
+    locationMessageKey = error?.code === 1 ? "location.denied" : error?.code === 3 ? "location.timeout" : "location.unavailable";
+    updateLocationControl();
+  };
+  try {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude, accuracy } = position.coords;
+      if (!Number.isFinite(latitude) || !Number.isFinite(longitude) || !Number.isFinite(accuracy)
+        || Math.abs(latitude) > 90 || Math.abs(longitude) > 180 || accuracy < 0) {
+        fail();
+        return;
+      }
+      const point = L.latLng(latitude, longitude);
+      if (!locationAccuracy) {
+        locationAccuracy = L.circle(point, { radius: accuracy, color: "#087f8c", weight: 1, fillOpacity: 0.1, interactive: false }).addTo(map);
+        locationMarker = L.circleMarker(point, { radius: 7, color: "#ffffff", weight: 3, fillColor: "#087f8c", fillOpacity: 1, interactive: false }).addTo(map);
+      } else {
+        locationAccuracy.setLatLng(point).setRadius(accuracy);
+        locationMarker.setLatLng(point);
+      }
+      locationHasCentered = true;
+      map.closePopup();
+      const centerLocation = () => {
+        if (locationZoomInProgress) {
+          map.once("zoomend", () => requestAnimationFrame(centerLocation));
+          return;
+        }
+        map.flyTo(point, 16, { duration: 0.8, animate: !window.matchMedia("(prefers-reduced-motion: reduce)").matches });
+        locationPending = false;
+        locationMessageKey = "location.found";
+        updateLocationControl();
+      };
+      map.stop();
+      requestAnimationFrame(centerLocation);
+    }, fail, { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 });
+  } catch {
+    fail();
+  }
+}
+
 let mapRenderFrame = null;
 const renderedClosureLayers = new Map();
 // Les entraves hors ecran restent en memoire et sont dessinees des qu'elles entrent dans la vue.
@@ -3230,7 +3318,7 @@ async function loadOfficialData() {
   }
 
   map.invalidateSize(true);
-  updateView({ fit: true });
+  updateView({ fit: !locationHasCentered });
 
   loadBackgroundOfficialData();
 }
@@ -3955,6 +4043,7 @@ function updateView({ fit = false } = {}) {
 }
 
 window.addEventListener("languagechange", () => {
+  updateLocationControl();
   menuToggle.setAttribute("aria-label", t(menuToggle.classList.contains("is-open") ? "menu.close" : "menu.open"));
   updateMapLegend();
   renderVisibleClosures();
@@ -4121,7 +4210,7 @@ updateView({ fit: true });
 loadOfficialData().catch((error) => {
   console.error("Official data load failed", error);
   showMapStatus(t("map.loadError"), "error");
-  updateView({ fit: true });
+  updateView({ fit: !locationHasCentered });
 });
 
 // Recalcule les heures de fin sans attendre un rechargement de la page.

@@ -1,5 +1,5 @@
 ---
-name: "Carte des entraves metro"
+name: "Carte des entraves"
 description: "Use when maintaining, debugging, extending, validating, or publishing the Carte des entraves Grand Montreal web app, including Leaflet maps, Montreal, Laval, Longueuil, MTMD Quebec 511, roadwork sources, responsive UI, or GitHub Pages."
 argument-hint: "Describe the map, data-source, UI, filtering, responsive, or deployment change needed."
 tools: [read, edit, search, execute, web, todo]

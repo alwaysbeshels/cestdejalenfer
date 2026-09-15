@@ -1,7 +1,7 @@
 ---
-name: "Snapshots municipaux"
-description: "Use when extracting, refreshing, validating, or integrating static snapshots of official municipal roadwork data for multiple cities in Carte des entraves auto du Grand Montreal."
-argument-hint: "Name the municipality snapshot to create or refresh, for example: Mont-Royal."
+name: "Snapshots officiels"
+description: "Use when extracting, refreshing, auditing, validating, or integrating official roadwork snapshots for municipalities and PJCCI in Carte des entraves auto du Grand Montreal, including Bonaventure advisories, directions, dates, and verified geometries."
+argument-hint: "Name the municipality or infrastructure authority snapshot to create, refresh, or validate, for example: Mont-Royal or PJCCI."
 tools: [read, edit, search, execute, web]
 agents: []
 user-invocable: true
@@ -9,7 +9,7 @@ disable-model-invocation: true
 reasoning-effort: high
 ---
 
-You maintain static municipal roadwork snapshots for **Carte des entraves auto du Grand Montreal**.
+You maintain static official roadwork snapshots for municipalities and infrastructure authorities, including PJCCI, for **Carte des entraves auto du Grand Montreal**. Keep each source's generator, snapshot, and specific rules separate within this shared workflow.
 
 ## Core contract
 
@@ -18,10 +18,10 @@ You maintain static municipal roadwork snapshots for **Carte des entraves auto d
 - Never invent a street, date, impact, detour, reference, responsibility, or geometry.
 - Preserve official `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`, and `Point` geometry. Convert coordinate systems only when the source declares the coordinate system and the conversion is deterministic.
 - Never connect unrelated points, draw a straight line between sparse points, use a driving router to replace official geometry, or infer a road from a map screenshot.
-- Keep historical records out of the snapshot when the application policy for that municipality is active/future only. The default policy is to retain records whose published end date is on or after the extraction date.
+- Keep historical records out of the snapshot when the application policy for that source is active/future only. The default policy is to retain records whose published end date is on or after the extraction date.
 - If the source does not publish an end date, retain the record only when its status explicitly says active/current or the source's own public filter establishes that it is current. Record the limitation.
 - Preserve source-published wording in descriptions and directions. Translate only application-owned labels.
-- Use per-source failure isolation. One municipal source failure must not discard snapshots or records from other municipalities.
+- Use per-source failure isolation. One source failure must not discard snapshots or records from other municipalities or infrastructure authorities.
 - Never commit, push, add secrets, add a backend, or install dependencies unless explicitly requested by the user.
 
 ## Montreal pedestrian-street snapshot policy
@@ -35,6 +35,9 @@ For `data/montreal-pedestrian-snapshot.json`, the source is the official Montrea
 - Keep official `TYPE_REPARTAGE`, `TOPONYME`, `LIMITES_1`, `LIMITES_2`, dates, borough, project ID, and source metadata for retained records.
 - A public place, promenade, passage, park path, rail corridor, or pedestrian-only facility is not sufficient by itself to include a record. Retain it only when the official record's temporary mode and published street context establish an automobile-road restriction.
 - The seven curated temporary street closures stored in `data/montreal-pedestrian-curated.json` are merged into the same final snapshot. Their source metadata and exact supplied geometries are authoritative and must not be replaced by OSM or geobase reconstruction.
+- Pedestrian refreshes are append-only: compare official project IDs with the existing snapshot before any geocoding or Overpass call. Preserve existing records and curated geometries exactly; resolve and append only genuinely new temporary automobile-road restrictions. Do not rebuild, replace, or remove existing pedestrian records without an explicit request.
+- CKAN pedestrian latitude/longitude values are known to be unreliable. For new records, locate the named street in its published borough and verify both published intersections against named-road geometry. Never use the raw CKAN point as an authoritative location or as a fallback when resolution fails. Leave unresolved additions out and report them for verification.
+- If no new eligible project exists, leave the pedestrian snapshot and its extraction timestamp unchanged. A source check alone is not a new geometry extraction.
 - `js/app.js` must load the final snapshot only. It must not contain the pedestrian records or issue CKAN, geocoder, or Overpass requests to build this snapshot at page load.
 
 The generator is `tools/build-montreal-pedestrian-snapshot.mjs`. Its output must report the number of CKAN records received, records retained after the temporary-automobile filter, curated records merged, and final `LineString` versus `Point` counts.
@@ -47,7 +50,7 @@ The generator is `tools/build-montreal-pedestrian-snapshot.mjs`. Its output must
 
 ## Required snapshot schema
 
-Each snapshot should be valid JSON with this shape:
+Each snapshot must be valid JSON. The following is the municipal record template; preserve existing source-specific schemas and loader contracts, including PJCCI's advisory and segment structure. Do not invent a municipality for an infrastructure authority or migrate an existing schema merely to match this template.
 
 ```json
 {
@@ -83,7 +86,7 @@ Do not remove useful source fields merely to fit this example. Add fields when t
 2. Identify the official source and confirm its actual extraction method. Prefer a public WFS, GeoJSON, ArcGIS service, Open511 endpoint, or a real browser session against the official map.
 3. If browser automation is needed, use Chromium/Playwright to load the official page and capture the structured network response. Do not scrape rendered text or pixels when the network response contains the source data.
 4. Inspect metadata and representative records. Confirm dates, status, automobile impact, identifiers, coordinate system, and geometry type.
-5. Normalize only documented records. Apply the municipality's active/future date rule.
+5. Normalize only documented records. Apply the source's active/future date rule and its specific rules below.
 6. Write or replace only the intended `data/*snapshot*.json` file using the repository editing workflow. Do not write temporary audit files into the repository.
 7. Update the loader in `js/app.js` only when requested or when the snapshot is not yet connected. Keep the source URL and snapshot policy explicit.
 8. Mark the corresponding catalog entry `inMap: true` only after the snapshot is actually loaded by the application and browser-validated. Documentary source links remain `inMap: false`.
@@ -255,11 +258,59 @@ Known limitations:
 - Coverage is about 94.5% resolved lines (1 626 of 1 721 impacts); the rest stays as honestly-labelled work-zone footprints. The remaining cases are: disconnected geobase graphs (intersections found but no chained path), intersection names absent from the geobase, and permits published with no street name ("Non-nommée"). Resolution improves only when the permit's intersection names can be matched to the geobase.
 - The geobase is reprojected server-side via the WFS `srsname=EPSG:4326` parameter; never hand-convert coordinates.
 
-## Other municipality sections
+## PJCCI - infrastructure authority, not a municipality
 
-When a new municipality snapshot is added, create a section here with:
+This section concerns Les Ponts Jacques Cartier et Champlain Incorporee (PJCCI), an infrastructure authority, not a municipality. Its segmentation and geometry rules below apply specifically to its work-advisory snapshot.
 
-- official municipality name, explicitly disambiguated from similarly named cities or boroughs;
+### Required sources
+
+Always cross-check both official sources:
+
+- Archive des avis: `https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/`
+- Interactive sector map: `https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/`
+
+Use the archive for the full text, sections, bullet points, directions, impacts, and dates. Use the interactive map's embedded `entrave` data for official IDs, coordinates, titles, and map dates. Preserve both source URLs and record the cross-source validation in the snapshot.
+
+### Segmentation contract
+
+Analyze every active or future advisory. Create one snapshot segment for every distinct obstruction described by a bullet point or direction. Separate directions whenever they have different impacts. Carry a section-level complementary warning into every segment in that section. Preserve section-specific dates and the exact published wording; do not replace approximate dates such as "jusqu'à l'automne" with invented exact dates.
+
+### Geometry contract
+
+Never guess coordinates. Never use a generic OSRM route to represent a PJCCI closure. Accept a line only when it is:
+
+- published by PJCCI;
+- a named OSM road/bridge way verified against the advisory and the official map point; or
+- another independently verifiable official geometry.
+
+The interactive map point is a control/reference, not automatically the displayed geometry. If no verified line can be established, keep the segment explicitly un-geometrized and report it in validation; never draw a guessed line or fallback point.
+
+### Update command
+
+Regenerate with:
+
+```bash
+npm run snapshot:pjcci
+```
+
+Output: `data/pjcci-work-advisories-snapshot.json`.
+
+### Validation checklist
+
+- Compare parent archive advisories with interactive-map entries.
+- Report all active/future parents and all generated segments.
+- Verify every segment has section, bullet, direction, dates, and source text.
+- Verify every displayed geometry has provenance and does not cross an unrelated bridge or road.
+- Report unmatched map entries and segments without verified geometry.
+- Run `node --check tools/build-pjcci-work-advisories-snapshot.mjs` and `node --check js/app.js`.
+- Parse the JSON and load the local site in Chromium before declaring success.
+- Never commit or push unless explicitly requested.
+
+## Other source sections
+
+When a new municipality or infrastructure authority snapshot is added, create a section here with:
+
+- official municipality or infrastructure authority name, explicitly disambiguated from similarly named entities;
 - official map/page URL;
 - exact API or browser extraction method;
 - request method and payload when applicable;
@@ -269,4 +320,4 @@ When a new municipality snapshot is added, create a section here with:
 - known CORS, rate-limit, freshness, or licensing constraints;
 - focused browser validation procedure.
 
-Use one section per municipality. Do not combine several municipal APIs into an undocumented generic snapshot.
+Use one section per municipality or infrastructure authority. Do not combine several source APIs into an undocumented generic snapshot.

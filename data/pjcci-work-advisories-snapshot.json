@@ -1,14 +1,14 @@
 {
-  "extractedAt": "2026-09-11T17:39:43.537Z",
+  "extractedAt": "2026-09-15T22:51:37.227Z",
   "sourceUrl": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
   "interactiveMapUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
-  "asOf": "2026-09-11",
-  "total": 10,
-  "parentNoticeTotal": 3,
+  "asOf": "2026-09-15",
+  "total": 9,
+  "parentNoticeTotal": 2,
   "interactiveMapEntraves": {
     "34": {
       "id": 1062,
-      "title": "Fermeture de la sortie 3 de l'autoroute en direction du pont Samuel-De Champlain",
+      "title": "Fermeture de la sortie 3 de l&#039;autoroute en direction du pont Samuel-De Champlain",
       "startDate": "2025-11-24",
       "endDate": "2026-12-31",
       "point": [
@@ -128,11 +128,46 @@
     }
   },
   "validation": {
-    "geometryPolicy": "Aucune coordonnee inventee; geometrie publiee, OSM verifiee ou point de la carte PJCCI seulement.",
-    "archiveAvis": 3,
+    "geometryPolicy": "Verified named road/bridge lines only; official map points are references, never fallback display geometry.",
+    "sourceArchiveCount": 153,
+    "archiveAvis": 2,
+    "excludedHistoricalParents": 151,
+    "excludedHistoricalSections": [
+      "Pont Clement: Du 3 au 15 mars",
+      "Voies surelevees: Du 6 mars jusqu’a mai 2026"
+    ],
     "interactiveMapEntraves": 4,
-    "segmentsMatchedToMap": 6,
-    "unmatchedMapKeys": []
+    "segmentsMatchedToMap": 7,
+    "unmatchedMapKeys": [],
+    "segmentsWithoutVerifiedGeometry": [
+      "pepsc-local",
+      "pepsc-access-bonaventure",
+      "sortie-3-vers-sud",
+      "gaetan-laberge-vers-sud",
+      "gaetan-laberge-vers-centre-ville",
+      "voies-victoria-clement-vers-sud",
+      "voies-victoria-clement-vers-centre-ville"
+    ],
+    "rejectedPreviousGeometry": [
+      {
+        "wayId": 23027179,
+        "reason": "junction:ref=2, not the published exit 3"
+      },
+      {
+        "wayId": 700832388,
+        "reason": "Bridge outline (man_made=bridge), not a highway carriageway"
+      },
+      {
+        "reason": "Previous Laberge and Victoria-Clement way sets did not establish continuous directional coverage at the official control points."
+      }
+    ],
+    "limitations": [
+      "Not live.",
+      "Pont Clement archive date: autumn 2026; map end date: November 30, 2026. Both retained with provenance.",
+      "Map key 65 explicitly describes the southbound impact; the downtown bullet is established by the archive only.",
+      "Map keys 64 and 66 share official id 1082; distinct keys preserved.",
+      "Approximate annual/seasonal schedules are not converted to invented January 1 or October 31 dates."
+    ]
   },
   "notices": [
     {
@@ -152,27 +187,64 @@
       "tagId": [
         1155
       ],
-      "segmentId": "pepsc-access-bonaventure",
-      "segmentTitle": "PEPSC - accès à l'autoroute Bonaventure fermé",
-      "segmentStreets": "Accès à l'autoroute Bonaventure depuis le parc d'entreprises de la Pointe-Saint-Charles",
-      "segmentImpact": "Circulation réservée aux entreprises locales; tout accès à l'autoroute Bonaventure depuis le PEPSC est fermé.",
-      "segmentDirection": "Accès du PEPSC vers l'autoroute Bonaventure.",
-      "segmentDateStart": "2025-11-27",
-      "segmentDateEnd": "2026-12-31",
-      "segmentDateText": "Avis en vigueur dès novembre 2025; fin publiée au 31 décembre 2026.",
+      "segmentId": "pepsc-local",
+      "segmentTitle": "SECTEUR DU PARC D’ENTREPRISES DE LA POINTE-SAINT-CHARLES (PEPSC) - Circulation aux entreprises riveraines uniquement",
+      "segmentStreets": "SECTEUR DU PARC D’ENTREPRISES DE LA POINTE-SAINT-CHARLES (PEPSC)",
+      "segmentImpact": "En raison des travaux de reconfiguration de l’autoroute Bonaventure en boulevard, la circulation dans le secteur du PEPSC est réservée aux entreprises locales uniquement.",
+      "segmentDirection": "Circulation aux entreprises riveraines uniquement",
+      "segmentDateText": "Dès novembre 2025 :",
       "noGeometry": true,
+      "geometry": null,
+      "geometryNote": "Aucun trace verifie pour ce segment; le point de la carte PJCCI reste uniquement une reference et ne sera pas affiche.",
       "analysis": {
         "sections": [
-          "Secteur du PEPSC"
+          "SECTEUR DU PARC D’ENTREPRISES DE LA POINTE-SAINT-CHARLES (PEPSC)"
         ],
         "bullets": [
-          "Circulation réservée aux entreprises locales",
-          "Accès à l'A-Bonaventure fermé"
+          "En raison des travaux de reconfiguration de l’autoroute Bonaventure en boulevard, la circulation dans le secteur du PEPSC est réservée aux entreprises locales uniquement."
         ],
-        "sourceText": "Dès novembre 2025&#160;: SECTEUR DU PARC D&#8217;ENTREPRISES DE LA POINTE-SAINT-CHARLES (PEPSC) En raison des travaux de reconfiguration de l&#8217;autoroute Bonaventure en boulevard, la circulation dans le secteur du PEPSC est réservée aux entreprises locales uniquement. Tout accès à l&#8217;A-Bonaventure depuis le PEPSC est actuellement fermé. Pour tout savoir sur le projet de reconfiguration de l&#8217;autoroute Bonaventure en boulevard, cliquez ici. Suivez notre compte X dédié au secteur Bonaventure pour être informé sur les entraves en temps réel. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet."
-      },
+        "sourceText": "Dès novembre 2025 :\n\nSECTEUR DU PARC D’ENTREPRISES DE LA POINTE-SAINT-CHARLES (PEPSC)\n\n\n\tEn raison des travaux de reconfiguration de l’autoroute Bonaventure en boulevard, la circulation dans le secteur du PEPSC est réservée aux entreprises locales uniquement. \n\tTout accès à l’A-Bonaventure depuis le PEPSC est actuellement fermé.\n\n\n \n\nPour tout savoir sur le projet de reconfiguration de l’autoroute Bonaventure en boulevard, cliquez ici.\n\nSuivez notre compte X dédié au secteur Bonaventure pour être informé sur les entraves en temps réel.\n\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet.",
+        "directionSourceField": "archive description/title",
+        "datePolicy": "Exact parent dates remain the published advisory envelope. Approximate section dates are preserved verbatim, not converted to invented dates."
+      }
+    },
+    {
+      "dateAffichageTravaux": "Du 27 novembre 2025 au 31 décembre 2026",
+      "anneDebut": "2025-11-27T19:51:00.000000Z",
+      "anneFin": "2027-01-01T04:59:00.000000Z",
+      "datedebut": "2025-11-27 14:51:00",
+      "datefin": "2026-12-31 23:59:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "Dès novembre 2025&#160;:\n\nSECTEUR DU PARC D&#8217;ENTREPRISES DE LA POINTE-SAINT-CHARLES (PEPSC)\n\n\n\tEn raison des travaux de reconfiguration de l&#8217;autoroute Bonaventure en boulevard, la circulation dans le secteur du PEPSC est réservée aux entreprises locales uniquement. \n\tTout accès à l&#8217;A-Bonaventure depuis le PEPSC est actuellement fermé.\n\n\n \n\nPour tout savoir sur le projet de reconfiguration de l&#8217;autoroute Bonaventure en boulevard, cliquez ici.\n\nSuivez notre compte X dédié au secteur Bonaventure pour être informé sur les entraves en temps réel.\n\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet.",
+      "title": "A-Bonaventure | Fermeture de longue durée à la circulation du Parc d&#039;entreprises de la Pointe-Saint-Charles (circulation aux entreprises riveraines uniquement)",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-a-la-circulation-du-parc-dentreprises-de-la-pointe-saint-charles-circulation-aux-entreprises-locales/",
+      "img": "/site/assets/files/17013/crt_ab_grand-public_fr_2025-11-27.-small.png",
+      "tags": [
+        "Secteur Bonaventure"
+      ],
+      "tagId": [
+        1155
+      ],
+      "segmentId": "pepsc-access-bonaventure",
+      "segmentTitle": "SECTEUR DU PARC D’ENTREPRISES DE LA POINTE-SAINT-CHARLES (PEPSC) - depuis le PEPSC",
+      "segmentStreets": "SECTEUR DU PARC D’ENTREPRISES DE LA POINTE-SAINT-CHARLES (PEPSC)",
+      "segmentImpact": "Tout accès à l’A-Bonaventure depuis le PEPSC est actuellement fermé.",
+      "segmentDirection": "depuis le PEPSC",
+      "segmentDateText": "Dès novembre 2025 :",
+      "noGeometry": true,
       "geometry": null,
-      "geometryNote": "Aucune geometrie verifiee n'est publiee pour cet avis; aucune coordonnee n'est inventee."
+      "geometryNote": "Aucun trace verifie pour ce segment; le point de la carte PJCCI reste uniquement une reference et ne sera pas affiche.",
+      "analysis": {
+        "sections": [
+          "SECTEUR DU PARC D’ENTREPRISES DE LA POINTE-SAINT-CHARLES (PEPSC)"
+        ],
+        "bullets": [
+          "Tout accès à l’A-Bonaventure depuis le PEPSC est actuellement fermé."
+        ],
+        "sourceText": "Dès novembre 2025 :\n\nSECTEUR DU PARC D’ENTREPRISES DE LA POINTE-SAINT-CHARLES (PEPSC)\n\n\n\tEn raison des travaux de reconfiguration de l’autoroute Bonaventure en boulevard, la circulation dans le secteur du PEPSC est réservée aux entreprises locales uniquement. \n\tTout accès à l’A-Bonaventure depuis le PEPSC est actuellement fermé.\n\n\n \n\nPour tout savoir sur le projet de reconfiguration de l’autoroute Bonaventure en boulevard, cliquez ici.\n\nSuivez notre compte X dédié au secteur Bonaventure pour être informé sur les entraves en temps réel.\n\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet.",
+        "directionSourceField": "archive description/title",
+        "datePolicy": "Exact parent dates remain the published advisory envelope. Approximate section dates are preserved verbatim, not converted to invented dates."
+      }
     },
     {
       "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
@@ -191,167 +263,16 @@
       "tagId": [
         1155
       ],
-      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
-      "analysis": {
-        "sections": [
-          "Secteur du pont Clément"
-        ],
-        "bullets": [
-          "1 voie sur 2 ouverte par direction",
-          "2 voies ouvertes vers le pont Samuel-De Champlain",
-          "1 voie sur 2 ouverte vers le centre-ville"
-        ],
-        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
-      },
-      "segmentId": "pont-clement",
-      "segmentTitle": "Pont Clément - voies réduites par direction",
-      "segmentStreets": "Secteur du pont Clément",
-      "segmentImpact": "Du 3 au 15 mars: 1 voie sur 2 ouverte par direction. Du 15 mars jusqu'à l'automne 2026: 2 voies ouvertes vers le pont Samuel-De Champlain et 1 voie sur 2 ouverte vers le centre-ville.",
-      "segmentDirection": "Deux directions concernées; les voies restantes demeurent ouvertes.",
-      "segmentDateStart": "2026-03-03",
-      "segmentDateEnd": "2026-10-31",
-      "segmentDateText": "Du 3 mars à l'automne 2026 (dates de fin exactes non publiées).",
-      "segmentEndpoints": [
-        [
-          -73.561,
-          45.478
-        ],
-        [
-          -73.548,
-          45.493
-        ]
-      ],
-      "segmentGeometry": {
+      "segmentId": "pont-clement-vers-sud",
+      "segmentTitle": "SECTEUR DU PONT CLÉMENT - en direction du pont Samuel-De Champlain",
+      "segmentStreets": "SECTEUR DU PONT CLÉMENT",
+      "segmentImpact": "2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 “Île des Soeurs” ouverte)",
+      "segmentDirection": "en direction du pont Samuel-De Champlain",
+      "segmentDateText": "Du 15 mars jusqu’à l’automne 2026",
+      "noGeometry": false,
+      "geometry": {
         "type": "MultiLineString",
         "coordinates": [
-          [
-            [
-              -73.5421026,
-              45.4744163
-            ],
-            [
-              -73.5420396,
-              45.4743964
-            ],
-            [
-              -73.5419258,
-              45.4743587
-            ],
-            [
-              -73.5418663,
-              45.474333
-            ],
-            [
-              -73.5416034,
-              45.4747523
-            ],
-            [
-              -73.5412258,
-              45.4753789
-            ],
-            [
-              -73.5410235,
-              45.4757322
-            ],
-            [
-              -73.5408235,
-              45.4760905
-            ],
-            [
-              -73.5406319,
-              45.4764477
-            ],
-            [
-              -73.5404574,
-              45.4767893
-            ],
-            [
-              -73.5402614,
-              45.4771833
-            ],
-            [
-              -73.5401957,
-              45.4773121
-            ],
-            [
-              -73.5402677,
-              45.4773277
-            ],
-            [
-              -73.5403903,
-              45.4773573
-            ],
-            [
-              -73.5404536,
-              45.4773706
-            ],
-            [
-              -73.5405521,
-              45.4771591
-            ],
-            [
-              -73.5407023,
-              45.4768522
-            ],
-            [
-              -73.5408836,
-              45.4765007
-            ],
-            [
-              -73.5410756,
-              45.4761424
-            ],
-            [
-              -73.5413835,
-              45.4755925
-            ],
-            [
-              -73.5417431,
-              45.4749955
-            ],
-            [
-              -73.5421026,
-              45.4744163
-            ]
-          ],
-          [
-            [
-              -73.5419258,
-              45.4743587
-            ],
-            [
-              -73.5417612,
-              45.4746175
-            ],
-            [
-              -73.5415989,
-              45.474879
-            ],
-            [
-              -73.5412892,
-              45.4753994
-            ],
-            [
-              -73.5409893,
-              45.4759311
-            ],
-            [
-              -73.5408365,
-              45.4762063
-            ],
-            [
-              -73.5406968,
-              45.4764762
-            ],
-            [
-              -73.5404765,
-              45.4769033
-            ],
-            [
-              -73.5402677,
-              45.4773277
-            ]
-          ],
           [
             [
               -73.5403903,
@@ -406,8 +327,18 @@
           ]
         ]
       },
-      "segmentGeometrySource": "OpenStreetMap ways 700832388, 39180620, 677782935, 567717682",
-      "noGeometry": true,
+      "geometryNote": "Chaussee OSM nommee Autoroute Bonaventure / Pont Clement, sens unique verifie et recoupee avec le point officiel PJCCI 66. Les voies ouvertes restent ouvertes.",
+      "analysis": {
+        "sections": [
+          "SECTEUR DU PONT CLÉMENT"
+        ],
+        "bullets": [
+          "2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 “Île des Soeurs” ouverte)"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars :\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu’à l’automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 “Île des Soeurs” ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l’autoroute depuis l’île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu’à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l’autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention : les travaux de reconfiguration de l’autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l’autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure ? Je m’informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet : https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+        "directionSourceField": "archive description/title",
+        "datePolicy": "Section start: archive March 15, 2026. Filtering end: official interactive-map datefin, not an inferred date for autumn. Archive and map start dates differ (March 15 / March 16)."
+      },
       "mapEntryKey": "66",
       "mapEntryId": 1082,
       "mapSourceTitle": "Secteur du pont Clément - 1 voie ouverte direction centre-ville, 2 voies ouvertes direction Samuel-De Champlain",
@@ -417,375 +348,227 @@
         -73.541153,
         45.475586
       ],
-      "segmentPoint": [
-        -73.541153,
-        45.475586
+      "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
+      "geometrySource": [
+        {
+          "url": "https://api.openstreetmap.org/api/0.6/way/677782935/full.json",
+          "id": 677782935,
+          "tags": {
+            "bicycle": "no",
+            "bridge": "yes",
+            "bridge:name": "Pont Clément",
+            "bridge:name:en": "Clement Bridge",
+            "bridge:name:fr": "Pont Clément",
+            "foot": "no",
+            "highway": "motorway",
+            "lanes": "2",
+            "layer": "1",
+            "lit": "yes",
+            "maxspeed": "70",
+            "name": "Autoroute Bonaventure",
+            "name:en": "Bonaventure Expressway",
+            "name:fr": "Autoroute Bonaventure",
+            "oneway": "yes",
+            "ref": "10",
+            "surface": "asphalt"
+          },
+          "version": 6,
+          "timestamp": "2023-05-02T23:48:20Z"
+        },
+        {
+          "url": "https://api.openstreetmap.org/api/0.6/way/567717682/full.json",
+          "id": 567717682,
+          "tags": {
+            "bicycle": "no",
+            "bridge": "yes",
+            "bridge:name": "Pont Clément",
+            "bridge:name:en": "Clement Bridge",
+            "bridge:name:fr": "Pont Clément",
+            "change:lanes": "no|yes",
+            "foot": "no",
+            "highway": "motorway",
+            "lanes": "2",
+            "layer": "1",
+            "lit": "yes",
+            "maxspeed": "50",
+            "name": "Autoroute Bonaventure",
+            "name:en": "Bonaventure Expressway",
+            "name:fr": "Autoroute Bonaventure",
+            "oneway": "yes",
+            "ref": "10",
+            "surface": "asphalt"
+          },
+          "version": 5,
+          "timestamp": "2023-05-02T23:48:20Z"
+        }
       ],
+      "segmentDateStart": "2026-03-15",
+      "segmentDateEnd": "2026-11-30"
+    },
+    {
+      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
+      "anneDebut": "2026-03-03T15:34:00.000000Z",
+      "anneFin": "2027-01-01T04:59:00.000000Z",
+      "datedebut": "2026-03-03 10:34:00",
+      "datefin": "2026-12-31 23:59:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
+      "tags": [
+        "Secteur Bonaventure"
+      ],
+      "tagId": [
+        1155
+      ],
+      "segmentId": "pont-clement-vers-centre-ville",
+      "segmentTitle": "SECTEUR DU PONT CLÉMENT - en direction du centre-ville",
+      "segmentStreets": "SECTEUR DU PONT CLÉMENT",
+      "segmentImpact": "1 voie sur 2 ouverte en direction du centre-ville (accès à l’autoroute depuis l’île des Soeurs ouverts)",
+      "segmentDirection": "en direction du centre-ville",
+      "segmentDateText": "Du 15 mars jusqu’à l’automne 2026",
+      "noGeometry": false,
       "geometry": {
-        "type": "MultiLineString",
-        "coordinates": [
-          [
-            [
-              -73.5421026,
-              45.4744163
-            ],
-            [
-              -73.5420396,
-              45.4743964
-            ],
-            [
-              -73.5419258,
-              45.4743587
-            ],
-            [
-              -73.5418663,
-              45.474333
-            ],
-            [
-              -73.5416034,
-              45.4747523
-            ],
-            [
-              -73.5412258,
-              45.4753789
-            ],
-            [
-              -73.5410235,
-              45.4757322
-            ],
-            [
-              -73.5408235,
-              45.4760905
-            ],
-            [
-              -73.5406319,
-              45.4764477
-            ],
-            [
-              -73.5404574,
-              45.4767893
-            ],
-            [
-              -73.5402614,
-              45.4771833
-            ],
-            [
-              -73.5401957,
-              45.4773121
-            ],
-            [
-              -73.5402677,
-              45.4773277
-            ],
-            [
-              -73.5403903,
-              45.4773573
-            ],
-            [
-              -73.5404536,
-              45.4773706
-            ],
-            [
-              -73.5405521,
-              45.4771591
-            ],
-            [
-              -73.5407023,
-              45.4768522
-            ],
-            [
-              -73.5408836,
-              45.4765007
-            ],
-            [
-              -73.5410756,
-              45.4761424
-            ],
-            [
-              -73.5413835,
-              45.4755925
-            ],
-            [
-              -73.5417431,
-              45.4749955
-            ],
-            [
-              -73.5421026,
-              45.4744163
-            ]
-          ],
-          [
-            [
-              -73.5419258,
-              45.4743587
-            ],
-            [
-              -73.5417612,
-              45.4746175
-            ],
-            [
-              -73.5415989,
-              45.474879
-            ],
-            [
-              -73.5412892,
-              45.4753994
-            ],
-            [
-              -73.5409893,
-              45.4759311
-            ],
-            [
-              -73.5408365,
-              45.4762063
-            ],
-            [
-              -73.5406968,
-              45.4764762
-            ],
-            [
-              -73.5404765,
-              45.4769033
-            ],
-            [
-              -73.5402677,
-              45.4773277
-            ]
-          ],
-          [
-            [
-              -73.5403903,
-              45.4773573
-            ],
-            [
-              -73.5404943,
-              45.4771404
-            ],
-            [
-              -73.540594,
-              45.4769357
-            ],
-            [
-              -73.5407773,
-              45.4765717
-            ],
-            [
-              -73.5409633,
-              45.4762221
-            ],
-            [
-              -73.5412117,
-              45.4757692
-            ],
-            [
-              -73.5413914,
-              45.4754565
-            ],
-            [
-              -73.5416286,
-              45.4750555
-            ]
-          ],
-          [
-            [
-              -73.5416286,
-              45.4750555
-            ],
-            [
-              -73.5417646,
-              45.4748311
-            ],
-            [
-              -73.541891,
-              45.4746289
-            ],
-            [
-              -73.5420396,
-              45.4743964
-            ]
-          ]
-        ]
-      },
-      "geometrySource": "OpenStreetMap ways 700832388, 39180620, 677782935, 567717682",
-      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
-    },
-    {
-      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
-      "anneDebut": "2026-03-03T15:34:00.000000Z",
-      "anneFin": "2027-01-01T04:59:00.000000Z",
-      "datedebut": "2026-03-03 10:34:00",
-      "datefin": "2026-12-31 23:59:00",
-      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
-      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
-      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
-      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
-      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
-      "tags": [
-        "Secteur Bonaventure"
-      ],
-      "tagId": [
-        1155
-      ],
-      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
-      "analysis": {
-        "sections": [
-          "Secteur des voies surélevées"
-        ],
-        "bullets": [
-          "2 voies sur 3 ouvertes dans cette direction"
-        ],
-        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
-      },
-      "segmentId": "voies-surelevees-vers-sud",
-      "segmentTitle": "Voies surélevées - vers le pont Samuel-De Champlain",
-      "segmentStreets": "Voies surélevées, entre le pont Victoria et la rue Wellington",
-      "segmentImpact": "2 voies sur 3 ouvertes par direction; une voie est retranchée dans cette direction.",
-      "segmentDirection": "Vers le pont Samuel-De Champlain.",
-      "segmentDateStart": "2026-03-06",
-      "segmentDateEnd": "2026-05-31",
-      "segmentDateText": "Du 6 mars jusqu'à mai 2026 (date exacte de fin non publiée).",
-      "segmentEndpoints": [
-        [
-          -73.562,
-          45.478
-        ],
-        [
-          -73.55,
-          45.49
-        ]
-      ],
-      "geometry": null,
-      "noGeometry": true,
-      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
-    },
-    {
-      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
-      "anneDebut": "2026-03-03T15:34:00.000000Z",
-      "anneFin": "2027-01-01T04:59:00.000000Z",
-      "datedebut": "2026-03-03 10:34:00",
-      "datefin": "2026-12-31 23:59:00",
-      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
-      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
-      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
-      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
-      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
-      "tags": [
-        "Secteur Bonaventure"
-      ],
-      "tagId": [
-        1155
-      ],
-      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
-      "analysis": {
-        "sections": [
-          "Secteur des voies surélevées"
-        ],
-        "bullets": [
-          "2 voies sur 3 ouvertes dans cette direction"
-        ],
-        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
-      },
-      "segmentId": "voies-surelevees-vers-centre-ville",
-      "segmentTitle": "Voies surélevées - vers le centre-ville",
-      "segmentStreets": "Voies surélevées, entre le pont Victoria et la rue Wellington",
-      "segmentImpact": "2 voies sur 3 ouvertes par direction; une voie est retranchée dans cette direction.",
-      "segmentDirection": "Vers le centre-ville.",
-      "segmentDateStart": "2026-03-06",
-      "segmentDateEnd": "2026-05-31",
-      "segmentDateText": "Du 6 mars jusqu'à mai 2026 (date exacte de fin non publiée).",
-      "segmentEndpoints": [
-        [
-          -73.55,
-          45.49
-        ],
-        [
-          -73.562,
-          45.478
-        ]
-      ],
-      "geometry": null,
-      "noGeometry": true,
-      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
-    },
-    {
-      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
-      "anneDebut": "2026-03-03T15:34:00.000000Z",
-      "anneFin": "2027-01-01T04:59:00.000000Z",
-      "datedebut": "2026-03-03 10:34:00",
-      "datefin": "2026-12-31 23:59:00",
-      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
-      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
-      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
-      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
-      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
-      "tags": [
-        "Secteur Bonaventure"
-      ],
-      "tagId": [
-        1155
-      ],
-      "segmentGeometryNote": "Ligne OSM verifiee et recoupee avec le point officiel de la carte interactive PJCCI (entrave 34).",
-      "analysis": {
-        "sections": [
-          "Secteur des voies surélevées"
-        ],
-        "bullets": [
-          "Fermeture de la sortie 3 en direction du pont Samuel-De Champlain"
-        ],
-        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
-      },
-      "segmentId": "sortie-3-vers-sud",
-      "segmentTitle": "Sortie 3 - fermeture vers le pont Samuel-De Champlain",
-      "segmentStreets": "Sortie 3 de l'autoroute Bonaventure",
-      "segmentImpact": "Fermeture de la sortie 3 de l'autoroute en direction du pont Samuel-De Champlain.",
-      "segmentDirection": "Vers le pont Samuel-De Champlain.",
-      "segmentDateStart": "2026-01-01",
-      "segmentDateEnd": "2026-12-31",
-      "segmentDateText": "Entrave de longue durée pendant l'année 2026.",
-      "segmentPoint": [
-        -73.541451,
-        45.488342
-      ],
-      "noGeometry": true,
-      "segmentGeometry": {
         "type": "LineString",
         "coordinates": [
           [
-            -73.5501271,
-            45.4901595
+            -73.5419258,
+            45.4743587
           ],
           [
-            -73.5496889,
-            45.4899399
+            -73.5417612,
+            45.4746175
+          ],
+          [
+            -73.5415989,
+            45.474879
+          ],
+          [
+            -73.5412892,
+            45.4753994
+          ],
+          [
+            -73.5409893,
+            45.4759311
+          ],
+          [
+            -73.5408365,
+            45.4762063
+          ],
+          [
+            -73.5406968,
+            45.4764762
+          ],
+          [
+            -73.5404765,
+            45.4769033
+          ],
+          [
+            -73.5402677,
+            45.4773277
           ]
         ]
       },
-      "segmentGeometrySource": "OpenStreetMap ways 23027179",
+      "geometryNote": "Chaussee OSM nommee Autoroute Bonaventure / Pont Clement, sens unique verifie et recoupee avec le point officiel PJCCI 66. Les voies ouvertes restent ouvertes.",
+      "analysis": {
+        "sections": [
+          "SECTEUR DU PONT CLÉMENT"
+        ],
+        "bullets": [
+          "1 voie sur 2 ouverte en direction du centre-ville (accès à l’autoroute depuis l’île des Soeurs ouverts)"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars :\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu’à l’automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 “Île des Soeurs” ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l’autoroute depuis l’île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu’à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l’autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention : les travaux de reconfiguration de l’autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l’autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure ? Je m’informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet : https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+        "directionSourceField": "archive description/title",
+        "datePolicy": "Section start: archive March 15, 2026. Filtering end: official interactive-map datefin, not an inferred date for autumn. Archive and map start dates differ (March 15 / March 16)."
+      },
+      "mapEntryKey": "66",
+      "mapEntryId": 1082,
+      "mapSourceTitle": "Secteur du pont Clément - 1 voie ouverte direction centre-ville, 2 voies ouvertes direction Samuel-De Champlain",
+      "mapStartDate": "2026-03-16",
+      "mapEndDate": "2026-11-30",
+      "mapPoint": [
+        -73.541153,
+        45.475586
+      ],
+      "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
+      "geometrySource": [
+        {
+          "url": "https://api.openstreetmap.org/api/0.6/way/39180620/full.json",
+          "id": 39180620,
+          "tags": {
+            "bicycle": "no",
+            "bridge": "yes",
+            "bridge:name": "Pont Clément",
+            "bridge:name:en": "Clement Bridge",
+            "bridge:name:fr": "Pont Clément",
+            "foot": "no",
+            "highway": "motorway",
+            "lanes": "2",
+            "layer": "1",
+            "lit": "yes",
+            "maxspeed": "70",
+            "name": "Autoroute Bonaventure",
+            "name:en": "Bonaventure Expressway",
+            "name:fr": "Autoroute Bonaventure",
+            "oneway": "yes",
+            "ref": "10",
+            "surface": "asphalt"
+          },
+          "version": 19,
+          "timestamp": "2023-05-02T23:48:20Z"
+        }
+      ],
+      "segmentDateStart": "2026-03-15",
+      "segmentDateEnd": "2026-11-30"
+    },
+    {
+      "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
+      "anneDebut": "2026-03-03T15:34:00.000000Z",
+      "anneFin": "2027-01-01T04:59:00.000000Z",
+      "datedebut": "2026-03-03 10:34:00",
+      "datefin": "2026-12-31 23:59:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;:\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu&#8217;à l&#8217;automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu&#8217;à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+      "title": "A-Bonaventure | Mobilisation des chantiers dans le secteur de l&#039;autoroute Bonaventure",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-mobilisation-des-chantiers-dans-le-secteur-de-lautoroute-bonaventure/",
+      "img": "/site/assets/files/17562/crt_ab_fp_secteur-complet_fr_2026-02-16.-small.jpg",
+      "tags": [
+        "Secteur Bonaventure"
+      ],
+      "tagId": [
+        1155
+      ],
+      "segmentId": "sortie-3-vers-sud",
+      "segmentTitle": "SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) - en direction du pont Samuel-De Champlain",
+      "segmentStreets": "SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)",
+      "segmentImpact": "Fermeture de la sortie 3 de l’autoroute en direction du pont Samuel-De Champlain",
+      "segmentDirection": "en direction du pont Samuel-De Champlain",
+      "segmentDateText": "Entrave de longue durée (année 2026)",
+      "noGeometry": true,
+      "geometry": null,
+      "geometryNote": "Aucun trace verifie pour ce segment; le point de la carte PJCCI reste uniquement une reference et ne sera pas affiche.",
+      "analysis": {
+        "sections": [
+          "SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)"
+        ],
+        "bullets": [
+          "Fermeture de la sortie 3 de l’autoroute en direction du pont Samuel-De Champlain"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars :\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu’à l’automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 “Île des Soeurs” ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l’autoroute depuis l’île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu’à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l’autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention : les travaux de reconfiguration de l’autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l’autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure ? Je m’informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet : https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+        "directionSourceField": "archive description/title",
+        "datePolicy": "Exact parent dates remain the published advisory envelope. Approximate section dates are preserved verbatim, not converted to invented dates."
+      },
       "mapEntryKey": "34",
       "mapEntryId": 1062,
-      "mapSourceTitle": "Fermeture de la sortie 3 de l'autoroute en direction du pont Samuel-De Champlain",
+      "mapSourceTitle": "Fermeture de la sortie 3 de l&#039;autoroute en direction du pont Samuel-De Champlain",
       "mapStartDate": "2025-11-24",
       "mapEndDate": "2026-12-31",
       "mapPoint": [
         -73.541451,
         45.488342
       ],
-      "mapPointSource": "PJCCI carte interactive, entrave 1062",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -73.5501271,
-            45.4901595
-          ],
-          [
-            -73.5496889,
-            45.4899399
-          ]
-        ]
-      },
-      "geometrySource": "OpenStreetMap ways 23027179",
-      "geometryNote": "Ligne OSM verifiee et recoupee avec le point officiel de la carte interactive PJCCI (entrave 34)."
+      "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/"
     },
     {
       "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
@@ -804,305 +587,26 @@
       "tagId": [
         1155
       ],
-      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
-      "analysis": {
-        "sections": [
-          "Secteur du boulevard Gaétan-Laberge"
-        ],
-        "bullets": [
-          "1 voie sur 2 ouverte dans cette direction"
-        ],
-        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
-      },
       "segmentId": "gaetan-laberge-vers-sud",
-      "segmentTitle": "Boulevard Gaétan-Laberge - vers le pont Samuel-De Champlain",
-      "segmentStreets": "Boulevard Gaétan-Laberge",
-      "segmentImpact": "1 voie sur 2 ouverte par direction; une voie est retranchée dans cette direction.",
-      "segmentDirection": "Vers le pont Samuel-De Champlain.",
-      "segmentDateStart": "2026-01-01",
-      "segmentDateEnd": "2026-12-31",
-      "segmentDateText": "Entrave de longue durée pendant l'année 2026.",
-      "segmentEndpoints": [
-        [
-          -73.562,
-          45.466
-        ],
-        [
-          -73.541,
-          45.49
-        ]
-      ],
-      "segmentGeometry": {
-        "type": "MultiLineString",
-        "coordinates": [
-          [
-            [
-              -73.5624665,
-              45.4699244
-            ],
-            [
-              -73.562495,
-              45.4698818
-            ],
-            [
-              -73.5625896,
-              45.4697127
-            ],
-            [
-              -73.5627101,
-              45.4695107
-            ],
-            [
-              -73.56275,
-              45.4694407
-            ],
-            [
-              -73.5627779,
-              45.4693793
-            ],
-            [
-              -73.5628659,
-              45.4691703
-            ],
-            [
-              -73.5629362,
-              45.4689057
-            ],
-            [
-              -73.5629462,
-              45.4688186
-            ],
-            [
-              -73.5629724,
-              45.4685452
-            ],
-            [
-              -73.5629784,
-              45.4683824
-            ],
-            [
-              -73.5629723,
-              45.468244
-            ],
-            [
-              -73.562955,
-              45.4681135
-            ],
-            [
-              -73.5629435,
-              45.4680291
-            ],
-            [
-              -73.5629076,
-              45.4678761
-            ],
-            [
-              -73.5628963,
-              45.467821
-            ],
-            [
-              -73.5628817,
-              45.4677639
-            ],
-            [
-              -73.5628631,
-              45.4677154
-            ],
-            [
-              -73.5626227,
-              45.4670892
-            ],
-            [
-              -73.5625596,
-              45.4669303
-            ],
-            [
-              -73.5625004,
-              45.4667836
-            ],
-            [
-              -73.562475,
-              45.4666869
-            ],
-            [
-              -73.5624561,
-              45.4665971
-            ],
-            [
-              -73.5624366,
-              45.4664155
-            ],
-            [
-              -73.5624474,
-              45.4662371
-            ]
-          ],
-          [
-            [
-              -73.5628389,
-              45.4647339
-            ],
-            [
-              -73.562832,
-              45.464791
-            ],
-            [
-              -73.5627415,
-              45.4650918
-            ],
-            [
-              -73.5624626,
-              45.4656595
-            ],
-            [
-              -73.5624176,
-              45.4657816
-            ],
-            [
-              -73.562375,
-              45.4659284
-            ],
-            [
-              -73.5623464,
-              45.4660739
-            ],
-            [
-              -73.5623405,
-              45.466126
-            ],
-            [
-              -73.562332,
-              45.4661921
-            ],
-            [
-              -73.5623311,
-              45.4662336
-            ]
-          ],
-          [
-            [
-              -73.5619382,
-              45.4703349
-            ],
-            [
-              -73.5618702,
-              45.4704059
-            ],
-            [
-              -73.5618341,
-              45.4704413
-            ],
-            [
-              -73.5617637,
-              45.4705077
-            ],
-            [
-              -73.5616587,
-              45.4705988
-            ],
-            [
-              -73.5615747,
-              45.4706639
-            ],
-            [
-              -73.5614899,
-              45.4707271
-            ],
-            [
-              -73.5613862,
-              45.4707985
-            ],
-            [
-              -73.5613003,
-              45.4708544
-            ],
-            [
-              -73.5612197,
-              45.4709052
-            ],
-            [
-              -73.5611047,
-              45.4709758
-            ],
-            [
-              -73.5609978,
-              45.471037
-            ],
-            [
-              -73.5608947,
-              45.4710937
-            ],
-            [
-              -73.5608012,
-              45.4711398
-            ],
-            [
-              -73.5607564,
-              45.4711678
-            ],
-            [
-              -73.5605423,
-              45.4712745
-            ]
-          ],
-          [
-            [
-              -73.5594669,
-              45.4718356
-            ],
-            [
-              -73.5595301,
-              45.471816
-            ],
-            [
-              -73.5596101,
-              45.4717893
-            ],
-            [
-              -73.5597577,
-              45.4717353
-            ],
-            [
-              -73.5598848,
-              45.4716844
-            ],
-            [
-              -73.5600977,
-              45.4715968
-            ]
-          ],
-          [
-            [
-              -73.5579883,
-              45.4722301
-            ],
-            [
-              -73.5578202,
-              45.472305
-            ],
-            [
-              -73.5574626,
-              45.4724655
-            ]
-          ],
-          [
-            [
-              -73.5499757,
-              45.4746104
-            ],
-            [
-              -73.5494186,
-              45.4745176
-            ],
-            [
-              -73.5492768,
-              45.4744944
-            ]
-          ]
-        ]
-      },
-      "segmentGeometrySource": "OpenStreetMap ways 1164875653, 1417416796, 429919712, 1074363189, 1074363198, 1074363830",
+      "segmentTitle": "SECTEUR DU BOULEVARD GAÉTAN-LABERGE - vers pont Samuel-De Champlain et A-15",
+      "segmentStreets": "SECTEUR DU BOULEVARD GAÉTAN-LABERGE",
+      "segmentImpact": "1 voie sur 2 ouverte par direction",
+      "segmentDirection": "vers pont Samuel-De Champlain et A-15",
+      "segmentDateText": "Entrave de longue durée (année 2026)",
       "noGeometry": true,
+      "geometry": null,
+      "geometryNote": "Aucun trace verifie pour ce segment; le point de la carte PJCCI reste uniquement une reference et ne sera pas affiche.",
+      "analysis": {
+        "sections": [
+          "SECTEUR DU BOULEVARD GAÉTAN-LABERGE"
+        ],
+        "bullets": [
+          "1 voie sur 2 ouverte par direction"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars :\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu’à l’automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 “Île des Soeurs” ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l’autoroute depuis l’île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu’à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l’autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention : les travaux de reconfiguration de l’autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l’autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure ? Je m’informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet : https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+        "directionSourceField": "interactiveMapEntraves.64.raw.voie_name",
+        "datePolicy": "Exact parent dates remain the published advisory envelope. Approximate section dates are preserved verbatim, not converted to invented dates."
+      },
       "mapEntryKey": "64",
       "mapEntryId": 1082,
       "mapSourceTitle": "Boul. Gaétan-Laberge - 1 voie ouverte par direction",
@@ -1112,281 +616,7 @@
         -73.543877,
         45.475708
       ],
-      "segmentPoint": [
-        -73.543877,
-        45.475708
-      ],
-      "geometry": {
-        "type": "MultiLineString",
-        "coordinates": [
-          [
-            [
-              -73.5624665,
-              45.4699244
-            ],
-            [
-              -73.562495,
-              45.4698818
-            ],
-            [
-              -73.5625896,
-              45.4697127
-            ],
-            [
-              -73.5627101,
-              45.4695107
-            ],
-            [
-              -73.56275,
-              45.4694407
-            ],
-            [
-              -73.5627779,
-              45.4693793
-            ],
-            [
-              -73.5628659,
-              45.4691703
-            ],
-            [
-              -73.5629362,
-              45.4689057
-            ],
-            [
-              -73.5629462,
-              45.4688186
-            ],
-            [
-              -73.5629724,
-              45.4685452
-            ],
-            [
-              -73.5629784,
-              45.4683824
-            ],
-            [
-              -73.5629723,
-              45.468244
-            ],
-            [
-              -73.562955,
-              45.4681135
-            ],
-            [
-              -73.5629435,
-              45.4680291
-            ],
-            [
-              -73.5629076,
-              45.4678761
-            ],
-            [
-              -73.5628963,
-              45.467821
-            ],
-            [
-              -73.5628817,
-              45.4677639
-            ],
-            [
-              -73.5628631,
-              45.4677154
-            ],
-            [
-              -73.5626227,
-              45.4670892
-            ],
-            [
-              -73.5625596,
-              45.4669303
-            ],
-            [
-              -73.5625004,
-              45.4667836
-            ],
-            [
-              -73.562475,
-              45.4666869
-            ],
-            [
-              -73.5624561,
-              45.4665971
-            ],
-            [
-              -73.5624366,
-              45.4664155
-            ],
-            [
-              -73.5624474,
-              45.4662371
-            ]
-          ],
-          [
-            [
-              -73.5628389,
-              45.4647339
-            ],
-            [
-              -73.562832,
-              45.464791
-            ],
-            [
-              -73.5627415,
-              45.4650918
-            ],
-            [
-              -73.5624626,
-              45.4656595
-            ],
-            [
-              -73.5624176,
-              45.4657816
-            ],
-            [
-              -73.562375,
-              45.4659284
-            ],
-            [
-              -73.5623464,
-              45.4660739
-            ],
-            [
-              -73.5623405,
-              45.466126
-            ],
-            [
-              -73.562332,
-              45.4661921
-            ],
-            [
-              -73.5623311,
-              45.4662336
-            ]
-          ],
-          [
-            [
-              -73.5619382,
-              45.4703349
-            ],
-            [
-              -73.5618702,
-              45.4704059
-            ],
-            [
-              -73.5618341,
-              45.4704413
-            ],
-            [
-              -73.5617637,
-              45.4705077
-            ],
-            [
-              -73.5616587,
-              45.4705988
-            ],
-            [
-              -73.5615747,
-              45.4706639
-            ],
-            [
-              -73.5614899,
-              45.4707271
-            ],
-            [
-              -73.5613862,
-              45.4707985
-            ],
-            [
-              -73.5613003,
-              45.4708544
-            ],
-            [
-              -73.5612197,
-              45.4709052
-            ],
-            [
-              -73.5611047,
-              45.4709758
-            ],
-            [
-              -73.5609978,
-              45.471037
-            ],
-            [
-              -73.5608947,
-              45.4710937
-            ],
-            [
-              -73.5608012,
-              45.4711398
-            ],
-            [
-              -73.5607564,
-              45.4711678
-            ],
-            [
-              -73.5605423,
-              45.4712745
-            ]
-          ],
-          [
-            [
-              -73.5594669,
-              45.4718356
-            ],
-            [
-              -73.5595301,
-              45.471816
-            ],
-            [
-              -73.5596101,
-              45.4717893
-            ],
-            [
-              -73.5597577,
-              45.4717353
-            ],
-            [
-              -73.5598848,
-              45.4716844
-            ],
-            [
-              -73.5600977,
-              45.4715968
-            ]
-          ],
-          [
-            [
-              -73.5579883,
-              45.4722301
-            ],
-            [
-              -73.5578202,
-              45.472305
-            ],
-            [
-              -73.5574626,
-              45.4724655
-            ]
-          ],
-          [
-            [
-              -73.5499757,
-              45.4746104
-            ],
-            [
-              -73.5494186,
-              45.4745176
-            ],
-            [
-              -73.5492768,
-              45.4744944
-            ]
-          ]
-        ]
-      },
-      "geometrySource": "OpenStreetMap ways 1164875653, 1417416796, 429919712, 1074363189, 1074363198, 1074363830",
-      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
+      "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/"
     },
     {
       "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
@@ -1405,305 +635,26 @@
       "tagId": [
         1155
       ],
-      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
-      "analysis": {
-        "sections": [
-          "Secteur du boulevard Gaétan-Laberge"
-        ],
-        "bullets": [
-          "1 voie sur 2 ouverte dans cette direction"
-        ],
-        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
-      },
       "segmentId": "gaetan-laberge-vers-centre-ville",
-      "segmentTitle": "Boulevard Gaétan-Laberge - vers le centre-ville",
-      "segmentStreets": "Boulevard Gaétan-Laberge",
-      "segmentImpact": "1 voie sur 2 ouverte par direction; une voie est retranchée dans cette direction.",
-      "segmentDirection": "Vers le centre-ville.",
-      "segmentDateStart": "2026-01-01",
-      "segmentDateEnd": "2026-12-31",
-      "segmentDateText": "Entrave de longue durée pendant l'année 2026.",
-      "segmentEndpoints": [
-        [
-          -73.541,
-          45.49
-        ],
-        [
-          -73.562,
-          45.466
-        ]
-      ],
-      "segmentGeometry": {
-        "type": "MultiLineString",
-        "coordinates": [
-          [
-            [
-              -73.5624665,
-              45.4699244
-            ],
-            [
-              -73.562495,
-              45.4698818
-            ],
-            [
-              -73.5625896,
-              45.4697127
-            ],
-            [
-              -73.5627101,
-              45.4695107
-            ],
-            [
-              -73.56275,
-              45.4694407
-            ],
-            [
-              -73.5627779,
-              45.4693793
-            ],
-            [
-              -73.5628659,
-              45.4691703
-            ],
-            [
-              -73.5629362,
-              45.4689057
-            ],
-            [
-              -73.5629462,
-              45.4688186
-            ],
-            [
-              -73.5629724,
-              45.4685452
-            ],
-            [
-              -73.5629784,
-              45.4683824
-            ],
-            [
-              -73.5629723,
-              45.468244
-            ],
-            [
-              -73.562955,
-              45.4681135
-            ],
-            [
-              -73.5629435,
-              45.4680291
-            ],
-            [
-              -73.5629076,
-              45.4678761
-            ],
-            [
-              -73.5628963,
-              45.467821
-            ],
-            [
-              -73.5628817,
-              45.4677639
-            ],
-            [
-              -73.5628631,
-              45.4677154
-            ],
-            [
-              -73.5626227,
-              45.4670892
-            ],
-            [
-              -73.5625596,
-              45.4669303
-            ],
-            [
-              -73.5625004,
-              45.4667836
-            ],
-            [
-              -73.562475,
-              45.4666869
-            ],
-            [
-              -73.5624561,
-              45.4665971
-            ],
-            [
-              -73.5624366,
-              45.4664155
-            ],
-            [
-              -73.5624474,
-              45.4662371
-            ]
-          ],
-          [
-            [
-              -73.5628389,
-              45.4647339
-            ],
-            [
-              -73.562832,
-              45.464791
-            ],
-            [
-              -73.5627415,
-              45.4650918
-            ],
-            [
-              -73.5624626,
-              45.4656595
-            ],
-            [
-              -73.5624176,
-              45.4657816
-            ],
-            [
-              -73.562375,
-              45.4659284
-            ],
-            [
-              -73.5623464,
-              45.4660739
-            ],
-            [
-              -73.5623405,
-              45.466126
-            ],
-            [
-              -73.562332,
-              45.4661921
-            ],
-            [
-              -73.5623311,
-              45.4662336
-            ]
-          ],
-          [
-            [
-              -73.5619382,
-              45.4703349
-            ],
-            [
-              -73.5618702,
-              45.4704059
-            ],
-            [
-              -73.5618341,
-              45.4704413
-            ],
-            [
-              -73.5617637,
-              45.4705077
-            ],
-            [
-              -73.5616587,
-              45.4705988
-            ],
-            [
-              -73.5615747,
-              45.4706639
-            ],
-            [
-              -73.5614899,
-              45.4707271
-            ],
-            [
-              -73.5613862,
-              45.4707985
-            ],
-            [
-              -73.5613003,
-              45.4708544
-            ],
-            [
-              -73.5612197,
-              45.4709052
-            ],
-            [
-              -73.5611047,
-              45.4709758
-            ],
-            [
-              -73.5609978,
-              45.471037
-            ],
-            [
-              -73.5608947,
-              45.4710937
-            ],
-            [
-              -73.5608012,
-              45.4711398
-            ],
-            [
-              -73.5607564,
-              45.4711678
-            ],
-            [
-              -73.5605423,
-              45.4712745
-            ]
-          ],
-          [
-            [
-              -73.5594669,
-              45.4718356
-            ],
-            [
-              -73.5595301,
-              45.471816
-            ],
-            [
-              -73.5596101,
-              45.4717893
-            ],
-            [
-              -73.5597577,
-              45.4717353
-            ],
-            [
-              -73.5598848,
-              45.4716844
-            ],
-            [
-              -73.5600977,
-              45.4715968
-            ]
-          ],
-          [
-            [
-              -73.5579883,
-              45.4722301
-            ],
-            [
-              -73.5578202,
-              45.472305
-            ],
-            [
-              -73.5574626,
-              45.4724655
-            ]
-          ],
-          [
-            [
-              -73.5499757,
-              45.4746104
-            ],
-            [
-              -73.5494186,
-              45.4745176
-            ],
-            [
-              -73.5492768,
-              45.4744944
-            ]
-          ]
-        ]
-      },
-      "segmentGeometrySource": "OpenStreetMap ways 1164875653, 1417416796, 429919712, 1074363189, 1074363198, 1074363830",
+      "segmentTitle": "SECTEUR DU BOULEVARD GAÉTAN-LABERGE - vers centre-ville",
+      "segmentStreets": "SECTEUR DU BOULEVARD GAÉTAN-LABERGE",
+      "segmentImpact": "1 voie sur 2 ouverte par direction",
+      "segmentDirection": "vers centre-ville",
+      "segmentDateText": "Entrave de longue durée (année 2026)",
       "noGeometry": true,
+      "geometry": null,
+      "geometryNote": "Aucun trace verifie pour ce segment; le point de la carte PJCCI reste uniquement une reference et ne sera pas affiche.",
+      "analysis": {
+        "sections": [
+          "SECTEUR DU BOULEVARD GAÉTAN-LABERGE"
+        ],
+        "bullets": [
+          "1 voie sur 2 ouverte par direction"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars :\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu’à l’automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 “Île des Soeurs” ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l’autoroute depuis l’île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu’à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l’autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention : les travaux de reconfiguration de l’autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l’autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure ? Je m’informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet : https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+        "directionSourceField": "interactiveMapEntraves.64.raw.voie_name",
+        "datePolicy": "Exact parent dates remain the published advisory envelope. Approximate section dates are preserved verbatim, not converted to invented dates."
+      },
       "mapEntryKey": "64",
       "mapEntryId": 1082,
       "mapSourceTitle": "Boul. Gaétan-Laberge - 1 voie ouverte par direction",
@@ -1713,281 +664,7 @@
         -73.543877,
         45.475708
       ],
-      "segmentPoint": [
-        -73.543877,
-        45.475708
-      ],
-      "geometry": {
-        "type": "MultiLineString",
-        "coordinates": [
-          [
-            [
-              -73.5624665,
-              45.4699244
-            ],
-            [
-              -73.562495,
-              45.4698818
-            ],
-            [
-              -73.5625896,
-              45.4697127
-            ],
-            [
-              -73.5627101,
-              45.4695107
-            ],
-            [
-              -73.56275,
-              45.4694407
-            ],
-            [
-              -73.5627779,
-              45.4693793
-            ],
-            [
-              -73.5628659,
-              45.4691703
-            ],
-            [
-              -73.5629362,
-              45.4689057
-            ],
-            [
-              -73.5629462,
-              45.4688186
-            ],
-            [
-              -73.5629724,
-              45.4685452
-            ],
-            [
-              -73.5629784,
-              45.4683824
-            ],
-            [
-              -73.5629723,
-              45.468244
-            ],
-            [
-              -73.562955,
-              45.4681135
-            ],
-            [
-              -73.5629435,
-              45.4680291
-            ],
-            [
-              -73.5629076,
-              45.4678761
-            ],
-            [
-              -73.5628963,
-              45.467821
-            ],
-            [
-              -73.5628817,
-              45.4677639
-            ],
-            [
-              -73.5628631,
-              45.4677154
-            ],
-            [
-              -73.5626227,
-              45.4670892
-            ],
-            [
-              -73.5625596,
-              45.4669303
-            ],
-            [
-              -73.5625004,
-              45.4667836
-            ],
-            [
-              -73.562475,
-              45.4666869
-            ],
-            [
-              -73.5624561,
-              45.4665971
-            ],
-            [
-              -73.5624366,
-              45.4664155
-            ],
-            [
-              -73.5624474,
-              45.4662371
-            ]
-          ],
-          [
-            [
-              -73.5628389,
-              45.4647339
-            ],
-            [
-              -73.562832,
-              45.464791
-            ],
-            [
-              -73.5627415,
-              45.4650918
-            ],
-            [
-              -73.5624626,
-              45.4656595
-            ],
-            [
-              -73.5624176,
-              45.4657816
-            ],
-            [
-              -73.562375,
-              45.4659284
-            ],
-            [
-              -73.5623464,
-              45.4660739
-            ],
-            [
-              -73.5623405,
-              45.466126
-            ],
-            [
-              -73.562332,
-              45.4661921
-            ],
-            [
-              -73.5623311,
-              45.4662336
-            ]
-          ],
-          [
-            [
-              -73.5619382,
-              45.4703349
-            ],
-            [
-              -73.5618702,
-              45.4704059
-            ],
-            [
-              -73.5618341,
-              45.4704413
-            ],
-            [
-              -73.5617637,
-              45.4705077
-            ],
-            [
-              -73.5616587,
-              45.4705988
-            ],
-            [
-              -73.5615747,
-              45.4706639
-            ],
-            [
-              -73.5614899,
-              45.4707271
-            ],
-            [
-              -73.5613862,
-              45.4707985
-            ],
-            [
-              -73.5613003,
-              45.4708544
-            ],
-            [
-              -73.5612197,
-              45.4709052
-            ],
-            [
-              -73.5611047,
-              45.4709758
-            ],
-            [
-              -73.5609978,
-              45.471037
-            ],
-            [
-              -73.5608947,
-              45.4710937
-            ],
-            [
-              -73.5608012,
-              45.4711398
-            ],
-            [
-              -73.5607564,
-              45.4711678
-            ],
-            [
-              -73.5605423,
-              45.4712745
-            ]
-          ],
-          [
-            [
-              -73.5594669,
-              45.4718356
-            ],
-            [
-              -73.5595301,
-              45.471816
-            ],
-            [
-              -73.5596101,
-              45.4717893
-            ],
-            [
-              -73.5597577,
-              45.4717353
-            ],
-            [
-              -73.5598848,
-              45.4716844
-            ],
-            [
-              -73.5600977,
-              45.4715968
-            ]
-          ],
-          [
-            [
-              -73.5579883,
-              45.4722301
-            ],
-            [
-              -73.5578202,
-              45.472305
-            ],
-            [
-              -73.5574626,
-              45.4724655
-            ]
-          ],
-          [
-            [
-              -73.5499757,
-              45.4746104
-            ],
-            [
-              -73.5494186,
-              45.4745176
-            ],
-            [
-              -73.5492768,
-              45.4744944
-            ]
-          ]
-        ]
-      },
-      "geometrySource": "OpenStreetMap ways 1164875653, 1417416796, 429919712, 1074363189, 1074363198, 1074363830",
-      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
+      "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/"
     },
     {
       "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
@@ -2006,253 +683,27 @@
       "tagId": [
         1155
       ],
-      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
-      "analysis": {
-        "sections": [
-          "Secteur des voies entre le pont Victoria et le pont Clément"
-        ],
-        "bullets": [
-          "2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain",
-          "Attention: respecter la signalisation"
-        ],
-        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
-      },
       "segmentId": "voies-victoria-clement-vers-sud",
-      "segmentTitle": "Voies entre les ponts Victoria et Clément - vers le pont Samuel-De Champlain",
-      "segmentStreets": "Voies entre le pont Victoria et le pont Clément",
-      "segmentImpact": "2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain.",
-      "segmentDirection": "Vers le pont Samuel-De Champlain.",
-      "segmentDateStart": "2026-01-01",
-      "segmentDateEnd": "2026-12-31",
-      "segmentDateText": "Entrave de longue durée pendant l'année 2026.",
-      "segmentComplement": "Attention: les travaux de reconfiguration imposent certaines modifications de la configuration des voies. Circulez prudemment et respectez la signalisation.",
-      "segmentEndpoints": [
-        [
-          -73.562,
-          45.478
-        ],
-        [
-          -73.548,
-          45.493
-        ]
-      ],
-      "segmentGeometry": {
-        "type": "MultiLineString",
-        "coordinates": [
-          [
-            [
-              -73.5464572,
-              45.4895408
-            ],
-            [
-              -73.5478694,
-              45.4898088
-            ],
-            [
-              -73.5488425,
-              45.4899941
-            ]
-          ],
-          [
-            [
-              -73.540311,
-              45.4883166
-            ],
-            [
-              -73.5404371,
-              45.4883579
-            ],
-            [
-              -73.5405394,
-              45.4883888
-            ],
-            [
-              -73.5406414,
-              45.4884184
-            ],
-            [
-              -73.5407583,
-              45.4884491
-            ],
-            [
-              -73.5408867,
-              45.4884816
-            ],
-            [
-              -73.5409881,
-              45.4885042
-            ],
-            [
-              -73.5411162,
-              45.4885309
-            ],
-            [
-              -73.5414526,
-              45.488594
-            ]
-          ],
-          [
-            [
-              -73.5399654,
-              45.4880475
-            ],
-            [
-              -73.5398551,
-              45.4879975
-            ],
-            [
-              -73.5397619,
-              45.4879548
-            ],
-            [
-              -73.5396799,
-              45.4879137
-            ],
-            [
-              -73.5395933,
-              45.4878694
-            ],
-            [
-              -73.539506,
-              45.4878228
-            ],
-            [
-              -73.5394209,
-              45.4877762
-            ],
-            [
-              -73.5393283,
-              45.4877213
-            ],
-            [
-              -73.5392516,
-              45.4876735
-            ],
-            [
-              -73.5391631,
-              45.4876165
-            ],
-            [
-              -73.5390939,
-              45.4875698
-            ],
-            [
-              -73.5390115,
-              45.4875119
-            ],
-            [
-              -73.5389405,
-              45.4874595
-            ],
-            [
-              -73.5388623,
-              45.4873979
-            ],
-            [
-              -73.5387923,
-              45.4873406
-            ],
-            [
-              -73.5387144,
-              45.4872746
-            ],
-            [
-              -73.5386421,
-              45.4872088
-            ],
-            [
-              -73.5385801,
-              45.4871494
-            ],
-            [
-              -73.5385096,
-              45.4870807
-            ],
-            [
-              -73.5384482,
-              45.4870152
-            ],
-            [
-              -73.5383855,
-              45.4869489
-            ],
-            [
-              -73.5383341,
-              45.4868922
-            ],
-            [
-              -73.5382807,
-              45.4868265
-            ],
-            [
-              -73.538233,
-              45.4867664
-            ],
-            [
-              -73.5381763,
-              45.4866908
-            ],
-            [
-              -73.538124,
-              45.4866136
-            ],
-            [
-              -73.5380728,
-              45.4865357
-            ],
-            [
-              -73.5380275,
-              45.4864625
-            ],
-            [
-              -73.5379821,
-              45.4863821
-            ],
-            [
-              -73.5379425,
-              45.4863097
-            ],
-            [
-              -73.5379052,
-              45.4862317
-            ],
-            [
-              -73.5378699,
-              45.4861541
-            ],
-            [
-              -73.537837,
-              45.4860748
-            ],
-            [
-              -73.5378117,
-              45.4860052
-            ],
-            [
-              -73.5377865,
-              45.4859373
-            ],
-            [
-              -73.5377562,
-              45.4858474
-            ],
-            [
-              -73.537735,
-              45.485768
-            ],
-            [
-              -73.5377152,
-              45.4856858
-            ],
-            [
-              -73.5377036,
-              45.4856326
-            ]
-          ]
-        ]
-      },
-      "segmentGeometrySource": "OpenStreetMap ways 1173070237, 1166103970, 111771062",
+      "segmentTitle": "SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT - en direction du pont Samuel-De Champlain",
+      "segmentStreets": "SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT",
+      "segmentImpact": "2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain",
+      "segmentDirection": "en direction du pont Samuel-De Champlain",
+      "segmentDateText": "Entraves de longue durée (année 2026)",
       "noGeometry": true,
+      "geometry": null,
+      "geometryNote": "Aucun trace verifie pour ce segment; le point de la carte PJCCI reste uniquement une reference et ne sera pas affiche.",
+      "analysis": {
+        "sections": [
+          "SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT"
+        ],
+        "bullets": [
+          "2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain"
+        ],
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars :\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu’à l’automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 “Île des Soeurs” ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l’autoroute depuis l’île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu’à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l’autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention : les travaux de reconfiguration de l’autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l’autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure ? Je m’informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet : https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+        "directionSourceField": "archive description/title",
+        "datePolicy": "Exact parent dates remain the published advisory envelope. Approximate section dates are preserved verbatim, not converted to invented dates."
+      },
+      "segmentComplement": "Attention : les travaux de reconfiguration de l’autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation",
       "mapEntryKey": "65",
       "mapEntryId": 1083,
       "mapSourceTitle": "Secteur des voies entre le pont Victoria et le pont Clément - 2 voies sur 3 ouvertes direction pont Samuel-De Champlain",
@@ -2262,227 +713,7 @@
         -73.538406,
         45.482822
       ],
-      "segmentPoint": [
-        -73.538406,
-        45.482822
-      ],
-      "geometry": {
-        "type": "MultiLineString",
-        "coordinates": [
-          [
-            [
-              -73.5464572,
-              45.4895408
-            ],
-            [
-              -73.5478694,
-              45.4898088
-            ],
-            [
-              -73.5488425,
-              45.4899941
-            ]
-          ],
-          [
-            [
-              -73.540311,
-              45.4883166
-            ],
-            [
-              -73.5404371,
-              45.4883579
-            ],
-            [
-              -73.5405394,
-              45.4883888
-            ],
-            [
-              -73.5406414,
-              45.4884184
-            ],
-            [
-              -73.5407583,
-              45.4884491
-            ],
-            [
-              -73.5408867,
-              45.4884816
-            ],
-            [
-              -73.5409881,
-              45.4885042
-            ],
-            [
-              -73.5411162,
-              45.4885309
-            ],
-            [
-              -73.5414526,
-              45.488594
-            ]
-          ],
-          [
-            [
-              -73.5399654,
-              45.4880475
-            ],
-            [
-              -73.5398551,
-              45.4879975
-            ],
-            [
-              -73.5397619,
-              45.4879548
-            ],
-            [
-              -73.5396799,
-              45.4879137
-            ],
-            [
-              -73.5395933,
-              45.4878694
-            ],
-            [
-              -73.539506,
-              45.4878228
-            ],
-            [
-              -73.5394209,
-              45.4877762
-            ],
-            [
-              -73.5393283,
-              45.4877213
-            ],
-            [
-              -73.5392516,
-              45.4876735
-            ],
-            [
-              -73.5391631,
-              45.4876165
-            ],
-            [
-              -73.5390939,
-              45.4875698
-            ],
-            [
-              -73.5390115,
-              45.4875119
-            ],
-            [
-              -73.5389405,
-              45.4874595
-            ],
-            [
-              -73.5388623,
-              45.4873979
-            ],
-            [
-              -73.5387923,
-              45.4873406
-            ],
-            [
-              -73.5387144,
-              45.4872746
-            ],
-            [
-              -73.5386421,
-              45.4872088
-            ],
-            [
-              -73.5385801,
-              45.4871494
-            ],
-            [
-              -73.5385096,
-              45.4870807
-            ],
-            [
-              -73.5384482,
-              45.4870152
-            ],
-            [
-              -73.5383855,
-              45.4869489
-            ],
-            [
-              -73.5383341,
-              45.4868922
-            ],
-            [
-              -73.5382807,
-              45.4868265
-            ],
-            [
-              -73.538233,
-              45.4867664
-            ],
-            [
-              -73.5381763,
-              45.4866908
-            ],
-            [
-              -73.538124,
-              45.4866136
-            ],
-            [
-              -73.5380728,
-              45.4865357
-            ],
-            [
-              -73.5380275,
-              45.4864625
-            ],
-            [
-              -73.5379821,
-              45.4863821
-            ],
-            [
-              -73.5379425,
-              45.4863097
-            ],
-            [
-              -73.5379052,
-              45.4862317
-            ],
-            [
-              -73.5378699,
-              45.4861541
-            ],
-            [
-              -73.537837,
-              45.4860748
-            ],
-            [
-              -73.5378117,
-              45.4860052
-            ],
-            [
-              -73.5377865,
-              45.4859373
-            ],
-            [
-              -73.5377562,
-              45.4858474
-            ],
-            [
-              -73.537735,
-              45.485768
-            ],
-            [
-              -73.5377152,
-              45.4856858
-            ],
-            [
-              -73.5377036,
-              45.4856326
-            ]
-          ]
-        ]
-      },
-      "geometrySource": "OpenStreetMap ways 1173070237, 1166103970, 111771062",
-      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
+      "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/"
     },
     {
       "dateAffichageTravaux": "Du 3 mars au 31 décembre 2026",
@@ -2501,253 +732,27 @@
       "tagId": [
         1155
       ],
-      "segmentGeometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne.",
+      "segmentId": "voies-victoria-clement-vers-centre-ville",
+      "segmentTitle": "SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT - en direction du centre-ville",
+      "segmentStreets": "SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT",
+      "segmentImpact": "3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)",
+      "segmentDirection": "en direction du centre-ville",
+      "segmentDateText": "Entraves de longue durée (année 2026)",
+      "noGeometry": true,
+      "geometry": null,
+      "geometryNote": "Aucun trace verifie pour ce segment; le point de la carte PJCCI reste uniquement une reference et ne sera pas affiche.",
       "analysis": {
         "sections": [
-          "Secteur des voies entre le pont Victoria et le pont Clément"
+          "SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT"
         ],
         "bullets": [
-          "3 voies ouvertes en direction du centre-ville",
-          "Attention: respecter la signalisation"
+          "3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)"
         ],
-        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars&#160;: SECTEUR DU PONT CLÉMENT Du 3 au 15 mars 1 voie sur 2 ouverte par direction Du 15 mars jusqu&#8217;à l&#8217;automne 2026 2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 &#8220;Île des Soeurs&#8221; ouverte) 1 voie sur 2 ouverte en direction du centre-ville (accès à l&#8217;autoroute depuis l&#8217;île des Soeurs ouverts) SECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington) Du 6 mars jusqu&#8217;à mai 2026 2 voies sur 3 ouvertes par direction Entrave de longue durée (année 2026) Fermeture de la sortie 3 de l&#8217;autoroute en direction du pont Samuel-De Champlain SECTEUR DU BOULEVARD GAÉTAN-LABERGE Entrave de longue durée (année 2026) 1 voie sur 2 ouverte par direction SECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT Entraves de longue durée (année 2026) 2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain 3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux) Attention&#160;: les travaux de reconfiguration de l&#8217;autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation Pour maintenir l&#8217;autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit. Vous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure&#160;? Je m&#8217;informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/ Veuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
+        "sourceText": "PJCCI annonce la mobilisation de ses chantiers de longue durée dans le secteur Bonaventure dès la première semaine du mois de mars :\n\n \n\nSECTEUR DU PONT CLÉMENT\nDu 3 au 15 mars\n\n\n\t1 voie sur 2 ouverte par direction\n\n\nDu 15 mars jusqu’à l’automne 2026\n\n\n\t2 voies ouvertes en direction du pont Samuel-De Champlain (sortie 5 “Île des Soeurs” ouverte)\n\t1 voie sur 2 ouverte en direction du centre-ville (accès à l’autoroute depuis l’île des Soeurs ouverts)\n\n\n \n\nSECTEUR DES VOIES SURÉLEVÉES (entre le pont Victoria et la rue Wellington)\nDu 6 mars jusqu’à mai 2026\n\n\n\t2 voies sur 3 ouvertes par direction\n\n\nEntrave de longue durée (année 2026)\n\n\n\tFermeture de la sortie 3 de l’autoroute en direction du pont Samuel-De Champlain\n\n\n \n\nSECTEUR DU BOULEVARD GAÉTAN-LABERGE\nEntrave de longue durée (année 2026)\n\n\n\t1 voie sur 2 ouverte par direction\n\n\n \n\nSECTEUR DES VOIES ENTRE LE PONT VICTORIA ET LE PONT CLÉMENT\nEntraves de longue durée (année 2026)\n\n\n\t2 voies sur 3 ouvertes en direction du pont Samuel-De Champlain\n\t3 voies ouvertes en direction du centre-ville (possibles exceptions en fonction des travaux)\n\tAttention : les travaux de reconfiguration de l’autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation\n\n\n \n\nPour maintenir l’autoroute Bonaventure ouverte la majorité du temps et maximiser votre temps de déplacement, nous nous efforçons de procéder aux entraves majeures de nuit.\n\nVous souhaitez savoir en quoi consistent les travaux dans le secteur de l’autoroute Bonaventure ? Je m’informe: https://jacquescartierchamplain.ca/fr/grands-projets/reconfiguration-de-lautoroute-bonaventure/chantier/travaux-en-cours-et-a-venir/\n\n \n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet : https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
+        "directionSourceField": "archive description/title",
+        "datePolicy": "Exact parent dates remain the published advisory envelope. Approximate section dates are preserved verbatim, not converted to invented dates."
       },
-      "segmentId": "voies-victoria-clement-vers-centre-ville",
-      "segmentTitle": "Voies entre les ponts Victoria et Clément - vers le centre-ville",
-      "segmentStreets": "Voies entre le pont Victoria et le pont Clément",
-      "segmentImpact": "3 voies ouvertes en direction du centre-ville, avec possibles exceptions selon les travaux.",
-      "segmentDirection": "Vers le centre-ville.",
-      "segmentDateStart": "2026-01-01",
-      "segmentDateEnd": "2026-12-31",
-      "segmentDateText": "Entrave de longue durée pendant l'année 2026.",
-      "segmentComplement": "Attention: les travaux de reconfiguration imposent certaines modifications de la configuration des voies. Circulez prudemment et respectez la signalisation.",
-      "segmentEndpoints": [
-        [
-          -73.548,
-          45.493
-        ],
-        [
-          -73.562,
-          45.478
-        ]
-      ],
-      "segmentGeometry": {
-        "type": "MultiLineString",
-        "coordinates": [
-          [
-            [
-              -73.5464572,
-              45.4895408
-            ],
-            [
-              -73.5478694,
-              45.4898088
-            ],
-            [
-              -73.5488425,
-              45.4899941
-            ]
-          ],
-          [
-            [
-              -73.540311,
-              45.4883166
-            ],
-            [
-              -73.5404371,
-              45.4883579
-            ],
-            [
-              -73.5405394,
-              45.4883888
-            ],
-            [
-              -73.5406414,
-              45.4884184
-            ],
-            [
-              -73.5407583,
-              45.4884491
-            ],
-            [
-              -73.5408867,
-              45.4884816
-            ],
-            [
-              -73.5409881,
-              45.4885042
-            ],
-            [
-              -73.5411162,
-              45.4885309
-            ],
-            [
-              -73.5414526,
-              45.488594
-            ]
-          ],
-          [
-            [
-              -73.5399654,
-              45.4880475
-            ],
-            [
-              -73.5398551,
-              45.4879975
-            ],
-            [
-              -73.5397619,
-              45.4879548
-            ],
-            [
-              -73.5396799,
-              45.4879137
-            ],
-            [
-              -73.5395933,
-              45.4878694
-            ],
-            [
-              -73.539506,
-              45.4878228
-            ],
-            [
-              -73.5394209,
-              45.4877762
-            ],
-            [
-              -73.5393283,
-              45.4877213
-            ],
-            [
-              -73.5392516,
-              45.4876735
-            ],
-            [
-              -73.5391631,
-              45.4876165
-            ],
-            [
-              -73.5390939,
-              45.4875698
-            ],
-            [
-              -73.5390115,
-              45.4875119
-            ],
-            [
-              -73.5389405,
-              45.4874595
-            ],
-            [
-              -73.5388623,
-              45.4873979
-            ],
-            [
-              -73.5387923,
-              45.4873406
-            ],
-            [
-              -73.5387144,
-              45.4872746
-            ],
-            [
-              -73.5386421,
-              45.4872088
-            ],
-            [
-              -73.5385801,
-              45.4871494
-            ],
-            [
-              -73.5385096,
-              45.4870807
-            ],
-            [
-              -73.5384482,
-              45.4870152
-            ],
-            [
-              -73.5383855,
-              45.4869489
-            ],
-            [
-              -73.5383341,
-              45.4868922
-            ],
-            [
-              -73.5382807,
-              45.4868265
-            ],
-            [
-              -73.538233,
-              45.4867664
-            ],
-            [
-              -73.5381763,
-              45.4866908
-            ],
-            [
-              -73.538124,
-              45.4866136
-            ],
-            [
-              -73.5380728,
-              45.4865357
-            ],
-            [
-              -73.5380275,
-              45.4864625
-            ],
-            [
-              -73.5379821,
-              45.4863821
-            ],
-            [
-              -73.5379425,
-              45.4863097
-            ],
-            [
-              -73.5379052,
-              45.4862317
-            ],
-            [
-              -73.5378699,
-              45.4861541
-            ],
-            [
-              -73.537837,
-              45.4860748
-            ],
-            [
-              -73.5378117,
-              45.4860052
-            ],
-            [
-              -73.5377865,
-              45.4859373
-            ],
-            [
-              -73.5377562,
-              45.4858474
-            ],
-            [
-              -73.537735,
-              45.485768
-            ],
-            [
-              -73.5377152,
-              45.4856858
-            ],
-            [
-              -73.5377036,
-              45.4856326
-            ]
-          ]
-        ]
-      },
-      "segmentGeometrySource": "OpenStreetMap ways 1173070237, 1166103970, 111771062",
-      "noGeometry": true,
+      "segmentComplement": "Attention : les travaux de reconfiguration de l’autoroute imposent certaines modifications de la configuration des voies, circulez prudemment, respectez la signalisation",
       "mapEntryKey": "65",
       "mapEntryId": 1083,
       "mapSourceTitle": "Secteur des voies entre le pont Victoria et le pont Clément - 2 voies sur 3 ouvertes direction pont Samuel-De Champlain",
@@ -2757,314 +762,7 @@
         -73.538406,
         45.482822
       ],
-      "segmentPoint": [
-        -73.538406,
-        45.482822
-      ],
-      "geometry": {
-        "type": "MultiLineString",
-        "coordinates": [
-          [
-            [
-              -73.5464572,
-              45.4895408
-            ],
-            [
-              -73.5478694,
-              45.4898088
-            ],
-            [
-              -73.5488425,
-              45.4899941
-            ]
-          ],
-          [
-            [
-              -73.540311,
-              45.4883166
-            ],
-            [
-              -73.5404371,
-              45.4883579
-            ],
-            [
-              -73.5405394,
-              45.4883888
-            ],
-            [
-              -73.5406414,
-              45.4884184
-            ],
-            [
-              -73.5407583,
-              45.4884491
-            ],
-            [
-              -73.5408867,
-              45.4884816
-            ],
-            [
-              -73.5409881,
-              45.4885042
-            ],
-            [
-              -73.5411162,
-              45.4885309
-            ],
-            [
-              -73.5414526,
-              45.488594
-            ]
-          ],
-          [
-            [
-              -73.5399654,
-              45.4880475
-            ],
-            [
-              -73.5398551,
-              45.4879975
-            ],
-            [
-              -73.5397619,
-              45.4879548
-            ],
-            [
-              -73.5396799,
-              45.4879137
-            ],
-            [
-              -73.5395933,
-              45.4878694
-            ],
-            [
-              -73.539506,
-              45.4878228
-            ],
-            [
-              -73.5394209,
-              45.4877762
-            ],
-            [
-              -73.5393283,
-              45.4877213
-            ],
-            [
-              -73.5392516,
-              45.4876735
-            ],
-            [
-              -73.5391631,
-              45.4876165
-            ],
-            [
-              -73.5390939,
-              45.4875698
-            ],
-            [
-              -73.5390115,
-              45.4875119
-            ],
-            [
-              -73.5389405,
-              45.4874595
-            ],
-            [
-              -73.5388623,
-              45.4873979
-            ],
-            [
-              -73.5387923,
-              45.4873406
-            ],
-            [
-              -73.5387144,
-              45.4872746
-            ],
-            [
-              -73.5386421,
-              45.4872088
-            ],
-            [
-              -73.5385801,
-              45.4871494
-            ],
-            [
-              -73.5385096,
-              45.4870807
-            ],
-            [
-              -73.5384482,
-              45.4870152
-            ],
-            [
-              -73.5383855,
-              45.4869489
-            ],
-            [
-              -73.5383341,
-              45.4868922
-            ],
-            [
-              -73.5382807,
-              45.4868265
-            ],
-            [
-              -73.538233,
-              45.4867664
-            ],
-            [
-              -73.5381763,
-              45.4866908
-            ],
-            [
-              -73.538124,
-              45.4866136
-            ],
-            [
-              -73.5380728,
-              45.4865357
-            ],
-            [
-              -73.5380275,
-              45.4864625
-            ],
-            [
-              -73.5379821,
-              45.4863821
-            ],
-            [
-              -73.5379425,
-              45.4863097
-            ],
-            [
-              -73.5379052,
-              45.4862317
-            ],
-            [
-              -73.5378699,
-              45.4861541
-            ],
-            [
-              -73.537837,
-              45.4860748
-            ],
-            [
-              -73.5378117,
-              45.4860052
-            ],
-            [
-              -73.5377865,
-              45.4859373
-            ],
-            [
-              -73.5377562,
-              45.4858474
-            ],
-            [
-              -73.537735,
-              45.485768
-            ],
-            [
-              -73.5377152,
-              45.4856858
-            ],
-            [
-              -73.5377036,
-              45.4856326
-            ]
-          ]
-        ]
-      },
-      "geometrySource": "OpenStreetMap ways 1173070237, 1166103970, 111771062",
-      "geometryNote": "Tracé indicatif du secteur; l'avis PJCCI décrit des configurations de voies et non une fermeture complète de toute la ligne."
-    },
-    {
-      "dateAffichageTravaux": "Du 10 au 14 septembre 2026",
-      "anneDebut": "2026-09-10T17:02:00.000000Z",
-      "anneFin": "2026-09-14T12:02:00.000000Z",
-      "datedebut": "2026-09-10 13:02:00",
-      "datefin": "2026-09-14 08:02:00",
-      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
-      "description": "Du samedi 12 septembre, 3 h, au lundi 14 septembre, 5 h&#160;:\n\n\n\tFermeture d&#8217;une voie sur deux, sur la partie centrale du pont, en direction de la Rive-Sud\n\tTravaux d&#8217;acier\n\n\n\nLes travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nPour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/",
-      "title": "Pont Honoré-Mercier | Blitz de travaux - Fermeture d&#039;une voie en direction de la Rive-Sud, du 12 au 14 septembre",
-      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-honore-mercier-blitz-de-travaux-fermeture-dune-voie-en-direction-de-la-rive-sud-du-12-au-14-septembre/",
-      "tags": [
-        "Pont Honoré-Mercier"
-      ],
-      "tagId": [
-        1152
-      ],
-      "segmentId": "honore-mercier-rive-sud",
-      "segmentTitle": "Pont Honoré-Mercier - une voie fermée vers la Rive-Sud",
-      "segmentStreets": "Pont Honoré-Mercier, partie centrale",
-      "segmentImpact": "Fermeture d'une voie sur deux en direction de la Rive-Sud.",
-      "segmentDirection": "Vers la Rive-Sud.",
-      "segmentDateStart": "2026-09-12",
-      "segmentDateEnd": "2026-09-14",
-      "segmentDateText": "Du 12 septembre à 3 h au 14 septembre à 5 h.",
-      "analysis": {
-        "sections": [
-          "Partie centrale du pont"
-        ],
-        "bullets": [
-          "Fermeture d'une voie sur deux vers la Rive-Sud"
-        ],
-        "sourceText": "Du samedi 12 septembre, 3 h, au lundi 14 septembre, 5 h&#160;: Fermeture d&#8217;une voie sur deux, sur la partie centrale du pont, en direction de la Rive-Sud Travaux d&#8217;acier Les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques. Pour toute information concernant le tunnel Louis-Hippolyte-La Fontaine, le pont Samuel-De Champlain, ou les autres structures gérées par nos partenaires en mobilité, visitez notre page Internet&#160;: https://jacquescartierchamplain.ca/fr/circulation-routiere/carte-du-reseau-et-partenaires/"
-      },
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -73.6527944,
-            45.4214853
-          ],
-          [
-            -73.6547312,
-            45.4177057
-          ],
-          [
-            -73.6551804,
-            45.4168055
-          ],
-          [
-            -73.6566325,
-            45.4139555
-          ],
-          [
-            -73.6567066,
-            45.413811
-          ],
-          [
-            -73.6570008,
-            45.4132383
-          ],
-          [
-            -73.6573216,
-            45.4126086
-          ],
-          [
-            -73.6579728,
-            45.4113296
-          ],
-          [
-            -73.6584538,
-            45.4103827
-          ],
-          [
-            -73.6585796,
-            45.4101366
-          ],
-          [
-            -73.6589823,
-            45.4093488
-          ],
-          [
-            -73.6590973,
-            45.409107
-          ]
-        ]
-      }
+      "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/"
     }
   ]
 }

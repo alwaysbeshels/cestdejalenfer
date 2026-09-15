@@ -186,7 +186,7 @@ const SOURCE_CATALOG = [
   { name: "Ville de Châteauguay - Travaux en cours", url: "https://ville.chateauguay.qc.ca/info-travaux/travaux-en-cours-et-a-venir/" },
   { name: "Ville de L'Assomption - Info-travaux", url: "https://www.lassomption.ca/" },
   { name: "Ville de Montreal - Info entraves et travaux", url: "https://services.montreal.ca/cartes/entraves" },
-  { name: "Ville de Montréal - Géométries d'entraves résolues (snapshot géobase)", url: "data/montreal-entraves-geometries-snapshot.json", dataType: "snapshot", extractedAt: "2026-09-09T21:48:55.878Z" },
+  { name: "Ville de Montréal - Géométries d'entraves résolues (snapshot géobase)", url: "data/montreal-entraves-geometries-snapshot.json", dataType: "snapshot", extractedAt: "2026-09-15T22:47:14.112Z" },
   { name: "Ville de Montreal - carte UCI 2026", url: "https://services.montreal.ca/cartes/uci" },
   { name: "Ville de Montréal - Piétonnisation de l'avenue du Mont-Royal", url: "https://montreal.ca/lieux/avenue-du-mont-royal" },
   { name: "Ville de Montréal - Rues piétonnes saisonnières", url: "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE" },
