@@ -45,6 +45,7 @@ body {
 
 .faq-nav {
   grid-area: nav;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   margin-top: 0.35rem;

@@ -17,7 +17,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="favicon-192.png">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="css/styles.css?v=20260910-text-format">
+  <link rel="stylesheet" href="css/styles.css?v=20260915-sections">
 </head>
 <body data-document-title="document.mapTitle">
   <div class="app-shell">
@@ -32,12 +32,15 @@
         <p class="intro" data-i18n="map.intro"></p>
         <nav class="site-nav" data-i18n-aria-label="nav.main">
           <a href="faq.html" data-language-page="faq" data-i18n="nav.faq"></a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8TiTOGHRjDw36fzIT3DS9ayLfqEcNaE6c_q2BYldNxhgddA/viewform" target="_blank" rel="noreferrer" data-i18n="nav.comments"></a>
           <button id="languageToggle" class="language-toggle" type="button" aria-label="Passer à l'anglais">EN</button>
         </nav>
       </header>
 
       <section class="controls" data-i18n-aria-label="filters.label">
-        <div class="date-range-fields">
+        <details class="filter-section" open>
+          <summary class="filter-heading"><h2 class="filter-title" data-i18n="filters.dates"></h2></summary>
+          <div class="date-range-fields section-content">
           <button id="todayDates" class="today-button" type="button" data-i18n="filters.today"></button>
           <label class="field">
             <span data-i18n="filters.start"></span>
@@ -51,27 +54,28 @@
             <input id="dateEnd" type="date">
           </label>
           <div id="dateHelpBubble" class="help-bubble" data-i18n="filters.dateHelp" hidden></div>
-        </div>
+          </div>
+        </details>
 
-        <div class="filter-heading">
+        <details class="filter-section" open>
+        <summary class="filter-heading">
           <h2 class="filter-title" data-i18n="filters.time"></h2>
           <button id="timeHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.timeHelpLabel">i</button>
           <div id="timeHelpBubble" class="help-bubble filter-help" data-i18n="filters.timeHelp" hidden></div>
-        </div>
-        <div class="toggle-grid time-filters" role="group" aria-label="Moment des travaux">
+        </summary>
+        <div class="toggle-grid time-filters section-content" role="group" data-i18n-aria-label="filters.time">
           <label><input type="checkbox" value="day" checked><span data-i18n="filters.day"></span></label>
           <label><input type="checkbox" value="night" checked><span data-i18n="filters.night"></span></label>
         </div>
+        </details>
 
-        <div class="filter-heading source-filter-heading">
+        <details class="filter-section">
+        <summary class="filter-heading">
           <h2 class="filter-title" data-i18n="filters.source"></h2>
-          <button id="sourceSectionToggle" class="section-toggle" type="button" aria-controls="sourceFilters" aria-expanded="false">
-            <span data-i18n="filters.showSources"></span><b aria-hidden="true">+</b>
-          </button>
           <button id="sourceHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.sourceHelpLabel">i</button>
           <div id="sourceHelpBubble" class="help-bubble filter-help" data-i18n="filters.sourceHelp" hidden></div>
-        </div>
-        <div id="sourceFilters" class="toggle-grid source-filters" role="group" data-i18n-aria-label="filters.sourceGroupLabel" hidden>
+        </summary>
+        <div id="sourceFilters" class="toggle-grid source-filters section-content" role="group" data-i18n-aria-label="filters.sourceGroupLabel">
           <label><input type="checkbox" value="municipal" checked><span data-i18n="category.municipal"></span></label>
           <label><input type="checkbox" value="private" checked><span data-i18n="category.private"></span></label>
           <label><input type="checkbox" value="commercial" checked><span data-i18n="category.commercial"></span></label>
@@ -80,18 +84,21 @@
           <label><input type="checkbox" value="q511" checked><span data-i18n="category.q511"></span></label>
           <label><input type="checkbox" value="strike" checked><span data-i18n="category.strike"></span></label>
         </div>
+        </details>
 
-        <div class="filter-heading">
+        <details class="filter-section" open>
+        <summary class="filter-heading">
           <h2 class="filter-title" data-i18n="filters.impact"></h2>
           <button id="impactHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.impactHelpLabel">i</button>
           <div id="impactHelpBubble" class="help-bubble filter-help" data-i18n="filters.impactHelp" hidden></div>
-        </div>
-        <div class="toggle-grid impact-filters" role="group" data-i18n-aria-label="filters.impactGroupLabel">
+        </summary>
+        <div class="toggle-grid impact-filters section-content" role="group" data-i18n-aria-label="filters.impactGroupLabel">
           <label><input type="checkbox" value="critical" checked><i class="impact-dot critical"></i> <span data-i18n="filters.critical"></span> <span class="impact-count" data-impact-count="critical"></span></label>
           <label><input type="checkbox" value="major" checked><i class="impact-dot major"></i> <span data-i18n="filters.major"></span> <span class="impact-count" data-impact-count="major"></span></label>
           <label><input type="checkbox" value="moderate" checked><i class="impact-dot moderate"></i> <span data-i18n="filters.moderate"></span> <span class="impact-count" data-impact-count="moderate"></span></label>
           <label><input type="checkbox" value="parking"><i class="impact-dot parking"></i> <span data-i18n="filters.parking"></span> <span class="impact-count" data-impact-count="parking"></span></label>
         </div>
+        </details>
 
       </section>
 
@@ -113,14 +120,16 @@
         <div id="municipalityList" class="municipality-list"></div>
       </section>
 
-      <section class="list-section">
-        <h2 data-i18n="list.title"></h2>
-        <label class="field list-search" hidden>
+      <details class="filter-section" open>
+        <summary class="filter-heading"><h2 data-i18n="list.title"></h2></summary>
+        <div class="list-section section-content">
+        <label class="field list-search">
           <span class="visually-hidden" data-i18n="list.searchLabel"></span>
           <input id="searchFilter" type="search" data-i18n-placeholder="list.searchPlaceholder">
         </label>
         <div id="closureList" class="closure-list"></div>
-      </section>
+        </div>
+      </details>
     </aside>
       <button id="panelResizeHandle" class="panel-resize-handle" type="button" data-i18n-aria-label="menu.resize" data-i18n-title="menu.resize"></button>
 
@@ -149,11 +158,11 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="languages/fr.js"></script>
-  <script src="languages/en.js"></script>
+  <script src="languages/fr.js?v=20260915-sections"></script>
+  <script src="languages/en.js?v=20260915-sections"></script>
   <script src="js/i18n.js?v=2"></script>
   <script src="data/sources.js"></script>
   <script src="data/closures.js"></script>
-  <script src="js/app.js?v=20260911-pjcci-map-source"></script>
+  <script src="js/app.js?v=20260915-sections"></script>
 </body>
 </html>

@@ -82,6 +82,10 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 - Vraie carte interactive couvrant la grande region metropolitaine de Montreal.
 - Pan/zoom fluide avec les controles natifs de Leaflet.
 - Filtres par date, recherche texte et categories.
+- Sections du menu repliables au clic ou au clavier (dates, moment des travaux, sources, impacts et liste), sans réinitialiser les filtres. Les sources sont repliées par défaut.
+- Recherche visible par rue, quartier/arrondissement et municipalité dans les entraves chargées, sans distinction d'accents ou de tirets, avec combinaison des mots et recentrage des résultats. Les filtres de date et d'impact restent appliqués; aucun géocodage de lieux sans entrave n'est effectué.
+- Hauteur mobile adaptée à la zone visible du navigateur (`100dvh`) et recalcul de la taille Leaflet lors des changements de dimensions.
+- Lien « Commentaires? » / « Comments? » dans les menus de la carte et de la FAQ, vers le formulaire de commentaires existant.
 - Chargement en direct du WFS officiel des entraves de la Ville de Montreal.
 - Chargement en direct des restrictions de circulation UCI 2026 par date.
 - Chargement en direct des entraves de Longueuil depuis son FeatureServer public, avec surfaces et localisations filtrees pour les impacts auto.

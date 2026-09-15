@@ -820,8 +820,6 @@ const dateHelp = document.querySelector("#dateHelp");
 const dateHelpBubble = document.querySelector("#dateHelpBubble");
 const sourceHelp = document.querySelector("#sourceHelp");
 const sourceHelpBubble = document.querySelector("#sourceHelpBubble");
-const sourceSectionToggle = document.querySelector("#sourceSectionToggle");
-const sourceFilters = document.querySelector("#sourceFilters");
 const impactHelp = document.querySelector("#impactHelp");
 const impactHelpBubble = document.querySelector("#impactHelpBubble");
 const timeHelp = document.querySelector("#timeHelp");
@@ -1118,11 +1116,18 @@ function matchesTimePeriod(closure, activePeriods) {
   return closure.periods.some((period) => activePeriods.has(period));
 }
 
+function normalizeSearchText(value) {
+  return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, " ")
+    .replace(/\bst\b/g, "saint").replace(/\bste\b/g, "sainte").trim();
+}
+
 function matchesSearch(closure, query) {
   if (!query) {
     return true;
   }
-  return (closure._searchText || prepareClosureForRuntime(closure)._searchText).includes(query);
+  const searchText = closure._searchText || prepareClosureForRuntime(closure)._searchText;
+  return query.split(/\s+/).every((word) => searchText.includes(word));
 }
 
 function severityRank(severity) {
@@ -1139,7 +1144,7 @@ function getFilteredClosures() {
   const impacts = getActiveImpacts();
   const timePeriods = getActiveTimePeriods();
   const dateRange = getDateRange();
-  const query = searchFilter.value.trim().toLowerCase();
+  const query = normalizeSearchText(searchFilter.value);
 
   const filteredClosures = [];
   allClosures.forEach((closure) => {
@@ -1160,7 +1165,7 @@ function getFilterBaseClosures() {
   const categories = getActiveCategories();
   const timePeriods = getActiveTimePeriods();
   const dateRange = getDateRange();
-  const query = searchFilter.value.trim().toLowerCase();
+  const query = normalizeSearchText(searchFilter.value);
 
   const filteredClosures = [];
   allClosures.forEach((closure) => {
@@ -3038,15 +3043,21 @@ function prepareClosureForRuntime(closure, { force = false } = {}) {
   return {
     ...closure,
     _runtimePrepared: true,
-    _searchText: [
+    _searchText: normalizeSearchText([
       closure.title,
       closure.responsible,
       closure.borough,
+      window.TRANSLATIONS?.fr?.[`abbreviation.${closure.borough}`],
+      window.TRANSLATIONS?.en?.[`abbreviation.${closure.borough}`],
+      closure.municipality,
+      closure.city,
+      closure.neighborhood,
       closure.impact,
       closure.streets,
+      closure.roadSearchText,
       closure.direction,
       closure.source
-    ].join(" ").toLowerCase(),
+    ].join(" ")),
     _startTime: parseDateTime(closure.startDate, closure.startTime, "00:00").valueOf(),
     _endTime: parseDateTime(closure.endDate, closure.endTime, "23:59").valueOf(),
     _bounds: bounds
@@ -3888,10 +3899,14 @@ function renderList(closures) {
   closureList.replaceChildren(fragment);
 }
 
-function fitMapToClosures(closures) {
+function fitMapToClosures(closures, { search = false } = {}) {
   map.invalidateSize(true);
 
-  if (closures.length === 0 || closures.length > MAX_AUTO_FIT_ITEMS) {
+  if (search && closures.length === 0) {
+    return;
+  }
+
+  if (closures.length === 0 || (!search && closures.length > MAX_AUTO_FIT_ITEMS)) {
     map.setView(MONTREAL_CENTER, 12);
     return;
   }
@@ -3935,12 +3950,11 @@ function updateView({ fit = false } = {}) {
   setTimeout(() => map.invalidateSize(true), 180);
 
   if (fit) {
-    fitMapToClosures(currentClosures);
+    fitMapToClosures(currentClosures, { search: Boolean(normalizeSearchText(searchFilter.value)) });
   }
 }
 
 window.addEventListener("languagechange", () => {
-  setSourceSectionOpen(!sourceFilters.hidden);
   menuToggle.setAttribute("aria-label", t(menuToggle.classList.contains("is-open") ? "menu.close" : "menu.open"));
   updateMapLegend();
   renderVisibleClosures();
@@ -3977,7 +3991,7 @@ todayDates.addEventListener("click", () => {
 let searchFilterTimer = null;
 searchFilter.addEventListener("input", () => {
   clearTimeout(searchFilterTimer);
-  searchFilterTimer = setTimeout(() => updateView({ fit: false }), 160);
+  searchFilterTimer = setTimeout(() => updateView({ fit: Boolean(normalizeSearchText(searchFilter.value)) }), 160);
 });
 categoryFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: false })));
 impactFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: false })));
@@ -3988,7 +4002,6 @@ dateHelp.addEventListener("click", () => {
 sourceHelp.addEventListener("click", () => {
   sourceHelpBubble.hidden = !sourceHelpBubble.hidden;
 });
-sourceSectionToggle.addEventListener("click", () => setSourceSectionOpen(sourceFilters.hidden));
 impactHelp.addEventListener("click", () => {
   impactHelpBubble.hidden = !impactHelpBubble.hidden;
 });
@@ -4011,8 +4024,9 @@ document.addEventListener("click", (event) => {
     }
   });
 });
-resetView.addEventListener("click", () => fitMapToClosures(currentClosures));
+resetView.addEventListener("click", () => fitMapToClosures(currentClosures, { search: Boolean(normalizeSearchText(searchFilter.value)) }));
 window.addEventListener("resize", () => map.invalidateSize());
+new ResizeObserver(() => map.invalidateSize({ pan: false })).observe(map.getContainer());
 menuToggle.addEventListener("click", () => {
   if (window.matchMedia("(max-width: 880px)").matches) {
     setMobileMenuOpen(!sidePanel.classList.contains("is-open"));
@@ -4055,14 +4069,6 @@ function setSourcesOpen(isOpen) {
   sourceCard.hidden = !isOpen;
   sourcesToggle.hidden = isOpen;
   sourcesToggle.setAttribute("aria-expanded", String(isOpen));
-}
-
-function setSourceSectionOpen(isOpen) {
-  sourceFilters.hidden = !isOpen;
-  sourceSectionToggle.setAttribute("aria-expanded", String(isOpen));
-  sourceSectionToggle.classList.toggle("is-open", isOpen);
-  sourceSectionToggle.querySelector("span").textContent = t(isOpen ? "filters.hideSources" : "filters.showSources");
-  sourceSectionToggle.querySelector("b").textContent = isOpen ? "-" : "+";
 }
 
 function setPanelWidth(width) {
