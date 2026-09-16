@@ -1448,6 +1448,8 @@ function normalizeQuebec511Feature(feature) {
     borough: quebec511LocationLabel(properties.localisation),
     startDate: dateOnlyFromTimestamp(properties.debut),
     endDate: dateOnlyFromTimestamp(properties.fin),
+    startTime: publishedTime(properties.debut),
+    endTime: publishedTime(properties.fin),
     impact: [properties.entrave, properties.detoursEtItinerairesFacultatifs].filter(Boolean).join(" - ") || "Détails de circulation non publiés.",
     trafficLabel: traffic.label,
     severity: traffic.severity,
@@ -1646,6 +1648,11 @@ function cleanLongueuilText(value) {
     .replace(/\s*,\s*/g, ", ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function publishedTime(value) {
+  const match = String(value ?? "").match(/^\d{4}[\/-]\d{2}[\/-]\d{2}[T ]([01]\d|2[0-3]):([0-5]\d)/);
+  return match ? `${match[1]}:${match[2]}` : "";
 }
 
 function dateOnlyFromTimestamp(value) {
@@ -1878,6 +1885,7 @@ function normalizeRepentignyEvent(event) {
     borough: "Repentigny",
     startDate: startDate.slice(0, 10),
     endDate: endDate.split("T")[0],
+    publishedIntervals: event.schedule.intervals,
     impact: [event.description, event.detour].filter(Boolean).join(" - ") || "Impact automobile publié par la Ville de Repentigny.",
     trafficLabel: traffic.label,
     severity,
@@ -2198,10 +2206,11 @@ function normalizeTerrebonneFeature(feature) {
     streets: p.localisation,
     source: "Ville de Terrebonne - Carte des travaux",
     sourceUrl: "https://cartographie.ville.terrebonne.qc.ca/travaux/",
+    scheduleText: p.horaire,
     color: SEVERITY_META[severity].color,
     geometry,
     point: representativePoint(geometry),
-    details: [["Horaire", p.horaire], ["Type d'entrave", p.type_entrave], ["Détour", p.note_type_circulation]]
+    details: [["Type d'entrave", p.type_entrave], ["Détour", p.note_type_circulation]]
   };
 }
 
@@ -2264,10 +2273,11 @@ function normalizeBoisbriandFeature(feature) {
     streets: p.Description,
     source: "Ville de Boisbriand - Travaux",
     sourceUrl: "https://www.arcgis.com/apps/mapviewer/index.html?url=https://services3.arcgis.com/x2965icj4V1l01th/ArcGIS/rest/services/Info_travaux_2026/FeatureServer/2&source=sd",
+    scheduleText: p.PeriodeTravaux,
     color: SEVERITY_META[severity].color,
     geometry,
     point: representativePoint(geometry),
-    details: [["Période", p.PeriodeTravaux], ["Détour", p.Detour]]
+    details: [["Détour", p.Detour]]
   };
 }
 
@@ -3016,6 +3026,14 @@ function normalizeMontrealFeature(feature, index) {
         ? "street"
         : roadTypeFromText(`${street} ${properties.occupancyName || ""} ${impact.spatialAnalysis?.name || ""}`),
       periods: periodsFromMontrealSchedule(properties),
+      schedule: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        .filter((day) => properties[`durationDays${day}Active`])
+        .map((day) => ({
+          day,
+          allDay: properties[`durationDays${day}AllDayRound`] === true,
+          start: properties[`durationDays${day}StartTime`],
+          end: properties[`durationDays${day}EndTime`]
+        })),
       direction: `Segment ${from} vers ${to}. Direction exacte de voie non publiée dans ce flux si une seule direction est touchée.`,
       streets: street && from && to
         ? `${street}, entre ${from} et ${to}`
@@ -3367,6 +3385,37 @@ function dedupeClosures(closures) {
   });
 }
 
+function closureDateRangeHtml(closure) {
+  const start = `${formatDate(closure.startDate)}${closure.startTime ? ` ${t("popup.at")} ${escapeHtml(closure.startTime)}` : ""}`;
+  const end = `${formatDate(closure.endDate)}${closure.endTime ? ` ${t("popup.at")} ${escapeHtml(closure.endTime)}` : ""}`;
+  return `${start} ${t("popup.to")} ${end}`;
+}
+
+function closureScheduleHtml(closure, className) {
+  const groups = new Map();
+  for (const entry of closure.schedule || []) {
+    const hours = entry.allDay ? t("schedule.allDay")
+      : `${entry.start || t("popup.notPublished")} ${t("schedule.to")} ${entry.end || t("popup.notPublished")}`;
+    if (!groups.has(hours)) groups.set(hours, []);
+    groups.get(hours).push(t(`schedule.${entry.day}`));
+  }
+  const lines = [...groups].map(([hours, days]) => `${days.join(", ")} : ${hours}`);
+  if (isMeaningfulLavalValue(closure.scheduleText)) lines.push(closure.scheduleText);
+  for (const interval of closure.publishedIntervals || []) {
+    lines.push(interval.split("/").map((value) => {
+      const time = publishedTime(value);
+      if (!time) return formatDate(value);
+      const date = new Date(value);
+      if (Number.isNaN(date.valueOf())) return value;
+      return new Intl.DateTimeFormat(currentLanguage() === "en" ? "en-CA" : "fr-CA", {
+        timeZone: "America/Toronto", year: "numeric", month: "short", day: "numeric",
+        hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZoneName: "short"
+      }).format(date);
+    }).join(` ${t("popup.to")} `));
+  }
+  return lines.length ? `<p class="${className}"><strong>${t("schedule.label")}:</strong><br>${lines.map(escapeHtml).join("<br>")}</p>` : "";
+}
+
 function popupContent(closure) {
   const meta = CATEGORY_META[closure.category] ?? CATEGORY_META.event;
   const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
@@ -3379,7 +3428,8 @@ function popupContent(closure) {
       <p class="popup-title">${escapeHtml(closure.title)}</p>
       <p class="popup-meta"><strong>${escapeHtml(closureImpactLabel(closure))}</strong> - ${escapeHtml(meta.label())}</p>
       <p class="popup-meta">${escapeHtml(closure.streets)}</p>
-      <p class="popup-meta">${formatDate(closure.startDate)}${closure.startTime ? ` à ${escapeHtml(closure.startTime)}` : ""} ${t("popup.to")} ${formatDate(closure.endDate)}${closure.endTime ? ` à ${escapeHtml(closure.endTime)}` : ""}</p>
+      <p class="popup-meta">${closureDateRangeHtml(closure)}</p>
+      ${closureScheduleHtml(closure, "popup-meta")}
       ${details}
       <p class="popup-meta"><strong>${t("popup.responsible")}:</strong> ${escapeHtml(closure.responsible)}</p>
       <p class="popup-meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
@@ -3494,23 +3544,30 @@ function openMapPopup(latLng, content, maxWidth) {
 function centerPopupInMap(popup, pass = 0) {
   const popupElement = popup.getElement();
   const mapElement = map.getContainer();
-  if (!popupElement || !mapElement) {
+  if (activeMapPopup !== popup || !map.hasLayer(popup) || !popupElement?.isConnected || !mapElement) {
     return;
   }
+
+  if (locationZoomInProgress) {
+    map.once("zoomend", () => requestAnimationFrame(() => centerPopupInMap(popup, pass)));
+    return;
+  }
+
+  if (pass === 0) map.stop();
 
   const popupBounds = popupElement.getBoundingClientRect();
   const mapBounds = mapElement.getBoundingClientRect();
   const horizontalOffset = popupBounds.left + popupBounds.width / 2 - (mapBounds.left + mapBounds.width / 2);
   const verticalOffset = popupBounds.top + popupBounds.height / 2 - (mapBounds.top + mapBounds.height / 2);
 
-  if (pass > 0 && Math.abs(horizontalOffset) < 3 && Math.abs(verticalOffset) < 3) {
+  if (Math.abs(horizontalOffset) < 3 && Math.abs(verticalOffset) < 3) {
     return;
   }
 
-  map.panBy([horizontalOffset, verticalOffset], { animate: true, duration: 0.28 });
   if (pass === 0) {
     map.once("moveend", () => requestAnimationFrame(() => centerPopupInMap(popup, 1)));
   }
+  map.panBy([horizontalOffset, verticalOffset], { animate: true, duration: 0.28 });
 }
 
 function closuresNearLatLng(latLng, primaryClosure) {
@@ -3961,14 +4018,19 @@ function renderList(closures) {
       </div>
       <h3>${escapeHtml(closure.title)}</h3>
       <p class="meta">${escapeHtml(closure.streets)}</p>
-      <p class="meta"><strong>${formatDate(closure.startDate)}${closure.startTime ? ` à ${escapeHtml(closure.startTime)}` : ""}</strong> au <strong>${formatDate(closure.endDate)}${closure.endTime ? ` à ${escapeHtml(closure.endTime)}` : ""}</strong></p>
+      <p class="meta"><strong>${closureDateRangeHtml(closure)}</strong></p>
+      ${closureScheduleHtml(closure, "meta")}
       <p class="meta"><strong>Moment:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
       <p class="meta"><strong>Impact auto:</strong> ${escapeHtml(closure.impact)}</p>
       <p class="meta"><strong>Direction:</strong> ${escapeHtml(closure.direction)}</p>
+      <a href="${escapeHtml(closure.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(closure.source)}</a>
     `;
     addAbbreviationTooltips(card);
-    card.addEventListener("click", () => focusClosure(closure, { openPopup: true }));
+    card.addEventListener("click", (event) => {
+      if (!event.target.closest("a")) focusClosure(closure, { openPopup: true });
+    });
     card.addEventListener("keydown", (event) => {
+      if (event.target.closest("a")) return;
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         focusClosure(closure, { openPopup: true });
