@@ -1,0 +1,152 @@
+{
+  "extractedAt": "2026-09-16T22:43:13.747Z",
+  "source": "Signalement citoyen transmis via notre formulaire",
+  "sourceKind": "citizen-report",
+  "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
+  "sourceDescription": "Information transmise par une personne ayant observé l'entrave sur place. Il ne s'agit pas d'un avis officiel de la municipalité.",
+  "extractionMethod": "Lecture de la réponse Google Forms via les données structurées Google Sheets; analyse manuelle de toutes les colonnes, y compris les détails supplémentaires.",
+  "sourceRecordCount": 1,
+  "retainedRecordCount": 1,
+  "impactCount": 2,
+  "inMap": true,
+  "privacy": {
+    "contactInformationIncluded": false,
+    "responseSpreadsheetUrlIncluded": false,
+    "policy": "Exclure les coordonnées personnelles, la colonne de courriel et le lien du tableur des réponses. Relire aussi les champs libres avant chaque publication. Le lien source public mène au formulaire de signalement."
+  },
+  "limitations": [
+    "Snapshot statique de déclarations citoyennes; la vérification du formulaire ne confirme pas les conditions réelles de circulation.",
+    "La géobase confirme le tracé de la rue, pas l'existence de la fermeture ni ses horaires.",
+    "Les dates normalisées reprennent les dates saisies par la personne. Le texte libre précise que les dates exactes n'ont pas été communiquées et que la fin octobre est estimée; cette réserve est conservée sans bloquer le signalement.",
+    "Ce fichier est chargé par l'application. Les impacts et leurs horaires sont traités séparément; les filtres proposent des journées et des périodes jour/nuit, pas une sélection d'heure précise. Les popups affichent les horaires exacts, les réserves et l'état selon l'horaire déclaré au moment de leur ouverture."
+  ],
+  "records": [
+    {
+      "id": "citizen-foucher-chabanel-louvain-20260916-182940",
+      "title": "Rue Foucher, entre Chabanel et Louvain : fermeture et stationnement interdit signalés",
+      "source": "Signalement citoyen transmis via notre formulaire",
+      "sourceKind": "citizen-report",
+      "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
+      "municipality": "Montréal",
+      "borough": "Ahuntsic - Cartierville",
+      "streets": "Rue Foucher, entre la rue Chabanel Est et la rue de Louvain Est",
+      "roadType": "street",
+      "limits": ["rue Chabanel Est", "rue de Louvain Est"],
+      "direction": "Non applicable",
+      "responsible": null,
+      "reference": null,
+      "submittedAtLocal": "2026-09-16T18:29:40",
+      "submissionTimeZone": null,
+      "observedAt": "2026-09-12",
+      "informationOrigin": "Observation sur place",
+      "supportingSourceUrl": null,
+      "status": "reported-active",
+      "statusSource": "Le texte libre décrit une fermeture récurrente et un stationnement interdit en tout temps; il s'agit du statut déclaré, non d'une confirmation officielle.",
+      "startDate": "2026-07-01",
+      "endDate": "2026-10-31",
+      "reportedDates": {
+        "enteredStartDate": "2026-07-01",
+        "enteredEndDate": "2026-10-31",
+        "startPrecision": "month-only-in-description",
+        "endPrecision": "respondent-estimate",
+        "publishedText": "Depuis juillet, prévu jusqu'à octobre 2026, mais aucune date précise encore nous a été donnée. Selon l'avancement des travaux, ce sera jusqu'à la fin octobre selon moi.",
+        "note": "La période du signalement reprend les dates saisies du 1er juillet au 31 octobre 2026. Ce sont des dates déclarées, pas des échéances officielles confirmées; la fin octobre reste une estimation selon le commentaire."
+      },
+      "trafficLabels": ["Route complètement fermée", "Stationnement interdit"],
+      "description": "Entrave à ajouter dans le quartier Ahuntsic : fermeture complète de la rue Foucher entre Chabanel et Louvain du lundi au vendredi de 7h à 19h. Depuis juillet, prévu jusqu'à octobre 2026, mais aucune date précise encore nous a été donnée. Selon l'avancement des travaux, ce sera jusqu'à la fin octobre selon moi.\n\nEn dehors de ces jours/heures-là, nous pouvons y circuler. \n\nToutefois, stationnement interdit en tout temps (même si des gens s'y stationnent quand même.... Mais il y a genre 5 places plausibles sans entraver la rue donc... Bof ahah)",
+      "impacts": [
+        {
+          "id": "citizen-foucher-chabanel-louvain-20260916-182940-road-closure",
+          "type": "road-closure",
+          "severity": "critical",
+          "trafficLabel": "Route complètement fermée",
+          "impact": "fermeture complète de la rue Foucher entre Chabanel et Louvain du lundi au vendredi de 7h à 19h.",
+          "direction": "Non applicable",
+          "schedule": {
+            "days": ["Mon", "Tue", "Wed", "Thu", "Fri"],
+            "allDay": false,
+            "startTime": "07:00",
+            "endTime": "19:00",
+            "timeZone": "America/Toronto",
+            "timeZoneBasis": "Heure locale du lieu signalé à Montréal.",
+            "reportedText": " lundi au vendredi de 7h à 19h",
+            "outsideScheduleText": "En dehors de ces jours/heures-là, nous pouvons y circuler."
+          },
+          "periods": ["day"],
+          "geometryRef": "citizen-foucher-chabanel-louvain-20260916-182940"
+        },
+        {
+          "id": "citizen-foucher-chabanel-louvain-20260916-182940-parking",
+          "type": "parking-restriction",
+          "severity": "parking",
+          "trafficLabel": "Stationnement interdit",
+          "impact": "stationnement interdit en tout temps",
+          "direction": "Non applicable",
+          "schedule": {
+            "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            "allDay": true,
+            "startTime": null,
+            "endTime": null,
+            "timeZone": "America/Toronto",
+            "timeZoneBasis": "Heure locale du lieu signalé à Montréal.",
+            "reportedText": "stationnement interdit en tout temps"
+          },
+          "periods": ["day", "night"],
+          "geometryRef": "citizen-foucher-chabanel-louvain-20260916-182940"
+        }
+      ],
+      "geometryStatus": "verified-official-street-segment",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.647503, 45.550485],
+          [-73.650514, 45.55136],
+          [-73.650583, 45.551379]
+        ]
+      },
+      "geometrySource": {
+        "name": "Ville de Montréal - Géobase",
+        "url": "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal%3Ageobase&outputFormat=application%2Fjson&srsname=EPSG%3A4326&CQL_FILTER=id%3D1040221",
+        "verifiedAt": "2026-09-16T22:43:13.747Z",
+        "coordinateSystem": "EPSG:4326",
+        "coordinateOrder": "longitude, latitude",
+        "segmentId": 1040221,
+        "noTronconSq": 1100421,
+        "street": "rue Foucher ",
+        "from": "rue Chabanel Est ",
+        "to": "rue de Louvain Est ",
+        "borough": "Ahuntsic - Cartierville",
+        "publishedLengthMeters": 260.212,
+        "sourceStartDate": "2022-09-03T04:00:00Z",
+        "note": "Géométrie publiée conservée exactement; la date de la géobase n'est pas celle des travaux. L'ordre des coordonnées ne définit pas la direction de l'entrave."
+      },
+      "review": {
+        "status": "reviewed-citizen-report",
+        "mapEligible": true,
+        "restrictionOfficiallyVerified": false,
+        "geometryVerified": true,
+        "warnings": [
+          "Le 1er juillet saisi n'est pas confirmé comme date exacte par le texte libre.",
+          "Le 31 octobre saisi est une estimation personnelle, pas une date de fin annoncée confirmée.",
+          "La fermeture et l'interdiction de stationnement ont des horaires distincts.",
+          "Le commentaire sur cinq places plausibles ne constitue pas une autorisation de stationnement."
+        ]
+      },
+      "reportedFields": {
+        "Timestamp": "16/09/2026 18:29:40",
+        "Dans quelle municipalité se trouve l’entrave?": "Montreal",
+        "Quelle rue, route, autoroute ou quel pont est touché?": "rue Foucher",
+        "Où exactement se situe l’entrave?": " entre Chabanel et Louvain",
+        "Quel est l’effet sur la circulation?": "Route complètement fermée, Stationnement interdit",
+        "Quelle direction est touchée?": "Non applicable",
+        "Quand avez-vous constaté l’entrave ou consulté l’avis?": "12/09/2026",
+        "Quelle est la date de début annoncée?": "01/07/2026",
+        "Quelle est la date de fin annoncée?": "31/10/2026",
+        "Quels jours et quelles heures sont concernés?": " lundi au vendredi de 7h à 19h",
+        "D’où provient l’information?": "Observation sur place",
+        "Avez-vous un lien vers une source ou l’emplacement?": null,
+        "Quels détails supplémentaires pourraient nous aider?": "Entrave à ajouter dans le quartier Ahuntsic : fermeture complète de la rue Foucher entre Chabanel et Louvain du lundi au vendredi de 7h à 19h. Depuis juillet, prévu jusqu'à octobre 2026, mais aucune date précise encore nous a été donnée. Selon l'avancement des travaux, ce sera jusqu'à la fin octobre selon moi.\n\nEn dehors de ces jours/heures-là, nous pouvons y circuler. \n\nToutefois, stationnement interdit en tout temps (même si des gens s'y stationnent quand même.... Mais il y a genre 5 places plausibles sans entraver la rue donc... Bof ahah)"
+      }
+    }
+  ]
+}

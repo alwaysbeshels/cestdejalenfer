@@ -1,4 +1,5 @@
 const CATEGORY_META = {
+  citizen: { label: () => t("category.citizen") },
   municipal: { label: () => t("category.municipal") },
   private: { label: () => t("category.private") },
   linkedCity: { label: () => t("category.linkedCity") },
@@ -72,6 +73,7 @@ const LIVE_SOURCES = {
   montrealPedestrianSnapshot: "data/montreal-pedestrian-snapshot.json",
   montrealResolvedGeometries: "data/montreal-entraves-geometries-snapshot.json",
   noovoRoadClosuresSnapshot: "data/noovo-road-closures-snapshot.json",
+  citizenReportsSnapshot: "data/citizen-reports-snapshot.json",
   montSaintHilaireWorks: "https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_4Septembre2026_WFL1/FeatureServer",
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
@@ -1176,6 +1178,13 @@ function hasExpiredToday(closure, now = new Date()) {
 }
 
 function overlapsDateRange(closure, range) {
+  if (closure.sourceKind === "citizen-report") {
+    const today = citizenLocalDateTime(closure, new Date()).slice(0, 10);
+    if (closure.endDate && closure.endDate < today) return false;
+    if (!closure.endDate && closure.status !== "reported-active") return false;
+    return citizenScheduleOverlaps(closure,
+      `${formatInputDate(range.start)}T00:00`, `${formatInputDate(range.end)}T23:59:59`);
+  }
   const startTime = closure._startTime ?? parseDate(closure.startDate).valueOf();
   const endTime = closure._endTime ?? parseDate(closure.endDate).valueOf();
   const hasStart = !Number.isNaN(startTime);
@@ -1186,6 +1195,42 @@ function overlapsDateRange(closure, range) {
   const lower = hasStart ? startTime : -8640000000000000;
   const upper = hasEnd ? endTime : 8640000000000000;
   return lower <= range.end.valueOf() && upper >= range.start.valueOf();
+}
+
+function citizenLocalDateTime(closure, instant) {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: closure.recurringSchedule.timeZone,
+    year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", hourCycle: "h23"
+  }).formatToParts(instant);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}T${values.hour}:${values.minute}`;
+}
+
+function citizenScheduleOverlaps(closure, startLocal, endLocal) {
+  const schedule = closure.recurringSchedule;
+  if (!schedule?.days?.length) return false;
+  const lower = Math.max(Date.parse(`${startLocal}Z`),
+    closure.startDate ? Date.parse(`${closure.startDate}T00:00:00Z`) : -Infinity);
+  const upper = Math.min(Date.parse(`${endLocal}Z`),
+    closure.endDate ? Date.parse(`${closure.endDate}T23:59:59Z`) : Infinity);
+  if (!Number.isFinite(lower) || !Number.isFinite(upper) || lower > upper) return false;
+  const startMinute = schedule.allDay ? 0 : minutesFromTime(schedule.startTime);
+  const endMinute = schedule.allDay ? 1440 : minutesFromTime(schedule.endTime);
+  if (startMinute === null || endMinute === null || startMinute === endMinute) return false;
+  const dayLength = 86400000;
+  const firstDay = Math.floor(lower / dayLength) * dayLength;
+  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  for (let offset = -1; offset < 8; offset += 1) {
+    const day = firstDay + offset * dayLength;
+    if (day > upper) break;
+    if (!schedule.days.includes(weekdays[new Date(day).getUTCDay()])) continue;
+    if (closure.startDate && day < Date.parse(`${closure.startDate}T00:00:00Z`)) continue;
+    const start = day + startMinute * 60000;
+    const end = day + (endMinute + (endMinute < startMinute ? 1440 : 0)) * 60000;
+    if (start <= upper && end > lower) return true;
+  }
+  return false;
 }
 
 function getActiveCategories() {
@@ -2095,6 +2140,48 @@ async function loadMontrealPedestrianSnapshotClosures() {
       };
     });
   return [...curatedClosures, ...snapshotClosures];
+}
+
+async function loadCitizenReportClosures() {
+  const snapshot = await fetchJson(LIVE_SOURCES.citizenReportsSnapshot);
+  if (snapshot.sourceKind !== "citizen-report" || !Array.isArray(snapshot.records)) {
+    throw new Error("Invalid citizen-report snapshot");
+  }
+  return snapshot.records
+    .filter((record) => record.review?.mapEligible === true && record.review.geometryVerified === true && record.geometry)
+    .flatMap((record) => (record.impacts || [])
+      .filter((impact) => impact.geometryRef === record.id && SEVERITY_META[impact.severity])
+      .map((impact) => ({
+        ...record,
+        ...impact,
+        category: "citizen",
+        sourceKind: "citizen-report",
+        startDate: impact.startDate ?? record.startDate,
+        endDate: impact.endDate ?? record.endDate,
+        recurringSchedule: impact.schedule,
+        schedule: (impact.schedule?.days || []).map((day) => ({
+          day,
+          allDay: impact.schedule.allDay,
+          start: impact.schedule.startTime,
+          end: impact.schedule.endTime
+        })),
+        scheduleText: impact.schedule?.outsideScheduleText,
+        source: snapshot.source,
+        sourceUrl: snapshot.sourceUrl,
+        color: SEVERITY_META[impact.severity].color,
+        geometry: record.geometry,
+        point: representativePoint(record.geometry),
+        details: [
+          [t("citizen.sourceKind"), t("citizen.unofficial")],
+          [t("citizen.origin"), record.informationOrigin],
+          [t("citizen.observed"), formatDate(record.observedAt)],
+          [t("citizen.dates"), record.reportedDates?.note],
+          [t("citizen.details"), record.description],
+          [t("citizen.warnings"), (record.review.warnings || []).join("\n")],
+          [t("citizen.geometry"), t("citizen.geometryOnly")],
+          [t("citizen.verified"), snapshot.extractedAt]
+        ]
+      })));
 }
 
 async function loadNoovoRoadClosuresSnapshot() {
@@ -3292,6 +3379,7 @@ async function loadOfficialData() {
     loadBeaconsfieldSnapshotClosures(),
     loadMontrealPedestrianSnapshotClosures(),
     loadNoovoRoadClosuresSnapshot(),
+    loadCitizenReportClosures(),
     loadPjcciClosures()
   ]);
   const localSnapshotClosures = localSnapshotResults
@@ -3400,6 +3488,11 @@ function closureScheduleHtml(closure, className) {
     groups.get(hours).push(t(`schedule.${entry.day}`));
   }
   const lines = [...groups].map(([hours, days]) => `${days.join(", ")} : ${hours}`);
+  if (closure.sourceKind === "citizen-report") {
+    const localNow = citizenLocalDateTime(closure, new Date());
+    lines.push(t(citizenScheduleOverlaps(closure, localNow, localNow)
+      ? "citizen.activeNow" : "citizen.inactiveNow"));
+  }
   if (isMeaningfulLavalValue(closure.scheduleText)) lines.push(closure.scheduleText);
   for (const interval of closure.publishedIntervals || []) {
     lines.push(interval.split("/").map((value) => {
@@ -3413,7 +3506,7 @@ function closureScheduleHtml(closure, className) {
       }).format(date);
     }).join(` ${t("popup.to")} `));
   }
-  return lines.length ? `<p class="${className}"><strong>${t("schedule.label")}:</strong><br>${lines.map(escapeHtml).join("<br>")}</p>` : "";
+  return lines.length ? `<p class="${className}"><strong>${t(closure.sourceKind === "citizen-report" ? "citizen.schedule" : "schedule.label")}:</strong><br>${lines.map(escapeHtml).join("<br>")}</p>` : "";
 }
 
 function popupContent(closure) {
@@ -3421,7 +3514,7 @@ function popupContent(closure) {
   const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
   const details = (closure.details || [])
     .filter(([, value]) => isMeaningfulLavalValue(value))
-    .map(([label, value]) => `<p class="popup-meta"><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</p>`)
+    .map(([label, value]) => `<p class="popup-meta"><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value).replace(/\n/g, "<br>")}</p>`)
     .join("");
   return `
     <div class="popup-card">
@@ -3431,7 +3524,7 @@ function popupContent(closure) {
       <p class="popup-meta">${closureDateRangeHtml(closure)}</p>
       ${closureScheduleHtml(closure, "popup-meta")}
       ${details}
-      <p class="popup-meta"><strong>${t("popup.responsible")}:</strong> ${escapeHtml(closure.responsible)}</p>
+      <p class="popup-meta"><strong>${t("popup.responsible")}:</strong> ${escapeHtml(closure.responsible || t("popup.notPublished"))}</p>
       <p class="popup-meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
       <p class="popup-meta"><strong>${t("popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
       <p class="popup-meta"><strong>${t("popup.direction")}:</strong> ${escapeHtml(closure.direction)}</p>

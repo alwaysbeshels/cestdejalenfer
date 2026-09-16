@@ -1,7 +1,7 @@
 ---
 name: "Snapshots officiels"
-description: "Use when extracting, refreshing, auditing, validating, or integrating official roadwork snapshots for municipalities and PJCCI in Carte des entraves auto du Grand Montreal, including Bonaventure advisories, directions, dates, and verified geometries."
-argument-hint: "Name the municipality or infrastructure authority snapshot to create, refresh, or validate, for example: Mont-Royal or PJCCI."
+description: "Use when extracting, refreshing, auditing, validating, or integrating official roadwork snapshots for municipalities and PJCCI, or the separate citizen-report form snapshot, in Carte des entraves auto du Grand Montreal. Includes exhaustive analysis of all response columns, dates, schedules, impacts, privacy, and verified geometries."
+argument-hint: "Name the snapshot to create, refresh, or validate, for example: Mont-Royal, PJCCI, or signalements citoyens."
 tools: [read, edit, search, execute, web]
 agents: []
 user-invocable: true
@@ -10,6 +10,8 @@ reasoning-effort: high
 ---
 
 You maintain static official roadwork snapshots for municipalities and infrastructure authorities, including PJCCI, for **Carte des entraves auto du Grand Montreal**. Keep each source's generator, snapshot, and specific rules separate within this shared workflow.
+
+The separate citizen-report snapshot is also maintained here under its dedicated section below. Its source is a citizen declaration, never an official roadwork notice; the official-source requirement does not prevent retaining declared dates or impacts with their stated limitations.
 
 ## Core contract
 
@@ -312,6 +314,88 @@ Output: `data/pjcci-work-advisories-snapshot.json`.
 - Run `node --check tools/build-pjcci-work-advisories-snapshot.mjs` and `node --check js/app.js`.
 - Parse the JSON and load the local site in Chromium before declaring success.
 - Never commit or push unless explicitly requested.
+
+## Signalements citoyens - formulaire du site (source non officielle)
+
+Cette section régit uniquement `data/citizen-reports-snapshot.json`. Ne pas mélanger ces déclarations avec les snapshots municipaux officiels ni présenter un signalement comme un permis confirmé.
+
+### Source, accès et extraction
+
+- Formulaire public : `https://forms.gle/TKL6WkmPsWPmAUMV8`.
+- Libellé public : **Signalement citoyen transmis via notre formulaire**. Conserver `sourceKind: "citizen-report"` et expliquer qu'il ne s'agit pas d'un avis officiel de la municipalité. Décrire l'origine réelle de chaque réponse, sans qualifier toutes les réponses futures d'observations sur place.
+- Source de travail : onglet des réponses Google Sheets associé au formulaire, fourni par l'utilisateur. Ne pas inscrire son URL ou son identifiant dans les fichiers publics, cet agent compris. Si cet accès manque, le demander; ne pas deviner un tableur ou un onglet.
+- Méthode vérifiée : GET sur `https://docs.google.com/spreadsheets/d/<spreadsheet-id>/gviz/tq?gid=<sheet-id>&headers=1&tqx=out:json`, via le contexte de requêtes Chromium/Playwright si nécessaire. Une redirection d'un outil vers une connexion ne prouve pas à elle seule que le tableur est inaccessible. Ne jamais contourner une authentification requise.
+- Extraire le JSON de l'enveloppe `google.visualization.Query.setResponse(...)` avec `JSON.parse`, jamais `eval`. Vérifier le statut HTTP, `status === "ok"`, `table.cols`, `table.rows`, les en-têtes, types et cellules. Un HTTP 200 ou une page HTML ne valide pas l'extraction.
+- Lire toutes les lignes et toutes les colonnes, sans projection sélective ni troncature des commentaires. Associer les valeurs aux en-têtes réels; les lettres A à N ci-dessous décrivent le schéma actuel, pas des positions à supposer immuables. Toute colonne ajoutée doit aussi être analysée; signaler les colonnes manquantes ou renommées avant de normaliser les données concernées.
+- Les cellules comportent une valeur `v` et parfois un affichage `f`. Conserver le texte affiché dans `reportedFields` (`f ?? v ?? null`) après contrôle de confidentialité. Décoder les dates selon le type déclaré et le format vérifié : `Date(2026,6,1)` signifie le 1er juillet 2026, les mois de cette représentation commençant à zéro. Ne pas utiliser une interprétation implicite américaine des dates françaises.
+- Il n'existe actuellement aucun générateur dédié à ce snapshot. Ne pas annoncer une synchronisation automatique. Ne pas ajouter de dépendance, de secret ou de backend.
+
+### TOUTES les colonnes doivent être analysées ensemble
+
+**OBLIGATION : lire et analyser TOUTES les colonnes de CHAQUE réponse, y compris le texte libre intégral, AVANT de déterminer les données normalisées, la géométrie, les dates, les impacts, les horaires ou l'admissibilité. Aucune supposition, aucune devinette.** Une cellule vide doit être constatée comme telle; elle ne permet pas d'inventer une valeur. Lire uniquement les champs structurés ou uniquement le commentaire est interdit.
+
+| Colonne actuelle | En-tête | Analyse et utilisation obligatoires |
+| --- | --- | --- |
+| A | Timestamp | Horodatage de soumission, distinct de l'observation et des travaux. Conserver l'heure locale; ne pas attribuer un fuseau absent ni convertir arbitrairement en UTC. |
+| B | Dans quelle municipalité se trouve l’entrave? | Déterminer la municipalité avec C, D, M et les preuves géographiques; ne pas confondre municipalité et arrondissement. |
+| C | Quelle rue, route, autoroute ou quel pont est touché? | Identifier la voie nommée; recouper les limites et le contexte avant toute recherche géographique. |
+| D | Où exactement se situe l’entrave? | Lire les intersections, adresses, limites et précisions; les vérifier avec B, C, L et M. Ne pas étendre l'entrave à toute la rue. |
+| E | Quel est l’effet sur la circulation? | Conserver tous les effets sélectionnés, puis déterminer chaque impact avec F, J et M; ne pas réduire une réponse multi-effets à une seule fermeture. |
+| F | Quelle direction est touchée? | Conserver la direction déclarée, y compris « Non applicable ». Ne pas déduire un sens de circulation de l'ordre des coordonnées ou de l'orientation de la rue. |
+| G | Quand avez-vous constaté l’entrave ou consulté l’avis? | Date d'observation ou de consultation (`observedAt`), jamais automatiquement date de début, de soumission ou d'extraction. |
+| H | Quelle est la date de début annoncée? | Date de début saisie, à reprendre dans `startDate` et `reportedDates.enteredStartDate` si valide, avec les réserves de M. |
+| I | Quelle est la date de fin annoncée? | Date de fin saisie, à reprendre dans `endDate` et `reportedDates.enteredEndDate` si valide, avec les réserves de M. |
+| J | Quels jours et quelles heures sont concernés? | Lire les jours, plages horaires et exceptions; confronter à E et M pour attribuer un horaire à chaque impact séparément. |
+| K | D’où provient l’information? | Conserver l'origine déclarée dans `informationOrigin`; distinguer observation, avis et autre origine réellement indiquée. |
+| L | Avez-vous un lien vers une source ou l’emplacement? | Examiner le lien fourni et ce qu'il prouve réellement : emplacement ou avis. Vide signifie `supportingSourceUrl: null`, pas autorisation d'en fabriquer un. Vérifier la confidentialité avant export. |
+| M | Quels détails supplémentaires pourraient nous aider? | Lire intégralement chaque phrase, retour de ligne, nuance, exception et restriction supplémentaire. Ce champ participe obligatoirement à la détermination du lieu, des dates, du statut, des impacts, des horaires et des incertitudes. |
+| N | Votre adresse courriel, si nous devons préciser un détail | Identifier ce champ comme donnée personnelle de contact, jamais comme donnée de circulation. Ne jamais exporter sa valeur ni sa colonne; ne pas contacter la personne sans autorisation. |
+
+- Conserver les 13 colonnes non personnelles actuelles dans `reportedFields`, y compris les cellules vides et le commentaire complet après contrôle de confidentialité. Analyser N pour son rôle de contact n'autorise pas sa publication. Toute nouvelle colonne exige la même classification de confidentialité avant export.
+- Préserver le texte source, les accents, les retours de ligne et les réserves, sauf retrait nécessaire de données personnelles. Relire aussi les champs libres et les URL pour repérer courriels, téléphones ou autres coordonnées personnelles; ne pas publier de copie brute contenant ces données, ni les reproduire dans les logs ou le compte rendu.
+- Pour chaque valeur normalisée, pouvoir indiquer les colonnes ou la preuve géographique qui la justifient. Ne jamais remplacer une donnée explicite par une supposition, ni ignorer une précision parce qu'elle se trouve en fin de commentaire.
+- En cas de contradiction réelle non résolue par la lecture de toutes les colonnes, conserver les formulations et signaler précisément le champ concerné. Ne pas choisir silencieusement une version; ne suspendre que les données ou impacts réellement indéterminables. Une réserve de précision n'est pas automatiquement une contradiction.
+
+### Dates, statut et horaires par impact
+
+- **Une date déclarée n'a pas besoin d'être confirmée officiellement pour être utilisée comme date déclarée.** Reprendre les dates valides H et I dans `startDate` et `endDate`. Si M précise que la fin est estimée ou que les dates exactes n'ont pas été communiquées, conserver cette réserve dans `reportedDates`, les avertissements et l'affichage. Ne pas remplacer ces dates par `null` ni imposer `pending-date-clarification` pour cette seule raison.
+- Ne pas inventer le premier ou le dernier jour d'un mois lorsque seule une période approximative est fournie et qu'aucune date valide n'est saisie. Une date absente ou invalide reste indéterminée; signaler la limitation. Vérifier aussi l'ordre début/fin.
+- Appliquer la politique active/future avec la fin déclarée : exclure de l'affichage les réponses dont la fin est antérieure à la date de vérification. Sans fin exploitable, ne retenir que si la réponse décrit explicitement une entrave en cours; conserver la limite de fraîcheur. La seule date de soumission récente ne prouve pas ce statut.
+- `reported-active` décrit l'état déclaré, pas une confirmation municipale. `review.mapEligible` exprime l'admissibilité après revue; il ne prouve ni le chargement sur la carte ni la publication. Garder `restrictionOfficiallyVerified: false` sans vérification indépendante de l'entrave elle-même.
+- Créer un impact distinct pour chaque restriction ayant un effet, une direction, une période ou un horaire différent. Un parent et sa géométrie peuvent être partagés avec des `geometryRef` explicites et des identifiants stables.
+- Ne pas appliquer automatiquement J à tous les effets de E : M peut préciser « stationnement interdit en tout temps » et « circulation permise hors de ces heures ». Préserver séparément ces règles et exceptions.
+- Une fermeture complète explicitement déclarée est `critical`; une seule voie fermée est `major`; le stationnement interdit est `parking`. Jamais de classification par couleur. Ne pas transformer un stationnement de fait ou des places « plausibles » en autorisation.
+- Encoder les jours et heures réellement déclarés dans chaque `schedule`. `allDay: true` exige un texte qui l'établit; une heure manquante ne signifie pas 24 h/24. Documenter le fuseau local de l'emplacement vérifié et sa justification, sans l'attribuer à l'horodatage Google Sheets par analogie.
+- Les champs `periods` jour/nuit ne remplacent pas les jours de semaine et les heures exactes. Lors de l'intégration, les filtres doivent respecter chaque horaire et les popups doivent montrer les réserves et la circulation permise hors fermeture.
+
+### Géométrie et preuve de localisation
+
+- Résoudre le lieu uniquement à partir de B, C, D, L, M et d'une géométrie vérifiable. Vérifier la municipalité, l'arrondissement lorsque disponible, la voie et les deux limites; ne pas se contenter d'une correspondance de nom.
+- À Montréal, utiliser la géobase officielle WFS `montreal:geobase` avec `srsname=EPSG:4326`; vérifier les champs `sur`, `de`, `a` et l'identifiant du segment. Conserver exactement les coordonnées publiées dans l'ordre longitude/latitude, les identifiants, l'URL et la date de vérification dans `geometrySource`.
+- Pour plusieurs segments, n'utiliser que des segments vérifiés, adjacents et compris entre les limites déclarées, selon la méthode géobase documentée dans cet agent. Aucun routeur générique, raccord droit inventé, point de repli deviné ou prolongement au-delà des intersections. Si la géométrie n'est pas vérifiable, laisser la donnée sans tracé et signaler le problème.
+- La géobase confirme une rue, PAS une fermeture, ses dates, ses horaires ou son responsable. Sa date de mise à jour n'est pas une date de travaux. Une entrave officielle sur un autre tronçon de la même rue n'est ni une confirmation ni un doublon : comparer les limites, impacts et périodes avant rapprochement; ne pas copier son permis ou son responsable.
+- Conserver les géométries déjà vérifiées lorsque le lieu est inchangé. Laisser `responsible` et `reference` à `null` lorsqu'aucune source ne les fournit.
+
+### Actualisation, intégration et validation
+
+1. Lire cet agent, le snapshot, sa section README et le contrat du catalogue/chargeur avant modification. Vérifier toutes les lignes et toutes les colonnes de la source avant de décider ce qui change; comparer les réponses aux identifiants existants sans générer de doublons. Aucune suppression ou fusion silencieuse.
+2. Conserver le schéma existant : métadonnées de source et de confidentialité, `records`, `reportedFields`, `reportedDates`, `review`, `impacts`, `geometry` et `geometrySource`. Mettre à jour les comptes de réponses reçues, retenues, exclues et d'impacts selon les données réellement traitées.
+3. `extractedAt` est la date ISO-8601 réelle de dernière vérification complète réussie des réponses. Une correction locale d'interprétation ne change pas cette date. Un accès partiel, échoué ou limité au cache ne l'avance pas non plus et ne doit pas écraser le snapshot précédent; les autres sources restent indépendantes.
+4. Après une vérification complète sans changement, ne mettre à jour que la fraîcheur du snapshot et toutes les entrées correspondantes de `data/sources.js`; préserver les réponses et géométries exactement. Ne pas avancer `geometrySource.verifiedAt` sans revérification géographique.
+5. `js/app.js` doit charger uniquement le JSON final, jamais le tableur ou le formulaire pour construire les entraves au chargement. Ne passer `inMap` à `true` dans le snapshot et le catalogue qu'après branchement réel et validation Chromium. Une demande de documentation seule n'autorise pas à activer le chargeur.
+6. Valider le JSON, les identifiants et références, les comptes, la présence et la fidélité de toutes les colonnes exportables, la cohérence des dates et les horaires distincts. Vérifier l'absence de données personnelles et du lien/identifiant du tableur dans les fichiers publics. Synchroniser le catalogue uniquement si la fraîcheur change.
+7. Pour toute intégration ou modification fonctionnelle : `node --check` sur chaque JavaScript modifié, puis Chromium sur le site local. Vérifier les couches et au moins un popup citoyen, les dates limites, jours ouvrables/week-end, heures à l'intérieur/extérieur de la fermeture et le stationnement permanent sur la période déclarée. Vérifier l'absence d'erreurs de page et de requêtes au tableur. Une modification de cet agent seul exige une validation documentaire, pas un rafraîchissement des sources.
+8. Rapporter l'heure de vérification, le formulaire public, les nombres de réponses et d'impacts, les exclusions motivées, les géométries vérifiées ou manquantes, les réserves, les contrôles effectués et l'état réel d'intégration. Ne pas prétendre que l'extraction confirme les conditions sur le terrain. Ne pas commettre ni pousser sans demande explicite.
+
+### Cas de référence : Foucher entre Chabanel et Louvain
+
+Ce cas contrôle l'interprétation de la réponse vérifiée le 16 septembre 2026; ce n'est pas une valeur par défaut à appliquer aux prochaines réponses.
+
+- H = `01/07/2026`, I = `31/10/2026` : `startDate: "2026-07-01"`, `endDate: "2026-10-31"`. M indique une fin octobre estimée; conserver cette réserve sans effacer les dates ni bloquer le signalement pour absence de confirmation officielle.
+- E + J + M : deux impacts, fermeture complète du lundi au vendredi de `07:00` à `19:00`, circulation possible hors de ces jours/heures; stationnement interdit tous les jours en tout temps pendant la période déclarée.
+- F reste `Non applicable`. G = `12/09/2026` est la date d'observation, pas le début des travaux. K = `Observation sur place`; L vide ne fournit aucune source justificative. N ne doit jamais figurer dans le snapshot.
+- B + C + D + M et la géobase vérifiée établissent Montréal, Ahuntsic - Cartierville, rue Foucher entre Chabanel Est et de Louvain Est : segment officiel `1040221`, `noTronconSq: 1100421`, longueur publiée `260.212` m, `LineString` exact `[[-73.647503,45.550485],[-73.650514,45.55136],[-73.650583,45.551379]]`.
+- `review.mapEligible: true`, `geometryVerified: true`, `restrictionOfficiallyVerified: false` sont compatibles. `inMap` reste faux tant que l'intégration n'est pas réellement faite. Ne pas attribuer les permis d'autres tronçons de Foucher à cette réponse.
 
 ## Other source sections
 

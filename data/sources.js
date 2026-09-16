@@ -12,6 +12,7 @@ const SOURCE_CATALOG = [
   { name: "Mobilite Montreal - Fermetures majeures", url: "https://mobilitemontreal.gouv.qc.ca/fermetures-majeures/" },
   { name: "PJCCI - Avis de travaux et chantiers", url: "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/" },
   { name: "PJCCI - Snapshot des avis actifs ou futurs", url: "data/pjcci-work-advisories-snapshot.json", dataType: "snapshot", extractedAt: "2026-09-16T22:06:15.544Z" },
+  { name: "Signalements citoyens - Snapshot du formulaire", url: "data/citizen-reports-snapshot.json", dataType: "snapshot", extractedAt: "2026-09-16T22:43:13.747Z" },
 
   // Agglomeration de Montreal
   { name: "Montreal - Carte des entraves", url: "https://services.montreal.ca/cartes/entraves/" },
@@ -195,6 +196,7 @@ const SOURCE_CATALOG = [
 
 // Sources reellement chargees ou affichees comme origine d'une entrave sur la carte.
 const MAP_SOURCE_NAMES = new Set([
+  "Signalements citoyens - Snapshot du formulaire",
   "OpenStreetMap - Fond de carte",
   "OSRM - Alignement des trajets sur le reseau routier",
   "Overpass / OpenStreetMap - Geometrie des rues nommees",
