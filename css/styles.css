@@ -169,6 +169,15 @@ h2 {
   background: #e7f2ee;
 }
 
+.site-nav a.missing-restrictions-link {
+  flex: 0 0 auto;
+  width: 90px;
+  padding: 5px 7px;
+  font-size: 0.68rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
 .site-nav a.is-current {
   border-color: var(--accent);
   background: var(--accent);

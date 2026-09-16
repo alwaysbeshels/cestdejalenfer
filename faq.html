@@ -15,7 +15,7 @@
   <link rel="icon" href="favicon.ico" sizes="48x48">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="favicon-192.png">
-  <link rel="stylesheet" href="css/faq.css?v=20260915-mobile-search">
+  <link rel="stylesheet" href="css/faq.css?v=20260915-missing-restrictions">
 </head>
 <body data-document-title="document.faqTitle">
   <main class="faq-shell">
@@ -28,6 +28,7 @@
       <nav class="faq-nav" data-i18n-aria-label="nav.main">
         <a href="index.html" data-language-page="map" data-i18n="nav.map"></a>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8TiTOGHRjDw36fzIT3DS9ayLfqEcNaE6c_q2BYldNxhgddA/viewform" target="_blank" rel="noreferrer" data-i18n="nav.comments"></a>
+        <a class="missing-restrictions-link" href="https://forms.gle/TKL6WkmPsWPmAUMV8" target="_blank" rel="noreferrer" data-i18n="nav.missing" data-i18n-aria-label="nav.missingLabel"></a>
         <button id="languageToggle" class="language-toggle" type="button" aria-label="Passer à l'anglais">EN</button>
       </nav>
       <nav class="faq-section-nav" data-i18n-aria-label="faq.sectionNav">
@@ -62,6 +63,11 @@
         <details>
           <summary data-i18n="faq.q.aboutFeedback"></summary>
           <p><span data-i18n="faq.a.aboutFeedback"></span> <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8TiTOGHRjDw36fzIT3DS9ayLfqEcNaE6c_q2BYldNxhgddA/viewform" target="_blank" rel="noreferrer" data-i18n="faq.feedbackLink"></a>.</p>
+        </details>
+        <details id="missing-restrictions">
+          <summary data-i18n="faq.q.missing"></summary>
+          <p data-i18n="faq.a.missing"></p>
+          <p><a href="https://forms.gle/TKL6WkmPsWPmAUMV8" target="_blank" rel="noreferrer" data-i18n="faq.missingLink"></a></p>
         </details>
       </div>
     </section>
@@ -170,8 +176,8 @@
     </footer>
   </main>
   <button id="backToTop" class="back-to-top" type="button" data-i18n-aria-label="faq.top" hidden>↑</button>
-  <script src="languages/fr.js?v=20260915-sections"></script>
-  <script src="languages/en.js?v=20260915-sections"></script>
+  <script src="languages/fr.js?v=20260915-missing-restrictions"></script>
+  <script src="languages/en.js?v=20260915-missing-restrictions"></script>
   <script src="js/i18n.js?v=2"></script>
   <script src="data/sources.js"></script>
   <script src="js/faq.js?v=2"></script>
