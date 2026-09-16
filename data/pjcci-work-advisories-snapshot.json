@@ -1,10 +1,10 @@
 {
-  "extractedAt": "2026-09-15T22:51:37.227Z",
+  "extractedAt": "2026-09-16T22:06:15.544Z",
   "sourceUrl": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
   "interactiveMapUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
-  "asOf": "2026-09-15",
-  "total": 9,
-  "parentNoticeTotal": 2,
+  "asOf": "2026-09-16",
+  "total": 10,
+  "parentNoticeTotal": 3,
   "interactiveMapEntraves": {
     "34": {
       "id": 1062,
@@ -129,9 +129,9 @@
   },
   "validation": {
     "geometryPolicy": "Verified named road/bridge lines only; official map points are references, never fallback display geometry.",
-    "sourceArchiveCount": 153,
-    "archiveAvis": 2,
-    "excludedHistoricalParents": 151,
+    "sourceArchiveCount": 154,
+    "archiveAvis": 3,
+    "excludedHistoricalParents": 150,
     "excludedHistoricalSections": [
       "Pont Clement: Du 3 au 15 mars",
       "Voies surelevees: Du 6 mars jusqu’a mai 2026"
@@ -146,7 +146,8 @@
       "gaetan-laberge-vers-sud",
       "gaetan-laberge-vers-centre-ville",
       "voies-victoria-clement-vers-sud",
-      "voies-victoria-clement-vers-centre-ville"
+      "voies-victoria-clement-vers-centre-ville",
+      "bonaventure-uci-vers-centre-ville"
     ],
     "rejectedPreviousGeometry": [
       {
@@ -166,7 +167,19 @@
       "Pont Clement archive date: autumn 2026; map end date: November 30, 2026. Both retained with provenance.",
       "Map key 65 explicitly describes the southbound impact; the downtown bullet is established by the archive only.",
       "Map keys 64 and 66 share official id 1082; distinct keys preserved.",
-      "Approximate annual/seasonal schedules are not converted to invented January 1 or October 31 dates."
+      "Approximate annual/seasonal schedules are not converted to invented January 1 or October 31 dates.",
+      "The September 19-22 Bonaventure downtown closure is published as 06:00-17:00 daily; no matching map entry or verified full closure line was established. It remains un-geometrized."
+    ],
+    "activeFutureArchiveParents": 4,
+    "excludedNonAutomobileParents": [
+      {
+        "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/mobilite-active-fermeture-complete-de-jour-de-lestacade-du-19-au-21-septembre-mondiaux-de-cyclisme/",
+        "title": "Mobilité active | Fermetures complètes de jour de l&#039;Estacade, du 19 au 21 septembre (mondiaux de cyclisme)",
+        "reason": "Published impacts concern cyclists, pedestrians and active-mobility facilities only."
+      }
+    ],
+    "archiveParentsWithoutMapMatch": [
+      "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-de-jour-de-lautoroute-direction-centre-ville-du-19-au-22-septembre-mondiaux-de-cyclisme/"
     ]
   },
   "notices": [
@@ -763,6 +776,51 @@
         45.482822
       ],
       "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/"
+    },
+    {
+      "dateAffichageTravaux": "Du 16 au 23 septembre 2026",
+      "anneDebut": "2026-09-16T12:03:00.000000Z",
+      "anneFin": "2026-09-23T12:03:00.000000Z",
+      "datedebut": "2026-09-16 08:03:00",
+      "datefin": "2026-09-23 08:03:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "En raison de la tenue des mondiaux de cyclisme à Montréal&#160;:\n\nSamedi 19 septembre&#160;: entre 6 h et 17 h\nDimanche 20 septembre&#160;: entre 6 h et 17 h\nLundi 21 septembre&#160;: entre 6 h et 17 h\nMardi 22 septembre&#160;: entre 6 h et 17 h\n\n\n\tFermeture de l&#8217;autoroute Bonaventure en direction du centre-ville\n\tDétour via la sortie 61 &#8220;Av. Atwater Ave.&#8221; ou la route 136 est &#8220;Montréal centre-ville&#8221;\n\n\n \n\nUtilisez le transport en commun pour vous déplacer sur l&#8217;île de Montréal durant toute la durée des mondiaux de cyclisme, soit du 19 au 27 septembre.\n\nPour planifier vos déplacements consultez le site Internet Montréal2026.org",
+      "title": "A-Bonaventure | Fermetures de jour de l&#039;autoroute, direction centre-ville, du 19 au 22 septembre (mondiaux de cyclisme)",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-de-jour-de-lautoroute-direction-centre-ville-du-19-au-22-septembre-mondiaux-de-cyclisme/",
+      "img": "/site/assets/files/18750/crt_ab_fc_uci_fr_2026-09-11-1.-small.jpg",
+      "tags": [
+        "Secteur Bonaventure"
+      ],
+      "tagId": [
+        1155
+      ],
+      "segmentId": "bonaventure-uci-vers-centre-ville",
+      "segmentTitle": "A-Bonaventure | Fermetures de jour de l'autoroute, direction centre-ville, du 19 au 22 septembre (mondiaux de cyclisme)",
+      "segmentStreets": "autoroute Bonaventure",
+      "segmentImpact": "Fermeture de l’autoroute Bonaventure en direction du centre-ville",
+      "segmentDirection": "en direction du centre-ville",
+      "segmentDateStart": "2026-09-19",
+      "segmentDateEnd": "2026-09-22",
+      "segmentDateText": "Samedi 19 septembre : entre 6 h et 17 h\nDimanche 20 septembre : entre 6 h et 17 h\nLundi 21 septembre : entre 6 h et 17 h\nMardi 22 septembre : entre 6 h et 17 h",
+      "segmentComplement": "Détour via la sortie 61 “Av. Atwater Ave.” ou la route 136 est “Montréal centre-ville”",
+      "detour": "Détour via la sortie 61 “Av. Atwater Ave.” ou la route 136 est “Montréal centre-ville”",
+      "noGeometry": true,
+      "geometry": null,
+      "geometryNote": "Aucun trace verifie ni entree correspondante dans la carte interactive PJCCI; aucune geometrie de remplacement n'est inventee.",
+      "sourceUrl": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-de-jour-de-lautoroute-direction-centre-ville-du-19-au-22-septembre-mondiaux-de-cyclisme/",
+      "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
+      "analysis": {
+        "sections": [
+          "A-Bonaventure | Fermetures de jour de l'autoroute, direction centre-ville, du 19 au 22 septembre (mondiaux de cyclisme)"
+        ],
+        "bullets": [
+          "Fermeture de l’autoroute Bonaventure en direction du centre-ville"
+        ],
+        "sourceText": "En raison de la tenue des mondiaux de cyclisme à Montréal :\n\nSamedi 19 septembre : entre 6 h et 17 h\nDimanche 20 septembre : entre 6 h et 17 h\nLundi 21 septembre : entre 6 h et 17 h\nMardi 22 septembre : entre 6 h et 17 h\n\n\n\tFermeture de l’autoroute Bonaventure en direction du centre-ville\n\tDétour via la sortie 61 “Av. Atwater Ave.” ou la route 136 est “Montréal centre-ville”\n\n\n \n\nUtilisez le transport en commun pour vous déplacer sur l’île de Montréal durant toute la durée des mondiaux de cyclisme, soit du 19 au 27 septembre.\n\nPour planifier vos déplacements consultez le site Internet Montréal2026.org",
+        "directionSourceField": "archive description/title",
+        "datePolicy": "Exact closure dates and daily hours from the archive description; parent publication dates preserved separately.",
+        "mapMatch": "No matching entry in the four published interactive map entries."
+      }
     }
   ]
 }

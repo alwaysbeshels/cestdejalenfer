@@ -18,6 +18,10 @@ npm run serve
 
 `npm run serve` démarre le même serveur statique local (`python -m http.server 5500`) sur `http://localhost:5500`. Le dossier `node_modules/` n'est jamais publié ni requis en production; il est exclu par `.gitignore`.
 
+### Date de vérification des snapshots
+
+Lors de chaque mise à jour demandée des snapshots, `extractedAt` indique la dernière vérification réussie de la source, même si aucune nouvelle donnée admissible n'est trouvée. Les métadonnées de fraîcheur correspondantes dans `data/sources.js` doivent porter la même date. Si les données sont inchangées, seuls ces horodatages sont actualisés : les enregistrements, géométries et dates publiées par les organismes restent intacts. Une consultation échouée, partielle ou limitée au cache local ne fait pas avancer la date. Cette date ne signifie ni que la source vient de publier de nouvelles données, ni que les géométries ont été reconstruites.
+
 ### Snapshot UCI 2026
 
 Pour conserver une copie locale de toutes les restrictions, fermetures et segments de parcours publies dans la [carte UCI de Montreal](https://services.montreal.ca/cartes/uci), executez:

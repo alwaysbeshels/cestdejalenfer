@@ -66,6 +66,7 @@ You are the maintenance engineer for the static web application **Carte des entr
 
 ## Data Accuracy Rules
 
+- On every requested snapshot refresh, update each successfully checked snapshot's `extractedAt` to the actual ISO-8601 verification time, even if no eligible data changed. Synchronize all matching freshness entries in `data/sources.js`. For an unchanged snapshot, preserve records, geometries and source-published dates exactly; only verification metadata changes. Never advance the date after a failed, partial or local-cache-only check. Report changed, checked-unchanged and failed/not-checked snapshots separately. Follow `.github/agents/snapshots-municipaux.agent.md` for the detailed workflow.
 - Prioritize the official source geometry. Never replace published route geometry with an approximate point, guessed route, or OSRM route when official geometry is available.
 - Colors represent traffic impact, not source ownership:
   - `critical`: `#ff1744`, road closed.

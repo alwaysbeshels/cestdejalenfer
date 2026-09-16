@@ -1,5 +1,5 @@
 {
-  "extractedAt": "2026-09-09T21:40:59.000Z",
+  "extractedAt": "2026-09-16T21:58:38.330Z",
   "sourceApi": "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=ef2a8162-0644-47e7-bd03-bea33f14a5d2&limit=100",
   "geometrySource": "OpenStreetMap (Overpass) - rue nommee entre limites publiees, validee par LONGUEUR_TRONCON",
   "validatedLineCount": 7,

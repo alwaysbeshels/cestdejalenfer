@@ -24,6 +24,13 @@ You maintain static official roadwork snapshots for municipalities and infrastru
 - Use per-source failure isolation. One source failure must not discard snapshots or records from other municipalities or infrastructure authorities.
 - Never commit, push, add secrets, add a backend, or install dependencies unless explicitly requested by the user.
 
+## Snapshot freshness on every requested refresh
+
+- For every snapshot in the requested scope, `extractedAt` records the latest successful source verification, even when there are no new records or the eligible data is unchanged. Use the actual ISO-8601 verification time, not a guessed date.
+- Retrieve and validate the required source responses before advancing the timestamp. An HTTP success alone, a local-cache-only run (including `--reuse-existing`), or a partial/failed source check does not establish a successful verification. Preserve the previous timestamp and report the limitation in those cases; continue with other sources independently.
+- When the eligible data is unchanged, update only the snapshot-level timestamp and corresponding freshness metadata in `data/sources.js` (all entries pointing to that snapshot). Preserve the records, geometries, source-published dates and source modification timestamps exactly. Do not reconstruct geometry merely to refresh a date.
+- Verify that the snapshot and catalog timestamps agree and that records are unchanged for a metadata-only refresh. Report each snapshot as changed, checked with no changes, or failed/not checked, with its last successful verification time. This time does not mean the source published new data or that every stored geometry was rebuilt.
+
 ## Montreal pedestrian-street snapshot policy
 
 For `data/montreal-pedestrian-snapshot.json`, the source is the official Montreal pedestrian-street dataset published through Données Québec / Montréal CKAN. This snapshot serves a driving-focused map, so retain only records that represent an automobile road becoming pedestrian-only temporarily:
@@ -37,7 +44,7 @@ For `data/montreal-pedestrian-snapshot.json`, the source is the official Montrea
 - The seven curated temporary street closures stored in `data/montreal-pedestrian-curated.json` are merged into the same final snapshot. Their source metadata and exact supplied geometries are authoritative and must not be replaced by OSM or geobase reconstruction.
 - Pedestrian refreshes are append-only: compare official project IDs with the existing snapshot before any geocoding or Overpass call. Preserve existing records and curated geometries exactly; resolve and append only genuinely new temporary automobile-road restrictions. Do not rebuild, replace, or remove existing pedestrian records without an explicit request.
 - CKAN pedestrian latitude/longitude values are known to be unreliable. For new records, locate the named street in its published borough and verify both published intersections against named-road geometry. Never use the raw CKAN point as an authoritative location or as a fallback when resolution fails. Leave unresolved additions out and report them for verification.
-- If no new eligible project exists, leave the pedestrian snapshot and its extraction timestamp unchanged. A source check alone is not a new geometry extraction.
+- If no new eligible project exists after a successful official source check, preserve every pedestrian record and geometry exactly, but advance the snapshot's `extractedAt` and matching catalog freshness metadata to the verification time. Do not geocode or rebuild existing geometry for this metadata-only refresh.
 - `js/app.js` must load the final snapshot only. It must not contain the pedestrian records or issue CKAN, geocoder, or Overpass requests to build this snapshot at page load.
 
 The generator is `tools/build-montreal-pedestrian-snapshot.mjs`. Its output must report the number of CKAN records received, records retained after the temporary-automobile filter, curated records merged, and final `LineString` versus `Point` counts.
