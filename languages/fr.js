@@ -15,7 +15,7 @@ window.TRANSLATIONS.fr = {
   "faq.a.missing": "Vous pouvez signaler une entrave manquante dans le Grand Montréal à l'aide du formulaire dédié. Précisez la municipalité, la rue ou la route, l'emplacement exact et l'effet sur la circulation automobile. Ajoutez les dates, les horaires et un lien vers un avis officiel si vous les connaissez. Les signalements sont vérifiés avant tout ajout : l'envoi du formulaire ne garantit pas une publication ni une réponse. Ce formulaire n'est pas un service d'urgence. Ne le remplissez pas en conduisant.",
   "faq.missingLink": "Signaler une entrave manquante",
   "map.region": "Région métropolitaine de Montréal",
-  "map.title": "Carte des entraves",
+  "map.title": "Carte des entraves routières",
   "map.intro": "Carte de conduite pour repérer les rues fermées, les voies retranchées, les restrictions UCI et les secteurs où les détours sont probables.",
   "map.interactiveLabel": "Carte interactive de Montréal",
   "map.instruction": "Cliquez sur une ligne colorée pour voir les détails des travaux.",
