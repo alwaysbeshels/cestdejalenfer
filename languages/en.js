@@ -3,7 +3,7 @@ window.TRANSLATIONS.en = {
   "language.name": "English",
   "language.switch": "FR",
   "language.switchLabel": "Switch to French",
-  "document.mapTitle": "Road restrictions map - Montreal",
+  "document.mapTitle": "Road restrictions map - Greater Montreal",
   "document.faqTitle": "Frequently asked questions | Road restrictions map",
   "nav.main": "Main navigation",
   "nav.map": "Map",

@@ -3,7 +3,7 @@ window.TRANSLATIONS.fr = {
   "language.name": "Français",
   "language.switch": "EN",
   "language.switchLabel": "Passer à l'anglais",
-  "document.mapTitle": "Carte des entraves - Montréal",
+  "document.mapTitle": "Carte des entraves routières - Grand Montréal",
   "document.faqTitle": "Questions fréquentes | Carte des entraves",
   "nav.main": "Navigation principale",
   "nav.map": "Carte",
