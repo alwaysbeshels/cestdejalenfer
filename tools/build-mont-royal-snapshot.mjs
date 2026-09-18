@@ -1,19 +1,19 @@
 #!/usr/bin/env node
-// Convertit la capture live de la carte officielle de Mont-Royal (tools/mont-royal-raw-capture.json,
-// reponse POST /public/get_projects capturee en Chromium reel) en snapshot statique.
 // Aucune geometrie n'est inventee: les coordonnees viennent de entraves.entraves[].selected.path[].geometry.paths
 // (EPSG:3857, converties en WGS84). Politique active/future: endDate >= date d'extraction.
 
 import { readFile, writeFile } from "node:fs/promises";
+import { isDeepStrictEqual } from "node:util";
+import assert from "node:assert/strict";
+import { chromium } from "playwright";
 
-const CAPTURE = "tools/mont-royal-raw-capture.json";
 const OUT = "data/mont-royal-snapshot.json";
 const SOURCE_URL = "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr";
 
 function toWgs84([x, y]) {
   const longitude = (x / 6378137) * (180 / Math.PI);
   const latitude = (Math.atan(Math.exp(y / 6378137)) * 360) / Math.PI - 90;
-  return [Number(longitude.toFixed(6)), Number(latitude.toFixed(6))];
+  return [longitude, latitude];
 }
 
 function stripHtml(value) {
@@ -31,21 +31,51 @@ function toDateOnly(ms) {
 
 function main() {
   return (async () => {
-    const capture = JSON.parse(await readFile(CAPTURE, "utf8"));
-    const projects = capture.data || [];
+    const previous = JSON.parse(await readFile(OUT, "utf8"));
+    const browser = await chromium.launch({ headless: true });
+    let capture;
+    let request;
+    try {
+      const page = await browser.newPage();
+      const pending = page.waitForResponse((response) =>
+        response.url() === "https://montroyal.opatech.ca/public/get_projects"
+        && response.request().method() === "POST" && response.ok(), { timeout: 90000 });
+      const responses = await Promise.all([
+        pending,
+        page.goto(SOURCE_URL, { waitUntil: "domcontentloaded", timeout: 90000 })
+      ]);
+      capture = await responses[0].json();
+      request = responses[0].request().postDataJSON();
+      assert(capture.success);
+      assert(Array.isArray(capture.data));
+      assert.equal(request.city, "montroyal");
+    } finally {
+      await browser.close();
+    }
+    const projects = capture.data;
     const extractedAt = new Date().toISOString();
     const today = extractedAt.slice(0, 10);
 
     const records = [];
+    const excluded = [];
     for (const project of projects) {
       const info = project.data?.informations;
       const entravesBlock = project.data?.entraves;
-      if (!info || !entravesBlock) continue;
+      assert(info && entravesBlock && project.data.uuid);
 
       const [startMs, endMs] = entravesBlock.date || [];
       const startDate = toDateOnly(startMs);
       const endDate = toDateOnly(endMs);
-      if (endDate && endDate < today) continue; // politique active/future uniquement
+      if (!endDate || endDate < today) {
+        excluded.push({ id: project.data.uuid, reason: endDate ? "expired" : "no-published-end-date-or-current-status" });
+        continue;
+      }
+
+      const existing = previous.records.find((record) => record.id === project.data.uuid);
+      if (existing && isDeepStrictEqual(existing.publishedProject, project)) {
+        records.push(existing);
+        continue;
+      }
 
       const entraves = entravesBlock.entraves || [];
       const streets = entraves.map((e) => e.name).filter(Boolean).join(" / ") || "Rue non publiee";
@@ -61,7 +91,10 @@ function main() {
           }
         }
       }
-      if (lines.length === 0) continue; // pas de geometrie publiee: on ne fabrique rien
+      if (lines.length === 0) {
+        excluded.push({ id: project.data.uuid, reason: "no-published-geometry" });
+        continue;
+      }
 
       const trafficLabels = (info.trafficImpact?.value || [])
         .filter((v) => v.status)
@@ -73,7 +106,7 @@ function main() {
         title: info.name || "",
         startDate,
         endDate,
-        impact: stripHtml(info.comment) || stripHtml(info.notes) || "",
+        impact: [stripHtml(info.comment), stripHtml(info.notes)].filter(Boolean).join("\n"),
         trafficLabels,
         streets,
         direction: "Direction non publiée.",
@@ -81,7 +114,13 @@ function main() {
         geometry: lines.length === 1
           ? { type: "LineString", coordinates: lines[0] }
           : { type: "MultiLineString", coordinates: lines },
-        sourceUrl: SOURCE_URL
+        sourceUrl: SOURCE_URL,
+        publishedProject: project,
+        geometrySource: {
+          crs: "EPSG:3857",
+          field: "data.entraves.entraves[].selected.path[].geometry.paths",
+          outputCrs: "EPSG:4326"
+        }
       });
     }
 
@@ -89,9 +128,21 @@ function main() {
       extractedAt,
       sourceUrl: SOURCE_URL,
       municipality: "Ville de Mont-Royal",
-      records
+      records,
+      extraction: {
+        ...previous.extraction,
+        method: "Chromium: successful same-origin POST emitted by the official public map",
+        endpoint: "https://montroyal.opatech.ca/public/get_projects",
+        request,
+        sourceRecordCount: projects.length,
+        retainedRecordCount: records.length,
+        excluded
+      }
     };
-    await writeFile(OUT, JSON.stringify(snapshot, null, 2), "utf8");
+    const previousById = new Map(previous.records.map((record) => [record.id, record]));
+    const unchanged = previous.records.length === records.length
+      && records.every((record) => isDeepStrictEqual(record, previousById.get(record.id)));
+    await writeFile(OUT, JSON.stringify(unchanged ? { ...previous, extractedAt } : snapshot, null, 2), "utf8");
     console.log(`Projets captures: ${projects.length} | retenus (actifs/futurs, geometrie publiee): ${records.length}`);
     console.log(`Saved ${OUT}`);
   })();

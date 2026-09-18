@@ -3474,8 +3474,15 @@ function dedupeClosures(closures) {
 }
 
 function closureDateRangeHtml(closure) {
+  const hasStart = Boolean(closure.startDate);
+  const hasEnd = Boolean(closure.endDate);
+  if (!hasStart && !hasEnd) return t("popup.unknownPeriod");
   const start = `${formatDate(closure.startDate)}${closure.startTime ? ` ${t("popup.at")} ${escapeHtml(closure.startTime)}` : ""}`;
   const end = `${formatDate(closure.endDate)}${closure.endTime ? ` ${t("popup.at")} ${escapeHtml(closure.endTime)}` : ""}`;
+  if (!hasStart || !hasEnd) {
+    const knownDate = hasStart ? `${t("popup.startDate")}: ${start}` : `${t("popup.endDate")}: ${end}`;
+    return `${t("popup.unknownPeriod")} (${knownDate})`;
+  }
   return `${start} ${t("popup.to")} ${end}`;
 }
 

@@ -1,13 +1,13 @@
 {
-  "extractedAt": "2026-09-16T22:43:13.747Z",
+  "extractedAt": "2026-09-18T14:21:58.965Z",
   "source": "Signalement citoyen transmis via notre formulaire",
   "sourceKind": "citizen-report",
   "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
-  "sourceDescription": "Information transmise par une personne ayant observé l'entrave sur place. Il ne s'agit pas d'un avis officiel de la municipalité.",
+  "sourceDescription": "Informations déclarées via le formulaire : observations sur place, consultation d'un avis officiel ou d'un site municipal. L'origine déclarée est conservée par réponse; ces signalements ne sont pas des permis municipaux confirmés.",
   "extractionMethod": "Lecture de la réponse Google Forms via les données structurées Google Sheets; analyse manuelle de toutes les colonnes, y compris les détails supplémentaires.",
-  "sourceRecordCount": 1,
-  "retainedRecordCount": 1,
-  "impactCount": 2,
+  "sourceRecordCount": 7,
+  "retainedRecordCount": 8,
+  "impactCount": 9,
   "inMap": true,
   "privacy": {
     "contactInformationIncluded": false,
@@ -18,7 +18,10 @@
     "Snapshot statique de déclarations citoyennes; la vérification du formulaire ne confirme pas les conditions réelles de circulation.",
     "La géobase confirme le tracé de la rue, pas l'existence de la fermeture ni ses horaires.",
     "Les dates normalisées reprennent les dates saisies par la personne. Le texte libre précise que les dates exactes n'ont pas été communiquées et que la fin octobre est estimée; cette réserve est conservée sans bloquer le signalement.",
-    "Ce fichier est chargé par l'application. Les impacts et leurs horaires sont traités séparément; les filtres proposent des journées et des périodes jour/nuit, pas une sélection d'heure précise. Les popups affichent les horaires exacts, les réserves et l'état selon l'horaire déclaré au moment de leur ouverture."
+    "Ce fichier est chargé par l'application. Les impacts et leurs horaires sont traités séparément; les filtres proposent des journées et des périodes jour/nuit, pas une sélection d'heure précise. Les popups affichent les horaires exacts, les réserves et l'état selon l'horaire déclaré au moment de leur ouverture.",
+    "Sept réponses conservées dans huit fiches : une réponse LaSalle décrit deux tronçons distincts, reliés par submissionRef. Aucune réponse supprimée ou fusionnée.",
+    "Cinq nouvelles réponses restent hors carte : quatre ne permettent pas d’établir un maintien actuel sans dates; celle de LaSalle Gordon–2e Avenue a des dates valides mais aucun horaire exploitable.",
+    "Les deux tronçons LaSalle Rielle–Gordon et Rielle–Willibrord sont déclarés 24/24 depuis le 22 juin 2026, sans date de fin. Leur maintien réel n’est pas confirmé; la géobase vérifie seulement leur localisation."
   ],
   "records": [
     {
@@ -31,7 +34,10 @@
       "borough": "Ahuntsic - Cartierville",
       "streets": "Rue Foucher, entre la rue Chabanel Est et la rue de Louvain Est",
       "roadType": "street",
-      "limits": ["rue Chabanel Est", "rue de Louvain Est"],
+      "limits": [
+        "rue Chabanel Est",
+        "rue de Louvain Est"
+      ],
       "direction": "Non applicable",
       "responsible": null,
       "reference": null,
@@ -52,7 +58,10 @@
         "publishedText": "Depuis juillet, prévu jusqu'à octobre 2026, mais aucune date précise encore nous a été donnée. Selon l'avancement des travaux, ce sera jusqu'à la fin octobre selon moi.",
         "note": "La période du signalement reprend les dates saisies du 1er juillet au 31 octobre 2026. Ce sont des dates déclarées, pas des échéances officielles confirmées; la fin octobre reste une estimation selon le commentaire."
       },
-      "trafficLabels": ["Route complètement fermée", "Stationnement interdit"],
+      "trafficLabels": [
+        "Route complètement fermée",
+        "Stationnement interdit"
+      ],
       "description": "Entrave à ajouter dans le quartier Ahuntsic : fermeture complète de la rue Foucher entre Chabanel et Louvain du lundi au vendredi de 7h à 19h. Depuis juillet, prévu jusqu'à octobre 2026, mais aucune date précise encore nous a été donnée. Selon l'avancement des travaux, ce sera jusqu'à la fin octobre selon moi.\n\nEn dehors de ces jours/heures-là, nous pouvons y circuler. \n\nToutefois, stationnement interdit en tout temps (même si des gens s'y stationnent quand même.... Mais il y a genre 5 places plausibles sans entraver la rue donc... Bof ahah)",
       "impacts": [
         {
@@ -63,7 +72,13 @@
           "impact": "fermeture complète de la rue Foucher entre Chabanel et Louvain du lundi au vendredi de 7h à 19h.",
           "direction": "Non applicable",
           "schedule": {
-            "days": ["Mon", "Tue", "Wed", "Thu", "Fri"],
+            "days": [
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri"
+            ],
             "allDay": false,
             "startTime": "07:00",
             "endTime": "19:00",
@@ -72,7 +87,9 @@
             "reportedText": " lundi au vendredi de 7h à 19h",
             "outsideScheduleText": "En dehors de ces jours/heures-là, nous pouvons y circuler."
           },
-          "periods": ["day"],
+          "periods": [
+            "day"
+          ],
           "geometryRef": "citizen-foucher-chabanel-louvain-20260916-182940"
         },
         {
@@ -83,7 +100,15 @@
           "impact": "stationnement interdit en tout temps",
           "direction": "Non applicable",
           "schedule": {
-            "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            "days": [
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
+              "Sun"
+            ],
             "allDay": true,
             "startTime": null,
             "endTime": null,
@@ -91,7 +116,10 @@
             "timeZoneBasis": "Heure locale du lieu signalé à Montréal.",
             "reportedText": "stationnement interdit en tout temps"
           },
-          "periods": ["day", "night"],
+          "periods": [
+            "day",
+            "night"
+          ],
           "geometryRef": "citizen-foucher-chabanel-louvain-20260916-182940"
         }
       ],
@@ -99,9 +127,18 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [-73.647503, 45.550485],
-          [-73.650514, 45.55136],
-          [-73.650583, 45.551379]
+          [
+            -73.647503,
+            45.550485
+          ],
+          [
+            -73.650514,
+            45.55136
+          ],
+          [
+            -73.650583,
+            45.551379
+          ]
         ]
       },
       "geometrySource": {
@@ -147,6 +184,900 @@
         "Avez-vous un lien vers une source ou l’emplacement?": null,
         "Quels détails supplémentaires pourraient nous aider?": "Entrave à ajouter dans le quartier Ahuntsic : fermeture complète de la rue Foucher entre Chabanel et Louvain du lundi au vendredi de 7h à 19h. Depuis juillet, prévu jusqu'à octobre 2026, mais aucune date précise encore nous a été donnée. Selon l'avancement des travaux, ce sera jusqu'à la fin octobre selon moi.\n\nEn dehors de ces jours/heures-là, nous pouvons y circuler. \n\nToutefois, stationnement interdit en tout temps (même si des gens s'y stationnent quand même.... Mais il y a genre 5 places plausibles sans entraver la rue donc... Bof ahah)"
       }
+    },
+    {
+      "id": "citizen-saint-hubert-saint-gregoire-20260917-125122",
+      "submissionRef": "citizen-response-20260917-125122",
+      "title": "st-hubert : fermeture signalée",
+      "source": "Signalement citoyen transmis via notre formulaire",
+      "sourceKind": "citizen-report",
+      "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
+      "municipality": "Montréal",
+      "borough": null,
+      "streets": "st-hubert : st-grégoire",
+      "roadType": "street",
+      "limits": [],
+      "direction": "Nord",
+      "responsible": null,
+      "reference": null,
+      "submittedAtLocal": "2026-09-17T12:51:22",
+      "submissionTimestampRaw": "Date(2026,8,17,12,51,21)",
+      "submissionTimeZone": null,
+      "observedAt": "2026-09-16",
+      "informationOrigin": "Observation sur place",
+      "supportingSourceUrl": null,
+      "status": "pending-current-status-clarification",
+      "statusSource": "Fermeture déclarée lors de l'observation ou de la consultation; aucune durée ou formulation explicite ne permet de confirmer son maintien à la date de vérification.",
+      "startDate": null,
+      "endDate": null,
+      "reportedDates": {
+        "enteredStartDate": null,
+        "enteredEndDate": null,
+        "startPrecision": "not-reported",
+        "endPrecision": "not-reported",
+        "publishedText": null,
+        "note": "Dates saisies conservées comme déclarations; aucune date manquante n'est remplacée par la date de soumission ou d'observation."
+      },
+      "trafficLabels": [
+        "Route complètement fermée"
+      ],
+      "description": null,
+      "impacts": [
+        {
+          "id": "citizen-saint-hubert-saint-gregoire-20260917-125122-road-closure",
+          "type": "road-closure",
+          "severity": "critical",
+          "trafficLabel": "Route complètement fermée",
+          "impact": "Route complètement fermée",
+          "direction": "Nord",
+          "schedule": {
+            "days": [],
+            "allDay": false,
+            "startTime": null,
+            "endTime": null,
+            "timeZone": null,
+            "timeZoneBasis": null,
+            "reportedText": "18h00",
+            "limitation": "Jours ou plage horaire indéterminés; une cellule vide ou une heure isolée ne signifie pas une fermeture permanente."
+          },
+          "periods": [],
+          "geometryRef": "citizen-saint-hubert-saint-gregoire-20260917-125122"
+        }
+      ],
+      "geometryStatus": "not-resolved-pending-review",
+      "geometry": null,
+      "geometrySource": null,
+      "review": {
+        "status": "pending-current-status-clarification",
+        "mapEligible": false,
+        "restrictionOfficiallyVerified": false,
+        "geometryVerified": false,
+        "warnings": [
+          "L'affichage de l'horodatage Google Sheets diffère d'une seconde de sa valeur brute; l'heure affichée est conservée sans fuseau ni conversion UTC.",
+          "Aucune date de fin saisie; la date d'observation ou de soumission ne prouve pas à elle seule que l'entrave est encore en cours.",
+          "Conservé pour revue, non affiché : période actuelle ou horaire insuffisamment établi. Aucune coordonnée de repli n'est inventée.",
+          "18h00 est une heure isolée, sans jours ni fin de plage; Saint-Grégoire est la seule limite indiquée."
+        ]
+      },
+      "reportedFields": {
+        "Timestamp": "17/09/2026 12:51:22",
+        "Dans quelle municipalité se trouve l’entrave?": "Montreal",
+        "Quelle rue, route, autoroute ou quel pont est touché?": "st-hubert",
+        "Où exactement se situe l’entrave?": "st-grégoire",
+        "Quel est l’effet sur la circulation?": "Route complètement fermée",
+        "Quelle direction est touchée?": "Nord",
+        "Quand avez-vous constaté l’entrave ou consulté l’avis?": "16/09/2026",
+        "Quelle est la date de début annoncée?": null,
+        "Quelle est la date de fin annoncée?": null,
+        "Quels jours et quelles heures sont concernés?": "18h00",
+        "D’où provient l’information?": "Observation sur place",
+        "Avez-vous un lien vers une source ou l’emplacement?": null,
+        "Quels détails supplémentaires pourraient nous aider?": null
+      }
+    },
+    {
+      "id": "citizen-lasalle-rielle-gordon-20260917-154805",
+      "submissionRef": "citizen-response-20260917-154805",
+      "title": "Boulevard LaSalle, entre rue Rielle et rue Gordon : fermeture complète signalée",
+      "source": "Signalement citoyen transmis via notre formulaire",
+      "sourceKind": "citizen-report",
+      "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
+      "municipality": "Montréal",
+      "borough": "Verdun",
+      "streets": "Boulevard LaSalle, entre rue Rielle et rue Gordon",
+      "roadType": "street",
+      "limits": [
+        "rue Rielle",
+        "rue Gordon"
+      ],
+      "direction": "Les deux",
+      "responsible": null,
+      "reference": null,
+      "submittedAtLocal": "2026-09-17T15:48:05",
+      "submissionTimestampRaw": "Date(2026,8,17,15,48,4)",
+      "submissionTimeZone": null,
+      "observedAt": "2026-09-17",
+      "informationOrigin": "Avis officiel",
+      "supportingSourceUrl": null,
+      "status": "reported-active",
+      "statusSource": "La localisation décrit deux restrictions présentes, avec un horaire déclaré 24/24 et un début saisi au 22 juin 2026. Aucune fin publiée ni confirmation indépendante du maintien de ces restrictions.",
+      "startDate": "2026-06-22",
+      "endDate": null,
+      "reportedDates": {
+        "enteredStartDate": "2026-06-22",
+        "enteredEndDate": null,
+        "startPrecision": "respondent-entered-date",
+        "endPrecision": "not-reported",
+        "publishedText": null,
+        "note": "Dates saisies conservées comme déclarations; aucune date manquante n'est remplacée par la date de soumission ou d'observation."
+      },
+      "trafficLabels": [
+        "Route complètement fermée"
+      ],
+      "description": null,
+      "impacts": [
+        {
+          "id": "citizen-lasalle-rielle-gordon-20260917-154805-road-closure",
+          "type": "road-closure",
+          "severity": "critical",
+          "trafficLabel": "Route complètement fermée",
+          "impact": "De Rielle à Gordon, fermeture complète.",
+          "direction": "Les deux",
+          "schedule": {
+            "days": [
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
+              "Sun"
+            ],
+            "allDay": true,
+            "startTime": null,
+            "endTime": null,
+            "timeZone": "America/Toronto",
+            "timeZoneBasis": "Heure locale du lieu vérifié à Montréal, arrondissement de Verdun.",
+            "reportedText": "24/24"
+          },
+          "periods": [
+            "day",
+            "night"
+          ],
+          "geometryRef": "citizen-lasalle-rielle-gordon-20260917-154805"
+        }
+      ],
+      "geometryStatus": "verified-official-street-segments",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.563066,
+            45.460826
+          ],
+          [
+            -73.563073,
+            45.460759
+          ],
+          [
+            -73.563151,
+            45.460022
+          ],
+          [
+            -73.563162,
+            45.459941
+          ]
+        ]
+      },
+      "geometrySource": {
+        "name": "Ville de Montréal - Géobase",
+        "url": "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal%3Ageobase&outputFormat=application%2Fjson&srsname=EPSG%3A4326&CQL_FILTER=sur+ILIKE+%27%25LaSalle%25%27",
+        "verifiedAt": "2026-09-18T14:22:27.494Z",
+        "coordinateSystem": "EPSG:4326",
+        "coordinateOrder": "longitude, latitude",
+        "segments": [
+          {
+            "segmentId": 1601305,
+            "noTronconSq": 1094464,
+            "street": "boulevard LaSalle ",
+            "from": "rue Gordon ",
+            "to": "rue Rielle ",
+            "municipalityLeft": "Montréal",
+            "municipalityRight": "Montréal",
+            "boroughLeft": "Verdun",
+            "boroughRight": "Verdun",
+            "publishedLengthMeters": 98.661,
+            "sourceStartDate": "2022-06-04T04:00:00Z"
+          }
+        ],
+        "note": "Coordonnées officielles exactes, tronçons adjacents conservés séparément. La géobase confirme le lieu, pas la restriction; l'ordre des coordonnées ne définit pas la direction déclarée."
+      },
+      "review": {
+        "status": "reviewed-citizen-report",
+        "mapEligible": true,
+        "restrictionOfficiallyVerified": false,
+        "geometryVerified": true,
+        "warnings": [
+          "L'affichage de l'horodatage Google Sheets diffère d'une seconde de sa valeur brute; l'heure affichée est conservée sans fuseau ni conversion UTC.",
+          "Aucune date de fin saisie; la date d'observation ou de soumission ne prouve pas à elle seule que l'entrave est encore en cours.",
+          "Origine déclarée : Avis officiel, mais aucun lien ni avis joint ne permet de vérifier indépendamment la restriction.",
+          "Deux fiches partagent la même submissionRef et les mêmes reportedFields; elles représentent les deux tronçons et impacts distincts de cette réponse, pas deux témoignages."
+        ]
+      },
+      "reportedFields": {
+        "Timestamp": "17/09/2026 15:48:05",
+        "Dans quelle municipalité se trouve l’entrave?": "Montreal",
+        "Quelle rue, route, autoroute ou quel pont est touché?": "Lasalle",
+        "Où exactement se situe l’entrave?": "De Rielle à Gordon, fermeture complète. De rielle à Willibrord, entrave partielle (ouvert vers l'ouest uniquement).",
+        "Quel est l’effet sur la circulation?": "Route complètement fermée",
+        "Quelle direction est touchée?": "Les deux",
+        "Quand avez-vous constaté l’entrave ou consulté l’avis?": "17/09/2026",
+        "Quelle est la date de début annoncée?": "22/06/2026",
+        "Quelle est la date de fin annoncée?": null,
+        "Quels jours et quelles heures sont concernés?": "24/24",
+        "D’où provient l’information?": "Avis officiel",
+        "Avez-vous un lien vers une source ou l’emplacement?": null,
+        "Quels détails supplémentaires pourraient nous aider?": null
+      }
+    },
+    {
+      "id": "citizen-lasalle-rielle-willibrord-20260917-154805",
+      "submissionRef": "citizen-response-20260917-154805",
+      "title": "Boulevard LaSalle, entre rue Rielle et rue Willibrord : entrave partielle signalée",
+      "source": "Signalement citoyen transmis via notre formulaire",
+      "sourceKind": "citizen-report",
+      "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
+      "municipality": "Montréal",
+      "borough": "Verdun",
+      "streets": "Boulevard LaSalle, entre rue Rielle et rue Willibrord",
+      "roadType": "street",
+      "limits": [
+        "rue Rielle",
+        "rue Willibrord"
+      ],
+      "direction": "Les deux",
+      "responsible": null,
+      "reference": null,
+      "submittedAtLocal": "2026-09-17T15:48:05",
+      "submissionTimestampRaw": "Date(2026,8,17,15,48,4)",
+      "submissionTimeZone": null,
+      "observedAt": "2026-09-17",
+      "informationOrigin": "Avis officiel",
+      "supportingSourceUrl": null,
+      "status": "reported-active",
+      "statusSource": "La localisation décrit deux restrictions présentes, avec un horaire déclaré 24/24 et un début saisi au 22 juin 2026. Aucune fin publiée ni confirmation indépendante du maintien de ces restrictions.",
+      "startDate": "2026-06-22",
+      "endDate": null,
+      "reportedDates": {
+        "enteredStartDate": "2026-06-22",
+        "enteredEndDate": null,
+        "startPrecision": "respondent-entered-date",
+        "endPrecision": "not-reported",
+        "publishedText": null,
+        "note": "Dates saisies conservées comme déclarations; aucune date manquante n'est remplacée par la date de soumission ou d'observation."
+      },
+      "trafficLabels": [
+        "Route complètement fermée"
+      ],
+      "description": null,
+      "impacts": [
+        {
+          "id": "citizen-lasalle-rielle-willibrord-20260917-154805-partial-obstruction",
+          "type": "partial-obstruction",
+          "severity": "major",
+          "trafficLabel": "Entrave partielle",
+          "impact": "De rielle à Willibrord, entrave partielle (ouvert vers l'ouest uniquement).",
+          "direction": "ouvert vers l'ouest uniquement",
+          "schedule": {
+            "days": [
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
+              "Sun"
+            ],
+            "allDay": true,
+            "startTime": null,
+            "endTime": null,
+            "timeZone": "America/Toronto",
+            "timeZoneBasis": "Heure locale du lieu vérifié à Montréal, arrondissement de Verdun.",
+            "reportedText": "24/24"
+          },
+          "periods": [
+            "day",
+            "night"
+          ],
+          "geometryRef": "citizen-lasalle-rielle-willibrord-20260917-154805"
+        }
+      ],
+      "geometryStatus": "verified-official-street-segments",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.563162,
+            45.459941
+          ],
+          [
+            -73.563169,
+            45.459888
+          ],
+          [
+            -73.563248,
+            45.459105
+          ],
+          [
+            -73.563254,
+            45.459063
+          ]
+        ]
+      },
+      "geometrySource": {
+        "name": "Ville de Montréal - Géobase",
+        "url": "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal%3Ageobase&outputFormat=application%2Fjson&srsname=EPSG%3A4326&CQL_FILTER=sur+ILIKE+%27%25LaSalle%25%27",
+        "verifiedAt": "2026-09-18T14:22:27.494Z",
+        "coordinateSystem": "EPSG:4326",
+        "coordinateOrder": "longitude, latitude",
+        "segments": [
+          {
+            "segmentId": 1601458,
+            "noTronconSq": 1094288,
+            "street": "boulevard LaSalle ",
+            "from": "rue Rielle ",
+            "to": "rue Willibrord ",
+            "municipalityLeft": "Montréal",
+            "municipalityRight": "Montréal",
+            "boroughLeft": "Verdun",
+            "boroughRight": "Verdun",
+            "publishedLengthMeters": 97.867,
+            "sourceStartDate": "2022-06-04T04:00:00Z"
+          }
+        ],
+        "note": "Coordonnées officielles exactes, tronçons adjacents conservés séparément. La géobase confirme le lieu, pas la restriction; l'ordre des coordonnées ne définit pas la direction déclarée."
+      },
+      "review": {
+        "status": "reviewed-citizen-report",
+        "mapEligible": true,
+        "restrictionOfficiallyVerified": false,
+        "geometryVerified": true,
+        "warnings": [
+          "L'affichage de l'horodatage Google Sheets diffère d'une seconde de sa valeur brute; l'heure affichée est conservée sans fuseau ni conversion UTC.",
+          "Aucune date de fin saisie; la date d'observation ou de soumission ne prouve pas à elle seule que l'entrave est encore en cours.",
+          "Origine déclarée : Avis officiel, mais aucun lien ni avis joint ne permet de vérifier indépendamment la restriction.",
+          "Deux fiches partagent la même submissionRef et les mêmes reportedFields; elles représentent les deux tronçons et impacts distincts de cette réponse, pas deux témoignages.",
+          "Le champ de direction dit « Les deux »; la localisation précise que ce tronçon reste ouvert vers l'ouest uniquement. Cette précision propre au tronçon est conservée dans l'impact."
+        ]
+      },
+      "reportedFields": {
+        "Timestamp": "17/09/2026 15:48:05",
+        "Dans quelle municipalité se trouve l’entrave?": "Montreal",
+        "Quelle rue, route, autoroute ou quel pont est touché?": "Lasalle",
+        "Où exactement se situe l’entrave?": "De Rielle à Gordon, fermeture complète. De rielle à Willibrord, entrave partielle (ouvert vers l'ouest uniquement).",
+        "Quel est l’effet sur la circulation?": "Route complètement fermée",
+        "Quelle direction est touchée?": "Les deux",
+        "Quand avez-vous constaté l’entrave ou consulté l’avis?": "17/09/2026",
+        "Quelle est la date de début annoncée?": "22/06/2026",
+        "Quelle est la date de fin annoncée?": null,
+        "Quels jours et quelles heures sont concernés?": "24/24",
+        "D’où provient l’information?": "Avis officiel",
+        "Avez-vous un lien vers une source ou l’emplacement?": null,
+        "Quels détails supplémentaires pourraient nous aider?": null
+      }
+    },
+    {
+      "id": "citizen-macarthur-griffith-ness-20260917-164138",
+      "submissionRef": "citizen-response-20260917-164138",
+      "title": "Rue MacArthur : fermeture signalée",
+      "source": "Signalement citoyen transmis via notre formulaire",
+      "sourceKind": "citizen-report",
+      "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
+      "municipality": "Montréal",
+      "borough": null,
+      "streets": "Rue MacArthur : Entre rue Griffith et rue Ness",
+      "roadType": "street",
+      "limits": [
+        "rue Griffith",
+        "rue Ness"
+      ],
+      "direction": "Non applicable",
+      "responsible": null,
+      "reference": null,
+      "submittedAtLocal": "2026-09-17T16:41:38",
+      "submissionTimestampRaw": "Date(2026,8,17,16,41,38)",
+      "submissionTimeZone": null,
+      "observedAt": "2026-09-17",
+      "informationOrigin": "Observation sur place",
+      "supportingSourceUrl": null,
+      "status": "pending-current-status-clarification",
+      "statusSource": "Fermeture déclarée lors de l'observation ou de la consultation; aucune durée ou formulation explicite ne permet de confirmer son maintien à la date de vérification.",
+      "startDate": null,
+      "endDate": null,
+      "reportedDates": {
+        "enteredStartDate": null,
+        "enteredEndDate": null,
+        "startPrecision": "not-reported",
+        "endPrecision": "not-reported",
+        "publishedText": null,
+        "note": "Dates saisies conservées comme déclarations; aucune date manquante n'est remplacée par la date de soumission ou d'observation."
+      },
+      "trafficLabels": [
+        "Route complètement fermée"
+      ],
+      "description": null,
+      "impacts": [
+        {
+          "id": "citizen-macarthur-griffith-ness-20260917-164138-road-closure",
+          "type": "road-closure",
+          "severity": "critical",
+          "trafficLabel": "Route complètement fermée",
+          "impact": "Route complètement fermée",
+          "direction": "Non applicable",
+          "schedule": {
+            "days": [],
+            "allDay": false,
+            "startTime": null,
+            "endTime": null,
+            "timeZone": null,
+            "timeZoneBasis": null,
+            "reportedText": "Toute la journée ",
+            "limitation": "Jours ou plage horaire indéterminés; une cellule vide ou une heure isolée ne signifie pas une fermeture permanente."
+          },
+          "periods": [],
+          "geometryRef": "citizen-macarthur-griffith-ness-20260917-164138"
+        }
+      ],
+      "geometryStatus": "not-resolved-pending-review",
+      "geometry": null,
+      "geometrySource": null,
+      "review": {
+        "status": "pending-current-status-clarification",
+        "mapEligible": false,
+        "restrictionOfficiallyVerified": false,
+        "geometryVerified": false,
+        "warnings": [
+          "Aucune date de fin saisie; la date d'observation ou de soumission ne prouve pas à elle seule que l'entrave est encore en cours.",
+          "Conservé pour revue, non affiché : période actuelle ou horaire insuffisamment établi. Aucune coordonnée de repli n'est inventée."
+        ]
+      },
+      "reportedFields": {
+        "Timestamp": "17/09/2026 16:41:38",
+        "Dans quelle municipalité se trouve l’entrave?": "Montreal",
+        "Quelle rue, route, autoroute ou quel pont est touché?": "Rue MacArthur ",
+        "Où exactement se situe l’entrave?": "Entre rue Griffith et rue Ness ",
+        "Quel est l’effet sur la circulation?": "Route complètement fermée",
+        "Quelle direction est touchée?": "Non applicable",
+        "Quand avez-vous constaté l’entrave ou consulté l’avis?": "17/09/2026",
+        "Quelle est la date de début annoncée?": null,
+        "Quelle est la date de fin annoncée?": null,
+        "Quels jours et quelles heures sont concernés?": "Toute la journée ",
+        "D’où provient l’information?": "Observation sur place",
+        "Avez-vous un lien vers une source ou l’emplacement?": null,
+        "Quels détails supplémentaires pourraient nous aider?": null
+      }
+    },
+    {
+      "id": "citizen-boyer-villeray-rosaire-20260917-182247",
+      "submissionRef": "citizen-response-20260917-182247",
+      "title": "rue boyer : fermeture signalée",
+      "source": "Signalement citoyen transmis via notre formulaire",
+      "sourceKind": "citizen-report",
+      "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
+      "municipality": "Montréal",
+      "borough": null,
+      "streets": "rue boyer : Villeray & du Rosaire",
+      "roadType": "street",
+      "limits": [
+        "Villeray",
+        "du Rosaire"
+      ],
+      "direction": "Nord",
+      "responsible": null,
+      "reference": null,
+      "submittedAtLocal": "2026-09-17T18:22:47",
+      "submissionTimestampRaw": "Date(2026,8,17,18,22,47)",
+      "submissionTimeZone": null,
+      "observedAt": "2026-09-01",
+      "informationOrigin": "Observation sur place",
+      "supportingSourceUrl": null,
+      "status": "pending-current-status-clarification",
+      "statusSource": "Fermeture déclarée lors de l'observation ou de la consultation; aucune durée ou formulation explicite ne permet de confirmer son maintien à la date de vérification.",
+      "startDate": null,
+      "endDate": null,
+      "reportedDates": {
+        "enteredStartDate": null,
+        "enteredEndDate": null,
+        "startPrecision": "not-reported",
+        "endPrecision": "not-reported",
+        "publishedText": null,
+        "note": "Dates saisies conservées comme déclarations; aucune date manquante n'est remplacée par la date de soumission ou d'observation."
+      },
+      "trafficLabels": [
+        "Route complètement fermée"
+      ],
+      "description": null,
+      "impacts": [
+        {
+          "id": "citizen-boyer-villeray-rosaire-20260917-182247-road-closure",
+          "type": "road-closure",
+          "severity": "critical",
+          "trafficLabel": "Route complètement fermée",
+          "impact": "Route complètement fermée",
+          "direction": "Nord",
+          "schedule": {
+            "days": [],
+            "allDay": false,
+            "startTime": null,
+            "endTime": null,
+            "timeZone": null,
+            "timeZoneBasis": null,
+            "reportedText": "Fermer pour piéton",
+            "limitation": "Jours ou plage horaire indéterminés; une cellule vide ou une heure isolée ne signifie pas une fermeture permanente."
+          },
+          "periods": [],
+          "geometryRef": "citizen-boyer-villeray-rosaire-20260917-182247"
+        }
+      ],
+      "geometryStatus": "not-resolved-pending-review",
+      "geometry": null,
+      "geometrySource": null,
+      "review": {
+        "status": "pending-current-status-clarification",
+        "mapEligible": false,
+        "restrictionOfficiallyVerified": false,
+        "geometryVerified": false,
+        "warnings": [
+          "Aucune date de fin saisie; la date d'observation ou de soumission ne prouve pas à elle seule que l'entrave est encore en cours.",
+          "Conservé pour revue, non affiché : période actuelle ou horaire insuffisamment établi. Aucune coordonnée de repli n'est inventée.",
+          "« Fermer pour piéton » précise l'usage mais ne donne pas de période actuelle ni d'horaire; l'observation date du 1er septembre."
+        ]
+      },
+      "reportedFields": {
+        "Timestamp": "17/09/2026 18:22:47",
+        "Dans quelle municipalité se trouve l’entrave?": "Montreal",
+        "Quelle rue, route, autoroute ou quel pont est touché?": "rue boyer",
+        "Où exactement se situe l’entrave?": "Villeray & du Rosaire",
+        "Quel est l’effet sur la circulation?": "Route complètement fermée",
+        "Quelle direction est touchée?": "Nord",
+        "Quand avez-vous constaté l’entrave ou consulté l’avis?": "01/09/2026",
+        "Quelle est la date de début annoncée?": null,
+        "Quelle est la date de fin annoncée?": null,
+        "Quels jours et quelles heures sont concernés?": "Fermer pour piéton",
+        "D’où provient l’information?": "Observation sur place",
+        "Avez-vous un lien vers une source ou l’emplacement?": null,
+        "Quels détails supplémentaires pourraient nous aider?": null
+      }
+    },
+    {
+      "id": "citizen-lasalle-gordon-2e-avenue-20260917-202529",
+      "submissionRef": "citizen-response-20260917-202529",
+      "title": "Boulevard Lasalle : fermeture signalée",
+      "source": "Signalement citoyen transmis via notre formulaire",
+      "sourceKind": "citizen-report",
+      "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
+      "municipality": "Montréal",
+      "borough": "Verdun",
+      "streets": "Boulevard LaSalle, entre la rue Gordon et la 2e Avenue",
+      "roadType": "street",
+      "limits": [
+        "rue Gordon",
+        "2e avenue"
+      ],
+      "direction": "Je ne sais pas",
+      "responsible": null,
+      "reference": null,
+      "submittedAtLocal": "2026-09-17T20:25:29",
+      "submissionTimestampRaw": "Date(2026,8,17,20,25,28)",
+      "submissionTimeZone": null,
+      "observedAt": "2025-09-01",
+      "informationOrigin": "Site municipal ou Québec 511",
+      "supportingSourceUrl": "https://montreal.ca/articles/reconstruction-du-boulevard-lasalle-de-la-2e-avenue-la-rue-gordon-95390",
+      "status": "reported-active",
+      "statusSource": "Période déclarée du 1er septembre 2025 au 30 novembre 2026; le lien municipal confirme le chantier et une période septembre 2025 à novembre 2026, sans confirmer les heures de fermeture.",
+      "startDate": "2025-09-01",
+      "endDate": "2026-11-30",
+      "reportedDates": {
+        "enteredStartDate": "2025-09-01",
+        "enteredEndDate": "2026-11-30",
+        "startPrecision": "respondent-entered-date",
+        "endPrecision": "respondent-entered-date",
+        "publishedText": null,
+        "note": "Les dates saisies restent déclarées. La page municipale indique seulement septembre 2025 à novembre 2026, sans confirmer le premier et le dernier jour saisis."
+      },
+      "trafficLabels": [
+        "Route complètement fermée"
+      ],
+      "description": null,
+      "impacts": [
+        {
+          "id": "citizen-lasalle-gordon-2e-avenue-20260917-202529-road-closure",
+          "type": "road-closure",
+          "severity": "critical",
+          "trafficLabel": "Route complètement fermée",
+          "impact": "Route complètement fermée",
+          "direction": "Je ne sais pas",
+          "schedule": {
+            "days": [],
+            "allDay": false,
+            "startTime": null,
+            "endTime": null,
+            "timeZone": null,
+            "timeZoneBasis": null,
+            "reportedText": null,
+            "limitation": "Jours ou plage horaire indéterminés; une cellule vide ou une heure isolée ne signifie pas une fermeture permanente."
+          },
+          "periods": [],
+          "geometryRef": "citizen-lasalle-gordon-2e-avenue-20260917-202529"
+        }
+      ],
+      "geometryStatus": "verified-official-street-segments",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.563066,
+              45.460826
+            ],
+            [
+              -73.563073,
+              45.460759
+            ],
+            [
+              -73.563151,
+              45.460022
+            ],
+            [
+              -73.563162,
+              45.459941
+            ]
+          ],
+          [
+            [
+              -73.563162,
+              45.459941
+            ],
+            [
+              -73.563169,
+              45.459888
+            ],
+            [
+              -73.563248,
+              45.459105
+            ],
+            [
+              -73.563254,
+              45.459063
+            ]
+          ],
+          [
+            [
+              -73.563254,
+              45.459063
+            ],
+            [
+              -73.563262,
+              45.459
+            ],
+            [
+              -73.563338,
+              45.458292
+            ],
+            [
+              -73.563345,
+              45.458246
+            ]
+          ],
+          [
+            [
+              -73.563345,
+              45.458246
+            ],
+            [
+              -73.563351,
+              45.458197
+            ],
+            [
+              -73.563409,
+              45.457713
+            ],
+            [
+              -73.563414,
+              45.457667
+            ]
+          ]
+        ]
+      },
+      "geometrySource": {
+        "name": "Ville de Montréal - Géobase",
+        "url": "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal%3Ageobase&outputFormat=application%2Fjson&srsname=EPSG%3A4326&CQL_FILTER=sur+ILIKE+%27%25LaSalle%25%27",
+        "verifiedAt": "2026-09-18T14:22:27.494Z",
+        "coordinateSystem": "EPSG:4326",
+        "coordinateOrder": "longitude, latitude",
+        "segments": [
+          {
+            "segmentId": 1601305,
+            "noTronconSq": 1094464,
+            "street": "boulevard LaSalle ",
+            "from": "rue Gordon ",
+            "to": "rue Rielle ",
+            "municipalityLeft": "Montréal",
+            "municipalityRight": "Montréal",
+            "boroughLeft": "Verdun",
+            "boroughRight": "Verdun",
+            "publishedLengthMeters": 98.661,
+            "sourceStartDate": "2022-06-04T04:00:00Z"
+          },
+          {
+            "segmentId": 1601458,
+            "noTronconSq": 1094288,
+            "street": "boulevard LaSalle ",
+            "from": "rue Rielle ",
+            "to": "rue Willibrord ",
+            "municipalityLeft": "Montréal",
+            "municipalityRight": "Montréal",
+            "boroughLeft": "Verdun",
+            "boroughRight": "Verdun",
+            "publishedLengthMeters": 97.867,
+            "sourceStartDate": "2022-06-04T04:00:00Z"
+          },
+          {
+            "segmentId": 1601460,
+            "noTronconSq": 1041250,
+            "street": "boulevard LaSalle ",
+            "from": "rue Willibrord ",
+            "to": "1re avenue  ",
+            "municipalityLeft": "Montréal",
+            "municipalityRight": "Montréal",
+            "boroughLeft": "Verdun",
+            "boroughRight": "Verdun",
+            "publishedLengthMeters": 91.047,
+            "sourceStartDate": "2020-04-11T04:00:00Z"
+          },
+          {
+            "segmentId": 1601463,
+            "noTronconSq": 1041048,
+            "street": "boulevard LaSalle ",
+            "from": "1re avenue  ",
+            "to": "2e avenue  ",
+            "municipalityLeft": "Montréal",
+            "municipalityRight": "Montréal",
+            "boroughLeft": "Verdun",
+            "boroughRight": "Verdun",
+            "publishedLengthMeters": 64.567,
+            "sourceStartDate": "2020-04-11T04:00:00Z"
+          }
+        ],
+        "note": "Coordonnées officielles exactes, tronçons adjacents conservés séparément. La géobase confirme le lieu, pas la restriction; l'ordre des coordonnées ne définit pas la direction déclarée."
+      },
+      "review": {
+        "status": "pending-schedule-clarification",
+        "mapEligible": false,
+        "restrictionOfficiallyVerified": false,
+        "geometryVerified": true,
+        "warnings": [
+          "L'affichage de l'horodatage Google Sheets diffère d'une seconde de sa valeur brute; l'heure affichée est conservée sans fuseau ni conversion UTC.",
+          "Horaire absent : la fermeture ne peut pas être traitée comme permanente. Conservé hors carte tant que les jours et heures applicables restent inconnus.",
+          "Le lien confirme un chantier, pas une fermeture complète de tous ces tronçons pendant toute la période. Ne pas fusionner avec l'autre réponse LaSalle, dont les limites et impacts sont différents."
+        ]
+      },
+      "reportedFields": {
+        "Timestamp": "17/09/2026 20:25:29",
+        "Dans quelle municipalité se trouve l’entrave?": "Montreal",
+        "Quelle rue, route, autoroute ou quel pont est touché?": "Boulevard Lasalle",
+        "Où exactement se situe l’entrave?": "Rue Lasalle entre de Gordon et 2e avenue",
+        "Quel est l’effet sur la circulation?": "Route complètement fermée",
+        "Quelle direction est touchée?": "Je ne sais pas",
+        "Quand avez-vous constaté l’entrave ou consulté l’avis?": "01/09/2025",
+        "Quelle est la date de début annoncée?": "01/09/2025",
+        "Quelle est la date de fin annoncée?": "30/11/2026",
+        "Quels jours et quelles heures sont concernés?": null,
+        "D’où provient l’information?": "Site municipal ou Québec 511",
+        "Avez-vous un lien vers une source ou l’emplacement?": "https://montreal.ca/articles/reconstruction-du-boulevard-lasalle-de-la-2e-avenue-la-rue-gordon-95390",
+        "Quels détails supplémentaires pourraient nous aider?": null
+      },
+      "supportingSourceReview": {
+        "url": "https://montreal.ca/articles/reconstruction-du-boulevard-lasalle-de-la-2e-avenue-la-rue-gordon-95390",
+        "publishedPeriod": "Septembre 2025 à novembre 2026",
+        "publishedLocation": "Boulevard LaSalle, entre la 2e Avenue et la rue Gordon",
+        "conclusion": "Lieu et chantier confirmés; horaire et fermeture complète continue non établis par cette page."
+      }
+    },
+    {
+      "id": "citizen-barry-brossard-20260917-233605",
+      "submissionRef": "citizen-response-20260917-233605",
+      "title": "Barry : fermeture signalée",
+      "source": "Signalement citoyen transmis via notre formulaire",
+      "sourceKind": "citizen-report",
+      "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
+      "municipality": "Brossard",
+      "borough": null,
+      "streets": "Barry : La rue complète",
+      "roadType": "street",
+      "limits": [],
+      "direction": "Je ne sais pas",
+      "responsible": null,
+      "reference": null,
+      "submittedAtLocal": "2026-09-17T23:36:05",
+      "submissionTimestampRaw": "Date(2026,8,17,23,36,4)",
+      "submissionTimeZone": null,
+      "observedAt": "2026-06-16",
+      "informationOrigin": "Observation sur place",
+      "supportingSourceUrl": null,
+      "status": "pending-current-status-clarification",
+      "statusSource": "Fermeture déclarée lors de l'observation ou de la consultation; aucune durée ou formulation explicite ne permet de confirmer son maintien à la date de vérification.",
+      "startDate": null,
+      "endDate": null,
+      "reportedDates": {
+        "enteredStartDate": null,
+        "enteredEndDate": null,
+        "startPrecision": "not-reported",
+        "endPrecision": "not-reported",
+        "publishedText": null,
+        "note": "Dates saisies conservées comme déclarations; aucune date manquante n'est remplacée par la date de soumission ou d'observation."
+      },
+      "trafficLabels": [
+        "Route complètement fermée"
+      ],
+      "description": null,
+      "impacts": [
+        {
+          "id": "citizen-barry-brossard-20260917-233605-road-closure",
+          "type": "road-closure",
+          "severity": "critical",
+          "trafficLabel": "Route complètement fermée",
+          "impact": "Route complètement fermée",
+          "direction": "Je ne sais pas",
+          "schedule": {
+            "days": [],
+            "allDay": false,
+            "startTime": null,
+            "endTime": null,
+            "timeZone": null,
+            "timeZoneBasis": null,
+            "reportedText": null,
+            "limitation": "Jours ou plage horaire indéterminés; une cellule vide ou une heure isolée ne signifie pas une fermeture permanente."
+          },
+          "periods": [],
+          "geometryRef": "citizen-barry-brossard-20260917-233605"
+        }
+      ],
+      "geometryStatus": "not-resolved-pending-review",
+      "geometry": null,
+      "geometrySource": null,
+      "review": {
+        "status": "pending-current-status-clarification",
+        "mapEligible": false,
+        "restrictionOfficiallyVerified": false,
+        "geometryVerified": false,
+        "warnings": [
+          "L'affichage de l'horodatage Google Sheets diffère d'une seconde de sa valeur brute; l'heure affichée est conservée sans fuseau ni conversion UTC.",
+          "Aucune date de fin saisie; la date d'observation ou de soumission ne prouve pas à elle seule que l'entrave est encore en cours.",
+          "Conservé pour revue, non affiché : période actuelle ou horaire insuffisamment établi. Aucune coordonnée de repli n'est inventée.",
+          "L'observation du 16 juin ne prouve pas un maintien en septembre. « La rue complète » n'a pas été converti en tracé sans vérification."
+        ]
+      },
+      "reportedFields": {
+        "Timestamp": "17/09/2026 23:36:05",
+        "Dans quelle municipalité se trouve l’entrave?": "Brossard",
+        "Quelle rue, route, autoroute ou quel pont est touché?": "Barry",
+        "Où exactement se situe l’entrave?": "La rue complète ",
+        "Quel est l’effet sur la circulation?": "Route complètement fermée",
+        "Quelle direction est touchée?": "Je ne sais pas",
+        "Quand avez-vous constaté l’entrave ou consulté l’avis?": "16/06/2026",
+        "Quelle est la date de début annoncée?": null,
+        "Quelle est la date de fin annoncée?": null,
+        "Quels jours et quelles heures sont concernés?": null,
+        "D’où provient l’information?": "Observation sur place",
+        "Avez-vous un lien vers une source ou l’emplacement?": null,
+        "Quels détails supplémentaires pourraient nous aider?": null
+      }
     }
-  ]
+  ],
+  "retainedResponseCount": 7,
+  "excludedResponseCount": 0,
+  "mapEligibleRecordCount": 3,
+  "pendingReviewRecordCount": 5,
+  "mapEligibleImpactCount": 4
 }
