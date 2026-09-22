@@ -1,13 +1,13 @@
 {
-  "extractedAt": "2026-09-18T14:21:58.965Z",
+  "extractedAt": "2026-09-22T19:06:24.874Z",
   "source": "Signalement citoyen transmis via notre formulaire",
   "sourceKind": "citizen-report",
   "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
   "sourceDescription": "Informations déclarées via le formulaire : observations sur place, consultation d'un avis officiel ou d'un site municipal. L'origine déclarée est conservée par réponse; ces signalements ne sont pas des permis municipaux confirmés.",
   "extractionMethod": "Lecture de la réponse Google Forms via les données structurées Google Sheets; analyse manuelle de toutes les colonnes, y compris les détails supplémentaires.",
-  "sourceRecordCount": 7,
-  "retainedRecordCount": 8,
-  "impactCount": 9,
+  "sourceRecordCount": 8,
+  "retainedRecordCount": 9,
+  "impactCount": 10,
   "inMap": true,
   "privacy": {
     "contactInformationIncluded": false,
@@ -19,8 +19,8 @@
     "La géobase confirme le tracé de la rue, pas l'existence de la fermeture ni ses horaires.",
     "Les dates normalisées reprennent les dates saisies par la personne. Le texte libre précise que les dates exactes n'ont pas été communiquées et que la fin octobre est estimée; cette réserve est conservée sans bloquer le signalement.",
     "Ce fichier est chargé par l'application. Les impacts et leurs horaires sont traités séparément; les filtres proposent des journées et des périodes jour/nuit, pas une sélection d'heure précise. Les popups affichent les horaires exacts, les réserves et l'état selon l'horaire déclaré au moment de leur ouverture.",
-    "Sept réponses conservées dans huit fiches : une réponse LaSalle décrit deux tronçons distincts, reliés par submissionRef. Aucune réponse supprimée ou fusionnée.",
-    "Cinq nouvelles réponses restent hors carte : quatre ne permettent pas d’établir un maintien actuel sans dates; celle de LaSalle Gordon–2e Avenue a des dates valides mais aucun horaire exploitable.",
+    "Huit réponses conservées dans neuf fiches : une réponse LaSalle décrit deux tronçons distincts, reliés par submissionRef. Aucune réponse supprimée ou fusionnée.",
+    "Six réponses restent hors carte : quatre ne permettent pas d’établir un maintien actuel sans dates; celle de LaSalle Gordon–2e Avenue a des dates valides mais aucun horaire exploitable; celle de McArthur/Griffith du 19 septembre indique Dorval et Saint-Laurent sans localisation vérifiée.",
     "Les deux tronçons LaSalle Rielle–Gordon et Rielle–Willibrord sont déclarés 24/24 depuis le 22 juin 2026, sans date de fin. Leur maintien réel n’est pas confirmé; la géobase vérifie seulement leur localisation."
   ],
   "records": [
@@ -1073,11 +1073,101 @@
         "Avez-vous un lien vers une source ou l’emplacement?": null,
         "Quels détails supplémentaires pourraient nous aider?": null
       }
+    },
+    {
+      "id": "citizen-mcarthur-griffith-20260919-014532",
+      "submissionRef": "citizen-response-20260919-014532",
+      "title": "McArthur à la hauteur de Griffith : fermeture signalée",
+      "source": "Signalement citoyen transmis via notre formulaire",
+      "sourceKind": "citizen-report",
+      "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
+      "municipality": null,
+      "borough": null,
+      "streets": "Intersection rue Griffith et McArthur à ville St-Laurent; 555 McArthur (poste Canada)",
+      "roadType": "street",
+      "limits": [],
+      "direction": "L’accès est totalement fermé sur McArthur dans les 2 directions à la hauteur de Griffith ",
+      "responsible": null,
+      "reference": null,
+      "submittedAtLocal": "2026-09-19T01:45:32",
+      "submissionTimeZone": null,
+      "observedAt": "2026-09-14",
+      "informationOrigin": "Observation sur place",
+      "supportingSourceUrl": null,
+      "status": "pending-location-clarification",
+      "statusSource": "La réponse décrit un accès totalement fermé 24/24, sans dates de travaux. La municipalité indiquée (Dorval) et la voie située selon la réponse à Saint-Laurent nécessitent une vérification de localisation avant affichage.",
+      "startDate": null,
+      "endDate": null,
+      "reportedDates": {
+        "enteredStartDate": null,
+        "enteredEndDate": null,
+        "startPrecision": "not-reported",
+        "endPrecision": "not-reported",
+        "publishedText": null,
+        "note": "Aucune date de début ou de fin saisie. Le 14 septembre est la date d'observation, pas une date de début; la durée et le maintien réel de la fermeture ne sont pas confirmés."
+      },
+      "trafficLabels": [
+        "Route complètement fermée"
+      ],
+      "description": null,
+      "impacts": [
+        {
+          "id": "citizen-mcarthur-griffith-20260919-014532-road-closure",
+          "type": "road-closure",
+          "severity": "critical",
+          "trafficLabel": "Route complètement fermée",
+          "impact": "L’accès est totalement fermé sur McArthur dans les 2 directions à la hauteur de Griffith ",
+          "direction": "L’accès est totalement fermé sur McArthur dans les 2 directions à la hauteur de Griffith ",
+          "schedule": {
+            "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            "allDay": true,
+            "startTime": null,
+            "endTime": null,
+            "timeZone": null,
+            "timeZoneBasis": null,
+            "reportedText": "24 / 24h",
+            "limitation": "Horaire continu déclaré, sans période de travaux ni localisation vérifiées."
+          },
+          "periods": ["day", "night"],
+          "geometryRef": "citizen-mcarthur-griffith-20260919-014532"
+        }
+      ],
+      "geometryStatus": "not-resolved-pending-review",
+      "geometry": null,
+      "geometrySource": null,
+      "review": {
+        "status": "pending-location-clarification",
+        "mapEligible": false,
+        "restrictionOfficiallyVerified": false,
+        "geometryVerified": false,
+        "warnings": [
+          "La colonne municipalité indique Dorval; la colonne voie indique ville St-Laurent. Aucune municipalité normalisée ni géométrie n'est choisie sans vérification.",
+          "Le 555 McArthur et l'intersection Griffith ne définissent pas deux limites de tronçon vérifiées. Aucun prolongement jusqu'à Ness n'est déduit de l'autre réponse MacArthur.",
+          "Aucune date de travaux saisie; le statut déclaré ne confirme pas le maintien de la fermeture à la date de vérification.",
+          "Le champ lien contient du texte, pas une URL : Aucun avis ni mention sur Google maps et Waze. Aucune source justificative n'est inventée.",
+          "Rapprochement possible avec la réponse MacArthur/Griffith/Ness du 17 septembre, mais les limites et périodes ne permettent pas de confirmer un doublon; les deux réponses restent distinctes."
+        ]
+      },
+      "reportedFields": {
+        "Timestamp": "19/09/2026 01:45:32",
+        "Dans quelle municipalité se trouve l’entrave?": "Dorval",
+        "Quelle rue, route, autoroute ou quel pont est touché?": "Intersection rue Griffith et McArthur à ville St-Laurent",
+        "Où exactement se situe l’entrave?": "555 McArthur (poste Canada)",
+        "Quel est l’effet sur la circulation?": "Route complètement fermée",
+        "Quelle direction est touchée?": "L’accès est totalement fermé sur McArthur dans les 2 directions à la hauteur de Griffith ",
+        "Quand avez-vous constaté l’entrave ou consulté l’avis?": "14/09/2026",
+        "Quelle est la date de début annoncée?": null,
+        "Quelle est la date de fin annoncée?": null,
+        "Quels jours et quelles heures sont concernés?": "24 / 24h",
+        "D’où provient l’information?": "Observation sur place",
+        "Avez-vous un lien vers une source ou l’emplacement?": "Aucun avis ni mention sur Google maps et Waze",
+        "Quels détails supplémentaires pourraient nous aider?": null
+      }
     }
   ],
-  "retainedResponseCount": 7,
+  "retainedResponseCount": 8,
   "excludedResponseCount": 0,
   "mapEligibleRecordCount": 3,
-  "pendingReviewRecordCount": 5,
+  "pendingReviewRecordCount": 6,
   "mapEligibleImpactCount": 4
 }
