@@ -1,10 +1,10 @@
 {
-  "extractedAt": "2026-09-22T19:07:44.836Z",
+  "extractedAt": "2026-09-23T18:48:59.213Z",
   "sourceUrl": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
   "interactiveMapUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
-  "asOf": "2026-09-22",
-  "total": 11,
-  "parentNoticeTotal": 3,
+  "asOf": "2026-09-23",
+  "total": 9,
+  "parentNoticeTotal": 2,
   "interactiveMapEntraves": {
     "34": {
       "id": 1062,
@@ -130,12 +130,14 @@
   "validation": {
     "geometryPolicy": "Verified named road/bridge lines only; official map points are references, never fallback display geometry.",
     "sourceArchiveCount": 148,
-    "archiveAvis": 3,
-    "excludedHistoricalParents": 144,
+    "archiveAvis": 2,
+    "excludedHistoricalParents": 145,
     "excludedHistoricalSections": [
       "Pont Clement: Du 3 au 15 mars",
       "Voies surelevees: Du 6 mars jusqu’a mai 2026",
-      "a15-nord-sortie-60-uci: published reopening from September 22; previous segment ended September 21."
+      "a15-nord-sortie-60-uci: published reopening from September 22; previous segment ended September 21.",
+      "bonaventure-uci-vers-centre-ville: published section ended 2026-09-22.",
+      "a15-nord-sortie-58-uci: published section ended 2026-09-22."
     ],
     "interactiveMapEntraves": 4,
     "segmentsMatchedToMap": 7,
@@ -147,9 +149,7 @@
       "gaetan-laberge-vers-sud",
       "gaetan-laberge-vers-centre-ville",
       "voies-victoria-clement-vers-sud",
-      "voies-victoria-clement-vers-centre-ville",
-      "bonaventure-uci-vers-centre-ville",
-      "a15-nord-sortie-58-uci"
+      "voies-victoria-clement-vers-centre-ville"
     ],
     "rejectedPreviousGeometry": [
       {
@@ -170,20 +170,34 @@
       "Map key 65 explicitly describes the southbound impact; the downtown bullet is established by the archive only.",
       "Map keys 64 and 66 share official id 1082; distinct keys preserved.",
       "Approximate annual/seasonal schedules are not converted to invented January 1 or October 31 dates.",
-      "Bonaventure downtown closure: 06:00-17:00 September 19-21; 06:00-14:45 September 22. No verified closure line or matching map entry.",
-      "Exit 58 toward Montreal and Ile-des-Soeurs: 06:00-17:00 September 19-22. Separate un-geometrized segment; the September 22 reopening exception concerns downtown access from Ile des Soeurs.",
-      "Exit 60 segment removed under the previously reviewed September 22 reopening exception; the complete updated advisory remains preserved in both current UCI segments."
+      "The UCI Bonaventure and exit 58 sections ended September 22 and are excluded, although their archive parent remains dated through September 23."
     ],
-    "activeFutureArchiveParents": 4,
-    "excludedNonAutomobileParents": [
-      {
-        "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/mobilite-active-fermeture-complete-de-jour-de-lestacade-du-19-au-21-septembre-mondiaux-de-cyclisme/",
-        "title": "RAPPEL ET MISE À JOUR - Mobilité active | Fermetures complètes de jour de l&#039;Estacade, du 19 au 21 septembre (mondiaux de cyclisme)",
-        "reason": "Published impacts concern cyclists, pedestrians and active-mobility facilities only."
-      }
-    ],
+    "activeFutureArchiveParents": 3,
+    "excludedNonAutomobileParents": [],
     "archiveParentsWithoutMapMatch": [
+      "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-a-la-circulation-du-parc-dentreprises-de-la-pointe-saint-charles-circulation-aux-entreprises-locales/",
       "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-de-jour-de-lautoroute-direction-centre-ville-du-19-au-22-septembre-mondiaux-de-cyclisme/"
+    ],
+    "excludedParentsWithExpiredSections": [
+      {
+        "dateAffichageTravaux": "Du 16 au 23 septembre 2026",
+        "anneDebut": "2026-09-16T12:03:00.000000Z",
+        "anneFin": "2026-09-23T12:03:00.000000Z",
+        "datedebut": "2026-09-16 08:03:00",
+        "datefin": "2026-09-23 08:03:00",
+        "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+        "description": "En raison de la tenue des mondiaux de cyclisme à Montréal&#160;:\n\nSamedi 19 septembre&#160;: entre 6 h et 17 h\nDimanche 20 septembre&#160;: entre 6 h et 17 h\nLundi 21 septembre&#160;: entre 6 h et 17 h\nMardi 22 septembre&#160;: entre 6 h et 14 h 45*\n\n\n\tFermeture de l&#8217;autoroute Bonaventure en direction du centre-ville et de la sortie 60 de l&#8217;A-15 nord\n\tDétour via la sortie 61 &#8220;Av. Atwater Ave.&#8221; ou la route 136 est &#8220;Montréal centre-ville&#8221;\n\n\n \n\n*MISES À JOUR&#160;:\n\n\n\tFermeture complète de la sortie 58 vers &#8220;Montréal&#8221; et &#8220;Île-des-Soeurs&#8221; du 19 au 22 septembre, de 6 h à 17 h.\n\tÀ compter du 22 septembre, l’accès au centre-ville de Montréal par la bretelle de l’autoroute 15 nord depuis l’île des Sœurs sera de nouveau accessible.\n\n\n \n\nUtilisez le transport en commun pour vous déplacer sur l&#8217;île de Montréal durant toute la durée des mondiaux de cyclisme, soit du 19 au 27 septembre.\n\n \n\nImportant : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org",
+        "title": "MISE À JOUR - A-Bonaventure | Fermetures de jour de l&#039;autoroute, direction centre-ville, du 19 au 22 septembre (mondiaux de cyclisme) et des sorties 58 et 60 de l&#039;A-15 N.",
+        "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-de-jour-de-lautoroute-direction-centre-ville-du-19-au-22-septembre-mondiaux-de-cyclisme/",
+        "img": "/site/assets/files/18750/crt_ab_fc_uci_fr_2026-09-21.-small.jpg",
+        "tags": [
+          "Secteur Bonaventure"
+        ],
+        "tagId": [
+          1155
+        ],
+        "reason": "All automobile obstruction sections ended September 22; the archive parent date is September 23."
+      }
     ]
   },
   "notices": [
@@ -780,96 +794,6 @@
         45.482822
       ],
       "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/"
-    },
-    {
-      "dateAffichageTravaux": "Du 16 au 23 septembre 2026",
-      "anneDebut": "2026-09-16T12:03:00.000000Z",
-      "anneFin": "2026-09-23T12:03:00.000000Z",
-      "datedebut": "2026-09-16 08:03:00",
-      "datefin": "2026-09-23 08:03:00",
-      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
-      "description": "En raison de la tenue des mondiaux de cyclisme à Montréal&#160;:\n\nSamedi 19 septembre&#160;: entre 6 h et 17 h\nDimanche 20 septembre&#160;: entre 6 h et 17 h\nLundi 21 septembre&#160;: entre 6 h et 17 h\nMardi 22 septembre&#160;: entre 6 h et 14 h 45*\n\n\n\tFermeture de l&#8217;autoroute Bonaventure en direction du centre-ville et de la sortie 60 de l&#8217;A-15 nord\n\tDétour via la sortie 61 &#8220;Av. Atwater Ave.&#8221; ou la route 136 est &#8220;Montréal centre-ville&#8221;\n\n\n \n\n*MISES À JOUR&#160;:\n\n\n\tFermeture complète de la sortie 58 vers &#8220;Montréal&#8221; et &#8220;Île-des-Soeurs&#8221; du 19 au 22 septembre, de 6 h à 17 h.\n\tÀ compter du 22 septembre, l’accès au centre-ville de Montréal par la bretelle de l’autoroute 15 nord depuis l’île des Sœurs sera de nouveau accessible.\n\n\n \n\nUtilisez le transport en commun pour vous déplacer sur l&#8217;île de Montréal durant toute la durée des mondiaux de cyclisme, soit du 19 au 27 septembre.\n\n \n\nImportant : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org",
-      "title": "MISE À JOUR - A-Bonaventure | Fermetures de jour de l&#039;autoroute, direction centre-ville, du 19 au 22 septembre (mondiaux de cyclisme) et des sorties 58 et 60 de l&#039;A-15 N.",
-      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-de-jour-de-lautoroute-direction-centre-ville-du-19-au-22-septembre-mondiaux-de-cyclisme/",
-      "img": "/site/assets/files/18750/crt_ab_fc_uci_fr_2026-09-21.-small.jpg",
-      "tags": [
-        "Secteur Bonaventure"
-      ],
-      "tagId": [
-        1155
-      ],
-      "segmentId": "bonaventure-uci-vers-centre-ville",
-      "segmentTitle": "MISE À JOUR - A-Bonaventure | Fermetures de jour de l'autoroute, direction centre-ville, du 19 au 22 septembre (mondiaux de cyclisme) et des sorties 58 et 60 de l'A-15 N.",
-      "segmentStreets": "autoroute Bonaventure",
-      "segmentImpact": "Fermeture de l’autoroute Bonaventure en direction du centre-ville",
-      "segmentDirection": "en direction du centre-ville",
-      "segmentDateStart": "2026-09-19",
-      "segmentDateEnd": "2026-09-22",
-      "segmentDateText": "Samedi 19 septembre : entre 6 h et 17 h\nDimanche 20 septembre : entre 6 h et 17 h\nLundi 21 septembre : entre 6 h et 17 h\nMardi 22 septembre : entre 6 h et 14 h 45*",
-      "segmentComplement": "Détour via la sortie 61 “Av. Atwater Ave.” ou la route 136 est “Montréal centre-ville”\n*MISES À JOUR :\nFermeture complète de la sortie 58 vers “Montréal” et “Île-des-Soeurs” du 19 au 22 septembre, de 6 h à 17 h.\nÀ compter du 22 septembre, l’accès au centre-ville de Montréal par la bretelle de l’autoroute 15 nord depuis l’île des Sœurs sera de nouveau accessible.\nImportant : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org",
-      "detour": "Détour via la sortie 61 “Av. Atwater Ave.” ou la route 136 est “Montréal centre-ville”",
-      "noGeometry": true,
-      "geometry": null,
-      "geometryNote": "Aucun trace verifie ni entree correspondante dans la carte interactive PJCCI; aucune geometrie de remplacement n'est inventee.",
-      "sourceUrl": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-de-jour-de-lautoroute-direction-centre-ville-du-19-au-22-septembre-mondiaux-de-cyclisme/",
-      "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
-      "analysis": {
-        "sections": [
-          "MISE À JOUR - A-Bonaventure | Fermetures de jour de l'autoroute, direction centre-ville, du 19 au 22 septembre (mondiaux de cyclisme) et des sorties 58 et 60 de l'A-15 N."
-        ],
-        "bullets": [
-          "Fermeture de l’autoroute Bonaventure en direction du centre-ville et de la sortie 60 de l’A-15 nord"
-        ],
-        "sourceText": "En raison de la tenue des mondiaux de cyclisme à Montréal :\n\nSamedi 19 septembre : entre 6 h et 17 h\nDimanche 20 septembre : entre 6 h et 17 h\nLundi 21 septembre : entre 6 h et 17 h\nMardi 22 septembre : entre 6 h et 14 h 45*\n\n\n\tFermeture de l’autoroute Bonaventure en direction du centre-ville et de la sortie 60 de l’A-15 nord\n\tDétour via la sortie 61 “Av. Atwater Ave.” ou la route 136 est “Montréal centre-ville”\n\n\n \n\n*MISES À JOUR :\n\n\n\tFermeture complète de la sortie 58 vers “Montréal” et “Île-des-Soeurs” du 19 au 22 septembre, de 6 h à 17 h.\n\tÀ compter du 22 septembre, l’accès au centre-ville de Montréal par la bretelle de l’autoroute 15 nord depuis l’île des Sœurs sera de nouveau accessible.\n\n\n \n\nUtilisez le transport en commun pour vous déplacer sur l’île de Montréal durant toute la durée des mondiaux de cyclisme, soit du 19 au 27 septembre.\n\n \n\nImportant : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org",
-        "directionSourceField": "archive description/title",
-        "datePolicy": "Exact dates and per-day hours from the archive description; parent publication dates preserved separately.",
-        "mapMatch": "No matching entry in the four published interactive map entries."
-      }
-    },
-    {
-      "dateAffichageTravaux": "Du 16 au 23 septembre 2026",
-      "anneDebut": "2026-09-16T12:03:00.000000Z",
-      "anneFin": "2026-09-23T12:03:00.000000Z",
-      "datedebut": "2026-09-16 08:03:00",
-      "datefin": "2026-09-23 08:03:00",
-      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
-      "description": "En raison de la tenue des mondiaux de cyclisme à Montréal&#160;:\n\nSamedi 19 septembre&#160;: entre 6 h et 17 h\nDimanche 20 septembre&#160;: entre 6 h et 17 h\nLundi 21 septembre&#160;: entre 6 h et 17 h\nMardi 22 septembre&#160;: entre 6 h et 14 h 45*\n\n\n\tFermeture de l&#8217;autoroute Bonaventure en direction du centre-ville et de la sortie 60 de l&#8217;A-15 nord\n\tDétour via la sortie 61 &#8220;Av. Atwater Ave.&#8221; ou la route 136 est &#8220;Montréal centre-ville&#8221;\n\n\n \n\n*MISES À JOUR&#160;:\n\n\n\tFermeture complète de la sortie 58 vers &#8220;Montréal&#8221; et &#8220;Île-des-Soeurs&#8221; du 19 au 22 septembre, de 6 h à 17 h.\n\tÀ compter du 22 septembre, l’accès au centre-ville de Montréal par la bretelle de l’autoroute 15 nord depuis l’île des Sœurs sera de nouveau accessible.\n\n\n \n\nUtilisez le transport en commun pour vous déplacer sur l&#8217;île de Montréal durant toute la durée des mondiaux de cyclisme, soit du 19 au 27 septembre.\n\n \n\nImportant : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org",
-      "title": "MISE À JOUR - A-Bonaventure | Fermetures de jour de l&#039;autoroute, direction centre-ville, du 19 au 22 septembre (mondiaux de cyclisme) et des sorties 58 et 60 de l&#039;A-15 N.",
-      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-de-jour-de-lautoroute-direction-centre-ville-du-19-au-22-septembre-mondiaux-de-cyclisme/",
-      "img": "/site/assets/files/18750/crt_ab_fc_uci_fr_2026-09-21.-small.jpg",
-      "tags": [
-        "Secteur Bonaventure"
-      ],
-      "tagId": [
-        1155
-      ],
-      "segmentId": "a15-nord-sortie-58-uci",
-      "segmentTitle": "Sortie 58 vers Montréal et Île-des-Soeurs - mondiaux de cyclisme",
-      "segmentStreets": "sortie 58 de l’A-15 nord",
-      "segmentImpact": "Fermeture complète de la sortie 58 vers “Montréal” et “Île-des-Soeurs” du 19 au 22 septembre, de 6 h à 17 h.",
-      "segmentDirection": "vers “Montréal” et “Île-des-Soeurs”",
-      "segmentDateStart": "2026-09-19",
-      "segmentDateEnd": "2026-09-22",
-      "segmentDateText": "Fermeture complète de la sortie 58 vers “Montréal” et “Île-des-Soeurs” du 19 au 22 septembre, de 6 h à 17 h.",
-      "segmentComplement": "Détour via la sortie 61 “Av. Atwater Ave.” ou la route 136 est “Montréal centre-ville”\n*MISES À JOUR :\nFermeture complète de la sortie 58 vers “Montréal” et “Île-des-Soeurs” du 19 au 22 septembre, de 6 h à 17 h.\nÀ compter du 22 septembre, l’accès au centre-ville de Montréal par la bretelle de l’autoroute 15 nord depuis l’île des Sœurs sera de nouveau accessible.\nImportant : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org",
-      "detour": "Détour via la sortie 61 “Av. Atwater Ave.” ou la route 136 est “Montréal centre-ville”",
-      "noGeometry": true,
-      "geometry": null,
-      "geometryNote": "Aucun trace verifie ni entree correspondante dans la carte interactive PJCCI; aucune geometrie de remplacement n'est inventee.",
-      "sourceUrl": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-de-jour-de-lautoroute-direction-centre-ville-du-19-au-22-septembre-mondiaux-de-cyclisme/",
-      "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
-      "analysis": {
-        "sections": [
-          "MISE À JOUR - A-Bonaventure | Fermetures de jour de l'autoroute, direction centre-ville, du 19 au 22 septembre (mondiaux de cyclisme) et des sorties 58 et 60 de l'A-15 N."
-        ],
-        "bullets": [
-          "Fermeture complète de la sortie 58 vers “Montréal” et “Île-des-Soeurs” du 19 au 22 septembre, de 6 h à 17 h."
-        ],
-        "sourceText": "En raison de la tenue des mondiaux de cyclisme à Montréal :\n\nSamedi 19 septembre : entre 6 h et 17 h\nDimanche 20 septembre : entre 6 h et 17 h\nLundi 21 septembre : entre 6 h et 17 h\nMardi 22 septembre : entre 6 h et 14 h 45*\n\n\n\tFermeture de l’autoroute Bonaventure en direction du centre-ville et de la sortie 60 de l’A-15 nord\n\tDétour via la sortie 61 “Av. Atwater Ave.” ou la route 136 est “Montréal centre-ville”\n\n\n \n\n*MISES À JOUR :\n\n\n\tFermeture complète de la sortie 58 vers “Montréal” et “Île-des-Soeurs” du 19 au 22 septembre, de 6 h à 17 h.\n\tÀ compter du 22 septembre, l’accès au centre-ville de Montréal par la bretelle de l’autoroute 15 nord depuis l’île des Sœurs sera de nouveau accessible.\n\n\n \n\nUtilisez le transport en commun pour vous déplacer sur l’île de Montréal durant toute la durée des mondiaux de cyclisme, soit du 19 au 27 septembre.\n\n \n\nImportant : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org",
-        "directionSourceField": "archive description/title",
-        "datePolicy": "Exact dates and per-day hours from the archive description; parent publication dates preserved separately.",
-        "mapMatch": "No matching entry in the four published interactive map entries."
-      }
     }
   ]
 }
