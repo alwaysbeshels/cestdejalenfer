@@ -65,7 +65,15 @@ async function main() {
             const fields = publicFields.map((field) => attributes[field]).filter((value) => typeof value === "string");
             if (Array.isArray(attributes.trafficLabels)) fields.push(...attributes.trafficLabels);
             if (key === "citizen") fields.push(JSON.stringify(attributes.reportedFields || {}));
+            const location = attributes.LOCALISATION ?? attributes["Localisation :"];
+            if (typeof location === "string") fields.push(location);
             const text = fields.join("\n");
+            if (normalize === "review" && attributes.displayOnPedestrianPage === true) {
+              pending.push({ id: attributes.id, reason: "approximate-period-unverified-geometry", displayOnPedestrianPage: true,
+                title: attributes.title, sourceUrl: attributes.sourceUrl, publishedPeriod: attributes.publishedPeriod,
+                text: attributes.description, affectedUsers: ["pedestrians", "cyclists"] });
+              return;
+            }
             if (normalize === "montreal" || normalize === "longueuil") {
               const output = normalize === "montreal" ? api.normalizeMontreal(item, index) : api.normalizeLongueuil(item);
               output.forEach((record) => {
@@ -79,8 +87,18 @@ async function main() {
               if (!output.length && /Trottoirs_Liens_Cyclable/i.test(attributes.REPERCUSSIONS_ENTRAVE || "")) pending.push({ id: String(attributes.OBJECTID), reason: "combined-sidewalk-cycle-impact", text: attributes.REPERCUSSIONS_ENTRAVE });
               return;
             }
-            if (!/pi[ée]ton|trottoir|sidewalk|pedestrian|sentier|footpath/i.test(text)) return;
-            let impacts = api.publishedPedestrianImpacts(text);
+            const cyclingImpacts = api.publishedCyclingImpacts(text);
+            if (normalize === "normalizeLavalIdentifyResult" && /^(?:voie|piste|bande) cyclable$/i.test(attributes.ENTRAVE || attributes["Entrave :"] || "")) {
+              cyclingImpacts.push({ index: 0, text, pedestrianArea: "path", affectedUsers: ["cyclists"], severity: "moderate",
+                side: { code: "not-applicable", published: null, geometryStatus: "worksite-only" } });
+            }
+            if (!cyclingImpacts.length && !/pi[ée]ton|trottoir|sidewalk|pedestrian|sentier|footpath/i.test(text)) {
+              if (/\b(?:cyclab\w*|cyclist\w*|v[ée]los?|bicycle\w*|bikes?|cycling)\b/i.test(text)) {
+                pending.push({ id: String(attributes.globalid || attributes.OBJECTID || attributes.FID || attributes.id || index), reason: "cycling-mention-without-pedestrian-evidence", text });
+              }
+              return;
+            }
+            let impacts = [...api.publishedPedestrianImpacts(text), ...cyclingImpacts];
             if (normalize === "normalizeTerrebonneFeature" && attributes.statut_avis === "Actif"
               && attributes.type_entrave === "Fermeture complete" && /tunnel/i.test(attributes.localisation)
               && /s[ée]curit[ée] des pi[ée]tons/i.test(attributes.description)) {
@@ -100,13 +118,14 @@ async function main() {
             if (!base) { pending.push({ id: String(attributes.OBJECTID || attributes.id || index), reason: "missing-dates-geometry-or-inactive-source-record", text }); return; }
             const grouped = new Map();
             for (const impact of impacts) {
-              const identity = `${impact.pedestrianArea}-${impact.side.code}-${impact.severity}`;
+              const identity = `${impact.pedestrianArea}-${impact.side.code}-${impact.severity}${impact.affectedUsers ? "-cyclists" : ""}`;
               const current = grouped.get(identity);
               if (current) current.text = [...new Set([current.text, impact.text])].join("\n");
               else grouped.set(identity, { ...impact });
             }
             grouped.forEach((impact, identity) => retained.push({ ...base, id: `pedestrian-${key}-${base.id}-${identity}`,
               sourceKind: `pedestrian-${key}`, pedestrianArea: impact.pedestrianArea, severity: impact.severity, impact: impact.text,
+              ...(impact.affectedUsers ? { affectedUsers: impact.affectedUsers } : {}),
               direction: impact.side.published || t("pedestrian.directionUnknown"), side: impact.side,
               geometryNote: t(base.geometry?.type === "Point" ? "pedestrian.pointNote" : "pedestrian.geometryNote"),
               evidence: { kind: "published-text", text: impact.text },
@@ -120,6 +139,7 @@ async function main() {
             .map((record) => ({
               id: record.id, title: record.title, streets: record.streets, category: record.category,
               sourceKind: record.sourceKind, source: record.source, sourceUrl: record.sourceUrl,
+              ...(record.affectedUsers ? { affectedUsers: record.affectedUsers } : {}),
               responsible: record.responsible, borough: record.borough, pedestrianArea: record.pedestrianArea,
               startDate: record.startDate, endDate: record.endDate || null, openEnded: Boolean(record.openEnded),
               periods: record.periods, schedule: record.schedule || null, scheduleText: record.scheduleText || null,
@@ -223,7 +243,7 @@ async function main() {
   const uniqueIds = new Set(records.map((record) => record.id));
   if (uniqueIds.size !== records.length) throw new Error("Duplicate consolidated IDs; output unchanged");
   const snapshot = { schemaVersion: 1, generatedAt: new Date().toISOString(),
-    policy: "Pedestrian impacts only. Per-source checkedAt is authoritative; local snapshots are not reverified. Unknown sidewalk sides are never inferred. Geometry is the published worksite unless explicitly identified otherwise.",
+    policy: "Pedestrian and cycling impacts. Cycling-only records identify affectedUsers explicitly and do not confirm pedestrian restrictions. Per-source checkedAt is authoritative; local snapshots are not reverified. Unknown sidewalk sides are never inferred. Geometry is the published worksite unless explicitly identified otherwise. Selected documentary review notices are displayed separately without geometry or inferred dates.",
     sources, records: records.sort((first, second) => first.id.localeCompare(second.id)), review };
   await writeFile(OUTPUT, `${JSON.stringify(snapshot, null, 2)}\n`, "utf8");
   console.log(JSON.stringify({ output: OUTPUT, generatedAt: snapshot.generatedAt, records: records.length, sources: sources.length, failed: sources.filter((source) => source.status === "failed").map((source) => source.key), review: review.length }));

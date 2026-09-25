@@ -332,9 +332,13 @@ const LINKED_CITY_WORKS = [
   {
     id: "linked-baie-durfe-clark-graham-exo",
     title: "Reconstruction de la piste cyclable Clark-Graham - gare EXO",
+    automobileImpact: false,
+    displayOnPedestrianPage: true,
+    publishedPeriod: "Début des travaux : mi-septembre 2026. Durée : Environ 6 semaines.",
+    description: "Des travaux de reconstruction de la piste cyclable reliant l’avenue Clark-Graham à la gare EXO sont prévus afin d’améliorer les conditions de déplacement pour les cyclistes et les piétons.\nL’accès à la gare EXO sera maintenu pendant toute la durée des travaux.\nL’échéancier pourrait toutefois être ajusté en raison de la coordination requise avec différents partenaires.",
     borough: "Baie-d'Urfe",
-    startDate: "2026-09-15",
-    endDate: "2026-10-27",
+    startDate: null,
+    endDate: null,
     impact: "Travaux de reconstruction; accès à la gare EXO maintenu, mais déplacements locaux a prévoir selon la signalisation.",
     trafficLabel: "Accès limite",
     severity: "moderate",
@@ -344,9 +348,8 @@ const LINKED_CITY_WORKS = [
     source: "Baie-d'Urfe - Info-travaux",
     sourceUrl: "https://baie-durfe.qc.ca/fr/nos-departements/page/info-travaux",
     periods: ["day"],
-    routeEndpoints: [[-73.9170, 45.4140], [-73.9055, 45.4115]],
-    point: [-73.909, 45.413],
-    geometry: { type: "Point", coordinates: [-73.909, 45.413] }
+    point: null,
+    geometry: null
   },
   {
     id: "linked-ddo-ravel-roadwork",
@@ -863,6 +866,11 @@ let currentClosures = [];
 let selectedClosureId = null;
 let activeMapPopup = null;
 
+const requestedMapView = new URLSearchParams(window.location.search).get("mapView")?.split(",").map(Number);
+const initialMapView = requestedMapView?.length === 3 && requestedMapView.every(Number.isFinite)
+  && Math.abs(requestedMapView[0]) <= 85 && Math.abs(requestedMapView[1]) <= 180
+  && requestedMapView[2] >= 10 && requestedMapView[2] <= 19 ? requestedMapView : null;
+
 const map = L.map("map", {
   preferCanvas: true,
   fadeAnimation: false,
@@ -874,7 +882,16 @@ const map = L.map("map", {
   zoomDelta: 0.25,
   minZoom: 10,
   maxZoom: 19
-}).setView(MONTREAL_CENTER, 12);
+}).setView(initialMapView ? initialMapView.slice(0, 2) : MONTREAL_CENTER, initialMapView?.[2] ?? 12);
+
+document.querySelectorAll(".map-mode-nav a").forEach((link) => {
+  link.addEventListener("click", () => {
+    const center = map.getCenter();
+    const target = new URL(link.href);
+    target.searchParams.set("mapView", [center.lat, center.lng, map.getZoom()].join(","));
+    link.href = target.href;
+  });
+});
 
 const baseLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 20,
@@ -885,7 +902,7 @@ const closureLayer = L.layerGroup().addTo(map);
 const arrowLayer = L.layerGroup().addTo(map);
 const fastRenderer = L.canvas({ padding: 2.0 });
 let locationPending = false;
-let locationHasCentered = false;
+let locationHasCentered = Boolean(initialMapView);
 let locationMessageKey = "";
 let locationMarker = null;
 let locationAccuracy = null;
@@ -1741,7 +1758,7 @@ function cleanQuebec511Direction(direction, text) {
 }
 
 async function loadLinkedCityWorks() {
-  const routedWorks = await Promise.all(LINKED_CITY_WORKS.map(async (work) => {
+  const routedWorks = await Promise.all(LINKED_CITY_WORKS.filter((work) => work.automobileImpact !== false).map(async (work) => {
     if (!work.routeEndpoints) {
       return normalizeLinkedCityWork(work);
     }
@@ -2282,11 +2299,14 @@ function normalizeTerrebonneFeature(feature) {
 
   const severity = municipalSeverity(impact);
   const critical = severity === "critical";
+  const nonMotorizedOnly = !/circulation automobile/i.test(impact)
+    && (/pi[ée]tons? et cyclistes?/i.test(p.type_circulation || "") || /^piste cyclable\b/i.test(p.localisation));
   return {
     id: `terrebonne-${p.globalid || p.OBJECTID}`,
     title: `${p.type_entrave || "Entrave routière"} - ${p.localisation}`,
     category: "municipal",
     sourceKind: "terrebonne-arcgis",
+    automobileImpact: !nonMotorizedOnly,
     responsible: "Ville de Terrebonne",
     borough: "Terrebonne",
     startDate: dateOnlyFromTimestamp(p.date_debut),
@@ -2320,6 +2340,7 @@ function normalizeDorvalFeature(feature) {
     title: `${p.NO_ENTRAVE || "Entrave routière"} - ${description}`,
     category: "municipal",
     sourceKind: "dorval-arcgis",
+    automobileImpact: !/^\s*travaux de r[ée]fection(?: permanente?)? (?:de|du|des) trottoirs?\s*\.?\s*$/i.test(description),
     responsible: "Ville de Dorval",
     borough: "Dorval",
     startDate: dateOnlyFromTimestamp(p.DateDebut),
@@ -3475,6 +3496,7 @@ async function loadBackgroundOfficialData() {
 function dedupeClosures(closures) {
   const seen = new Set();
   return closures.map(prepareClosureForRuntime).filter((closure) => {
+    if (!PEDESTRIAN_MODE && closure.automobileImpact === false) return false;
     if (seen.has(closure.id)) {
       return false;
     }
@@ -3547,7 +3569,7 @@ function popupContent(closure) {
       ${details}
       <p class="popup-meta"><strong>${t("popup.responsible")}:</strong> ${escapeHtml(closure.responsible || t("popup.notPublished"))}</p>
       <p class="popup-meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
-      <p class="popup-meta"><strong>${t("popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
+      <p class="popup-meta"><strong>${t(closure.affectedUsers?.includes("cyclists") ? "pedestrian.cyclingImpact" : "popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
       <p class="popup-meta"><strong>${t("popup.direction")}:</strong> ${escapeHtml(closure.direction)}</p>
       ${closure.tunnelNote ? `<p class="popup-meta popup-geometry-note"><strong>🚇 ${escapeHtml(closure.tunnelNote)}</strong></p>` : ""}
       ${closure.geometryNote ? `<p class="popup-meta popup-geometry-note"><strong>${t("popup.geometryNote")}:</strong> ${escapeHtml(closure.geometryNote)}</p>` : ""}
@@ -3584,7 +3606,7 @@ function groupPopupClosures(closures) {
     const reference = popupReference(closure);
     const key = JSON.stringify([
       closure.sourceKind, closure.source, closure.sourceUrl, reference,
-      closure.category, closure.responsible, closure.borough, closure.pedestrianArea,
+      closure.category, closure.responsible, closure.borough, closure.pedestrianArea, closure.affectedUsers,
       closure.severity, closure.trafficLabel, closure.impact, closure.side,
       closure.startDate, closure.endDate, closure.startTime, closure.endTime, closure.openEnded,
       closure.periods, closure.schedule, closure.scheduleText, closure.publishedIntervals,
@@ -3930,6 +3952,7 @@ function normalizeLavalIdentifyResult(result) {
     title: `${entrave || result.layerName || "Entrave"} - ${location}`,
     category: "municipal",
     sourceKind: "laval-mapserver",
+    automobileImpact: !/^(?:(?:voie|piste|bande) cyclable|trottoir)s?$/i.test(String(entrave || "").trim()),
     responsible: responsible || "Ville de Laval",
     borough: "Laval",
     startDate: dateOnlyFromTimestamp(startDate),
@@ -4177,7 +4200,7 @@ function renderList(closures) {
       <p class="meta"><strong>${closureDateRangeHtml(closure)}</strong></p>
       ${closureScheduleHtml(closure, "meta")}
       <p class="meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
-      <p class="meta"><strong>${t("popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
+      <p class="meta"><strong>${t(closure.affectedUsers?.includes("cyclists") ? "pedestrian.cyclingImpact" : "popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
       <p class="meta"><strong>${t("popup.direction")}:</strong> ${escapeHtml(closure.direction)}</p>
       <a href="${escapeHtml(closure.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(closure.source)}</a>
     `;
@@ -4249,6 +4272,7 @@ function focusClosure(closure, { openPopup = false } = {}) {
 
 function updateView({ fit = false } = {}) {
   currentClosures = getFilteredClosures();
+  if (PEDESTRIAN_MODE) window.PEDESTRIAN_MAP?.renderUnmappedNotices();
   updateMapLegend();
   renderVisibleClosures();
   updateViewportList();
@@ -4431,7 +4455,7 @@ if (window.matchMedia("(max-width: 880px)").matches) {
 }
 
 renderMunicipalityLinks();
-updateView({ fit: true });
+updateView({ fit: !locationHasCentered });
 loadOfficialData().catch((error) => {
   console.error("Official data load failed", error);
   showMapStatus(t("map.loadError"), "error");

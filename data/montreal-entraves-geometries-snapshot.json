@@ -1,5 +1,5 @@
 {
-  "extractedAt": "2026-09-25T20:39:42.797Z",
+  "extractedAt": "2026-09-25T22:01:07.437Z",
   "sourceUrl": "https://donnees.montreal.ca/dataset/info-travaux",
   "wfsSource": "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal:entraves-ponctuelles&outputFormat=application/json&CQL_FILTER=affectedArea%20like%20%27%25street%25%27",
   "geobaseSource": "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&typeName=montreal:geobase",

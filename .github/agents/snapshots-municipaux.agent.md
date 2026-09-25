@@ -26,6 +26,13 @@ The separate citizen-report snapshot is also maintained here under its dedicated
 - Use per-source failure isolation. One source failure must not discard snapshots or records from other municipalities or infrastructure authorities.
 - Never commit, push, add secrets, add a backend, or install dependencies unless explicitly requested by the user.
 
+## Local workaround for Copilot image-download failures
+
+- On this workstation, seven error episodes on 2026-09-25 followed `view_image` calls immediately. Copilot returned `400 invalid_request_body` with `Error while downloading file. Upstream status code: 404.` The failed remote URL is absent from the inspected logs. This implicates image delivery to the chat, not a municipal API; it does not prove which file or server component failed.
+- During snapshot refreshes and audits, do not invoke `view_image` or attach generated screenshots to the chat. Keep captures outside the repository for local inspection. This is a transport workaround, not a repair of Copilot itself.
+- Keep Chromium validation: source responses, page errors, record counts, vector layers, actual popup clicks, dates, filters, desktop/mobile bounds and text overflow. Return textual assertions and summaries. If visual inspection requires a person to open a saved capture, report that limitation rather than declaring it passed.
+- If the same Copilot error recurs, distinguish it from a source HTTP failure. Preserve completed work and source timestamps; do not rerun successful extractions or change source URLs merely to retry a failed chat request. Existing image references in the conversation may still require a new text-only session.
+
 ## Snapshot freshness on every requested refresh
 
 - For source snapshots in the requested scope, `extractedAt` records the latest successful source verification, even when there are no new records or the eligible data is unchanged. Use the actual ISO-8601 verification time, not a guessed date. The consolidated pedestrian snapshot is the explicit exception: its per-source freshness contract below replaces a single `extractedAt`.

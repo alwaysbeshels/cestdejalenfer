@@ -161,6 +161,7 @@ window.PEDESTRIAN_MAP = (() => {
       geometryNote: t(record.geometry.type === "Point" ? "pedestrian.pointNote" : "pedestrian.geometryNote"),
       details: [
         ...(record.details || []).map((detail) => [detail.labelKey ? t(detail.labelKey) : detail.label, detail.valueKey ? t(detail.valueKey) : detail.value]),
+        ...(record.affectedUsers?.includes("cyclists") ? [[t("pedestrian.affectedUsers"), t("pedestrian.cyclists")]] : []),
         [t("pedestrian.sourceChecked"), record.sourceCheckedAt || t("popup.notPublished")],
         [t("pedestrian.side"), t(`pedestrian.side.${record.side?.code || "unknown"}`)],
         ...(record.openEnded ? [[t("pedestrian.endDate"), t("pedestrian.openEnded")]] : [])
@@ -170,11 +171,34 @@ window.PEDESTRIAN_MAP = (() => {
     const failures = consolidatedSnapshot.sources.filter((source) => source.status === "failed");
     const info = document.querySelector("#pedestrianSnapshotInfo");
     if (info) info.textContent = `${t("pedestrian.generatedAt")} ${consolidatedSnapshot.generatedAt}. ${t("pedestrian.failedSources")} ${failures.length}.`;
-    if (failures.length) {
-      showMapStatus(`${t("pedestrian.loaded")}: ${allClosures.length}. ${t("pedestrian.failedSources")} ${failures.length}.`, "error");
-    } else {
-      showMapStatus(`${t("pedestrian.loaded")}: ${allClosures.length}.`, "ready");
-    }
+    showMapStatus(`${t("pedestrian.loaded")}: ${allClosures.length}.`, "ready");
+  }
+
+  function renderUnmappedNotices() {
+    const section = document.querySelector("#unmappedNoticesSection");
+    const list = document.querySelector("#unmappedNotices");
+    if (!section || !list || !consolidatedSnapshot) return;
+    const notices = (consolidatedSnapshot.review || []).filter((notice) => notice.displayOnPedestrianPage === true);
+    section.hidden = !notices.length || !matchesArea({ pedestrianArea: "path" });
+    list.replaceChildren(...notices.map((notice) => {
+      const card = document.createElement("article");
+      card.className = "closure-card";
+      card.dataset.noticeId = notice.id;
+      const title = document.createElement("h3");
+      title.textContent = notice.title;
+      const period = document.createElement("p");
+      period.className = "meta";
+      period.textContent = notice.publishedPeriod;
+      const description = document.createElement("p");
+      description.textContent = notice.text;
+      const source = document.createElement("a");
+      source.href = notice.sourceUrl;
+      source.target = "_blank";
+      source.rel = "noopener noreferrer";
+      source.textContent = t("pedestrian.noticeSource");
+      card.append(title, period, description, source);
+      return card;
+    }));
   }
 
   async function load() {
@@ -213,6 +237,7 @@ window.PEDESTRIAN_MAP = (() => {
         || new RegExp(`\\b(?:fermeture|closure)\\s+(?:(?:complete|temporaire|du|des|de|d.un|d.une|of|the)\\s+){0,4}${subject}\\b`).test(normalized);
       const arrangement = /\b(?:detour|deviation)\s+(?:pour\s+(?:les\s+)?)?(?:pietons?|pedestrians?)\b/.test(normalized)
         || /\bamenagement\s+(?:temporaire\s+)?(?:du|des|de)\s+trottoirs?\b/.test(normalized)
+        || /^travaux de refection(?: permanente?)? (?:de|du|des) trottoirs?\s*\.?$/.test(normalized)
         || /\b(?:passage pieton temporaire|temporary sidewalk|temporary footpath)\b/.test(normalized);
       if (!closure && !arrangement) return [];
       const sideMatch = normalized.match(/\b(?:cote|side)\s+(nord|sud|est|ouest|north|south|east|west)\b/)
@@ -227,10 +252,21 @@ window.PEDESTRIAN_MAP = (() => {
     });
   }
 
+  function publishedCyclingImpacts(value) {
+    return String(value || "").split(/[;\n]|(?<=[.!?])\s+/).map((text) => text.trim()).filter(Boolean).flatMap((text, index) => {
+      const normalized = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      if (/\b(?:aucune fermeture|sans fermeture|pas de fermeture|ne sera pas|rouvert|reouvert)\b/.test(normalized)) return [];
+      const closed = /\bfermeture\s+(?:(?:complete|temporaire|de|du|des|la|le|une|d.une)\s+){0,6}(?:pistes?|voies?|bandes?) cyclables?\b/.test(normalized)
+        || /\b(?:pistes?|voies?|bandes?) cyclables?\s+(?:(?:sera|est|seront|sont|completement|temporairement)\s+){0,3}(?:ferme[es]*|inaccessible[sn]*)\b/.test(normalized);
+      return closed ? [{ index, text, pedestrianArea: "path", affectedUsers: ["cyclists"], severity: "critical",
+        side: { code: "not-applicable", published: null, geometryStatus: "worksite-only" } }] : [];
+    });
+  }
+
   function useNoticeSnapshot(snapshot) {
     noticeSnapshot = snapshot;
     notices = new Map((snapshot?.records || []).map((record) => [record.permitId, record]));
   }
 
-  return { load, refresh, normalizeMontreal, normalizeLongueuil, matchesArea, publishedPedestrianImpacts, useNoticeSnapshot };
+  return { load, refresh, renderUnmappedNotices, normalizeMontreal, normalizeLongueuil, matchesArea, publishedPedestrianImpacts, publishedCyclingImpacts, useNoticeSnapshot };
 })();

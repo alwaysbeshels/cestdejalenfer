@@ -35,6 +35,7 @@ Pour le snapshot pieton consolide, applique l'exception de l'agent aux etapes 7 
 
 ## Validation
 
+- Sur ce poste, applique le contournement de transport d'images de l'agent : pas de `view_image` ni de capture jointe au chat pendant l'actualisation. Conserve les captures hors depot et execute les validations Chromium avec resultats textuels. Le 400 Copilot « Error while downloading file / Upstream 404 » est distinct d'un echec de source; ne relance pas toutes les extractions reussies a cause de cette erreur. Signale toute inspection visuelle non effectuee.
 - Apres chaque mise a jour, valide le JSON, les comptes, les identifiants et references, les dates et la provenance des geometries. Pour un rafraichissement de metadonnees seul, prouve que tout le reste du snapshot est identique a la base de comparaison.
 - Verifie l'accord des horodatages avec toutes les entrees du catalogue et l'absence de donnees privees dans les fichiers publics. Lance `node --check` sur les JavaScript modifies et les controles supplementaires requis par l'agent.
 - Charge le vrai site local dans Chromium sur `http://localhost:5500/index.html`, avec les outils deja disponibles. Verifie les snapshots charges, les comptes attendus, les lignes, polygones et points pertinents, les popups et les filtres. Pour les citoyens, controle les horaires distincts et l'absence de requetes au tableur.

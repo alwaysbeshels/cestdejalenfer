@@ -19,6 +19,40 @@ try {
     const report = await page.evaluate(() => {
       const check = (condition, message) => { if (!condition) throw new Error(message); };
       const original = JSON.stringify(allClosures);
+      const mobilityGeometry = { paths: [[[-73.65, 45.69], [-73.651, 45.691]]] };
+      const terrebonneBase = { globalid: "mobility-test", statut_avis: "Actif", date_fin: Date.UTC(2099, 11, 31), type_entrave: "Fermeture complete" };
+      const terrebonneCases = [
+        [{ localisation: "Piste cyclable située entre le chemin Comtois et le chemin Martin", type_circulation: "Autre" }, false],
+        [{ localisation: "Tunnel reliant le Vieux-Terrebonne au terminus sous l'autoroute 25", type_circulation: "Chemin de detour - Pietons et cyclistes" }, false],
+        [{ localisation: "Pierre-Dansereau", description: "Travaux de piste cyclable et réfection de chaussée", type_circulation: "Chemin de detour - Circulation automobile" }, true],
+        [{ localisation: "Piste cyclable et rue", type_circulation: "Circulation automobile, pietons et cyclistes" }, true]
+      ];
+      for (const [attributes, expected] of terrebonneCases) {
+        const record = normalizeTerrebonneFeature({ attributes: { ...terrebonneBase, ...attributes }, geometry: mobilityGeometry });
+        check(record.automobileImpact === expected, `Wrong Terrebonne travel mode: ${attributes.localisation}`);
+        check(dedupeClosures([record]).length === Number(PEDESTRIAN_MODE || expected), "Travel-mode gate affected the wrong map");
+      }
+      for (const [entrave, expected] of [["Voie cyclable", false], ["Trottoir", false], ["Partielle", true], ["Fermeture complète", true]]) {
+        const record = normalizeLavalIdentifyResult({ layerId: 0, attributes: { OBJECTID: "mobility-test", ENTRAVE: entrave, LOCALISATION: "Piste cyclable et trottoir" }, geometry: { paths: [[[-8200000, 5700000], [-8200010, 5700010]]] } });
+        check(record.automobileImpact === expected, `Wrong Laval travel mode: ${entrave}`);
+      }
+      const sidewalkWorks = "Travaux de réfection permanent de Trottoir";
+      for (const [description, expected] of [[sidewalkWorks, false], ["Fermeture de la voie de droite sur l'avenue Cardinal et fermeture du trottoir", true]]) {
+        const record = normalizeDorvalFeature({ attributes: { FID: "mobility-test", REMARQUE: description, StatusEntr: "Actif", DateFin: Date.UTC(2099, 11, 31) }, geometry: { x: -73.74, y: 45.448 } });
+        check(record.automobileImpact === expected, `Wrong Dorval travel mode: ${description}`);
+      }
+      check(LINKED_CITY_WORKS.find((record) => record.id === "linked-baie-durfe-clark-graham-exo").automobileImpact === false, "Unverified automobile impact on Clark-Graham");
+      if (PEDESTRIAN_MODE) {
+        const impacts = window.PEDESTRIAN_MAP.publishedPedestrianImpacts(sidewalkWorks);
+        check(impacts.length === 1 && impacts[0].severity === "moderate", "Sidewalk works became a closure or disappeared");
+        check(window.PEDESTRIAN_MAP.publishedPedestrianImpacts("Fermeture complète de la piste cyclable").length === 0, "Cycle-only closure became a pedestrian closure");
+        const cycling = window.PEDESTRIAN_MAP.publishedCyclingImpacts("Fermeture complète de la piste cyclable");
+        check(cycling.length === 1 && cycling[0].affectedUsers[0] === "cyclists" && cycling[0].severity === "critical", "Explicit cycling closure missing");
+        check(window.PEDESTRIAN_MAP.publishedCyclingImpacts("Aucune fermeture de la piste cyclable").length === 0, "Negated cycling closure retained");
+      } else {
+        check(allClosures.every((record) => record.automobileImpact !== false), "Non-automobile restriction leaked onto the auto map");
+      }
+      check(JSON.stringify(allClosures) === original, "Travel-mode tests mutated the loaded records");
       const groups = groupPopupClosures(allClosures);
       const byId = new Map(allClosures.map((record) => [record.id, record]));
       const groupedIds = groups.flatMap((group) => group.popupRecordIds);
@@ -61,7 +95,8 @@ try {
         { severity: base.severity === "critical" ? "moderate" : "critical" }, { side: { code: "north" } },
         { startDate: "2050-01-01" }, { endDate: "2050-12-31" }, { startTime: "23:59" },
         { scheduleText: "Different hours" }, { recurringSchedule: { days: ["Mon"] } },
-        { direction: "Different published direction" }, { impact: "Different published impact" }
+        { direction: "Different published direction" }, { impact: "Different published impact" },
+        { affectedUsers: ["cyclists"] }
       ];
       for (const difference of differences) check(groupPopupClosures([base, { ...second, ...difference }]).length === 2, `Unsafe merge: ${JSON.stringify(difference)}`);
       const activeGroups = groupPopupClosures(getFilteredClosures());
@@ -125,6 +160,17 @@ try {
     }
     assert.equal(errors.length, 0, errors.join("\n"));
     console.log(JSON.stringify({ ...report, unavailable: [...unavailable], pageErrors: errors }));
+    await page.evaluate(() => map.setView([45.6967, -73.6517], 16.25, { animate: false }));
+    const savedView = await page.evaluate(() => ({ center: map.getCenter(), zoom: map.getZoom() }));
+    if (await page.locator("#sidePanel").evaluate((panel) => !panel.classList.contains("is-open"))) await page.locator("#menuToggle").click();
+    await page.locator(".map-mode-nav a:not([aria-current])").click();
+    await page.waitForFunction(() => document.querySelector("#mapStatus")?.dataset.mode === "ready", {}, { timeout: 180000 });
+    const restoredView = await page.evaluate((view) => ({ zoom: map.getZoom(),
+      pixelDrift: map.project(map.getCenter(), view.zoom).distanceTo(map.project(L.latLng(view.center.lat, view.center.lng), view.zoom)) }), savedView);
+    assert.equal(restoredView.zoom, savedView.zoom);
+    assert(restoredView.pixelDrift <= 1, `Map moved ${restoredView.pixelDrift} pixels during navigation`);
+    assert.equal(errors.length, 0, errors.join("\n"));
+    console.log(`Center and zoom preserved when leaving ${report.mode}`);
     await page.close();
   }
   console.log("PASS: all loaded records audited on both maps; identities, geometries and distinct impacts preserved.");

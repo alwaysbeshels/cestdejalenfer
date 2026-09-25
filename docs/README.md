@@ -40,9 +40,25 @@ Extraction du 25 septembre 2026 a 15:58:29.169 UTC : 194 pages, 1 936 resultats,
 
 Le snapshot de details enrichit seulement les permis presents dans le WFS au moment de la consolidation, sans ajouter ses propres geometries. Il n'est pas charge comme second flux d'entraves par la page. Les descriptions complementaires ne sont reprises que si les dates du permis correspondent. Les mises a jour des libelles officiels exigent une nouvelle verification, pas une supposition sur les noms des codes.
 
-Longueuil conserve uniquement `Sentier_Ferme`, avec statut officiel en cours ou planifie (1 ou 2), dates et geometrie publiees. Le champ combine `Trottoirs_Liens_Cyclable_Inacces` n'est pas une preuve suffisante, a lui seul, d'une fermeture pietonne. Les echecs sont isoles par source lors de la consolidation et restent signales sur la page. Une panne du fichier commun ne charge aucune fermeture automobile de remplacement.
+Longueuil conserve uniquement `Sentier_Ferme`, avec statut officiel en cours ou planifie (1 ou 2), dates et geometrie publiees. Le champ combine `Trottoirs_Liens_Cyclable_Inacces` n'est pas une preuve suffisante, a lui seul, d'une fermeture pietonne. Les echecs sont isoles par source lors de la consolidation et restent consultables dans le panneau Sources, sans bandeau persistant sur une carte chargee avec succes. Une panne du fichier commun reste signalee et ne charge aucune fermeture automobile de remplacement.
 
 Validation Chromium : avis Gordon, Duquette et Percy-Walters compares aux pages officielles; filtre Parcs et popup Duquette; bascule FR/EN du popup; filtres de zones et d'impacts; compteurs au deplacement; panneau mobile; panne de Longueuil; chargement et rendu de la carte automobile. Les sources live changent a chaque visite; les nombres charges ne sont pas les nombres visibles ni necessairement actifs a la date selectionnee.
+
+### Separation des impacts automobiles et pietons
+
+Une piste cyclable en travaux ne constitue pas automatiquement une entrave automobile. Les normaliseurs peuvent publier `automobileImpact: false`; le chargement commun exclut alors la fiche de la carte auto uniquement. Les fiches manuelles ainsi marquees sont exclues avant toute recherche d'itineraire. Les normaliseurs restent utilisables par la consolidation pietonne. Les impacts mixtes, les voies automobiles retranchees, le stationnement et les rues temporairement pietonnisees restent admissibles sur la carte auto.
+
+L'audit du 25 septembre 2026 a examine les candidats des 21 familles effectivement chargees sur la carte auto, puis les flux et entrees locales de la consolidation. Cinq fiches sans impact automobile documente ont ete exclues : le tunnel pieton/cyclable du Vieux-Terrebonne, la piste Comtois-Martin, la voie cyclable entre du Renard et Sainte-Rose a Laval, la piste Clark-Graham vers la gare Exo a Baie-d'Urfe et la refection de trottoir Dorval `2026-228`. Les chantiers mixtes Pierre-Dansereau, Champfleury/Parulines, les pistes de Longueuil, Industriel a Saint-Eustache et Rene-A.-Robert/Roland-Durand du MTMD ont ete conserves. La simple presence d'un mot cyclable ou pieton n'est pas une exclusion.
+
+Le tunnel Terrebonne reste sur la carte pietonne. Dorval `2026-228` y est ajoute en orange comme travaux de trottoir, du 28 septembre au 1er octobre 2026, avec le point officiel, cote inconnu et sans fermeture supposee. La page pietonne accueille aussi les restrictions cyclables : Comtois-Martin est une fermeture cyclable rouge, l'entree Laval du Renard/Sainte-Rose un obstacle/chantier cyclable orange. Elles conservent leurs geometries officielles et `affectedUsers: ["cyclists"]`; les popups indiquent « Impact cyclable », sans affirmer une fermeture pietonne. Le filtre Sentiers / pistes cyclables les inclut. Les mentions sans restriction etablie restent en revue. Le regroupement ne fusionne pas des usagers concernes differents.
+
+L'[avis Clark-Graham](https://baie-durfe.qc.ca/fr/nos-departements/page/info-travaux) confirme un usage cycliste et pieton, mais seulement un debut « mi-septembre 2026 », une duree d'environ six semaines et l'acces a la gare maintenu. La page pietonne l'affiche dans « Avis sans trace verifie », depuis une entree documentaire de `review` marquee `displayOnPedestrianPage`. Les anciennes dates precises et le point non justifies ont ete retires de la fiche manuelle. Cet avis n'est ni un marqueur ni une fermeture confirmee et n'entre pas dans le compteur des geometries visibles. Les periodes approximatives ne sont pas converties en dates de filtrage.
+
+Assemblage du transfert cyclable : `2026-09-25T21:23:22.764Z`, 1 124 fiches, dont les 1 122 precedentes conservees hors `sourceCheckedAt`, et 179 candidats en revue, dont l'avis documentaire Clark-Graham affiche. Les 29 entrees sources comprennent 13 flux verifies en direct, 10 entrees locales non reverifiees et 6 echecs : cinq couches Mont-Saint-Hilaire et le flux Repentigny. Les heures de verification propres a chaque source restent dans le snapshot; aucun `extractedAt` global ou catalogue n'est avance pour cette consolidation. Les pages detaillees ne sont toujours pas toutes consultees par le generateur. L'audit ne garantit donc pas une couverture exhaustive des avis ni l'accessibilite sur le terrain.
+
+Les liens Auto / Pietons transmettent le centre et le zoom via le parametre `mapView`. La destination valide ces valeurs puis les restaure avant le premier affichage, sans recadrage automatique a la fin du chargement. Une premiere visite sans position transmise garde le comportement initial. La commande Recentrer reste disponible.
+
+`node tools/validate-popup-grouping.mjs` controle aussi les exclusions par mode, les cas mixtes Terrebonne/Laval/Dorval, la distinction travaux/fermeture et la conservation des enregistrements lors des tests, sur les deux cartes.
 
 ### Outils locaux
 
@@ -60,7 +76,62 @@ npm run serve
 
 Lors de chaque mise à jour demandée des snapshots, `extractedAt` indique la dernière vérification réussie de la source, même si aucune nouvelle donnée admissible n'est trouvée. Les métadonnées de fraîcheur correspondantes dans `data/sources.js` doivent porter la même date. Si les données sont inchangées, seuls ces horodatages sont actualisés : les enregistrements, géométries et dates publiées par les organismes restent intacts. Une consultation échouée, partielle ou limitée au cache local ne fait pas avancer la date. Cette date ne signifie ni que la source vient de publier de nouvelles données, ni que les géométries ont été reconstruites.
 
-### Bilan du 25 septembre 2026
+### Actualisation du 25 septembre 2026, 22 h UTC
+
+Execution locale sans publication ni changement d'interface. Huit snapshots d'entree sont verifies sans changement de contenu : seul `extractedAt` avance, avec les 11 entrees correspondantes du catalogue. Noovo reste integralement conserve. Les nombres recus ne sont pas des nombres d'entraves visibles.
+
+| Snapshot / source publique | Etat | Verification du 25 septembre, UTC | Recus / retenus | Geometries conservees |
+| --- | --- | --- | --- | --- |
+| [Mont-Royal](https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr) | Verifie sans changement | 22:00:40.309Z | 12 / 12 | 7 LineString, 5 MultiLineString |
+| [Geometries Montreal](https://donnees.montreal.ca/dataset/info-travaux) | Verifie sans changement | 22:01:07.437Z | 1 617 permis / 1 887 impacts | 1 632 LineString, 3 MultiLineString, 252 Polygon |
+| [UCI](https://services.montreal.ca/cartes/uci) | Verifie sans changement | 22:02:02.159Z | 5 305 restrictions + 17 parcours / tous | 5 322 LineString |
+| [PJCCI archive](https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/) et [carte](https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/) | Verifie sans changement | 22:00:55.906Z | 148 parents / 3 parents, 11 segments; 4 entrees carte comparees | 1 LineString, 1 MultiLineString, 9 sans trace |
+| [Beaconsfield](https://www.beaconsfield.ca/fr/carte-interactive/info-travaux) | Verifie sans changement | 22:02:09.711Z | 6 couches, 494 objets / 241 objets dans 119 fiches | 3 MultiLineString, 116 Polygon |
+| [Rues pietonnisees Montreal, CKAN](https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=ef2a8162-0644-47e7-bd03-bea33f14a5d2) | Verifie sans changement | 22:00:45.640Z | 53 / 10 temporaires + 7 fiches manuelles | 7 LineString, 3 Point; 7 lignes manuelles |
+| [Avis Montreal](https://montreal.ca/entraves-travaux/entraves) | Verifie sans changement | 22:02:00.063Z | 194 pages, 1 936 resultats / 919 avis | Sans geometrie propre |
+| [Formulaire citoyen](https://forms.gle/TKL6WkmPsWPmAUMV8) | Verifie sans changement, non officiel | 22:00:44.183Z | 8 reponses, 13 champs publics / 9 fiches, 10 impacts | 3 LineString, 1 MultiLineString, 5 sans trace |
+| [Noovo](https://www.noovomoi.ca/tendances/infos-pratiques/article/cyclisme-a-montreal-voici-les-rues-et-secteurs-a-eviter-en-septembre/) | Verification incomplete, non officiel | Ancienne date : 2026-09-08, heure absente | Article consulte / 3 fiches conservees | 2 LineString, 1 sans geometrie stockee |
+| [Consolidation pietonne](../data/pedestrian-closures-snapshot.json) | Fraicheur par source actualisee, donnees inchangees | Assemblage : 22:03:22.306Z, pas une verification universelle | 29 entrees sources / 1 124 fiches; 179 en revue | 1 112 Polygon, 5 LineString, 5 MultiLineString, 2 Point |
+
+Les 1 124 fiches consolidees sont identiques hors `sourceCheckedAt` et date de verification des avis dans les details Montreal. Aucune geometrie reconstruite : les 1 887 geometries Montreal sont conservees; la geobase en cache n'est pas reverifiee. Les 919 avis restent identiques; la recherche a rencontre deux doublons identiques, sans recuperation directe requise. Ces comptes d'execution ne remplacent pas les anciennes metadonnees de source lors d'une actualisation de fraicheur seule.
+
+Bilan de consolidation : heures UTC du 25 septembre; `local-snapshot` ne signifie pas reverifie par le consolidateur. Les URLs exactes de requete figurent dans `sources` du JSON.
+
+| Source | Etat | Recus / retenus / revue | Verification ou extraction d'entree |
+| --- | --- | --- | --- |
+| Montreal | checked | 1 936 / 1 112 / 0 | 22:03:10.019Z |
+| Longueuil | checked | 345 / 0 / 93 | 22:03:12.210Z |
+| Dorval | checked | 585 / 2 / 11 | 22:03:13.256Z |
+| Boisbriand | checked | 67 / 0 / 10 | 22:03:13.960Z |
+| Saint-Eustache lignes | checked | 165 / 0 / 20 | 22:03:14.534Z |
+| Saint-Eustache points | checked | 314 / 0 / 22 | 22:03:15.379Z |
+| Chateauguay | checked | 39 / 0 / 0 | 22:03:15.901Z |
+| L'Assomption | checked | 9 / 0 / 0 | 22:03:16.382Z |
+| Terrebonne lignes | checked | 8 / 2 / 2 | 22:03:17.129Z |
+| Terrebonne points | checked | 2 / 0 / 0 | 22:03:17.396Z |
+| MTMD travaux | checked | 645 / 0 / 2 | 22:03:19.034Z |
+| MTMD evenements | checked | 44 / 0 / 0 | 22:03:19.578Z |
+| Laval | checked | 158 / 2 / 6 | 22:03:20.568Z |
+| Mont-Saint-Hilaire couches 3, 4, 5, 6, 15 | failed, cinq `Invalid URL` | 0 conserve | Aucune verification reussie enregistree |
+| Repentigny | failed, `fetch failed` | 0 conserve | Aucune verification reussie enregistree |
+| Mont-Royal | local-snapshot, verifie en amont | 12 / 6 / 0 | 22:00:40.309Z |
+| Beaconsfield | local-snapshot, verifie en amont | 119 / 0 / 0 | 22:02:09.711Z |
+| PJCCI | local-snapshot, verifie en amont | 11 / 0 / 0 | 22:00:55.906Z |
+| Citoyens | local-snapshot, verifie en amont | 9 / 0 / 1 | 22:00:44.183Z |
+| Noovo | local-snapshot, non reverifie | 3 / 0 / 0 | 2026-09-08 |
+| Rues pietonnisees | local-snapshot, verifie en amont | 17 / 0 / 8 | 22:00:45.640Z |
+| UCI | local-snapshot, verifie en amont | 5 305 / 0 / 0 | 22:02:02.159Z |
+| Liste regionale | local-snapshot, non reverifiee | 7 / 0 / 0 | Non datee |
+| Liste municipale manuelle | local-snapshot, non reverifiee | 25 / 0 / 4 | Non datee |
+| Details Montreal | local-snapshot, verifie en amont | 919 / 0 / 0, enrichissement | 22:02:00.063Z |
+
+Exclusions et limites : 43 projets CKAN non temporaires; 145 parents PJCCI historiques; 253 objets Beaconsfield aux echeanciers expires, approximatifs ou invalides. Les citoyens conservent trois fiches parentes admissibles produisant quatre impacts sur la carte et six fiches en revue, sans nouvelles reponses ni geocodage. La divergence Wellington dans le fichier manuel reste documentee, pas corrigee silencieusement. Le snapshot UCI conserve sa politique specifique de donnees datees de l'evenement. Les neuf segments PJCCI sans geometrie verifiee ne sont pas traces. Les 179 candidats pietons/cyclables restent distincts des fermetures confirmees; Clark-Graham demeure un avis sans trace verifie.
+
+Noovo : article HTTP 200 et images reperees, mais pieces visuelles non entierement validees; aucune date de fraicheur avancee. L'article annonce le debut sur Parc au 4 septembre, contre le 7 dans le snapshot; l'horaire Champlain stocke reste distinct du nouvel avis PJCCI. Le consolidateur ne consulte toujours pas systematiquement les pages detaillees, notamment les cas Longueuil Roland-Therrien et Louise-Gravel. Six echecs de flux correspondent a deux municipalites, pas six.
+
+Validations reussies : JSON, identites, donnees inchangees hors fraicheur, accord des 11 dates du catalogue; Chromium FR/EN ordinateur/mobile, couches et popups des cinq sources pietonnes, filtres, bornes de dates, couleurs, maintien du centre/zoom; horaires citoyens semaine/week-end, heures limites et stationnement permanent; absence de requete au tableur; panne du snapshot sans repli automobile. `node tools/validate-popup-grouping.mjs` : 1 124 fiches pietonnes et 8 056 auto chargees, aucune erreur de page; un avertissement reseau auto subsiste. Captures conservees hors depot sans envoi au chat; inspection visuelle humaine non effectuee. Cette verification des donnees ne confirme pas les conditions sur le terrain.
+
+### Bilan precedent du 25 septembre 2026, 20 h UTC
 
 Actualisation locale terminee, sans publication. Les heures suivantes sont en UTC; les URLs publiques et les preuves restent dans chaque snapshot.
 
