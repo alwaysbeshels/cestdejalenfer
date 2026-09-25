@@ -17,7 +17,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="favicon-192.png">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="css/styles.css?v=20260915-missing-restrictions">
+  <link rel="stylesheet" href="css/styles.css?v=20260925-pedestrian">
 </head>
 <body data-document-title="document.mapTitle">
   <div class="app-shell">
@@ -37,6 +37,11 @@
           <button id="languageToggle" class="language-toggle" type="button" aria-label="Passer à l'anglais">EN</button>
         </nav>
       </header>
+
+      <nav class="map-mode-nav" data-i18n-aria-label="nav.mapMode">
+        <a href="index.html" data-language-page="map" data-i18n="nav.auto" aria-current="page"></a>
+        <a href="pedestrian.html" data-language-page="pedestrian" data-i18n="nav.pedestrian"></a>
+      </nav>
 
       <section class="controls" data-i18n-aria-label="filters.label">
         <label class="field list-search">
@@ -160,11 +165,11 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="languages/fr.js?v=20260916-citizen-reports"></script>
-  <script src="languages/en.js?v=20260916-citizen-reports"></script>
-  <script src="js/i18n.js?v=2"></script>
+  <script src="languages/fr.js?v=20260925-shared-popups"></script>
+  <script src="languages/en.js?v=20260925-shared-popups"></script>
+  <script src="js/i18n.js?v=20260925-pedestrian"></script>
   <script src="data/sources.js"></script>
   <script src="data/closures.js"></script>
-  <script src="js/app.js?v=20260916-citizen-reports"></script>
+  <script src="js/app.js?v=20260925-shared-popups"></script>
 </body>
 </html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entraves pi&eacute;tonnes - Grand Montr&eacute;al</title>
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon-192.png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="css/styles.css?v=20260925-pedestrian-popup">
+</head>
+<body data-document-title="document.mapTitle" data-map-mode="pedestrian">
+  <div class="app-shell">
+    <button id="menuToggle" class="menu-toggle" type="button" data-i18n-aria-label="menu.open" aria-controls="sidePanel" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div id="menuBackdrop" class="menu-backdrop" hidden></div>
+    <aside id="sidePanel" class="panel" data-i18n-aria-label="filters.label">
+      <header class="brand-block">
+        <p class="eyebrow" data-i18n="map.region"></p>
+        <h1 data-i18n="map.title"></h1>
+        <p class="intro" data-i18n="map.intro"></p>
+        <nav class="site-nav" data-i18n-aria-label="nav.main">
+          <a href="faq.html" data-language-page="faq" data-i18n="nav.faq"></a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8TiTOGHRjDw36fzIT3DS9ayLfqEcNaE6c_q2BYldNxhgddA/viewform" target="_blank" rel="noreferrer" data-i18n="nav.comments"></a>
+          <button id="languageToggle" class="language-toggle" type="button" data-i18n-aria-label="language.switchLabel">EN</button>
+        </nav>
+      </header>
+      <nav class="map-mode-nav" data-i18n-aria-label="nav.mapMode">
+        <a href="index.html" data-language-page="map" data-i18n="nav.auto"></a>
+        <a href="pedestrian.html" data-language-page="pedestrian" data-i18n="nav.pedestrian" aria-current="page"></a>
+      </nav>
+
+      <section class="controls" data-i18n-aria-label="filters.label">
+        <label class="field list-search">
+          <span class="visually-hidden" data-i18n="list.searchLabel"></span>
+          <input id="searchFilter" type="search" data-i18n-placeholder="list.searchPlaceholder">
+        </label>
+        <details class="filter-section">
+          <summary class="filter-heading"><h2 class="filter-title" data-i18n="filters.dates"></h2></summary>
+          <div class="date-range-fields section-content">
+            <button id="todayDates" class="today-button" type="button" data-i18n="filters.today"></button>
+            <label class="field"><span data-i18n="filters.start"></span><input id="dateStart" type="date"></label>
+            <label class="field">
+              <span class="date-label-with-help">
+                <span data-i18n="filters.end"></span>
+                <button id="dateHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.dateHelpLabel">i</button>
+              </span>
+              <input id="dateEnd" type="date">
+            </label>
+            <div id="dateHelpBubble" class="help-bubble" data-i18n="filters.dateHelp" hidden></div>
+          </div>
+        </details>
+        <details class="filter-section">
+          <summary class="filter-heading">
+            <h2 class="filter-title" data-i18n="filters.time"></h2>
+            <button id="timeHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.timeHelpLabel">i</button>
+            <div id="timeHelpBubble" class="help-bubble filter-help" data-i18n="filters.timeHelp" hidden></div>
+          </summary>
+          <div class="toggle-grid time-filters section-content" role="group" data-i18n-aria-label="filters.time">
+            <label><input type="checkbox" value="day" checked><span data-i18n="filters.day"></span></label>
+            <label><input type="checkbox" value="night" checked><span data-i18n="filters.night"></span></label>
+          </div>
+        </details>
+        <details class="filter-section">
+          <summary class="filter-heading">
+            <h2 class="filter-title" data-i18n="filters.source"></h2>
+            <button id="sourceHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.sourceHelpLabel">i</button>
+            <div id="sourceHelpBubble" class="help-bubble filter-help" data-i18n="filters.sourceHelp" hidden></div>
+          </summary>
+          <div id="sourceFilters" class="toggle-grid source-filters section-content" role="group" data-i18n-aria-label="filters.sourceGroupLabel">
+            <label><input type="checkbox" value="municipal" checked><span data-i18n="category.municipal"></span></label>
+            <label><input type="checkbox" value="private" checked><span data-i18n="category.private"></span></label>
+            <label><input type="checkbox" value="commercial" checked><span data-i18n="category.commercial"></span></label>
+            <label><input type="checkbox" value="regional" checked><span data-i18n="category.regional"></span></label>
+          </div>
+        </details>
+        <details class="filter-section">
+          <summary class="filter-heading"><h2 class="filter-title" data-i18n="pedestrian.areas"></h2></summary>
+          <div class="toggle-grid pedestrian-area-filters section-content" role="group" data-i18n-aria-label="pedestrian.areas">
+            <label><input type="checkbox" value="sidewalk" checked><span data-i18n="pedestrian.area.sidewalk"></span></label>
+            <label><input type="checkbox" value="park" checked><span data-i18n="pedestrian.area.park"></span></label>
+            <label><input type="checkbox" value="path" checked><span data-i18n="pedestrian.area.path"></span></label>
+          </div>
+        </details>
+        <details class="filter-section" open>
+          <summary class="filter-heading">
+            <h2 class="filter-title" data-i18n="filters.impact"></h2>
+            <button id="impactHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.impactHelpLabel">i</button>
+            <div id="impactHelpBubble" class="help-bubble filter-help" data-i18n="filters.impactHelp" hidden></div>
+          </summary>
+          <div class="toggle-grid impact-filters section-content" role="group" data-i18n-aria-label="filters.impactGroupLabel">
+            <label><input type="checkbox" value="critical" checked><i class="impact-dot critical"></i><span data-i18n="filters.critical"></span><span class="impact-count" data-impact-count="critical"></span></label>
+            <label><input type="checkbox" value="moderate" checked><i class="impact-dot moderate"></i><span data-i18n="filters.moderate"></span><span class="impact-count" data-impact-count="moderate"></span></label>
+          </div>
+        </details>
+      </section>
+
+      <section class="summary" aria-live="polite">
+        <div><strong id="visibleCount">0</strong><span data-i18n="summary.visible"></span></div>
+        <button id="resetView" type="button" data-i18n="summary.reset"></button>
+      </section>
+      <section class="municipality-section" hidden>
+        <button id="municipalityHelp" type="button" data-i18n-aria-label="municipalities.helpLabel">i</button>
+        <div id="municipalityHelpBubble" hidden></div>
+        <div id="municipalityList"></div>
+      </section>
+      <details class="filter-section" open>
+        <summary class="filter-heading"><h2 data-i18n="list.title"></h2></summary>
+        <div class="list-section section-content"><div id="closureList" class="closure-list"></div></div>
+      </details>
+    </aside>
+    <button id="panelResizeHandle" class="panel-resize-handle" type="button" data-i18n-aria-label="menu.resize" data-i18n-title="menu.resize"></button>
+
+    <main class="map-zone">
+      <div id="map" data-i18n-aria-label="map.interactiveLabel"></div>
+      <div id="mapStatus" class="map-status" role="status" data-i18n="map.loadingInitial"></div>
+      <aside id="mapFirstVisitHint" class="map-first-visit-hint" hidden>
+        <button id="mapFirstVisitClose" type="button" data-i18n-aria-label="map.tipClose">&times;</button>
+      </aside>
+      <section id="mapLegend" class="severity-legend map-legend" data-i18n-aria-label="map.legendLabel">
+        <span class="severity-chip critical" data-legend-impact="critical" data-i18n="severity.critical"></span>
+        <span class="severity-chip moderate" data-legend-impact="moderate" data-i18n="severity.moderate"></span>
+      </section>
+      <button id="sourcesToggle" class="sources-toggle" type="button" data-i18n="map.sources" aria-controls="sourceCard" aria-expanded="false"></button>
+      <section id="sourceCard" class="source-card" data-i18n-aria-label="map.sourcesLabel" hidden>
+        <button id="sourcesClose" class="sources-close" type="button" data-i18n-aria-label="map.sourcesClose">&times;</button>
+        <strong data-i18n="map.sourcesLabel"></strong>
+        <span data-i18n="map.sourcesText"></span>
+        <span id="pedestrianSnapshotInfo"></span>
+        <a href="data/pedestrian-closures-snapshot.json" target="_blank" rel="noreferrer" data-i18n="pedestrian.snapshotLink"></a>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="languages/fr.js?v=20260925-shared-popups"></script>
+  <script src="languages/en.js?v=20260925-shared-popups"></script>
+  <script src="js/i18n.js?v=20260925-pedestrian"></script>
+  <script src="js/pedestrian.js?v=20260925-shared-popups"></script>
+  <script src="js/app.js?v=20260925-shared-popups"></script>
+</body>
+</html>

@@ -8,7 +8,7 @@ function languageFromPath() {
 
 function languagePath(language, pageOverride = null) {
   const path = window.location.pathname;
-  const page = pageOverride === null ? (path.endsWith("faq.html") ? "faq.html" : "") : pageOverride;
+  const page = pageOverride === null ? (path.endsWith("pedestrian.html") ? "pedestrian.html" : path.endsWith("faq.html") ? "faq.html" : "") : pageOverride;
   const isLocalFile = window.location.protocol === "file:";
   if (isLocalFile) {
     return page ? `/${language}/${page}` : `/${language}/`;
@@ -31,6 +31,11 @@ function currentLanguage() {
 }
 
 function t(key, language = currentLanguage()) {
+  if (document.body?.dataset.mapMode === "pedestrian") {
+    const scoped = window.TRANSLATIONS?.[language]?.[`pedestrian.${key}`]
+      ?? window.TRANSLATIONS?.[DEFAULT_LANGUAGE]?.[`pedestrian.${key}`];
+    if (scoped !== undefined) return scoped;
+  }
   return window.TRANSLATIONS?.[language]?.[key]
     ?? window.TRANSLATIONS?.[DEFAULT_LANGUAGE]?.[key]
     ?? key;
@@ -97,11 +102,11 @@ function applyTranslations(language = currentLanguage()) {
   }
 
   document.querySelectorAll("[data-language-page]").forEach((link) => {
-    const page = link.dataset.languagePage === "faq" ? "faq.html" : "";
+    const page = link.dataset.languagePage === "pedestrian" ? "pedestrian.html" : link.dataset.languagePage === "faq" ? "faq.html" : "";
     link.href = languagePath(language, page);
   });
 
-  const sourceFaqLink = document.querySelector("#sourceCard a[href]");
+  const sourceFaqLink = document.querySelector('#sourceCard a[href*="faq.html"]');
   if (sourceFaqLink) {
     sourceFaqLink.href = `${languagePath(language, "faq.html")}#sources-utilisees`;
   }

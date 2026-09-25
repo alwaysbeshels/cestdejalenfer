@@ -1,5 +1,5 @@
 {
-  "extractedAt": "2026-09-23T18:46:20.684Z",
+  "extractedAt": "2026-09-25T20:35:11.442Z",
   "source": "Signalement citoyen transmis via notre formulaire",
   "sourceKind": "citizen-report",
   "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
@@ -1119,7 +1119,15 @@
           "impact": "L’accès est totalement fermé sur McArthur dans les 2 directions à la hauteur de Griffith ",
           "direction": "L’accès est totalement fermé sur McArthur dans les 2 directions à la hauteur de Griffith ",
           "schedule": {
-            "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            "days": [
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
+              "Sun"
+            ],
             "allDay": true,
             "startTime": null,
             "endTime": null,
@@ -1128,7 +1136,10 @@
             "reportedText": "24 / 24h",
             "limitation": "Horaire continu déclaré, sans période de travaux ni localisation vérifiées."
           },
-          "periods": ["day", "night"],
+          "periods": [
+            "day",
+            "night"
+          ],
           "geometryRef": "citizen-mcarthur-griffith-20260919-014532"
         }
       ],

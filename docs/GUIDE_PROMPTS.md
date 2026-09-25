@@ -36,11 +36,15 @@ Utilisez cette commande lorsque vous voulez relire les sources et actualiser les
 /actualiser-snapshots PJCCI
 /actualiser-snapshots Mont-Royal et Beaconsfield
 /actualiser-snapshots signalements citoyens
+/actualiser-snapshots entraves pietonnes consolidees
+/actualiser-snapshots avis pietons Montreal et entraves pietonnes consolidees
 ```
 
 Une verification complete reussie avance `extractedAt`, meme sans nouvelles donnees. Dans ce cas, les fiches et leurs geometries restent intactes. Une source inaccessible ou partiellement verifiee garde sa date precedente; les autres sources sont traitees independamment.
 
 Le bilan distingue donnees modifiees, verification sans changement et echec. La date de verification ne confirme pas les conditions sur le terrain.
+
+La carte pietonne utilise `data/pedestrian-closures-snapshot.json`, distinct du snapshot des rues pietonnisees qui sert a la carte auto. Son `generatedAt` date la consolidation; la verification est indiquee par source (`checkedAt` ou `sourceExtractedAt`). Actualiser seulement la consolidation ne reverifie pas automatiquement les snapshots locaux qu'elle reutilise. Lors d'une actualisation globale, les entrees sont traitees avant le fichier commun. Les consignes detaillees sont dans l'[agent Snapshots officiels](../.github/agents/snapshots-municipaux.agent.md).
 
 ## Auditer les snapshots
 
@@ -49,6 +53,7 @@ Choisissez l'audit pour examiner ce qui est deja conserve : dates, comptes, iden
 ```text
 /auditer-snapshots
 /auditer-snapshots PJCCI et rues pietonnes
+/auditer-snapshots entraves pietonnes consolidees
 ```
 
 L'audit ne rafraichit rien, ne contacte pas les sources et ne corrige pas les fichiers. Un resultat coherent localement ne prouve pas que la source distante est a jour ni que la carte fonctionne dans un navigateur.

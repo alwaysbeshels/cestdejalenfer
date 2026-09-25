@@ -12,6 +12,40 @@ La carte est une application statique. Depuis la racine du projet, démarrez le 
 
 ## Développement local (optionnel)
 
+### Carte pietonne
+
+La page `pedestrian.html`, disponible aussi sous `/fr/pedestrian.html` et `/en/pedestrian.html`, est distincte de la carte automobile. Les liens Auto / Pietons permettent de changer de page en gardant la langue. Elle reutilise le moteur Leaflet, les filtres de dates et de responsables, les compteurs lies a la vue et le panneau mobile. Elle ne charge aucune fermeture automobile, rue pietonnisee saisonniere ou donnee de demonstration comme entrave pietonne.
+
+Les amenagements / travaux pietons sont orange (`#ff8c00`), comme les voies touchees de la carte auto; leur categorie reste distincte. La palette automobile ne change pas.
+
+Les deux cartes utilisent le meme regroupement de popups (`groupPopupClosures` dans `js/app.js`). Les troncons d'une meme reference et d'une meme source sont regroupes uniquement si leurs impacts, cotes, dates, horaires et autres details sont identiques. Les directions publiees distinctes ne sont pas fusionnees. Pour Montreal auto, la description generee des limites du troncon peut varier : chaque rue, limite et description de segment reste conservee dans la fiche commune. Les permis distincts restent separes et leur reference est affichee; a defaut, la fiche affiche l'identifiant source sans pretendre qu'il s'agit d'un permis. Les geometries et enregistrements sources restent distincts dans le jeu de donnees; seul le compteur du popup compte les fiches regroupees parmi les entrees proches du clic. Le permis `OCC-2609DY18597171` affiche ainsi une seule fiche pietonne pour Ontario Est et Saint-Dominique.
+
+Audit reproductible, serveur local actif : `node tools/validate-popup-grouping.mjs`. Il examine toutes les entrees chargees des deux cartes, controle la preservation des identites, impacts, rues, horaires, directions et geometries, puis execute des clics de geometries dans les sources ayant des regroupements actifs. Le 25 septembre 2026, le controle a porte sur 1 120 entrees pietonnes (103 groupes regroupables) et 8 001 entrees auto (124 groupes regroupables). Ce bilan global ne constitue pas un compteur d'entraves visibles; les donnees live evoluent. Les sources absentes ou en echec ne sont pas declarees verifiees par cet audit d'affichage.
+
+La page charge uniquement [le snapshot pieton consolide](../data/pedestrian-closures-snapshot.json) via `js/pedestrian.js`, et non les flux municipaux en direct. Les cases Trottoirs / Parcs / Sentiers restent cochees dans « Zones touchees », replie par defaut. La consolidation du 25 septembre retient Montreal, Mont-Royal, Dorval, Laval et Terrebonne; une source examinee peut ne fournir aucun impact admissible. Aucune absence de resultat ne garantit un passage libre ou accessible.
+
+Le WFS Montreal est relu sans le filtre automobile `affectedArea like '%street%'`. Le normalisateur lit `sidewalk.blockedType` et `occupancyImpactParkImpactBlockedType`. Les codes ne doivent pas etre traduits litteralement en fermetures : les avis officiels verifiés le 25 septembre 2026 affichent « Aménagement prévu pour la circulation piétonne en tout temps » pour les trottoirs `blocked` et `obstructed`, et « Travaux en cours dans le parc » pour les parcs `blocked` et `closed`. Ces entrees sont donc classees comme amenagements / travaux, pas comme passages fermes. Le champ `backSidewalk` n'est pas interprete comme un trottoir oppose : ce n'est pas la regle utilisee par les avis publics examines.
+
+Chaque fiche Montreal pointe vers `https://montreal.ca/entraves-travaux/entraves/{permitPermitId}`. Les dates WFS sont converties dans le fuseau `America/Toronto`, et non tronquees en UTC (la fin de Gordon est le 12 novembre 2027, pas le 13). Les descriptions officielles restent dans leur langue source. La geometrie demeure celle de la source : ligne publiee, emprise de chantier ou point; elle ne prouve ni le cote du trottoir, ni un itineraire accessible. Aucun itineraire automobile ni aucune fleche directionnelle n'est genere sur cette page.
+
+Les avis individuels et leur recherche sont bloques par CORS depuis le site statique. Leurs attributs sont livres dans `data/montreal-pedestrian-notices-snapshot.json`, produit localement par :
+
+```bash
+node tools/build-montreal-pedestrian-notices.mjs
+```
+
+Le generateur parcourt toutes les pages de l'API publique `/entraves-travaux/api/recherche`, compare les permis attendus au WFS, refuse les doublons contradictoires et consulte directement tout avis pieton manquant. Il conserve les avis actifs/futurs, les impacts structures, les descriptions complementaires lorsqu'elles sont publiees et les libelles officiels verifies dans les donnees structurees d'une page d'avis. Une extraction incomplete ne remplace pas le fichier precedent. Synchroniser ensuite son `extractedAt` dans `data/sources.js`.
+
+Extraction du 25 septembre 2026 a 15:58:29.169 UTC : 194 pages, 1 936 resultats, 919 avis pietons actifs/futurs conserves. Un doublon identique de permis de ruelle est present dans la recherche; les avis pietons attendus sont controles contre le WFS. Aucun champ `workImpact` contenant une description particuliere n'a ete renvoye parmi ces 919 avis. Ce constat ne couvre pas les autres pages editoriales d'avis et alertes du site Montreal.ca.
+
+Le snapshot de details enrichit seulement les permis presents dans le WFS au moment de la consolidation, sans ajouter ses propres geometries. Il n'est pas charge comme second flux d'entraves par la page. Les descriptions complementaires ne sont reprises que si les dates du permis correspondent. Les mises a jour des libelles officiels exigent une nouvelle verification, pas une supposition sur les noms des codes.
+
+Longueuil conserve uniquement `Sentier_Ferme`, avec statut officiel en cours ou planifie (1 ou 2), dates et geometrie publiees. Le champ combine `Trottoirs_Liens_Cyclable_Inacces` n'est pas une preuve suffisante, a lui seul, d'une fermeture pietonne. Les echecs sont isoles par source lors de la consolidation et restent signales sur la page. Une panne du fichier commun ne charge aucune fermeture automobile de remplacement.
+
+Validation Chromium : avis Gordon, Duquette et Percy-Walters compares aux pages officielles; filtre Parcs et popup Duquette; bascule FR/EN du popup; filtres de zones et d'impacts; compteurs au deplacement; panneau mobile; panne de Longueuil; chargement et rendu de la carte automobile. Les sources live changent a chaque visite; les nombres charges ne sont pas les nombres visibles ni necessairement actifs a la date selectionnee.
+
+### Outils locaux
+
 Le site lui-même ne nécessite ni Node.js ni installation: c'est du HTML/CSS/JS statique servi tel quel. Un `package.json` est fourni uniquement pour les outils de développement (validation par navigateur automatisé). Si vous clonez le projet et voulez ces outils:
 
 ```bash
@@ -25,6 +59,33 @@ npm run serve
 ### Date de vérification des snapshots
 
 Lors de chaque mise à jour demandée des snapshots, `extractedAt` indique la dernière vérification réussie de la source, même si aucune nouvelle donnée admissible n'est trouvée. Les métadonnées de fraîcheur correspondantes dans `data/sources.js` doivent porter la même date. Si les données sont inchangées, seuls ces horodatages sont actualisés : les enregistrements, géométries et dates publiées par les organismes restent intacts. Une consultation échouée, partielle ou limitée au cache local ne fait pas avancer la date. Cette date ne signifie ni que la source vient de publier de nouvelles données, ni que les géométries ont été reconstruites.
+
+### Bilan du 25 septembre 2026
+
+Actualisation locale terminee, sans publication. Les heures suivantes sont en UTC; les URLs publiques et les preuves restent dans chaque snapshot.
+
+| Snapshot | Etat | Derniere verification | Recus / retenus | Geometries |
+| --- | --- | --- | --- | --- |
+| [Mont-Royal](../data/mont-royal-snapshot.json) | Modifie | 2026-09-25 20:32:48.165Z | 12 / 12 projets | 7 lignes, 5 multilignes |
+| [Montreal geometries](../data/montreal-entraves-geometries-snapshot.json) | Modifie | 2026-09-25 20:39:42.797Z | 1 617 permis / 1 887 impacts | 1 631 lignes resolues, 4 publiees, 252 emprises |
+| [UCI](../data/montreal-uci-closures-snapshot.json) | Modifie | 2026-09-25 20:34:07.016Z | 5 305 restrictions et 17 parcours / tous retenus | 5 322 lignes |
+| [PJCCI](../data/pjcci-work-advisories-snapshot.json) | Modifie | 2026-09-25 20:38:57.788Z | 148 avis / 3 parents, 11 segments | 1 ligne, 1 multiligne, 9 sans trace |
+| [Beaconsfield](../data/beaconsfield-snapshot.json) | Verifie sans changement | 2026-09-25 20:38:44.572Z | 494 objets / 241 dans 119 fiches | 3 multilignes, 116 polygones |
+| [Rues pietonnisees auto](../data/montreal-pedestrian-snapshot.json) | Verifie sans changement | 2026-09-25 20:36:25.094Z | 53 projets / 10 temporaires, plus 7 fiches manuelles | 7 lignes et 3 points conserves; 7 lignes manuelles |
+| [Avis pietons Montreal](../data/montreal-pedestrian-notices-snapshot.json) | Verifie sans changement | 2026-09-25 20:33:35.435Z | 194 pages, 1 936 resultats / 919 avis | Sans geometrie propre |
+| [Signalements citoyens](../data/citizen-reports-snapshot.json) | Verifie sans changement | 2026-09-25 20:35:11.442Z | 8 reponses / 9 fiches, 10 impacts, dont 4 admissibles | 3 lignes, 1 multiligne, 5 sans trace |
+| [Noovo](../data/noovo-road-closures-snapshot.json) | Verification incomplete, fichier conserve | 2026-09-08, heure absente | 3 fiches conservees | Non reverifiees |
+| [Consolidation pietonne](../data/pedestrian-closures-snapshot.json) | Modifie, verification partielle | Assemblage 2026-09-25 20:41:00.136Z; verification par source | 29 entrees sources / 1 121 fiches, 159 en revue | 1 point, 4 lignes, 4 multilignes, 1 112 polygones |
+
+La consolidation comprend 1 024 trottoirs, 96 parcs et 1 sentier. Les 1 120 fiches precedentes sont identiques hors fraicheur; une fermeture de trottoir Mont-Royal a ete ajoutee, sans cote invente. Les 13 flux verifies sont Montreal, Longueuil, Dorval, Boisbriand, Saint-Eustache lignes et points, Chateauguay, L'Assomption, Terrebonne lignes et points, MTMD travaux et evenements, et Laval. Leurs heures, comptes et URLs figurent dans `sources` du JSON. Les six echecs sont les couches Mont-Saint-Hilaire 3/4/5/6/15 (`Invalid URL`) et Repentigny (`fetch failed`), sans derniere verification reussie enregistree. Il s'agit de deux municipalites, pas six.
+
+Les dix entrees locales reutilisees ne sont pas reverifiees par le consolidateur : Mont-Royal, Beaconsfield, PJCCI, citoyens, rues pietonnisees, UCI et details Montreal ont ete verifies en amont dans cette execution; Noovo garde sa date precedente; les listes regionales et municipales manuelles restent non datees. `generatedAt` date uniquement l'assemblage, jamais la verification globale. Regeneration : `node tools/build-pedestrian-snapshot.mjs`, serveur local et Chromium disponibles, apres les snapshots d'entree autorises.
+
+Limites conservees : 253 objets Beaconsfield exclus pour echeanciers expires, approximatifs ou invalides, dont « 32 octobre »; six fiches citoyennes en revue, sans contacts publies; 43 projets CKAN non temporaires exclus, sans reconstruire les geometries existantes. La date Wellington du snapshot est conservee malgre une date differente dans le fichier manuel. Montreal reutilise le cache geobase : 1 483 geometries conservees et 404 emplacements traites, sans pretendre reverifier toute la geobase. Les 919 avis pietons sont inchanges; le controle a rencontre deux doublons de recherche identiques et recupere un avis directement. Seul `extractedAt` a change dans ce snapshot.
+
+PJCCI ajoute la fermeture du pont Samuel-De Champlain vers Montreal et les ralentissements dans les deux directions sur Jacques-Cartier, les 26 et 27 septembre de 8 h a 13 h. Ces deux segments restent sans geometrie verifiee et ne sont pas traces. Les 145 parents historiques sont exclus. L'article Noovo est accessible, mais sa preuve image d'origine n'a pas ete retrouvee; des dates/horaires divergent des avis actuels. Aucune fraicheur Noovo n'a ete avancee. Les pages detaillees ne sont toujours pas examinees systematiquement par le consolidateur : les omissions Longueuil Roland-Therrien et Louise-Gravel documentees precedemment restent non integrees. Les 159 candidats comprennent 93 impacts trottoir/velo ambigus, 64 mentions sans restriction explicite et 2 cas sans dates/geometrie admissibles ou inactifs.
+
+Validations : JSON, comptes, identifiants, geometries finies, conservation des fiches inchangees et accord des 11 entrees du catalogue; syntaxe JavaScript; Chromium FR/EN, ordinateur/mobile, popups des cinq sources pietonnes, cotes, filtres, dates limites, orange/rouge et panne sans repli auto. Horaires citoyens verifies en semaine/week-end, avant/apres fermeture, stationnement permanent et absence de requete au tableur. `node tools/validate-popup-grouping.mjs` passe sur 1 121 entrees pietonnes et 8 053 auto chargees, sans erreur de page; un avertissement reseau auto subsiste. Les controles complementaires temporaires ont adapte l'ouverture du panneau mobile; le validateur pieton historique n'est pas declare reussi avec ses anciennes hypotheses ARIA/filtres. Ces controles ne confirment pas les conditions sur le terrain.
 
 ### Snapshot des signalements citoyens
 

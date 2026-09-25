@@ -1,0 +1,133 @@
+import assert from "node:assert/strict";
+import { chromium } from "playwright";
+
+const browser = await chromium.launch({ headless: true });
+try {
+  for (const route of ["fr/pedestrian.html", "fr/index.html"]) {
+    const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+    const errors = [];
+    const unavailable = new Set();
+    page.on("pageerror", (error) => errors.push(error.message));
+    page.on("console", (message) => {
+      if (/source failed|Failed to load|API|Invalid URL/i.test(message.text())) unavailable.add(message.text().slice(0, 400));
+    });
+    await page.goto(`http://localhost:5500/${route}`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof allClosures !== "undefined" && allClosures.length > 0);
+    if (route.endsWith("index.html")) {
+      await page.waitForFunction(() => document.querySelector("#mapStatus").dataset.mode === "ready", {}, { timeout: 180000 });
+    }
+    const report = await page.evaluate(() => {
+      const check = (condition, message) => { if (!condition) throw new Error(message); };
+      const original = JSON.stringify(allClosures);
+      const groups = groupPopupClosures(allClosures);
+      const byId = new Map(allClosures.map((record) => [record.id, record]));
+      const groupedIds = groups.flatMap((group) => group.popupRecordIds);
+      check(groupedIds.length === allClosures.length, "A source record was lost");
+      check(new Set(groupedIds).size === allClosures.length, "A source record was duplicated");
+      const summary = {};
+      for (const record of allClosures) {
+        const source = summary[record.sourceKind] ||= { records: 0, cards: 0, mergedGroups: 0, repeatedCardsRemoved: 0 };
+        source.records++;
+      }
+      for (const group of groups) {
+        const source = summary[group.sourceKind];
+        source.cards++;
+        if (group.popupRecordIds.length > 1) {
+          source.mergedGroups++;
+          source.repeatedCardsRemoved += group.popupRecordIds.length - 1;
+        }
+        const identities = new Set();
+        for (const id of group.popupRecordIds) {
+          const member = byId.get(id);
+          identities.add(JSON.stringify([member.sourceKind, member.sourceUrl, popupReference(member)]));
+          check(group.streets.includes(String(member.streets || "").trim()), `Lost street: ${id}`);
+          check(group.title.includes(String(member.title || "").trim()), `Lost title: ${id}`);
+          check(!member.direction || group.direction.includes(member.direction), `Lost direction: ${id}`);
+          for (const field of ["severity", "side", "startDate", "endDate", "schedule", "scheduleText", "impact", "details", "recurringSchedule"]) {
+            check(JSON.stringify(member[field]) === JSON.stringify(group[field]), `Merged different ${field}: ${id}`);
+          }
+        }
+        check(identities.size === 1, "Merged different sources or references");
+      }
+      check(JSON.stringify(allClosures) === original, "Grouping mutated source records or geometry");
+      const html = groups.map(popupContent);
+      check(new Set(html).size === html.length, "Identical cards remain after grouping");
+      const sample = allClosures.find((record) => popupReference(record).value && record.title);
+      const base = { ...sample, details: [], evidence: null, reference: "test-permit", directionIsSegmentDescription: false };
+      const second = { ...base, id: "second-segment", title: "Other street", streets: "Other published limits" };
+      check(groupPopupClosures([base, second]).length === 1, "Same permit not grouped");
+      const differences = [
+        { reference: "other-permit" }, { sourceKind: "other-source" }, { sourceUrl: "https://example.invalid/other" },
+        { severity: base.severity === "critical" ? "moderate" : "critical" }, { side: { code: "north" } },
+        { startDate: "2050-01-01" }, { endDate: "2050-12-31" }, { startTime: "23:59" },
+        { scheduleText: "Different hours" }, { recurringSchedule: { days: ["Mon"] } },
+        { direction: "Different published direction" }, { impact: "Different published impact" }
+      ];
+      for (const difference of differences) check(groupPopupClosures([base, { ...second, ...difference }]).length === 2, `Unsafe merge: ${JSON.stringify(difference)}`);
+      const activeGroups = groupPopupClosures(getFilteredClosures());
+      const clickSamples = [];
+      const sampledSources = new Set();
+      for (const group of activeGroups.filter((group) => group.popupRecordIds.length > 1)) {
+        if (sampledSources.has(group.sourceKind)) continue;
+        sampledSources.add(group.sourceKind);
+        clickSamples.push(group.popupRecordIds[0]);
+      }
+      return { mode: PEDESTRIAN_MODE ? "pedestrian" : "auto", records: allClosures.length, cards: groups.length,
+        mergedGroups: groups.filter((group) => group.popupRecordIds.length > 1).length,
+        sources: summary, clickSamples };
+    });
+    for (const id of report.clickSamples) {
+      const result = await page.evaluate((id) => {
+        const record = allClosures.find((item) => item.id === id);
+        map.stop();
+        map.setView([record.point[1], record.point[0]], 18, { animate: false });
+        updateView({ fit: false });
+        const layer = renderedClosureLayers.get(id)?.closures.getLayers()[0];
+        if (!layer) throw new Error(`No rendered layer for ${id}`);
+        layer.fire("click", { latlng: L.latLng(record.point[1], record.point[0]) });
+        const popup = document.querySelector(".leaflet-popup-content");
+        if (!popup) throw new Error(`No popup for ${id}`);
+        const cards = [...popup.querySelectorAll(".popup-card")].map((card) => card.innerHTML);
+        const expected = groupPopupClosures(closuresNearLatLng(L.latLng(record.point[1], record.point[0]), record)).length;
+        return { source: record.sourceKind, cards: cards.length, distinct: new Set(cards).size, expected, header: popup.querySelector(".popup-group-header").textContent };
+      }, id);
+      assert.equal(result.cards, Math.min(8, result.expected));
+      assert.equal(result.cards, result.distinct);
+      assert(result.header.startsWith(String(result.expected)));
+      await page.locator(".popup-close-button").click();
+      console.log("Vector click", JSON.stringify(result));
+    }
+    assert.equal(errors.length, 0, errors.join("\n"));
+    const selectedId = report.clickSamples.at(-1);
+    if (selectedId) {
+      await page.locator("#languageToggle").click();
+      await page.waitForFunction(() => document.documentElement.lang === "en");
+      await page.evaluate((id) => {
+        const record = allClosures.find((item) => item.id === id);
+        openGroupedPopup(record, L.latLng(record.point[1], record.point[0]));
+      }, selectedId);
+      assert((await page.locator(".popup-group-header").innerText()).includes("restriction"));
+      assert(!(await page.locator(".leaflet-popup-content").innerText()).includes("popup.reference"));
+      await page.locator(".popup-close-button").click();
+      await page.setViewportSize({ width: 390, height: 844 });
+      if (await page.locator("#sidePanel").evaluate((panel) => panel.classList.contains("is-open"))) await page.locator("#menuToggle").click();
+      await page.evaluate((id) => {
+        const record = allClosures.find((item) => item.id === id);
+        openGroupedPopup(record, L.latLng(record.point[1], record.point[0]));
+      }, selectedId);
+      await page.waitForFunction(() => {
+        const popup = document.querySelector(".leaflet-popup-content").getBoundingClientRect();
+        return popup.left >= 0 && popup.right <= innerWidth && popup.top >= 0 && popup.bottom <= innerHeight;
+      });
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+      await page.locator(".popup-close-button").click();
+      console.log(`Language switch and mobile popup: ${report.mode}`);
+    }
+    assert.equal(errors.length, 0, errors.join("\n"));
+    console.log(JSON.stringify({ ...report, unavailable: [...unavailable], pageErrors: errors }));
+    await page.close();
+  }
+  console.log("PASS: all loaded records audited on both maps; identities, geometries and distinct impacts preserved.");
+} finally {
+  await browser.close();
+}

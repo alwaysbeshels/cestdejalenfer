@@ -1,7 +1,7 @@
 ---
 name: actualiser-snapshots
-description: "Actualiser les snapshots de la carte, verifier leurs sources et leur affichage, sans publication automatique."
-argument-hint: "Toutes les sources par defaut, ou une selection : PJCCI, Mont-Royal, signalements citoyens..."
+description: "Actualiser les snapshots auto et pietons consolides, verifier leurs sources et leur affichage, sans publication automatique."
+argument-hint: "Toutes les sources par defaut, ou une selection : PJCCI, Mont-Royal, signalements citoyens, entraves pietonnes consolidees, avis pietons Montreal..."
 agent: "Snapshots officiels"
 ---
 
@@ -15,7 +15,9 @@ Respecte aussi les [regles de publication](./deployment-rules.md).
 
 - Si le message accompagnant cette commande nomme des sources, ne traite que celles-ci.
 - Sans precision, inventorie et traite tous les snapshots existants dans `data/`, y compris les signalements citoyens et les sources complementaires comme Noovo. Ne presente pas ces deux dernieres comme des avis officiels.
-- Ne cree pas de nouvelle source, ne modifie pas l'interface et ne rafraichis pas les flux uniquement live dans le cadre de cette demande. Leur consultation pour valider une jointure existante reste permise.
+- Ne cree pas de nouvelle source, ne modifie pas l'interface et ne rafraichis pas les flux uniquement live dans le cadre de cette demande. Leur consultation pour valider une jointure existante ou alimenter le snapshot pieton consolide, lorsqu'il est dans le perimetre, reste permise.
+- « Entraves pietonnes consolidees » cible `data/pedestrian-closures-snapshot.json`; « avis pietons Montreal » cible son entree `data/montreal-pedestrian-notices-snapshot.json`. Ne les confonds pas avec les rues pietonnisees temporaires de la carte auto. Si « snapshot pieton » est ambigu, clarifie lequel avant execution.
+- Pour une actualisation globale, traite les snapshots d'entree avant la consolidation pietonne. Pour la seule consolidation, conserve les dates des entrees locales reutilisees et indique qu'elles n'ont pas ete reverifiees.
 - Ne fais aucun commit, push, deploiement ou installation de dependances sans demande explicite distincte. Une autorisation de publication d'une session precedente ne vaut pas pour cette execution.
 
 ## Execution
@@ -29,16 +31,20 @@ Respecte aussi les [regles de publication](./deployment-rules.md).
 7. Apres une verification complete reussie, inscris l'heure ISO-8601 reelle de verification dans `extractedAt` et dans toutes les entrees correspondantes du catalogue. Si les donnees sont inchangees, ne modifie que ces metadonnees de fraicheur. N'avance pas les dates de provenance geographique sans nouvelle verification de la geometrie.
 8. En cas d'echec, de verification partielle ou d'acces manquant, conserve le snapshot precedent et son horodatage, explique le blocage et continue avec les autres sources. Ne presente jamais une source non verifiee comme actualisee.
 
+Pour le snapshot pieton consolide, applique l'exception de l'agent aux etapes 7 et 8 : `generatedAt` date l'assemblage, `sources[].checkedAt` date chaque verification live, `sourceExtractedAt` conserve la date des entrees locales. Les sources reussies peuvent etre actualisees en conservant les anciennes donnees admissibles des sources echouees. N'ajoute pas de faux `extractedAt` global. Execute `node tools/build-pedestrian-snapshot.mjs` apres les entrees autorisees, avec le serveur statique local et Chromium disponibles; aucune installation implicite.
+
 ## Validation
 
 - Apres chaque mise a jour, valide le JSON, les comptes, les identifiants et references, les dates et la provenance des geometries. Pour un rafraichissement de metadonnees seul, prouve que tout le reste du snapshot est identique a la base de comparaison.
 - Verifie l'accord des horodatages avec toutes les entrees du catalogue et l'absence de donnees privees dans les fichiers publics. Lance `node --check` sur les JavaScript modifies et les controles supplementaires requis par l'agent.
 - Charge le vrai site local dans Chromium sur `http://localhost:5500/index.html`, avec les outils deja disponibles. Verifie les snapshots charges, les comptes attendus, les lignes, polygones et points pertinents, les popups et les filtres. Pour les citoyens, controle les horaires distincts et l'absence de requetes au tableur.
 - Verifie le rendu ordinateur et mobile selon les controles de l'agent. Tiens compte du moteur Leaflet reel : un rendu canvas n'a pas necessairement de chemins SVG. Attends la fin des animations avant de mesurer un popup.
+- Si les entraves pietonnes sont dans le perimetre, valide aussi `/fr/pedestrian.html` et `/en/pedestrian.html`, le chargement du seul snapshot commun, les preuves textuelles, les cotes, les filtres et la fraicheur par source. Applique les controles de regroupement commun des deux cartes. Signale les descriptions completes ou pages d'avis non examinees; ne transforme pas une fermeture automobile en fermeture de trottoir.
 - Termine par le controle du diff. Signale les echecs et les anomalies preexistantes sans corriger des problemes d'interface hors perimetre ni annoncer des tests non realises comme reussis.
 
 ## Bilan attendu
 
 Reponds en francais avec un tableau par snapshot : source publique, etat (`modifie`, `verifie sans changement`, `echec / non verifie`), derniere verification reussie avec fuseau, nombres recus et retenus, exclusions motivees et types de geometries.
 Resume les changements importants, les segments sans trace, les declarations en attente de revue, les limites de fraicheur et les validations executees ou bloquees.
+Pour la consolidation pietonne, ajoute un bilan par source et distingue les entrees locales reutilisees des verifications live reussies et echouees. Le nombre de flux echoues n'est pas un nombre de municipalites.
 Precise les fichiers modifies et rappelle que les changements restent locaux, sans commit ni push. Cette verification des sources ne confirme pas les conditions sur le terrain.

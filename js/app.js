@@ -1,3 +1,5 @@
+const PEDESTRIAN_MODE = document.body.dataset.mapMode === "pedestrian";
+
 const CATEGORY_META = {
   citizen: { label: () => t("category.citizen") },
   municipal: { label: () => t("category.municipal") },
@@ -20,6 +22,8 @@ const SEVERITY_META = {
   minor: { label: () => t("severity.minor"), color: "#00e676", width: 4, opacity: 0.78 }
 };
 
+if (PEDESTRIAN_MODE) SEVERITY_META.moderate.color = SEVERITY_META.major.color;
+
 function roadTypeFromText(value) {
   const text = String(value || "").toLowerCase();
   if (/\btunnel\b/.test(text)) return "tunnel";
@@ -32,7 +36,7 @@ function roadTypeFromText(value) {
 }
 
 function closureImpactLabel(closure) {
-  if (closure.severity !== "critical") {
+  if (PEDESTRIAN_MODE || closure.severity !== "critical") {
     return (SEVERITY_META[closure.severity] ?? SEVERITY_META.major).label();
   }
 
@@ -852,7 +856,7 @@ const panelResizeHandle = document.querySelector("#panelResizeHandle");
 
 // Regional/pedestrian/linked-city entries are (re)loaded with routed geometry on startup;
 // seeding their un-routed static versions here would let dedupeClosures keep the stale copy.
-let allClosures = [
+let allClosures = PEDESTRIAN_MODE ? [] : [
   ...window.CLOSURES.map(normalizeLegacyClosure).map(prepareClosureForRuntime)
 ];
 let currentClosures = [];
@@ -1025,7 +1029,8 @@ map.on("moveend", () => {
 });
 
 function escapeHtml(value) {
-  return correctFrenchText(value).replace(/[&<>'"]/g, (character) => ({
+  const text = PEDESTRIAN_MODE ? String(value ?? "") : correctFrenchText(value);
+  return text.replace(/[&<>'"]/g, (character) => ({
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
@@ -1282,6 +1287,7 @@ function getFilteredClosures() {
   const filteredClosures = [];
   allClosures.forEach((closure) => {
     if (isCoveredByComplementaryClosure(closure)) return;
+    if (PEDESTRIAN_MODE && !window.PEDESTRIAN_MAP.matchesArea(closure)) return;
     if (categories.has(closure.category)
       && impacts.has(closure.severity)
       && matchesTimePeriod(closure, timePeriods)
@@ -1303,6 +1309,7 @@ function getFilterBaseClosures() {
   const filteredClosures = [];
   allClosures.forEach((closure) => {
     if (isCoveredByComplementaryClosure(closure)) return;
+    if (PEDESTRIAN_MODE && !window.PEDESTRIAN_MAP.matchesArea(closure)) return;
     if (categories.has(closure.category)
       && matchesTimePeriod(closure, timePeriods)
       && overlapsDateRange(closure, dateRange)
@@ -3100,6 +3107,9 @@ function normalizeMontrealFeature(feature, index) {
     return {
       id: recordId,
       title: `${displayTraffic.label} - ${street}`,
+      reference: properties.permitPermitId || null,
+      sourceRecordId: properties.id || null,
+      directionIsSegmentDescription: true,
       category,
       sourceKind: "montreal-wfs",
       responsible: properties.submitterSummaryOrganizationName || properties.occupancysubmitterdetailsPublicOrganization || siteAuthorityLabel(properties.siteAuthority),
@@ -3371,6 +3381,7 @@ async function fetchJson(url, { timeout = 15000, cache = true } = {}) {
 }
 
 async function loadOfficialData() {
+  if (PEDESTRIAN_MODE) return window.PEDESTRIAN_MAP.load();
   showMapStatus(t("map.loading"), "loading");
 
   const localSnapshotResults = await Promise.allSettled([
@@ -3519,6 +3530,8 @@ function closureScheduleHtml(closure, className) {
 function popupContent(closure) {
   const meta = CATEGORY_META[closure.category] ?? CATEGORY_META.event;
   const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
+  const reference = popupReference(closure);
+  const hasReferenceDetail = (closure.details || []).some(([, value]) => String(value) === reference.value);
   const details = (closure.details || [])
     .filter(([, value]) => isMeaningfulLavalValue(value))
     .map(([label, value]) => `<p class="popup-meta"><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value).replace(/\n/g, "<br>")}</p>`)
@@ -3530,6 +3543,7 @@ function popupContent(closure) {
       <p class="popup-meta">${escapeHtml(closure.streets)}</p>
       <p class="popup-meta">${closureDateRangeHtml(closure)}</p>
       ${closureScheduleHtml(closure, "popup-meta")}
+      ${hasReferenceDetail ? "" : `<p class="popup-meta"><strong>${t(reference.isSourceId ? "popup.sourceId" : "popup.reference")}:</strong> ${escapeHtml(reference.value)}</p>`}
       ${details}
       <p class="popup-meta"><strong>${t("popup.responsible")}:</strong> ${escapeHtml(closure.responsible || t("popup.notPublished"))}</p>
       <p class="popup-meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
@@ -3554,12 +3568,54 @@ function periodsLabel(periods) {
   return t("popup.day");
 }
 
+function popupReference(closure) {
+  const detail = (closure.details || []).find(([label, value]) =>
+    /^(reference|references|permis|permit)$/.test(normalizeSearchText(label))
+    && value && !/^(null|n\/a|non publi[eé]e?|not published)$/i.test(String(value).trim()));
+  const reference = closure.evidence?.reference || closure.reference || detail?.[1];
+  return reference
+    ? { value: String(reference), isSourceId: false }
+    : { value: String(closure.sourceRecordId || closure.id), isSourceId: true };
+}
+
+function groupPopupClosures(closures) {
+  const groups = new Map();
+  for (const closure of closures) {
+    const reference = popupReference(closure);
+    const key = JSON.stringify([
+      closure.sourceKind, closure.source, closure.sourceUrl, reference,
+      closure.category, closure.responsible, closure.borough, closure.pedestrianArea,
+      closure.severity, closure.trafficLabel, closure.impact, closure.side,
+      closure.startDate, closure.endDate, closure.startTime, closure.endTime, closure.openEnded,
+      closure.periods, closure.schedule, closure.scheduleText, closure.publishedIntervals,
+      closure.recurringSchedule, closure.status, closure.informationOrigin,
+      closure.directionIsSegmentDescription ? null : closure.direction,
+      closure.geometryNote, closure.tunnelNote, closure.details, closure.evidence,
+      closure.rawType, closure.width, closure.sourceDescription
+    ]);
+    if (!groups.has(key)) groups.set(key, { closure, titles: new Set(), streets: new Set(), directions: new Set(), ids: [] });
+    const group = groups.get(key);
+    group.titles.add(String(closure.title || "").trim());
+    group.streets.add(String(closure.streets || "").trim());
+    if (closure.direction) group.directions.add(closure.direction);
+    group.ids.push(closure.id);
+  }
+  return [...groups.values()].map(({ closure, titles, streets, directions, ids }) => ({
+    ...closure,
+    title: [...titles].join(" / "),
+    streets: [...streets].join(" ; "),
+    direction: [...directions].join(" ; "),
+    popupRecordIds: ids
+  }));
+}
+
 function groupedPopupContent(closures) {
+  closures = groupPopupClosures(closures);
   const title = closures.length === 1 ? t("popup.one") : `${closures.length} ${t("popup.many")}`;
   const primaryColor = closures[0]?.color || "#ff8c00";
   return `
     <div class="popup-scroll-shell" style="--popup-header-color: ${primaryColor};">
-      <button class="popup-close-button" type="button" aria-label="Fermer les détails">&times;</button>
+      <button class="popup-close-button" type="button" aria-label="${t("map.closeDetails")}">&times;</button>
       <div class="popup-group-header">${title}</div>
       <div class="popup-scroll-body">
         ${closures.slice(0, 8).map(popupContent).join("")}
@@ -3927,7 +3983,7 @@ function isMeaningfulLavalValue(value) {
 }
 
 function addDirectionArrows(latLngs, closure, targetLayer) {
-  if (latLngs.length < 2) {
+  if (PEDESTRIAN_MODE || latLngs.length < 2) {
     return;
   }
 
@@ -4095,7 +4151,7 @@ function renderList(closures) {
   if (closures.length === 0) {
     const emptyCard = document.createElement("article");
     emptyCard.className = "closure-card";
-    emptyCard.innerHTML = `<h3>Aucune entrave auto trouvee</h3><p class="meta">Change la date, la recherche ou les types d'entraves. Les fermetures UCI commencent le 19 septembre 2026.</p>`;
+    emptyCard.innerHTML = `<h3>${t("list.none")}</h3><p class="meta">${t("list.noneHint")}</p>`;
     closureList.replaceChildren(emptyCard);
     return;
   }
@@ -4120,9 +4176,9 @@ function renderList(closures) {
       <p class="meta">${escapeHtml(closure.streets)}</p>
       <p class="meta"><strong>${closureDateRangeHtml(closure)}</strong></p>
       ${closureScheduleHtml(closure, "meta")}
-      <p class="meta"><strong>Moment:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
-      <p class="meta"><strong>Impact auto:</strong> ${escapeHtml(closure.impact)}</p>
-      <p class="meta"><strong>Direction:</strong> ${escapeHtml(closure.direction)}</p>
+      <p class="meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
+      <p class="meta"><strong>${t("popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
+      <p class="meta"><strong>${t("popup.direction")}:</strong> ${escapeHtml(closure.direction)}</p>
       <a href="${escapeHtml(closure.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(closure.source)}</a>
     `;
     addAbbreviationTooltips(card);
@@ -4142,7 +4198,7 @@ function renderList(closures) {
   if (closures.length > MAX_LIST_ITEMS) {
     const note = document.createElement("article");
     note.className = "closure-card list-note";
-    note.innerHTML = `<h3>${closures.length - MAX_LIST_ITEMS} autres segments affiches sur la carte</h3><p class="meta">Affinez par date, rue ou responsable pour reduire la liste.</p>`;
+    note.innerHTML = `<h3>${closures.length - MAX_LIST_ITEMS} ${t("list.more")}</h3><p class="meta">${t("list.refine")}</p>`;
     fragment.appendChild(note);
   }
 
@@ -4205,11 +4261,17 @@ function updateView({ fit = false } = {}) {
 }
 
 window.addEventListener("languagechange", () => {
+  if (PEDESTRIAN_MODE) window.PEDESTRIAN_MAP.refresh();
   updateLocationControl();
   menuToggle.setAttribute("aria-label", t(menuToggle.classList.contains("is-open") ? "menu.close" : "menu.open"));
   updateMapLegend();
   renderVisibleClosures();
   updateViewportList();
+  if (PEDESTRIAN_MODE && activeMapPopup) {
+    const closure = currentClosures.find((item) => item.id === selectedClosureId);
+    if (closure) openGroupedPopup(closure, activeMapPopup.getLatLng());
+    else map.closePopup();
+  }
 });
 
 function showMapStatus(message, mode = "loading") {
@@ -4247,6 +4309,7 @@ searchFilter.addEventListener("input", () => {
 categoryFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: false })));
 impactFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: false })));
 timeFilters.forEach((input) => input.addEventListener("change", () => updateView({ fit: false })));
+document.querySelectorAll(".pedestrian-area-filters input").forEach((input) => input.addEventListener("change", () => updateView({ fit: false })));
 dateHelp.addEventListener("click", () => {
   dateHelpBubble.hidden = !dateHelpBubble.hidden;
 });

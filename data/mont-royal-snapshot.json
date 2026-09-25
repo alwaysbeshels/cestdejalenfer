@@ -1,5 +1,5 @@
 {
-  "extractedAt": "2026-09-23T18:45:23.368Z",
+  "extractedAt": "2026-09-25T20:32:48.165Z",
   "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
   "municipality": "Ville de Mont-Royal",
   "records": [
@@ -3358,6 +3358,482 @@
               ]
             }
           ]
+        },
+        "archives": []
+      },
+      "geometrySource": {
+        "crs": "EPSG:3857",
+        "field": "data.entraves.entraves[].selected.path[].geometry.paths",
+        "outputCrs": "EPSG:4326"
+      }
+    },
+    {
+      "id": "b1848e19-c2ca-4158-821b-02cea67bb203",
+      "title": "CIRCULATION ALTERNANCE ROYALMOUNT - TRAVAUX - HQ",
+      "startDate": "2026-09-28",
+      "endDate": "2026-10-20",
+      "impact": "Fermeture direction Est sur Royalmount, entre Montview et Paré -Circulation en alternance, avec signaleurs de jour; et feux de circulation en soirée\nFermeture direction Est sur Royalmount, entre Montview et Paré -Circulation en alternance, avec signaleurs de jour; et feux de circulation en soirée",
+      "trafficLabels": [
+        "Entrave partielle",
+        "Modification de stationnement",
+        "Présence de signaleurs",
+        "Fermeture de trottoir"
+      ],
+      "streets": "Royalmount",
+      "direction": "Direction non publiée.",
+      "reference": "",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.67109029999875,
+            45.49064839999923
+          ],
+          [
+            -73.67235527169935,
+            45.48966396194348
+          ]
+        ]
+      },
+      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
+      "publishedProject": {
+        "data": {
+          "informations": {
+            "name": "CIRCULATION ALTERNANCE ROYALMOUNT - TRAVAUX - HQ",
+            "comment": "<p>Fermeture direction Est sur Royalmount, entre Montview et Paré</p><p>-Circulation en alternance, avec signaleurs de jour; et feux de circulation en soirée</p>",
+            "notes": "<p>Fermeture direction Est sur Royalmount, entre Montview et Paré</p><p>-Circulation en alternance, avec signaleurs de jour; et feux de circulation en soirée</p>",
+            "inchargeof": "Ann-Lise Annoual",
+            "phone": "(514)734-3037",
+            "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
+            "role": "Coordonatrice technique",
+            "agents": [],
+            "district": [],
+            "city": [],
+            "entity": [
+              "5"
+            ],
+            "step": "2",
+            "status": "1",
+            "workType": [],
+            "serviceInfra": [],
+            "servicePublic": [],
+            "workType1": [],
+            "workCategory": [],
+            "sector": [],
+            "dista": [],
+            "distp": "",
+            "publish": true,
+            "publishReport": true,
+            "citizenOpinions": false,
+            "notification": false,
+            "internalCommunication": false,
+            "externalCommunication": false,
+            "publicWork": false,
+            "publicMap": false,
+            "publicMapWork": true,
+            "typeMap": {
+              "waze": false,
+              "map": false
+            },
+            "passanger": {
+              "key": "passanger",
+              "title": {
+                "label": "Type d'usager",
+                "label_fr": "Type d'usager",
+                "label_en": "Passenger type"
+              },
+              "title1": {
+                "label": "Type d'impact",
+                "label_fr": "Type d'impact",
+                "label_en": "Impact type"
+              },
+              "show": true,
+              "showInList": false,
+              "search": false,
+              "value": [
+                {
+                  "value": "type1",
+                  "status": false,
+                  "content": "",
+                  "label": "Local ou usager du site",
+                  "label_fr": "Local ou usager du site",
+                  "label_en": "Local or site user"
+                },
+                {
+                  "value": "type2",
+                  "status": false,
+                  "content": "",
+                  "label": "Automobiliste",
+                  "label_fr": "Automobiliste",
+                  "label_en": "Driver"
+                },
+                {
+                  "value": "type3",
+                  "status": false,
+                  "content": "",
+                  "label": "Cycliste",
+                  "label_fr": "Cycliste",
+                  "label_en": "Cyclist"
+                },
+                {
+                  "value": "type4",
+                  "status": false,
+                  "content": "",
+                  "label": "Piéton",
+                  "label_fr": "Piéton",
+                  "label_en": "Pedestrian"
+                },
+                {
+                  "value": "type5",
+                  "status": false,
+                  "content": "",
+                  "label": "Transport collectif",
+                  "label_fr": "Transport collectif",
+                  "label_en": "Public transport"
+                },
+                {
+                  "value": "type6",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité véhicules d'urgence",
+                  "label_fr": "Accessibilité véhicules d'urgence",
+                  "label_en": "Emergency vehicles accessibility"
+                },
+                {
+                  "value": "type7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité personnes à mobilité réduite",
+                  "label_fr": "Accessibilité personnes à mobilité réduite",
+                  "label_en": "Accessibility for people with reduced mobility"
+                }
+              ]
+            },
+            "trafficImpact": {
+              "key": "trafficImpact",
+              "title": {
+                "label": "Impacts - Gestion de la circulation",
+                "label_fr": "Impacts - Gestion de la circulation",
+                "label_en": "Impacts - Traffic Management"
+              },
+              "title1": {
+                "label": "Impacts - Précisions",
+                "label_fr": "Impacts - Précisions",
+                "label_en": "Impacts - Details"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture complète",
+                  "label_fr": "Fermeture complète",
+                  "label_en": "Complete closure"
+                },
+                {
+                  "value": "2",
+                  "status": true,
+                  "content": "circulation en alternance",
+                  "label": "Entrave partielle",
+                  "label_fr": "Entrave partielle",
+                  "label_en": "Partial obstruction"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Circulation locale seulement",
+                  "label_fr": "Circulation locale seulement",
+                  "label_en": "Local Traffic only"
+                },
+                {
+                  "value": "4",
+                  "status": true,
+                  "content": "",
+                  "label": "Modification de stationnement",
+                  "label_fr": "Modification de stationnement",
+                  "label_en": "Parking modification"
+                },
+                {
+                  "value": "5",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet de détour",
+                  "label_fr": "Trajet de détour",
+                  "label_en": "Detour route"
+                },
+                {
+                  "value": "6",
+                  "status": true,
+                  "content": "",
+                  "label": "Présence de signaleurs",
+                  "label_fr": "Présence de signaleurs",
+                  "label_en": "Presence of flaggers"
+                },
+                {
+                  "value": "7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accès aux commerces maintenu",
+                  "label_fr": "Accès aux commerces maintenu",
+                  "label_en": "Access to shops maintained"
+                },
+                {
+                  "value": "8",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet ou arrêt de la STM",
+                  "label_fr": "Trajet ou arrêt de la STM",
+                  "label_en": "Routes or Stops STM"
+                },
+                {
+                  "value": "9",
+                  "status": false,
+                  "content": "",
+                  "label": "Corridor scolaire entravé",
+                  "label_fr": "Corridor scolaire entravé",
+                  "label_en": "Blocked school corridor"
+                },
+                {
+                  "value": "10",
+                  "status": false,
+                  "content": "",
+                  "label": "Réduction de la vitesse légale",
+                  "label_fr": "Réduction de la vitesse légale",
+                  "label_en": "Reduced legal speed limit"
+                },
+                {
+                  "value": "11",
+                  "status": true,
+                  "content": "",
+                  "label": "Fermeture de trottoir",
+                  "label_fr": "Fermeture de trottoir",
+                  "label_en": "Closure of sidewalk"
+                },
+                {
+                  "value": "12",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de piste cyclable",
+                  "label_fr": "Fermeture de piste cyclable",
+                  "label_en": "Closure of cycling path"
+                },
+                {
+                  "value": "13",
+                  "status": false,
+                  "content": "",
+                  "label": "Collectes des matières résiduelles",
+                  "label_fr": "Collectes des matières résiduelles",
+                  "label_en": "Collection of residual materials"
+                },
+                {
+                  "value": "14",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_fr": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_en": "Temporary closure of municipal services (Park, Chalet etc)"
+                }
+              ]
+            },
+            "portableWater": {
+              "key": "portableWater",
+              "title": {
+                "label": "Impacts - Alimentation en eau potable",
+                "label_fr": "Impacts - Alimentation en eau potable",
+                "label_en": "Impacts - Potable water supply"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": false,
+                  "content": "",
+                  "label": "Réseau temporaire d’eau potable",
+                  "label_fr": "Réseau temporaire d’eau potable",
+                  "label_en": "Temporary potable water network"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Interruption d’eau potable",
+                  "label_fr": "Interruption d’eau potable",
+                  "label_en": "Interruption of potable water"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Perte de pression temporaire",
+                  "label_fr": "Perte de pression temporaire",
+                  "label_en": "Temporary pressure loss"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Changement de couleur de l’eau - non nocif",
+                  "label_fr": "Changement de couleur de l’eau - non nocif",
+                  "label_en": "Water color change - not harmful"
+                }
+              ]
+            },
+            "documents": {
+              "allowed": false,
+              "plan": false,
+              "other": ""
+            },
+            "typeProject": "linear",
+            "requestDate": "",
+            "authorizeDate": "",
+            "cost": "",
+            "departments": [],
+            "eventType": "",
+            "permitInfo": {
+              "timeRange": "",
+              "applicantType": "",
+              "details": [],
+              "equipments": [],
+              "applicant": {
+                "name": "",
+                "phone": "",
+                "email": "",
+                "address": "",
+                "postalCode": ""
+              },
+              "isWeekendWork": false
+            }
+          },
+          "entraves": {
+            "date": [
+              1790568000000,
+              1792468800000
+            ],
+            "perimeter": 5.58,
+            "entraves": [
+              {
+                "selected": {
+                  "path": [
+                    {
+                      "geometry": {
+                        "type": "polyline",
+                        "paths": [
+                          [
+                            [
+                              -8201028.258381137,
+                              5699097.620184514
+                            ],
+                            [
+                              -8201169.074386715,
+                              5698941.297541509
+                            ]
+                          ]
+                        ],
+                        "hasM": false,
+                        "hasZ": false,
+                        "spatialReference": {
+                          "latestWkid": 3857,
+                          "wkid": 102100
+                        }
+                      },
+                      "attributes": {
+                        "ID_TRC": 1603067,
+                        "NOM_VOIE": "Royalmount",
+                        "TYP_VOIE": "avenue",
+                        "DIR_VOIE": " "
+                      },
+                      "suggest": false,
+                      "segment": {
+                        "attributes": {
+                          "ID_TRC": 1603067,
+                          "NOM_VOIE": "Royalmount",
+                          "TYP_VOIE": "avenue",
+                          "DIR_VOIE": " "
+                        },
+                        "geometry": {
+                          "type": "polyline",
+                          "paths": [
+                            [
+                              [
+                                -8200851.4312,
+                                5699293.9086000025
+                              ],
+                              [
+                                -8201172.6119,
+                                5698937.3706
+                              ]
+                            ]
+                          ],
+                          "hasM": false,
+                          "hasZ": false,
+                          "spatialReference": {
+                            "latestWkid": 3857,
+                            "wkid": 102100
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "startPoint": {
+                    "type": "point",
+                    "latitude": 45.490648399996125,
+                    "longitude": -73.67109029999378,
+                    "x": -8201028.258380584,
+                    "y": 5699097.620184022,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "endPoint": {
+                    "type": "point",
+                    "latitude": 45.48966396194038,
+                    "longitude": -73.67235527169437,
+                    "x": -8201169.074386162,
+                    "y": 5698941.2975410195,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "streetsTrack": [
+                    {
+                      "name": "Royalmount",
+                      "distance": 147.47601219702133
+                    }
+                  ]
+                },
+                "type": "linear",
+                "value": "Royalmount [Sur 147 m] ",
+                "label": "Royalmount <span class=\"paths-distance\">[Sur 147 m]</span> ",
+                "name": "Royalmount",
+                "showError": false,
+                "entraveId": "e4d214f0-8f43-11f1-82db-d98670f38205"
+              }
+            ],
+            "layer": "roadworks",
+            "validateEntraves": true,
+            "timeRange": "",
+            "timeOfDay": ""
+          },
+          "phases": [],
+          "projectType": {
+            "isQuick": false,
+            "isDraft": false,
+            "isPublished": true
+          },
+          "uuid": "b1848e19-c2ca-4158-821b-02cea67bb203",
+          "conflicts": []
         },
         "archives": []
       },
@@ -9999,450 +10475,6 @@
       }
     },
     {
-      "id": "442e8c5d-f0a4-4b1e-be8f-6813f103b9bc",
-      "title": "Montview - HQ",
-      "startDate": "2026-09-23",
-      "endDate": "2026-09-23",
-      "impact": "Une voie barrée - circulation en alternance\nUne voie barrée - circulation en alternance",
-      "trafficLabels": [
-        "Entrave partielle",
-        "Présence de signaleurs"
-      ],
-      "streets": "Montview",
-      "direction": "Direction non publiée.",
-      "reference": "",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -73.66951999999876,
-            45.491895599999225
-          ],
-          [
-            -73.6704421243179,
-            45.49245634181614
-          ]
-        ]
-      },
-      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
-      "publishedProject": {
-        "data": {
-          "informations": {
-            "name": "Montview - HQ",
-            "comment": "<p>Une voie barrée - circulation en alternance</p>",
-            "notes": "<p>Une voie barrée - circulation en alternance</p>",
-            "inchargeof": "Ann-Lise Annoual",
-            "phone": "(514)734-3037",
-            "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
-            "role": "Coordonatrice technique",
-            "agents": [],
-            "district": [],
-            "city": [],
-            "entity": [
-              "5"
-            ],
-            "step": "2",
-            "status": "1",
-            "workType": [],
-            "serviceInfra": "",
-            "servicePublic": "",
-            "workType1": [],
-            "workCategory": [],
-            "sector": [],
-            "dista": [],
-            "distp": "",
-            "publish": true,
-            "publishReport": true,
-            "citizenOpinions": false,
-            "notification": false,
-            "internalCommunication": false,
-            "externalCommunication": false,
-            "publicWork": false,
-            "publicMap": false,
-            "publicMapWork": true,
-            "typeMap": {
-              "waze": false,
-              "map": true
-            },
-            "passanger": {
-              "key": "passanger",
-              "title": {
-                "label": "Type d'usager",
-                "label_fr": "Type d'usager",
-                "label_en": "Passenger type"
-              },
-              "title1": {
-                "label": "Type d'impact",
-                "label_fr": "Type d'impact",
-                "label_en": "Impact type"
-              },
-              "show": true,
-              "showInList": false,
-              "search": false,
-              "value": [
-                {
-                  "value": "type1",
-                  "status": false,
-                  "content": "",
-                  "label": "Local ou usager du site",
-                  "label_fr": "Local ou usager du site",
-                  "label_en": "Local or site user"
-                },
-                {
-                  "value": "type2",
-                  "status": false,
-                  "content": "",
-                  "label": "Automobiliste",
-                  "label_fr": "Automobiliste",
-                  "label_en": "Driver"
-                },
-                {
-                  "value": "type3",
-                  "status": false,
-                  "content": "",
-                  "label": "Cycliste",
-                  "label_fr": "Cycliste",
-                  "label_en": "Cyclist"
-                },
-                {
-                  "value": "type4",
-                  "status": false,
-                  "content": "",
-                  "label": "Piéton",
-                  "label_fr": "Piéton",
-                  "label_en": "Pedestrian"
-                },
-                {
-                  "value": "type5",
-                  "status": false,
-                  "content": "",
-                  "label": "Transport collectif",
-                  "label_fr": "Transport collectif",
-                  "label_en": "Public transport"
-                },
-                {
-                  "value": "type6",
-                  "status": false,
-                  "content": "",
-                  "label": "Accessibilité véhicules d'urgence",
-                  "label_fr": "Accessibilité véhicules d'urgence",
-                  "label_en": "Emergency vehicles accessibility"
-                },
-                {
-                  "value": "type7",
-                  "status": false,
-                  "content": "",
-                  "label": "Accessibilité personnes à mobilité réduite",
-                  "label_fr": "Accessibilité personnes à mobilité réduite",
-                  "label_en": "Accessibility for people with reduced mobility"
-                }
-              ]
-            },
-            "trafficImpact": {
-              "key": "trafficImpact",
-              "title": {
-                "label": "Impacts - Gestion de la circulation",
-                "label_fr": "Impacts - Gestion de la circulation",
-                "label_en": "Impacts - Traffic Management"
-              },
-              "title1": {
-                "label": "Impacts - Précisions",
-                "label_fr": "Impacts - Précisions",
-                "label_en": "Impacts - Details"
-              },
-              "show": true,
-              "showInList": false,
-              "search": true,
-              "value": [
-                {
-                  "value": "1",
-                  "status": false,
-                  "content": "",
-                  "label": "Fermeture complète",
-                  "label_fr": "Fermeture complète",
-                  "label_en": "Complete closure"
-                },
-                {
-                  "value": "2",
-                  "status": true,
-                  "content": "",
-                  "label": "Entrave partielle",
-                  "label_fr": "Entrave partielle",
-                  "label_en": "Partial obstruction"
-                },
-                {
-                  "value": "3",
-                  "status": false,
-                  "content": "",
-                  "label": "Circulation locale seulement",
-                  "label_fr": "Circulation locale seulement",
-                  "label_en": "Local Traffic only"
-                },
-                {
-                  "value": "4",
-                  "status": false,
-                  "content": "",
-                  "label": "Modification de stationnement",
-                  "label_fr": "Modification de stationnement",
-                  "label_en": "Parking modification"
-                },
-                {
-                  "value": "5",
-                  "status": false,
-                  "content": "",
-                  "label": "Trajet de détour",
-                  "label_fr": "Trajet de détour",
-                  "label_en": "Detour route"
-                },
-                {
-                  "value": "6",
-                  "status": true,
-                  "content": "",
-                  "label": "Présence de signaleurs",
-                  "label_fr": "Présence de signaleurs",
-                  "label_en": "Presence of flaggers"
-                },
-                {
-                  "value": "7",
-                  "status": false,
-                  "content": "",
-                  "label": "Accès aux commerces maintenu",
-                  "label_fr": "Accès aux commerces maintenu",
-                  "label_en": "Access to shops maintained"
-                },
-                {
-                  "value": "8",
-                  "status": false,
-                  "content": "",
-                  "label": "Trajet ou arrêt de la STM",
-                  "label_fr": "Trajet ou arrêt de la STM",
-                  "label_en": "Routes or Stops STM"
-                },
-                {
-                  "value": "9",
-                  "status": false,
-                  "content": "",
-                  "label": "Corridor scolaire entravé",
-                  "label_fr": "Corridor scolaire entravé",
-                  "label_en": "Blocked school corridor"
-                },
-                {
-                  "value": "10",
-                  "status": false,
-                  "content": "",
-                  "label": "Réduction de la vitesse légale",
-                  "label_fr": "Réduction de la vitesse légale",
-                  "label_en": "Reduced legal speed limit"
-                },
-                {
-                  "value": "11",
-                  "status": false,
-                  "content": "",
-                  "label": "Fermeture de trottoir",
-                  "label_fr": "Fermeture de trottoir",
-                  "label_en": "Closure of sidewalk"
-                },
-                {
-                  "value": "12",
-                  "status": false,
-                  "content": "",
-                  "label": "Fermeture de piste cyclable",
-                  "label_fr": "Fermeture de piste cyclable",
-                  "label_en": "Closure of cycling path"
-                },
-                {
-                  "value": "13",
-                  "status": false,
-                  "content": "",
-                  "label": "Collectes des matières résiduelles",
-                  "label_fr": "Collectes des matières résiduelles",
-                  "label_en": "Collection of residual materials"
-                },
-                {
-                  "value": "14",
-                  "status": false,
-                  "content": "",
-                  "label": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
-                  "label_fr": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
-                  "label_en": "Temporary closure of municipal services (Park, Chalet etc)"
-                }
-              ]
-            },
-            "portableWater": {
-              "key": "portableWater",
-              "title": {
-                "label": "Impacts - Alimentation en eau potable",
-                "label_fr": "Impacts - Alimentation en eau potable",
-                "label_en": "Impacts - Potable water supply"
-              },
-              "show": true,
-              "showInList": false,
-              "search": true,
-              "value": [
-                {
-                  "value": "1",
-                  "status": false,
-                  "content": "",
-                  "label": "Réseau temporaire d’eau potable",
-                  "label_fr": "Réseau temporaire d’eau potable",
-                  "label_en": "Temporary potable water network"
-                },
-                {
-                  "value": "2",
-                  "status": false,
-                  "content": "",
-                  "label": "Interruption d’eau potable",
-                  "label_fr": "Interruption d’eau potable",
-                  "label_en": "Interruption of potable water"
-                },
-                {
-                  "value": "3",
-                  "status": false,
-                  "content": "",
-                  "label": "Perte de pression temporaire",
-                  "label_fr": "Perte de pression temporaire",
-                  "label_en": "Temporary pressure loss"
-                },
-                {
-                  "value": "4",
-                  "status": false,
-                  "content": "",
-                  "label": "Changement de couleur de l’eau - non nocif",
-                  "label_fr": "Changement de couleur de l’eau - non nocif",
-                  "label_en": "Water color change - not harmful"
-                }
-              ]
-            },
-            "documents": {
-              "allowed": false,
-              "plan": false,
-              "other": ""
-            },
-            "typeProject": "linear",
-            "requestDate": "",
-            "authorizeDate": "",
-            "cost": "",
-            "departments": [],
-            "eventType": "",
-            "permitInfo": {
-              "timeRange": "",
-              "applicantType": "",
-              "details": [],
-              "equipments": [],
-              "applicant": {
-                "name": "",
-                "phone": "",
-                "email": "",
-                "address": "",
-                "postalCode": ""
-              },
-              "isWeekendWork": false
-            }
-          },
-          "entraves": {
-            "date": [
-              1790164800000,
-              1790186400000
-            ],
-            "perimeter": 3.95,
-            "entraves": [
-              {
-                "selected": {
-                  "path": [
-                    {
-                      "geometry": {
-                        "type": "polyline",
-                        "paths": [
-                          [
-                            [
-                              -8200853.453384745,
-                              5699295.671714276
-                            ],
-                            [
-                              -8200956.1037944,
-                              5699384.717221925
-                            ]
-                          ]
-                        ],
-                        "hasM": false,
-                        "hasZ": false,
-                        "spatialReference": {
-                          "latestWkid": 3857,
-                          "wkid": 102100
-                        }
-                      },
-                      "attributes": {
-                        "ID_TRC": 1603073,
-                        "NOM_VOIE": "Montview",
-                        "TYP_VOIE": "chemin",
-                        "DIR_VOIE": " "
-                      }
-                    }
-                  ],
-                  "startPoint": {
-                    "type": "point",
-                    "latitude": 45.49189559999924,
-                    "longitude": -73.66951999999876,
-                    "x": -8200853.453384745,
-                    "y": 5699295.671714276,
-                    "spatialReference": {
-                      "latestWkid": 3857,
-                      "wkid": 102100
-                    },
-                    "hasM": false,
-                    "hasZ": false
-                  },
-                  "endPoint": {
-                    "type": "point",
-                    "latitude": 45.49245634181613,
-                    "longitude": -73.6704421243179,
-                    "x": -8200956.1037944,
-                    "y": 5699384.717221925,
-                    "spatialReference": {
-                      "latestWkid": 3857,
-                      "wkid": 102100
-                    },
-                    "hasM": false,
-                    "hasZ": false
-                  },
-                  "streetsTrack": [
-                    {
-                      "name": "Montview",
-                      "distance": 95.28755566917854
-                    }
-                  ]
-                },
-                "type": "linear",
-                "value": "Montview [Sur 95 m] ",
-                "label": "Montview <span class=\"paths-distance\">[Sur 95 m]</span> ",
-                "name": "Montview",
-                "showError": false,
-                "entraveId": "91da3a80-86a5-11f1-aa1d-853b18ab817f"
-              }
-            ],
-            "layer": "roadworks",
-            "validateEntraves": true,
-            "timeRange": "",
-            "timeOfDay": ""
-          },
-          "phases": [],
-          "projectType": {
-            "isQuick": false,
-            "isDraft": false,
-            "isPublished": true
-          },
-          "uuid": "442e8c5d-f0a4-4b1e-be8f-6813f103b9bc",
-          "conflicts": []
-        },
-        "archives": []
-      },
-      "geometrySource": {
-        "crs": "EPSG:3857",
-        "field": "data.entraves.entraves[].selected.path[].geometry.paths",
-        "outputCrs": "EPSG:4326"
-      }
-    },
-    {
       "id": "fab6214f-3596-4a51-9bb5-6b470788c789",
       "title": "Roosevelt (Moyle Dunkirk) 30-40 Roosevelt ",
       "startDate": "2026-02-10",
@@ -11722,6 +11754,2141 @@
         "field": "data.entraves.entraves[].selected.path[].geometry.paths",
         "outputCrs": "EPSG:4326"
       }
+    },
+    {
+      "id": "e65f86f7-0833-4985-a544-b8accf60d2fb",
+      "title": "TRAVAUX - Andover (Darnley.Delmeade) - HQ",
+      "startDate": "2026-09-28",
+      "endDate": "2026-10-20",
+      "impact": "Circulation sur Andover, direction Ouest. Fermeture de Andover, direction Est\nCirculation sur Andover, direction Ouest. Fermeture de Andover, direction Est",
+      "trafficLabels": [
+        "Fermeture complète"
+      ],
+      "streets": "Andover",
+      "direction": "Direction non publiée.",
+      "reference": "",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.67735849999875,
+            45.488426499999235
+          ],
+          [
+            -73.6774965827549,
+            45.48790525122831
+          ]
+        ]
+      },
+      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
+      "publishedProject": {
+        "data": {
+          "informations": {
+            "name": "TRAVAUX - Andover (Darnley.Delmeade) - HQ",
+            "comment": "<p>Circulation sur Andover, direction Ouest.</p><p>Fermeture de Andover, direction Est</p>",
+            "notes": "<p>Circulation sur Andover, direction Ouest.</p><p>Fermeture de Andover, direction Est</p>",
+            "inchargeof": "Ann-Lise Annoual",
+            "phone": "(514)734-3037",
+            "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
+            "role": "Coordonatrice technique",
+            "agents": [],
+            "district": [],
+            "city": [],
+            "entity": [
+              "5"
+            ],
+            "step": "2",
+            "status": "1",
+            "workType": [],
+            "serviceInfra": "",
+            "servicePublic": "",
+            "workType1": [],
+            "workCategory": [],
+            "sector": [],
+            "dista": [],
+            "distp": "",
+            "publish": true,
+            "publishReport": true,
+            "citizenOpinions": false,
+            "notification": false,
+            "internalCommunication": false,
+            "externalCommunication": false,
+            "publicWork": false,
+            "publicMap": false,
+            "publicMapWork": true,
+            "typeMap": {
+              "waze": false,
+              "map": true
+            },
+            "passanger": {
+              "key": "passanger",
+              "title": {
+                "label": "Type d'usager",
+                "label_fr": "Type d'usager",
+                "label_en": "Passenger type"
+              },
+              "title1": {
+                "label": "Type d'impact",
+                "label_fr": "Type d'impact",
+                "label_en": "Impact type"
+              },
+              "show": true,
+              "showInList": false,
+              "search": false,
+              "value": [
+                {
+                  "value": "type1",
+                  "status": false,
+                  "content": "",
+                  "label": "Local ou usager du site",
+                  "label_fr": "Local ou usager du site",
+                  "label_en": "Local or site user"
+                },
+                {
+                  "value": "type2",
+                  "status": false,
+                  "content": "",
+                  "label": "Automobiliste",
+                  "label_fr": "Automobiliste",
+                  "label_en": "Driver"
+                },
+                {
+                  "value": "type3",
+                  "status": false,
+                  "content": "",
+                  "label": "Cycliste",
+                  "label_fr": "Cycliste",
+                  "label_en": "Cyclist"
+                },
+                {
+                  "value": "type4",
+                  "status": false,
+                  "content": "",
+                  "label": "Piéton",
+                  "label_fr": "Piéton",
+                  "label_en": "Pedestrian"
+                },
+                {
+                  "value": "type5",
+                  "status": false,
+                  "content": "",
+                  "label": "Transport collectif",
+                  "label_fr": "Transport collectif",
+                  "label_en": "Public transport"
+                },
+                {
+                  "value": "type6",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité véhicules d'urgence",
+                  "label_fr": "Accessibilité véhicules d'urgence",
+                  "label_en": "Emergency vehicles accessibility"
+                },
+                {
+                  "value": "type7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité personnes à mobilité réduite",
+                  "label_fr": "Accessibilité personnes à mobilité réduite",
+                  "label_en": "Accessibility for people with reduced mobility"
+                }
+              ]
+            },
+            "trafficImpact": {
+              "key": "trafficImpact",
+              "title": {
+                "label": "Impacts - Gestion de la circulation",
+                "label_fr": "Impacts - Gestion de la circulation",
+                "label_en": "Impacts - Traffic Management"
+              },
+              "title1": {
+                "label": "Impacts - Précisions",
+                "label_fr": "Impacts - Précisions",
+                "label_en": "Impacts - Details"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": true,
+                  "content": "",
+                  "label": "Fermeture complète",
+                  "label_fr": "Fermeture complète",
+                  "label_en": "Complete closure"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Entrave partielle",
+                  "label_fr": "Entrave partielle",
+                  "label_en": "Partial obstruction"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Circulation locale seulement",
+                  "label_fr": "Circulation locale seulement",
+                  "label_en": "Local Traffic only"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Modification de stationnement",
+                  "label_fr": "Modification de stationnement",
+                  "label_en": "Parking modification"
+                },
+                {
+                  "value": "5",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet de détour",
+                  "label_fr": "Trajet de détour",
+                  "label_en": "Detour route"
+                },
+                {
+                  "value": "6",
+                  "status": false,
+                  "content": "",
+                  "label": "Présence de signaleurs",
+                  "label_fr": "Présence de signaleurs",
+                  "label_en": "Presence of flaggers"
+                },
+                {
+                  "value": "7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accès aux commerces maintenu",
+                  "label_fr": "Accès aux commerces maintenu",
+                  "label_en": "Access to shops maintained"
+                },
+                {
+                  "value": "8",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet ou arrêt de la STM",
+                  "label_fr": "Trajet ou arrêt de la STM",
+                  "label_en": "Routes or Stops STM"
+                },
+                {
+                  "value": "9",
+                  "status": false,
+                  "content": "",
+                  "label": "Corridor scolaire entravé",
+                  "label_fr": "Corridor scolaire entravé",
+                  "label_en": "Blocked school corridor"
+                },
+                {
+                  "value": "10",
+                  "status": false,
+                  "content": "",
+                  "label": "Réduction de la vitesse légale",
+                  "label_fr": "Réduction de la vitesse légale",
+                  "label_en": "Reduced legal speed limit"
+                },
+                {
+                  "value": "11",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de trottoir",
+                  "label_fr": "Fermeture de trottoir",
+                  "label_en": "Closure of sidewalk"
+                },
+                {
+                  "value": "12",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de piste cyclable",
+                  "label_fr": "Fermeture de piste cyclable",
+                  "label_en": "Closure of cycling path"
+                },
+                {
+                  "value": "13",
+                  "status": false,
+                  "content": "",
+                  "label": "Collectes des matières résiduelles",
+                  "label_fr": "Collectes des matières résiduelles",
+                  "label_en": "Collection of residual materials"
+                },
+                {
+                  "value": "14",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_fr": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_en": "Temporary closure of municipal services (Park, Chalet etc)"
+                }
+              ]
+            },
+            "portableWater": {
+              "key": "portableWater",
+              "title": {
+                "label": "Impacts - Alimentation en eau potable",
+                "label_fr": "Impacts - Alimentation en eau potable",
+                "label_en": "Impacts - Potable water supply"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": false,
+                  "content": "",
+                  "label": "Réseau temporaire d’eau potable",
+                  "label_fr": "Réseau temporaire d’eau potable",
+                  "label_en": "Temporary potable water network"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Interruption d’eau potable",
+                  "label_fr": "Interruption d’eau potable",
+                  "label_en": "Interruption of potable water"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Perte de pression temporaire",
+                  "label_fr": "Perte de pression temporaire",
+                  "label_en": "Temporary pressure loss"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Changement de couleur de l’eau - non nocif",
+                  "label_fr": "Changement de couleur de l’eau - non nocif",
+                  "label_en": "Water color change - not harmful"
+                }
+              ]
+            },
+            "documents": {
+              "allowed": false,
+              "plan": false,
+              "other": ""
+            },
+            "typeProject": "linear",
+            "requestDate": "",
+            "authorizeDate": "",
+            "cost": "",
+            "departments": [],
+            "eventType": "",
+            "permitInfo": {
+              "timeRange": "",
+              "applicantType": "",
+              "details": [],
+              "equipments": [],
+              "applicant": {
+                "name": "",
+                "phone": "",
+                "email": "",
+                "address": "",
+                "postalCode": ""
+              },
+              "isWeekendWork": false
+            }
+          },
+          "entraves": {
+            "date": [
+              1790568000000,
+              1792468800000
+            ],
+            "perimeter": 5.77,
+            "entraves": [
+              {
+                "selected": {
+                  "path": [
+                    {
+                      "geometry": {
+                        "type": "polyline",
+                        "paths": [
+                          [
+                            [
+                              -8201726.031213327,
+                              5698744.80015381
+                            ],
+                            [
+                              -8201741.402515429,
+                              5698662.032014308
+                            ]
+                          ]
+                        ],
+                        "hasM": false,
+                        "hasZ": false,
+                        "spatialReference": {
+                          "latestWkid": 3857,
+                          "wkid": 102100
+                        }
+                      },
+                      "attributes": {
+                        "ID_TRC": 4001156,
+                        "NOM_VOIE": "Andover",
+                        "TYP_VOIE": "avenue",
+                        "DIR_VOIE": " "
+                      },
+                      "suggest": false,
+                      "segment": {
+                        "attributes": {
+                          "ID_TRC": 4001156,
+                          "NOM_VOIE": "Andover",
+                          "TYP_VOIE": "avenue",
+                          "DIR_VOIE": " "
+                        },
+                        "geometry": {
+                          "type": "polyline",
+                          "paths": [
+                            [
+                              [
+                                -8201691.902999999,
+                                5699019.516199999
+                              ],
+                              [
+                                -8201684.015699999,
+                                5699003.224300005
+                              ],
+                              [
+                                -8201682.1533,
+                                5698989.136700004
+                              ],
+                              [
+                                -8201683.945799999,
+                                5698971.364500001
+                              ],
+                              [
+                                -8201743.0898,
+                                5698652.948100001
+                              ]
+                            ]
+                          ],
+                          "hasM": false,
+                          "hasZ": false,
+                          "spatialReference": {
+                            "latestWkid": 3857,
+                            "wkid": 102100
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "startPoint": {
+                    "type": "point",
+                    "latitude": 45.488426499999235,
+                    "longitude": -73.67735849999875,
+                    "x": -8201726.031213327,
+                    "y": 5698744.80015381,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "endPoint": {
+                    "type": "point",
+                    "latitude": 45.4879052512283,
+                    "longitude": -73.6774965827549,
+                    "x": -8201741.402515429,
+                    "y": 5698662.032014308,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "streetsTrack": [
+                    {
+                      "name": "Andover",
+                      "distance": 58.92936981833952
+                    }
+                  ]
+                },
+                "type": "linear",
+                "value": "Andover [Sur 58 m] ",
+                "label": "Andover <span class=\"paths-distance\">[Sur 58 m]</span> ",
+                "name": "Andover",
+                "showError": false,
+                "entraveId": "7ba322f0-b8e0-11f1-8511-4dddc79664ed"
+              }
+            ],
+            "layer": "roadworks",
+            "validateEntraves": true,
+            "timeRange": "",
+            "timeOfDay": ""
+          },
+          "phases": [],
+          "projectType": {
+            "isQuick": false,
+            "isDraft": false,
+            "isPublished": true
+          },
+          "uuid": "e65f86f7-0833-4985-a544-b8accf60d2fb",
+          "conflicts": []
+        },
+        "archives": []
+      },
+      "geometrySource": {
+        "crs": "EPSG:3857",
+        "field": "data.entraves.entraves[].selected.path[].geometry.paths",
+        "outputCrs": "EPSG:4326"
+      }
+    },
+    {
+      "id": "bd32f505-9f58-4d77-b1dc-b44f5191bd06",
+      "title": "Travaux pour la bibliothèque VMR",
+      "startDate": "2026-09-28",
+      "endDate": "2026-10-26",
+      "impact": "",
+      "trafficLabels": [],
+      "streets": "Sherwood",
+      "direction": "Direction non publiée.",
+      "reference": "",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.64619989999875,
+            45.51381539999926
+          ],
+          [
+            -73.64621207910913,
+            45.51381343471289
+          ],
+          [
+            -73.64623761461938,
+            45.51380827232242
+          ],
+          [
+            -73.64626157628126,
+            45.51380155007229
+          ],
+          [
+            -73.646393364347,
+            45.513752115967804
+          ]
+        ]
+      },
+      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
+      "publishedProject": {
+        "data": {
+          "informations": {
+            "name": "Travaux pour la bibliothèque VMR",
+            "comment": "",
+            "notes": "",
+            "inchargeof": "Ann-Lise Annoual",
+            "phone": "(514)734-3037",
+            "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
+            "role": "Coordonatrice technique",
+            "agents": [
+              {
+                "name": "Ann-Lise Annoual",
+                "role": "Coordonatrice technique",
+                "phone": "(514)734-3037",
+                "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
+                "organization": "",
+                "publicContact": true,
+                "isAuthor": true
+              },
+              {
+                "uuid": "06977c50-0870-45e7-9dd3-7f415464b285",
+                "name": "Marc Parent",
+                "email": "marc.parent@ville.mont-royal.qc.ca",
+                "role": "Coordonnateur technique – Génie",
+                "phone": "514-734-3040",
+                "publicContact": false,
+                "isStakeholder": true
+              }
+            ],
+            "district": [],
+            "city": [],
+            "entity": [
+              "1"
+            ],
+            "step": "2",
+            "status": "",
+            "workType": [],
+            "serviceInfra": "",
+            "servicePublic": "",
+            "workType1": [],
+            "workCategory": [],
+            "sector": [],
+            "dista": [],
+            "distp": "",
+            "publish": true,
+            "publishReport": true,
+            "citizenOpinions": false,
+            "notification": false,
+            "internalCommunication": false,
+            "externalCommunication": false,
+            "publicWork": false,
+            "publicMap": false,
+            "publicMapWork": true,
+            "typeMap": {
+              "waze": false,
+              "map": true
+            },
+            "passanger": {
+              "key": "passanger",
+              "title": {
+                "label": "Type d'usager",
+                "label_fr": "Type d'usager",
+                "label_en": "Passenger type"
+              },
+              "title1": {
+                "label": "Type d'impact",
+                "label_fr": "Type d'impact",
+                "label_en": "Impact type"
+              },
+              "show": true,
+              "showInList": false,
+              "search": false,
+              "value": [
+                {
+                  "value": "type1",
+                  "status": false,
+                  "content": "",
+                  "label": "Local ou usager du site",
+                  "label_fr": "Local ou usager du site",
+                  "label_en": "Local or site user"
+                },
+                {
+                  "value": "type2",
+                  "status": false,
+                  "content": "",
+                  "label": "Automobiliste",
+                  "label_fr": "Automobiliste",
+                  "label_en": "Driver"
+                },
+                {
+                  "value": "type3",
+                  "status": false,
+                  "content": "",
+                  "label": "Cycliste",
+                  "label_fr": "Cycliste",
+                  "label_en": "Cyclist"
+                },
+                {
+                  "value": "type4",
+                  "status": false,
+                  "content": "",
+                  "label": "Piéton",
+                  "label_fr": "Piéton",
+                  "label_en": "Pedestrian"
+                },
+                {
+                  "value": "type5",
+                  "status": false,
+                  "content": "",
+                  "label": "Transport collectif",
+                  "label_fr": "Transport collectif",
+                  "label_en": "Public transport"
+                },
+                {
+                  "value": "type6",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité véhicules d'urgence",
+                  "label_fr": "Accessibilité véhicules d'urgence",
+                  "label_en": "Emergency vehicles accessibility"
+                },
+                {
+                  "value": "type7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité personnes à mobilité réduite",
+                  "label_fr": "Accessibilité personnes à mobilité réduite",
+                  "label_en": "Accessibility for people with reduced mobility"
+                }
+              ]
+            },
+            "trafficImpact": {
+              "key": "trafficImpact",
+              "title": {
+                "label": "Impacts - Gestion de la circulation",
+                "label_fr": "Impacts - Gestion de la circulation",
+                "label_en": "Impacts - Traffic Management"
+              },
+              "title1": {
+                "label": "Impacts - Précisions",
+                "label_fr": "Impacts - Précisions",
+                "label_en": "Impacts - Details"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture complète",
+                  "label_fr": "Fermeture complète",
+                  "label_en": "Complete closure"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Entrave partielle",
+                  "label_fr": "Entrave partielle",
+                  "label_en": "Partial obstruction"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Circulation locale seulement",
+                  "label_fr": "Circulation locale seulement",
+                  "label_en": "Local Traffic only"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Modification de stationnement",
+                  "label_fr": "Modification de stationnement",
+                  "label_en": "Parking modification"
+                },
+                {
+                  "value": "5",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet de détour",
+                  "label_fr": "Trajet de détour",
+                  "label_en": "Detour route"
+                },
+                {
+                  "value": "6",
+                  "status": false,
+                  "content": "",
+                  "label": "Présence de signaleurs",
+                  "label_fr": "Présence de signaleurs",
+                  "label_en": "Presence of flaggers"
+                },
+                {
+                  "value": "7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accès aux commerces maintenu",
+                  "label_fr": "Accès aux commerces maintenu",
+                  "label_en": "Access to shops maintained"
+                },
+                {
+                  "value": "8",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet ou arrêt de la STM",
+                  "label_fr": "Trajet ou arrêt de la STM",
+                  "label_en": "Routes or Stops STM"
+                },
+                {
+                  "value": "9",
+                  "status": false,
+                  "content": "",
+                  "label": "Corridor scolaire entravé",
+                  "label_fr": "Corridor scolaire entravé",
+                  "label_en": "Blocked school corridor"
+                },
+                {
+                  "value": "10",
+                  "status": false,
+                  "content": "",
+                  "label": "Réduction de la vitesse légale",
+                  "label_fr": "Réduction de la vitesse légale",
+                  "label_en": "Reduced legal speed limit"
+                },
+                {
+                  "value": "11",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de trottoir",
+                  "label_fr": "Fermeture de trottoir",
+                  "label_en": "Closure of sidewalk"
+                },
+                {
+                  "value": "12",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de piste cyclable",
+                  "label_fr": "Fermeture de piste cyclable",
+                  "label_en": "Closure of cycling path"
+                },
+                {
+                  "value": "13",
+                  "status": false,
+                  "content": "",
+                  "label": "Collectes des matières résiduelles",
+                  "label_fr": "Collectes des matières résiduelles",
+                  "label_en": "Collection of residual materials"
+                },
+                {
+                  "value": "14",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_fr": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_en": "Temporary closure of municipal services (Park, Chalet etc)"
+                }
+              ]
+            },
+            "portableWater": {
+              "key": "portableWater",
+              "title": {
+                "label": "Impacts - Alimentation en eau potable",
+                "label_fr": "Impacts - Alimentation en eau potable",
+                "label_en": "Impacts - Potable water supply"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": false,
+                  "content": "",
+                  "label": "Réseau temporaire d’eau potable",
+                  "label_fr": "Réseau temporaire d’eau potable",
+                  "label_en": "Temporary potable water network"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Interruption d’eau potable",
+                  "label_fr": "Interruption d’eau potable",
+                  "label_en": "Interruption of potable water"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Perte de pression temporaire",
+                  "label_fr": "Perte de pression temporaire",
+                  "label_en": "Temporary pressure loss"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Changement de couleur de l’eau - non nocif",
+                  "label_fr": "Changement de couleur de l’eau - non nocif",
+                  "label_en": "Water color change - not harmful"
+                }
+              ]
+            },
+            "documents": {
+              "allowed": false,
+              "plan": false,
+              "other": ""
+            },
+            "typeProject": "linear",
+            "requestDate": "",
+            "authorizeDate": "",
+            "cost": "",
+            "departments": [],
+            "eventType": "",
+            "permitInfo": {
+              "timeRange": "",
+              "applicantType": "",
+              "details": [],
+              "equipments": [],
+              "applicant": {
+                "name": "",
+                "phone": "",
+                "email": "",
+                "address": "",
+                "postalCode": ""
+              },
+              "isWeekendWork": false
+            }
+          },
+          "entraves": {
+            "date": [
+              1790568000000,
+              1792987200000
+            ],
+            "perimeter": 3.55,
+            "entraves": [
+              {
+                "selected": {
+                  "path": [
+                    {
+                      "geometry": {
+                        "type": "polyline",
+                        "paths": [
+                          [
+                            [
+                              -8198257.471727496,
+                              5702777.184806303
+                            ],
+                            [
+                              -8198258.827499862,
+                              5702776.872599882
+                            ],
+                            [
+                              -8198261.67009986,
+                              5702776.052499879
+                            ],
+                            [
+                              -8198264.33749986,
+                              5702774.984599878
+                            ],
+                            [
+                              -8198279.00808023,
+                              5702767.131477364
+                            ]
+                          ]
+                        ],
+                        "hasM": false,
+                        "hasZ": false,
+                        "spatialReference": {
+                          "latestWkid": 3857,
+                          "wkid": 102100
+                        }
+                      },
+                      "attributes": {
+                        "ID_TRC": 1603745,
+                        "NOM_VOIE": "Sherwood",
+                        "TYP_VOIE": "croissant",
+                        "DIR_VOIE": " "
+                      },
+                      "suggest": false,
+                      "segment": {
+                        "attributes": {
+                          "ID_TRC": 1603745,
+                          "NOM_VOIE": "Sherwood",
+                          "TYP_VOIE": "croissant",
+                          "DIR_VOIE": " "
+                        },
+                        "geometry": {
+                          "type": "polyline",
+                          "paths": [
+                            [
+                              [
+                                -8198208.852299999,
+                                5702742.976900004
+                              ],
+                              [
+                                -8198217.771599999,
+                                5702751.571800001
+                              ],
+                              [
+                                -8198226.6756,
+                                5702761.616900004
+                              ],
+                              [
+                                -8198234.475,
+                                5702769.111200005
+                              ],
+                              [
+                                -8198239.829699999,
+                                5702773.233199999
+                              ],
+                              [
+                                -8198242.312899999,
+                                5702774.7064
+                              ],
+                              [
+                                -8198244.1939,
+                                5702775.584100001
+                              ],
+                              [
+                                -8198247.180599999,
+                                5702776.4793
+                              ],
+                              [
+                                -8198251.671399999,
+                                5702777.328900002
+                              ],
+                              [
+                                -8198253.932599999,
+                                5702777.3598000035
+                              ],
+                              [
+                                -8198255.996199999,
+                                5702777.3495000005
+                              ],
+                              [
+                                -8198257.2963,
+                                5702777.226300001
+                              ],
+                              [
+                                -8198258.827499999,
+                                5702776.872600004
+                              ],
+                              [
+                                -8198261.6701,
+                                5702776.052500002
+                              ],
+                              [
+                                -8198264.3374999985,
+                                5702774.9846
+                              ],
+                              [
+                                -8198323.2853,
+                                5702743.43
+                              ],
+                              [
+                                -8198324.463,
+                                5702743.0832
+                              ],
+                              [
+                                -8198326.2345,
+                                5702742.941500001
+                              ],
+                              [
+                                -8198329.4232,
+                                5702743.2250000015
+                              ],
+                              [
+                                -8198334.661799999,
+                                5702744.0101
+                              ]
+                            ]
+                          ],
+                          "hasM": false,
+                          "hasZ": false,
+                          "spatialReference": {
+                            "latestWkid": 3857,
+                            "wkid": 102100
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "startPoint": {
+                    "type": "point",
+                    "latitude": 45.51381539999923,
+                    "longitude": -73.64619989999875,
+                    "x": -8198257.471727496,
+                    "y": 5702777.184806303,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "endPoint": {
+                    "type": "point",
+                    "latitude": 45.5137521159678,
+                    "longitude": -73.646393364347,
+                    "x": -8198279.00808023,
+                    "y": 5702767.131477364,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "streetsTrack": [
+                    {
+                      "name": "Sherwood",
+                      "distance": 16.74026628814189
+                    }
+                  ]
+                },
+                "type": "linear",
+                "value": "Sherwood [Sur 16 m] ",
+                "label": "Sherwood <span class=\"paths-distance\">[Sur 16 m]</span> ",
+                "name": "Sherwood",
+                "showError": false,
+                "entraveId": "807bc270-b843-11f1-bc36-5929b6c23f6e"
+              }
+            ],
+            "layer": "roadworks",
+            "validateEntraves": true,
+            "timeRange": "",
+            "timeOfDay": ""
+          },
+          "phases": [],
+          "projectType": {
+            "isQuick": true,
+            "isDraft": false,
+            "isPublished": true,
+            "advanceOptions": {
+              "detour": false,
+              "phaseAndDetour": false
+            }
+          },
+          "uuid": "bd32f505-9f58-4d77-b1dc-b44f5191bd06",
+          "conflicts": []
+        },
+        "archives": []
+      },
+      "geometrySource": {
+        "crs": "EPSG:3857",
+        "field": "data.entraves.entraves[].selected.path[].geometry.paths",
+        "outputCrs": "EPSG:4326"
+      }
+    },
+    {
+      "id": "4c773c68-c7cd-4fd5-b1e5-7e5cd773b8b2",
+      "title": "TRAVAUX - Dalton (Cavendish.Andover) - HQ",
+      "startDate": "2026-09-28",
+      "endDate": "2026-10-20",
+      "impact": "Circulation en double sens sur Dalton, direction Nord. Fermeture de Dalton, direction sud\nCirculation en double sens sur Dalton, direction Nord. Fermeture de Dalton, direction sud",
+      "trafficLabels": [
+        "Fermeture complète"
+      ],
+      "streets": "Dalton",
+      "direction": "Direction non publiée.",
+      "reference": "",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.68073432380099,
+            45.48645163879928
+          ],
+          [
+            -73.68337240449922,
+            45.48805245339713
+          ]
+        ]
+      },
+      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
+      "publishedProject": {
+        "data": {
+          "informations": {
+            "name": "TRAVAUX - Dalton (Cavendish.Andover) - HQ",
+            "comment": "<p>Circulation en double sens sur Dalton, direction Nord.</p><p>Fermeture de Dalton, direction sud</p>",
+            "notes": "<p>Circulation en double sens sur Dalton, direction Nord.</p><p>Fermeture de Dalton, direction sud</p>",
+            "inchargeof": "Ann-Lise Annoual",
+            "phone": "(514)734-3037",
+            "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
+            "role": "Coordonatrice technique",
+            "agents": [
+              {
+                "name": "Ann-Lise Annoual",
+                "role": "Coordonatrice technique",
+                "phone": "(514)734-3037",
+                "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
+                "organization": "",
+                "publicContact": true,
+                "isAuthor": true
+              }
+            ],
+            "district": [],
+            "city": [],
+            "entity": [
+              "5"
+            ],
+            "step": "2",
+            "status": "1",
+            "workType": [],
+            "serviceInfra": "",
+            "servicePublic": "",
+            "workType1": [],
+            "workCategory": [],
+            "sector": [],
+            "dista": [],
+            "distp": "",
+            "publish": true,
+            "publishReport": true,
+            "citizenOpinions": false,
+            "notification": false,
+            "internalCommunication": false,
+            "externalCommunication": false,
+            "publicWork": false,
+            "publicMap": false,
+            "publicMapWork": true,
+            "typeMap": {
+              "waze": false,
+              "map": true
+            },
+            "passanger": {
+              "key": "passanger",
+              "title": {
+                "label": "Type d'usager",
+                "label_fr": "Type d'usager",
+                "label_en": "Passenger type"
+              },
+              "title1": {
+                "label": "Type d'impact",
+                "label_fr": "Type d'impact",
+                "label_en": "Impact type"
+              },
+              "show": true,
+              "showInList": false,
+              "search": false,
+              "value": [
+                {
+                  "value": "type1",
+                  "status": false,
+                  "content": "",
+                  "label": "Local ou usager du site",
+                  "label_fr": "Local ou usager du site",
+                  "label_en": "Local or site user"
+                },
+                {
+                  "value": "type2",
+                  "status": false,
+                  "content": "",
+                  "label": "Automobiliste",
+                  "label_fr": "Automobiliste",
+                  "label_en": "Driver"
+                },
+                {
+                  "value": "type3",
+                  "status": false,
+                  "content": "",
+                  "label": "Cycliste",
+                  "label_fr": "Cycliste",
+                  "label_en": "Cyclist"
+                },
+                {
+                  "value": "type4",
+                  "status": false,
+                  "content": "",
+                  "label": "Piéton",
+                  "label_fr": "Piéton",
+                  "label_en": "Pedestrian"
+                },
+                {
+                  "value": "type5",
+                  "status": false,
+                  "content": "",
+                  "label": "Transport collectif",
+                  "label_fr": "Transport collectif",
+                  "label_en": "Public transport"
+                },
+                {
+                  "value": "type6",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité véhicules d'urgence",
+                  "label_fr": "Accessibilité véhicules d'urgence",
+                  "label_en": "Emergency vehicles accessibility"
+                },
+                {
+                  "value": "type7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité personnes à mobilité réduite",
+                  "label_fr": "Accessibilité personnes à mobilité réduite",
+                  "label_en": "Accessibility for people with reduced mobility"
+                }
+              ]
+            },
+            "trafficImpact": {
+              "key": "trafficImpact",
+              "title": {
+                "label": "Impacts - Gestion de la circulation",
+                "label_fr": "Impacts - Gestion de la circulation",
+                "label_en": "Impacts - Traffic Management"
+              },
+              "title1": {
+                "label": "Impacts - Précisions",
+                "label_fr": "Impacts - Précisions",
+                "label_en": "Impacts - Details"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": true,
+                  "content": "",
+                  "label": "Fermeture complète",
+                  "label_fr": "Fermeture complète",
+                  "label_en": "Complete closure"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Entrave partielle",
+                  "label_fr": "Entrave partielle",
+                  "label_en": "Partial obstruction"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Circulation locale seulement",
+                  "label_fr": "Circulation locale seulement",
+                  "label_en": "Local Traffic only"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Modification de stationnement",
+                  "label_fr": "Modification de stationnement",
+                  "label_en": "Parking modification"
+                },
+                {
+                  "value": "5",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet de détour",
+                  "label_fr": "Trajet de détour",
+                  "label_en": "Detour route"
+                },
+                {
+                  "value": "6",
+                  "status": false,
+                  "content": "",
+                  "label": "Présence de signaleurs",
+                  "label_fr": "Présence de signaleurs",
+                  "label_en": "Presence of flaggers"
+                },
+                {
+                  "value": "7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accès aux commerces maintenu",
+                  "label_fr": "Accès aux commerces maintenu",
+                  "label_en": "Access to shops maintained"
+                },
+                {
+                  "value": "8",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet ou arrêt de la STM",
+                  "label_fr": "Trajet ou arrêt de la STM",
+                  "label_en": "Routes or Stops STM"
+                },
+                {
+                  "value": "9",
+                  "status": false,
+                  "content": "",
+                  "label": "Corridor scolaire entravé",
+                  "label_fr": "Corridor scolaire entravé",
+                  "label_en": "Blocked school corridor"
+                },
+                {
+                  "value": "10",
+                  "status": false,
+                  "content": "",
+                  "label": "Réduction de la vitesse légale",
+                  "label_fr": "Réduction de la vitesse légale",
+                  "label_en": "Reduced legal speed limit"
+                },
+                {
+                  "value": "11",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de trottoir",
+                  "label_fr": "Fermeture de trottoir",
+                  "label_en": "Closure of sidewalk"
+                },
+                {
+                  "value": "12",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de piste cyclable",
+                  "label_fr": "Fermeture de piste cyclable",
+                  "label_en": "Closure of cycling path"
+                },
+                {
+                  "value": "13",
+                  "status": false,
+                  "content": "",
+                  "label": "Collectes des matières résiduelles",
+                  "label_fr": "Collectes des matières résiduelles",
+                  "label_en": "Collection of residual materials"
+                },
+                {
+                  "value": "14",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_fr": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_en": "Temporary closure of municipal services (Park, Chalet etc)"
+                }
+              ]
+            },
+            "portableWater": {
+              "key": "portableWater",
+              "title": {
+                "label": "Impacts - Alimentation en eau potable",
+                "label_fr": "Impacts - Alimentation en eau potable",
+                "label_en": "Impacts - Potable water supply"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": false,
+                  "content": "",
+                  "label": "Réseau temporaire d’eau potable",
+                  "label_fr": "Réseau temporaire d’eau potable",
+                  "label_en": "Temporary potable water network"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Interruption d’eau potable",
+                  "label_fr": "Interruption d’eau potable",
+                  "label_en": "Interruption of potable water"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Perte de pression temporaire",
+                  "label_fr": "Perte de pression temporaire",
+                  "label_en": "Temporary pressure loss"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Changement de couleur de l’eau - non nocif",
+                  "label_fr": "Changement de couleur de l’eau - non nocif",
+                  "label_en": "Water color change - not harmful"
+                }
+              ]
+            },
+            "documents": {
+              "allowed": false,
+              "plan": false,
+              "other": ""
+            },
+            "typeProject": "linear",
+            "requestDate": "",
+            "authorizeDate": "",
+            "cost": "",
+            "departments": [],
+            "eventType": "",
+            "permitInfo": {
+              "timeRange": "",
+              "applicantType": "",
+              "details": [],
+              "equipments": [],
+              "applicant": {
+                "name": "",
+                "phone": "",
+                "email": "",
+                "address": "",
+                "postalCode": ""
+              },
+              "isWeekendWork": false
+            }
+          },
+          "entraves": {
+            "date": [
+              1790568000000,
+              1792468800000
+            ],
+            "perimeter": 5.77,
+            "entraves": [
+              {
+                "selected": {
+                  "path": [
+                    {
+                      "geometry": {
+                        "type": "polyline",
+                        "paths": [
+                          [
+                            [
+                              -8202101.826199999,
+                              5698431.2195999995
+                            ],
+                            [
+                              -8202395.495999999,
+                              5698685.4059000015
+                            ]
+                          ]
+                        ],
+                        "hasM": false,
+                        "hasZ": false,
+                        "spatialReference": {
+                          "latestWkid": 3857,
+                          "wkid": 102100
+                        }
+                      },
+                      "attributes": {
+                        "FID": 17220,
+                        "ID_TRC": 1603089,
+                        "DEB_GCH": 0,
+                        "FIN_GCH": 0,
+                        "ARR_GCH": "N/A",
+                        "SENS_CIR": -1,
+                        "CLASSE": 0,
+                        "LIE_VOIE": " ",
+                        "TYP_VOIE": "chemin",
+                        "DIR_VOIE": " ",
+                        "NOM_VOIE": "Dalton",
+                        "DEB_DRT": 0,
+                        "FIN_DRT": 0,
+                        "ARR_DRT": "N/A",
+                        "LIM_GCH": "Mont-Royal",
+                        "LIM_DRT": "Mont-Royal",
+                        "Shape__Length": 0.0030857860727625756
+                      }
+                    }
+                  ],
+                  "startPoint": {
+                    "type": "point",
+                    "latitude": 45.48805245339711,
+                    "longitude": -73.68337240449922,
+                    "x": -8202395.495999999,
+                    "y": 5698685.4059000015,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "endPoint": {
+                    "type": "point",
+                    "latitude": 45.48645163879926,
+                    "longitude": -73.68073432380099,
+                    "x": -8202101.826199999,
+                    "y": 5698431.2195999995,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "streetsTrack": [
+                    {
+                      "name": "Dalton",
+                      "distance": 272.3723616766596
+                    }
+                  ]
+                },
+                "type": "linear",
+                "value": "Dalton [Sur 272 m] ",
+                "label": "Dalton <span class=\"paths-distance\">[Sur 272 m]</span> ",
+                "name": "Dalton",
+                "showError": false,
+                "entraveId": "7ba322f0-b8e0-11f1-8511-4dddc79664ed"
+              }
+            ],
+            "layer": "roadworks",
+            "validateEntraves": true,
+            "timeRange": "",
+            "timeOfDay": ""
+          },
+          "phases": [],
+          "projectType": {
+            "isQuick": true,
+            "isDraft": false,
+            "isPublished": true,
+            "advanceOptions": {
+              "detour": false,
+              "phaseAndDetour": false
+            }
+          },
+          "uuid": "4c773c68-c7cd-4fd5-b1e5-7e5cd773b8b2",
+          "conflicts": []
+        },
+        "archives": []
+      },
+      "geometrySource": {
+        "crs": "EPSG:3857",
+        "field": "data.entraves.entraves[].selected.path[].geometry.paths",
+        "outputCrs": "EPSG:4326"
+      }
+    },
+    {
+      "id": "adcdab33-db1c-4983-8090-c4bff56e6f31",
+      "title": "Lucerne.Glengarry - Axxys Construction",
+      "startDate": "2026-09-29",
+      "endDate": "2026-10-07",
+      "impact": "Lucerne sera entravée pour 4 jours et Glengarry, pour 2 jours. Aucune des rues ne sera entravée simultanément.\nLucerne sera entravée pour 4 jours et Glengarry, pour 2 jours. Aucune des rues ne sera entravée simultanément.",
+      "trafficLabels": [],
+      "streets": "Lucerne / Glengarry",
+      "direction": "Direction non publiée.",
+      "reference": "",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.66090279848348,
+              45.507238330963474
+            ],
+            [
+              -73.66100915002997,
+              45.5072723830377
+            ],
+            [
+              -73.66207337516391,
+              45.50757344292043
+            ]
+          ],
+          [
+            [
+              -73.66049506036254,
+              45.50793745232457
+            ],
+            [
+              -73.66052658134754,
+              45.507881413645464
+            ],
+            [
+              -73.66086420775719,
+              45.50730543409759
+            ],
+            [
+              -73.66090279848348,
+              45.507238330963474
+            ]
+          ]
+        ]
+      },
+      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
+      "publishedProject": {
+        "data": {
+          "informations": {
+            "name": "Lucerne.Glengarry - Axxys Construction",
+            "comment": "<p>Lucerne sera entravée pour 4 jours et Glengarry, pour 2 jours.</p><p>Aucune des rues ne sera entravée simultanément.</p>",
+            "notes": "<p>Lucerne sera entravée pour 4 jours et Glengarry, pour 2 jours. </p><p>Aucune des rues ne sera entravée simultanément. </p>",
+            "inchargeof": "Ann-Lise Annoual",
+            "phone": "(514)734-3037",
+            "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
+            "role": "Coordonatrice technique",
+            "agents": [
+              {
+                "name": "Ann-Lise Annoual",
+                "role": "Coordonatrice technique",
+                "phone": "(514)734-3037",
+                "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
+                "organization": "",
+                "publicContact": true,
+                "isAuthor": true
+              }
+            ],
+            "district": [],
+            "city": [],
+            "entity": [
+              "4"
+            ],
+            "step": "2",
+            "status": "1",
+            "workType": [],
+            "serviceInfra": "",
+            "servicePublic": "",
+            "workType1": [],
+            "workCategory": [],
+            "sector": [],
+            "dista": [],
+            "distp": "",
+            "publish": true,
+            "publishReport": true,
+            "citizenOpinions": false,
+            "notification": false,
+            "internalCommunication": false,
+            "externalCommunication": false,
+            "publicWork": false,
+            "publicMap": false,
+            "publicMapWork": true,
+            "typeMap": {
+              "waze": false,
+              "map": true
+            },
+            "passanger": {
+              "key": "passanger",
+              "title": {
+                "label": "Type d'usager",
+                "label_fr": "Type d'usager",
+                "label_en": "Passenger type"
+              },
+              "title1": {
+                "label": "Type d'impact",
+                "label_fr": "Type d'impact",
+                "label_en": "Impact type"
+              },
+              "show": true,
+              "showInList": false,
+              "search": false,
+              "value": [
+                {
+                  "value": "type1",
+                  "status": false,
+                  "content": "",
+                  "label": "Local ou usager du site",
+                  "label_fr": "Local ou usager du site",
+                  "label_en": "Local or site user"
+                },
+                {
+                  "value": "type2",
+                  "status": false,
+                  "content": "",
+                  "label": "Automobiliste",
+                  "label_fr": "Automobiliste",
+                  "label_en": "Driver"
+                },
+                {
+                  "value": "type3",
+                  "status": false,
+                  "content": "",
+                  "label": "Cycliste",
+                  "label_fr": "Cycliste",
+                  "label_en": "Cyclist"
+                },
+                {
+                  "value": "type4",
+                  "status": false,
+                  "content": "",
+                  "label": "Piéton",
+                  "label_fr": "Piéton",
+                  "label_en": "Pedestrian"
+                },
+                {
+                  "value": "type5",
+                  "status": false,
+                  "content": "",
+                  "label": "Transport collectif",
+                  "label_fr": "Transport collectif",
+                  "label_en": "Public transport"
+                },
+                {
+                  "value": "type6",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité véhicules d'urgence",
+                  "label_fr": "Accessibilité véhicules d'urgence",
+                  "label_en": "Emergency vehicles accessibility"
+                },
+                {
+                  "value": "type7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité personnes à mobilité réduite",
+                  "label_fr": "Accessibilité personnes à mobilité réduite",
+                  "label_en": "Accessibility for people with reduced mobility"
+                }
+              ]
+            },
+            "trafficImpact": {
+              "key": "trafficImpact",
+              "title": {
+                "label": "Impacts - Gestion de la circulation",
+                "label_fr": "Impacts - Gestion de la circulation",
+                "label_en": "Impacts - Traffic Management"
+              },
+              "title1": {
+                "label": "Impacts - Précisions",
+                "label_fr": "Impacts - Précisions",
+                "label_en": "Impacts - Details"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture complète",
+                  "label_fr": "Fermeture complète",
+                  "label_en": "Complete closure"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Entrave partielle",
+                  "label_fr": "Entrave partielle",
+                  "label_en": "Partial obstruction"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Circulation locale seulement",
+                  "label_fr": "Circulation locale seulement",
+                  "label_en": "Local Traffic only"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Modification de stationnement",
+                  "label_fr": "Modification de stationnement",
+                  "label_en": "Parking modification"
+                },
+                {
+                  "value": "5",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet de détour",
+                  "label_fr": "Trajet de détour",
+                  "label_en": "Detour route"
+                },
+                {
+                  "value": "6",
+                  "status": false,
+                  "content": "",
+                  "label": "Présence de signaleurs",
+                  "label_fr": "Présence de signaleurs",
+                  "label_en": "Presence of flaggers"
+                },
+                {
+                  "value": "7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accès aux commerces maintenu",
+                  "label_fr": "Accès aux commerces maintenu",
+                  "label_en": "Access to shops maintained"
+                },
+                {
+                  "value": "8",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet ou arrêt de la STM",
+                  "label_fr": "Trajet ou arrêt de la STM",
+                  "label_en": "Routes or Stops STM"
+                },
+                {
+                  "value": "9",
+                  "status": false,
+                  "content": "",
+                  "label": "Corridor scolaire entravé",
+                  "label_fr": "Corridor scolaire entravé",
+                  "label_en": "Blocked school corridor"
+                },
+                {
+                  "value": "10",
+                  "status": false,
+                  "content": "",
+                  "label": "Réduction de la vitesse légale",
+                  "label_fr": "Réduction de la vitesse légale",
+                  "label_en": "Reduced legal speed limit"
+                },
+                {
+                  "value": "11",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de trottoir",
+                  "label_fr": "Fermeture de trottoir",
+                  "label_en": "Closure of sidewalk"
+                },
+                {
+                  "value": "12",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de piste cyclable",
+                  "label_fr": "Fermeture de piste cyclable",
+                  "label_en": "Closure of cycling path"
+                },
+                {
+                  "value": "13",
+                  "status": false,
+                  "content": "",
+                  "label": "Collectes des matières résiduelles",
+                  "label_fr": "Collectes des matières résiduelles",
+                  "label_en": "Collection of residual materials"
+                },
+                {
+                  "value": "14",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_fr": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_en": "Temporary closure of municipal services (Park, Chalet etc)"
+                }
+              ]
+            },
+            "portableWater": {
+              "key": "portableWater",
+              "title": {
+                "label": "Impacts - Alimentation en eau potable",
+                "label_fr": "Impacts - Alimentation en eau potable",
+                "label_en": "Impacts - Potable water supply"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": false,
+                  "content": "",
+                  "label": "Réseau temporaire d’eau potable",
+                  "label_fr": "Réseau temporaire d’eau potable",
+                  "label_en": "Temporary potable water network"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Interruption d’eau potable",
+                  "label_fr": "Interruption d’eau potable",
+                  "label_en": "Interruption of potable water"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Perte de pression temporaire",
+                  "label_fr": "Perte de pression temporaire",
+                  "label_en": "Temporary pressure loss"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Changement de couleur de l’eau - non nocif",
+                  "label_fr": "Changement de couleur de l’eau - non nocif",
+                  "label_en": "Water color change - not harmful"
+                }
+              ]
+            },
+            "documents": {
+              "allowed": false,
+              "plan": false,
+              "other": ""
+            },
+            "typeProject": "linear",
+            "requestDate": "",
+            "authorizeDate": "",
+            "cost": "",
+            "departments": [],
+            "eventType": "",
+            "permitInfo": {
+              "timeRange": "",
+              "applicantType": "",
+              "details": [],
+              "equipments": [],
+              "applicant": {
+                "name": "",
+                "phone": "",
+                "email": "",
+                "address": "",
+                "postalCode": ""
+              },
+              "isWeekendWork": false
+            }
+          },
+          "entraves": {
+            "date": [
+              1790679600000,
+              1791399600000
+            ],
+            "perimeter": 20,
+            "entraves": [
+              {
+                "selected": {
+                  "path": [
+                    {
+                      "geometry": {
+                        "type": "polyline",
+                        "paths": [
+                          [
+                            [
+                              -8199894.1909,
+                              5701732.409200005
+                            ],
+                            [
+                              -8199906.0299,
+                              5701737.818100005
+                            ],
+                            [
+                              -8200024.4989,
+                              5701785.639200002
+                            ]
+                          ]
+                        ],
+                        "hasM": false,
+                        "hasZ": false,
+                        "spatialReference": {
+                          "latestWkid": 3857,
+                          "wkid": 102100
+                        }
+                      },
+                      "attributes": {
+                        "FID": 34042,
+                        "ID_TRC": 4000543,
+                        "DEB_GCH": 2300,
+                        "FIN_GCH": 2400,
+                        "ARR_GCH": "N/A",
+                        "SENS_CIR": 0,
+                        "CLASSE": 6,
+                        "LIE_VOIE": " ",
+                        "TYP_VOIE": "chemin",
+                        "DIR_VOIE": " ",
+                        "NOM_VOIE": "Lucerne",
+                        "DEB_DRT": 2375,
+                        "FIN_DRT": 2459,
+                        "ARR_DRT": "N/A",
+                        "LIM_GCH": "Mont-Royal",
+                        "LIM_DRT": "Mont-Royal",
+                        "Shape__Length": 0.0012176589753011753
+                      }
+                    }
+                  ],
+                  "startPoint": {
+                    "type": "point",
+                    "latitude": 45.50723833096347,
+                    "longitude": -73.66090279848348,
+                    "x": -8199894.1909,
+                    "y": 5701732.409200005,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "endPoint": {
+                    "type": "point",
+                    "latitude": 45.507573442920425,
+                    "longitude": -73.66207337516391,
+                    "x": -8200024.4989,
+                    "y": 5701785.639200002,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "streetsTrack": [
+                    {
+                      "name": "Lucerne",
+                      "distance": 98.77779038444258
+                    }
+                  ]
+                },
+                "type": "linear",
+                "value": "Lucerne [Sur 98 m] ",
+                "label": "Lucerne <span class=\"paths-distance\">[Sur 98 m]</span> ",
+                "name": "Lucerne",
+                "showError": false,
+                "entraveId": "928e4a20-b8eb-11f1-99cc-05caf768334e"
+              },
+              {
+                "entraveId": "a5c8ed70-b8eb-11f1-99cc-05caf768334e",
+                "selected": {
+                  "path": [
+                    {
+                      "geometry": {
+                        "type": "polyline",
+                        "paths": [
+                          [
+                            [
+                              -8199848.8017,
+                              5701843.459700003
+                            ],
+                            [
+                              -8199852.3106,
+                              5701834.558300003
+                            ],
+                            [
+                              -8199889.895,
+                              5701743.068000004
+                            ],
+                            [
+                              -8199894.1909,
+                              5701732.409200005
+                            ]
+                          ]
+                        ],
+                        "hasM": false,
+                        "hasZ": false,
+                        "spatialReference": {
+                          "latestWkid": 3857,
+                          "wkid": 102100
+                        }
+                      },
+                      "attributes": {
+                        "FID": 33969,
+                        "ID_TRC": 4000430,
+                        "DEB_GCH": 0,
+                        "FIN_GCH": 0,
+                        "ARR_GCH": "N/A",
+                        "SENS_CIR": 1,
+                        "CLASSE": 0,
+                        "LIE_VOIE": " ",
+                        "TYP_VOIE": "avenue",
+                        "DIR_VOIE": " ",
+                        "NOM_VOIE": "Glengarry",
+                        "DEB_DRT": 0,
+                        "FIN_DRT": 0,
+                        "ARR_DRT": "N/A",
+                        "LIM_GCH": "Mont-Royal",
+                        "LIM_DRT": "Mont-Royal",
+                        "Shape__Length": 0.0008093445777526483
+                      }
+                    }
+                  ],
+                  "startPoint": {
+                    "type": "point",
+                    "latitude": 45.507937452324555,
+                    "longitude": -73.66049506036254,
+                    "x": -8199848.8017,
+                    "y": 5701843.459700003,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "endPoint": {
+                    "type": "point",
+                    "latitude": 45.50723833096347,
+                    "longitude": -73.66090279848348,
+                    "x": -8199894.1909,
+                    "y": 5701732.409200005,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "streetsTrack": [
+                    {
+                      "name": "Glengarry",
+                      "distance": 83.98184099989588
+                    }
+                  ]
+                },
+                "type": "linear",
+                "value": "Glengarry [Sur 83 m] ",
+                "label": "Glengarry <span class=\"paths-distance\">[Sur 83 m]</span> ",
+                "name": "Glengarry",
+                "showError": false
+              }
+            ],
+            "layer": "roadworks",
+            "validateEntraves": true,
+            "timeRange": "",
+            "timeOfDay": ""
+          },
+          "phases": [],
+          "projectType": {
+            "isQuick": true,
+            "isDraft": false,
+            "isPublished": true,
+            "advanceOptions": {
+              "detour": false,
+              "phaseAndDetour": false
+            }
+          },
+          "uuid": "adcdab33-db1c-4983-8090-c4bff56e6f31",
+          "conflicts": []
+        },
+        "archives": []
+      },
+      "geometrySource": {
+        "crs": "EPSG:3857",
+        "field": "data.entraves.entraves[].selected.path[].geometry.paths",
+        "outputCrs": "EPSG:4326"
+      }
     }
   ],
   "extraction": {
@@ -11734,8 +13901,8 @@
       "publish": true,
       "nopublish": false,
       "ranges": [
-        1774551946363,
-        1805655946363
+        1774816366201,
+        1805920366201
       ],
       "city": "montroyal",
       "tags": {
@@ -11756,8 +13923,8 @@
       "modeMap": "0",
       "lang": "fr"
     },
-    "sourceRecordCount": 8,
-    "retainedRecordCount": 8,
+    "sourceRecordCount": 12,
+    "retainedRecordCount": 12,
     "excluded": [],
     "limitation": "Snapshot limited to the date window and public filters sent by the official map; not live."
   }

@@ -1,10 +1,10 @@
 {
-  "extractedAt": "2026-09-23T18:48:59.213Z",
+  "extractedAt": "2026-09-25T20:38:57.788Z",
   "sourceUrl": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
   "interactiveMapUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
-  "asOf": "2026-09-23",
-  "total": 9,
-  "parentNoticeTotal": 2,
+  "asOf": "2026-09-25",
+  "total": 11,
+  "parentNoticeTotal": 3,
   "interactiveMapEntraves": {
     "34": {
       "id": 1062,
@@ -130,7 +130,7 @@
   "validation": {
     "geometryPolicy": "Verified named road/bridge lines only; official map points are references, never fallback display geometry.",
     "sourceArchiveCount": 148,
-    "archiveAvis": 2,
+    "archiveAvis": 3,
     "excludedHistoricalParents": 145,
     "excludedHistoricalSections": [
       "Pont Clement: Du 3 au 15 mars",
@@ -149,7 +149,9 @@
       "gaetan-laberge-vers-sud",
       "gaetan-laberge-vers-centre-ville",
       "voies-victoria-clement-vers-sud",
-      "voies-victoria-clement-vers-centre-ville"
+      "voies-victoria-clement-vers-centre-ville",
+      "samuel-de-champlain-uci-vers-montreal",
+      "jacques-cartier-uci-ralentissements"
     ],
     "rejectedPreviousGeometry": [
       {
@@ -176,7 +178,7 @@
     "excludedNonAutomobileParents": [],
     "archiveParentsWithoutMapMatch": [
       "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-a-la-circulation-du-parc-dentreprises-de-la-pointe-saint-charles-circulation-aux-entreprises-locales/",
-      "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-de-jour-de-lautoroute-direction-centre-ville-du-19-au-22-septembre-mondiaux-de-cyclisme/"
+      "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-jacques-cartier-ralentissements-majeurs-a-prevoir-en-raison-de-la-fermeture-du-pont-samuel-de-champlain-direction-montreal/"
     ],
     "excludedParentsWithExpiredSections": [
       {
@@ -794,6 +796,102 @@
         45.482822
       ],
       "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/"
+    },
+    {
+      "dateAffichageTravaux": "Du 24 au 27 septembre 2026",
+      "anneDebut": "2026-09-24T13:11:00.000000Z",
+      "anneFin": "2026-09-27T19:11:00.000000Z",
+      "datedebut": "2026-09-24 09:11:00",
+      "datefin": "2026-09-27 15:11:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "En raison de la tenue des mondiaux de cyclisme à Montréal&#160;:\n\nLe samedi 26 septembre, de 8 h à 13 h*\nLe dimanche 27 septembre, de 8 h à 13 h*\n\n\n\tFermeture du pont Samuel-De Champlain, en direction de Montréal\n\tDétour&#160;: pont Jacques-Cartier - Ralentissements majeurs à prévoir dans les deux directions\n\n\n\nUtilisez le transport en commun pour vous déplacer sur l&#8217;île de Montréal durant toute la durée des mondiaux de cyclisme.\n\n* Important : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org",
+      "title": "Pont Jacques-Cartier | RALENTISSEMENTS MAJEURS À PRÉVOIR en raison de la fermeture du pont Samuel-De Champlain direction Montréal, les 26 et 27 septembre en matinée (mondiaux de cyclisme)",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-jacques-cartier-ralentissements-majeurs-a-prevoir-en-raison-de-la-fermeture-du-pont-samuel-de-champlain-direction-montreal/",
+      "tags": [
+        "Pont Jacques-Cartier"
+      ],
+      "tagId": [
+        1151
+      ],
+      "segmentId": "samuel-de-champlain-uci-vers-montreal",
+      "segmentTitle": "Fermeture du pont Samuel-De Champlain, en direction de Montréal",
+      "segmentStreets": "Pont Samuel-De Champlain",
+      "segmentImpact": "Fermeture du pont Samuel-De Champlain, en direction de Montréal",
+      "segmentDirection": "En direction de Montréal",
+      "segmentDateStart": "2026-09-26",
+      "segmentDateEnd": "2026-09-27",
+      "segmentDateText": "Le samedi 26 septembre, de 8 h à 13 h*\nLe dimanche 27 septembre, de 8 h à 13 h*",
+      "segmentComplement": "* Important : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org",
+      "schedule": {
+        "dates": [
+          "2026-09-26",
+          "2026-09-27"
+        ],
+        "startTime": "08:00",
+        "endTime": "13:00",
+        "allDay": false,
+        "sourceText": "Le samedi 26 septembre, de 8 h à 13 h*\nLe dimanche 27 septembre, de 8 h à 13 h*"
+      },
+      "noGeometry": true,
+      "geometry": null,
+      "geometryNote": "Aucune géométrie vérifiée pour ce segment; aucun point ou tracé de remplacement inventé.",
+      "analysis": {
+        "sections": [
+          "Le samedi 26 septembre, de 8 h à 13 h*\nLe dimanche 27 septembre, de 8 h à 13 h*"
+        ],
+        "bullets": [
+          "Fermeture du pont Samuel-De Champlain, en direction de Montréal"
+        ],
+        "sourceText": "En raison de la tenue des mondiaux de cyclisme à Montréal :\n\nLe samedi 26 septembre, de 8 h à 13 h*\nLe dimanche 27 septembre, de 8 h à 13 h*\n\n\n\tFermeture du pont Samuel-De Champlain, en direction de Montréal\n\tDétour : pont Jacques-Cartier - Ralentissements majeurs à prévoir dans les deux directions\n\n\n\nUtilisez le transport en commun pour vous déplacer sur l’île de Montréal durant toute la durée des mondiaux de cyclisme.\n\n* Important : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org"
+      }
+    },
+    {
+      "dateAffichageTravaux": "Du 24 au 27 septembre 2026",
+      "anneDebut": "2026-09-24T13:11:00.000000Z",
+      "anneFin": "2026-09-27T19:11:00.000000Z",
+      "datedebut": "2026-09-24 09:11:00",
+      "datefin": "2026-09-27 15:11:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "En raison de la tenue des mondiaux de cyclisme à Montréal&#160;:\n\nLe samedi 26 septembre, de 8 h à 13 h*\nLe dimanche 27 septembre, de 8 h à 13 h*\n\n\n\tFermeture du pont Samuel-De Champlain, en direction de Montréal\n\tDétour&#160;: pont Jacques-Cartier - Ralentissements majeurs à prévoir dans les deux directions\n\n\n\nUtilisez le transport en commun pour vous déplacer sur l&#8217;île de Montréal durant toute la durée des mondiaux de cyclisme.\n\n* Important : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org",
+      "title": "Pont Jacques-Cartier | RALENTISSEMENTS MAJEURS À PRÉVOIR en raison de la fermeture du pont Samuel-De Champlain direction Montréal, les 26 et 27 septembre en matinée (mondiaux de cyclisme)",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-jacques-cartier-ralentissements-majeurs-a-prevoir-en-raison-de-la-fermeture-du-pont-samuel-de-champlain-direction-montreal/",
+      "tags": [
+        "Pont Jacques-Cartier"
+      ],
+      "tagId": [
+        1151
+      ],
+      "segmentId": "jacques-cartier-uci-ralentissements",
+      "segmentTitle": "Détour : pont Jacques-Cartier - Ralentissements majeurs à prévoir dans les deux directions",
+      "segmentStreets": "Pont Jacques-Cartier",
+      "segmentImpact": "Détour : pont Jacques-Cartier - Ralentissements majeurs à prévoir dans les deux directions",
+      "segmentDirection": "Dans les deux directions",
+      "segmentDateStart": "2026-09-26",
+      "segmentDateEnd": "2026-09-27",
+      "segmentDateText": "Le samedi 26 septembre, de 8 h à 13 h*\nLe dimanche 27 septembre, de 8 h à 13 h*",
+      "segmentComplement": "* Important : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org",
+      "schedule": {
+        "dates": [
+          "2026-09-26",
+          "2026-09-27"
+        ],
+        "startTime": "08:00",
+        "endTime": "13:00",
+        "allDay": false,
+        "sourceText": "Le samedi 26 septembre, de 8 h à 13 h*\nLe dimanche 27 septembre, de 8 h à 13 h*"
+      },
+      "noGeometry": true,
+      "geometry": null,
+      "geometryNote": "Aucune géométrie vérifiée pour ce segment; aucun point ou tracé de remplacement inventé.",
+      "analysis": {
+        "sections": [
+          "Le samedi 26 septembre, de 8 h à 13 h*\nLe dimanche 27 septembre, de 8 h à 13 h*"
+        ],
+        "bullets": [
+          "Détour : pont Jacques-Cartier - Ralentissements majeurs à prévoir dans les deux directions"
+        ],
+        "sourceText": "En raison de la tenue des mondiaux de cyclisme à Montréal :\n\nLe samedi 26 septembre, de 8 h à 13 h*\nLe dimanche 27 septembre, de 8 h à 13 h*\n\n\n\tFermeture du pont Samuel-De Champlain, en direction de Montréal\n\tDétour : pont Jacques-Cartier - Ralentissements majeurs à prévoir dans les deux directions\n\n\n\nUtilisez le transport en commun pour vous déplacer sur l’île de Montréal durant toute la durée des mondiaux de cyclisme.\n\n* Important : les horaires et les configurations des fermetures peuvent varier, pour planifier vos déplacements consultez le site Internet Montréal2026.org"
+      }
     }
   ]
 }

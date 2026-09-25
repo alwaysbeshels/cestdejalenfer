@@ -195,6 +195,47 @@ h2 {
   gap: 12px;
 }
 
+.map-mode-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.map-mode-nav a {
+  display: grid;
+  place-items: center;
+  min-height: 40px;
+  padding: 6px;
+  border-radius: 4px;
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+.map-mode-nav a:hover {
+  background: #e7f2ee;
+}
+
+.map-mode-nav a[aria-current="page"] {
+  background: var(--accent-dark);
+  color: #fff;
+}
+
+body[data-map-mode="pedestrian"] h1 {
+  font-size: 1.9rem;
+  overflow-wrap: anywhere;
+}
+
+body[data-map-mode="pedestrian"] .brand-block {
+  padding-right: 110px;
+}
+
+body[data-map-mode="pedestrian"] #mapFirstVisitHint {
+  display: none;
+}
+
 .date-range-fields {
   position: relative;
   display: grid;
@@ -887,6 +928,12 @@ button:hover {
 .closure-card[data-severity="moderate"] .severity-badge {
   background: #ffe600;
   color: #17201c;
+}
+
+body[data-map-mode="pedestrian"] .impact-dot.moderate,
+body[data-map-mode="pedestrian"] .severity-chip.moderate,
+body[data-map-mode="pedestrian"] .closure-card[data-severity="moderate"] .severity-badge {
+  background: #ff8c00;
 }
 
 .closure-card[data-severity="parking"] .severity-badge {
