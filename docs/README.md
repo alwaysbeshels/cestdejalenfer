@@ -84,6 +84,67 @@ npm run serve
 
 Lors de chaque mise à jour demandée des snapshots, `extractedAt` indique la dernière vérification réussie de la source, même si aucune nouvelle donnée admissible n'est trouvée. Les métadonnées de fraîcheur correspondantes dans `data/sources.js` doivent porter la même date. Si les données sont inchangées, seuls ces horodatages sont actualisés : les enregistrements, géométries et dates publiées par les organismes restent intacts. Une consultation échouée, partielle ou limitée au cache local ne fait pas avancer la date. Cette date ne signifie ni que la source vient de publier de nouvelles données, ni que les géométries ont été reconstruites.
 
+### Actualisation du 29 septembre 2026, 15 h UTC
+
+Actualisation locale sans commit, push, deploiement, installation ni modification de l'interface. Les dix snapshots existants ont ete examines, avec une base de comparaison hors depot. Cinq sont identiques octet pour octet hors `extractedAt`; Mont-Royal, les avis Montreal, les geometries Montreal et la consolidation changent. Noovo reste integralement conserve faute de verification complete. Les 11 dates du catalogue concordent. Les comptes ci-dessous sont ceux de cette execution; les anciennes metadonnees autres que la fraicheur restent intactes lors des cinq mises a jour de date seulement. Heures UTC du 29 septembre, sauf indication contraire.
+
+| Snapshot / source publique | Etat | Derniere verification reussie | Recus / retenus et exclusions | Geometries |
+| --- | --- | --- | --- | --- |
+| [Mont-Royal](https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr) | Modifie | 15:10:35.367Z | 12 / 12 projets; aucune exclusion | 7 LineString, 5 MultiLineString |
+| [Citoyens, formulaire non officiel](https://forms.gle/TKL6WkmPsWPmAUMV8) | Verifie sans changement | 15:12:27.843Z | 8 reponses, 14 colonnes lues dont 13 exportables / 9 fiches, 10 impacts; 0 reponse exclue | 3 LineString, 1 MultiLineString, 5 sans trace |
+| [Rues pietonnisees Montreal, CKAN](https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=ef2a8162-0644-47e7-bd03-bea33f14a5d2&limit=100) | Verifie sans changement | 15:08:28.268Z | 53 / 10 temporaires + 7 fiches manuelles; 43 modes non admissibles | 7 LineString, 3 Point; 7 lignes manuelles |
+| [Avis pietons Montreal](https://montreal.ca/entraves-travaux/entraves) | Modifie | 15:11:23.404Z | 213 pages, 2 128 resultats / 1 067 avis; 1 061 hors criteres zone/date | Sans geometrie propre |
+| [Geometries Montreal](https://donnees.montreal.ca/dataset/info-travaux) | Modifie | 15:14:27.390Z | 1 797 permis / 2 078 impacts; 64 anciennes identites absentes du WFS | 1 789 LineString, 3 MultiLineString, 286 emprises Polygon |
+| [UCI Montreal](https://services.montreal.ca/cartes/uci) | Verifie sans changement | 15:11:25.677Z | 5 305 restrictions + 17 parcours / tous dates; aucune exclusion | 5 322 LineString |
+| [Beaconsfield](https://www.beaconsfield.ca/fr/carte-interactive/info-travaux) | Verifie sans changement | 15:20:38.499Z | 6 couches, 494 objets / 241 dans 119 fiches; 253 exclus | 3 MultiLineString, 116 Polygon |
+| [PJCCI archive](https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/) et [carte](https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/) | Verifie sans changement | 15:19:48.660Z | 144 parents / 2 parents, 9 segments; 142 parents historiques; 4 entrees carte comparees | 1 LineString, 1 MultiLineString, 7 sans trace |
+| [Noovo, non officiel](https://www.noovomoi.ca/tendances/infos-pratiques/article/cyclisme-a-montreal-voici-les-rues-et-secteurs-a-eviter-en-septembre/) | Echec de verification complete | 2026-09-08, heure et fuseau absents | Article HTTP 200 consulte / 3 fiches conservees, dont 2 periodes expirees | 2 LineString, 1 sans geometrie stockee |
+| [Consolidation pietonne](../data/pedestrian-closures-snapshot.json) | Modifie, verification partielle | Assemblage 15:23:28.993Z; verification par source ci-dessous | 29 entrees sources / 1 289 fiches, 178 candidats en revue | 1 277 Polygon, 5 LineString, 5 MultiLineString, 2 Point |
+
+Mont-Royal : Graham Ouest entre Appin et Brookfield passe du 12 aout au 2 octobre a la periode officielle du 5 au 9 octobre 2026. Le texte annonce le resurfacage de la chaussee et la MultiLineString officielle est mise a jour; deux de ses quatre chemins different de la version precedente. Les 11 autres projets sont strictement identiques. La fiche pietonne correspondante conserve son impact et son cote inconnu, avec les nouvelles dates et la nouvelle geometrie.
+
+Montreal : 1 829 impacts geometriques sont strictement conserves et 249 identites nouvelles sont traitees. Le resultat comprend 1 788 resolutions geobase, 4 lignes publiees et 286 emprises officielles. Le generateur conserve maintenant les emplacements inchanges avant tout calcul et refuse un WFS incomplet ou une erreur de recuperation geobase. Le cache existant est reutilise; 25 noms supplementaires sont traites et le cache de cette execution reste hors depot. Aucune reverification globale des anciennes geometries n'est revendiquee. Les avis ajoutent 150 permis admissibles, en retirent 115 dont 89 expires, et modifient 7 fiches; 910 restent identiques. Pagination, couverture des permis et libelles verifies; aucun doublon contradictoire ni recuperation directe, aucun `workImpact` particulier retourne.
+
+Beaconsfield : les six details et les 494 objets KML sont compares, types textuels et coordonnees compris, sans reconstruire les geometries. Les exclusions confirment 4 echeanciers approximatifs, 107 objets termines en juillet et 142 objets lies a la date publiee invalide « 32 octobre 2026 ». PJCCI : la reponse cumulative complete de l'archive est validee par total, identifiants uniques et contenu, puis croisee avec la carte. Les deux parents et les quatre entrees carte sont inchanges. Tous les points de carte sont rattaches aux segments; le parent PEPSC reste sans correspondance de carte. Sept segments restent sans trace verifie, sans point de repli ni route inventee.
+
+Les generateurs historiques de pietonnisation, Beaconsfield et PJCCI n'ont pas ete executes : ils reconstruiraient inutilement des fiches ou remplaceraient les interpretations validees par des dates fixes. Leurs sources ont ete controlees separement et les sorties inchangees exactement conservees. Les scripts temporaires et reponses de controle restent hors depot. Les autres generateurs ont ete executes dans une zone temporaire, puis leurs sorties validees avant remplacement local.
+
+| Source de consolidation | Etat | Recus / retenus / revue | Verification ou extraction d'entree, UTC |
+| --- | --- | --- | --- |
+| Montreal | checked | 2 128 / 1 277 / 0 | 15:23:12.362Z |
+| Longueuil | checked | 352 / 0 / 93 | 15:23:16.206Z |
+| Dorval | checked | 588 / 2 / 11 | 15:23:17.645Z |
+| Boisbriand | checked | 67 / 0 / 10 | 15:23:18.618Z |
+| Saint-Eustache lignes | checked | 164 / 0 / 20 | 15:23:19.579Z |
+| Saint-Eustache points | checked | 315 / 0 / 22 | 15:23:20.607Z |
+| Chateauguay | checked | 39 / 0 / 0 | 15:23:21.253Z |
+| L'Assomption | checked | 8 / 0 / 0 | 15:23:21.773Z |
+| Terrebonne lignes | checked | 8 / 2 / 2 | 15:23:22.186Z |
+| Terrebonne points | checked | 2 / 0 / 0 | 15:23:22.452Z |
+| MTMD travaux | checked | 573 / 0 / 2 | 15:23:23.962Z |
+| MTMD evenements | checked | 23 / 0 / 0 | 15:23:24.673Z |
+| Laval | checked | 144 / 2 / 5 | 15:23:25.830Z |
+| Mont-Saint-Hilaire couches 3, 4, 5, 6, 15 | failed : cinq `Invalid URL` | 0 conserve | Aucune verification reussie enregistree |
+| Repentigny | failed : `fetch failed` | 0 conserve | Aucune verification reussie enregistree |
+| Mont-Royal | local-snapshot, verifie en amont | 12 / 6 / 0 | 15:10:35.367Z |
+| Beaconsfield | local-snapshot, verifie en amont | 119 / 0 / 0 | 15:20:38.499Z |
+| PJCCI | local-snapshot, verifie en amont | 9 / 0 / 0 | 15:19:48.660Z |
+| Citoyens | local-snapshot, verifie en amont | 9 / 0 / 1 | 15:12:27.843Z |
+| Rues pietonnisees | local-snapshot, verifie en amont | 17 / 0 / 8 | 15:08:28.268Z |
+| UCI | local-snapshot, verifie en amont | 5 305 / 0 / 0 | 15:11:25.677Z |
+| Details Montreal | local-snapshot, verifie en amont | 1 067 / 0 / sans objet, enrichissement | 15:11:23.404Z |
+| Noovo | local-snapshot, non reverifie | 3 / 0 / 0 | 2026-09-08, heure absente |
+| Liste regionale | local-snapshot, non reverifiee | 7 / 0 / 0 | Non datee |
+| Liste municipale manuelle | local-snapshot, non reverifiee | 25 / 0 / 4 | Non datee |
+
+Les URLs exactes des 29 entrees restent dans `sources` du snapshot commun. Treize flux sont verifies en direct, dix entrees locales sont reutilisees et six flux echouent, correspondant a deux municipalites. Sept entrees locales ont ete verifiees en amont dans cette execution. Les derniers horodatages des sources en echec sont preserves; aucun ancien enregistrement admissible ne provient ici de ces six flux. `generatedAt` date seulement l'assemblage. La consolidation ajoute 164 identites et en retire 125, dont 95 expirees; 1 124 fiches communes restent identiques hors fraicheur et seule la fiche Graham change parmi les identites conservees. Ces nombres ne sont pas des nombres de nouveaux chantiers.
+
+Limites : six fiches citoyennes restent en revue, trois fiches parentes produisent quatre impacts admissibles, aucune reponse ni geometrie citoyenne n'est recalculee. La divergence preexistante de fin Wellington entre le fichier manuel et le snapshot reste preservee selon la politique d'ajout seulement. UCI conserve ses donnees datees d'evenement, meme apres les courses. L'article Noovo annonce Parc du 4 septembre au 4 octobre, contre un debut au 7 septembre stocke; il ne confirme pas l'heure Champlain de 11 h 30. L'image fournie a l'origine n'est pas identifiee ni revalidee : aucune fraicheur Noovo n'avance. Les descriptions editoriales et pages detaillees ne sont pas parcourues exhaustivement par le consolidateur, notamment les exemples Longueuil Roland-Therrien et Louise-Gravel, non reexamines ici. Les 178 candidats restent distincts des fermetures confirmees; Clark-Graham demeure un avis documentaire sans trace verifie.
+
+Validations : dix JSON, comptes, identifiants, references et geometries finies; conservation exacte des cinq mises a jour de fraicheur seule, des sept fiches manuelles et de Noovo; accord des 11 dates du catalogue. Les 14 colonnes citoyennes sont lues, dont 13 conservees, et l'absence du lien ou identifiant prive dans les fichiers suivis est verifiee. Le WFS incomplet simule est refuse sans ecriture. `node --check` passe sur le catalogue, le generateur modifie et les outils/chargeurs requis. Chromium teste `/index.html`, `/fr/pedestrian.html` et `/en/pedestrian.html`, ordinateur/mobile : huit snapshots auto, un seul snapshot pieton, cinq sources pietonnes avec vrais clics sur geometries et pixels canvas non vides, popups et cotes, orange/rouge, bornes de dates, filtres, zones repliees et cochees, fraicheur et panne sans repli auto. Horaires citoyens : neuf cas d'heures/bornes, filtres semaine/week-end/nuit, stationnement permanent sur la periode declaree, commentaire complet et reserves dans le popup, sans requete au tableur. Les popups Mont-Royal, Beaconsfield, PJCCI, citoyen et une ligne Montreal sont controles.
+
+`node tools/validate-popup-grouping.mjs` passe sur 1 289 fiches pietonnes et 8 171 entrees auto chargees, sans erreur de page, avec un avertissement reseau auto. Les controles complementaires chargent 8 170 entrees auto, les flux live ayant evolue; ils passent egalement. Le reseau signale Repentigny (`ERR_CONNECTION_RESET`); des requetes de tuiles sont annulees lors des deplacements. Le premier test temporaire de couleur ponctuelle a ete corrige pour verifier `fillColor`, le contour blanc etant intentionnel; l'interface n'a pas ete modifiee. L'ancien validateur pieton n'est pas declare reussi avec ses hypotheses ARIA/filtres depassees. Les 13 avertissements Markdown des anciennes sections (MD022, MD032, MD034) restent inchanges. Captures conservees hors depot, sans transmission au chat; inspection visuelle humaine non effectuee. Cette verification des sources ne confirme pas les conditions sur le terrain.
+
 ### Actualisation du 28 septembre 2026, 22 h UTC
 
 Actualisation locale sans commit, push, installation ni modification de l'interface. Base de comparaison conservee hors depot. Cinq snapshots sont strictement identiques hors `extractedAt`; trois snapshots d'entree et la consolidation changent. Noovo reste integralement conserve faute de verification complete. Les 11 entrees de fraicheur du catalogue correspondent aux snapshots. Les heures ci-dessous sont en UTC le 28 septembre 2026, sauf indication contraire.

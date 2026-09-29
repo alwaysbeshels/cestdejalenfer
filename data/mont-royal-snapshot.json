@@ -1,5 +1,5 @@
 {
-  "extractedAt": "2026-09-28T22:23:13.880Z",
+  "extractedAt": "2026-09-29T15:10:35.367Z",
   "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
   "municipality": "Ville de Mont-Royal",
   "records": [
@@ -5708,9 +5708,9 @@
     {
       "id": "1939d03c-b4b2-4c2d-b3a6-871f2dba4a6c",
       "title": "Travaux de chaussées et de trottoirs - Graham Ouest - Entre Appin et Brookfield",
-      "startDate": "2026-08-12",
-      "endDate": "2026-10-02",
-      "impact": "À partir du 12 août, la Ville de Mont-Royal effectuera des travaux de resurfaçage de chaussée etde reconstruction de trottoirs, bordures. Des perturbations sont à prévoir dans le secteur.\nÀ partir du 12 août, la Ville de Mont-Royal effectuera des travaux de resurfaçage de chaussée etde reconstruction de trottoirs, bordures. Des perturbations sont à prévoir dans le secteur.",
+      "startDate": "2026-10-05",
+      "endDate": "2026-10-09",
+      "impact": "À partir du 5 octobre , la Ville de Mont-Royal effectuera des travaux de resurfaçage de la chaussée. Ceux-ci se termineront le vendredi 9 octobre .\nÀ partir du 5 octobre , la Ville de Mont-Royal effectuera des travaux de resurfaçage de la chaussée. Ceux-ci se termineront le vendredi 9 octobre .",
       "trafficLabels": [
         "Fermeture complète",
         "Modification de stationnement",
@@ -5765,7 +5765,7 @@
               45.51942080908512
             ],
             [
-              -73.63263504970402,
+              -73.63263504970404,
               45.519401188792386
             ],
             [
@@ -5773,13 +5773,13 @@
               45.51905380235786
             ],
             [
-              -73.63387543985506,
+              -73.63387543985507,
               45.51903330388981
             ]
           ],
           [
             [
-              -73.63387543985506,
+              -73.63387543985507,
               45.51903330388981
             ],
             [
@@ -5798,8 +5798,8 @@
         "data": {
           "informations": {
             "name": "Travaux de chaussées et de trottoirs - Graham Ouest - Entre Appin et Brookfield",
-            "comment": "<p>À partir du 12 août, la Ville de Mont-Royal effectuera des travaux de resurfaçage de chaussée et</p><p>de reconstruction de trottoirs, bordures. Des perturbations sont à prévoir dans le secteur.</p><p><br></p><p><br></p>",
-            "notes": "<p>À partir du 12 août, la Ville de Mont-Royal effectuera des travaux de resurfaçage de chaussée et</p><p>de reconstruction de trottoirs, bordures. Des perturbations sont à prévoir dans le secteur.</p><p><br></p><p><br></p>",
+            "comment": "<p>À partir du <strong>5 octobre</strong>, la Ville de Mont-Royal effectuera des travaux de resurfaçage de la chaussée. </p><p>﻿Ceux-ci se termineront le vendredi <strong>9 octobre</strong>. </p>",
+            "notes": "<p>À partir du <strong>5 octobre</strong>, la Ville de Mont-Royal effectuera des travaux de resurfaçage de la chaussée. </p><p>﻿Ceux-ci se termineront le vendredi <strong>9 octobre</strong>. </p>",
             "inchargeof": "Émilie Larose",
             "phone": "",
             "email": "emilie.larose@ville.mont-royal.qc.ca",
@@ -6121,8 +6121,8 @@
           },
           "entraves": {
             "date": [
-              1786507200000,
-              1790913600000
+              1791172800000,
+              1791518400000
             ],
             "perimeter": 20,
             "entraves": [
@@ -6328,10 +6328,10 @@
                   ],
                   "startPoint": {
                     "type": "point",
-                    "latitude": 45.52019283686854,
-                    "longitude": -73.62995719878904,
-                    "x": -8196449.342499724,
-                    "y": 5703790.365199754,
+                    "latitude": 45.52019283686777,
+                    "longitude": -73.6299571987878,
+                    "x": -8196449.342499586,
+                    "y": 5703790.365199632,
                     "spatialReference": {
                       "latestWkid": 3857,
                       "wkid": 102100
@@ -6341,10 +6341,10 @@
                   },
                   "endPoint": {
                     "type": "point",
-                    "latitude": 45.51861530270057,
-                    "longitude": -73.63530245141067,
-                    "x": -8197044.373299724,
-                    "y": 5703539.732399755,
+                    "latitude": 45.518615302699786,
+                    "longitude": -73.63530245140942,
+                    "x": -8197044.373299586,
+                    "y": 5703539.732399632,
                     "spatialReference": {
                       "latestWkid": 3857,
                       "wkid": 102100
@@ -6376,453 +6376,6 @@
             {
               "phaseId": "35d27781-94f5-11f1-ba6b-6dd88a0fef4f",
               "closing": [
-                {
-                  "closingId": "35d27782-94f5-11f1-ba6b-6dd88a0fef4f",
-                  "selected": {
-                    "path": [
-                      {
-                        "geometry": {
-                          "type": "polyline",
-                          "paths": [
-                            [
-                              [
-                                -8196449.342499999,
-                                5703790.365199998
-                              ],
-                              [
-                                -8196456.4289,
-                                5703787.342600003
-                              ],
-                              [
-                                -8196587.9284999985,
-                                5703731.566500001
-                              ],
-                              [
-                                -8196594.8027,
-                                5703728.799500003
-                              ]
-                            ]
-                          ],
-                          "hasM": false,
-                          "hasZ": false,
-                          "spatialReference": {
-                            "latestWkid": 3857,
-                            "wkid": 102100
-                          }
-                        },
-                        "attributes": {
-                          "FID": 17474,
-                          "ID_TRC": 1603427,
-                          "DEB_GCH": 0,
-                          "FIN_GCH": 0,
-                          "ARR_GCH": "N/A",
-                          "SENS_CIR": 1,
-                          "CLASSE": 5,
-                          "LIE_VOIE": " ",
-                          "TYP_VOIE": "boulevard",
-                          "DIR_VOIE": " ",
-                          "NOM_VOIE": "Graham",
-                          "DEB_DRT": 403,
-                          "FIN_DRT": 495,
-                          "ARR_DRT": "N/A",
-                          "LIM_GCH": "Mont-Royal",
-                          "LIM_DRT": "Mont-Royal",
-                          "Shape__Length": 0.0013629436557717094
-                        }
-                      },
-                      {
-                        "geometry": {
-                          "type": "polyline",
-                          "paths": [
-                            [
-                              [
-                                -8196594.8027,
-                                5703728.799500003
-                              ],
-                              [
-                                -8196601.624,
-                                5703726.153800003
-                              ],
-                              [
-                                -8196732.1986,
-                                5703671.435500003
-                              ],
-                              [
-                                -8196740.516199999,
-                                5703667.707400002
-                              ]
-                            ]
-                          ],
-                          "hasM": false,
-                          "hasZ": false,
-                          "spatialReference": {
-                            "latestWkid": 3857,
-                            "wkid": 102100
-                          }
-                        },
-                        "attributes": {
-                          "FID": 17475,
-                          "ID_TRC": 1603428,
-                          "DEB_GCH": 0,
-                          "FIN_GCH": 0,
-                          "ARR_GCH": "N/A",
-                          "SENS_CIR": 1,
-                          "CLASSE": 5,
-                          "LIE_VOIE": " ",
-                          "TYP_VOIE": "boulevard",
-                          "DIR_VOIE": " ",
-                          "NOM_VOIE": "Graham",
-                          "DEB_DRT": 517,
-                          "FIN_DRT": 615,
-                          "ARR_DRT": "N/A",
-                          "LIM_GCH": "Mont-Royal",
-                          "LIM_DRT": "Mont-Royal",
-                          "Shape__Length": 0.001364304371313181
-                        }
-                      },
-                      {
-                        "geometry": {
-                          "type": "polyline",
-                          "paths": [
-                            [
-                              [
-                                -8196740.516199999,
-                                5703667.707400002
-                              ],
-                              [
-                                -8196747.4395,
-                                5703664.5901999995
-                              ],
-                              [
-                                -8196877.6789,
-                                5703609.398900002
-                              ],
-                              [
-                                -8196885.519099999,
-                                5703606.142200001
-                              ]
-                            ]
-                          ],
-                          "hasM": false,
-                          "hasZ": false,
-                          "spatialReference": {
-                            "latestWkid": 3857,
-                            "wkid": 102100
-                          }
-                        },
-                        "attributes": {
-                          "FID": 17478,
-                          "ID_TRC": 1603431,
-                          "DEB_GCH": 0,
-                          "FIN_GCH": 0,
-                          "ARR_GCH": "N/A",
-                          "SENS_CIR": 1,
-                          "CLASSE": 5,
-                          "LIE_VOIE": " ",
-                          "TYP_VOIE": "boulevard",
-                          "DIR_VOIE": " ",
-                          "NOM_VOIE": "Graham",
-                          "DEB_DRT": 635,
-                          "FIN_DRT": 737,
-                          "ARR_DRT": "N/A",
-                          "LIM_GCH": "Mont-Royal",
-                          "LIM_DRT": "Mont-Royal",
-                          "Shape__Length": 0.001359011371420441
-                        }
-                      },
-                      {
-                        "geometry": {
-                          "type": "polyline",
-                          "paths": [
-                            [
-                              [
-                                -8196885.519099999,
-                                5703606.142200001
-                              ],
-                              [
-                                -8196893.3117,
-                                5703603.053100005
-                              ],
-                              [
-                                -8197044.373299999,
-                                5703539.7324
-                              ]
-                            ]
-                          ],
-                          "hasM": false,
-                          "hasZ": false,
-                          "spatialReference": {
-                            "latestWkid": 3857,
-                            "wkid": 102100
-                          }
-                        },
-                        "attributes": {
-                          "FID": 17479,
-                          "ID_TRC": 1603432,
-                          "DEB_GCH": 0,
-                          "FIN_GCH": 0,
-                          "ARR_GCH": "N/A",
-                          "SENS_CIR": 1,
-                          "CLASSE": 5,
-                          "LIE_VOIE": " ",
-                          "TYP_VOIE": "boulevard",
-                          "DIR_VOIE": " ",
-                          "NOM_VOIE": "Graham",
-                          "DEB_DRT": 761,
-                          "FIN_DRT": 841,
-                          "ARR_DRT": "N/A",
-                          "LIM_GCH": "Mont-Royal",
-                          "LIM_DRT": "Mont-Royal",
-                          "Shape__Length": 0.0014869793733789018
-                        }
-                      }
-                    ],
-                    "startPoint": {
-                      "type": "point",
-                      "latitude": 45.52019283686854,
-                      "longitude": -73.62995719878904,
-                      "x": -8196449.342499724,
-                      "y": 5703790.365199754,
-                      "spatialReference": {
-                        "latestWkid": 3857,
-                        "wkid": 102100
-                      },
-                      "hasM": false,
-                      "hasZ": false
-                    },
-                    "endPoint": {
-                      "type": "point",
-                      "latitude": 45.51861530270057,
-                      "longitude": -73.63530245141067,
-                      "x": -8197044.373299724,
-                      "y": 5703539.732399755,
-                      "spatialReference": {
-                        "latestWkid": 3857,
-                        "wkid": 102100
-                      },
-                      "hasM": false,
-                      "hasZ": false
-                    },
-                    "streetsTrack": [
-                      {
-                        "name": "Graham",
-                        "distance": 452.95023862766334
-                      }
-                    ]
-                  },
-                  "value": "Graham [Sur 452 m] ",
-                  "label": "Graham <span class=\"paths-distance\">[Sur 452 m]</span> ",
-                  "showError": false,
-                  "type": "linear",
-                  "dates": [
-                    {
-                      "dateId": "35d27780-94f5-11f1-ba6b-6dd88a0fef4f",
-                      "sdate": 1786507200000,
-                      "edate": 1787716800000,
-                      "days": [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6,
-                        7
-                      ],
-                      "closingType": [
-                        "sidewalk"
-                      ],
-                      "closingSide": [
-                        "west"
-                      ],
-                      "typeStreet": [],
-                      "comment": "<p>Reconstruction des trottoirs ainsi que des bordures du terre-plein. Ces travaux seront d'une durée de 2 semaines.</p>",
-                      "dates": [
-                        1786507200000,
-                        1787716800000
-                      ]
-                    }
-                  ],
-                  "detours": [],
-                  "workType1": [
-                    "54"
-                  ],
-                  "trafficImpact": {
-                    "key": "trafficImpact",
-                    "title": {
-                      "label": "Impacts - Gestion de la circulation",
-                      "label_fr": "Impacts - Gestion de la circulation",
-                      "label_en": "Impacts - Traffic Management"
-                    },
-                    "title1": {
-                      "label": "Impacts - Précisions",
-                      "label_fr": "Impacts - Précisions",
-                      "label_en": "Impacts - Details"
-                    },
-                    "show": true,
-                    "showInList": false,
-                    "search": true,
-                    "value": [
-                      {
-                        "value": "1",
-                        "status": true,
-                        "content": "",
-                        "label": "Fermeture complète",
-                        "label_fr": "Fermeture complète",
-                        "label_en": "Complete closure"
-                      },
-                      {
-                        "value": "2",
-                        "status": false,
-                        "content": "",
-                        "label": "Entrave partielle",
-                        "label_fr": "Entrave partielle",
-                        "label_en": "Partial obstruction"
-                      },
-                      {
-                        "value": "3",
-                        "status": false,
-                        "content": "",
-                        "label": "Circulation locale seulement",
-                        "label_fr": "Circulation locale seulement",
-                        "label_en": "Local Traffic only"
-                      },
-                      {
-                        "value": "4",
-                        "status": true,
-                        "content": "Interdiction de stationnement sur la rue",
-                        "label": "Modification de stationnement",
-                        "label_fr": "Modification de stationnement",
-                        "label_en": "Parking modification"
-                      },
-                      {
-                        "value": "5",
-                        "status": true,
-                        "content": "Des chemins de détours seront mis en place.",
-                        "label": "Trajet de détour",
-                        "label_fr": "Trajet de détour",
-                        "label_en": "Detour route"
-                      },
-                      {
-                        "value": "6",
-                        "status": false,
-                        "content": "",
-                        "label": "Présence de signaleurs",
-                        "label_fr": "Présence de signaleurs",
-                        "label_en": "Presence of flaggers"
-                      },
-                      {
-                        "value": "7",
-                        "status": false,
-                        "content": "",
-                        "label": "Accès aux commerces maintenu",
-                        "label_fr": "Accès aux commerces maintenu",
-                        "label_en": "Access to shops maintained"
-                      },
-                      {
-                        "value": "8",
-                        "status": false,
-                        "content": "",
-                        "label": "Trajet ou arrêt de la STM",
-                        "label_fr": "Trajet ou arrêt de la STM",
-                        "label_en": "Routes or Stops STM"
-                      },
-                      {
-                        "value": "9",
-                        "status": false,
-                        "content": "",
-                        "label": "Corridor scolaire entravé",
-                        "label_fr": "Corridor scolaire entravé",
-                        "label_en": "Blocked school corridor"
-                      },
-                      {
-                        "value": "10",
-                        "status": false,
-                        "content": "",
-                        "label": "Réduction de la vitesse légale",
-                        "label_fr": "Réduction de la vitesse légale",
-                        "label_en": "Reduced legal speed limit"
-                      },
-                      {
-                        "value": "11",
-                        "status": true,
-                        "content": "Les trottoirs seront fermés un côté à la fois selon l'avancement des travaux. ",
-                        "label": "Fermeture de trottoir",
-                        "label_fr": "Fermeture de trottoir",
-                        "label_en": "Closure of sidewalk"
-                      },
-                      {
-                        "value": "12",
-                        "status": false,
-                        "content": "",
-                        "label": "Fermeture de piste cyclable",
-                        "label_fr": "Fermeture de piste cyclable",
-                        "label_en": "Closure of cycling path"
-                      },
-                      {
-                        "value": "13",
-                        "status": false,
-                        "content": "",
-                        "label": "Collectes des matières résiduelles",
-                        "label_fr": "Collectes des matières résiduelles",
-                        "label_en": "Collection of residual materials"
-                      },
-                      {
-                        "value": "14",
-                        "status": false,
-                        "content": "",
-                        "label": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
-                        "label_fr": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
-                        "label_en": "Temporary closure of municipal services (Park, Chalet etc)"
-                      }
-                    ]
-                  },
-                  "portableWater": {
-                    "key": "portableWater",
-                    "title": {
-                      "label": "Impacts - Alimentation en eau potable",
-                      "label_fr": "Impacts - Alimentation en eau potable",
-                      "label_en": "Impacts - Potable water supply"
-                    },
-                    "show": true,
-                    "showInList": false,
-                    "search": true,
-                    "value": [
-                      {
-                        "value": "1",
-                        "status": false,
-                        "content": "",
-                        "label": "Réseau temporaire d’eau potable",
-                        "label_fr": "Réseau temporaire d’eau potable",
-                        "label_en": "Temporary potable water network"
-                      },
-                      {
-                        "value": "2",
-                        "status": false,
-                        "content": "",
-                        "label": "Interruption d’eau potable",
-                        "label_fr": "Interruption d’eau potable",
-                        "label_en": "Interruption of potable water"
-                      },
-                      {
-                        "value": "3",
-                        "status": false,
-                        "content": "",
-                        "label": "Perte de pression temporaire",
-                        "label_fr": "Perte de pression temporaire",
-                        "label_en": "Temporary pressure loss"
-                      },
-                      {
-                        "value": "4",
-                        "status": false,
-                        "content": "",
-                        "label": "Changement de couleur de l’eau - non nocif",
-                        "label_fr": "Changement de couleur de l’eau - non nocif",
-                        "label_en": "Water color change - not harmful"
-                      }
-                    ]
-                  },
-                  "publish": true
-                },
                 {
                   "closingId": "5c6c3611-94f5-11f1-ba6b-6dd88a0fef4f",
                   "selected": {
@@ -7026,10 +6579,10 @@
                     ],
                     "startPoint": {
                       "type": "point",
-                      "latitude": 45.52019283686854,
-                      "longitude": -73.62995719878904,
-                      "x": -8196449.342499724,
-                      "y": 5703790.365199754,
+                      "latitude": 45.52019283686777,
+                      "longitude": -73.6299571987878,
+                      "x": -8196449.342499586,
+                      "y": 5703790.365199632,
                       "spatialReference": {
                         "latestWkid": 3857,
                         "wkid": 102100
@@ -7039,10 +6592,10 @@
                     },
                     "endPoint": {
                       "type": "point",
-                      "latitude": 45.51861530270057,
-                      "longitude": -73.63530245141067,
-                      "x": -8197044.373299724,
-                      "y": 5703539.732399755,
+                      "latitude": 45.518615302699786,
+                      "longitude": -73.63530245140942,
+                      "x": -8197044.373299586,
+                      "y": 5703539.732399632,
                       "spatialReference": {
                         "latestWkid": 3857,
                         "wkid": 102100
@@ -7064,8 +6617,8 @@
                   "dates": [
                     {
                       "dateId": "5c6c3610-94f5-11f1-ba6b-6dd88a0fef4f",
-                      "sdate": 1790568000000,
-                      "edate": 1790913600000,
+                      "sdate": 1791172800000,
+                      "edate": 1791518400000,
                       "days": [
                         1,
                         2,
@@ -7084,8 +6637,8 @@
                       "typeStreet": [],
                       "comment": "<p><span style=\"color: rgba(255, 255, 255, 0.8);\">Fermeture de la route pour travaux de resurfaçage de la chausée. Des chemins de detours seront mis en place.</span></p>",
                       "dates": [
-                        1790568000000,
-                        1790913600000
+                        1791172800000,
+                        1791518400000
                       ]
                     }
                   ],
@@ -7777,10 +7330,10 @@
                         ],
                         "startPoint": {
                           "type": "point",
-                          "latitude": 45.52019283686854,
-                          "longitude": -73.62995719878904,
-                          "x": -8196449.342499724,
-                          "y": 5703790.365199754,
+                          "latitude": 45.52019283686777,
+                          "longitude": -73.6299571987878,
+                          "x": -8196449.342499586,
+                          "y": 5703790.365199632,
                           "spatialReference": {
                             "latestWkid": 3857,
                             "wkid": 102100
@@ -7790,10 +7343,10 @@
                         },
                         "endPoint": {
                           "type": "point",
-                          "latitude": 45.51811898103049,
-                          "longitude": -73.6369680096941,
-                          "x": -8197229.782399722,
-                          "y": 5703460.88009976,
+                          "latitude": 45.518118981029716,
+                          "longitude": -73.63696800969286,
+                          "x": -8197229.782399585,
+                          "y": 5703460.880099637,
                           "spatialReference": {
                             "latestWkid": 3857,
                             "wkid": 102100
@@ -7829,8 +7382,8 @@
                       "dates": [
                         {
                           "dateId": "7ad14730-94f5-11f1-ba6b-6dd88a0fef4f",
-                          "sdate": 1790568000000,
-                          "edate": 1790913600000,
+                          "sdate": 1791172800000,
+                          "edate": 1791518400000,
                           "days": [
                             1,
                             2,
@@ -8693,10 +8246,10 @@
                         ],
                         "startPoint": {
                           "type": "point",
-                          "latitude": 45.51893067862715,
-                          "longitude": -73.63227085471907,
-                          "x": -8196706.897499725,
-                          "y": 5703589.837599754,
+                          "latitude": 45.51893067862638,
+                          "longitude": -73.63227085471782,
+                          "x": -8196706.897499586,
+                          "y": 5703589.837599632,
                           "spatialReference": {
                             "latestWkid": 3857,
                             "wkid": 102100
@@ -8706,10 +8259,10 @@
                         },
                         "endPoint": {
                           "type": "point",
-                          "latitude": 45.51800586958528,
-                          "longitude": -73.63689741199424,
-                          "x": -8197221.923499723,
-                          "y": 5703442.9097997565,
+                          "latitude": 45.51800586958451,
+                          "longitude": -73.63689741199299,
+                          "x": -8197221.923499584,
+                          "y": 5703442.909799634,
                           "spatialReference": {
                             "latestWkid": 3857,
                             "wkid": 102100
@@ -8749,8 +8302,8 @@
                       "dates": [
                         {
                           "dateId": "c36f1a20-94f6-11f1-ba6b-6dd88a0fef4f",
-                          "sdate": 1790568000000,
-                          "edate": 1790913600000,
+                          "sdate": 1791172800000,
+                          "edate": 1791518400000,
                           "days": [
                             1,
                             2,
@@ -8956,228 +8509,7 @@
             "isPublished": true
           },
           "uuid": "1939d03c-b4b2-4c2d-b3a6-871f2dba4a6c",
-          "conflicts": [
-            {
-              "uuid": "1939d03c-b4b2-4c2d-b3a6-871f2dba4a6c",
-              "step": "entrave",
-              "publish": true,
-              "type": "linear",
-              "name": "Travaux de chaussées et de trottoirs - Graham Ouest - Entre Appin et Brookfield",
-              "entraveIndex": 1,
-              "entraveId": "bf94d810-94f4-11f1-ba6b-6dd88a0fef4f",
-              "value": "Graham [Sur 452 m] ",
-              "dates": [
-                1786507200000,
-                1790913600000
-              ],
-              "conflicts": [
-                {
-                  "uuid": "ced63e50-c067-435a-bccd-88507293b805",
-                  "name": "Travaux de chaussées et de trottoirs - Graham Est - Entre Appin et Brookfield",
-                  "inchargeof": "Émilie Larose",
-                  "phone": "",
-                  "type": "linear",
-                  "publish": true,
-                  "entraves": [
-                    {
-                      "entraveId": "d48d4a40-94ef-11f1-b0fc-13375023d346",
-                      "entraveIndex": 1,
-                      "value": "Graham [Sur 452 m] ",
-                      "label": "Graham <span class=\"paths-distance\">[Sur 452 m]</span> ",
-                      "dates": [
-                        {
-                          "ranges": [
-                            1786507200000,
-                            1789099200000
-                          ],
-                          "days": true,
-                          "dateRangeNb": 1
-                        }
-                      ]
-                    }
-                  ],
-                  "phases": [
-                    {
-                      "phaseId": "379aff51-94f1-11f1-b0fc-13375023d346",
-                      "phaseIndex": 1,
-                      "closing": [
-                        {
-                          "closingId": "379aff52-94f1-11f1-b0fc-13375023d346",
-                          "closeIndex": 1,
-                          "value": "Graham [Sur 536 m] ",
-                          "label": "Graham <span class=\"paths-distance\">[Sur 536 m]</span> ",
-                          "dates": [
-                            {
-                              "ranges": [
-                                1786507200000,
-                                1787716800000
-                              ],
-                              "days": [
-                                1,
-                                2,
-                                3
-                              ],
-                              "dateRangeNb": 1
-                            }
-                          ]
-                        }
-                      ],
-                      "detours": []
-                    },
-                    {
-                      "phaseId": "9a38f811-94f1-11f1-b0fc-13375023d346",
-                      "phaseIndex": 2,
-                      "closing": [
-                        {
-                          "closingId": "9a38f812-94f1-11f1-b0fc-13375023d346",
-                          "closeIndex": 1,
-                          "value": "Graham [Sur 536 m] ",
-                          "label": "Graham <span class=\"paths-distance\">[Sur 536 m]</span> ",
-                          "dates": [
-                            {
-                              "ranges": [
-                                1788408000000,
-                                1790913600000
-                              ],
-                              "days": [
-                                1,
-                                2,
-                                3
-                              ],
-                              "dateRangeNb": 1
-                            }
-                          ]
-                        }
-                      ],
-                      "detours": [
-                        {
-                          "detourId": "f13bbfd1-94f1-11f1-b0fc-13375023d346",
-                          "detourIndex": 1,
-                          "value": "De: Rockland [522m]   &xrarr; Dunrae [227m]   &xrarr; Dumfries [99m]   &xrarr; Appin [216m]  À: Graham [50m] ",
-                          "label": "<span class=\"paths-keys\">De: </span>Rockland <span class=\"paths-distance\">[522m]</span> <span class=\"paths-keys\">  &xrarr; </span>Dunrae <span class=\"paths-distance\">[227m]</span> <span class=\"paths-keys\">  &xrarr; </span>Dumfries <span class=\"paths-distance\">[99m]</span> <span class=\"paths-keys\">  &xrarr; </span>Appin <span class=\"paths-distance\">[216m]</span>  <span class=\"paths-keys\">À: </span>Graham <span class=\"paths-distance\">[50m]</span> ",
-                          "dates": [
-                            {
-                              "ranges": [
-                                1788408000000,
-                                1790913600000
-                              ],
-                              "days": [
-                                1,
-                                2,
-                                3
-                              ],
-                              "dateRangeNb": 1
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "uuid": "1939d03c-b4b2-4c2d-b3a6-871f2dba4a6c",
-              "step": "closing",
-              "publish": true,
-              "type": "linear",
-              "name": "Travaux de chaussées et de trottoirs - Graham Ouest - Entre Appin et Brookfield",
-              "phaseIndex": 1,
-              "phaseId": "35d27781-94f5-11f1-ba6b-6dd88a0fef4f",
-              "closeIndex": 1,
-              "closingId": "35d27782-94f5-11f1-ba6b-6dd88a0fef4f",
-              "value": "Graham [Sur 452 m] ",
-              "dates": [
-                {
-                  "dateId": "35d27780-94f5-11f1-ba6b-6dd88a0fef4f",
-                  "sdate": 1786507200000,
-                  "edate": 1787716800000,
-                  "days": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7
-                  ],
-                  "closingType": [
-                    "sidewalk"
-                  ],
-                  "closingSide": [
-                    "west"
-                  ],
-                  "typeStreet": [],
-                  "comment": "<p>Reconstruction des trottoirs ainsi que des bordures du terre-plein. Ces travaux seront d'une durée de 2 semaines.</p>",
-                  "dates": [
-                    1786507200000,
-                    1787716800000
-                  ]
-                }
-              ],
-              "conflicts": [
-                {
-                  "uuid": "ced63e50-c067-435a-bccd-88507293b805",
-                  "name": "Travaux de chaussées et de trottoirs - Graham Est - Entre Appin et Brookfield",
-                  "inchargeof": "Émilie Larose",
-                  "phone": "",
-                  "type": "linear",
-                  "publish": true,
-                  "entraves": [
-                    {
-                      "entraveId": "d48d4a40-94ef-11f1-b0fc-13375023d346",
-                      "entraveIndex": 1,
-                      "value": "Graham [Sur 452 m] ",
-                      "label": "Graham <span class=\"paths-distance\">[Sur 452 m]</span> ",
-                      "dates": [
-                        [
-                          {
-                            "ranges": [
-                              1786507200000,
-                              1789099200000
-                            ],
-                            "days": true,
-                            "dateRangeNb": 1
-                          }
-                        ]
-                      ]
-                    }
-                  ],
-                  "phases": [
-                    {
-                      "phaseId": "379aff51-94f1-11f1-b0fc-13375023d346",
-                      "phaseIndex": 1,
-                      "closing": [
-                        {
-                          "closingId": "379aff52-94f1-11f1-b0fc-13375023d346",
-                          "closeIndex": 1,
-                          "value": "Graham [Sur 536 m] ",
-                          "label": "Graham <span class=\"paths-distance\">[Sur 536 m]</span> ",
-                          "dates": [
-                            [
-                              {
-                                "ranges": [
-                                  1786507200000,
-                                  1787716800000
-                                ],
-                                "days": [
-                                  1,
-                                  2,
-                                  3
-                                ],
-                                "dateRangeNb": 1
-                              }
-                            ]
-                          ]
-                        }
-                      ],
-                      "detours": []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          "conflicts": []
         },
         "archives": []
       },
@@ -13901,8 +13233,8 @@
       "publish": true,
       "nopublish": false,
       "ranges": [
-        1774816366201,
-        1805920366201
+        1775142632944,
+        1806246632944
       ],
       "city": "montroyal",
       "tags": {

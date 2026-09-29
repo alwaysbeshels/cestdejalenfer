@@ -21,7 +21,8 @@
 //
 // Usage: node tools/build-montreal-resolved-geometries.mjs [--limit N]
 
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
+import { isDeepStrictEqual } from "node:util";
 
 const WFS_BASE = "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows";
 const ENTRAVES_URL = `${WFS_BASE}?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal:entraves-ponctuelles&outputFormat=application/json&CQL_FILTER=affectedArea%20like%20%27%25street%25%27`;
@@ -119,6 +120,10 @@ async function loadGeobaseStreet(streetRaw, cache) {
     const url = `${WFS_BASE}?${params.toString()}`;
     try {
       const gj = await fetchJson(url);
+      if (gj.type !== "FeatureCollection" || !Array.isArray(gj.features)
+        || Number(gj.totalFeatures) !== gj.features.length) {
+        throw new Error("Incomplete geobase response; snapshot not written");
+      }
       for (const f of gj.features || []) {
         if (f.geometry?.type === "LineString" && f.geometry.coordinates.length >= 2) {
           collected.push({
@@ -131,6 +136,7 @@ async function loadGeobaseStreet(streetRaw, cache) {
       }
     } catch (error) {
       console.error(`  geobase fetch failed for "${streetNorm}" ("${q}"): ${error.message}`);
+      throw error;
     }
   }
   // Deduplique les segments identiques retournes par plusieurs variantes.
@@ -361,9 +367,22 @@ async function main() {
 
   console.log("Telechargement du flux officiel des entraves...");
   const data = await fetchJson(ENTRAVES_URL);
-  const features = data.features || [];
+  if (data.type !== "FeatureCollection" || !Array.isArray(data.features)
+    || Number(data.totalFeatures) !== data.features.length) {
+    throw new Error("Incomplete roadwork WFS response; snapshot not written");
+  }
+  const features = data.features;
   console.log(`Entraves publiees: ${features.length}`);
 
+  let previous = { impacts: [] };
+  try {
+    previous = JSON.parse(await readFile(OUT_SNAPSHOT, "utf8"));
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+  const previousImpacts = new Map(previous.impacts.map((impact) => [impact.requestId, impact]));
+  const previousOrder = new Map(previous.impacts.map((impact, index) => [impact.requestId, index]));
+  let preservedGeometryCount = 0;
   let cache;
   try {
     cache = new Map(Object.entries(JSON.parse(await (await import("node:fs/promises")).readFile(OUT_CACHE, "utf-8"))));
@@ -380,10 +399,10 @@ async function main() {
 
   for (const feature of features) {
     const properties = feature.properties ?? {};
-    let impacts = [];
-    try { impacts = JSON.parse(properties.occupancyImpactImpactsOfSection || "[]"); } catch {}
-    let polygon = null;
-    try { polygon = properties.locationOccupancyZoneGeometryCoordinates ? JSON.parse(properties.locationOccupancyZoneGeometryCoordinates) : null; } catch {}
+    const impacts = JSON.parse(properties.occupancyImpactImpactsOfSection || "[]");
+    if (!Array.isArray(impacts)) throw new Error("Invalid published impacts; snapshot not written");
+    const polygon = properties.locationOccupancyZoneGeometryCoordinates
+      ? JSON.parse(properties.locationOccupancyZoneGeometryCoordinates) : null;
     const point = feature.geometry?.type === "Point" ? feature.geometry.coordinates : null;
 
     impacts.forEach((impact, impactIndex) => {
@@ -408,7 +427,9 @@ async function main() {
         const published = typeof analysis.lineGeometry === "string" ? JSON.parse(analysis.lineGeometry) : analysis.lineGeometry;
         if (published?.geometry?.coordinates) lineGeometry = published.geometry;
         else if (published?.coordinates) lineGeometry = published;
-      } catch {}
+      } catch (error) {
+        throw new Error(`Invalid published geometry for ${out.requestId}`, { cause: error });
+      }
 
       if (lineGeometry) {
         out.geometryStatus = "published-line";
@@ -419,12 +440,24 @@ async function main() {
         out._streetRaw = street;
       }
       if (polygon) out.occupancyZone = { type: "Polygon", coordinates: polygon };
-      impactsOut.push(out);
+      const existing = previousImpacts.get(out.requestId);
+      if (!lineGeometry && existing && existing.geometryStatus !== "published-line"
+        && ["permitId", "street", "from", "to", "point", "occupancyZone"].every((key) => isDeepStrictEqual(out[key], existing[key]))) {
+        out.geometryStatus = existing.geometryStatus;
+        if (existing.geometry) out.geometry = existing.geometry;
+        delete out._streetRaw;
+        preservedGeometryCount += 1;
+        if (out.geometryStatus === "resolved-geobase") resolved += 1;
+        else if (out.geometryStatus === "occupancy-zone") occupancyZone += 1;
+        else noGeometry += 1;
+      }
+      impactsOut.push(isDeepStrictEqual(out, existing) ? existing : out);
       processed += 1;
     });
   }
 
   const pending = impactsOut.filter((i) => i.geometryStatus === "pending");
+  console.log(`Geometries inchangees conservees: ${preservedGeometryCount}`);
   console.log(`Impacts a resoudre: ${pending.length} (deja publies en ligne: ${publishedLine})`);
 
   let idx = 0;
@@ -487,7 +520,11 @@ async function main() {
     },
     impacts: impactsOut
   };
-  await writeFile(OUT_SNAPSHOT, JSON.stringify(snapshot, null, 2), "utf-8");
+  impactsOut.sort((first, second) => (previousOrder.get(first.requestId) ?? Number.MAX_SAFE_INTEGER)
+    - (previousOrder.get(second.requestId) ?? Number.MAX_SAFE_INTEGER));
+  const unchanged = previous.impacts.length === impactsOut.length
+    && impactsOut.every((impact) => isDeepStrictEqual(impact, previousImpacts.get(impact.requestId)));
+  await writeFile(OUT_SNAPSHOT, JSON.stringify(unchanged ? { ...previous, extractedAt: snapshot.extractedAt } : snapshot, null, 2), "utf-8");
   console.log(`\nSauvegarde ${OUT_SNAPSHOT}`);
   console.log(`  lignes resolues via geobase : ${resolved}`);
   console.log(`  lignes deja publiees        : ${publishedLine}`);
