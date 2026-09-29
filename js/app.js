@@ -866,7 +866,8 @@ let currentClosures = [];
 let selectedClosureId = null;
 let activeMapPopup = null;
 
-const requestedMapView = new URLSearchParams(window.location.search).get("mapView")?.split(",").map(Number);
+const routeParams = new URLSearchParams(window.location.search);
+const requestedMapView = routeParams.get("mapView")?.split(",").map(Number);
 const initialMapView = requestedMapView?.length === 3 && requestedMapView.every(Number.isFinite)
   && Math.abs(requestedMapView[0]) <= 85 && Math.abs(requestedMapView[1]) <= 180
   && requestedMapView[2] >= 10 && requestedMapView[2] <= 19 ? requestedMapView : null;
@@ -886,12 +887,17 @@ const map = L.map("map", {
 
 document.querySelectorAll(".map-mode-nav a").forEach((link) => {
   link.addEventListener("click", () => {
+    if (installedApp) window.localStorage.setItem(mapModeKey, link.dataset.languagePage === "pedestrian" ? "pedestrian" : "auto");
     const center = map.getCenter();
     const target = new URL(link.href);
     target.searchParams.set("mapView", [center.lat, center.lng, map.getZoom()].join(","));
+    target.searchParams.set("startDate", dateStart.value);
+    target.searchParams.set("endDate", dateEnd.value);
+    target.searchParams.set("periods", timeFilters.filter((input) => input.checked).map((input) => input.value).join(","));
     link.href = target.href;
   });
 });
+if (installedApp && !redirectToSavedMode) window.localStorage.setItem(mapModeKey, PEDESTRIAN_MODE ? "pedestrian" : "auto");
 
 const baseLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 20,
@@ -988,6 +994,11 @@ function locateUser() {
     fail();
   }
 }
+
+if (installedApp && !redirectToSavedMode) locateUser();
+document.addEventListener("visibilitychange", () => {
+  if (installedApp && !document.hidden) locateUser();
+});
 
 let mapRenderFrame = null;
 const renderedClosureLayers = new Map();
@@ -4447,6 +4458,20 @@ panelResizeHandle.addEventListener("pointercancel", () => {
 const currentDate = formatInputDate(new Date());
 dateStart.value = currentDate;
 dateEnd.value = currentDate;
+[[dateStart, "startDate"], [dateEnd, "endDate"]].forEach(([input, key]) => {
+  const selectedDate = routeParams.get(key);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(selectedDate || "")) {
+    input.value = selectedDate;
+    if (!input.value) input.value = currentDate;
+  }
+});
+const selectedPeriods = routeParams.get("periods");
+if (selectedPeriods !== null) {
+  const periods = selectedPeriods ? selectedPeriods.split(",") : [];
+  if (periods.every((period) => timeFilters.some((input) => input.value === period)) && new Set(periods).size === periods.length) {
+    timeFilters.forEach((input) => { input.checked = periods.includes(input.value); });
+  }
+}
 
 if (window.matchMedia("(max-width: 880px)").matches) {
   setMobileMenuOpen(false);

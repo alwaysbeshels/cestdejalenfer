@@ -223,6 +223,81 @@ h2 {
   color: #fff;
 }
 
+.install-app:not([hidden]) {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  position: absolute;
+  right: 18px;
+  bottom: 76px;
+  z-index: 1050;
+}
+
+.install-app button {
+  min-height: 30px;
+  padding: 3px 8px;
+  border: 1px solid var(--accent-dark);
+  border-radius: 6px;
+  background: #fffdf8;
+  color: var(--accent-dark);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(20, 29, 26, 0.16);
+}
+
+.install-app p {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  width: min(280px, calc(100vw - 36px));
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fffdf8;
+  color: var(--ink);
+  font-size: 0.82rem;
+  box-shadow: 0 10px 26px rgba(20, 29, 26, 0.16);
+}
+
+@media (max-width: 1200px) {
+  .install-app:not([hidden]) {
+    bottom: 154px;
+  }
+}
+
+@media (max-width: 880px) {
+  .install-app:not([hidden]) {
+    bottom: 68px;
+  }
+
+  .install-app button {
+    display: grid;
+    grid-template-columns: 22px 70px;
+    align-items: center;
+    gap: 4px;
+    min-height: 48px;
+    padding: 4px 7px;
+    text-align: left;
+  }
+
+  .install-app button span:first-child {
+    font-size: 1.9rem;
+    line-height: 1;
+    transform: scaleY(1.2);
+  }
+
+  .install-app button span:last-child {
+    line-height: 1.15;
+  }
+
+  html[lang="en"] .install-app button span:last-child {
+    max-width: 44px;
+  }
+}
+
 body[data-map-mode="pedestrian"] h1 {
   font-size: 1.9rem;
   overflow-wrap: anywhere;

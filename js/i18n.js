@@ -30,6 +30,15 @@ function currentLanguage() {
   return DEFAULT_LANGUAGE;
 }
 
+const installedApp = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+const mapModeKey = "installedMapMode";
+const redirectToSavedMode = installedApp && document.body.dataset.mapMode !== "pedestrian"
+  && document.body.dataset.documentTitle === "document.mapTitle"
+  && window.localStorage.getItem(mapModeKey) === "pedestrian";
+if (redirectToSavedMode) {
+  window.location.replace(languagePath(currentLanguage(), "pedestrian.html"));
+}
+
 function t(key, language = currentLanguage()) {
   if (document.body?.dataset.mapMode === "pedestrian") {
     const scoped = window.TRANSLATIONS?.[language]?.[`pedestrian.${key}`]
@@ -134,10 +143,57 @@ function setupLanguageToggle() {
   applyTranslations();
 }
 
+function setupInstallApp() {
+  const container = document.querySelector("#installAppContainer");
+  if (!container) return;
+
+  const button = document.querySelector("#installApp");
+  const help = document.querySelector("#installAppHelp");
+  const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  help.dataset.i18n = isIos ? "nav.installHelp" : /Chrome|Chromium|Edg\//.test(navigator.userAgent) ? "nav.installHelpChrome" : "nav.installHelpBrowser";
+  translateElement(help);
+  let installPrompt = null;
+  let installedHere = false;
+  const isInstalled = () => window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+
+  function refresh() {
+    container.hidden = installedHere || isInstalled() || !window.isSecureContext || !("serviceWorker" in navigator);
+  }
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    installPrompt = event;
+    refresh();
+  });
+  window.addEventListener("appinstalled", () => {
+    installPrompt = null;
+    installedHere = true;
+    refresh();
+  });
+  window.matchMedia("(display-mode: standalone)").addEventListener("change", refresh);
+
+  button.addEventListener("click", async () => {
+    if (installPrompt) {
+      const prompt = installPrompt;
+      installPrompt = null;
+      await prompt.prompt();
+      refresh();
+    } else {
+      help.hidden = !help.hidden;
+      button.setAttribute("aria-expanded", String(!help.hidden));
+    }
+  });
+  refresh();
+}
+
 if (document.readyState === "loading") {
-  window.addEventListener("DOMContentLoaded", setupLanguageToggle);
+  window.addEventListener("DOMContentLoaded", () => {
+    setupLanguageToggle();
+    setupInstallApp();
+  });
 } else {
   setupLanguageToggle();
+  setupInstallApp();
 }
 
 window.addEventListener("load", ensureFavicon);

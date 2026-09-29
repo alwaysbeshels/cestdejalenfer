@@ -10,6 +10,14 @@ Application statique pour visualiser les fermetures de rues, voies retranchees, 
 
 La carte est une application statique. Depuis la racine du projet, démarrez le serveur local avec `python -m http.server 5500`, puis ouvrez `http://localhost:5500/index.html`. Vous pouvez aussi utiliser l'extension Live Server de VS Code en configurant son port sur `5500`. La commande standard du projet est donc `python -m http.server 5500`, et il faut tester sur `localhost:5500`, pas sur un autre port. Elle utilise Leaflet avec le fond OpenStreetMap standard et des données GeoJSON officielles.
 
+### Application installable (PWA)
+
+Les cartes et la FAQ partagent un manifeste et un service worker sous la racine du site, y compris depuis `/fr/` et `/en/`. Sur GitHub Pages (HTTPS) ou `localhost`, le site peut etre ajoute a l'ecran d'accueil. Cette premiere version reste **en ligne uniquement** : le service worker ne conserve ni entraves ni fond de carte, afin de ne pas afficher des informations perimees hors connexion.
+
+Dans la PWA installee, le dernier mode Auto/Pietons est conserve localement et restaure au prochain lancement depuis l'icone. La carte demande la position au lancement et quand l'application revient au premier plan; le navigateur gere la permission a la premiere demande. En cas de refus ou d'indisponibilite, la carte reste utilisable et le bouton de localisation permet de reessayer. La position n'est pas enregistree. Un onglet de navigateur ordinaire ne declenche pas cette localisation automatique.
+
+Pour tester sans Chrome sur Mac : installez Xcode depuis l'App Store, ouvrez Xcode > Settings > Components et installez un simulateur iOS si necessaire, puis lancez Xcode > Open Developer Tool > Simulator. Depuis le simulateur, ouvrez Safari sur `http://localhost:5500/index.html` apres avoir demarre le serveur local; utilisez Partager > Sur l'ecran d'accueil et ouvrez l'icone ajoutee. Le simulateur iOS requiert l'installation complete de Xcode; les seuls outils en ligne de commande ne suffisent pas. Testez egalement sur un vrai iPhone via l'URL HTTPS de GitHub Pages avant publication : le simulateur ne reproduit pas tous les comportements du materiel. L'application installee ne fonctionne pas hors ligne et ne remplace pas une application native App Store.
+
 ## Développement local (optionnel)
 
 ### Carte pietonne
@@ -56,7 +64,7 @@ L'[avis Clark-Graham](https://baie-durfe.qc.ca/fr/nos-departements/page/info-tra
 
 Assemblage du transfert cyclable : `2026-09-25T21:23:22.764Z`, 1 124 fiches, dont les 1 122 precedentes conservees hors `sourceCheckedAt`, et 179 candidats en revue, dont l'avis documentaire Clark-Graham affiche. Les 29 entrees sources comprennent 13 flux verifies en direct, 10 entrees locales non reverifiees et 6 echecs : cinq couches Mont-Saint-Hilaire et le flux Repentigny. Les heures de verification propres a chaque source restent dans le snapshot; aucun `extractedAt` global ou catalogue n'est avance pour cette consolidation. Les pages detaillees ne sont toujours pas toutes consultees par le generateur. L'audit ne garantit donc pas une couverture exhaustive des avis ni l'accessibilite sur le terrain.
 
-Les liens Auto / Pietons transmettent le centre et le zoom via le parametre `mapView`. La destination valide ces valeurs puis les restaure avant le premier affichage, sans recadrage automatique a la fin du chargement. Une premiere visite sans position transmise garde le comportement initial. La commande Recentrer reste disponible.
+Les liens Auto / Pietons transmettent le centre et le zoom via le parametre `mapView`, ainsi que les dates et les choix Jour / Nuit. La destination valide ces valeurs puis les restaure avant le premier affichage, sans recadrage automatique a la fin du chargement. Une premiere visite sans position transmise garde le comportement initial. La commande Recentrer reste disponible.
 
 `node tools/validate-popup-grouping.mjs` controle aussi les exclusions par mode, les cas mixtes Terrebonne/Laval/Dorval, la distinction travaux/fermeture et la conservation des enregistrements lors des tests, sur les deux cartes.
 
