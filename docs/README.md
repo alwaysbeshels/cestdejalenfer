@@ -2,6 +2,8 @@
 
 Documentation complete du projet. Consultez aussi le [guide utilisateur des prompts Copilot](GUIDE_PROMPTS.md) ou revenez a l'[index du depot](../README.md).
 
+Les [annonces GitHub](annonces/README.md) sont classees par date, avec une version francaise et anglaise dans chaque fichier et une proposition de versions et de tags. Elles deviennent consultables dans le depot lors de la publication autorisee qui les inclut, sans statut manuel dans leur tableau.
+
 Les commandes et les chemins de fichiers mentionnes ci-dessous sont relatifs a la racine du projet, pas au dossier `docs/`. Les mises a jour de cette documentation doivent etre faites ici; le README a la racine reste un index.
 
 Application statique pour visualiser les fermetures de rues, voies retranchees, autoroutes, ponts, viaducs et restrictions qui compliquent les déplacements en auto dans la region metropolitaine de Montreal, y compris Montreal, Laval, Longueuil, la Rive-Sud, la Rive-Nord et les grands axes de la grande region.

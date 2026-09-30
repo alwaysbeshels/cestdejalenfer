@@ -23,6 +23,7 @@ Chaque prompt selectionne son agent specialise. L'agent definit les regles du pr
 | `/examiner-signalements` | Revoir les declarations citoyennes en attente et leurs preuves. | Snapshot citoyen et documentation necessaire, seulement pour les corrections justifiees. |
 | `/integrer-source` | Rechercher une source officielle et preparer son branchement. | Catalogue uniquement; aucun nouveau chargeur active. |
 | `/valider-carte` | Tester le vrai site local dans Chromium. | Aucune modification du code ou des donnees. |
+| `/preparer-annonce` | Rediger une annonce datee FR/EN des nouveautes importantes depuis la derniere annonce publiee. | Edition preparee dans `docs/annonces/`, index des editions et liens documentaires necessaires. |
 | `/preparer-publication` | Examiner les changements et verifier leur etat avant publication. | Aucune; pas de staging, commit ou push. |
 
 Aucune de ces commandes ne publie automatiquement le site et aucune n'autorise l'installation de dependances sans votre accord. Les limites sont des instructions de travail; relisez toujours le diff et le bilan.
@@ -99,6 +100,23 @@ Le projet utilise `http://localhost:5500/index.html` pour ces controles. Chromiu
 
 L'agent fournit les tests reussis, echoues ou bloques, sans corriger l'interface. Une erreur peut donc mener a une demande de correction distincte. Un simple HTTP 200 ne vaut pas validation du site.
 
+## Preparer une annonce
+
+Cette commande prepare une annonce Markdown complete en francais et en anglais, dans un seul fichier date. Elle examine l'historique et les changements importants du site depuis la derniere annonce effectivement publiee, puis verifie les faits dans le code et la documentation.
+
+```text
+/preparer-annonce
+/preparer-annonce pour le 2026-10-07
+/preparer-annonce jusqu'au commit <SHA-complet>
+/preparer-annonce uniquement les nouveautes du mode lecteur d'ecran
+```
+
+Les editions se trouvent dans [docs/annonces](annonces/README.md), au format `AAAA-MM-JJ.md`, avec leur date et leurs references de comparaison. Le tableau reste un index date/sujets/langues, sans statut manuel. Lorsqu'une publication explicitement demandee inclut l'edition, son push reussi sur la branche publique rend l'annonce consultable dans le depot. Le prompt verifie les fichiers et commits reellement presents sur cette branche pour retrouver la derniere annonce; un fichier uniquement local ne devient pas une reference publiee.
+
+Une selection de sujets est marquee `targeted`, pas comme bilan exhaustif. La commande tient compte de cette distinction lors de la prochaine comparaison pour ne pas oublier les autres changements. Sans couverture complete precedente, elle prepare un premier bilan d'ensemble en distinguant les sujets deja annonces. Les fonctionnalites preparees mais non branchees et les limites de couverture sont signalees, pas presentees comme disponibles. Le deploiement du site et les eventuels relais dans GitHub Discussions ou les Releases sont distincts de la publication du Markdown dans le depot.
+
+Les deux langues contiennent les memes nouveautes, dates et reserves, avec les libelles reels de l'interface et les liens FR/EN. Les emojis peuvent accompagner les titres, sans remplacer l'information. Aucune annonce n'est publiee sur GitHub, aucun tag ou Release n'est cree et aucune source n'est actualisee par cette commande.
+
 ## Preparer la publication
 
 Utilisez cette commande quand les changements locaux sont prets a etre examines. Elle inspecte le diff, controle les fichiers et execute les tests pertinents. Elle ne modifie ni les fichiers ni l'index Git.
@@ -136,6 +154,7 @@ Les prompts restent dans `.github/prompts/` pour etre decouverts par VS Code; se
 - [Examiner les signalements](../.github/prompts/examiner-signalements.prompt.md)
 - [Integrer une source](../.github/prompts/integrer-source.prompt.md)
 - [Valider la carte](../.github/prompts/valider-carte.prompt.md)
+- [Preparer une annonce](../.github/prompts/preparer-annonce.prompt.md)
 - [Preparer la publication](../.github/prompts/preparer-publication.prompt.md)
 - [Regles de publication](../.github/prompts/deployment-rules.md)
 - [Documentation du projet](README.md)
