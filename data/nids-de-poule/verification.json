@@ -1,0 +1,254 @@
+{
+  "role": "Seul fichier du dossier reecrit a chaque execution. Les autres ne changent que si leur contenu change.",
+  "derniereVerification": "2026-09-30T04:44:59.234Z",
+  "rayonAppariementM": 25,
+  "anneeCourante": 2026,
+  "fichiersModifiesCetteExecution": [],
+  "signalements": {
+    "2014": {
+      "ressourceId": "f62595b0-b26a-4e7b-ba67-05b84521ab64",
+      "nombre": 11392,
+      "creationMax": "2014-12-31T14:51:52",
+      "statutMax": "",
+      "verifieLe": "2026-09-30T04:44:32.302Z"
+    },
+    "2015": {
+      "ressourceId": "f62595b0-b26a-4e7b-ba67-05b84521ab64",
+      "nombre": 8482,
+      "creationMax": "2015-12-31T19:22:06",
+      "statutMax": "",
+      "verifieLe": "2026-09-30T04:44:32.890Z"
+    },
+    "2016": {
+      "ressourceId": "f62595b0-b26a-4e7b-ba67-05b84521ab64",
+      "nombre": 8768,
+      "creationMax": "2016-12-31T19:58:28",
+      "statutMax": "2018-03-29T08:36:05",
+      "verifieLe": "2026-09-30T04:44:33.531Z"
+    },
+    "2017": {
+      "ressourceId": "dbc02208-907c-46ff-a052-e4c42042d327",
+      "nombre": 7538,
+      "creationMax": "2017-12-31T12:38:23",
+      "statutMax": "2019-12-05T14:24:09",
+      "verifieLe": "2026-09-30T04:44:34.452Z"
+    },
+    "2018": {
+      "ressourceId": "dbc02208-907c-46ff-a052-e4c42042d327",
+      "nombre": 7927,
+      "creationMax": "2018-12-31T17:39:02",
+      "statutMax": "2023-01-11T14:39:31",
+      "verifieLe": "2026-09-30T04:44:35.309Z"
+    },
+    "2019": {
+      "ressourceId": "dbfc05f8-b939-4639-ae52-2e77f738e43f",
+      "nombre": 12885,
+      "creationMax": "2019-12-31T19:43:02",
+      "statutMax": "2023-07-11T08:38:10",
+      "verifieLe": "2026-09-30T04:44:39.503Z"
+    },
+    "2020": {
+      "ressourceId": "dbfc05f8-b939-4639-ae52-2e77f738e43f",
+      "nombre": 5092,
+      "creationMax": "2020-12-31T14:30:04",
+      "statutMax": "2024-01-19T14:57:45",
+      "verifieLe": "2026-09-30T04:44:40.373Z"
+    },
+    "2021": {
+      "ressourceId": "dbfc05f8-b939-4639-ae52-2e77f738e43f",
+      "nombre": 4808,
+      "creationMax": "2021-12-31T19:08:05",
+      "statutMax": "2024-12-02T16:11:07",
+      "verifieLe": "2026-09-30T04:44:41.194Z"
+    },
+    "2022": {
+      "ressourceId": "2cfa0e06-9be4-49a6-b7f1-ee9f2363a872",
+      "nombre": 10191,
+      "creationMax": "2022-12-31T19:36:32",
+      "statutMax": "2025-11-10T10:08:40",
+      "verifieLe": "2026-09-30T04:44:42.435Z"
+    },
+    "2023": {
+      "ressourceId": "2cfa0e06-9be4-49a6-b7f1-ee9f2363a872",
+      "nombre": 8660,
+      "creationMax": "2023-12-31T22:42:25",
+      "statutMax": "2025-06-16T13:35:12",
+      "verifieLe": "2026-09-30T04:44:43.571Z"
+    },
+    "2024": {
+      "ressourceId": "2cfa0e06-9be4-49a6-b7f1-ee9f2363a872",
+      "nombre": 10460,
+      "creationMax": "2024-12-31T20:20:05",
+      "statutMax": "2026-08-06T09:07:30",
+      "verifieLe": "2026-09-30T04:44:44.682Z"
+    },
+    "2025": {
+      "ressourceId": "2cfa0e06-9be4-49a6-b7f1-ee9f2363a872",
+      "nombre": 14189,
+      "creationMax": "2025-12-31T21:39:06",
+      "statutMax": "2026-09-28T08:36:38",
+      "verifieLe": "2026-09-30T04:44:45.806Z"
+    },
+    "2026": {
+      "ressourceId": "2cfa0e06-9be4-49a6-b7f1-ee9f2363a872",
+      "nombre": 23955,
+      "creationMax": "2026-09-28T20:29:35",
+      "statutMax": "2026-09-28T20:29:35",
+      "verifieLe": "2026-09-30T04:44:53.262Z"
+    }
+  },
+  "reparations": {
+    "2016": {
+      "ressourceDerniereModification": "2017-04-11T20:32:54.146897",
+      "nombre": 13876,
+      "verifieLe": "2026-09-30T04:44:27.764Z"
+    },
+    "2017": {
+      "ressourceDerniereModification": "2018-05-23T18:18:08.178355",
+      "nombre": 205437,
+      "verifieLe": "2026-09-30T04:44:28.234Z"
+    },
+    "2018": {
+      "ressourceDerniereModification": "2019-06-10T20:00:07.536170",
+      "nombre": 199019,
+      "verifieLe": "2026-09-30T04:44:28.721Z"
+    },
+    "2019": {
+      "ressourceDerniereModification": "2020-10-19T14:01:23.089399",
+      "nombre": 174856,
+      "verifieLe": "2026-09-30T04:44:29.245Z"
+    },
+    "2020": {
+      "ressourceDerniereModification": "2020-04-23T20:06:51.710745",
+      "nombre": 81354,
+      "verifieLe": "2026-09-30T04:44:29.729Z"
+    },
+    "2021": {
+      "ressourceDerniereModification": "2023-08-22T14:59:12.475477",
+      "nombre": 50320,
+      "verifieLe": "2026-09-30T04:44:30.073Z"
+    },
+    "2022": {
+      "ressourceDerniereModification": "2023-08-22T15:01:16.938189",
+      "nombre": 72062,
+      "verifieLe": "2026-09-30T04:44:30.502Z"
+    },
+    "2023": {
+      "ressourceDerniereModification": "2025-08-04T17:45:09.051219",
+      "nombre": 105773,
+      "verifieLe": "2026-09-30T04:44:30.883Z"
+    },
+    "2024": {
+      "ressourceDerniereModification": "2025-08-04T17:32:56.856218",
+      "nombre": 50411,
+      "verifieLe": "2026-09-30T04:44:31.285Z"
+    },
+    "2025": {
+      "ressourceDerniereModification": "2025-08-06T22:02:13.788306",
+      "nombre": 74159,
+      "verifieLe": "2026-09-30T04:44:31.621Z"
+    }
+  },
+  "fichiers": {
+    "index.json": {
+      "empreinte": "8e19c9d2319d9e58926ea7c0b62a3b67eb8869794892eeae62546a7233b23f6e",
+      "contenuModifieLe": "2026-09-30T04:43:34.167Z"
+    },
+    "positions.json": {
+      "empreinte": "4ad2e62822684885e8a86e0d560fc350680b1485091fe7ea371cf36dcae7e594",
+      "contenuModifieLe": "2026-09-30T04:43:34.130Z"
+    },
+    "reparations-2016.json": {
+      "empreinte": "3ab1b1e5508ab76c160fb1b4f20053d1380da0447cc4d76e8cc06d3fa77751fd",
+      "contenuModifieLe": "2026-09-30T04:41:48.752Z"
+    },
+    "reparations-2017.json": {
+      "empreinte": "f937daaabc86cf749117b346050f26a55c753133a19a172eaba00b5e7b072922",
+      "contenuModifieLe": "2026-09-30T04:42:03.901Z"
+    },
+    "reparations-2018.json": {
+      "empreinte": "d7c8605a63477e670e7ee78e7f2f455d9c3c143df52f665c3b928bf417976684",
+      "contenuModifieLe": "2026-09-30T04:42:17.778Z"
+    },
+    "reparations-2019.json": {
+      "empreinte": "f0f8ae9cd3c083510e95d4942f6d679a39a7f89836ce8bcbe16da6bd254aae76",
+      "contenuModifieLe": "2026-09-30T04:42:28.492Z"
+    },
+    "reparations-2020.json": {
+      "empreinte": "f12be50238a4a394e94910a3a2573b0f3d44d2aaa1ed71630378191192c85a28",
+      "contenuModifieLe": "2026-09-30T04:42:34.132Z"
+    },
+    "reparations-2021.json": {
+      "empreinte": "245980e3ba05b2a7fcdc73e10281ec7206ce75bbe4a0c305e69751db7cae3f09",
+      "contenuModifieLe": "2026-09-30T04:42:34.814Z"
+    },
+    "reparations-2022.json": {
+      "empreinte": "bc2d9d38cfef6a8f60449f201c05f6c17ce2fdbac81e65b96ca827c13efec048",
+      "contenuModifieLe": "2026-09-30T04:42:35.443Z"
+    },
+    "reparations-2023.json": {
+      "empreinte": "96ead07b8da29fd8e44d18ff351f39a6b48a75395fdea7d86efbf4bed7d4b1e7",
+      "contenuModifieLe": "2026-09-30T04:42:36.027Z"
+    },
+    "reparations-2024.json": {
+      "empreinte": "9d649a204d6375fac9d31e240df8f84e86953729c464ddce66c2357b0de93076",
+      "contenuModifieLe": "2026-09-30T04:42:36.584Z"
+    },
+    "reparations-2025.json": {
+      "empreinte": "b909a59ebb14e2566d6154dbb07924e62de1bc0264829e914edfd6d4fbe1ff2f",
+      "contenuModifieLe": "2026-09-30T04:42:37.139Z"
+    },
+    "signalements-2014.json": {
+      "empreinte": "f222fc5cc0379d0dc39bb69e1aea9563a3b9e18adba00069c744ae81afd4e40e",
+      "contenuModifieLe": "2026-09-30T04:43:26.857Z"
+    },
+    "signalements-2015.json": {
+      "empreinte": "da44132b023a7768b23d561c2c1a0e77e397ddb95d42b6df47e5f913525063eb",
+      "contenuModifieLe": "2026-09-30T04:43:26.876Z"
+    },
+    "signalements-2016.json": {
+      "empreinte": "a69a57c4a2e3d6847cbf4db1f652f8ffd899b7c60144868894713b8cc7b954b3",
+      "contenuModifieLe": "2026-09-30T04:43:26.907Z"
+    },
+    "signalements-2017.json": {
+      "empreinte": "9c1fb268bc5b69a3799a4e92716c13214cc250fda0f4a14e8255c38ed9645e8b",
+      "contenuModifieLe": "2026-09-30T04:43:27.544Z"
+    },
+    "signalements-2018.json": {
+      "empreinte": "4ba2bbaecd72ba12ea98a4634558ed90a7c946acdf4b766f216eba990f976770",
+      "contenuModifieLe": "2026-09-30T04:43:28.259Z"
+    },
+    "signalements-2019.json": {
+      "empreinte": "61ae25c13487981d832c199cf43d82369f677e97bc93c3992869e1b62df45e34",
+      "contenuModifieLe": "2026-09-30T04:43:29.471Z"
+    },
+    "signalements-2020.json": {
+      "empreinte": "ea7decacd5d2cf295ff588ee88ed079965686e75a02052c34fd8dc4d17874c33",
+      "contenuModifieLe": "2026-09-30T04:43:29.867Z"
+    },
+    "signalements-2021.json": {
+      "empreinte": "9ee72f3799e0885d7928d5b2e47819480614fbee64ec39264568fd9c7d91e508",
+      "contenuModifieLe": "2026-09-30T04:43:30.173Z"
+    },
+    "signalements-2022.json": {
+      "empreinte": "0bf0172a7a79eb013409ee374b132f3a6b72ca3a8ef3085c9a97f9e5f1272b7d",
+      "contenuModifieLe": "2026-09-30T04:43:30.960Z"
+    },
+    "signalements-2023.json": {
+      "empreinte": "5b7451da4cf2d72684c460658707935d6f72aca66b255da888edfd8d0000b075",
+      "contenuModifieLe": "2026-09-30T04:43:31.463Z"
+    },
+    "signalements-2024.json": {
+      "empreinte": "5871f4da7d30bd192b2a03432fc97aad0efad7cf6c847ee08447c8969a88459d",
+      "contenuModifieLe": "2026-09-30T04:43:32.046Z"
+    },
+    "signalements-2025.json": {
+      "empreinte": "69952c7a2f49cc6e5fbeb474f8b4b1e6a11d23a2c415513d066d41daab64ce62",
+      "contenuModifieLe": "2026-09-30T04:43:32.692Z"
+    },
+    "signalements-2026.json": {
+      "empreinte": "7be0028c907c8962d3f79ad91c7fa44bdbca58ecc8d5c5a2dab1de69c178eab7",
+      "contenuModifieLe": "2026-09-30T04:43:33.982Z"
+    }
+  }
+}

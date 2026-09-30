@@ -2,5 +2,6 @@ node_modules/
 .DS_Store
 *.log
 tools/geobase-cache.json
+tools/cache-nids-de-poule/
 /PREPARATION_ENTREVUES_RADIO.md
 /PREPARATION_ENTREVUES_RADIO.pdf

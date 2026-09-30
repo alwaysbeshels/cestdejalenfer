@@ -25,6 +25,13 @@ const SOURCE_CATALOG = [
   { name: "Montreal - API CKAN des rues piétonnes", url: "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=ef2a8162-0644-47e7-bd03-bea33f14a5d2" },
   { name: "Montreal - API CKAN des rues piétonnes (SQL)", url: "https://donnees.montreal.ca/api/3/action/datastore_search_sql?sql=SELECT%20*%20from%20%22ef2a8162-0644-47e7-bd03-bea33f14a5d2%22" },
   { name: "Montreal - Rues piétonnes (snapshot API + géométrie OSM validée)", url: "data/montreal-pedestrian-snapshot.json", dataType: "snapshot", extractedAt: "2026-09-29T15:08:28.268Z" },
+  // Nids-de-poule. Sources catalogues mais non chargees par la carte : la fraicheur de
+  // chaque fichier est portee par data/nids-de-poule/verification.json, pas par extractedAt.
+  { name: "Montreal - Demandes de services citoyennes (Requetes 311)", url: "https://donnees.montreal.ca/dataset/requete-311" },
+  { name: "Montreal - Travaux de colmatage mecanise de nid-de-poule des chaussees", url: "https://donnees.montreal.ca/dataset/refection-de-chaussee-par-remplissage-mecanise-de-nid-de-poule" },
+  { name: "Montreal - Snapshots nids-de-poule (signalements, reparations, recurrence)", url: "data/nids-de-poule/index.json", dataType: "snapshot" },
+  { name: "Montreal - Verification des snapshots nids-de-poule", url: "data/nids-de-poule/verification.json", dataType: "snapshot" },
+
   { name: "Montreal - Entraves et travaux en cours (CSV)", url: "https://donnees.montreal.ca/dataset/667342f7-f667-4c3c-9837-65e81312cd8d/resource/cc41b532-f12d-40fb-9f55-eb58c9a2b12b/download/entraves-travaux-en-cours.csv" },
   { name: "Montreal - Impacts des entraves en cours (CSV)", url: "https://donnees.montreal.ca/dataset/667342f7-f667-4c3c-9837-65e81312cd8d/resource/a2bc8014-488c-495d-941b-e7ae1999d1bd/download/impacts-entraves-travaux-en-cours.csv" },
   { name: "Montreal - Avis et alertes", url: "https://www.montreal.ca/avis-et-alertes" },
