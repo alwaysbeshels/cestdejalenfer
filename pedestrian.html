@@ -10,7 +10,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#d96d00">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="css/styles.css?v=20260928-install5">
+  <link rel="stylesheet" href="css/styles.css?v=20260929-visual-assist13">
 </head>
 <body data-document-title="document.mapTitle" data-map-mode="pedestrian">
   <div class="app-shell">
@@ -18,15 +18,19 @@
       <span></span><span></span><span></span>
     </button>
     <div id="menuBackdrop" class="menu-backdrop" hidden></div>
+    <section id="accessibleListPanel" class="accessible-list-panel" tabindex="-1" data-i18n-aria-label="visualAssist.panelLabel" hidden>
+      <div id="accessibleListTools" class="accessible-list-tools"></div>
+    </section>
     <aside id="sidePanel" class="panel" data-i18n-aria-label="filters.label">
       <header class="brand-block">
         <p class="eyebrow" data-i18n="map.region"></p>
         <h1 data-i18n="map.title"></h1>
         <p class="intro" data-i18n="map.intro"></p>
-        <nav class="site-nav" data-i18n-aria-label="nav.main">
+        <nav class="site-nav has-visual-assist" data-i18n-aria-label="nav.main">
           <a href="faq.html" data-language-page="faq" data-i18n="nav.faq"></a>
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8TiTOGHRjDw36fzIT3DS9ayLfqEcNaE6c_q2BYldNxhgddA/viewform" target="_blank" rel="noreferrer" data-i18n="nav.comments"></a>
           <button id="languageToggle" class="language-toggle" type="button" data-i18n-aria-label="language.switchLabel">EN</button>
+          <button id="visualAssistToggle" class="visual-assist-toggle" type="button" data-i18n="visualAssist.on" data-i18n-aria-label="visualAssist.onLabel"></button>
         </nav>
       </header>
       <nav class="map-mode-nav" data-i18n-aria-label="nav.mapMode">
@@ -39,6 +43,7 @@
           <span class="visually-hidden" data-i18n="list.searchLabel"></span>
           <input id="searchFilter" type="search" data-i18n-placeholder="list.searchPlaceholder">
         </label>
+        <button id="panelLocateButton" class="panel-locate-button" type="button" data-i18n="location.nearby" hidden></button>
         <details class="filter-section">
           <summary class="filter-heading"><h2 class="filter-title" data-i18n="filters.dates"></h2></summary>
           <div class="date-range-fields section-content">
@@ -145,11 +150,11 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="languages/fr.js?v=20260928-install2"></script>
-  <script src="languages/en.js?v=20260928-install2"></script>
-  <script src="js/i18n.js?v=20260928-pwa-location"></script>
+  <script src="languages/fr.js?v=20260929-faq-accessibility"></script>
+  <script src="languages/en.js?v=20260929-faq-accessibility"></script>
+  <script src="js/i18n.js?v=20260929-faq-accessibility"></script>
   <script src="js/pedestrian.js?v=20260925-cycling-view"></script>
-  <script src="js/app.js?v=20260928-mode-filters"></script>
+  <script src="js/app.js?v=20260929-visual-assist14"></script>
   <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
 </body>
 </html>

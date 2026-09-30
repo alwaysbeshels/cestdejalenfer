@@ -906,6 +906,15 @@ const baseLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", 
 
 const closureLayer = L.layerGroup().addTo(map);
 const arrowLayer = L.layerGroup().addTo(map);
+
+function translateZoomControl() {
+  [[".leaflet-control-zoom-in", "map.zoomIn"], [".leaflet-control-zoom-out", "map.zoomOut"]].forEach(([selector, key]) => {
+    const control = map.getContainer().querySelector(selector);
+    control?.setAttribute("title", t(key));
+    control?.setAttribute("aria-label", t(key));
+  });
+}
+translateZoomControl();
 const fastRenderer = L.canvas({ padding: 2.0 });
 let locationPending = false;
 let locationHasCentered = Boolean(initialMapView);
@@ -930,7 +939,10 @@ L.DomEvent.disableClickPropagation(locationContainer);
 L.DomEvent.disableScrollPropagation(locationContainer);
 locationControl.onAdd = () => locationContainer;
 locationControl.addTo(map);
-locateButton.addEventListener("click", locateUser);
+locateButton.addEventListener("click", () => locateUser());
+// Outside the Leaflet container so VoiceOver can activate it like any panel control.
+const panelLocateButton = document.querySelector("#panelLocateButton");
+panelLocateButton?.addEventListener("click", () => locateUser({ fromList: true }));
 updateLocationControl();
 
 function updateLocationControl() {
@@ -939,12 +951,13 @@ function updateLocationControl() {
   locateButton.setAttribute("aria-label", label);
   locateButton.setAttribute("aria-busy", String(locationPending));
   locateButton.disabled = locationPending;
+  panelLocateButton?.setAttribute("aria-busy", String(locationPending));
   locationStatus.textContent = locationMessageKey ? t(locationMessageKey) : "";
   locationStatus.hidden = !locationMessageKey;
-  locationStatus.classList.toggle("visually-hidden", locationMessageKey === "location.found");
+  locationStatus.classList.toggle("visually-hidden", locationMessageKey === "location.found" || locationMessageKey === "location.foundList");
 }
 
-function locateUser() {
+function locateUser({ fromList = false } = {}) {
   if (locationPending) return;
   if (!window.isSecureContext || !navigator.geolocation) {
     locationMessageKey = "location.unsupported";
@@ -984,7 +997,7 @@ function locateUser() {
         }
         map.flyTo(point, 16, { duration: 0.8, animate: !window.matchMedia("(prefers-reduced-motion: reduce)").matches });
         locationPending = false;
-        locationMessageKey = "location.found";
+        locationMessageKey = fromList ? "location.foundList" : "location.found";
         updateLocationControl();
       };
       map.stop();
@@ -3563,6 +3576,23 @@ function closureScheduleHtml(closure, className) {
 function popupContent(closure) {
   const meta = CATEGORY_META[closure.category] ?? CATEGORY_META.event;
   const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
+  if (document.body.classList.contains("visual-assist")) {
+    const municipality = closureMunicipalityLabel(closure);
+    const borough = closureBoroughLabel(closure);
+    return `
+    <div class="popup-card">
+      <p class="popup-title">${escapeHtml(closure.title)}</p>
+      <p class="popup-meta"><strong>${escapeHtml(closureImpactLabel(closure))}</strong> - ${escapeHtml(municipality)} - ${escapeHtml(meta.label())}${borough !== municipality ? ` - ${escapeHtml(borough)}` : ""}</p>
+      <p class="popup-meta">${escapeHtml(closure.streets)}</p>
+      <p class="popup-meta">${closureDateRangeHtml(closure)}</p>
+      ${closureScheduleHtml(closure, "popup-meta")}
+      <p class="popup-meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
+      <p class="popup-meta"><strong>${t(closure.affectedUsers?.includes("cyclists") ? "pedestrian.cyclingImpact" : "popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
+      <p class="popup-meta"><strong>${t("popup.direction")}:</strong> ${escapeHtml(closure.direction)}</p>
+      <a href="${escapeHtml(closure.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(closure.source)}</a>
+    </div>
+  `;
+  }
   const reference = popupReference(closure);
   const hasReferenceDetail = (closure.details || []).some(([, value]) => String(value) === reference.value);
   const details = (closure.details || [])
@@ -4298,6 +4328,7 @@ function updateView({ fit = false } = {}) {
 window.addEventListener("languagechange", () => {
   if (PEDESTRIAN_MODE) window.PEDESTRIAN_MAP.refresh();
   updateLocationControl();
+  translateZoomControl();
   menuToggle.setAttribute("aria-label", t(menuToggle.classList.contains("is-open") ? "menu.close" : "menu.open"));
   updateMapLegend();
   renderVisibleClosures();
@@ -4384,6 +4415,62 @@ menuToggle.addEventListener("click", () => {
   }
 });
 menuBackdrop.addEventListener("click", () => setMobileMenuOpen(false));
+
+const visualAssistToggle = document.querySelector("#visualAssistToggle");
+const accessibleListPanel = document.querySelector("#accessibleListPanel");
+const closureListSection = closureList.closest("details");
+const closureListContent = closureList.parentElement;
+const searchField = searchFilter.closest("label");
+const searchFieldHome = searchField?.nextElementSibling;
+const panelLocateHome = panelLocateButton?.nextElementSibling;
+
+// Keeps location, search and cards outside the menu, always expanded, so VoiceOver can reach and scroll them.
+function applyVisualAssistMode() {
+  const active = PEDESTRIAN_MODE && visualAssistActive();
+  document.body.classList.toggle("visual-assist", active);
+  if (accessibleListPanel && closureListSection) {
+    if (active) {
+      document.querySelector("#accessibleListTools").append(panelLocateButton, searchField);
+      accessibleListPanel.append(closureListContent);
+    } else if (closureListContent.parentElement === accessibleListPanel) {
+      panelLocateHome.before(panelLocateButton);
+      searchFieldHome.before(searchField);
+      closureListSection.append(closureListContent);
+    }
+    closureListSection.hidden = active;
+    panelLocateButton.hidden = !active;
+    accessibleListPanel.hidden = !active;
+  }
+  if (visualAssistToggle) {
+    visualAssistToggle.dataset.i18n = active ? "visualAssist.off" : "visualAssist.on";
+    visualAssistToggle.dataset.i18nAriaLabel = active ? "visualAssist.offLabel" : "visualAssist.onLabel";
+    translateElement(visualAssistToggle);
+  }
+  map.closePopup();
+  requestAnimationFrame(() => {
+    map.invalidateSize();
+    updateView({ fit: false });
+  });
+  return active;
+}
+
+visualAssistToggle?.addEventListener("click", () => {
+  window.localStorage.setItem(VISUAL_ASSIST_KEY, visualAssistActive() ? "off" : "on");
+  if (applyVisualAssistMode()) {
+    setMobileMenuOpen(false);
+    accessibleListPanel.focus();
+  }
+});
+compactLayoutQuery.addEventListener("change", applyVisualAssistMode);
+closureList.addEventListener("focusin", (event) => {
+  if (!document.body.classList.contains("visual-assist")) return;
+  const card = event.target.closest(".closure-card");
+  const toolsBottom = document.querySelector("#accessibleListTools")?.getBoundingClientRect().bottom;
+  if (!card || !toolsBottom) return;
+  const cardTop = card.getBoundingClientRect().top;
+  // Safari centres focused elements and ignores scroll-padding, which can leave a card under the sticky tools.
+  if (cardTop < toolsBottom || cardTop > window.innerHeight - 40) window.scrollBy(0, cardTop - toolsBottom - 8);
+});
 sourcesToggle.addEventListener("click", () => setSourcesOpen(true));
 sourcesClose.addEventListener("click", () => setSourcesOpen(false));
 mapFirstVisitClose.addEventListener("click", dismissMapFirstVisitHint);
@@ -4478,6 +4565,7 @@ if (window.matchMedia("(max-width: 880px)").matches) {
 } else {
   setDesktopPanelOpen(true);
 }
+applyVisualAssistMode();
 
 renderMunicipalityLinks();
 updateView({ fit: !locationHasCentered });

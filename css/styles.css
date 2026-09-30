@@ -190,6 +190,31 @@ h2 {
   cursor: pointer;
 }
 
+.site-nav .visual-assist-toggle {
+  display: none;
+  min-height: 30px;
+  padding: 6px 9px;
+  border: 1px solid var(--accent-dark);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent-dark);
+  font-size: 0.74rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.accessible-list-panel[hidden] {
+  display: none !important;
+}
+
+.accessible-list-panel:focus {
+  outline: none;
+}
+
+.accessible-list-panel .section-content {
+  margin-top: 0;
+}
+
 .controls {
   display: grid;
   gap: 12px;
@@ -903,6 +928,13 @@ button:hover {
   display: none !important;
 }
 
+.panel-locate-button {
+  min-height: 32px;
+  padding: 6px 12px;
+  font-size: 0.86rem;
+  line-height: 1.2;
+}
+
 .closure-list {
   display: grid;
   gap: 10px;
@@ -1612,7 +1644,8 @@ body[data-map-mode="pedestrian"] .closure-card[data-severity="moderate"] .severi
     padding-top: 0;
     max-height: none;
     transform: translateX(-105%);
-    transition: transform 220ms ease;
+    visibility: hidden;
+    transition: transform 220ms ease, visibility 0s linear 220ms;
     border-right: 1px solid var(--line);
     border-bottom: 0;
     z-index: 1200;
@@ -1625,6 +1658,8 @@ body[data-map-mode="pedestrian"] .closure-card[data-severity="moderate"] .severi
   .panel.is-open {
     translate: 0;
     transform: none !important;
+    visibility: visible;
+    transition: transform 220ms ease;
   }
 
   .brand-block {
@@ -1722,6 +1757,70 @@ body[data-map-mode="pedestrian"] .closure-card[data-severity="moderate"] .severi
   #map {
     height: 100%;
     min-height: 0;
+  }
+
+  .site-nav .visual-assist-toggle {
+    display: inline-block;
+  }
+
+  body[data-map-mode="pedestrian"] .brand-block {
+    padding-right: 0;
+  }
+
+  .site-nav.has-visual-assist > * {
+    flex: 1 1 auto;
+  }
+
+  body.visual-assist .map-mode-nav {
+    display: none;
+  }
+
+  body.visual-assist {
+    height: auto;
+    overflow: visible;
+  }
+
+  body.visual-assist .app-shell {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  body.visual-assist .map-zone {
+    position: sticky;
+    top: 0;
+    order: 1;
+    flex: 0 0 auto;
+    height: 50vh;
+    height: 50dvh;
+    z-index: 5;
+  }
+
+  body.visual-assist .accessible-list-panel {
+    order: 2;
+    display: grid;
+    gap: 10px;
+    padding: 0 14px 24px;
+    border-top: 3px solid var(--accent-dark);
+    background: #fffdf8;
+  }
+
+  body.visual-assist .accessible-list-tools {
+    position: sticky;
+    top: 50vh;
+    top: 50dvh;
+    z-index: 4;
+    display: grid;
+    gap: 8px;
+    margin-inline: -14px;
+    padding: 12px 14px 10px;
+    border-bottom: 1px solid var(--line);
+    background: #fffdf8;
+  }
+
+  html:has(body.visual-assist) {
+    scroll-padding-top: calc(50dvh + 110px);
   }
 
   .map-instruction {

@@ -32,9 +32,17 @@ function currentLanguage() {
 
 const installedApp = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
 const mapModeKey = "installedMapMode";
-const redirectToSavedMode = installedApp && document.body.dataset.mapMode !== "pedestrian"
+const VISUAL_ASSIST_KEY = "visualAssistMode";
+const compactLayoutQuery = window.matchMedia("(max-width: 880px)");
+
+// The saved choice only applies to the phone/tablet layout.
+function visualAssistActive() {
+  return compactLayoutQuery.matches && window.localStorage.getItem(VISUAL_ASSIST_KEY) === "on";
+}
+
+const redirectToSavedMode = document.body.dataset.mapMode !== "pedestrian"
   && document.body.dataset.documentTitle === "document.mapTitle"
-  && window.localStorage.getItem(mapModeKey) === "pedestrian";
+  && (visualAssistActive() || (installedApp && window.localStorage.getItem(mapModeKey) === "pedestrian"));
 if (redirectToSavedMode) {
   window.location.replace(languagePath(currentLanguage(), "pedestrian.html"));
 }
