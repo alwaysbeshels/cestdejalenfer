@@ -8,7 +8,7 @@
 </head>
 <body>
   <script>
-    fetch("../potholes.html").then((response) => response.text()).then((html) => {
+    fetch("../potholes.html", { cache: "no-cache" }).then((response) => response.text()).then((html) => {
       document.open();
       document.write(html.replace("<head>", "<head><base href=\"../\">"));
       document.close();

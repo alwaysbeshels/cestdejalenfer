@@ -1,11 +1,16 @@
-import { selectMapPositions, decodeMapReport, decodeMapRepair, buildPositionTimeline } from "./potholes-data.mjs?v=20260930-potholes3";
+import Supercluster from "https://cdn.jsdelivr.net/npm/supercluster@8.0.1/+esm";
+import {
+  selectMapPositions, decodeMapReport, decodeMapRepair, buildPositionTimeline,
+  clusterProperties, mergeClusterProperties, clusterStatus, buildRepairGroups, snapshotSummary, districtBounds,
+} from "./potholes-data.mjs?v=20261001-potholes18";
 
-const store = { version: 0, features: [], groups: new Map(), reports: new Map() };
+const store = { version: 0, features: [], groups: new Map(), reports: new Map(), index: null };
+const repairStore = { version: 0, features: [], groups: new Map(), index: null, request: null };
 let mapPromise;
 let historyPromise;
 
-async function fetchSnapshot(file) {
-  const response = await fetch(new URL(`../data/nids-de-poule/${file}`, import.meta.url), { cache: "no-cache" });
+async function fetchSnapshot(file, options = {}) {
+  const response = await fetch(new URL(`../data/nids-de-poule/${file}`, import.meta.url), { cache: "no-cache", ...options });
   if (!response.ok) throw new Error(`Snapshot HTTP ${response.status}`);
   return response.json();
 }
@@ -19,6 +24,7 @@ async function filterRecords(message) {
   const { version, filters, catalog } = message;
   store.version = version;
   store.features = [];
+  store.index = null;
   store.groups.clear();
   const snapshot = await loadMap();
   if (version !== store.version) return;
@@ -32,14 +38,20 @@ async function filterRecords(message) {
     properties: {
       id: position.positionId, kind: "reports", count: selectedIndices.length, total: position.signalements.length,
       status: mapStatus, date: position.dernierSignalement,
+      firstReport: position.premierSignalement, repairCount: position.nombreColmatages,
       label: position.rues[0] || "", district: position.arrondissements[0] || "",
     },
   }));
+  store.index = new Supercluster({
+    radius: 96, maxZoom: 16, minPoints: 2,
+    map: clusterProperties, reduce: mergeClusterProperties,
+  }).load(store.features);
   const years = new Set(filters.years);
   const metadata = snapshot.annees;
   const dateValues = selected.flatMap(({ position, selectedIndices }) => selectedIndices.map((index) => position.signalements[index][1])).sort();
   self.postMessage({
     type: "filtered", kind: "reports", version,
+    district: filters.district || "", districtBounds: districtBounds(snapshot.positions, filters.district),
     summary: {
       sourceYears: metadata.map((entry) => entry.annee),
       total: metadata.reduce((count, entry) => count + entry.nombre, 0),
@@ -58,14 +70,77 @@ async function filterRecords(message) {
   });
 }
 
-function queryViewport(message) {
-  if (message.versions.reports !== store.version) return;
-  const [west, south, east, north] = message.bounds;
-  const features = store.features.filter((feature) => {
-    const [longitude, latitude] = feature.geometry.coordinates;
-    return latitude >= south && latitude <= north && longitude >= west && longitude <= east;
+async function filterRepairs(message) {
+  const { version, filters, catalog } = message;
+  repairStore.version = version;
+  repairStore.index = null;
+  repairStore.features = [];
+  repairStore.groups.clear();
+  const entry = catalog.reparations.find((item) => item.annee === filters.year);
+  if (!entry || !/^reparations-\d{4}\.json$/.test(entry.fichier)) throw new Error("Invalid repair snapshot");
+  if (repairStore.request?.file !== entry.fichier) {
+    repairStore.request?.controller.abort();
+    const request = { file: entry.fichier, controller: new AbortController() };
+    repairStore.request = request;
+    request.promise = fetchSnapshot(entry.fichier, { signal: request.controller.signal }).catch((error) => {
+      if (repairStore.request === request) repairStore.request = null;
+      throw error;
+    });
+  }
+  const snapshot = await repairStore.request.promise;
+  if (version !== repairStore.version) return;
+  if (!Array.isArray(snapshot.interventions) || snapshot.interventions.length !== entry.nombre
+    || (entry.contenuModifieLe && snapshot.contenuModifieLe !== entry.contenuModifieLe)) throw new Error("Repair snapshot is stale");
+  if (repairStore.snapshot !== snapshot) repairStore.summary = snapshotSummary(snapshot.interventions, "repairs");
+  repairStore.snapshot = snapshot;
+  const selection = buildRepairGroups(snapshot.interventions, filters);
+  repairStore.groups = new Map(selection.groups.map((group) => [group.positionId, group]));
+  repairStore.features = selection.groups.map((group) => ({
+    type: "Feature", geometry: { type: "Point", coordinates: [group.longitude, group.latitude] },
+    properties: {
+      id: group.positionId, kind: "repairs", status: "repairs", count: group.count,
+      firstDate: group.firstDate, date: group.lastDate, devices: group.devices,
+    },
+  }));
+  repairStore.index = new Supercluster({
+    radius: 96, maxZoom: 16, minPoints: 2,
+    map: (properties) => ({ interventions: properties.count }),
+    reduce: (target, properties) => { target.interventions += properties.interventions; },
+  }).load(repairStore.features);
+  self.postMessage({
+    type: "filtered", kind: "repairs", version, summary: repairStore.summary,
+    counts: { mapped: selection.mappedCount, unmapped: selection.unmappedCount, positions: selection.groups.length },
+    snapshot: { year: snapshot.annee, modified: snapshot.contenuModifieLe },
   });
-  self.postMessage({ type: "viewport", requestId: message.requestId, layers: { reports: { version: store.version, features } } });
+}
+
+function queryViewport(message) {
+  const layers = {};
+  for (const [kind, version] of Object.entries(message.versions)) {
+    const current = kind === "repairs" ? repairStore : store;
+    if (version !== current.version || !current.index) continue;
+    const features = current.index.getClusters(message.bounds, Math.floor(message.zoom)).map((feature) => {
+      if (!feature.properties.cluster) return feature;
+      return {
+        ...feature,
+        properties: {
+          ...feature.properties, kind, id: `cluster:${feature.properties.cluster_id}`,
+          status: kind === "repairs" ? "repairs" : clusterStatus(feature.properties),
+        },
+      };
+    });
+    layers[kind] = { version, features };
+  }
+  self.postMessage({ type: "viewport", requestId: message.requestId, layers });
+}
+
+function expandCluster(message) {
+  const current = message.kind === "repairs" ? repairStore : store;
+  if (message.version !== current.version || !current.index) return;
+  self.postMessage({
+    type: "expand", kind: message.kind, version: current.version, coordinates: message.coordinates,
+    zoom: current.index.getClusterExpansionZoom(message.clusterId),
+  });
 }
 
 async function loadRecord(reference) {
@@ -120,13 +195,30 @@ async function queryDetail(message) {
   });
 }
 
+function queryRepairDetail(message) {
+  if (message.version !== repairStore.version) return;
+  const group = repairStore.groups.get(message.id);
+  if (!group) return;
+  const records = repairStore.snapshot.interventions;
+  const indices = [...group.recordIndices].sort((left, right) => (records[right].horodatage || "").localeCompare(records[left].horodatage || ""));
+  const offset = Math.max(0, Math.min(indices.length - 1, Number(message.offset) || 0));
+  self.postMessage({
+    type: "detail", kind: "repairs", version: message.version, requestId: message.requestId, id: message.id,
+    offset, total: indices.length, record: records[indices[offset]],
+    position: { count: group.count, firstDate: group.firstDate, lastDate: group.lastDate, devices: group.devices },
+    snapshot: { year: repairStore.snapshot.annee, modified: repairStore.snapshot.contenuModifieLe },
+  });
+}
+
 self.addEventListener("message", async ({ data: message }) => {
   try {
-    if (message.type === "filter") await filterRecords(message);
+    if (message.type === "filter") await (message.kind === "repairs" ? filterRepairs(message) : filterRecords(message));
     if (message.type === "viewport") queryViewport(message);
-    if (message.type === "detail") await queryDetail(message);
+    if (message.type === "expand") expandCluster(message);
+    if (message.type === "detail") await (message.kind === "repairs" ? queryRepairDetail(message) : queryDetail(message));
   } catch (error) {
-    self.postMessage({ type: "error", operation: message.type, kind: "reports", version: message.version, requestId: message.requestId, message: error.message });
+    if (error.name === "AbortError") return;
+    self.postMessage({ type: "error", operation: message.type, kind: message.kind || "reports", version: message.version, requestId: message.requestId, message: error.message });
   }
 });
 

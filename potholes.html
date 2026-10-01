@@ -12,23 +12,31 @@
   <meta name="theme-color" content="#0f7b66">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="css/styles.css?v=20260930-potholes2">
-  <link rel="stylesheet" href="css/potholes.css?v=20260930-potholes2">
+  <link rel="stylesheet" href="css/potholes.css?v=20261001-potholes36">
 </head>
 <body class="potholes-page" data-document-title="potholes.documentTitle" data-map-mode="potholes">
   <div class="app-shell">
-    <button id="menuToggle" class="menu-toggle pothole-icon-button" type="button" data-i18n-aria-label="potholes.filters" data-i18n-title="potholes.filters" aria-controls="sidePanel" aria-expanded="false"><i data-lucide="sliders-horizontal" aria-hidden="true"></i></button>
+    <button id="menuToggle" class="menu-toggle pothole-icon-button" type="button" data-i18n-aria-label="potholes.results" data-i18n-title="potholes.results" aria-controls="sidePanel" aria-expanded="false"><i data-lucide="list" aria-hidden="true"></i></button>
     <div id="menuBackdrop" class="menu-backdrop" hidden></div>
-    <aside id="sidePanel" class="panel potholes-panel" data-i18n-aria-label="potholes.filters">
+    <section id="potholeToolbar" class="pothole-toolbar" data-i18n-aria-label="potholes.filters">
+      <div class="pothole-toolbar-heading">
       <header class="brand-block">
         <p class="eyebrow" data-i18n="potholes.region"></p>
-        <h1 data-i18n="potholes.title"></h1>
+        <h1 id="potholePageTitle" data-i18n="potholes.title"></h1>
         <nav class="site-nav" data-i18n-aria-label="nav.main">
+          <a href="index.html" class="pothole-road-link" data-language-page="map" data-i18n-title="potholes.roadMapLabel" data-i18n-aria-label="potholes.roadMapLabel"><i data-lucide="route" aria-hidden="true"></i><span data-i18n="potholes.roadMap"></span></a>
           <a href="faq.html" data-language-page="faq" data-i18n="nav.faq"></a>
           <button id="languageToggle" class="language-toggle" type="button" data-i18n-aria-label="language.switchLabel">EN</button>
         </nav>
       </header>
-      <fieldset id="reportsFieldset" class="pothole-layer" disabled>
-        <legend><label class="pothole-layer-toggle"><input id="reportsEnabled" type="checkbox" checked><span class="pothole-swatch reports" aria-hidden="true"></span><span data-i18n="potholes.reports"></span></label></legend>
+      <nav id="potholeModeNav" class="map-mode-nav" data-i18n-aria-label="potholes.modeLabel">
+        <a href="potholes.html" data-pothole-mode="reports" data-i18n="nav.potholes" aria-current="page"></a>
+        <a href="potholes.html?mode=repairs" data-pothole-mode="repairs" data-i18n="potholes.repairsTitle"></a>
+        <a href="potholes.html?mode=how" data-pothole-mode="how" data-i18n="potholes.howTitle"></a>
+        <a href="potholes.html?mode=statistics" data-pothole-mode="statistics" data-i18n="potholes.statisticsTitle"></a>
+      </nav>
+      </div>
+      <fieldset id="reportsFieldset" class="pothole-layer" data-i18n-aria-label="potholes.reports" disabled>
         <div id="reportsControls" class="pothole-filter-grid">
           <div class="field pothole-full-width">
             <span id="yearLabel" data-i18n="potholes.reportYear"></span>
@@ -49,28 +57,49 @@
           <label class="field pothole-full-width"><span data-i18n="potholes.district"></span><select id="reportDistrict"></select></label>
           <label class="field pothole-full-width"><span class="visually-hidden" data-i18n="potholes.search"></span><input id="reportSearch" type="search" data-i18n-placeholder="potholes.searchPlaceholder" autocomplete="off"></label>
         </div>
-        <p id="reportsCoverage" class="pothole-coverage"></p>
-        <p id="reportsCounts" class="pothole-counts" aria-live="polite"></p>
-        <p id="reportsWarning" class="pothole-warning" hidden></p>
+        <div id="reportsSummary" hidden>
+          <p id="reportsCoverage" class="pothole-coverage"></p>
+          <div id="countsHelpArea" class="pothole-counts-area">
+            <div class="pothole-counts-row"><p id="reportsCounts" class="pothole-counts" aria-live="polite"></p><button id="countsHelpButton" class="pothole-icon-button pothole-info-button" type="button" aria-controls="countsHelp" aria-expanded="false" data-i18n-title="potholes.countsHelp" data-i18n-aria-label="potholes.countsHelp"><i data-lucide="info" aria-hidden="true"></i></button></div>
+            <div id="countsHelp" class="pothole-counts-help" role="note" hidden>
+              <strong data-i18n="potholes.knownReportsLabel"></strong><p data-i18n="potholes.knownReportsDefinition"></p>
+              <strong data-i18n="potholes.positionsLabel"></strong><p data-i18n="potholes.positionsDefinition"></p>
+              <p data-i18n="potholes.clusterDefinition"></p>
+            </div>
+          </div>
+          <p id="reportsWarning" class="pothole-warning" hidden></p>
+        </div>
         <p id="reportsError" class="pothole-error" role="alert" hidden></p>
         <button id="reportsRetry" class="pothole-text-button" type="button" data-i18n="potholes.retry" hidden></button>
       </fieldset>
 
-      <fieldset id="repairsFieldset" class="pothole-layer" disabled hidden>
-        <legend><label class="pothole-layer-toggle"><input id="repairsEnabled" type="checkbox"><span class="pothole-swatch repairs" aria-hidden="true"></span><span data-i18n="potholes.repairs"></span></label></legend>
+      <fieldset id="repairsFieldset" class="pothole-layer" data-i18n-aria-label="potholes.repairs" disabled hidden>
         <div id="repairsControls" class="pothole-filter-grid">
           <label class="field"><span data-i18n="potholes.repairYear"></span><select id="repairYear"></select></label>
           <label class="field"><span data-i18n="potholes.month"></span><select id="repairMonth"></select></label>
           <label class="field pothole-full-width"><span data-i18n="potholes.device"></span><select id="repairDevice"></select></label>
         </div>
+        <div class="pothole-toolbar-repair-summary">
         <p id="repairsCoverage" class="pothole-coverage"></p>
-        <p id="repairsCounts" class="pothole-counts" aria-live="polite"></p>
+        <p class="pothole-coverage" data-i18n="potholes.repairDatasetNote"></p>
+        <div id="repairsCountsHelpArea" class="pothole-counts-area">
+          <div class="pothole-counts-row"><p id="repairsCounts" class="pothole-counts" aria-live="polite"></p><button id="repairsCountsHelpButton" class="pothole-icon-button pothole-info-button" type="button" aria-controls="repairsCountsHelp" aria-expanded="false" data-i18n-title="potholes.countsHelp" data-i18n-aria-label="potholes.countsHelp"><i data-lucide="info" aria-hidden="true"></i></button></div>
+          <div id="repairsCountsHelp" class="pothole-counts-help" role="note" hidden>
+            <strong data-i18n="potholes.repairEventsLabel"></strong><p data-i18n="potholes.repairEventsDefinition"></p>
+            <strong data-i18n="potholes.repairLocationsLabel"></strong><p data-i18n="potholes.repairLocationsDefinition"></p>
+            <p data-i18n="potholes.repairClustersDefinition"></p>
+            <p data-i18n="potholes.repairYearNote"></p>
+          </div>
+        </div>
         <p id="repairsWarning" class="pothole-warning" hidden></p>
+        </div>
         <p id="repairsError" class="pothole-error" role="alert" hidden></p>
         <button id="repairsRetry" class="pothole-text-button" type="button" data-i18n="potholes.retry" hidden></button>
       </fieldset>
 
-      <div class="pothole-result-heading"><h2 data-i18n="potholes.results"></h2><button id="resetFilters" class="pothole-icon-button" type="button" data-i18n-title="potholes.resetFilters" data-i18n-aria-label="potholes.resetFilters"><i data-lucide="filter-x" aria-hidden="true"></i></button></div>
+    </section>
+    <aside id="sidePanel" class="panel potholes-panel" data-i18n-aria-label="potholes.results" tabindex="-1">
+      <div class="pothole-result-heading"><h2 data-i18n="potholes.results"></h2></div>
       <p id="viewportCounts" class="pothole-coverage" aria-live="polite"></p>
       <ol id="potholeResults" class="pothole-results"></ol>
       <p id="emptyResults" class="pothole-coverage" hidden></p>
@@ -81,22 +110,23 @@
         <p id="verificationDate"></p>
         <div id="sourceStatistics"></div>
         <p data-i18n="potholes.scopeNote"></p>
-        <p data-i18n="potholes.positionNote"></p>
-        <p data-i18n="potholes.statusNote"></p>
-        <p data-i18n="potholes.mapStatusNote"></p>
-        <p data-i18n="potholes.activityYearNote"></p>
+        <p data-source-mode="reports" data-i18n="potholes.positionNote"></p>
+        <p data-source-mode="reports" data-i18n="potholes.statusNote"></p>
+        <p data-source-mode="reports" data-i18n="potholes.mapStatusNote"></p>
+        <p data-source-mode="reports" data-i18n="potholes.activityYearNote"></p>
         <p data-i18n="potholes.repairNote"></p>
-        <p data-i18n="potholes.matchNote"></p>
+        <p data-source-mode="reports" data-i18n="potholes.matchNote"></p>
         <p data-i18n="potholes.yearNote"></p>
-        <a href="https://donnees.montreal.ca/dataset/requete-311" target="_blank" rel="noreferrer" data-i18n="potholes.sources311"></a>
+        <a data-source-mode="reports" href="https://donnees.montreal.ca/dataset/requete-311" target="_blank" rel="noreferrer" data-i18n="potholes.sources311"></a>
         <a href="https://donnees.montreal.ca/dataset/refection-de-chaussee-par-remplissage-mecanise-de-nid-de-poule" target="_blank" rel="noreferrer" data-i18n="potholes.sourcesRepairs"></a>
         <a href="data/nids-de-poule/index.json" target="_blank" rel="noreferrer" data-i18n="potholes.snapshotIndex"></a>
       </details>
     </aside>
 
+    <button id="panelResizeHandle" class="panel-resize-handle pothole-results-resize" type="button" role="separator" aria-orientation="vertical" aria-controls="sidePanel" aria-valuemin="220" aria-valuemax="340" aria-valuenow="340" data-i18n-aria-label="menu.resize" data-i18n-title="menu.resize"><i data-lucide="move-horizontal" aria-hidden="true"></i></button>
     <main class="map-zone" id="potholeMapZone">
       <div id="map" role="region" data-i18n-aria-label="potholes.mapAria"></div>
-      <div class="pothole-map-caption"><strong data-i18n="nav.potholes"></strong><span data-i18n="potholes.region"></span></div>
+      <div class="pothole-map-caption"><strong id="potholeMapCaption" data-i18n="nav.potholes"></strong><span data-i18n="potholes.region"></span></div>
       <div class="pothole-map-tools" role="group" data-i18n-aria-label="potholes.mapTools">
         <button id="zoomIn" class="pothole-icon-button" type="button" data-i18n-title="map.zoomIn" data-i18n-aria-label="map.zoomIn"><i data-lucide="plus" aria-hidden="true"></i></button>
         <button id="zoomOut" class="pothole-icon-button" type="button" data-i18n-title="map.zoomOut" data-i18n-aria-label="map.zoomOut"><i data-lucide="minus" aria-hidden="true"></i></button>
@@ -107,6 +137,139 @@
       <button id="pageRetry" class="pothole-text-button pothole-page-retry" type="button" data-i18n="potholes.retry" hidden></button>
       <p id="mapNotice" class="pothole-map-notice" role="status" hidden></p>
       <div id="potholeLegend" class="pothole-map-legend" data-i18n-aria-label="potholes.legend"></div>
+    </main>
+    <main id="potholeContent" class="pothole-content" hidden>
+      <section id="howView" class="pothole-document" aria-labelledby="howHeading" hidden>
+        <header class="pothole-document-intro">
+          <h2 id="howHeading" data-i18n="potholes.howHeading"></h2>
+          <p class="pothole-document-lead" data-i18n="potholes.howLead"></p>
+          <p id="howVerified" class="pothole-document-meta"></p>
+        </header>
+        <dl class="pothole-reading-facts">
+          <div><dt data-i18n="potholes.howFactSources"></dt><dd data-i18n="potholes.howFactSourcesDetail"></dd></div>
+          <div><dt data-i18n="potholes.howFactLocations"></dt><dd data-i18n="potholes.howFactLocationsDetail"></dd></div>
+          <div><dt data-i18n="potholes.howFactStatuses"></dt><dd data-i18n="potholes.howFactStatusesDetail"></dd></div>
+        </dl>
+        <nav class="pothole-document-nav" data-i18n-aria-label="potholes.howContents">
+          <a href="#how-sources" data-doc-target="how-sources" data-i18n="potholes.howSourcesHeading"></a>
+          <a href="#how-locations" data-doc-target="how-locations" data-i18n="potholes.howLocationsHeading"></a>
+          <a href="#how-statuses" data-doc-target="how-statuses" data-i18n="potholes.howStatusesHeading"></a>
+          <a href="#how-history" data-doc-target="how-history" data-i18n="potholes.howHistoryHeading"></a>
+          <a href="#how-repairs" data-doc-target="how-repairs" data-i18n="potholes.howRepairsHeading"></a>
+          <a href="#how-limits" data-doc-target="how-limits" data-i18n="potholes.howLimitsHeading"></a>
+        </nav>
+        <section id="how-sources" class="pothole-document-section">
+          <h2 data-i18n="potholes.howSourcesHeading"></h2>
+          <details><summary data-i18n="potholes.how.q.sources"></summary><div class="pothole-answer"><p data-i18n="potholes.how.a.sources"></p>
+            <ul class="pothole-document-links">
+              <li><a href="https://donnees.montreal.ca/dataset/requete-311" target="_blank" rel="noreferrer" data-i18n="potholes.sources311"></a></li>
+              <li><a href="https://donnees.montreal.ca/dataset/refection-de-chaussee-par-remplissage-mecanise-de-nid-de-poule" target="_blank" rel="noreferrer" data-i18n="potholes.sourcesRepairs"></a></li>
+              <li><a href="data/nids-de-poule/index.json" target="_blank" rel="noreferrer" data-i18n="potholes.snapshotIndex"></a></li>
+            </ul>
+          </div></details>
+          <details><summary data-i18n="potholes.how.q.collection"></summary><div class="pothole-answer" data-i18n="potholes.how.a.collection"></div></details>
+          <details><summary data-i18n="potholes.how.q.freshness"></summary><div class="pothole-answer" data-i18n="potholes.how.a.freshness"></div></details>
+          <details><summary data-i18n="potholes.how.q.scope"></summary><div class="pothole-answer" data-i18n="potholes.how.a.scope"></div></details>
+        </section>
+        <section id="how-locations" class="pothole-document-section">
+          <h2 data-i18n="potholes.howLocationsHeading"></h2>
+          <details><summary data-i18n="potholes.how.q.request"></summary><div class="pothole-answer" data-i18n="potholes.how.a.request"></div></details>
+          <details><summary data-i18n="potholes.how.q.location"></summary><div class="pothole-answer" data-i18n="potholes.how.a.location"></div></details>
+          <details><summary data-i18n="potholes.how.q.excluded"></summary><div class="pothole-answer" data-i18n="potholes.how.a.excluded"></div></details>
+          <details><summary data-i18n="potholes.how.q.clusters"></summary><div class="pothole-answer" data-i18n="potholes.how.a.clusters"></div></details>
+        </section>
+        <section id="how-statuses" class="pothole-document-section">
+          <h2 data-i18n="potholes.howStatusesHeading"></h2>
+          <details><summary data-i18n="potholes.how.q.cityStatus"></summary><div class="pothole-answer" data-i18n="potholes.how.a.cityStatus"></div></details>
+          <details><summary data-i18n="potholes.how.q.whyStatuses"></summary><div class="pothole-answer" data-i18n="potholes.how.a.whyStatuses"></div></details>
+          <details><summary data-i18n="potholes.how.q.ourStatuses"></summary><div class="pothole-answer">
+            <dl class="pothole-status-definitions">
+              <div><dt><i class="pothole-swatch active" aria-hidden="true"></i><span data-i18n="potholes.mapStatus.active"></span></dt><dd data-i18n="potholes.how.status.active"></dd></div>
+              <div><dt><i class="pothole-swatch presumed-repaired" aria-hidden="true"></i><span data-i18n="potholes.mapStatus.presumed-repaired"></span></dt><dd data-i18n="potholes.how.status.repaired"></dd></div>
+              <div><dt><i class="pothole-swatch unknown" aria-hidden="true"></i><span data-i18n="potholes.mapStatus.unknown"></span></dt><dd data-i18n="potholes.how.status.unknown"></dd></div>
+            </dl>
+            <p data-i18n="potholes.how.a.oneStatus"></p>
+          </div></details>
+          <details><summary data-i18n="potholes.how.q.matching"></summary><div class="pothole-answer"><p data-i18n="potholes.how.a.matching"></p><p id="howMatchingRadius" class="pothole-document-meta"></p></div></details>
+        </section>
+        <section id="how-history" class="pothole-document-section">
+          <h2 data-i18n="potholes.howHistoryHeading"></h2>
+          <details><summary data-i18n="potholes.how.q.reactivated"></summary><div class="pothole-answer">
+            <p data-i18n="potholes.how.a.reactivated"></p>
+            <p class="pothole-example-label" data-i18n="potholes.how.exampleLabel"></p>
+            <ol class="pothole-example-timeline">
+              <li class="active"><time datetime="2025-01-10" data-i18n="potholes.how.exampleFirstDate"></time><strong data-i18n="potholes.how.exampleFirst"></strong><span data-i18n="potholes.how.exampleFirstState"></span></li>
+              <li class="presumed-repaired"><time datetime="2025-01-15" data-i18n="potholes.how.exampleRepairDate"></time><strong data-i18n="potholes.how.exampleRepair"></strong><span data-i18n="potholes.how.exampleRepairState"></span></li>
+              <li class="active"><time datetime="2025-03-02" data-i18n="potholes.how.exampleLastDate"></time><strong data-i18n="potholes.how.exampleLast"></strong><span data-i18n="potholes.how.exampleLastState"></span></li>
+            </ol>
+          </div></details>
+          <details><summary data-i18n="potholes.how.q.disagreement"></summary><div class="pothole-answer" data-i18n="potholes.how.a.disagreement"></div></details>
+          <details><summary data-i18n="potholes.how.q.years"></summary><div class="pothole-answer" data-i18n="potholes.how.a.years"></div></details>
+          <details><summary data-i18n="potholes.how.q.historyCount"></summary><div class="pothole-answer" data-i18n="potholes.how.a.historyCount"></div></details>
+          <details><summary data-i18n="potholes.how.q.delay"></summary><div class="pothole-answer" data-i18n="potholes.how.a.delay"></div></details>
+        </section>
+        <section id="how-repairs" class="pothole-document-section">
+          <h2 data-i18n="potholes.howRepairsHeading"></h2>
+          <p id="howRepairCoverage" class="pothole-document-highlight"></p>
+          <details><summary data-i18n="potholes.how.q.currentYear"></summary><div class="pothole-answer" data-i18n="potholes.how.a.currentYear"></div></details>
+          <details><summary data-i18n="potholes.how.q.repairRecord"></summary><div class="pothole-answer" data-i18n="potholes.how.a.repairRecord"></div></details>
+          <details><summary data-i18n="potholes.how.q.partial"></summary><div class="pothole-answer" data-i18n="potholes.how.a.partial"></div></details>
+          <details><summary data-i18n="potholes.how.q.coordinates2021"></summary><div class="pothole-answer" data-i18n="potholes.how.a.coordinates2021"></div></details>
+        </section>
+        <section id="how-limits" class="pothole-document-section">
+          <h2 data-i18n="potholes.howLimitsHeading"></h2>
+          <details><summary data-i18n="potholes.how.q.statistics"></summary><div class="pothole-answer" data-i18n="potholes.how.a.statistics"></div></details>
+          <details><summary data-i18n="potholes.how.q.absence"></summary><div class="pothole-answer" data-i18n="potholes.how.a.absence"></div></details>
+          <details><summary data-i18n="potholes.how.q.planning"></summary><div class="pothole-answer" data-i18n="potholes.how.a.planning"></div></details>
+          <details><summary data-i18n="potholes.how.q.independent"></summary><div class="pothole-answer" data-i18n="potholes.how.a.independent"></div></details>
+        </section>
+      </section>
+      <section id="statisticsView" class="pothole-document" aria-labelledby="statisticsHeading" hidden>
+        <header class="pothole-document-intro">
+          <h2 id="statisticsHeading" data-i18n="potholes.statisticsHeading"></h2>
+          <p class="pothole-document-lead" data-i18n="potholes.statisticsLead"></p>
+          <p class="pothole-document-meta" data-i18n="potholes.statisticsCalculationNote"></p>
+          <p id="statisticsVerified" class="pothole-document-meta"></p>
+        </header>
+        <p id="infoStatus" class="pothole-document-highlight" role="status" hidden></p>
+        <button id="infoRetry" class="pothole-text-button" type="button" data-i18n="potholes.retry" hidden></button>
+        <div id="statisticsData" hidden>
+          <dl id="statisticsMetrics" class="pothole-statistics-metrics"></dl>
+          <section class="pothole-document-section">
+            <h2 data-i18n="potholes.statisticsReportsHeading"></h2>
+            <p id="statisticsReportsTotal" class="pothole-document-meta"></p>
+            <p data-i18n="potholes.statisticsReportsNote"></p>
+            <div class="pothole-table-scroll" tabindex="0" data-i18n-aria-label="potholes.statisticsReportsHeading">
+              <table class="pothole-statistics-table"><thead><tr><th scope="col" data-i18n="potholes.statisticsYear"></th><th scope="col" data-i18n="potholes.statisticsRequests"></th><th scope="col" data-i18n="potholes.statisticsInformation"></th></tr></thead><tbody id="statisticsReportRows"></tbody></table>
+            </div>
+          </section>
+          <section class="pothole-document-section">
+            <h2 data-i18n="potholes.statisticsRepairsHeading"></h2>
+            <p id="statisticsRepairsTotal" class="pothole-document-meta"></p>
+            <p data-i18n="potholes.statisticsRepairsNote"></p>
+            <div class="pothole-table-scroll" tabindex="0" data-i18n-aria-label="potholes.statisticsRepairsHeading">
+              <table class="pothole-statistics-table"><thead><tr><th scope="col" data-i18n="potholes.repairYear"></th><th scope="col" data-i18n="potholes.repairEventsLabel"></th><th scope="col" data-i18n="potholes.statisticsFirstDate"></th><th scope="col" data-i18n="potholes.statisticsLastDate"></th></tr></thead><tbody id="statisticsRepairRows"></tbody></table>
+            </div>
+          </section>
+        </div>
+        <section id="statisticsRankings" aria-labelledby="rankingsHeading" hidden>
+          <header class="pothole-ranking-intro">
+            <h2 id="rankingsHeading" data-i18n="potholes.rankingsHeading"></h2>
+            <p data-i18n="potholes.rankingsLimits"></p>
+            <p id="rankingsCoverage" class="pothole-document-meta"></p>
+            <details class="pothole-ranking-method">
+              <summary data-i18n="potholes.rankingsMethod"></summary>
+              <p id="rankingsGeography"></p>
+              <p id="rankingsLocationsCoverage"></p>
+              <p id="rankingsGeobase"></p>
+              <p data-i18n="potholes.rankingsMachinesMethod"></p>
+            </details>
+          </header>
+          <p id="rankingsStatus" class="pothole-document-highlight" role="status" hidden></p>
+          <button id="rankingsRetry" class="pothole-text-button" type="button" data-i18n="potholes.retry" hidden></button>
+          <div id="statisticsRankingTables"></div>
+        </section>
+      </section>
     </main>
   </div>
 
@@ -122,10 +285,10 @@
   <noscript>JavaScript est n&eacute;cessaire pour afficher cette carte.</noscript>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <script src="languages/fr.js?v=20260930-potholes3"></script>
-  <script src="languages/en.js?v=20260930-potholes3"></script>
+  <script src="languages/fr.js?v=20261001-potholes36"></script>
+  <script src="languages/en.js?v=20261001-potholes36"></script>
   <script src="js/i18n.js?v=20260930-potholes1"></script>
-  <script type="module" src="js/potholes.mjs?v=20260930-potholes3"></script>
+  <script type="module" src="js/potholes.mjs?v=20261001-potholes36"></script>
   <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
 </body>
 </html>

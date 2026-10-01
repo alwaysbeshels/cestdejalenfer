@@ -146,6 +146,18 @@ h1 {
   background: var(--accent-dark);
 }
 
+.faq-nav .potholes-link,
+.faq-nav .pothole-road-link {
+  gap: 6px;
+}
+
+.faq-nav .potholes-link img,
+.faq-nav .pothole-road-link img {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+}
+
 .faq-nav a:not(.is-current) {
   border: 1px solid var(--line);
   background: var(--panel);

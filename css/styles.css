@@ -168,6 +168,19 @@ h2 {
   background: #e7f2ee;
 }
 
+.site-nav .potholes-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.site-nav .potholes-link img {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+}
+
 .site-nav a.missing-restrictions-link {
   flex: 0 0 auto;
   width: 90px;

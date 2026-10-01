@@ -18,6 +18,97 @@ export function reportStreet(record) {
   return record.rue || [record.intersection1, record.intersection2].filter(Boolean).join(" / ");
 }
 
+export const RESULTS_PANEL_MIN_WIDTH = 220;
+export const RESULTS_PANEL_MAX_WIDTH = 340;
+
+export function clampResultsPanelWidth(width) {
+  return Math.max(RESULTS_PANEL_MIN_WIDTH, Math.min(RESULTS_PANEL_MAX_WIDTH, Math.round(width)));
+}
+
+export function summarizePotholeCatalog(catalog, annualCounts = []) {
+  const countsByYear = new Map(annualCounts.map((entry) => [entry.annee, entry]));
+  const reports = [...(catalog.signalements || [])].sort((left, right) => right.annee - left.annee).map((entry) => {
+    const counts = countsByYear.get(entry.annee);
+    const valid = counts?.nombre === entry.nombre && Number.isInteger(counts?.informations)
+      && counts.informations >= 0 && counts.informations <= entry.nombre;
+    return {
+      ...entry,
+      reportCount: valid ? entry.nombre - counts.informations : null,
+      informationCount: valid ? counts.informations : null,
+    };
+  });
+  const repairs = [...(catalog.reparations || [])].sort((left, right) => right.annee - left.annee);
+  const dataUpdatedAt = [...reports, ...repairs].reduce((latest, entry) => {
+    const modified = entry.contenuModifieLe;
+    return Number.isFinite(Date.parse(modified)) && (!latest || Date.parse(modified) > Date.parse(latest)) ? modified : latest;
+  }, null);
+  const hasRequestBreakdown = reports.length > 0 && reports.every((entry) => entry.reportCount !== null);
+  return {
+    reports,
+    repairs,
+    dataUpdatedAt,
+    hasRequestBreakdown,
+    totalReports: hasRequestBreakdown ? reports.reduce((count, entry) => count + entry.reportCount, 0) : null,
+    totalInformation: hasRequestBreakdown ? reports.reduce((count, entry) => count + entry.informationCount, 0) : null,
+    totalRequests: reports.reduce((count, entry) => count + entry.nombre, 0),
+    totalInterventions: repairs.reduce((count, entry) => count + entry.nombre, 0),
+    latestReports: reports[0] || null,
+    latestRepairs: repairs[0] || null,
+  };
+}
+
+export function districtBounds(positions, district) {
+  if (!district) return null;
+  let west = Infinity;
+  let south = Infinity;
+  let east = -Infinity;
+  let north = -Infinity;
+  for (const position of positions) {
+    if (!position.arrondissements.includes(district) || !hasLocalCoordinates(position)) continue;
+    west = Math.min(west, position.longitude);
+    south = Math.min(south, position.latitude);
+    east = Math.max(east, position.longitude);
+    north = Math.max(north, position.latitude);
+  }
+  return Number.isFinite(west) ? [west, south, east, north] : null;
+}
+
+export function rankPotholePositions(positions, repairCoverageEnd, repairCoverageStart) {
+  const coverageTime = Date.parse(repairCoverageEnd);
+  const coverageStart = repairCoverageStart ? Date.parse(repairCoverageStart) : -Infinity;
+  const entries = positions.filter((position) => hasLocalCoordinates(position) && position.signalements?.length).map((position) => {
+    const periods = position.periodesActives || [];
+    return {
+      positionId: position.positionId,
+      latitude: position.latitude,
+      longitude: position.longitude,
+      rues: [...position.rues],
+      arrondissements: [...position.arrondissements],
+      signalements: position.signalements.length,
+      colmatages: position.nombreColmatages,
+      premierSignalement: position.premierSignalement,
+      reapparitions: periods.slice(1).filter((period, index) => {
+        const previous = periods[index];
+        return previous.end > previous.start && period.start > previous.end;
+      }).length,
+      signalementsPeriodeColmatages: position.signalements.filter((record) => {
+        const reportTime = Date.parse(record[1]);
+        return reportTime >= coverageStart && reportTime <= coverageTime;
+      }).length,
+    };
+  });
+  const tieBreak = (left, right) => left.positionId.localeCompare(right.positionId);
+  return {
+    emplacements: entries,
+    plusSignales: [...entries].sort((left, right) => right.signalements - left.signalements || tieBreak(left, right)).slice(0, 5),
+    plusColmates: entries.filter((entry) => entry.colmatages > 0)
+      .sort((left, right) => right.colmatages - left.colmatages || right.signalements - left.signalements || tieBreak(left, right)).slice(0, 5),
+    sansColmatage: entries.filter((entry) => entry.colmatages === 0 && entry.signalementsPeriodeColmatages > 0)
+      .sort((left, right) => right.signalementsPeriodeColmatages - left.signalementsPeriodeColmatages
+        || left.premierSignalement.localeCompare(right.premierSignalement) || tieBreak(left, right)).slice(0, 5),
+  };
+}
+
 export function classifyPosition(lastReportDate, repairs = [], complete = true) {
   const reportTime = Date.parse(lastReportDate);
   if (!complete || !Number.isFinite(reportTime)) return "unknown";
@@ -80,7 +171,31 @@ export function activeInYear(periods, year) {
 }
 
 export function pointRadiusForZoom(zoom) {
-  return 2 + (Math.max(10, Math.min(19, zoom)) - 10) * 2 / 3;
+  const progress = (Math.max(10, Math.min(19, zoom)) - 10) / 9;
+  return 1 + 6 * progress ** 2;
+}
+
+export function clusterProperties(properties) {
+  return {
+    reports: properties.count,
+    active: properties.status === "active" ? 1 : 0,
+    repaired: properties.status === "presumed-repaired" ? 1 : 0,
+    unknown: properties.status === "unknown" ? 1 : 0,
+  };
+}
+
+export function mergeClusterProperties(target, properties) {
+  target.reports += properties.reports;
+  target.active += properties.active;
+  target.repaired += properties.repaired;
+  target.unknown += properties.unknown;
+}
+
+export function clusterStatus(properties) {
+  const statuses = [
+    ["active", properties.active], ["presumed-repaired", properties.repaired], ["unknown", properties.unknown],
+  ].filter((entry) => entry[1] > 0);
+  return statuses.length === 1 ? statuses[0][0] : "mixed";
 }
 
 export function selectMapPositions(positions, filters = {}) {
@@ -182,12 +297,14 @@ export function buildRepairGroups(records, filters = {}) {
     const positionId = `${record.latitude},${record.longitude}`;
     let group = groups.get(positionId);
     if (!group) {
-      group = { positionId, latitude: record.latitude, longitude: record.longitude, recordIndices: [], count: 0, lastDate: "" };
+      group = { positionId, latitude: record.latitude, longitude: record.longitude, recordIndices: [], count: 0, firstDate: "", lastDate: "", devices: [] };
       groups.set(positionId, group);
     }
     group.recordIndices.push(recordIndex);
     group.count += 1;
+    if (record.horodatage && (!group.firstDate || record.horodatage < group.firstDate)) group.firstDate = record.horodatage;
     if (record.horodatage > group.lastDate) group.lastDate = record.horodatage;
+    if (record.appareil && !group.devices.includes(record.appareil)) group.devices.push(record.appareil);
   }
   const { recordIndices, ...counts } = selection;
   return { ...counts, groups: [...groups.values()] };

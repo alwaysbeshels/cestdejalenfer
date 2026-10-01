@@ -21,6 +21,7 @@ import { DatabaseSync } from "node:sqlite";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { hasLocalCoordinates, reportStreet, reportDistrict, buildActivePeriods } from "../js/potholes-data.mjs";
+import { createPotholeRankings, loadPotholeStreets } from "./potholes-rankings.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_DIR = path.join(ROOT, "data", "nids-de-poule");
@@ -357,9 +358,15 @@ function ecrireSiModifie(fichier, contenu, etat) {
 
 const clePosition = (lat, lon) => `${Number(lat).toFixed(7)},${Number(lon).toFixed(7)}`;
 
-function construireCarteLocale() {
+async function construireCarteLocale() {
   const catalogue = lireJson("index.json");
   if (!catalogue?.signalements?.length || !catalogue?.reparations?.length) throw new Error("Index des snapshots absent");
+  const referenceRues = await loadPotholeStreets(CACHE_DIR, args.includes("--actualiser-rues"));
+  const datesDebut = catalogue.reparations.map((entree) => entree.premiereIntervention).filter(Boolean).sort();
+  const datesFin = catalogue.reparations.map((entree) => entree.derniereIntervention).filter(Boolean).sort();
+  const classements = createPotholeRankings(referenceRues.rues, {
+    firstRepair: datesDebut[0], lastRepair: datesFin.at(-1), latestYear: Math.max(...catalogue.reparations.map((entree) => entree.annee)),
+  });
   const positions = new Map();
   const annees = [];
   for (const entree of catalogue.signalements) {
@@ -395,6 +402,7 @@ function construireCarteLocale() {
     if (!snapshot || snapshot.interventions?.length !== entree.nombre) throw new Error(`Snapshot incomplet : ${entree.fichier}`);
     let exclus = 0;
     for (const record of snapshot.interventions) {
+      classements.addRepair(record, entree.annee);
       if (!hasLocalCoordinates(record) || !Number.isFinite(Date.parse(record.horodatage))) { exclus += 1; continue; }
       const [x, y] = wgs84VersMtm8(record.latitude, record.longitude);
       points.push({ ...record, x, y });
@@ -434,7 +442,13 @@ function construireCarteLocale() {
   };
   const schemaVersion = 2;
   const version = empreinteDe({ origine, schemaVersion });
+  const classementsCalcules = classements.finish(carte, historique);
+  classementsCalcules.geobase = {
+    source: referenceRues.source, recupereLe: referenceRues.recupereLe, empreinte: referenceRues.empreinte,
+    troncons: referenceRues.rues.length, tronconsSource: referenceRues.nombreTronconsSource,
+  };
   const sorties = {
+    "statistiques.json": { version, origine, annees, classements: classementsCalcules },
     "carte.json": {
       version, schemaVersion, origine, rayonAppariementM: rayon, annees, reparations: sources,
       colonnesSignalements: ["idUnique", "dateCreation", "dernierStatut", "annee", "index"],
@@ -819,7 +833,7 @@ async function main() {
     )
   );
 
-  construireCarteLocale();
+  await construireCarteLocale();
   console.log(`\n  positions.json : ${positions.length} positions${ecriturePositions.modifie ? " (reecrit)" : " (inchange)"}`);
   console.log(`  fichiers modifies : ${fichiersModifies.length ? [...new Set(fichiersModifies)].sort().join(", ") : "aucun"}`);
   console.log(`\nTermine en ${((Date.now() - debut) / 1000).toFixed(1)} s -> ${path.relative(ROOT, OUT_DIR)}/`);

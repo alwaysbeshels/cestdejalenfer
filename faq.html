@@ -17,7 +17,7 @@
   <link rel="apple-touch-icon" href="favicon-192.png">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#d96d00">
-  <link rel="stylesheet" href="css/faq.css?v=20260915-missing-restrictions">
+  <link rel="stylesheet" href="css/faq.css?v=20261001-potholes-nav2">
 </head>
 <body data-document-title="document.faqTitle">
   <main class="faq-shell">
@@ -28,7 +28,8 @@
         <p class="intro" data-i18n="faq.intro"></p>
       </div>
       <nav class="faq-nav" data-i18n-aria-label="nav.main">
-        <a href="index.html" data-language-page="map" data-i18n="nav.map"></a>
+        <a href="index.html" class="pothole-road-link" data-language-page="map" data-i18n-title="potholes.roadMapLabel" data-i18n-aria-label="potholes.roadMapLabel"><img src="https://unpkg.com/lucide-static@0.468.0/icons/route.svg" width="17" height="17" alt="" aria-hidden="true"><span data-i18n="potholes.roadMap"></span></a>
+        <a href="potholes.html" class="potholes-link" data-language-page="potholes" data-i18n-title="nav.potholes"><img src="https://unpkg.com/lucide-static@0.468.0/icons/circle-dot.svg" width="17" height="17" alt="" aria-hidden="true"><span data-i18n="nav.potholes"></span></a>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8TiTOGHRjDw36fzIT3DS9ayLfqEcNaE6c_q2BYldNxhgddA/viewform" target="_blank" rel="noreferrer" data-i18n="nav.comments"></a>
         <a class="missing-restrictions-link" href="https://forms.gle/TKL6WkmPsWPmAUMV8" target="_blank" rel="noreferrer" data-i18n="nav.missing" data-i18n-aria-label="nav.missingLabel"></a>
         <button id="languageToggle" class="language-toggle" type="button" aria-label="Passer à l'anglais">EN</button>
@@ -190,9 +191,9 @@
     </footer>
   </main>
   <button id="backToTop" class="back-to-top" type="button" data-i18n-aria-label="faq.top" hidden>↑</button>
-  <script src="languages/fr.js?v=20260929-faq-accessibility"></script>
-  <script src="languages/en.js?v=20260929-faq-accessibility"></script>
-  <script src="js/i18n.js?v=20260929-faq-accessibility"></script>
+  <script src="languages/fr.js?v=20261001-potholes-nav1"></script>
+  <script src="languages/en.js?v=20261001-potholes-nav1"></script>
+  <script src="js/i18n.js?v=20261001-potholes-nav1"></script>
   <script src="data/sources.js"></script>
   <script src="js/faq.js?v=2"></script>
   <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>

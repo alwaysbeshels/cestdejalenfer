@@ -1,30 +1,69 @@
 .potholes-page {
-  --panel-width: 400px;
+  --panel-width: 340px;
+  --pothole-toolbar-height: 180px;
   --panel: #fff;
   --line: #dce4df;
   --muted: #52645b;
   --pothole-report: #d33030;
   --pothole-repair: #13766a;
+  --pothole-presumed: #7a8b80;
+  --pothole-unknown: #161b18;
   background: #f4f7f5;
 }
 
 .potholes-page [hidden] { display: none !important; }
+.potholes-page .app-shell { display: grid; grid-template-columns: var(--panel-width) minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+.pothole-toolbar { grid-column: 1 / -1; grid-row: 1; min-width: 0; padding: 12px 18px; display: grid; gap: 10px; background: #fff; border-bottom: 1px solid var(--line); z-index: 1400; }
+.pothole-toolbar-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(440px, 520px); gap: 24px; align-items: center; }
+.pothole-toolbar .brand-block { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "region links" "title links"; gap: 3px 18px; padding: 0; min-width: 0; }
+.pothole-toolbar .eyebrow { grid-area: region; font-size: 0.68rem; }
+.pothole-toolbar h1 { grid-area: title; font-size: 1.4rem; line-height: 1.2; letter-spacing: 0; }
+.pothole-toolbar .site-nav { grid-area: links; position: static; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; }
+.pothole-toolbar .site-nav > a, .pothole-toolbar .site-nav > button { min-width: 40px; min-height: 36px; }
+.pothole-toolbar .pothole-road-link { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.pothole-toolbar .map-mode-nav { margin: 0; }
+.pothole-toolbar .pothole-layer { padding: 0; border: 0; }
+.pothole-toolbar .pothole-layer legend { margin-bottom: 6px; }
+.pothole-toolbar .pothole-layer-heading { justify-content: flex-start; gap: 10px; font-size: 0.8rem; }
+.pothole-toolbar .pothole-layer-heading .pothole-icon-button { width: 36px; height: 36px; flex-basis: 36px; }
+.pothole-toolbar .pothole-filter-grid { grid-template-columns: minmax(140px, 0.65fr) minmax(170px, 0.85fr) minmax(180px, 1fr) minmax(220px, 1.2fr); align-items: end; gap: 12px; }
+.pothole-toolbar .pothole-full-width { grid-column: auto; }
+.pothole-toolbar #repairsControls { grid-template-columns: repeat(3, minmax(140px, 1fr)); }
+.pothole-toolbar-repair-summary { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 4px 20px; margin-top: 8px; }
+.pothole-toolbar .pothole-toolbar-repair-summary .pothole-coverage { margin: 0; }
+.pothole-toolbar-repair-summary #repairsCountsHelpArea { grid-column: 2; grid-row: 1 / span 2; }
+.pothole-toolbar-repair-summary #repairsWarning { grid-column: 1 / -1; }
+.pothole-toolbar .pothole-year-picker { position: relative; }
+.pothole-toolbar .pothole-year-options { position: absolute; top: calc(100% + 5px); left: 0; width: max(100%, 260px); max-width: calc(100vw - 32px); max-height: min(320px, calc(100dvh - var(--pothole-toolbar-height) - 18px)); overflow-y: auto; padding: 10px 12px; border: 1px solid #b7c7be; border-radius: 4px; background: #fff; box-shadow: 0 5px 18px #17201c25; z-index: 20; }
+.pothole-toolbar .pothole-counts-help { max-height: min(340px, calc(100dvh - var(--pothole-toolbar-height) - 16px)); }
+.potholes-page .potholes-panel { grid-column: 1; grid-row: 2; }
+.potholes-page .pothole-results-resize { top: calc(50% + var(--pothole-toolbar-height) / 2); display: grid; place-items: center; touch-action: none; color: var(--accent-dark); }
+.potholes-page .pothole-results-resize::before { content: none; }
+.pothole-results-resize svg { width: 18px; height: 18px; pointer-events: none; }
+.potholes-page .map-zone { grid-column: 2; grid-row: 2; height: 100%; }
+.potholes-page .menu-toggle { display: none; }
 .potholes-page button, .potholes-page select { font: inherit; }
 .potholes-page :focus-visible { outline: 3px solid #1976d2; outline-offset: 3px; }
-.potholes-panel { padding: 22px; gap: 16px; background: var(--panel); box-shadow: none; }
-.potholes-panel .brand-block { padding-right: 64px; min-height: 80px; }
+.potholes-panel { padding: 18px; gap: 16px; background: var(--panel); box-shadow: none; }
+.potholes-panel .brand-block { padding-right: 0; min-height: 0; flex-shrink: 0; }
+.potholes-panel .site-nav { position: static; display: flex; flex-wrap: wrap; gap: 6px; margin: 0; grid-row: auto; justify-content: flex-start; }
+.potholes-panel .site-nav > a, .potholes-panel .site-nav > button { min-width: 40px; min-height: 36px; }
+.potholes-panel .site-nav .pothole-road-link { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.pothole-road-link svg { width: 17px; height: 17px; flex: 0 0 17px; }
 .potholes-panel h1 { font-size: 1.7rem; line-height: 1.14; letter-spacing: 0; }
-.potholes-page .map-mode-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); flex-shrink: 0; }
+.potholes-page .map-mode-nav { grid-template-columns: 1fr 1fr 1.7fr 1fr; flex-shrink: 0; }
 .potholes-page .map-mode-nav a { font-size: 0.8rem; min-height: 44px; overflow-wrap: anywhere; text-align: center; }
 .pothole-layer { margin: 0; padding: 0 0 16px; border: 0; border-bottom: 1px solid var(--line); min-width: 0; }
 .pothole-layer legend { padding: 0; margin-bottom: 12px; width: 100%; }
+.pothole-layer-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-weight: 750; font-size: 0.98rem; }
 .pothole-layer-toggle { display: flex; align-items: center; gap: 9px; font-size: 0.98rem; font-weight: 750; cursor: pointer; min-height: 28px; }
 .pothole-layer-toggle input { width: 18px; height: 18px; flex: 0 0 18px; accent-color: var(--accent); margin: 0; }
 .pothole-swatch { display: inline-block; width: 10px; height: 10px; flex: 0 0 10px; background: var(--pothole-report); border-radius: 50%; }
 .pothole-swatch.repairs { background: var(--pothole-repair); border-radius: 2px; }
 .pothole-swatch.closed { background: #677078; }
-.pothole-swatch.presumed-repaired { background: #7b8186; }
-.pothole-swatch.unknown { background: #fff; border: 2px solid var(--pothole-report); }
+.pothole-swatch.presumed-repaired { background: var(--pothole-presumed); }
+.pothole-swatch.unknown { background: #fff; border: 2px solid var(--pothole-unknown); }
+.pothole-swatch.mixed { background: #e7ece9; border: 1px solid #5a7364; }
 .pothole-year-picker { border: 1px solid #b7c7be; border-radius: 4px; background: #fff; min-width: 0; }
 .pothole-year-picker summary { padding: 10px; cursor: pointer; min-height: 40px; font-size: 0.85rem; line-height: 1.45; overflow-wrap: anywhere; }
 .pothole-year-options { padding: 0 12px 10px; }
@@ -44,6 +83,13 @@
 .pothole-coverage { color: var(--muted); }
 .pothole-layer .pothole-coverage { margin-top: 10px; }
 .pothole-counts { margin-top: 4px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.pothole-counts-area { position: relative; }
+.pothole-counts-row { display: flex; align-items: center; gap: 8px; }
+.pothole-counts-row .pothole-counts { flex: 1; min-width: 0; }
+.pothole-info-button { border: 0; border-radius: 50%; }
+.pothole-counts-help { position: absolute; top: 100%; left: 0; width: 100%; max-height: min(360px, 65dvh); overflow-y: auto; padding: 14px; z-index: 10; border: 1px solid #b7c7be; border-radius: 6px; background: #fff; box-shadow: 0 5px 18px #17201c25; font-size: 0.8rem; line-height: 1.5; overflow-wrap: anywhere; }
+.pothole-counts-help p { margin: 4px 0 12px; }
+.pothole-counts-help p:last-child { margin-bottom: 0; }
 .pothole-warning { color: #7a4421; border-left: 2px solid #b78537; padding-left: 8px; margin-top: 7px; }
 .pothole-error { color: #a32940; margin-top: 6px; }
 .pothole-text-button { min-height: 40px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 4px; background: #fff; color: var(--accent-dark); cursor: pointer; font-weight: 700; }
@@ -68,6 +114,7 @@
 .pothole-map-caption { position: absolute; top: 18px; left: 18px; z-index: 500; padding: 10px 13px; background: rgba(255, 255, 255, 0.94); border-left: 3px solid var(--pothole-report); max-width: calc(100% - 100px); pointer-events: none; }
 .pothole-map-caption strong { display: block; font-size: 1.05rem; line-height: 1.25; }
 .pothole-map-caption span { display: block; font-size: 0.74rem; color: var(--muted); margin-top: 3px; }
+.potholes-page[data-pothole-view="repairs"] .pothole-map-caption { border-left-color: var(--pothole-repair); }
 .pothole-map-tools { position: absolute; right: 14px; top: 14px; display: grid; gap: 8px; z-index: 700; }
 .pothole-map-tools .pothole-icon-button { box-shadow: 0 2px 7px #17201c20; }
 .pothole-map-legend { position: absolute; bottom: 30px; left: 14px; display: flex; flex-wrap: wrap; gap: 8px 16px; max-width: calc(100% - 28px); padding: 10px 12px; border-radius: 4px; background: rgba(255, 255, 255, 0.96); z-index: 500; font-size: 0.78rem; line-height: 1.5; }
@@ -78,6 +125,12 @@
 .pothole-map-notice { position: absolute; top: 110px; left: 18px; z-index: 500; max-width: min(290px, calc(100% - 100px)); padding: 12px; border-radius: 4px; background: #fff; color: #7a4421; font-size: 0.8rem; line-height: 1.5; }
 .pothole-marker { background: none; border: 0; }
 .pothole-marker > span { display: grid; place-items: center; width: 38px; height: 38px; border: 2px solid #fff; border-radius: 50%; background: var(--pothole-report); color: #fff; box-shadow: 0 1px 4px #17201c50; font-size: 0.78rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.pothole-marker.presumed-repaired > span { background: var(--pothole-presumed); color: #101b14; }
+.pothole-marker.unknown > span { background: #fff; border-color: var(--pothole-unknown); color: var(--pothole-unknown); }
+.pothole-marker.mixed > span { background: #e7ece9; color: #263e30; border-color: #5a7364; }
+.potholes-page .leaflet-tooltip { width: max-content; white-space: normal; max-width: min(280px, calc(100vw - 32px)); overflow-wrap: anywhere; }
+.potholes-page .leaflet-tooltip.pothole-point-label { max-width: min(380px, calc(100vw - 32px)); }
+.pothole-point-tooltip { white-space: pre-line; }
 .pothole-marker.repairs > span { background: var(--pothole-repair); border-radius: 6px; }
 .pothole-marker.closed > span { background: #677078; }
 .pothole-marker.position > span { width: 28px; height: 28px; font-size: 0.7rem; border-width: 1px; }
@@ -90,12 +143,12 @@
 .pothole-detail-meta { color: var(--muted); font-size: 0.8rem; }
 .pothole-detail-status { display: inline-block; padding: 4px 8px; color: #822339; background: #faedf0; border-left: 3px solid var(--pothole-report); font-weight: 750; }
 .pothole-detail-status.closed { color: #45524a; background: #edf1ee; border-color: #677078; }
-.pothole-detail-status.presumed-repaired { color: #45524a; background: #edf1ee; border-color: #7b8186; }
-.pothole-detail-status.unknown { background: #fff; color: var(--muted); }
+.pothole-detail-status.presumed-repaired { color: #45524a; background: #edf1ee; border-color: var(--pothole-presumed); }
+.pothole-detail-status.unknown { background: #fff; color: var(--muted); border-color: var(--pothole-unknown); }
 .pothole-timeline { list-style: none; margin: 16px 0; padding: 0 0 0 14px; border-left: 2px solid var(--line); }
 .pothole-timeline li { position: relative; display: grid; gap: 3px; padding: 0 0 18px; overflow-wrap: anywhere; }
 .pothole-timeline li::before { position: absolute; top: 5px; left: -19px; content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--pothole-report); }
-.pothole-timeline li.repair::before { background: #7b8186; }
+.pothole-timeline li.repair::before { background: var(--pothole-presumed); }
 .pothole-timeline time, .pothole-timeline span { color: var(--muted); font-size: 0.77rem; }
 .pothole-timeline strong { font-size: 0.84rem; }
 .pothole-detail-fields { display: grid; grid-template-columns: minmax(120px, 0.8fr) minmax(0, 1.2fr); gap: 7px 14px; margin: 0; }
@@ -115,20 +168,46 @@
 .pothole-detail-content a { color: var(--accent-dark); text-decoration: underline; }
 
 @media (max-width: 880px) {
-  .potholes-page .map-zone { height: 100vh; height: 100dvh; }
-  .potholes-panel { padding: 76px 18px 24px; }
-  .potholes-panel .brand-block { padding-top: 0; padding-right: 64px; }
-  .potholes-panel .site-nav { position: absolute; top: 0; right: 0; margin: 0; display: grid; }
-  .potholes-page .menu-backdrop:not([hidden]) { display: block; position: fixed; inset: 0; background: #17201c70; z-index: 1100; }
+  .potholes-page .app-shell { grid-template-columns: minmax(0, 1fr); }
+  .pothole-toolbar { padding: 10px 14px; gap: 8px; }
+  .pothole-toolbar-heading { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .pothole-toolbar .pothole-filter-grid, .pothole-toolbar #repairsControls { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .pothole-toolbar #repairsControls .pothole-full-width { grid-column: 1 / -1; }
+  .pothole-toolbar-repair-summary { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .pothole-toolbar-repair-summary #repairsCountsHelpArea { grid-column: 1; grid-row: auto; }
+  .potholes-page .menu-toggle { display: grid; top: calc(var(--pothole-toolbar-height) + 12px); }
+  .potholes-page .map-zone { grid-column: 1; grid-row: 2; height: 100%; }
+  .potholes-page .potholes-panel { top: var(--pothole-toolbar-height); bottom: 0; width: min(340px, calc(100vw - 54px)); padding: 66px 18px 24px; }
+  .potholes-page .pothole-results-resize { display: none; }
+  .potholes-panel .brand-block { padding-top: 0; padding-right: 0; }
+  .potholes-panel .site-nav { position: static; margin: 0; display: flex; }
+  .potholes-page .menu-backdrop:not([hidden]) { display: block; position: fixed; inset: var(--pothole-toolbar-height) 0 0; background: #17201c70; z-index: 1100; }
   .potholes-page .menu-toggle.is-open { color: #fff; }
   .pothole-map-caption { top: 14px; left: 70px; max-width: calc(100% - 140px); padding: 8px 10px; }
   .pothole-map-caption strong { font-size: 0.95rem; overflow-wrap: anywhere; }
   .pothole-map-caption span { font-size: 0.7rem; }
   .pothole-map-notice { left: 14px; }
-  .pothole-map-legend { font-size: 0.73rem; gap: 5px 12px; }
+  .pothole-map-legend { max-width: calc(100% - 84px); font-size: 0.73rem; gap: 5px 12px; }
+}
+
+@media (max-width: 880px) and (max-height: 650px) {
+  .pothole-toolbar { max-height: 55dvh; overflow-y: auto; }
+  .pothole-toolbar .pothole-year-options { position: static; width: 100%; max-width: 100%; max-height: 190px; border: 0; box-shadow: none; }
+  .pothole-toolbar .pothole-counts-help { position: static; max-height: 180px; }
+}
+
+@media (max-width: 880px) and (max-height: 450px) {
+  .pothole-map-caption { display: none; }
+  .pothole-map-tools { display: flex; top: 12px; right: 12px; gap: 6px; }
+  .pothole-map-tools .pothole-icon-button { width: 36px; height: 36px; flex-basis: 36px; }
+  .pothole-map-legend { max-width: calc(100% - 28px); bottom: 24px; }
 }
 
 @media (max-width: 400px) {
+  .pothole-toolbar { padding-inline: 10px; }
+  .pothole-toolbar h1 { font-size: 1.1rem; }
+  .pothole-toolbar .brand-block { column-gap: 8px; }
+  .pothole-toolbar .pothole-road-link span { display: none; }
   .potholes-panel { padding-inline: 14px; }
   .potholes-panel h1 { font-size: 1.4rem; }
   .pothole-filter-grid { grid-template-columns: minmax(0, 1fr); }
@@ -139,4 +218,108 @@
 
 @media (prefers-reduced-motion: reduce) {
   .potholes-page *, .potholes-page *::before { animation: none !important; transition: none !important; }
+}
+
+.potholes-page.pothole-reading .app-shell { grid-template-columns: minmax(0, 1fr); }
+.potholes-page.pothole-reading .pothole-toolbar { max-height: none; overflow: visible; }
+.pothole-content { grid-column: 1 / -1; grid-row: 2; min-height: 0; overflow-y: auto; background: #fff; padding: 30px 24px 64px; scroll-padding-top: 20px; }
+.pothole-document { max-width: 1000px; margin: 0 auto; line-height: 1.65; }
+#statisticsView { width: 100%; max-width: none; }
+.pothole-document-intro { padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.pothole-document-intro h2 { font-size: 1.6rem; line-height: 1.25; margin-bottom: 10px; }
+.pothole-document-lead { max-width: 800px; font-size: 1rem; }
+#statisticsView .pothole-document-lead { max-width: none; }
+.pothole-document-meta { color: var(--muted); font-size: 0.8rem; margin-top: 12px; }
+.pothole-reading-facts, .pothole-statistics-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 24px 0; border-bottom: 1px solid var(--line); }
+.pothole-reading-facts dt { font-weight: 750; font-size: 0.88rem; }
+.pothole-reading-facts dd { margin: 4px 0 0; color: var(--muted); font-size: 0.86rem; }
+.pothole-document-nav { display: flex; flex-wrap: wrap; gap: 8px 22px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.pothole-document a { color: var(--accent-dark); text-decoration: underline; text-underline-offset: 3px; }
+.pothole-document-nav a { font-weight: 650; font-size: 0.86rem; }
+.pothole-document-section { padding: 28px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
+.pothole-document-section > h2 { font-size: 1.25rem; line-height: 1.3; margin-bottom: 16px; }
+#howView .pothole-document-section > h2 { text-align: center; font-size: 1.4rem; margin-bottom: 20px; }
+.pothole-document-section details { border-top: 1px solid var(--line); }
+.pothole-document-section details:last-child { border-bottom: 1px solid var(--line); }
+.pothole-document-section summary { cursor: pointer; padding: 15px 4px; font-size: 0.98rem; font-weight: 650; line-height: 1.45; }
+.pothole-answer { padding: 0 4px 18px; max-width: 850px; color: #34453c; font-size: 0.94rem; overflow-wrap: anywhere; }
+.pothole-answer p + p { margin-top: 12px; }
+.pothole-document-links { padding-left: 22px; margin-bottom: 0; }
+.pothole-document-links li + li { margin-top: 5px; }
+.pothole-status-definitions { margin: 8px 0 18px; display: grid; gap: 18px; }
+.pothole-status-definitions dt { display: flex; align-items: center; gap: 9px; font-weight: 750; }
+.pothole-status-definitions dd { margin: 5px 0 0 19px; }
+.pothole-example-label { margin-top: 20px; font-weight: 650; font-size: 0.78rem; color: var(--muted); }
+.pothole-example-timeline { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.pothole-example-timeline li { display: grid; align-content: start; gap: 6px; padding-top: 10px; border-top: 3px solid var(--pothole-report); }
+.pothole-example-timeline li.presumed-repaired { border-color: var(--pothole-presumed); }
+.pothole-example-timeline time { color: var(--muted); font-size: 0.78rem; }
+.pothole-example-timeline strong { font-size: 0.92rem; }
+.pothole-example-timeline span { font-size: 0.82rem; }
+.pothole-document-highlight { padding: 12px 14px; border-left: 3px solid var(--accent); background: #f0f6f2; font-size: 0.9rem; margin: 16px 0; }
+.pothole-statistics-metrics dt { color: var(--muted); font-size: 0.84rem; }
+.pothole-statistics-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#statisticsData { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; border-bottom: 1px solid var(--line); }
+#statisticsMetrics { grid-column: 1 / -1; }
+#statisticsData > .pothole-document-section { min-width: 0; display: grid; grid-row: span 4; grid-template-rows: subgrid; align-items: start; border-bottom: 0; }
+.pothole-statistics-metrics dd { margin: 6px 0 0; font-size: 2rem; line-height: 1.2; font-weight: 750; font-variant-numeric: tabular-nums; }
+.pothole-table-scroll { overflow: auto; margin-top: 16px; scrollbar-gutter: stable; scrollbar-width: auto; scrollbar-color: #587966 #edf2ef; }
+.pothole-table-scroll.has-year-overflow { overflow-y: scroll; }
+.pothole-table-scroll::-webkit-scrollbar { width: 12px; height: 12px; }
+.pothole-table-scroll::-webkit-scrollbar-track { background: #edf2ef; }
+.pothole-table-scroll::-webkit-scrollbar-thumb { background: #587966; border: 2px solid #edf2ef; border-radius: 6px; }
+.pothole-table-scroll::-webkit-scrollbar-corner { background: #edf2ef; }
+.pothole-statistics-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+.pothole-statistics-table th, .pothole-statistics-table td { padding: 11px 12px; border: 0; border-bottom: 1px solid var(--line); text-align: left; }
+.pothole-statistics-table thead th { position: sticky; top: 0; z-index: 3; color: var(--muted); background: #f3f6f4; font-size: 0.78rem; box-shadow: 0 1px 0 var(--line); }
+.pothole-statistics-table tbody th { background: none; font-weight: 650; }
+.pothole-statistics-table td.pothole-stat-volume { position: relative; width: 27%; }
+.pothole-stat-volume > span:last-child { position: relative; z-index: 1; }
+.pothole-stat-track { position: absolute; inset: 7px 12px; pointer-events: none; }
+.pothole-stat-bar { display: block; height: 100%; background: #efc8cf; max-width: 100%; }
+.pothole-stat-information .pothole-stat-bar { background: #d9ebe2; }
+
+.pothole-ranking-intro { padding: 28px 0 8px; }
+.pothole-ranking-intro h2 { font-size: 1.35rem; line-height: 1.3; margin-bottom: 12px; }
+.pothole-ranking-method { margin-top: 14px; color: var(--muted); font-size: 0.82rem; }
+.pothole-ranking-method summary { cursor: pointer; font-weight: 650; }
+.pothole-ranking-method p { margin-top: 10px; }
+.pothole-ranking-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.pothole-ranking-panel { min-width: 0; display: grid; grid-row: span 3; grid-template-rows: subgrid; align-items: start; }
+.pothole-ranking-panel h3 { font-size: 1.1rem; line-height: 1.35; margin: 0 0 12px; }
+.pothole-ranking-note { font-size: 0.84rem; color: var(--muted); }
+.pothole-ranking-table thead tr { height: var(--ranking-header-height, auto); }
+.pothole-ranking-table tbody tr { height: var(--ranking-row-height, auto); }
+.pothole-ranking-table th:first-child { width: 45%; }
+.pothole-ranking-table tbody th { min-width: 140px; overflow-wrap: anywhere; }
+.pothole-ranking-table tbody th, .pothole-ranking-table tbody td { vertical-align: top; }
+.pothole-ranking-place { display: block; }
+.pothole-ranking-meta { display: block; color: var(--muted); font-size: 0.72rem; line-height: 1.45; font-weight: 400; margin-top: 4px; }
+
+@media (max-width: 1100px) {
+  .pothole-toolbar-heading { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+}
+
+@media (min-width: 1001px) {
+  .pothole-statistics-table thead th { height: 4rem; }
+}
+
+@media (max-width: 1000px) {
+  #statisticsData { grid-template-columns: minmax(0, 1fr); }
+  #statisticsData > .pothole-document-section { display: block; grid-row: auto; }
+  .pothole-ranking-pair { grid-template-columns: minmax(0, 1fr); row-gap: 28px; }
+  .pothole-ranking-panel { display: block; grid-row: auto; }
+}
+
+@media (max-width: 600px) {
+  .potholes-page .map-mode-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pothole-content { padding: 22px 16px 40px; }
+  .pothole-document-intro h2 { font-size: 1.25rem; }
+  .pothole-reading-facts, .pothole-statistics-metrics, .pothole-example-timeline { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .pothole-document-section { padding: 22px 0; }
+  .pothole-document-section summary { font-size: 0.92rem; }
+  .pothole-statistics-metrics dd { font-size: 1.6rem; }
+  .pothole-statistics-table th, .pothole-statistics-table td { padding: 9px 7px; }
+  .pothole-stat-track { inset: 7px; }
+  .pothole-ranking-table { min-width: 360px; }
 }
