@@ -753,12 +753,18 @@ function renderRankings() {
   });
   byId("rankingsGeography").textContent = text("rankingsGeography", {
     radius: number(coverage.rayonRueM), matched: number(coverage.colmatagesAttribues), ambiguous: number(coverage.colmatagesAmbigus),
-    excluded: number(coverage.colmatagesHorsRue + coverage.colmatagesInvalides), duplicates: number(coverage.doublonsColmatages),
+    excluded: number(coverage.colmatagesHorsRue + coverage.colmatagesInvalides + coverage.colmatagesSansIdentification),
+    unidentified: number(coverage.colmatagesSansIdentification), duplicates: number(coverage.doublonsColmatages),
   });
   byId("rankingsLocationsCoverage").textContent = text("rankingsLocationsCoverage", {
     matched: number(coverage.emplacementsAttribues), excluded: number(coverage.emplacementsNonAttribues),
+    unidentified: number(coverage.emplacementsSansIdentification),
   });
   byId("rankingsGeobase").textContent = text("rankingsGeobase", { date: formatDate(rankings.geobase.recupereLe) });
+  byId("rankingsRtss").textContent = text("rankingsRtss", {
+    date: formatDate(rankings.rtss.recupereLe), identified: number(rankings.identificationRues.generiquesResolus),
+    total: number(rankings.identificationRues.generiques), remaining: number(rankings.identificationRues.generiquesNonResolus),
+  });
   for (let index = 0; index < rankingTables.length; index += 2) {
     const pair = element("div", "pothole-ranking-pair");
     for (const [key, headingKey, noteKey, columns] of rankingTables.slice(index, index + 2)) {
@@ -926,7 +932,7 @@ async function start() {
     const rankings = annual?.classements;
     const repairsMatch = Array.isArray(annual?.origine?.reparations)
       && catalog.reparations.every((entry) => annual.origine.reparations.some(([file, modified]) => file === entry.fichier && modified === entry.contenuModifieLe));
-    if (state.annualCounts && repairsMatch && rankings?.schemaVersion === 1 && rankings.couverture && rankings.geobase
+    if (state.annualCounts && repairsMatch && rankings?.schemaVersion === 2 && rankings.couverture && rankings.geobase && rankings.rtss && rankings.identificationRues
       && rankingTables.every(([key]) => Array.isArray(rankings[key]))) state.rankings = rankings;
     for (const kind of kinds) {
       const entries = state.catalog[kind === "reports" ? "signalements" : "reparations"];

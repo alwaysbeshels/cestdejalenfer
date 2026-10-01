@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { districtBounds, clampResultsPanelWidth, RESULTS_PANEL_MIN_WIDTH, RESULTS_PANEL_MAX_WIDTH, summarizePotholeCatalog } from "../js/potholes-data.mjs";
 import { readFileSync } from "node:fs";
-import { createStreetMatcher, createPotholeRankings } from "./potholes-rankings.mjs";
+import { createStreetMatcher, createPotholeRankings, isGenericStreetName, rtssRoadsFromFeatures, resolveNumberedStreets } from "./potholes-rankings.mjs";
 import {
   buildReportGroups, buildRepairGroups, hasLocalCoordinates, normalizeSearch, reportStreet, selectRepairRecords, snapshotSummary,
   classifyPosition, buildPositionTimeline, selectMapPositions, decodeMapReport, decodeMapRepair,
@@ -115,6 +115,64 @@ assert.equal(streetRankings.machines.reduce((total, machine) => total + machine.
 assert.equal(streetRankings.ruesRatio[0].signalementsComparables, 7);
 assert.equal(rankPotholePositions([rankingPosition("before", ["2014-01-01"])], "2025-05-20", "2016-01-01").sansColmatage.length, 0);
 console.log("PASS: street assignment excludes ambiguous crossings, counts unique interventions, preserves raw machine totals and uses comparable reporting periods");
+assert.equal(isGenericStreetName("voie Non-nomm\u00e9e"), true);
+assert.equal(isGenericStreetName("voie Non-nomm\u00e9e Longue-Pointe"), true);
+assert.equal(isGenericStreetName("autoroute 10"), false);
+const unnamedStreets = [
+  { rue: "voie Non-nommee", arrondissements: ["Verdun"], coordinates: [[-73.61, 45.51], [-73.60, 45.51]] },
+  { rue: "rue Voisine", arrondissements: ["Verdun"], coordinates: [[-73.61, 45.51009], [-73.60, 45.51009]] },
+];
+const unnamedPoint = { latitude: 45.51, longitude: -73.605 };
+assert.equal(createStreetMatcher(unnamedStreets)(unnamedPoint).kind, "unidentified");
+assert.equal(createStreetMatcher([unnamedStreets[0], {
+  ...unnamedStreets[0], coordinates: [[-73.605, 45.509], [-73.605, 45.511]],
+}])(unnamedPoint).kind, "ambiguous");
+const unnamedRankings = createPotholeRankings(unnamedStreets, { firstRepair: "2016-01-01", lastRepair: "2025-05-20", latestYear: 2025 });
+unnamedRankings.addRepair({ ...rankingRepair, ...unnamedPoint }, 2025);
+const unnamedResult = unnamedRankings.finish([{ ...rankingFixtures[0], ...unnamedPoint }], {});
+assert.equal(unnamedResult.couverture.colmatagesBruts, 1);
+assert.equal(unnamedResult.couverture.colmatagesSansIdentification, 1);
+assert.equal(unnamedResult.couverture.emplacementsSansIdentification, 1);
+assert.equal(unnamedResult.ruesEmplacements.length, 0);
+assert.equal(unnamedResult.ruesColmatages.length, 0);
+assert.equal(unnamedResult.machines[0].colmatages, 1);
+console.log("PASS: generic street labels never merge distinct roads or transfer their events to a nearby named street; totals remain accounted for");
+const highwayFixture = { ...unnamedStreets[0], id: 100, classeDescription: "Autoroute" };
+const rtssFeature = (numero, coordinates = highwayFixture.coordinates, overrides = {}) => ({
+  type: "Feature", geometry: { type: "LineString", coordinates },
+  properties: { num_route: numero, num_rts: `${numero}-test`, cod_sous_r: "0", des_clasf_: "Autoroute", ...overrides },
+});
+const rtssRoads = rtssRoadsFromFeatures([rtssFeature("00010")]);
+const numbered = resolveNumberedStreets([highwayFixture, unnamedStreets[1]], rtssRoads);
+assert.equal(numbered.rues[0].rue, "autoroute 10");
+assert.equal(numbered.rues[0].identificationRtss.numeroRoute, 10);
+assert.equal(numbered.rues[0].libelleGeobase, "voie Non-nommee");
+assert.equal(numbered.rues[1], unnamedStreets[1]);
+assert.equal(highwayFixture.rue, "voie Non-nommee");
+assert.equal(numbered.generiquesResolus, 1);
+assert.equal(numbered.generiquesNonResolus, 0);
+assert.equal(resolveNumberedStreets([highwayFixture], rtssRoadsFromFeatures([rtssFeature("00010", [...highwayFixture.coordinates].reverse())])).generiquesResolus, 1);
+assert.equal(resolveNumberedStreets([highwayFixture], rtssRoadsFromFeatures([rtssFeature("00010"), rtssFeature("00015")])).generiquesResolus, 0);
+assert.equal(resolveNumberedStreets([{ ...highwayFixture, classeDescription: "Rue projetee" }], rtssRoads).generiquesResolus, 0);
+assert.equal(resolveNumberedStreets([{ ...highwayFixture, classeDescription: "Rue locale" }], rtssRoads).generiquesResolus, 0);
+const shortCrossing = { ...highwayFixture, coordinates: [[-73.6052, 45.51], [-73.6048, 45.51]] };
+assert.equal(resolveNumberedStreets([shortCrossing], rtssRoadsFromFeatures([
+  rtssFeature("00040", [[-73.605, 45.509], [-73.605, 45.511]]),
+])).generiquesResolus, 0);
+assert.equal(rtssRoadsFromFeatures([rtssFeature("998028")]).length, 0);
+assert.equal(rtssRoadsFromFeatures([rtssFeature("00010", highwayFixture.coordinates, { cod_sous_r: "C" })]).length, 0);
+assert.equal(resolveNumberedStreets([highwayFixture], []).generiquesResolus, 0);
+assert.equal(resolveNumberedStreets([{ ...highwayFixture, rue: "autoroute Bonaventure" }], rtssRoads).rues[0].rue, "autoroute 10");
+assert.equal(resolveNumberedStreets([{ ...highwayFixture, rue: "autoroute 15" }], rtssRoads).rues[0].rue, "autoroute 15");
+assert.equal(resolveNumberedStreets([{ ...highwayFixture, rue: "autoroute 15-20" }], rtssRoads).rues[0].rue, "autoroute 15-20");
+assert.equal(resolveNumberedStreets([{ ...highwayFixture, rue: "autoroute 15" }], rtssRoads).autoroutesNormalisees, 0);
+const groupedHighways = createPotholeRankings(numbered.rues, { firstRepair: "2016-01-01", lastRepair: "2025-05-20", latestYear: 2025 });
+groupedHighways.addRepair({ ...rankingRepair, ...unnamedPoint }, 2025);
+const groupedHighwayResult = groupedHighways.finish([{ ...rankingFixtures[0], ...unnamedPoint }], {});
+assert.equal(groupedHighwayResult.ruesColmatages[0].rue, "autoroute 10");
+assert.equal(groupedHighwayResult.ruesEmplacements[0].emplacements, 1);
+assert.equal(groupedHighwayResult.couverture.colmatagesSansIdentification, 0);
+console.log("PASS: RTSS matching uses public route numbers, multiple aligned samples and ambiguity rejection without altering named local streets or inventing route numbers");
 const base = {
   positionId: "45.5,-73.6", latitude: 45.5, longitude: -73.6,
   positionFiable: true, etat: "ouvert", nature: "Requete",
@@ -326,10 +384,10 @@ for (const entry of selectMapPositions(mapSnapshot.positions)) {
 }
 console.log(`PASS: compact map and chronological repair history agree: ${JSON.stringify(statuses)}`);
 const rankings = annualStatistics.classements;
-assert.equal(rankings.schemaVersion, 1);
+assert.equal(rankings.schemaVersion, 2);
 assert.equal(rankings.couverture.derniereAnnee, latestRepairYear);
 assert.equal(rankings.couverture.colmatagesBruts, totalRepairs);
-assert.equal(["doublonsColmatages", "colmatagesAttribues", "colmatagesAmbigus", "colmatagesHorsRue", "colmatagesInvalides"]
+assert.equal(["doublonsColmatages", "colmatagesAttribues", "colmatagesAmbigus", "colmatagesHorsRue", "colmatagesInvalides", "colmatagesSansIdentification"]
   .reduce((total, key) => total + rankings.couverture[key], 0), totalRepairs);
 assert.equal(rankings.couverture.emplacementsAttribues + rankings.couverture.emplacementsNonAttribues, mapSnapshot.positions.length);
 const expectedLocationRankings = rankPotholePositions(mapSnapshot.positions, rankings.couverture.dernierColmatage, rankings.couverture.premierColmatage);
@@ -346,7 +404,12 @@ assert.deepEqual(rankings.machinesAbsentes.map((machine) => machine.appareil).so
 for (const key of ["ruesEmplacements", "ruesRecurrences", "ruesColmatages", "ruesAnciennes", "ruesRatio"]) {
   assert.ok(rankings[key].length <= 5);
   assert.equal(new Set(rankings[key].map((row) => row.rue)).size, rankings[key].length);
+  assert.ok(rankings[key].every((row) => !isGenericStreetName(row.rue)));
 }
+assert.equal(rankings.identificationRues.generiquesResolus + rankings.identificationRues.generiquesNonResolus, rankings.identificationRues.generiques);
+assert.ok(rankings.identificationRues.generiquesResolus > 0);
+assert.ok(rankings.rtss.empreinte && rankings.rtss.troncons > 0);
+assert.ok(rankings.couverture.emplacementsSansIdentification <= rankings.couverture.emplacementsNonAttribues);
 assert.ok(rankings.ruesRatio.every((row) => row.ratio === row.colmatages / Math.max(1, row.signalementsComparables)));
 assert.ok(rankings.ruesRecurrences.every((row) => row.emplacementsRecurrents > 0 && row.reapparitions >= row.emplacementsRecurrents));
 assert.ok(rankings.ruesAnciennes.every((row) => row.sansColmatage > 0 && Number.isFinite(Date.parse(row.plusAncienSansColmatage))));
@@ -384,6 +447,9 @@ if (process.argv.includes("--browser")) {
         const layout = await page.evaluate(() => ({
           pageOverflow: document.documentElement.scrollWidth > innerWidth || document.querySelector(".pothole-content").scrollWidth > document.querySelector(".pothole-content").clientWidth,
           missingTranslations: /potholes\.rank|\{(?:year|count|first|last)\}/.test(document.querySelector("#statisticsRankings").textContent),
+          genericStreet: [...document.querySelectorAll("[data-ranking^=rues] tbody .pothole-ranking-place")]
+            .some((element) => /non[-\s]+nomm/i.test(element.textContent)),
+          rtssMethod: document.querySelector("#rankingsRtss").textContent,
           annualColumns: document.querySelector("#statisticsReportRows").rows[0].cells.length,
           pairs: [...document.querySelectorAll(".pothole-ranking-pair")].map((pair) => ({
             border: getComputedStyle(pair).borderBottomWidth,
@@ -411,6 +477,8 @@ if (process.argv.includes("--browser")) {
         }));
         assert.equal(layout.pageOverflow, false, `${language} ${width}: page overflow`);
         assert.equal(layout.missingTranslations, false, `${language} ${width}: untranslated ranking labels`);
+        assert.equal(layout.genericStreet, false, `${language} ${width}: generic street grouping`);
+        assert.ok(layout.rtssMethod.includes("MTMD") && !layout.rtssMethod.includes("{"));
         assert.equal(layout.annualColumns, 3);
         assert.equal(layout.pairs.length, 5);
         for (const pair of layout.pairs) {
@@ -432,10 +500,11 @@ if (process.argv.includes("--browser")) {
       }
     }
     const statisticsRoute = "**/data/nids-de-poule/statistiques.json";
-    for (const kind of ["missing", "stale"]) {
+    for (const kind of ["missing", "stale", "legacy"]) {
       const outdated = structuredClone(annualStatistics);
       if (kind === "missing") delete outdated.classements;
-      else outdated.origine.reparations[0][1] = "2000-01-01T00:00:00Z";
+      else if (kind === "stale") outdated.origine.reparations[0][1] = "2000-01-01T00:00:00Z";
+      else outdated.classements.schemaVersion = 1;
       await context.route(statisticsRoute, (route) => route.fulfill({ json: outdated }));
       await page.goto("http://localhost:5500/fr/potholes.html?mode=statistics");
       await page.waitForFunction(() => document.querySelector("#rankingsStatus")?.hidden === false, null, { polling: 100 });

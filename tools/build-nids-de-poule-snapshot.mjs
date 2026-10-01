@@ -21,7 +21,7 @@ import { DatabaseSync } from "node:sqlite";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { hasLocalCoordinates, reportStreet, reportDistrict, buildActivePeriods } from "../js/potholes-data.mjs";
-import { createPotholeRankings, loadPotholeStreets } from "./potholes-rankings.mjs";
+import { createPotholeRankings, loadPotholeStreets, loadRtssRoads, resolveNumberedStreets } from "./potholes-rankings.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_DIR = path.join(ROOT, "data", "nids-de-poule");
@@ -362,9 +362,12 @@ async function construireCarteLocale() {
   const catalogue = lireJson("index.json");
   if (!catalogue?.signalements?.length || !catalogue?.reparations?.length) throw new Error("Index des snapshots absent");
   const referenceRues = await loadPotholeStreets(CACHE_DIR, args.includes("--actualiser-rues"));
+  const referenceRtss = await loadRtssRoads(CACHE_DIR, args.includes("--actualiser-rues") || args.includes("--actualiser-rtss"));
+  const { rues: ruesIdentifiees, ...identificationRues } = resolveNumberedStreets(referenceRues.rues, referenceRtss.routes);
+  console.log(`  routes : ${identificationRues.generiquesResolus}/${identificationRues.generiques} troncons generiques identifies; ${identificationRues.autoroutesNormalisees} noms d'autoroutes normalises`);
   const datesDebut = catalogue.reparations.map((entree) => entree.premiereIntervention).filter(Boolean).sort();
   const datesFin = catalogue.reparations.map((entree) => entree.derniereIntervention).filter(Boolean).sort();
-  const classements = createPotholeRankings(referenceRues.rues, {
+  const classements = createPotholeRankings(ruesIdentifiees, {
     firstRepair: datesDebut[0], lastRepair: datesFin.at(-1), latestYear: Math.max(...catalogue.reparations.map((entree) => entree.annee)),
   });
   const positions = new Map();
@@ -447,6 +450,11 @@ async function construireCarteLocale() {
     source: referenceRues.source, recupereLe: referenceRues.recupereLe, empreinte: referenceRues.empreinte,
     troncons: referenceRues.rues.length, tronconsSource: referenceRues.nombreTronconsSource,
   };
+  classementsCalcules.rtss = {
+    source: referenceRtss.source, recupereLe: referenceRtss.recupereLe, empreinte: referenceRtss.empreinte,
+    troncons: referenceRtss.routes.length, tronconsSource: referenceRtss.nombreTronconsSource,
+  };
+  classementsCalcules.identificationRues = identificationRues;
   const sorties = {
     "statistiques.json": { version, origine, annees, classements: classementsCalcules },
     "carte.json": {
