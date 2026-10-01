@@ -20,6 +20,7 @@ import { createHash } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { hasLocalCoordinates, reportStreet, reportDistrict, buildActivePeriods } from "../js/potholes-data.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_DIR = path.join(ROOT, "data", "nids-de-poule");
@@ -355,6 +356,107 @@ function ecrireSiModifie(fichier, contenu, etat) {
 }
 
 const clePosition = (lat, lon) => `${Number(lat).toFixed(7)},${Number(lon).toFixed(7)}`;
+
+function construireCarteLocale() {
+  const catalogue = lireJson("index.json");
+  if (!catalogue?.signalements?.length || !catalogue?.reparations?.length) throw new Error("Index des snapshots absent");
+  const positions = new Map();
+  const annees = [];
+  for (const entree of catalogue.signalements) {
+    const snapshot = lireJson(entree.fichier);
+    if (!snapshot || snapshot.signalements?.length !== entree.nombre) throw new Error(`Snapshot incomplet : ${entree.fichier}`);
+    let informations = 0;
+    let nonCartographiables = 0;
+    snapshot.signalements.forEach((record, recordIndex) => {
+      if (record.etat === "information" || record.nature === "Information") { informations += 1; return; }
+      if (!record.positionFiable || !record.positionId || !hasLocalCoordinates(record)) { nonCartographiables += 1; return; }
+      let position = positions.get(record.positionId);
+      if (!position) {
+        position = {
+          positionId: record.positionId, latitude: record.latitude, longitude: record.longitude,
+          rues: new Set(), arrondissements: new Set(), signalements: [], premierSignalement: "", dernierSignalement: "",
+        };
+        positions.set(record.positionId, position);
+      }
+      const rue = reportStreet(record);
+      const arrondissement = reportDistrict(record);
+      if (rue) position.rues.add(rue);
+      if (arrondissement) position.arrondissements.add(arrondissement);
+      position.signalements.push([record.idUnique || "", record.dateCreation || "", record.dernierStatut || "", entree.annee, recordIndex]);
+      if (record.dateCreation && (!position.premierSignalement || record.dateCreation < position.premierSignalement)) position.premierSignalement = record.dateCreation;
+      if (record.dateCreation > position.dernierSignalement) position.dernierSignalement = record.dateCreation;
+    });
+    annees.push({ annee: entree.annee, nombre: entree.nombre, informations, nonCartographiables });
+  }
+  const points = [];
+  const sources = [];
+  for (const entree of catalogue.reparations) {
+    const snapshot = lireJson(entree.fichier);
+    if (!snapshot || snapshot.interventions?.length !== entree.nombre) throw new Error(`Snapshot incomplet : ${entree.fichier}`);
+    let exclus = 0;
+    for (const record of snapshot.interventions) {
+      if (!hasLocalCoordinates(record) || !Number.isFinite(Date.parse(record.horodatage))) { exclus += 1; continue; }
+      const [x, y] = wgs84VersMtm8(record.latitude, record.longitude);
+      points.push({ ...record, x, y });
+    }
+    sources.push({ annee: entree.annee, nombre: entree.nombre, exclus, premiereIntervention: snapshot.premiereIntervention, derniereIntervention: snapshot.derniereIntervention });
+  }
+  const rayon = Number(catalogue.rayonAppariementM);
+  if (!Number.isFinite(rayon) || rayon <= 0) throw new Error("Rayon d'appariement invalide");
+  const spatial = construireIndexSpatial(points, 100);
+  const historique = {};
+  const carte = [];
+  for (const position of positions.values()) {
+    const [x, y] = wgs84VersMtm8(position.latitude, position.longitude);
+    const uniques = new Map();
+    for (const voisin of interventionsProches(spatial, points, x, y, rayon)) {
+      const intervention = voisin.point;
+      if (intervention.horodatage < position.premierSignalement) continue;
+      const cle = [intervention.horodatage, intervention.appareil || "", intervention.latitude, intervention.longitude].join("|");
+      uniques.set(cle, [intervention.horodatage, intervention.appareil || "", Number(voisin.distance.toFixed(1)), intervention.latitude, intervention.longitude]);
+    }
+    const interventions = [...uniques.values()].sort((left, right) => left[0].localeCompare(right[0]));
+    if (interventions.length) historique[position.positionId] = interventions;
+    carte.push({
+      ...position,
+      rues: [...position.rues], arrondissements: [...position.arrondissements],
+      signalements: position.signalements.sort((left, right) => left[1].localeCompare(right[1])),
+      nombreColmatages: interventions.length,
+      dernierColmatage: interventions.at(-1)?.[0] || "",
+      periodesActives: buildActivePeriods(position.signalements.map((record) => record[1]), interventions.map((record) => record[0])),
+    });
+  }
+  carte.sort((left, right) => left.positionId.localeCompare(right.positionId));
+  const origine = {
+    indexModifieLe: catalogue.contenuModifieLe,
+    signalements: catalogue.signalements.map((entree) => [entree.fichier, entree.contenuModifieLe]),
+    reparations: catalogue.reparations.map((entree) => [entree.fichier, entree.contenuModifieLe]),
+  };
+  const schemaVersion = 2;
+  const version = empreinteDe({ origine, schemaVersion });
+  const sorties = {
+    "carte.json": {
+      version, schemaVersion, origine, rayonAppariementM: rayon, annees, reparations: sources,
+      colonnesSignalements: ["idUnique", "dateCreation", "dernierStatut", "annee", "index"],
+      positions: carte,
+    },
+    "historique-colmatages.json": {
+      version, rayonAppariementM: rayon,
+      colonnes: ["horodatage", "appareil", "distanceM", "latitude", "longitude"],
+      positions: historique,
+    },
+  };
+  for (const [fichier, contenu] of Object.entries(sorties)) {
+    const precedent = lireJson(fichier);
+    if (precedent && empreinteDe(precedent) === empreinteDe(contenu)) {
+      console.log(`  ${fichier} : inchange`);
+      continue;
+    }
+    writeFileSync(path.join(OUT_DIR, fichier), JSON.stringify({ ...contenu, contenuModifieLe: new Date().toISOString() }));
+    console.log(`  ${fichier} : genere depuis les snapshots locaux`);
+  }
+  console.log(`  carte : ${carte.length} positions; colmatages exclus : ${sources.reduce((total, source) => total + source.exclus, 0)}`);
+}
 
 function normaliser(r) {
   const estInformation = r.NATURE === "Information";
@@ -717,12 +819,14 @@ async function main() {
     )
   );
 
+  construireCarteLocale();
   console.log(`\n  positions.json : ${positions.length} positions${ecriturePositions.modifie ? " (reecrit)" : " (inchange)"}`);
   console.log(`  fichiers modifies : ${fichiersModifies.length ? [...new Set(fichiersModifies)].sort().join(", ") : "aucun"}`);
   console.log(`\nTermine en ${((Date.now() - debut) / 1000).toFixed(1)} s -> ${path.relative(ROOT, OUT_DIR)}/`);
 }
 
-main().catch((erreur) => {
+const execution = args.includes("--carte-locale") ? Promise.resolve().then(construireCarteLocale) : main();
+execution.catch((erreur) => {
   console.error("Echec :", erreur.message);
   process.exitCode = 1;
 });

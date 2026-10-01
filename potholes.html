@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nids-de-poule - Montr&eacute;al</title>
+  <meta name="description" content="Carte des signalements 311 de nids-de-poule et des interventions historiques de colmatage m&eacute;canis&eacute; &agrave; Montr&eacute;al.">
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0f7b66">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="css/styles.css?v=20260930-potholes2">
+  <link rel="stylesheet" href="css/potholes.css?v=20260930-potholes2">
+</head>
+<body class="potholes-page" data-document-title="potholes.documentTitle" data-map-mode="potholes">
+  <div class="app-shell">
+    <button id="menuToggle" class="menu-toggle pothole-icon-button" type="button" data-i18n-aria-label="potholes.filters" data-i18n-title="potholes.filters" aria-controls="sidePanel" aria-expanded="false"><i data-lucide="sliders-horizontal" aria-hidden="true"></i></button>
+    <div id="menuBackdrop" class="menu-backdrop" hidden></div>
+    <aside id="sidePanel" class="panel potholes-panel" data-i18n-aria-label="potholes.filters">
+      <header class="brand-block">
+        <p class="eyebrow" data-i18n="potholes.region"></p>
+        <h1 data-i18n="potholes.title"></h1>
+        <nav class="site-nav" data-i18n-aria-label="nav.main">
+          <a href="faq.html" data-language-page="faq" data-i18n="nav.faq"></a>
+          <button id="languageToggle" class="language-toggle" type="button" data-i18n-aria-label="language.switchLabel">EN</button>
+        </nav>
+      </header>
+      <fieldset id="reportsFieldset" class="pothole-layer" disabled>
+        <legend><label class="pothole-layer-toggle"><input id="reportsEnabled" type="checkbox" checked><span class="pothole-swatch reports" aria-hidden="true"></span><span data-i18n="potholes.reports"></span></label></legend>
+        <div id="reportsControls" class="pothole-filter-grid">
+          <div class="field pothole-full-width">
+            <span id="yearLabel" data-i18n="potholes.reportYear"></span>
+            <details id="reportYears" class="pothole-year-picker">
+              <summary aria-labelledby="yearLabel yearSelection"><span id="yearSelection"></span></summary>
+              <div class="pothole-year-options" role="group" aria-labelledby="yearLabel">
+                <label class="pothole-year-all"><input id="allYears" type="checkbox"><span data-i18n="potholes.allYears"></span></label>
+                <div id="yearOptions"></div>
+              </div>
+            </details>
+          </div>
+          <label class="field pothole-full-width"><span data-i18n="potholes.state"></span><select id="reportState">
+            <option value="all" data-i18n="potholes.allStates"></option>
+            <option value="active" data-i18n="potholes.mapStatus.active"></option>
+            <option value="presumed-repaired" data-i18n="potholes.mapStatus.presumed-repaired"></option>
+            <option value="unknown" data-i18n="potholes.mapStatus.unknown"></option>
+          </select></label>
+          <label class="field pothole-full-width"><span data-i18n="potholes.district"></span><select id="reportDistrict"></select></label>
+          <label class="field pothole-full-width"><span class="visually-hidden" data-i18n="potholes.search"></span><input id="reportSearch" type="search" data-i18n-placeholder="potholes.searchPlaceholder" autocomplete="off"></label>
+        </div>
+        <p id="reportsCoverage" class="pothole-coverage"></p>
+        <p id="reportsCounts" class="pothole-counts" aria-live="polite"></p>
+        <p id="reportsWarning" class="pothole-warning" hidden></p>
+        <p id="reportsError" class="pothole-error" role="alert" hidden></p>
+        <button id="reportsRetry" class="pothole-text-button" type="button" data-i18n="potholes.retry" hidden></button>
+      </fieldset>
+
+      <fieldset id="repairsFieldset" class="pothole-layer" disabled hidden>
+        <legend><label class="pothole-layer-toggle"><input id="repairsEnabled" type="checkbox"><span class="pothole-swatch repairs" aria-hidden="true"></span><span data-i18n="potholes.repairs"></span></label></legend>
+        <div id="repairsControls" class="pothole-filter-grid">
+          <label class="field"><span data-i18n="potholes.repairYear"></span><select id="repairYear"></select></label>
+          <label class="field"><span data-i18n="potholes.month"></span><select id="repairMonth"></select></label>
+          <label class="field pothole-full-width"><span data-i18n="potholes.device"></span><select id="repairDevice"></select></label>
+        </div>
+        <p id="repairsCoverage" class="pothole-coverage"></p>
+        <p id="repairsCounts" class="pothole-counts" aria-live="polite"></p>
+        <p id="repairsWarning" class="pothole-warning" hidden></p>
+        <p id="repairsError" class="pothole-error" role="alert" hidden></p>
+        <button id="repairsRetry" class="pothole-text-button" type="button" data-i18n="potholes.retry" hidden></button>
+      </fieldset>
+
+      <div class="pothole-result-heading"><h2 data-i18n="potholes.results"></h2><button id="resetFilters" class="pothole-icon-button" type="button" data-i18n-title="potholes.resetFilters" data-i18n-aria-label="potholes.resetFilters"><i data-lucide="filter-x" aria-hidden="true"></i></button></div>
+      <p id="viewportCounts" class="pothole-coverage" aria-live="polite"></p>
+      <ol id="potholeResults" class="pothole-results"></ol>
+      <p id="emptyResults" class="pothole-coverage" hidden></p>
+      <button id="moreResults" class="pothole-text-button" type="button" data-i18n="potholes.more" hidden></button>
+
+      <details class="pothole-sources">
+        <summary data-i18n="potholes.sources"></summary>
+        <p id="verificationDate"></p>
+        <div id="sourceStatistics"></div>
+        <p data-i18n="potholes.scopeNote"></p>
+        <p data-i18n="potholes.positionNote"></p>
+        <p data-i18n="potholes.statusNote"></p>
+        <p data-i18n="potholes.mapStatusNote"></p>
+        <p data-i18n="potholes.activityYearNote"></p>
+        <p data-i18n="potholes.repairNote"></p>
+        <p data-i18n="potholes.matchNote"></p>
+        <p data-i18n="potholes.yearNote"></p>
+        <a href="https://donnees.montreal.ca/dataset/requete-311" target="_blank" rel="noreferrer" data-i18n="potholes.sources311"></a>
+        <a href="https://donnees.montreal.ca/dataset/refection-de-chaussee-par-remplissage-mecanise-de-nid-de-poule" target="_blank" rel="noreferrer" data-i18n="potholes.sourcesRepairs"></a>
+        <a href="data/nids-de-poule/index.json" target="_blank" rel="noreferrer" data-i18n="potholes.snapshotIndex"></a>
+      </details>
+    </aside>
+
+    <main class="map-zone" id="potholeMapZone">
+      <div id="map" role="region" data-i18n-aria-label="potholes.mapAria"></div>
+      <div class="pothole-map-caption"><strong data-i18n="nav.potholes"></strong><span data-i18n="potholes.region"></span></div>
+      <div class="pothole-map-tools" role="group" data-i18n-aria-label="potholes.mapTools">
+        <button id="zoomIn" class="pothole-icon-button" type="button" data-i18n-title="map.zoomIn" data-i18n-aria-label="map.zoomIn"><i data-lucide="plus" aria-hidden="true"></i></button>
+        <button id="zoomOut" class="pothole-icon-button" type="button" data-i18n-title="map.zoomOut" data-i18n-aria-label="map.zoomOut"><i data-lucide="minus" aria-hidden="true"></i></button>
+        <button id="locatePotholes" class="pothole-icon-button" type="button" data-i18n-title="potholes.locate" data-i18n-aria-label="potholes.locate"><i data-lucide="locate-fixed" aria-hidden="true"></i></button>
+        <button id="resetMap" class="pothole-icon-button" type="button" data-i18n-title="potholes.reset" data-i18n-aria-label="potholes.reset"><i data-lucide="maximize" aria-hidden="true"></i></button>
+      </div>
+      <div id="mapStatus" class="map-status" role="status" data-mode="loading" data-i18n="potholes.loading"></div>
+      <button id="pageRetry" class="pothole-text-button pothole-page-retry" type="button" data-i18n="potholes.retry" hidden></button>
+      <p id="mapNotice" class="pothole-map-notice" role="status" hidden></p>
+      <div id="potholeLegend" class="pothole-map-legend" data-i18n-aria-label="potholes.legend"></div>
+    </main>
+  </div>
+
+  <dialog id="potholeDialog" class="pothole-dialog" aria-labelledby="detailTitle">
+    <header class="pothole-dialog-header"><h2 id="detailTitle" data-i18n="potholes.details"></h2><button id="closeDetail" class="pothole-icon-button" type="button" data-i18n-title="potholes.close" data-i18n-aria-label="potholes.close"><i data-lucide="x" aria-hidden="true"></i></button></header>
+    <div id="detailContent" class="pothole-detail-content" aria-live="polite"></div>
+    <nav id="detailPagination" class="pothole-pagination" data-i18n-aria-label="potholes.records" hidden>
+      <button id="previousRecord" class="pothole-icon-button" type="button" data-i18n-title="potholes.previous" data-i18n-aria-label="potholes.previous"><i data-lucide="chevron-left" aria-hidden="true"></i></button>
+      <span id="recordPage"></span>
+      <button id="nextRecord" class="pothole-icon-button" type="button" data-i18n-title="potholes.next" data-i18n-aria-label="potholes.next"><i data-lucide="chevron-right" aria-hidden="true"></i></button>
+    </nav>
+  </dialog>
+  <noscript>JavaScript est n&eacute;cessaire pour afficher cette carte.</noscript>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="languages/fr.js?v=20260930-potholes3"></script>
+  <script src="languages/en.js?v=20260930-potholes3"></script>
+  <script src="js/i18n.js?v=20260930-potholes1"></script>
+  <script type="module" src="js/potholes.mjs?v=20260930-potholes3"></script>
+  <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
+</body>
+</html>

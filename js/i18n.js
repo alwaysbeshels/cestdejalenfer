@@ -8,7 +8,7 @@ function languageFromPath() {
 
 function languagePath(language, pageOverride = null) {
   const path = window.location.pathname;
-  const page = pageOverride === null ? (path.endsWith("pedestrian.html") ? "pedestrian.html" : path.endsWith("faq.html") ? "faq.html" : "") : pageOverride;
+  const page = pageOverride === null ? (["pedestrian.html", "potholes.html", "faq.html"].find((name) => path.endsWith(name)) || "") : pageOverride;
   const isLocalFile = window.location.protocol === "file:";
   if (isLocalFile) {
     return page ? `/${language}/${page}` : `/${language}/`;
@@ -119,7 +119,7 @@ function applyTranslations(language = currentLanguage()) {
   }
 
   document.querySelectorAll("[data-language-page]").forEach((link) => {
-    const page = link.dataset.languagePage === "pedestrian" ? "pedestrian.html" : link.dataset.languagePage === "faq" ? "faq.html" : "";
+    const page = { pedestrian: "pedestrian.html", potholes: "potholes.html", faq: "faq.html" }[link.dataset.languagePage] || "";
     link.href = languagePath(language, page);
   });
 
