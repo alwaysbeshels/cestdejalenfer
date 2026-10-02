@@ -1008,9 +1008,9 @@ function locateUser({ fromList = false } = {}) {
   }
 }
 
-if (installedApp && !redirectToSavedMode) locateUser();
+if (installedApp && PEDESTRIAN_MODE && visualAssistActive() && !redirectToSavedMode) locateUser();
 document.addEventListener("visibilitychange", () => {
-  if (installedApp && !document.hidden) locateUser();
+  if (installedApp && PEDESTRIAN_MODE && visualAssistActive() && !document.hidden) locateUser();
 });
 
 let mapRenderFrame = null;
