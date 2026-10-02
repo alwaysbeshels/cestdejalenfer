@@ -21,7 +21,9 @@ import { DatabaseSync } from "node:sqlite";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { hasLocalCoordinates, reportStreet, reportDistrict, buildActivePeriods } from "../js/potholes-data.mjs";
-import { createPotholeRankings, loadPotholeStreets, loadRtssRoads, resolveNumberedStreets } from "./potholes-rankings.mjs";
+import { createPotholeRankings, createStreetMatcher, loadPotholeStreets, loadRtssRoads, resolveNumberedStreets } from "./potholes-rankings.mjs";
+import { createPotholeAnalyses } from "./potholes-analysis.mjs";
+import { createBoroughProfiles } from "./potholes-boroughs.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_DIR = path.join(ROOT, "data", "nids-de-poule");
@@ -372,9 +374,13 @@ async function construireCarteLocale() {
   });
   const positions = new Map();
   const annees = [];
+  const analyses = createPotholeAnalyses(catalogue);
+  const arrondissements = createBoroughProfiles(catalogue);
   for (const entree of catalogue.signalements) {
     const snapshot = lireJson(entree.fichier);
     if (!snapshot || snapshot.signalements?.length !== entree.nombre) throw new Error(`Snapshot incomplet : ${entree.fichier}`);
+    analyses.addReports(snapshot.signalements, entree.annee);
+    arrondissements.addReports(snapshot.signalements, entree.annee);
     let informations = 0;
     let nonCartographiables = 0;
     snapshot.signalements.forEach((record, recordIndex) => {
@@ -455,8 +461,18 @@ async function construireCarteLocale() {
     troncons: referenceRtss.routes.length, tronconsSource: referenceRtss.nombreTronconsSource,
   };
   classementsCalcules.identificationRues = identificationRues;
+  const analysesCalculees = { ...analyses.finish(carte, historique), origine };
+  analysesCalculees.donneesModifieesLe = [...catalogue.signalements, ...catalogue.reparations]
+    .map((entree) => entree.contenuModifieLe).filter((value) => Number.isFinite(Date.parse(value))).sort().at(-1) || null;
+  analysesCalculees.version = empreinteDe(analysesCalculees);
+  const fiches = arrondissements.finish(carte, historique, analysesCalculees, createStreetMatcher(ruesIdentifiees), {
+    geobase: referenceRues.empreinte, rtss: referenceRtss.empreinte, identificationRues,
+  });
   const sorties = {
     "statistiques.json": { version, origine, annees, classements: classementsCalcules },
+    "analyses.json": analysesCalculees,
+    "arrondissements.json": fiches.index,
+    ...Object.fromEntries(fiches.profiles.map((fiche) => [`arrondissements/${fiche.id}.json`, fiche])),
     "carte.json": {
       version, schemaVersion, origine, rayonAppariementM: rayon, annees, reparations: sources,
       colonnesSignalements: ["idUnique", "dateCreation", "dernierStatut", "annee", "index"],
@@ -474,6 +490,7 @@ async function construireCarteLocale() {
       console.log(`  ${fichier} : inchange`);
       continue;
     }
+    mkdirSync(path.dirname(path.join(OUT_DIR, fichier)), { recursive: true });
     writeFileSync(path.join(OUT_DIR, fichier), JSON.stringify({ ...contenu, contenuModifieLe: new Date().toISOString() }));
     console.log(`  ${fichier} : genere depuis les snapshots locaux`);
   }

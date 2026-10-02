@@ -1,6 +1,6 @@
 ---
 name: "Snapshots officiels"
-description: "Use when extracting, refreshing, auditing, validating, or integrating municipal, PJCCI, citizen-report, or consolidated pedestrian snapshots (snapshot pieton, entraves pietonnes, avis Montreal) in Carte des entraves du Grand Montreal. Includes all response columns, dates, schedules, impacts, privacy, and verified geometries."
+description: "Use when extracting, refreshing, auditing, validating, or integrating municipal, PJCCI, citizen-report, or consolidated pedestrian snapshots (snapshot pieton, entraves pietonnes, avis Montreal) in Carte des entraves du Grand Montreal. Excludes pothole and road-patching datasets (nids-de-poule et colmatage). Includes all response columns, dates, schedules, impacts, privacy, and verified geometries."
 argument-hint: "Name the snapshot to create, refresh, or validate: Mont-Royal, PJCCI, signalements citoyens, entraves pietonnes consolidees, or avis pietons Montreal."
 tools: [read, edit, search, execute, web]
 agents: []
@@ -15,6 +15,8 @@ The separate citizen-report snapshot is also maintained here under its dedicated
 
 ## Core contract
 
+- Pothole and road-patching datasets (nids-de-poule et colmatage) are always out of scope, including every source and derived file under `data/nids-de-poule/`: annual 311 reports and repairs, positions, maps, statistics, analyses, borough profiles and verification metadata. Their refresh belongs exclusively to the [actualiser-nids-de-poule prompt](../prompts/actualiser-nids-de-poule.prompt.md). This exclusion applies even to requests for "all snapshots" or explicitly naming these datasets; redirect those requests to the dedicated prompt without processing them here.
+- Do not fetch or probe those sources, run `tools/build-nids-de-poule-snapshot.mjs` with any options, or run `npm run snapshot:potholes:map`. Leave their files and corresponding catalog metadata unchanged in this workflow.
 - This is a static GitHub Pages project. Snapshot files live under `data/` and are loaded by `js/app.js`, or by `js/pedestrian.js` for the separate pedestrian map.
 - A snapshot is a temporary static delivery of official source data. It is not live and must record its extraction time and source URL.
 - Never invent a street, date, impact, detour, reference, responsibility, or geometry.

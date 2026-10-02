@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { chromium } from "playwright";
 
+const baseUrl = process.env.PEDESTRIAN_VALIDATION_URL || "http://localhost:5500";
 const context = vm.createContext({ window: {} });
 vm.runInContext(await readFile("js/pedestrian.js", "utf8"), context);
 const parse = context.window.PEDESTRIAN_MAP.publishedPedestrianImpacts;
@@ -42,10 +43,13 @@ try {
   const requests = [];
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("request", (request) => requests.push(request.url()));
-  await page.goto("http://localhost:5500/fr/pedestrian.html");
+  await page.goto(`${baseUrl}/fr/pedestrian.html`);
   await page.waitForFunction((count) => typeof allClosures !== "undefined" && allClosures.length === count, snapshot.records.length);
   assert.equal(requests.filter((url) => /arcgis.*query|wfs-maps|swtq|api\/events/.test(url)).length, 0);
   assert.equal(requests.filter((url) => /snapshot\.json/.test(url)).length, 1);
+  const areas = page.locator("details").filter({ has: page.locator(".pedestrian-area-filters") });
+  assert.equal(await areas.getAttribute("open"), null);
+  assert.equal(await areas.locator("input:checked").count(), 3);
   const sourceKeys = [...new Set(snapshot.records.map((record) => record.sourceKey))];
   for (const key of sourceKeys) {
     const record = snapshot.records.find((item) => item.sourceKey === key);
@@ -82,6 +86,8 @@ try {
   await page.locator(".popup-close-button").click();
   await page.locator("#searchFilter").fill("");
   await page.locator("#resetView").click();
+  await areas.locator("summary").click();
+  assert.notEqual(await areas.getAttribute("open"), null);
   await page.locator(".pedestrian-area-filters input[value=sidewalk]").uncheck();
   assert(await page.evaluate(() => getFilteredClosures().every((record) => record.pedestrianArea !== "sidewalk")));
   await page.locator(".pedestrian-area-filters input[value=sidewalk]").check();
@@ -90,6 +96,8 @@ try {
   await page.locator("#sourcesClose").click();
   await page.screenshot({ path: join(tmpdir(), "pedestrian-consolidated-desktop.png") });
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.waitForFunction((count) => typeof allClosures !== "undefined" && allClosures.length === count, snapshot.records.length);
   assert.equal(await page.locator("#menuToggle").getAttribute("aria-expanded"), "false");
   await page.locator("#menuToggle").click();
   assert.equal(await page.locator("#menuToggle").getAttribute("aria-expanded"), "true");
@@ -104,8 +112,8 @@ try {
 
   const failure = await browser.newPage();
   await failure.route("**/data/pedestrian-closures-snapshot.json*", (route) => route.abort());
-  await failure.goto("http://localhost:5500/fr/pedestrian.html");
-  await failure.waitForFunction(() => document.querySelector("#mapStatus").textContent.includes("impossible"));
+  await failure.goto(`${baseUrl}/fr/pedestrian.html`);
+  await failure.waitForFunction(() => /impossible/i.test(document.querySelector("#mapStatus")?.textContent || ""));
   assert.equal(await failure.evaluate(() => allClosures.length), 0);
   console.log(`PASS: ${snapshot.records.length} records, ${sourceKeys.length} displayed sources, sides, popups, FR/EN, filters, mobile, snapshot failure; no page errors.`);
 } finally {

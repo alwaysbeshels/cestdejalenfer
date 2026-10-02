@@ -18,6 +18,7 @@
     "@turf/length": "^7.4.0",
     "@turf/nearest-point-on-line": "^7.4.0",
     "@turf/point-to-line-distance": "^7.4.0",
+    "chart.js": "4.5.1",
     "playwright": "^1.63.0",
     "rbush": "^4.0.1"
   }

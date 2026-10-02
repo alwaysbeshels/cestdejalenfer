@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { chromium } from "playwright";
 
+const baseUrl = process.env.PEDESTRIAN_VALIDATION_URL || "http://localhost:5500";
 const browser = await chromium.launch({ headless: true });
 try {
   for (const route of ["fr/pedestrian.html", "fr/index.html"]) {
@@ -11,7 +12,7 @@ try {
     page.on("console", (message) => {
       if (/source failed|Failed to load|API|Invalid URL/i.test(message.text())) unavailable.add(message.text().slice(0, 400));
     });
-    await page.goto(`http://localhost:5500/${route}`, { waitUntil: "domcontentloaded" });
+    await page.goto(`${baseUrl}/${route}`, { waitUntil: "domcontentloaded" });
     await page.waitForFunction(() => typeof allClosures !== "undefined" && allClosures.length > 0);
     if (route.endsWith("index.html")) {
       await page.waitForFunction(() => document.querySelector("#mapStatus").dataset.mode === "ready", {}, { timeout: 180000 });

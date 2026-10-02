@@ -12,6 +12,11 @@ const compact = window.matchMedia("(max-width: 880px)");
 const dialog = byId("potholeDialog");
 const kinds = ["reports", "repairs"];
 const views = [...kinds, "how", "statistics"];
+const statisticsLinks = [...document.querySelectorAll("[data-statistics-tab]")];
+const statisticsTabFromUrl = () => {
+  const tab = new URLSearchParams(location.search).get("tab");
+  return statisticsLinks.some((link) => link.dataset.statisticsTab === tab) ? tab : "summary";
+};
 const modeFromUrl = () => {
   const mode = new URLSearchParams(location.search).get("mode");
   return views.includes(mode) ? mode : "reports";
@@ -19,6 +24,7 @@ const modeFromUrl = () => {
 const isMapMode = (mode = state.mode) => kinds.includes(mode);
 const state = {
   mode: modeFromUrl(),
+  statisticsTab: statisticsTabFromUrl(),
   catalog: null, verification: null, worker: null, map: null, fatal: false, notice: "",
   viewportRequest: 0, detailRequest: 0, detail: null, detailQuery: null, listLimit: 16, location: null,
   pendingDistrict: null,
@@ -31,6 +37,38 @@ const sources = {
   reports: "https://donnees.montreal.ca/dataset/requete-311",
   repairs: "https://donnees.montreal.ca/dataset/refection-de-chaussee-par-remplissage-mecanise-de-nid-de-poule",
 };
+let chartsView = null;
+let chartsImport = null;
+let boroughView = null;
+let boroughImport = null;
+
+function syncBoroughView() {
+  const active = state.mode === "statistics" && state.statisticsTab === "boroughs";
+  if (boroughView) { boroughView.setActive(active); return; }
+  if (!active || boroughImport) return;
+  boroughImport = import("./potholes-boroughs.mjs?v=20261001-boroughs3").then(({ createBoroughView }) => {
+    boroughView = createBoroughView(byId("statisticsBoroughs"));
+    boroughView.setActive(state.mode === "statistics" && state.statisticsTab === "boroughs");
+  }).catch(() => {
+    byId("boroughsStatus").hidden = false;
+    byId("boroughsStatus").textContent = text("boroughsLoadError");
+    byId("boroughsRetry").hidden = false;
+  });
+}
+
+function syncChartsView() {
+  const active = state.mode === "statistics" && state.statisticsTab === "charts";
+  if (chartsView) { chartsView.setActive(active); return; }
+  if (!active || chartsImport) return;
+  chartsImport = import("./potholes-charts.mjs?v=20261001-charts16").then(({ createStatisticsCharts }) => {
+    chartsView = createStatisticsCharts(byId("statisticsCharts"));
+    chartsView.setActive(state.mode === "statistics" && state.statisticsTab === "charts");
+  }).catch(() => {
+    byId("chartsStatus").hidden = false;
+    byId("chartsStatus").textContent = text("chartsLoadError");
+    byId("chartsRetry").hidden = false;
+  });
+}
 
 function element(tag, className = "", content = "") {
   const node = document.createElement(tag);
@@ -78,6 +116,9 @@ function renderYears() {
 
 function initializeYears(entries) {
   const previous = byId("yearOptions").childElementCount ? new Set(selectedYears()) : null;
+  const requestedLocation = new URLSearchParams(location.search).get("location")?.split(",").map(Number);
+  const focusedLocation = requestedLocation?.length === 2 && requestedLocation.every(Number.isFinite)
+    && requestedLocation[0] >= 45.3 && requestedLocation[0] <= 45.8 && requestedLocation[1] >= -74.1 && requestedLocation[1] <= -73.4;
   const options = byId("yearOptions");
   options.replaceChildren();
   const firstYear = Math.min(...entries.map((entry) => entry.annee));
@@ -87,7 +128,7 @@ function initializeYears(entries) {
     const input = document.createElement("input");
     input.type = "checkbox";
     input.value = String(year);
-    input.checked = previous ? previous.has(year) : year === currentYear();
+    input.checked = previous ? previous.has(year) : focusedLocation || year === currentYear();
     label.append(input, document.createTextNode(String(year)));
     options.append(label);
   });
@@ -107,11 +148,38 @@ function renderFilterOptions(kind) {
   }
 }
 
+function setStatisticsUrl(url, mode, tab = state.statisticsTab) {
+  if (mode === "statistics" && tab !== "summary") url.searchParams.set("tab", tab);
+  else url.searchParams.delete("tab");
+  if (mode !== "statistics" || tab !== "boroughs") { url.searchParams.delete("borough"); url.searchParams.delete("period"); }
+}
+
+function renderStatisticsTab() {
+  document.body.dataset.statisticsPage = state.statisticsTab;
+  for (const link of statisticsLinks) {
+    const tab = link.dataset.statisticsTab;
+    const selected = tab === state.statisticsTab;
+    byId(link.getAttribute("aria-controls")).hidden = !selected;
+    if (selected) {
+      link.setAttribute("aria-current", "page");
+      byId("statisticsView").setAttribute("aria-labelledby", link.dataset.statisticsHeading);
+    } else link.removeAttribute("aria-current");
+    const url = new URL(location.href);
+    url.searchParams.set("mode", "statistics");
+    url.hash = "";
+    setStatisticsUrl(url, "statistics", tab);
+    link.href = url.href;
+  }
+  syncChartsView();
+  syncBoroughView();
+}
+
 function updateModeUrl(push = false) {
   const url = new URL(location.href);
   if (push) url.hash = "";
   if (state.mode !== "reports") url.searchParams.set("mode", state.mode);
   else url.searchParams.delete("mode");
+  setStatisticsUrl(url, state.mode);
   window.history[push ? "pushState" : "replaceState"]({}, "", url);
 }
 
@@ -132,10 +200,12 @@ function renderMode() {
   }
   byId("map").dataset.i18nAriaLabel = repairs ? "potholes.repairsMapAria" : "potholes.mapAria";
   translateElement(byId("map"));
-  ["sidePanel", "panelResizeHandle", "potholeMapZone", "menuToggle"].forEach((id) => { byId(id).hidden = !mapView; });
+  ["sidePanel", "panelResizeHandle", "potholeMapZone", "menuToggle", "mapFilters"].forEach((id) => { byId(id).hidden = !mapView; });
+  if (!compact.matches) byId("mapFilters").open = true;
   byId("potholeContent").hidden = mapView;
   byId("howView").hidden = state.mode !== "how";
   byId("statisticsView").hidden = state.mode !== "statistics";
+  renderStatisticsTab();
   kinds.forEach((kind) => {
     state[kind].enabled = state.mode === kind;
     byId(`${kind}Fieldset`).hidden = state.mode !== kind;
@@ -148,6 +218,7 @@ function renderMode() {
     const url = new URL(location.href);
     if (mode !== "reports") url.searchParams.set("mode", mode);
     else url.searchParams.delete("mode");
+    setStatisticsUrl(url, mode);
     link.href = url.href;
   });
   document.querySelectorAll("[data-doc-target]").forEach((link) => {
@@ -723,6 +794,85 @@ function updateStatisticsTableLimits() {
   });
 }
 
+const statisticsTableSelections = new Map();
+
+function addStatisticsTableControls(table, key, columns, values) {
+  let selection = statisticsTableSelections.get(key);
+  if (!selection) {
+    selection = { column: -1, direction: 0, filters: new Map() };
+    statisticsTableSelections.set(key, selection);
+  }
+  const body = table.tBodies[0];
+  const rows = values.map((cells, index) => ({ cells, row: body.rows[index], index }));
+  const collator = new Intl.Collator(locale(), { numeric: true, sensitivity: "base" });
+  const header = table.tHead.rows[0];
+  header.replaceChildren();
+  table.dataset.tableControls = key;
+  const controls = columns.map(([label, filterable], column) => {
+    const cell = element("th");
+    cell.scope = "col";
+    const button = element("button", "pothole-table-sort");
+    button.type = "button";
+    button.dataset.sortColumn = column;
+    cell.append(button);
+    if (filterable) {
+      const select = element("select", "pothole-column-filter");
+      select.dataset.filterColumn = column;
+      select.setAttribute("aria-label", text("tableFilter", { column: text(label) }));
+      select.title = select.getAttribute("aria-label");
+      select.add(new Option(text("tableAll"), ""));
+      const options = [...new Set(values.map((entry) => entry[column]).filter((value) => value != null).map(String))].sort(collator.compare);
+      options.forEach((value) => select.add(new Option(value, value)));
+      if (!options.includes(selection.filters.get(column))) selection.filters.delete(column);
+      select.value = selection.filters.get(column) || "";
+      select.disabled = !options.length;
+      select.addEventListener("change", () => {
+        if (select.value) selection.filters.set(column, select.value);
+        else selection.filters.delete(column);
+        render();
+      });
+      cell.append(select);
+    }
+    button.addEventListener("click", () => {
+      selection.direction = selection.column !== column ? 1 : selection.direction === 1 ? -1 : selection.direction === -1 ? 0 : 1;
+      selection.column = selection.direction ? column : -1;
+      render();
+    });
+    header.append(cell);
+    return { cell, button, label };
+  });
+  function render() {
+    const filtered = rows.filter((entry) => [...selection.filters].every(([column, value]) => String(entry.cells[column] ?? "") === value));
+    if (selection.direction) filtered.sort((left, right) => {
+      const leftValue = left.cells[selection.column];
+      const rightValue = right.cells[selection.column];
+      if (leftValue == null || rightValue == null) return leftValue == null ? rightValue == null ? left.index - right.index : 1 : -1;
+      const comparison = typeof leftValue === "number" && typeof rightValue === "number" ? leftValue - rightValue : collator.compare(String(leftValue), String(rightValue));
+      return selection.direction * comparison || left.index - right.index;
+    });
+    body.replaceChildren(...filtered.map((entry) => entry.row));
+    if (!filtered.length) {
+      const cell = body.insertRow().insertCell();
+      cell.colSpan = columns.length;
+      cell.textContent = text("rankNoResults");
+    }
+    controls.forEach(({ cell, button, label }, column) => {
+      const direction = selection.column === column ? selection.direction : 0;
+      cell.setAttribute("aria-sort", direction === 1 ? "ascending" : direction === -1 ? "descending" : "none");
+      const action = text(direction === 1 ? "tableSortDescending" : direction === -1 ? "tableSortReset" : "tableSortAscending", { column: text(label) });
+      button.title = action;
+      button.setAttribute("aria-label", action);
+      const icon = element("i");
+      icon.dataset.lucide = direction === 1 ? "arrow-up" : direction === -1 ? "arrow-down" : "arrow-up-down";
+      icon.setAttribute("aria-hidden", "true");
+      button.replaceChildren(element("span", "", text(label)), icon);
+    });
+    window.lucide?.createIcons();
+    updateStatisticsTableLimits();
+  }
+  render();
+}
+
 const rankingTables = [
   ["emplacementsSignales", "rankMostReported", "rankAllReportsNote", [["location", "rankLocation"], ["signalements", "rankReports"], ["colmatages", "rankNearbyRepairs"]]],
   ["emplacementsColmates", "rankMostPatched", "rankNearbyRepairsNote", [["location", "rankLocation"], ["colmatages", "rankNearbyRepairs"], ["signalements", "rankReports"]]],
@@ -814,6 +964,8 @@ function renderRankings() {
         cell.colSpan = columns.length;
         cell.textContent = text("rankNoResults");
       }
+      addStatisticsTableControls(table, key, columns.map(([field, label]) => [label, ["location", "rue", "appareil", "derniereAnnee"].includes(field)]),
+        rankings[key].map((entry) => columns.map(([field]) => field === "location" ? entry.rues[0] || text("rankLocation") : entry[field])));
       container.append(table);
       section.append(heading, element("p", "pothole-ranking-note", text(noteKey, values)), container);
       pair.append(section);
@@ -829,9 +981,6 @@ function renderInfoData() {
   byId("howVerified").textContent = updatedText;
   byId("statisticsVerified").textContent = updatedText;
   const latest = statistics?.latestRepairs;
-  byId("howRepairCoverage").textContent = latest ? text("howCurrentCoverage", {
-    year: latest.annee, first: formatDate(latest.premiereIntervention), last: formatDate(latest.derniereIntervention),
-  }) : text("howCoverageUnavailable");
   byId("howMatchingRadius").textContent = state.catalog ? text("howRadius", { radius: number(state.catalog.rayonAppariementM) }) : "";
   byId("statisticsData").hidden = !statistics?.hasRequestBreakdown;
   byId("statisticsRankings").hidden = !statistics?.hasRequestBreakdown;
@@ -877,6 +1026,10 @@ function renderInfoData() {
     line.append(year, element("td", "", number(entry.nombre)), element("td", "", formatDate(entry.premiereIntervention)), element("td", "", formatDate(entry.derniereIntervention)));
     repairs.append(line);
   }
+  addStatisticsTableControls(reports.closest("table"), "reports", [["statisticsYear", true], ["statisticsRequests"], ["statisticsInformation"]],
+    statistics.reports.map((entry) => [entry.annee, entry.reportCount, entry.informationCount]));
+  addStatisticsTableControls(repairs.closest("table"), "repairs", [["repairYear", true], ["repairEventsLabel"], ["statisticsFirstDate"], ["statisticsLastDate"]],
+    statistics.repairs.map((entry) => [entry.annee, entry.nombre, entry.premiereIntervention, entry.derniereIntervention]));
   renderRankings();
   statisticsTableObserver.disconnect();
   document.querySelectorAll("#statisticsView .pothole-statistics-table").forEach((table) => statisticsTableObserver.observe(table));
@@ -995,11 +1148,34 @@ document.querySelectorAll("[data-pothole-mode]").forEach((link) => link.addEvent
   event.preventDefault();
   selectMode(link.dataset.potholeMode);
 }));
-window.addEventListener("popstate", () => selectMode(modeFromUrl(), false));
+statisticsLinks.forEach((link) => link.addEventListener("click", (event) => {
+  if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  if (state.statisticsTab === link.dataset.statisticsTab) return;
+  state.statisticsTab = link.dataset.statisticsTab;
+  updateModeUrl(true);
+  renderStatisticsTab();
+  updateStatisticsTableLimits();
+  byId("potholeContent").scrollTop = 0;
+}));
+window.addEventListener("popstate", () => {
+  state.statisticsTab = statisticsTabFromUrl();
+  selectMode(modeFromUrl(), false);
+  renderStatisticsTab();
+  updateStatisticsTableLimits();
+});
 byId("moreResults").addEventListener("click", () => { state.listLimit += 16; renderResults(); });
 byId("pageRetry").addEventListener("click", start);
 byId("infoRetry").addEventListener("click", start);
 byId("rankingsRetry").addEventListener("click", start);
+byId("chartsRetry").addEventListener("click", () => {
+  if (chartsView) chartsView.retry();
+  else { chartsImport = null; syncChartsView(); }
+});
+byId("boroughsRetry").addEventListener("click", () => {
+  if (boroughView) boroughView.retry();
+  else { boroughImport = null; syncBoroughView(); }
+});
 byId("closeDetail").addEventListener("click", () => dialog.close());
 dialog.addEventListener("click", (event) => {
   const bounds = dialog.getBoundingClientRect();
@@ -1068,7 +1244,7 @@ document.addEventListener("keydown", (event) => {
     if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   }
 });
-compact.addEventListener("change", () => { finishResultsResize(); setPanel(false); if (isMapMode()) state.map?.invalidateSize(); });
+compact.addEventListener("change", () => { byId("mapFilters").open = !compact.matches; finishResultsResize(); setPanel(false); if (isMapMode()) state.map?.invalidateSize(); });
 window.addEventListener("languagechange", () => {
   updateModeUrl();
   renderMode();
@@ -1077,6 +1253,10 @@ window.addEventListener("languagechange", () => {
 });
 const statisticsTableObserver = new ResizeObserver(updateStatisticsTableLimits);
 document.querySelectorAll("#statisticsData .pothole-statistics-table").forEach((table) => statisticsTableObserver.observe(table));
+const statisticsDockObserver = new ResizeObserver(() => {
+  byId("potholeContent").style.setProperty("--statistics-dock-height", `${Math.max(20, byId("statisticsDock").getBoundingClientRect().height + 16)}px`);
+});
+statisticsDockObserver.observe(byId("statisticsDock"));
 window.lucide?.createIcons({ attrs: { "aria-hidden": "true", focusable: "false" } });
 setPanel(false);
 start();

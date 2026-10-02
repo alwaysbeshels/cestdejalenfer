@@ -1,7 +1,7 @@
 ---
 name: actualiser-snapshots
-description: "Actualiser les snapshots auto et pietons consolides, verifier leurs sources et leur affichage, sans publication automatique."
-argument-hint: "Toutes les sources par defaut, ou une selection : PJCCI, Mont-Royal, signalements citoyens, entraves pietonnes consolidees, avis pietons Montreal..."
+description: "Actualiser les snapshots auto et pietons consolides, hors nids-de-poule et colmatage, verifier leurs sources et leur affichage, sans publication automatique."
+argument-hint: "Toutes les sources du perimetre par defaut, ou une selection : PJCCI, Mont-Royal, signalements citoyens, entraves pietonnes consolidees, avis pietons Montreal..."
 agent: "Snapshots officiels"
 ---
 
@@ -13,8 +13,10 @@ Respecte aussi les [regles de publication](./deployment-rules.md).
 
 ## Perimetre
 
-- Si le message accompagnant cette commande nomme des sources, ne traite que celles-ci.
-- Sans precision, inventorie et traite tous les snapshots existants dans `data/`, y compris les signalements citoyens et les sources complementaires comme Noovo. Ne presente pas ces deux dernieres comme des avis officiels.
+- Les donnees de nids-de-poule et de colmatage sont toujours hors perimetre : exclue tout le dossier `data/nids-de-poule/`, y compris les signalements 311, reparations annuelles, positions, cartes, statistiques, analyses, fiches d'arrondissements et metadonnees de verification. Leur actualisation releve exclusivement du [prompt actualiser-nids-de-poule](./actualiser-nids-de-poule.prompt.md). Cette exclusion s'applique aussi a une demande de « tous les snapshots » ou nommant ces sources : renvoie alors vers le prompt dedie sans les traiter.
+- N'interroge ni ne sonde ces sources et ne lance pas `tools/build-nids-de-poule-snapshot.mjs`, quelles que soient ses options, ni `npm run snapshot:potholes:map`. Ne modifie aucun de leurs fichiers ni leurs metadonnees dans le catalogue dans le cadre de cette commande.
+- Si le message accompagnant cette commande nomme des sources, ne traite que celles-ci dans le perimetre autorise ci-dessus.
+- Sans precision, inventorie et traite tous les snapshots existants dans `data/` hors `data/nids-de-poule/`, y compris les signalements citoyens et les sources complementaires comme Noovo. Ne presente pas ces deux dernieres comme des avis officiels.
 - Ne cree pas de nouvelle source, ne modifie pas l'interface et ne rafraichis pas les flux uniquement live dans le cadre de cette demande. Leur consultation pour valider une jointure existante ou alimenter le snapshot pieton consolide, lorsqu'il est dans le perimetre, reste permise.
 - « Entraves pietonnes consolidees » cible `data/pedestrian-closures-snapshot.json`; « avis pietons Montreal » cible son entree `data/montreal-pedestrian-notices-snapshot.json`. Ne les confonds pas avec les rues pietonnisees temporaires de la carte auto. Si « snapshot pieton » est ambigu, clarifie lequel avant execution.
 - Pour une actualisation globale, traite les snapshots d'entree avant la consolidation pietonne. Pour la seule consolidation, conserve les dates des entrees locales reutilisees et indique qu'elles n'ont pas ete reverifiees.

@@ -1,13 +1,13 @@
 {
-  "extractedAt": "2026-09-29T15:12:27.843Z",
+  "extractedAt": "2026-10-02T04:46:21.836Z",
   "source": "Signalement citoyen transmis via notre formulaire",
   "sourceKind": "citizen-report",
   "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
   "sourceDescription": "Informations déclarées via le formulaire : observations sur place, consultation d'un avis officiel ou d'un site municipal. L'origine déclarée est conservée par réponse; ces signalements ne sont pas des permis municipaux confirmés.",
   "extractionMethod": "Lecture de la réponse Google Forms via les données structurées Google Sheets; analyse manuelle de toutes les colonnes, y compris les détails supplémentaires.",
-  "sourceRecordCount": 8,
-  "retainedRecordCount": 9,
-  "impactCount": 10,
+  "sourceRecordCount": 9,
+  "retainedRecordCount": 10,
+  "impactCount": 11,
   "inMap": true,
   "privacy": {
     "contactInformationIncluded": false,
@@ -19,8 +19,8 @@
     "La géobase confirme le tracé de la rue, pas l'existence de la fermeture ni ses horaires.",
     "Les dates normalisées reprennent les dates saisies par la personne. Le texte libre précise que les dates exactes n'ont pas été communiquées et que la fin octobre est estimée; cette réserve est conservée sans bloquer le signalement.",
     "Ce fichier est chargé par l'application. Les impacts et leurs horaires sont traités séparément; les filtres proposent des journées et des périodes jour/nuit, pas une sélection d'heure précise. Les popups affichent les horaires exacts, les réserves et l'état selon l'horaire déclaré au moment de leur ouverture.",
-    "Huit réponses conservées dans neuf fiches : une réponse LaSalle décrit deux tronçons distincts, reliés par submissionRef. Aucune réponse supprimée ou fusionnée.",
-    "Six réponses restent hors carte : quatre ne permettent pas d’établir un maintien actuel sans dates; celle de LaSalle Gordon–2e Avenue a des dates valides mais aucun horaire exploitable; celle de McArthur/Griffith du 19 septembre indique Dorval et Saint-Laurent sans localisation vérifiée.",
+    "Neuf réponses conservées dans dix fiches : une réponse LaSalle décrit deux tronçons distincts, reliés par submissionRef. Aucune réponse supprimée ou fusionnée.",
+    "Sept réponses restent hors carte : quatre ne permettent pas d’établir un maintien actuel sans dates; celle de LaSalle Gordon–2e Avenue a des dates valides mais aucun horaire exploitable; celle de McArthur/Griffith du 19 septembre indique Dorval et Saint-Laurent sans localisation vérifiée; celle de Chambly ne fournit pas de période de travaux et sa seconde limite reste à vérifier.",
     "Les deux tronçons LaSalle Rielle–Gordon et Rielle–Willibrord sont déclarés 24/24 depuis le 22 juin 2026, sans date de fin. Leur maintien réel n’est pas confirmé; la géobase vérifie seulement leur localisation."
   ],
   "records": [
@@ -1174,11 +1174,113 @@
         "Avez-vous un lien vers une source ou l’emplacement?": "Aucun avis ni mention sur Google maps et Waze",
         "Quels détails supplémentaires pourraient nous aider?": null
       }
+    },
+    {
+      "id": "citizen-chambly-rouen-ontatio-20260929-193658",
+      "submissionRef": "citizen-response-20260929-193658",
+      "title": "Rue Chambly : circulation locale seulement signalée",
+      "source": "Signalement citoyen transmis via notre formulaire",
+      "sourceKind": "citizen-report",
+      "sourceUrl": "https://forms.gle/TKL6WkmPsWPmAUMV8",
+      "municipality": "Montréal",
+      "borough": null,
+      "streets": "Rue Chambly, entre Rouen et Ontatio",
+      "roadType": "street",
+      "limits": [
+        "Rouen",
+        "Ontatio"
+      ],
+      "direction": "Sud",
+      "responsible": null,
+      "reference": null,
+      "submittedAtLocal": "2026-09-29T19:36:58",
+      "submissionTimeZone": null,
+      "observedAt": "2026-09-21",
+      "informationOrigin": "Observation sur place",
+      "supportingSourceUrl": null,
+      "status": "pending-current-status-clarification",
+      "statusSource": "Circulation locale seulement déclarée lors de l'observation du 21 septembre, sans dates de travaux ni texte établissant son maintien à la date de vérification.",
+      "startDate": null,
+      "endDate": null,
+      "reportedDates": {
+        "enteredStartDate": null,
+        "enteredEndDate": null,
+        "startPrecision": "not-reported",
+        "endPrecision": "not-reported",
+        "publishedText": null,
+        "note": "Aucune date de début ou de fin saisie. Le 21 septembre est la date d'observation, pas une date de début; l'horaire 24/24 ne fournit pas la période de travaux."
+      },
+      "trafficLabels": [
+        "Circulation locale seulement"
+      ],
+      "description": null,
+      "impacts": [
+        {
+          "id": "citizen-chambly-rouen-ontatio-20260929-193658-local-traffic",
+          "type": "local-traffic-only",
+          "severity": "moderate",
+          "trafficLabel": "Circulation locale seulement",
+          "impact": "Circulation locale seulement",
+          "direction": "Sud",
+          "schedule": {
+            "days": [
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
+              "Sun"
+            ],
+            "allDay": true,
+            "startTime": null,
+            "endTime": null,
+            "timeZone": null,
+            "timeZoneBasis": null,
+            "reportedText": "24/24",
+            "limitation": "Horaire continu déclaré, sans période de travaux ni limites géographiques vérifiées."
+          },
+          "periods": [
+            "day",
+            "night"
+          ],
+          "geometryRef": "citizen-chambly-rouen-ontatio-20260929-193658"
+        }
+      ],
+      "geometryStatus": "not-resolved-pending-review",
+      "geometry": null,
+      "geometrySource": null,
+      "review": {
+        "status": "pending-current-status-clarification",
+        "mapEligible": false,
+        "restrictionOfficiallyVerified": false,
+        "geometryVerified": false,
+        "warnings": [
+          "Aucune date de travaux saisie; l'observation et la soumission ne prouvent pas à elles seules que la restriction est encore en cours.",
+          "La seconde limite est saisie « Ontatio »; elle reste conservée telle quelle, sans correction ni géométrie déduite.",
+          "Aucun lien justificatif ni détail supplémentaire n'est fourni. La fiche reste en attente de revue et hors carte."
+        ]
+      },
+      "reportedFields": {
+        "Timestamp": "29/09/2026 19:36:58",
+        "Dans quelle municipalité se trouve l’entrave?": "Montreal",
+        "Quelle rue, route, autoroute ou quel pont est touché?": "Rue Chambly",
+        "Où exactement se situe l’entrave?": "entre Rouen et Ontatio",
+        "Quel est l’effet sur la circulation?": "Circulation locale seulement",
+        "Quelle direction est touchée?": "Sud",
+        "Quand avez-vous constaté l’entrave ou consulté l’avis?": "21/09/2026",
+        "Quelle est la date de début annoncée?": null,
+        "Quelle est la date de fin annoncée?": null,
+        "Quels jours et quelles heures sont concernés?": "24/24",
+        "D’où provient l’information?": "Observation sur place",
+        "Avez-vous un lien vers une source ou l’emplacement?": null,
+        "Quels détails supplémentaires pourraient nous aider?": null
+      }
     }
   ],
-  "retainedResponseCount": 8,
+  "retainedResponseCount": 9,
   "excludedResponseCount": 0,
   "mapEligibleRecordCount": 3,
-  "pendingReviewRecordCount": 6,
+  "pendingReviewRecordCount": 7,
   "mapEligibleImpactCount": 4
 }

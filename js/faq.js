@@ -288,14 +288,20 @@ function setupFaqSectionLinks() {
   });
 }
 
+function updatePotholesFaqLink() {
+  document.getElementById("potholesFaqLink").href = `${languagePath(currentLanguage(), "potholes.html")}?mode=how`;
+}
+
 backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 window.addEventListener("scroll", updateBackToTop, { passive: true });
 window.addEventListener("hashchange", openAnchoredDetails);
 window.addEventListener("languagechange", () => {
+  updatePotholesFaqLink();
   renderFaqSources();
   sortFaqLists();
   updateFaqSectionLinks();
 });
+updatePotholesFaqLink();
 setupFaqSectionLinks();
 renderFaqSources();
 sortFaqLists();

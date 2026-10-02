@@ -22,6 +22,8 @@
 .pothole-toolbar .site-nav > a, .pothole-toolbar .site-nav > button { min-width: 40px; min-height: 36px; }
 .pothole-toolbar .pothole-road-link { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 .pothole-toolbar .map-mode-nav { margin: 0; }
+.pothole-map-filters { min-width: 0; }
+.pothole-map-filters > summary { display: none; }
 .pothole-toolbar .pothole-layer { padding: 0; border: 0; }
 .pothole-toolbar .pothole-layer legend { margin-bottom: 6px; }
 .pothole-toolbar .pothole-layer-heading { justify-content: flex-start; gap: 10px; font-size: 0.8rem; }
@@ -171,6 +173,14 @@
   .potholes-page .app-shell { grid-template-columns: minmax(0, 1fr); }
   .pothole-toolbar { padding: 10px 14px; gap: 8px; }
   .pothole-toolbar-heading { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .potholes-page #potholeModeNav { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+  .potholes-page #potholeModeNav a { min-width: 0; min-height: 36px; padding: 4px 3px; font-size: 0.72rem; line-height: 1.25; }
+  .pothole-map-filters > summary { display: flex; align-items: center; justify-content: space-between; min-height: 36px; padding: 4px 0; cursor: pointer; list-style: none; font-size: 0.82rem; font-weight: 700; }
+  .pothole-map-filters > summary::-webkit-details-marker { display: none; }
+  .pothole-map-filters > summary > span { display: inline-flex; align-items: center; gap: 7px; }
+  .pothole-map-filters > summary svg { width: 17px; height: 17px; }
+  .pothole-map-filters[open] > summary { margin-bottom: 8px; }
+  .pothole-map-filters[open] > summary > svg { transform: rotate(180deg); }
   .pothole-toolbar .pothole-filter-grid, .pothole-toolbar #repairsControls { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .pothole-toolbar #repairsControls .pothole-full-width { grid-column: 1 / -1; }
   .pothole-toolbar-repair-summary { grid-template-columns: minmax(0, 1fr); gap: 4px; }
@@ -222,9 +232,86 @@
 
 .potholes-page.pothole-reading .app-shell { grid-template-columns: minmax(0, 1fr); }
 .potholes-page.pothole-reading .pothole-toolbar { max-height: none; overflow: visible; }
-.pothole-content { grid-column: 1 / -1; grid-row: 2; min-height: 0; overflow-y: auto; background: #fff; padding: 30px 24px 64px; scroll-padding-top: 20px; }
+.pothole-content { grid-column: 1 / -1; grid-row: 2; min-height: 0; overflow-y: auto; background: #fff; padding: 30px 24px 64px; scroll-padding-top: var(--statistics-dock-height, 20px); }
+.potholes-page[data-pothole-view="statistics"] .pothole-content { padding-top: 0; }
 .pothole-document { max-width: 1000px; margin: 0 auto; line-height: 1.65; }
 #statisticsView { width: 100%; max-width: none; }
+.pothole-statistics-dock { position: sticky; top: 0; z-index: 8; display: grid; justify-items: center; gap: 6px; background: #fff; padding: 8px 0; margin-bottom: 20px; border-bottom: 1px solid var(--line); }
+.potholes-page .pothole-statistics-nav { display: flex; flex-wrap: wrap; justify-content: center; width: fit-content; max-width: 100%; gap: 6px; margin: 0; }
+.pothole-document .pothole-statistics-nav a { flex: 0 1 auto; min-width: 112px; min-height: 32px; padding: 6px 12px; text-decoration: none; }
+.pothole-document .pothole-statistics-nav a[aria-current="page"] { color: #fff; }
+.pothole-chart-controls { width: min(100%, 600px); display: grid; justify-items: center; gap: 3px; }
+.pothole-chart-controls .field { width: min(100%, 350px); display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: center; gap: 8px; text-align: left; margin: 0; }
+.pothole-chart-controls .field > span:first-child { font-size: 0.75rem; font-weight: 650; color: var(--muted); }
+.pothole-period-select { position: relative; display: flex; align-items: center; min-width: 0; min-height: 36px; border: 1px solid #bccdc3; border-radius: 6px; background: #f3f7f4; box-shadow: 0 1px 2px #203c2b0a; }
+.pothole-period-select:focus-within { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+.pothole-period-select select { appearance: none; width: 100%; min-width: 0; min-height: 36px; padding: 6px 32px; border: 0; outline: 0; border-radius: 6px; background: transparent; color: #243a31; font-size: 0.82rem; font-weight: 650; cursor: pointer; }
+.pothole-period-select > svg { position: absolute; width: 17px; height: 17px; color: var(--accent-dark); pointer-events: none; }
+.pothole-period-select > svg:first-child { left: 11px; }
+.pothole-period-select > svg:last-child { right: 11px; }
+.pothole-data-updates { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 14px; margin: 0; color: var(--muted); font-size: 0.7rem; line-height: 1.4; text-align: center; }
+.pothole-data-updates > span { white-space: nowrap; }
+.pothole-chart-controls.pothole-borough-controls { width: min(100%, 850px); grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 5px 20px; }
+.pothole-borough-controls .field { width: 100%; }
+.pothole-borough-controls .pothole-data-updates { grid-column: 1 / -1; }
+.pothole-borough-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; padding: 22px 0; margin: 0; border-bottom: 1px solid var(--line); }
+.pothole-borough-metrics dt { font-size: 0.8rem; line-height: 1.4; color: var(--muted); }
+.pothole-borough-metrics dd { margin: 6px 0 0; font-size: 1.7rem; line-height: 1.25; font-weight: 750; font-variant-numeric: tabular-nums; }
+#boroughCharts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
+.pothole-borough-chart { min-width: 0; display: grid; grid-row: span 3; grid-template-rows: subgrid; align-items: start; gap: 14px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+.pothole-borough-chart h3, #statisticsBoroughs .pothole-document-section h3 { margin: 0; font-size: 1.12rem; line-height: 1.35; }
+.pothole-borough-chart .pothole-analysis-note { margin-top: 10px; }
+.pothole-borough-chart-details summary { cursor: pointer; font-size: 0.84rem; font-weight: 650; }
+.pothole-borough-chart-details { min-width: 0; }
+.pothole-borough-search { padding: 22px 0 0; }
+.pothole-borough-search .field { max-width: 440px; }
+.pothole-borough-table-wrap { max-width: 100%; overflow: auto; margin-top: 14px; }
+.pothole-borough-table-wrap table { min-width: 650px; }
+#boroughLocationsTable { min-width: 1050px; }
+.pothole-borough-table-wrap tbody th { min-width: 190px; max-width: 270px; overflow-wrap: anywhere; }
+.pothole-borough-table-wrap td { vertical-align: top; }
+.pothole-borough-table-wrap a { text-decoration: none; }
+.pothole-borough-table-wrap .pothole-icon-button { color: var(--accent-dark); }
+.pothole-borough-sort { display: inline-flex; gap: 5px; align-items: center; padding: 0; border: 0; background: none; color: inherit; font: inherit; font-weight: 700; text-align: left; cursor: pointer; }
+.pothole-borough-sort svg { width: 13px; height: 13px; flex: 0 0 13px; }
+.pothole-borough-section-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.pothole-borough-section-heading .field { max-width: 100%; }
+@media (max-width: 1000px) {
+  #boroughCharts { grid-template-columns: minmax(0, 1fr); }
+  .pothole-borough-chart { grid-row: auto; grid-template-rows: none; }
+}
+@media (max-width: 600px) {
+  .pothole-chart-controls.pothole-borough-controls { grid-template-columns: minmax(0, 1fr); max-width: 350px; }
+  .pothole-borough-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  #statisticsBoroughs .pothole-pagination { padding-inline: 0; }
+}
+#statisticsChartsContent { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: 32px; }
+.pothole-analysis { position: relative; min-width: 0; display: grid; grid-column: span 3; grid-row: span 3; grid-template-columns: minmax(0, 1fr); grid-template-rows: subgrid; align-items: start; gap: 16px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.pothole-analysis[data-analysis="concentration"] { grid-column: span 2; }
+.pothole-analysis[data-analysis="districts"] { grid-column: span 4; }
+.pothole-analysis-copy, .pothole-analysis-plot { min-width: 0; }
+.pothole-analysis h3 { margin: 0 0 18px; font-size: 1.2rem; line-height: 1.35; }
+.pothole-analysis-metric { margin: 0 0 8px; font-size: 2rem; font-weight: 750; line-height: 1.2; font-variant-numeric: tabular-nums; color: #963e51; }
+.pothole-analysis-statement { font-size: 0.95rem; line-height: 1.55; }
+.pothole-analysis-note { margin-top: 16px; font-size: 0.8rem; color: var(--muted); }
+.pothole-analysis-plot { position: relative; height: var(--analysis-height, 300px); }
+.pothole-analysis-viewport { min-width: 0; width: 100%; overflow: hidden; }
+.pothole-analysis[data-analysis="unpatched"] .pothole-analysis-viewport { overflow: visible; }
+.pothole-polar-outer-label { position: absolute; transform: translate(-50%, -50%); color: #506256; font-size: 10px; line-height: 1; white-space: nowrap; pointer-events: none; }
+.pothole-analysis[data-analysis="districts"] .pothole-analysis-viewport { overflow-x: auto; }
+.pothole-analysis[data-analysis="districts"] .pothole-analysis-plot { min-width: 960px; }
+.pothole-analysis-plot canvas { width: 100%; height: 100%; }
+.pothole-analysis-empty { padding: 24px 0; color: var(--muted); }
+.pothole-analysis-values { grid-column: 1 / -1; min-width: 0; }
+.pothole-analysis-values summary { cursor: pointer; width: fit-content; font-weight: 650; font-size: 0.84rem; }
+.pothole-analysis-values.is-accessible-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.pothole-analysis-table-wrap { max-width: 100%; overflow: auto; margin-top: 12px; }
+.pothole-analysis-values .pothole-statistics-table { min-width: 360px; }
+@media (max-width: 1000px) {
+  #statisticsChartsContent { grid-template-columns: minmax(0, 1fr); }
+  .pothole-analysis, .pothole-analysis[data-analysis="concentration"], .pothole-analysis[data-analysis="districts"] { grid-column: auto; grid-row: auto; grid-template-rows: none; gap: 18px; }
+  .pothole-analysis h3 { margin-bottom: 12px; }
+}
 .pothole-document-intro { padding-bottom: 22px; border-bottom: 1px solid var(--line); }
 .pothole-document-intro h2 { font-size: 1.6rem; line-height: 1.25; margin-bottom: 10px; }
 .pothole-document-lead { max-width: 800px; font-size: 1rem; }
@@ -273,6 +360,10 @@
 .pothole-statistics-table th, .pothole-statistics-table td { padding: 11px 12px; border: 0; border-bottom: 1px solid var(--line); text-align: left; }
 .pothole-statistics-table thead th { position: sticky; top: 0; z-index: 3; color: var(--muted); background: #f3f6f4; font-size: 0.78rem; box-shadow: 0 1px 0 var(--line); }
 .pothole-statistics-table tbody th { background: none; font-weight: 650; }
+.pothole-table-sort { display: flex; align-items: center; justify-content: space-between; gap: 5px; width: 100%; min-height: 32px; padding: 0; border: 0; background: transparent; color: var(--accent-dark); font-weight: 700; text-align: left; cursor: pointer; }
+.pothole-table-sort span { min-width: 0; overflow-wrap: anywhere; }
+.pothole-table-sort svg { width: 15px; height: 15px; flex: 0 0 15px; }
+.pothole-column-filter { display: block; width: 100%; min-width: 0; max-width: 180px; min-height: 32px; margin-top: 5px; padding: 3px 5px; border: 1px solid #b7c7be; border-radius: 4px; background: #fff; color: var(--ink); font-size: 0.75rem; text-overflow: ellipsis; }
 .pothole-statistics-table td.pothole-stat-volume { position: relative; width: 27%; }
 .pothole-stat-volume > span:last-child { position: relative; z-index: 1; }
 .pothole-stat-track { position: absolute; inset: 7px 12px; pointer-events: none; }
@@ -312,7 +403,8 @@
 }
 
 @media (max-width: 600px) {
-  .potholes-page .map-mode-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .potholes-page .pothole-statistics-nav { gap: 4px; }
+  .pothole-document .pothole-statistics-nav a { min-width: 0; padding: 6px 4px; font-size: 0.8rem; }
   .pothole-content { padding: 22px 16px 40px; }
   .pothole-document-intro h2 { font-size: 1.25rem; }
   .pothole-reading-facts, .pothole-statistics-metrics, .pothole-example-timeline { grid-template-columns: minmax(0, 1fr); gap: 16px; }
