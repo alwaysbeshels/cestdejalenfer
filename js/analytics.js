@@ -162,9 +162,10 @@
     // Modes de la page nids-de-poule (Signalements, Colmatages, Comment ça marche, Statistiques).
     const potholeMode = target.closest("[data-pothole-mode]");
     if (potholeMode) {
+      const mode = String(potholeMode.dataset.potholeMode || "unknown");
       track("pothole_mode_opened", {
         page: "potholes",
-        tab: `nids-de-poule:${String(potholeMode.dataset.potholeMode || "unknown")}`
+        tab: mode === "repairs" ? "colmatages:repairs" : `nids-de-poule:${mode}`
       });
       return;
     }
@@ -231,9 +232,10 @@
 
   /* --- Sections dépliables : FAQ, « comment ça marche », données de graphiques --- */
   function sectionDetails(details) {
-    const article = details.closest("[data-borough-analysis], [data-chart]");
+    const article = details.closest("[data-borough-analysis], [data-analysis], [data-chart]");
     if (article) {
-      return `nids-de-poule:${article.dataset.boroughAnalysis || article.dataset.chart}`;
+      const key = article.dataset.boroughAnalysis || article.dataset.analysis || article.dataset.chart;
+      return `nids-de-poule:${key}`;
     }
     const section = details.closest(".pothole-document-section, .pothole-document");
     const heading = section?.querySelector("h2, h3");
