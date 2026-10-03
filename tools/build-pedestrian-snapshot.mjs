@@ -34,6 +34,27 @@ function geojsonFeatures(data) {
   return data.features;
 }
 
+async function montSaintHilaireLayers() {
+  const experienceUrl = "https://www.arcgis.com/sharing/rest/content/items/f6ea6c5a42f5440c970ec7a8bb5b17d4/data?f=json";
+  const experience = await json(experienceUrl);
+  const maps = Object.values(experience.dataSources || {}).filter((source) => source.type === "WEB_MAP");
+  if (maps.length !== 1 || !/^[a-f0-9]{32}$/i.test(maps[0].itemId)) throw new Error("Mont-Saint-Hilaire: expected one published web map");
+  const portal = new URL(maps[0].portalUrl);
+  if (portal.protocol !== "https:" || portal.hostname.toLowerCase() !== "montsainthilaire.maps.arcgis.com") throw new Error("Mont-Saint-Hilaire: unexpected portal");
+  const webMapUrl = `${portal.origin}/sharing/rest/content/items/${maps[0].itemId}/data?f=json`;
+  const webMap = await json(webMapUrl);
+  if (!Array.isArray(webMap.operationalLayers)) throw new Error("Mont-Saint-Hilaire: missing operational layers");
+  return [3, 4, 5, 6, 15].map((id) => {
+    const matches = webMap.operationalLayers.filter((layer) => layer.layerType === "ArcGISFeatureLayer"
+      && typeof layer.url === "string" && layer.url.endsWith(`/FeatureServer/${id}`));
+    if (matches.length !== 1) throw new Error(`Mont-Saint-Hilaire: missing or ambiguous layer ${id}`);
+    const endpoint = new URL(matches[0].url);
+    if (endpoint.protocol !== "https:" || endpoint.hostname !== "services5.arcgis.com"
+      || !endpoint.pathname.startsWith("/RupmNFqbsv0VX4xY/arcgis/rest/services/")) throw new Error(`Mont-Saint-Hilaire: unexpected layer ${id} URL`);
+    return { id, url: endpoint.href, title: matches[0].title, experienceUrl, webMapUrl };
+  });
+}
+
 async function main() {
   let previous = { records: [], sources: [] };
   try { previous = JSON.parse(await readFile(OUTPUT, "utf8")); } catch (error) { if (error.code !== "ENOENT") throw error; }
@@ -68,6 +89,12 @@ async function main() {
             const location = attributes.LOCALISATION ?? attributes["Localisation :"];
             if (typeof location === "string") fields.push(location);
             const text = fields.join("\n");
+            if (key.startsWith("montSaintHilaire-")) {
+              pending.push({ id: String(attributes.OBJECTID ?? attributes.FID ?? index),
+                reason: "project-without-dated-pedestrian-impact", title: attributes.PROJET,
+                sourceUrl: options.sourceUrl, publishedSchedule: attributes.ECHEANCIER || null, text });
+              return;
+            }
             if (normalize === "review" && attributes.displayOnPedestrianPage === true) {
               pending.push({ id: attributes.id, reason: "approximate-period-unverified-geometry", displayOnPedestrianPage: true,
                 title: attributes.title, sourceUrl: attributes.sourceUrl, publishedPeriod: attributes.publishedPeriod,
@@ -165,8 +192,9 @@ async function main() {
         const old = previous.sources.find((source) => source.key === key);
         const retained = previous.records.filter((record) => record.sourceKey === key && (!record.endDate || record.endDate >= today));
         records.push(...retained);
-        sources.push({ key, url, status: "failed", checkedAt: old?.checkedAt || null, sourceExtractedAt: old?.sourceExtractedAt || null, retained: retained.length, error: error.message });
-        console.log(`${key}: FAILED (${error.message}), ${retained.length} previous records retained`);
+        const message = error.cause?.code ? `${error.message} (${error.cause.code})` : error.message;
+        sources.push({ key, url, status: "failed", checkedAt: old?.checkedAt || null, sourceExtractedAt: old?.sourceExtractedAt || null, retained: retained.length, error: message });
+        console.log(`${key}: FAILED (${message}), ${retained.length} previous records retained`);
       }
     }
 
@@ -181,9 +209,16 @@ async function main() {
       ["terrebonneEntraveLines", "normalizeTerrebonneFeature"], ["terrebonneEntravePoints", "normalizeTerrebonneFeature"]
     ];
     for (const [key, normalize] of municipal) await collect(key, urls[key], () => arcgis(urls[key]), normalize);
-    for (const layer of [3, 4, 5, 6, 15]) {
-      const endpoint = `${urls.montSaintHilaireWorks}/${layer}`;
-      await collect(`montSaintHilaire-${layer}`, endpoint, () => arcgis(endpoint), "review");
+    let montSaintHilaire;
+    try {
+      montSaintHilaire = await montSaintHilaireLayers();
+    } catch (error) {
+      for (const layer of [3, 4, 5, 6, 15]) {
+        await collect(`montSaintHilaire-${layer}`, `${urls.montSaintHilaireWorks}/${layer}`, async () => { throw error; }, "review");
+      }
+    }
+    for (const layer of montSaintHilaire || []) {
+      await collect(`montSaintHilaire-${layer.id}`, layer.url, () => arcgis(layer.url), "review", { sourceUrl: layer.url });
     }
     for (const [key, normalize] of [["quebec511", "normalizeQuebec511Feature"], ["quebec511Events", "normalizeQuebec511Event"]]) {
       await collect(key, urls[key], async () => geojsonFeatures(await json(urls[key])), normalize);

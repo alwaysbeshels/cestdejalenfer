@@ -210,6 +210,120 @@ npm run serve
 
 Lors de chaque mise à jour demandée des snapshots, `extractedAt` indique la dernière vérification réussie de la source, même si aucune nouvelle donnée admissible n'est trouvée. Les métadonnées de fraîcheur correspondantes dans `data/sources.js` doivent porter la même date. Si les données sont inchangées, seuls ces horodatages sont actualisés : les enregistrements, géométries et dates publiées par les organismes restent intacts. Une consultation échouée, partielle ou limitée au cache local ne fait pas avancer la date. Cette date ne signifie ni que la source vient de publier de nouvelles données, ni que les géométries ont été reconstruites.
 
+### Verification des sources du 3 octobre 2026
+
+Cette verification prend pour base les fichiers locaux apres les actualisations precedentes, pas `HEAD`. Les modifications deja presentes sont preservees. Les nids-de-poule, le colmatage, le snapshot UCI et leurs metadonnees sont exclus de cette execution. Le consolidateur reutilise seulement le fichier UCI existant, sans interroger sa source. Aucun commit, push, deploiement ni installation de dependance.
+
+#### Mont-Saint-Hilaire : cinq URL remplacees et verifiees
+
+Les cinq anciennes requetes ci-dessous repondent en HTTP 200 avec un corps JSON d'erreur ArcGIS `{"error":{"code":400,"message":"Invalid URL","details":["Invalid URL"]}}`. Le succes HTTP ne signifie donc pas que la couche existe.
+
+Ancienne base commune :
+
+```text
+https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_4Septembre2026_WFL1/FeatureServer
+```
+
+La [configuration de l'Experience officielle](https://www.arcgis.com/sharing/rest/content/items/f6ea6c5a42f5440c970ec7a8bb5b17d4/data?f=json), intitulee `INFO-TRAVAUX 2026`, reference desormais la Web Map `45659cdda2284bd28228cff888a5be30`. Les [donnees de cette Web Map](https://MontSaintHilaire.maps.arcgis.com/sharing/rest/content/items/45659cdda2284bd28228cff888a5be30/data?f=json) publient les URL suivantes; elles n'ont pas ete obtenues en remplacant une date au hasard dans un nom de service.
+
+| Couche / projet | Ancienne requete, a ajouter a l'ancienne base | Nouvelle URL publiee | Resultat de la lecture complete |
+| --- | --- | --- | --- |
+| 3, Poste Huard | `/3/query?f=json&where=1%3D1&returnIdsOnly=true` | [FeatureServer/3](https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_10Septembre2026_WFL1/FeatureServer/3) | 1 objet, Point, `Automne 2026` |
+| 4, rue du Parc | `/4/query?f=json&where=1%3D1&returnIdsOnly=true` | [FeatureServer/4](https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_10Septembre2026_WFL1/FeatureServer/4) | 1 objet, Polyline, `Automne 2026` |
+| 5, rue Fortier | `/5/query?f=json&where=1%3D1&returnIdsOnly=true` | [FeatureServer/5](https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_10Septembre2026_WFL1/FeatureServer/5) | 1 objet, Polyline, `Été 2026` |
+| 6, rue Chénier | `/6/query?f=json&where=1%3D1&returnIdsOnly=true` | [FeatureServer/6](https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_10Septembre2026_WFL1/FeatureServer/6) | 1 objet, Polyline, `Été 2026` |
+| 15, Flanc nord | `/15/query?f=json&where=1%3D1&returnIdsOnly=true` | [FeatureServer/15](https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_10Septembre2026_WFL1/FeatureServer/15) | 1 objet, Polygon, `Été-Automne 2026` |
+
+Pour chaque couche : liste complete d'identifiants, attributs complets, absence de troncature, geometrie presente, sortie `outSR=4326` et en-tete CORS `*` verifies. La carte publie aussi la limite municipale (9, pas un chantier) et une ligne Chemin des Patriotes (18, `InfoTravaux: null`, `Alternance: Oui`, sans dates); ces couches ne sont pas substituees aux cinq flux recherches.
+
+`montSaintHilaireLayers()` dans [le consolidateur](../tools/build-pedestrian-snapshot.mjs) suit maintenant l'Experience puis sa Web Map a chaque execution, controle le portail et l'organisation ArcGIS, retrouve les cinq identifiants attendus et utilise leurs URL publiees. Une couche absente, ambigue ou un portail inattendu provoque un echec explicite, sans URL devinee. [Le catalogue](../data/sources.js) et `LIVE_SOURCES.montSaintHilaireWorks` dans [le chargeur](../js/app.js) portent la derniere base effectivement verifiee.
+
+Les cinq objets ne publient pas de dates precises ni de restriction pietonne explicite. Ils sont donc conserves dans `review` avec leur projet, echeancier, texte et URL, mais ne deviennent pas des fermetures. L'ancien normalisateur automobile qui transformait les saisons en dates precises et attribuait systematiquement une voie touchee a ete retire. Mont-Saint-Hilaire reste documentaire (`inMap: false`) tant qu'une restriction admissible n'est pas etablie.
+
+#### Repentigny : adresse officielle retrouvee, connexion securisee en echec
+
+Liens exacts utiles pour poursuivre la recherche :
+
+- [API Open511 en echec](https://info-travaux.ville.repentigny.qc.ca/api/events/).
+- [Carte Info-travaux en echec](https://info-travaux.ville.repentigny.qc.ca/).
+- [Page municipale Travaux d'infrastructures](https://repentigny.ca/services/citoyens/entretien-circulation/travaux-dinfrastructures) et [Grands projets](https://repentigny.ca/la-ville/a-propos/grands-projets) : elles renvoient encore vers cette meme carte.
+- [Jeu officiel Info-travaux (API) sur Donnees Quebec](https://www.donneesquebec.ca/recherche/api/3/action/package_show?id=a201ab69-0777-4a93-abed-ed89eaab7fa2) : meme adresse, ressource HTML de la carte Open511. La recherche ArcGIS publique a aussi retourne l'element `d8f725a006114dde8aa509ad4c7d5659`, qui renvoie vers un ancien avis du meme hote, pas vers une nouvelle API.
+
+Constats de transport : le nom se resout en IPv4 `206.162.182.85`; Node renvoie `ECONNRESET` et Chromium `ERR_CONNECTION_RESET` avant une reponse HTTP sur HTTPS. Le test TLS 1.2 echoue par reinitialisation; TLS 1.3 renvoie une alerte de negociation. Une requete HTTP non securisee recoit un `301` de nginx vers `https://info-travaux.ville.repentigny.qc.ca:443/api/events/`, qui est le meme service HTTPS en echec. Passer en HTTP n'est donc pas un remplacement fonctionnel.
+
+Le stade de l'echec est identifie : connexion HTTPS/TLS, pas JSON invalide, pagination ou erreur CORS du navigateur. Ces controles ne permettent pas d'attribuer avec certitude l'interruption au serveur municipal ou a un intermediaire reseau. Aucun nouvel endpoint n'est confirme. L'URL existante reste dans l'extraction pour permettre une reprise du service; l'erreur conserve maintenant sa cause reseau dans le snapshot. Le catalogue ne presente pas Repentigny comme une source actuellement affichee. Avant de le reactiver, verifier une reponse Open511 complete et des fiches effectivement chargees, pas seulement la page municipale.
+
+#### Snapshots du perimetre
+
+Les heures suivantes sont en UTC le 3 octobre 2026 (`Z`), soit UTC moins quatre heures a Montreal. Les sept snapshots verifies sans changement sont identiques octet pour octet a la base de cette intervention apres exclusion du seul `extractedAt`. Leurs dix entrees de fraicheur du catalogue concordent. Les modifications de contenu des actualisations precedentes restent presentes.
+
+| Snapshot / source publique | Etat de cette verification | Derniere verification reussie | Recus / retenus et exclusions | Geometries conservees |
+| --- | --- | --- | --- | --- |
+| [Mont-Royal](https://montroyal.opatech.ca/#/public?city=montroyal) | Verifie sans changement | `2026-10-03T07:47:32.886Z` | 14 projets / 11; 3 expires | 7 LineString, 4 MultiLineString |
+| [Geometries Montreal](https://donnees.montreal.ca/dataset/info-travaux) | Verifie sans changement | `2026-10-03T07:47:55.172Z` | 1 762 permis / 2 080 impacts; 0 nouvelle resolution | 1 770 LineString, 3 MultiLineString, 307 emprises Polygon |
+| [Avis pietons Montreal](https://montreal.ca/entraves-travaux/entraves) | Verifie sans changement | `2026-10-03T07:49:18.409Z` | 209 pages, 2 087 resultats / 935 avis; filtrage zones et dates | Attributs et libelles, pas de geometrie propre |
+| [Declarations citoyennes, non officielles](https://forms.gle/TKL6WkmPsWPmAUMV8) | Verifie sans changement | `2026-10-03T07:52:10.462Z` | 9 reponses, 14 colonnes / 10 fiches, 11 impacts; 7 fiches en attente, 4 impacts admissibles | 3 LineString, 1 MultiLineString, 6 sans trace |
+| [Rues pietonnisees Montreal](https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=ef2a8162-0644-47e7-bd03-bea33f14a5d2&limit=100) | Verifie sans ajout | `2026-10-03T07:54:10.685Z` | 53 projets / 10 temporaires; 43 modes exclus, 0 nouvel identifiant; 7 fiches manuelles preservees | 7 LineString, 3 Point; 7 lignes manuelles |
+| [Beaconsfield](https://www.beaconsfield.ca/fr/carte-interactive/info-travaux) | Verifie sans changement | `2026-10-03T07:54:40.180Z` | 78 POI, 6 couches, 494 reperes KML / 103 reperes dans 2 fiches; 391 exclusions relues | 2 MultiLineString |
+| [PJCCI archive](https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/) et [carte](https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/) | Verifie sans changement | `2026-10-03T07:56:40.222Z` | 141 parents uniques / 2 actifs, 9 segments; 139 historiques exclus; 4 entrees carte identiques | 1 LineString, 1 MultiLineString, 7 sans trace |
+| [Noovo, non officiel](https://www.noovomoi.ca/tendances/infos-pratiques/article/cyclisme-a-montreal-voici-les-rues-et-secteurs-a-eviter-en-septembre/) | Verification incomplete, fichier preserve | `2026-09-08`, heure et fuseau absents | Article relu / 3 fiches conservees; preuve image et certains horaires non verifies | 2 LineString, 1 sans geometrie stockee |
+| [Consolide pieton](../data/pedestrian-closures-snapshot.json) | Modifie, un flux encore en echec | Assemblage `2026-10-03T08:00:58.037Z` | 29 entrees sources / 1 149 fiches; 186 candidats en revue | 1 140 Polygon, 6 LineString, 3 MultiLineString |
+
+Beaconsfield : les six descriptions completes, les identifiants et les champs `TypeTravaux` des tableaux HTML integres aux KML, les 103 geometries retenues et les 391 exclusions ont ete compares. La date source invalide « 32 octobre 2026 » reste exclue. Les periodes terminees le 2 octobre restent exclues. Le generateur historique a dates fixes n'a pas ete execute.
+
+PJCCI : le POST `request=loadmore&articlelimit=...&all=...` renvoie des listes cumulatives (10, 20, puis jusqu'a 141 avis), pas des pages disjointes. Les 15 reponses contiennent 1 191 occurrences et 141 URL uniques, sans conflit d'attributs. Les deux parents actifs et les quatre objets `interactiveMapEntraves[].raw` concordent avec le snapshot. Son `asOf` et ses compteurs historiques d'extraction restent ceux du contenu conserve; les comptes de la presente verification sont ceux de ce tableau. Les sept segments sans trace restent `pepsc-local`, `pepsc-access-bonaventure`, `sortie-3-vers-sud`, `gaetan-laberge-vers-sud`, `gaetan-laberge-vers-centre-ville`, `voies-victoria-clement-vers-sud` et `voies-victoria-clement-vers-centre-ville`. Aucun nouvel appel geometrique ni nouvelle date de provenance geographique.
+
+Le generateur PJCCI historique contient encore des dates de segments codees en dur et des ensembles OSM deja rejetes dans `validation.rejectedPreviousGeometry`. Il n'a pas ete relance. Une prochaine execution doit suivre la comparaison complete archive/carte de [l'agent de snapshots](../.github/agents/snapshots-municipaux.agent.md), et ne pas remplacer les segments valides par sa reconstruction actuelle. Les avis Montreal disposent maintenant d'une protection de conservation : [leur generateur](../tools/build-montreal-pedestrian-notices.mjs) ne reecrit que l'horodatage si les fiches et les libelles n'ont pas change, meme si les compteurs techniques de collecte different.
+
+#### Consolidation : detail par source
+
+`checkedAt` date une verification live; `sourceExtractedAt` est la date de l'entree locale reutilisee. Les six entrees locales reverifiees dans cette intervention le sont en amont, jamais par la simple lecture du consolidateur; le snapshot de geometries Montreal est utilise par la carte auto, pas comme entree de cette consolidation. Les URL completes figurent dans `sources` du JSON.
+
+| Source | Etat | Heure UTC ou date de l'entree | Recus / retenus / revue |
+| --- | --- | --- | --- |
+| Montreal | checked | `08:00:41.504Z` | 2 087 / 1 140 / 0 |
+| Longueuil | checked | `08:00:44.000Z` | 352 / 0 / 93 |
+| Dorval | checked | `08:00:45.634Z` | 589 / 0 / 13 |
+| Boisbriand | checked | `08:00:46.478Z` | 68 / 0 / 10 |
+| Saint-Eustache lignes | checked | `08:00:47.328Z` | 166 / 0 / 20 |
+| Saint-Eustache points | checked | `08:00:48.538Z` | 318 / 0 / 22 |
+| Chateauguay | checked | `08:00:49.167Z` | 40 / 0 / 0 |
+| L'Assomption | checked | `08:00:49.766Z` | 8 / 0 / 0 |
+| Terrebonne lignes | checked | `08:00:50.306Z` | 7 / 2 / 2 |
+| Terrebonne points | checked | `08:00:50.687Z` | 2 / 0 / 0 |
+| Mont-Saint-Hilaire 3 | checked | `08:00:52.566Z` | 1 / 0 / 1 |
+| Mont-Saint-Hilaire 4 | checked | `08:00:52.789Z` | 1 / 0 / 1 |
+| Mont-Saint-Hilaire 5 | checked | `08:00:53.059Z` | 1 / 0 / 1 |
+| Mont-Saint-Hilaire 6 | checked | `08:00:53.327Z` | 1 / 0 / 1 |
+| Mont-Saint-Hilaire 15 | checked | `08:00:53.590Z` | 1 / 0 / 1 |
+| MTMD chantiers | checked | `08:00:54.364Z` | 567 / 0 / 2 |
+| MTMD evenements | checked | `08:00:54.844Z` | 25 / 0 / 0 |
+| Repentigny | failed, `ECONNRESET` | Aucune verification reussie enregistree | Non recu / 0 ancienne fiche conservee |
+| Laval | checked | `08:00:55.782Z` | 153 / 2 / 6 |
+| Mont-Royal | local-snapshot | `07:47:32.886Z` | 11 / 5 / 0 |
+| Beaconsfield | local-snapshot | `07:54:40.180Z` | 2 / 0 / 0 |
+| PJCCI | local-snapshot | `07:56:40.222Z` | 9 / 0 / 0 |
+| Citoyens | local-snapshot | `07:52:10.462Z` | 10 / 0 / 1 |
+| Noovo | local-snapshot, non reverifie entierement | `2026-09-08` | 3 / 0 / 0 |
+| Rues pietonnisees | local-snapshot | `07:54:10.685Z` | 17 / 0 / 8 |
+| UCI | local-snapshot, exclu de la verification | `07:11:00.630Z`, date precedente preservee | 5 305 / 0 / 0 |
+| Listes regionales | local-snapshot, non date | Aucune | 7 / 0 / 0 |
+| Villes liees | local-snapshot, non date | Aucune | 25 / 0 / 4 |
+| Details Montreal | local-snapshot, libelles | `07:49:18.409Z` | 935 / 0 / sans objet |
+
+Bilan : 18 verifications live reussies, 10 entrees locales reutilisees et un echec. Les cinq nouveaux candidats Mont-Saint-Hilaire expliquent le passage de 181 a 186 entrees en revue; aucun n'est affiche comme une fermeture. La collecte ne consulte toujours pas systematiquement toutes les pages editoriales liees, notamment les avis Longueuil cites dans les bilans anterieurs. Ce n'est pas une verification exhaustive des conditions pietonnes sur le terrain.
+
+#### Limites et controles executes
+
+- Noovo : le texte obtenu a `2026-10-03T07:58:53.859Z` annonce Parc du 4 septembre au 4 octobre, alors que le snapshot commence au 7 septembre. Le texte ne justifie pas les horaires A-10 `06:30-16:30` ni la fin Champlain `11:30`. Le snapshot mentionne une image fournie sans en conserver une URL identifiable. Ses trois fiches et sa date restent donc intactes; l'article seul ne constitue pas une reverification complete. Aucune inspection visuelle des images n'a ete effectuee.
+- Les sept fiches manuelles pietonnes et leurs geometries sont preservees exactement. Une divergence preexistante reste explicite : Wellington finit le 14 septembre dans le fichier manuel et le 21 septembre dans sa copie integree. Aucune date n'a ete choisie silencieusement. Le chargeur des dix projets CKAN contient aussi des dates saisonnieres de repli preexistantes; cette verification des fichiers ne certifie pas ces dates comme publiees.
+- JSON, identifiants uniques, dates, geometries finies et comptes de consolidation controles. Les sept mises a jour de fraicheur seule sont identiques octet pour octet hors horodatage. Les fichiers UCI, nids-de-poule, manuels et `.gitignore` proteges sont identiques aux empreintes prises au debut de cette intervention.
+- Les 14 colonnes citoyennes ont ete lues; les 13 colonnes publiques de chaque reponse concordent avec `reportedFields`. Les contacts et l'identifiant du tableur ne sont ni exportes ni journalises. Les trois fiches admissibles donnent quatre impacts charges, soumis aux filtres de la carte; les sept autres restent en attente.
+- [L'audit de regroupement](../tools/validate-popup-grouping.mjs) passe sur les deux cartes : 1 149 fiches pietonnes / 1 022 cartes / 109 groupes fusionnes, et 8 068 entrees auto / 7 907 cartes / 134 groupes fusionnes. La navigation choisit maintenant l'autre carte sans confondre le bouton Statistiques; le test attend aussi la transition responsive avant de rouvrir un popup.
+- Chromium : sept popups auto par largeur, a 1 400 et 390 px, pour Mont-Royal, Beaconsfield, PJCCI, citoyens, rues pietonnisees et les lignes/polygones Montreal. Contenu present, canvas vectoriels non vides, popups contenus dans la carte, aucune erreur JavaScript. Les horaires Foucher sont testes a `06:59`, `07:00`, `18:59`, `19:00`, le samedi et apres la fin declaree; fermeture et stationnement restent distincts.
+- Les quatre parcours `/fr/pedestrian.html` et `/en/pedestrian.html`, a 1 400 et 390 px, chargent uniquement le snapshot commun, affichent 1 149 impacts et un flux en echec. Aucune requete au tableur ou au formulaire citoyen.
+- FAQ FR/EN : textes, liens et catalogue controles. Un debordement mobile preexistant de 688 px sur un ecran de 390 px est reproduit avant et apres ces modifications, dans les deux langues; il n'est pas corrige dans cette intervention de sources. Aucune nouvelle erreur JavaScript. Aucun `view_image` ni capture jointe au chat; les controles graphiques sont des mesures Chromium, pas une inspection visuelle humaine.
+
 ### Reprise du 2 octobre 2026, UTC
 
 Reprise locale de l'actualisation interrompue par la fermeture de VS Code. Aucun commit, push, deploiement, ajout de dependance ni changement d'interface. Les heures ci-dessous sont en UTC le 2 octobre, sauf Noovo. Les trois sorties deja generees avant la coupure (Mont-Royal, avis Montreal et geometries Montreal) sont conservees octet pour octet; leurs dates sont synchronisees au catalogue sans nouvelle extraction. Les verifications completes deja reussies pour UCI, les rues pietonnisees et PJCCI sont reprises avec leurs heures originales, sans reconstruction.
@@ -579,11 +693,11 @@ Les sources externes restent liées à leurs pages officielles. L'application ne
 - Chargement en direct des entraves de Longueuil depuis son FeatureServer public, avec surfaces et localisations filtrees pour les impacts auto.
 - Ajout des fermetures majeures Mobilité Montréal pour les ponts, tunnels et grands axes lorsque ces entraves ne sont pas dans le flux municipal.
 - Chargement en direct du GeoJSON MTMD publie sur Donnees Quebec pour les travaux routiers Quebec 511, avec géométries lineaires, directions, dates, entraves et détours officiels. Le flux est relu a chaque rafraichissement de la page.
-- Chargement en direct des événements Open511 de Repentigny, avec événements actifs dates, limites routieres, impacts, detours et geometries LineString officielles.
+- Integration Open511 de Repentigny : l'adresse officielle reste configuree, mais sa connexion HTTPS est en echec lors du controle du 3 octobre 2026. Aucun remplacement n'est confirme; voir le diagnostic detaille ci-dessus.
 - Chargement en direct des entraves ArcGIS de Saint-Eustache (lignes et points), de Châteauguay (polygones) et de L'Assomption (incidents ponctuels), avec filtrage des travaux termines, expires ou sans impact automobile.
 - Chargement en direct des entraves actives de Dorval et des travaux dates de Boisbriand depuis leurs couches ArcGIS officielles, avec geometries ponctuelles et filtrage des enregistrements historiques ou de test.
 - Chargement en direct des entraves Terrebonne depuis ses couches ArcGIS publiques de lignes et points, avec statut actif, dates, types d'entrave, horaires, circulation et détours publiés.
-- Chargement en direct des travaux Mont-Saint-Hilaire depuis ses couches ArcGIS publiques de lignes, polygones et points, avec projets, tronçons, nature, échéanciers saisonniers et géométries officielles.
+- Mont-Saint-Hilaire : les cinq couches ArcGIS de projets sont retrouvees par l'Experience officielle lors de la consolidation. Elles restent documentaires et en revue tant que les dates et les impacts necessaires ne sont pas publies; les saisons ne sont plus converties en dates automobiles inventees.
 - La carte Mont-Royal expose bien des projets publiés, mais son endpoint `POST /public/get_projects` refuse les requêtes cross-origin depuis ce site statique (CORS/preflight); il reste documentaire tant qu'une couche publique CORS-compatible n'est pas fournie.
 - Un snapshot statique Mont-Royal est conservé dans `data/mont-royal-snapshot.json`, extrait le 7 septembre 2026 depuis la réponse officielle. Il conserve uniquement les entraves actives ou futures à la date d'extraction; il n'est pas temps réel et doit être régénéré pour refléter les nouveaux projets. Les impacts publiés (fermeture, voie, stationnement, circulation locale, détour) sont conservés.
 - Chargement en direct des projets publics de Mont-Royal via son endpoint officiel `public/get_projects`, avec dates, descriptions d'impact et géométries polyline publiées par la carte.

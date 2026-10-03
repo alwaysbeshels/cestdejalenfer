@@ -1,4 +1,5 @@
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
+import { isDeepStrictEqual } from "node:util";
 import { chromium } from "playwright";
 
 const API = "https://montreal.ca/entraves-travaux/api/recherche";
@@ -18,6 +19,8 @@ async function fetchPage(page) {
 }
 
 async function main() {
+  let previous;
+  try { previous = JSON.parse(await readFile(OUTPUT, "utf8")); } catch (error) { if (error.code !== "ENOENT") throw error; }
   const first = await fetchPage(1);
   const pages = [first];
   const pageCount = Math.ceil(first.total / first.limit);
@@ -120,7 +123,9 @@ async function main() {
     labels,
     records
   };
-  await writeFile(OUTPUT, `${JSON.stringify(snapshot, null, 2)}\n`, "utf8");
+  const unchanged = previous && ["sourceUrl", "apiUrl", "note", "labels", "records"]
+    .every((key) => isDeepStrictEqual(previous[key], snapshot[key]));
+  await writeFile(OUTPUT, `${JSON.stringify(unchanged ? { ...previous, extractedAt: snapshot.extractedAt } : snapshot, null, 2)}\n`, "utf8");
   console.log(JSON.stringify({ extractedAt: snapshot.extractedAt, sourceRecords: entries.length, retained: records.length,
     customDescriptions: records.filter((record) => record.workImpact).length, output: OUTPUT }));
 }

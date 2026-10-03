@@ -145,14 +145,22 @@ try {
       assert((await page.locator(".popup-group-header").innerText()).includes("restriction"));
       assert(!(await page.locator(".leaflet-popup-content").innerText()).includes("popup.reference"));
       await page.locator(".popup-close-button").click();
+      await page.evaluate(() => {
+        window.popupTestMobileLayoutReady = new Promise((resolve) => {
+          compactLayoutQuery.addEventListener("change", () => requestAnimationFrame(resolve), { once: true });
+        });
+      });
       await page.setViewportSize({ width: 390, height: 844 });
+      await page.evaluate(() => window.popupTestMobileLayoutReady);
       if (await page.locator("#sidePanel").evaluate((panel) => panel.classList.contains("is-open"))) await page.locator("#menuToggle").click();
       await page.evaluate((id) => {
         const record = allClosures.find((item) => item.id === id);
         openGroupedPopup(record, L.latLng(record.point[1], record.point[0]));
       }, selectedId);
       await page.waitForFunction(() => {
-        const popup = document.querySelector(".leaflet-popup-content").getBoundingClientRect();
+        const element = document.querySelector(".leaflet-popup-content");
+        if (!element) return false;
+        const popup = element.getBoundingClientRect();
         return popup.left >= 0 && popup.right <= innerWidth && popup.top >= 0 && popup.bottom <= innerHeight;
       });
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
@@ -164,7 +172,7 @@ try {
     await page.evaluate(() => map.setView([45.6967, -73.6517], 16.25, { animate: false }));
     const savedView = await page.evaluate(() => ({ center: map.getCenter(), zoom: map.getZoom() }));
     if (await page.locator("#sidePanel").evaluate((panel) => !panel.classList.contains("is-open"))) await page.locator("#menuToggle").click();
-    await page.locator(".map-mode-nav a:not([aria-current])").click();
+    await page.locator(".map-mode-nav a[data-language-page]:not([aria-current]):not([data-view])").click();
     await page.waitForFunction(() => document.querySelector("#mapStatus")?.dataset.mode === "ready", {}, { timeout: 180000 });
     const restoredView = await page.evaluate((view) => ({ zoom: map.getZoom(),
       pixelDrift: map.project(map.getCenter(), view.zoom).distanceTo(map.project(L.latLng(view.center.lat, view.center.lng), view.zoom)) }), savedView);

@@ -256,17 +256,40 @@ KML layers:
 
 Detail extraction method:
 - The KML geometries provide official WGS84 line segments and point coordinates.
-- The schedule and nature of the works are extracted from the interactive map's detail panels (`interactiveMap::onChangeLocation` AJAX requests):
-  - Aqueduc: 1 juin au 2 octobre 2026 (Active)
-  - Égouts: 6 juillet au 23 octobre 2026 / 2 juin au 31 octobre 2026 (Active)
-  - Travaux divers: Reconfiguration Woodland/Beaurepaire (Automne 2026), Centre culturel (2026-2029), Centre récréatif (2026-2029) (Active/Future)
-  - Pavage & Trottoirs: Ended July 24, 2026 (Excluded per active/future policy).
+- Read every work POI detail at `/api/v1/pois/{id}` and its current `kml` URL from the POI API. Work types are published in `TypeTravaux` rows inside each Placemark's HTML description; parse those tables, never KML colours. Preserve Polygon geometry as polygons, not ring-shaped LineStrings.
+- Verified on 2026-10-03: sanitary-sewer rehabilitation runs July 6 to October 23; sanitary inspection runs June 22 to October 23. The storm-sewer inspection description literally says `32 octobre 2026`, which is invalid and must not be corrected to October 31.
+- Drainage and water-main work ended October 2; paving and sidewalk work ended July 24. Seasonal or year-only projects do not establish exact dates or an active restriction. Review the live descriptions on each refresh instead of reusing these dates as constants.
+- The current legacy generator's `MANUAL_WINDOWS` and KML coordinate-only parser do not preserve the reviewed per-type records and exclusions. Do not run it blindly. When every detail, identifier, retained geometry and exclusion still agrees, preserve the snapshot exactly except for `extractedAt`. A changed detail requires renewed source-specific review before writing.
 
 Snapshot path:
 
 ```text
 data/beaconsfield-snapshot.json
 ```
+
+## Mont-Saint-Hilaire - discover the published project layers
+
+- Public Experience: `https://experience.arcgis.com/experience/f6ea6c5a42f5440c970ec7a8bb5b17d4`.
+- Stable configuration endpoint: `https://www.arcgis.com/sharing/rest/content/items/f6ea6c5a42f5440c970ec7a8bb5b17d4/data?f=json`.
+- Follow the single `dataSources` entry of type `WEB_MAP`, its published `itemId` and `portalUrl`, then that item's `/data?f=json` and `operationalLayers`. Never guess the date embedded in a FeatureServer name.
+- On 2026-10-03 the Web Map is `45659cdda2284bd28228cff888a5be30` and the service is `https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_10Septembre2026_WFL1/FeatureServer`. The previous `4Septembre2026_WFL1` service returns HTTP 200 with ArcGIS error 400 `Invalid URL` on layers 3, 4, 5, 6 and 15.
+- Those five layer IDs respectively publish Poste Huard (Point), rue du Parc (Polyline), rue Fortier (Polyline), rue Chenier (Polyline) and Flanc nord (Polygon). Query all object IDs, fetch attributes and geometry with `outSR=4326`, and require exact count/identity agreement.
+- `montSaintHilaireLayers()` in `tools/build-pedestrian-snapshot.mjs` performs this discovery each time. Missing or ambiguous expected layers and unexpected portals fail explicitly. Do not silently replace them with layer 9 (municipal boundary) or 18 (Patriotes line, with no published dates in the inspected record).
+- The verified project fields contain only seasonal `ECHEANCIER` values and do not establish dated pedestrian restrictions. Preserve their published text, schedules and URLs in `review`, not confirmed `records`. Do not restore the removed automobile normalizer that fabricated season-boundary dates and a lane impact.
+- Keep Mont-Saint-Hilaire documentary (`inMap: false`) until actual admissible map records are independently established. A repaired extraction URL is not proof of new displayed road closures.
+
+## Repentigny - retain the official URL unless a replacement is proved
+
+- Public map: `https://info-travaux.ville.repentigny.qc.ca/`.
+- Existing Open511 feed: `https://info-travaux.ville.repentigny.qc.ca/api/events/`.
+- Confirmed references on 2026-10-03: `https://repentigny.ca/services/citoyens/entretien-circulation/travaux-dinfrastructures`, `https://repentigny.ca/la-ville/a-propos/grands-projets` and Donnees Quebec package `a201ab69-0777-4a93-abed-ed89eaab7fa2` still point to the same map. The ArcGIS search result `d8f725a006114dde8aa509ad4c7d5659` points to an old event on the same host, not a replacement API.
+- Node and Chromium fail during HTTPS connection setup (`ECONNRESET` / `ERR_CONNECTION_RESET`). TLS 1.2 resets; TLS 1.3 reports a handshake failure. HTTP redirects with 301 to the same HTTPS service on port 443. Do not claim a CORS/JSON problem, a proven global outage, or a usable HTTP fallback from these observations.
+- No replacement was confirmed. Keep the configured feed, preserve its last successful freshness and eligible records on failure, and include the transport error code in the source result. Do not substitute the municipality's editorial projects page, which is not an Open511 geometry feed.
+- Re-enable its active catalog label only after a complete successful events response and actual map records are verified. Inspect all pages and preserve published intervals, directions, roads and geometries if the service returns.
+
+## Noovo - incomplete supplementary evidence is not a successful refresh
+
+`data/noovo-road-closures-snapshot.json` is an unofficial article-plus-image supplement, not a municipal notice or the UCI snapshot. The article alone does not revalidate the image or its precise hours. On 2026-10-03 it stated Parc closed from September 4 to October 4, while the stored record starts September 7; it did not establish the stored A-10 `06:30-16:30` hours or Champlain `11:30` end time. No identifiable URL for the originally supplied image is stored. Preserve the file and its old date unless all necessary evidence is re-established; report exact discrepancies and any image inspection not performed.
 
 ## Montréal — géométries d'entraves résolues
 
@@ -343,13 +366,15 @@ The interactive map point is a control/reference, not automatically the displaye
 
 ### Update command
 
-Regenerate with:
+The legacy generator below still contains hardcoded segment dates and OSM way sets rejected by the reviewed snapshot. Do not run its reconstruction on a validated snapshot until those rules have been corrected from current source evidence:
 
 ```bash
 npm run snapshot:pjcci
 ```
 
 Output: `data/pjcci-work-advisories-snapshot.json`.
+
+For an unchanged-data verification, retrieve the complete archive and current map first. The archive POST returns cumulative lists: `articlelimit=0` returns ten notices, `10` returns twenty, and so on. Deduplicate by notice URL, require the unique count to equal `all`, and reject conflicting copies; do not compare the sum of repeated page lengths to `all`. Compare every published active/future parent field and all map entries with their stored raw values. Only then advance `extractedAt`, preserving the reviewed segments, geometry, source-published dates and historical build metadata. If the parents, map or segment evidence changes, perform the required full-text segmentation review before writing; never fall back to the legacy hardcoded interpretations. The detailed 2026-10-03 check is recorded in [the project documentation](../../docs/README.md#verification-des-sources-du-3-octobre-2026).
 
 ### Validation checklist
 

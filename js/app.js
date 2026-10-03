@@ -78,7 +78,7 @@ const LIVE_SOURCES = {
   montrealResolvedGeometries: "data/montreal-entraves-geometries-snapshot.json",
   noovoRoadClosuresSnapshot: "data/noovo-road-closures-snapshot.json",
   citizenReportsSnapshot: "data/citizen-reports-snapshot.json",
-  montSaintHilaireWorks: "https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_4Septembre2026_WFL1/FeatureServer",
+  montSaintHilaireWorks: "https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_10Septembre2026_WFL1/FeatureServer",
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
   // WFS MTMD Quebec 511 - evenements (fermetures, incidents, restrictions)
@@ -2105,21 +2105,6 @@ async function loadTerrebonneClosures() {
   return results.flat();
 }
 
-async function loadMontSaintHilaireClosures() {
-  const layers = [3, 4, 5, 6, 15];
-  const results = await Promise.all(layers.map(async (layerId) => {
-    try {
-      const params = new URLSearchParams({ f: "json", where: "1=1", outFields: "*", returnGeometry: "true", outSR: "4326", resultRecordCount: "2000" });
-      const data = await fetchJson(`${LIVE_SOURCES.montSaintHilaireWorks}/${layerId}/query?${params}`);
-      return (data.features || []).map((feature) => normalizeMontSaintHilaireFeature(feature)).filter(Boolean);
-    } catch (error) {
-      console.warn("Mont-Saint-Hilaire ArcGIS source failed", layerId, error);
-      return [];
-    }
-  }));
-  return results.flat();
-}
-
 async function loadMontRoyalSnapshotClosures() {
   const snapshot = await fetchJson(LIVE_SOURCES.montRoyalSnapshot);
   return (snapshot.records || []).map((record) => {
@@ -2299,50 +2284,6 @@ async function loadNoovoRoadClosuresSnapshot() {
     point: record.focus,
     details: [["Source complémentaire", snapshot.sourceUrl], ["Géométrie", record.geometryStatus]]
   }));
-}
-
-function montSaintHilaireScheduleDates(schedule) {
-  const value = String(schedule || "").toLowerCase();
-  if (!value) return ["", ""];
-  const year = value.match(/20\d{2}/)?.[0] || "";
-  if (!year) return ["", ""];
-  const startsSummer = /été|ete/.test(value);
-  const startsAutumn = /automne/.test(value);
-  if (startsSummer && startsAutumn) return [`${year}-06-01`, `${year}-11-30`];
-  if (startsSummer) return [`${year}-06-01`, `${year}-08-31`];
-  if (startsAutumn) return [`${year}-09-01`, `${year}-11-30`];
-  return ["", ""];
-}
-
-function normalizeMontSaintHilaireFeature(feature) {
-  const p = feature.attributes || {};
-  const geometry = esriGeometryToGeoJson(feature.geometry);
-  const [startDate, endDate] = montSaintHilaireScheduleDates(p.ECHEANCIER);
-  if (!geometry || !p.PROJET || !startDate || !endDate) return null;
-  const severity = "major";
-  return {
-    id: `mont-saint-hilaire-${p.OBJECTID || p.FID}-${p.PROJET}`,
-    title: p.PROJET,
-    category: "municipal",
-    sourceKind: "mont-saint-hilaire-arcgis",
-    responsible: "Ville de Mont-Saint-Hilaire",
-    borough: "Mont-Saint-Hilaire",
-    startDate,
-    endDate,
-    impact: `${p.Nature || "Travaux routiers"}${p.TRONÇON ? ` - ${p.TRONÇON}` : ""}`,
-    trafficLabel: "Voie touchée",
-    severity,
-    roadType: roadTypeFromText(`${p.PROJET} ${p.TRONÇON || ""}`),
-    periods: ["day", "night"],
-    direction: "Direction non publiée.",
-    streets: p.TRONÇON || p.PROJET,
-    source: "Ville de Mont-Saint-Hilaire - Carte Info-travaux",
-    sourceUrl: "https://experience.arcgis.com/experience/f6ea6c5a42f5440c970ec7a8bb5b17d4",
-    color: SEVERITY_META[severity].color,
-    geometry,
-    point: representativePoint(geometry),
-    details: [["Échéancier publié", p.ECHEANCIER], ["Entrepreneur", p.ENTRE], ["Nature", p.Nature]]
-  };
 }
 
 function normalizeTerrebonneFeature(feature) {
@@ -3529,7 +3470,6 @@ async function loadBackgroundOfficialData() {
     loadMunicipalArcgisClosures(),
     loadDorvalAndBoisbriandClosures(),
     loadTerrebonneClosures(),
-    loadMontSaintHilaireClosures(),
   ]);
 
   const additions = [];
