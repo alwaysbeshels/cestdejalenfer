@@ -18,6 +18,9 @@ window.TRANSLATIONS.en = {
   "potholes.statisticsTitle": "Statistics",
   "potholes.howDocumentTitle": "How it works | Potholes and patching",
   "potholes.statisticsDocumentTitle": "Statistics | Potholes and patching",
+  "potholes.statisticsSummaryDocumentTitle": "Overview | Statistics | Potholes and patching",
+  "potholes.statisticsChartsDocumentTitle": "Charts | Statistics | Potholes and patching",
+  "potholes.statisticsBoroughsDocumentTitle": "By borough | Statistics | Potholes and patching",
   "potholes.howHeading": "Understanding the data and statuses",
   "potholes.howLead": "This section brings together citizen requests and patching records published by the City of Montreal. It helps interpret their history but does not replace a road inspection. A 311 request, a public location and a physical pothole are not the same thing.",
   "potholes.howFactSources": "Official source data",
@@ -783,6 +786,12 @@ window.TRANSLATIONS.en = {
   ,"nav.stats": "Statistics"
   ,"stats.title": "Road restriction statistics"
   ,"stats.documentTitle": "Road restriction statistics - Greater Montreal"
+  ,"stats.documentTitle.general": "Road restriction statistics - Greater Montreal"
+  ,"stats.documentTitle.roads": "Highways and numbered routes | Road restriction statistics - Greater Montreal"
+  ,"stats.documentTitle.private": "Public & Private | Road restriction statistics - Greater Montreal"
+  ,"stats.documentTitle.territory": "By municipality | Road restriction statistics - Greater Montreal"
+  ,"stats.documentTitle.places": "Rankings | Road restriction statistics - Greater Montreal"
+  ,"stats.documentTitle.how": "How it works | Road restriction statistics - Greater Montreal"
   ,"stats.disclaimer": "Snapshot of the data received when the page loaded, for every source and the whole region, regardless of the map view. This is not historical data: completed work is no longer published, so no trend or comparison over time is possible. Durations are the planned durations published by the sources. The same restriction may be published by more than one source."
   ,"stats.loading": "Sources are still loading… figures update as data arrives."
   ,"stats.error": "Some primary sources are unavailable: figures are partial."

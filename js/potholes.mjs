@@ -154,8 +154,17 @@ function setStatisticsUrl(url, mode, tab = state.statisticsTab) {
   if (mode !== "statistics" || tab !== "boroughs") { url.searchParams.delete("borough"); url.searchParams.delete("period"); }
 }
 
+function syncDocumentTitle() {
+  const key = state.mode === "statistics"
+    ? `potholes.statistics${state.statisticsTab[0].toUpperCase()}${state.statisticsTab.slice(1)}DocumentTitle`
+    : { reports: "potholes.documentTitle", repairs: "potholes.repairsDocumentTitle", how: "potholes.howDocumentTitle", statistics: "potholes.statisticsDocumentTitle" }[state.mode];
+  document.body.dataset.documentTitle = key;
+  document.title = t(key);
+}
+
 function renderStatisticsTab() {
   document.body.dataset.statisticsPage = state.statisticsTab;
+  syncDocumentTitle();
   for (const link of statisticsLinks) {
     const tab = link.dataset.statisticsTab;
     const selected = tab === state.statisticsTab;
@@ -189,8 +198,7 @@ function renderMode() {
   const titleKey = { reports: "potholes.title", repairs: "potholes.repairsTitle", how: "potholes.howTitle", statistics: "potholes.statisticsTitle" }[state.mode];
   document.body.dataset.potholeView = state.mode;
   document.body.classList.toggle("pothole-reading", !mapView);
-  document.body.dataset.documentTitle = { reports: "potholes.documentTitle", repairs: "potholes.repairsDocumentTitle", how: "potholes.howDocumentTitle", statistics: "potholes.statisticsDocumentTitle" }[state.mode];
-  document.title = t(document.body.dataset.documentTitle);
+  syncDocumentTitle();
   for (const [id, key] of [
     ["potholePageTitle", titleKey],
     ["potholeMapCaption", repairs ? "potholes.repairsTitle" : "nav.potholes"],

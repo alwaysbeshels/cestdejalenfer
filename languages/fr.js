@@ -18,6 +18,9 @@ window.TRANSLATIONS.fr = {
   "potholes.statisticsTitle": "Statistiques",
   "potholes.howDocumentTitle": "Comment ça marche | Nids-de-poule et colmatages",
   "potholes.statisticsDocumentTitle": "Statistiques | Nids-de-poule et colmatages",
+  "potholes.statisticsSummaryDocumentTitle": "Bilan | Statistiques | Nids-de-poule et colmatages",
+  "potholes.statisticsChartsDocumentTitle": "Graphiques | Statistiques | Nids-de-poule et colmatages",
+  "potholes.statisticsBoroughsDocumentTitle": "Par arrondissement | Statistiques | Nids-de-poule et colmatages",
   "potholes.howHeading": "Comprendre les données et les statuts",
   "potholes.howLead": "Cette section compare les signalements citoyens aux colmatages enregistrés à proximité par la Ville de Montréal. Elle aide à lire leur historique, mais ne remplace pas une inspection de la chaussée. Un dossier 311, un emplacement public et un trou physique ne sont pas la même chose.",
   "potholes.howFactSources": "Des sources officielles",
@@ -783,6 +786,12 @@ window.TRANSLATIONS.fr = {
   ,"nav.stats": "Statistiques"
   ,"stats.title": "Statistiques des entraves"
   ,"stats.documentTitle": "Statistiques des entraves routières - Grand Montréal"
+  ,"stats.documentTitle.general": "Statistiques des entraves routières - Grand Montréal"
+  ,"stats.documentTitle.roads": "Autoroutes et routes numérotées | Statistiques des entraves routières - Grand Montréal"
+  ,"stats.documentTitle.private": "Public et privé | Statistiques des entraves routières - Grand Montréal"
+  ,"stats.documentTitle.territory": "Par municipalité | Statistiques des entraves routières - Grand Montréal"
+  ,"stats.documentTitle.places": "Classements | Statistiques des entraves routières - Grand Montréal"
+  ,"stats.documentTitle.how": "Comment ça marche | Statistiques des entraves routières - Grand Montréal"
   ,"stats.disclaimer": "Portrait des données reçues au chargement de la page, pour toutes les sources et toute la région, peu importe le cadrage de la carte. Ce ne sont pas des données historiques : les chantiers terminés ne sont plus publiés, donc aucune tendance ni comparaison dans le temps n'est possible. Les durées sont les durées prévues publiées par les sources. Une même entrave peut être publiée par plus d'une source."
   ,"stats.loading": "Chargement des sources en cours… les chiffres se mettent à jour à mesure que les données arrivent."
   ,"stats.error": "Certaines sources principales sont indisponibles : les chiffres sont partiels."

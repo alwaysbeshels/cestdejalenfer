@@ -2145,6 +2145,7 @@
         activeTab = tab.dataset.statsTab;
         resetScroll = true;
         syncUrl(true);
+        syncDocumentTitle();
         render();
       }
     }
@@ -2291,6 +2292,13 @@
   container.addEventListener("scroll", () => closeInfo(), { passive: true });
 
   // --- Tabs and independent columns ------------------------------------------------
+
+  function syncDocumentTitle() {
+    if (!statsViewActive) return;
+    const key = `stats.documentTitle.${activeTab}`;
+    document.body.dataset.documentTitle = key;
+    document.title = t(key);
+  }
 
   function tabsHtml(stats) {
     return `<div class="stats-dock"><nav class="map-mode-nav stats-tabs" aria-label="${escapeAttr(t("stats.tabsLabel"))}">${TABS.map((tab) => {
@@ -2591,7 +2599,7 @@
     if (!active) autoLink?.setAttribute("aria-current", "page");
     statsLink?.toggleAttribute("aria-current", active);
     if (active) statsLink?.setAttribute("aria-current", "page");
-    document.body.dataset.documentTitle = active ? "stats.documentTitle" : "document.mapTitle";
+    document.body.dataset.documentTitle = active ? `stats.documentTitle.${activeTab}` : "document.mapTitle";
     document.title = t(document.body.dataset.documentTitle);
     if (updateUrl) syncUrl(active);
     if (window.matchMedia("(max-width: 880px)").matches) setMobileMenuOpen(false);
@@ -2619,7 +2627,7 @@
   window.addEventListener("languagechange", () => {
     if (!statsViewActive) return;
     syncUrl(true);
-    document.title = t("stats.documentTitle");
+    syncDocumentTitle();
     render();
   });
 
