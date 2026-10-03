@@ -865,6 +865,10 @@ let allClosures = PEDESTRIAN_MODE ? [] : [
 let currentClosures = [];
 let selectedClosureId = null;
 let activeMapPopup = null;
+// Set by js/stats.js: statistics ignore the map viewport, source and search filters.
+let statsViewActive = false;
+// Set by js/stats.js: "All data" mode also ignores the date range (ended and future restrictions included).
+let statsAllDates = false;
 
 const routeParams = new URLSearchParams(window.location.search);
 const requestedMapView = routeParams.get("mapView")?.split(",").map(Number);
@@ -894,6 +898,7 @@ document.querySelectorAll(".map-mode-nav a").forEach((link) => {
     target.searchParams.set("startDate", dateStart.value);
     target.searchParams.set("endDate", dateEnd.value);
     target.searchParams.set("periods", timeFilters.filter((input) => input.checked).map((input) => input.value).join(","));
+    if (link.dataset.view) target.searchParams.set("view", link.dataset.view);
     link.href = target.href;
   });
 });
@@ -1319,20 +1324,20 @@ function layerRank(closure) {
 }
 
 function getFilteredClosures() {
-  const categories = getActiveCategories();
+  const categories = statsViewActive ? null : getActiveCategories();
   const impacts = getActiveImpacts();
   const timePeriods = getActiveTimePeriods();
   const dateRange = getDateRange();
-  const query = normalizeSearchText(searchFilter.value);
+  const query = statsViewActive ? "" : normalizeSearchText(searchFilter.value);
 
   const filteredClosures = [];
   allClosures.forEach((closure) => {
     if (isCoveredByComplementaryClosure(closure)) return;
     if (PEDESTRIAN_MODE && !window.PEDESTRIAN_MAP.matchesArea(closure)) return;
-    if (categories.has(closure.category)
+    if ((!categories || categories.has(closure.category))
       && impacts.has(closure.severity)
       && matchesTimePeriod(closure, timePeriods)
-      && overlapsDateRange(closure, dateRange)
+      && ((statsViewActive && statsAllDates) || overlapsDateRange(closure, dateRange))
       && matchesSearch(closure, query)) {
       filteredClosures.push(closure);
     }
@@ -1342,18 +1347,18 @@ function getFilteredClosures() {
 }
 
 function getFilterBaseClosures() {
-  const categories = getActiveCategories();
+  const categories = statsViewActive ? null : getActiveCategories();
   const timePeriods = getActiveTimePeriods();
   const dateRange = getDateRange();
-  const query = normalizeSearchText(searchFilter.value);
+  const query = statsViewActive ? "" : normalizeSearchText(searchFilter.value);
 
   const filteredClosures = [];
   allClosures.forEach((closure) => {
     if (isCoveredByComplementaryClosure(closure)) return;
     if (PEDESTRIAN_MODE && !window.PEDESTRIAN_MAP.matchesArea(closure)) return;
-    if (categories.has(closure.category)
+    if ((!categories || categories.has(closure.category))
       && matchesTimePeriod(closure, timePeriods)
-      && overlapsDateRange(closure, dateRange)
+      && ((statsViewActive && statsAllDates) || overlapsDateRange(closure, dateRange))
       && matchesSearch(closure, query)) {
       filteredClosures.push(closure);
     }
@@ -1362,9 +1367,19 @@ function getFilterBaseClosures() {
   return filteredClosures;
 }
 
+// Looked up once per allClosures change instead of once per UCI record (thousands of records).
+let complementaryUciCache = { source: null, length: -1, closure: null };
+
+function complementaryUciClosure() {
+  if (complementaryUciCache.source !== allClosures || complementaryUciCache.length !== allClosures.length) {
+    complementaryUciCache = { source: allClosures, length: allClosures.length, closure: allClosures.find((item) => item.hideOverlappingUci) || null };
+  }
+  return complementaryUciCache.closure;
+}
+
 function isCoveredByComplementaryClosure(closure) {
   if (closure.sourceKind !== "uci-wfs") return false;
-  const complementary = allClosures.find((item) => item.hideOverlappingUci);
+  const complementary = complementaryUciClosure();
   if (!complementary || !overlapsDateRange(closure, {
     start: parseDate(complementary.startDate),
     end: parseDate(complementary.endDate)
@@ -1416,7 +1431,8 @@ function updateViewportList() {
 }
 
 function updateImpactCounts() {
-  const counts = filterClosuresToViewport(getFilterBaseClosures()).reduce((result, closure) => {
+  const baseClosures = getFilterBaseClosures();
+  const counts = (statsViewActive ? baseClosures : filterClosuresToViewport(baseClosures)).reduce((result, closure) => {
     result[closure.severity] = (result[closure.severity] || 0) + 1;
     return result;
   }, {});
@@ -1424,7 +1440,7 @@ function updateImpactCounts() {
   impactCountElements.forEach((element) => {
     const impact = element.dataset.impactCount;
     const count = counts[impact] || 0;
-    element.textContent = `(${count} ${count === 1 ? "visible" : "visibles"})`;
+    element.textContent = statsViewActive ? `(${count})` : `(${count} ${count === 1 ? "visible" : "visibles"})`;
   });
 }
 
@@ -1538,6 +1554,7 @@ function normalizeQuebec511Feature(feature) {
     sourceKind: "quebec511-mtmd-wfs",
     title: properties.identificationDesTravaux || "Travaux routiers MTMD",
     responsible: "MTMD / Quebec 511",
+    routeNumber: properties.routeAutoroute || null,
     borough: quebec511LocationLabel(properties.localisation),
     startDate: dateOnlyFromTimestamp(properties.debut),
     endDate: dateOnlyFromTimestamp(properties.fin),
@@ -1641,6 +1658,7 @@ function normalizeQuebec511Event(feature) {
     sourceKind: "quebec511-event",
     title,
     responsible: "Transports Québec (MTMD) / Quebec 511",
+    routeNumber: p.numeroRoute || null,
     borough: p.municipalite || quebec511LocationLabel(localisation),
     startDate,
     endDate,
@@ -1681,6 +1699,7 @@ function normalizeLongueuilFeature(feature, layerKind) {
     category: "municipal",
     sourceKind: `longueuil-${layerKind}`,
     responsible: longueuilResponsibleLabel(properties),
+    responsibleCode: properties.RESPONSABLE ?? null,
     borough: "Longueuil",
     startDate: dateOnlyFromTimestamp(properties.DATE_DEBUT),
     endDate: dateOnlyFromTimestamp(properties.DATE_FIN),
@@ -1722,10 +1741,16 @@ function longueuilResponsibleLabel(properties) {
     return cleanLongueuilText(properties.AUTRE_RESPONSABLE);
   }
 
+  // Domaine officiel COM_GestionEntraves_ResponsableTravaux de la couche Longueuil.
   const labels = {
     1: "Ville de Longueuil",
-    2: "Entrepreneur ou partenaire",
-    3: "Service public ou réseau technique"
+    2: "Ministère des Transports et de la Mobilité durable",
+    3: "Hydro-Québec",
+    4: "Énergir",
+    5: "Bell",
+    6: "Vidéotron",
+    7: "Entrepreneur ou promoteur (travaux privés)",
+    8: "Autre"
   };
 
   return labels[properties.RESPONSABLE] || "Ville de Longueuil";
@@ -1764,7 +1789,13 @@ function dateOnlyFromTimestamp(value) {
 }
 
 function cleanQuebec511Direction(direction, text) {
-  const source = `${direction || ""} ${text || ""}`;
+  // The MTMD field holds the published direction itself ("Ouest", "Sud et nord", "Dans une direction à la fois").
+  const published = String(direction || "").trim();
+  if (published) {
+    return published;
+  }
+
+  const source = String(text || "");
   if (/deux directions|deux sens/i.test(source)) {
     return "Dans les deux directions.";
   }
@@ -3158,6 +3189,8 @@ function normalizeMontrealFeature(feature, index) {
       category,
       sourceKind: "montreal-wfs",
       responsible: properties.submitterSummaryOrganizationName || properties.occupancysubmitterdetailsPublicOrganization || siteAuthorityLabel(properties.siteAuthority),
+      siteAuthority: properties.siteAuthority || null,
+      organization: properties.submitterSummaryOrganizationName || null,
       borough: properties.boroughId || "Montreal",
       startDate: dateOnly(properties.durationStartDate),
       endDate: dateOnly(properties.durationEndDate),
@@ -4312,6 +4345,11 @@ function focusClosure(closure, { openPopup = false } = {}) {
 }
 
 function updateView({ fit = false } = {}) {
+  if (statsViewActive) {
+    updateImpactCounts();
+    window.STATS_VIEW?.render();
+    return;
+  }
   currentClosures = getFilteredClosures();
   if (PEDESTRIAN_MODE) window.PEDESTRIAN_MAP?.renderUnmappedNotices();
   updateMapLegend();
@@ -4344,20 +4382,29 @@ function showMapStatus(message, mode = "loading") {
   mapStatus.textContent = correctFrenchText(message);
   mapStatus.dataset.mode = mode;
   mapStatus.hidden = mode === "ready";
+  window.STATS_VIEW?.render();
 
   if (mode === "ready" && !window.localStorage.getItem("mapClickHintSeen")) {
     mapFirstVisitHint.hidden = false;
   }
 }
 
+// The start date cannot be in the past and the end date cannot precede the start date.
+function enforceDateBounds() {
+  const today = formatInputDate(new Date());
+  dateStart.min = today;
+  if (!dateStart.value || dateStart.value < today) dateStart.value = today;
+  dateEnd.min = dateStart.value;
+  if (dateEnd.value && dateEnd.value < dateStart.value) dateEnd.value = dateStart.value;
+}
+
 dateStart.addEventListener("change", () => {
-  if (!dateEndUsesOpenDefault && parseDate(dateStart.value) > parseDate(dateEnd.value)) {
-    dateEnd.value = dateStart.value;
-  }
+  enforceDateBounds();
   updateView({ fit: false });
 });
 dateEnd.addEventListener("change", () => {
   dateEndUsesOpenDefault = false;
+  enforceDateBounds();
   updateView({ fit: false });
 });
 todayDates.addEventListener("click", () => {
@@ -4365,6 +4412,7 @@ todayDates.addEventListener("click", () => {
   dateStart.value = today;
   dateEnd.value = today;
   dateEndUsesOpenDefault = false;
+  enforceDateBounds();
   updateView({ fit: false });
 });
 let searchFilterTimer = null;
@@ -4552,6 +4600,7 @@ dateEnd.value = currentDate;
     if (!input.value) input.value = currentDate;
   }
 });
+enforceDateBounds();
 const selectedPeriods = routeParams.get("periods");
 if (selectedPeriods !== null) {
   const periods = selectedPeriods ? selectedPeriods.split(",") : [];

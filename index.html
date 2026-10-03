@@ -19,7 +19,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#d96d00">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="css/styles.css?v=20261001-potholes-nav1">
+  <link rel="stylesheet" href="css/styles.css?v=20261002-stats49">
 </head>
 <body data-document-title="document.mapTitle">
   <div class="app-shell">
@@ -42,18 +42,28 @@
       </header>
 
       <nav class="map-mode-nav" data-i18n-aria-label="nav.mapMode">
-        <a href="index.html" data-language-page="map" data-i18n="nav.auto" aria-current="page"></a>
-        <a href="pedestrian.html" data-language-page="pedestrian" data-i18n="nav.pedestrian"></a>
+        <a href="index.html" data-language-page="map" data-i18n-title="nav.auto" aria-current="page"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg><span class="visually-hidden" data-i18n="nav.auto"></span></a>
+        <a href="pedestrian.html" data-language-page="pedestrian" data-i18n-title="nav.pedestrian"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/><path d="M16 17h4"/><path d="M4 13h4"/></svg><span class="visually-hidden" data-i18n="nav.pedestrian"></span></a>
+        <a href="index.html?view=stats" data-language-page="map" data-view="stats" data-i18n-title="nav.stats"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span class="visually-hidden" data-i18n="nav.stats"></span></a>
       </nav>
 
       <section class="controls" data-i18n-aria-label="filters.label">
-        <label class="field list-search">
+        <label class="field list-search map-only">
           <span class="visually-hidden" data-i18n="list.searchLabel"></span>
           <input id="searchFilter" type="search" data-i18n-placeholder="list.searchPlaceholder">
         </label>
-        <button id="panelLocateButton" class="panel-locate-button" type="button" data-i18n="location.nearby" hidden></button>
+        <button id="panelLocateButton" class="panel-locate-button map-only" type="button" data-i18n="location.nearby" hidden></button>
         <details class="filter-section">
-          <summary class="filter-heading"><h2 class="filter-title" data-i18n="filters.dates"></h2></summary>
+          <summary class="filter-heading"><h2 class="filter-title"><span class="map-only" data-i18n="filters.dates"></span><span class="stats-only" data-i18n="stats.dateSectionTitle"></span></h2></summary>
+          <fieldset class="stats-date-mode stats-only section-content">
+            <legend class="visually-hidden" data-i18n="stats.dateMode.label"></legend>
+            <label><input type="radio" name="statsDateMode" value="all" checked><span data-i18n="stats.dateMode.all"></span></label>
+            <div class="stats-date-mode-option">
+              <label><input type="radio" name="statsDateMode" value="period"><span data-i18n="stats.dateMode.period"></span></label>
+              <button id="dateModeHelp" class="icon-help small" type="button" aria-expanded="false" aria-controls="dateModeHelpBubble" data-i18n-aria-label="stats.dateMode.helpLabel">i</button>
+            </div>
+            <div id="dateModeHelpBubble" class="help-bubble" data-i18n="stats.dateMode.help" hidden></div>
+          </fieldset>
           <div class="date-range-fields section-content">
           <button id="todayDates" class="today-button" type="button" data-i18n="filters.today"></button>
           <label class="field">
@@ -83,7 +93,7 @@
         </div>
         </details>
 
-        <details class="filter-section">
+        <details class="filter-section map-only">
         <summary class="filter-heading">
           <h2 class="filter-title" data-i18n="filters.source"></h2>
           <button id="sourceHelp" class="icon-help small" type="button" data-i18n-aria-label="filters.sourceHelpLabel">i</button>
@@ -117,7 +127,7 @@
 
       </section>
 
-      <section class="summary" aria-live="polite">
+      <section class="summary map-only" aria-live="polite">
         <div>
           <strong id="visibleCount">0</strong>
           <span data-i18n="summary.visible"></span>
@@ -135,7 +145,7 @@
         <div id="municipalityList" class="municipality-list"></div>
       </section>
 
-      <details class="filter-section" open>
+      <details class="filter-section map-only" open>
         <summary class="filter-heading"><h2 data-i18n="list.title"></h2></summary>
         <div class="list-section section-content">
         <div id="closureList" class="closure-list"></div>
@@ -170,15 +180,17 @@
         <span data-i18n="map.sourcesText"></span>
       </section>
     </main>
+    <section id="statsView" class="stats-view" data-i18n-aria-label="stats.title" hidden></section>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="languages/fr.js?v=20261001-potholes-nav1"></script>
-  <script src="languages/en.js?v=20261001-potholes-nav1"></script>
-  <script src="js/i18n.js?v=20261001-potholes-nav1"></script>
+  <script src="languages/fr.js?v=20261002-stats49"></script>
+  <script src="languages/en.js?v=20261002-stats49"></script>
+  <script src="js/i18n.js?v=20261002-stats1"></script>
   <script src="data/sources.js"></script>
   <script src="data/closures.js"></script>
-  <script src="js/app.js?v=20260929-visual-assist14"></script>
+  <script src="js/app.js?v=20261002-stats49"></script>
+  <script src="js/stats.js?v=20261002-stats49"></script>
   <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
 </body>
 </html>

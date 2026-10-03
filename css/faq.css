@@ -195,6 +195,15 @@ h1 {
   text-underline-offset: 3px;
 }
 
+.faq-potholes-help:has(+ .faq-potholes-help) {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.faq-potholes-help + .faq-potholes-help {
+  padding-top: 6px;
+}
+
 .faq-section {
   padding: 32px 0;
   border-bottom: 1px solid var(--line);

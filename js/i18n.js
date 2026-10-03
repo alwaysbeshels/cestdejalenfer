@@ -42,6 +42,7 @@ function visualAssistActive() {
 
 const redirectToSavedMode = document.body.dataset.mapMode !== "pedestrian"
   && document.body.dataset.documentTitle === "document.mapTitle"
+  && new URLSearchParams(window.location.search).get("view") !== "stats"
   && (visualAssistActive() || (installedApp && window.localStorage.getItem(mapModeKey) === "pedestrian"));
 if (redirectToSavedMode) {
   window.location.replace(languagePath(currentLanguage(), "pedestrian.html"));
@@ -120,7 +121,7 @@ function applyTranslations(language = currentLanguage()) {
 
   document.querySelectorAll("[data-language-page]").forEach((link) => {
     const page = { pedestrian: "pedestrian.html", potholes: "potholes.html", faq: "faq.html" }[link.dataset.languagePage] || "";
-    link.href = languagePath(language, page);
+    link.href = languagePath(language, page) + (link.dataset.view ? `?view=${encodeURIComponent(link.dataset.view)}` : "");
   });
 
   const sourceFaqLink = document.querySelector('#sourceCard a[href*="faq.html"]');

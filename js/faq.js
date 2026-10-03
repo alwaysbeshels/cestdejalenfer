@@ -290,6 +290,7 @@ function setupFaqSectionLinks() {
 
 function updatePotholesFaqLink() {
   document.getElementById("potholesFaqLink").href = `${languagePath(currentLanguage(), "potholes.html")}?mode=how`;
+  document.getElementById("statsHowFaqLink").href = `${languagePath(currentLanguage(), "")}?view=stats&tab=how`;
 }
 
 backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
