@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dossier de presse de C'est déjà l'enfer : entraves du Grand Montréal, signalements de nids-de-poule, colmatages et statistiques de Montréal.">
+  <title>C'est déjà l'enfer | Dossier de presse | 3 octobre 2026</title>
+  <style>
+    :root { --ink: #1c3030; --muted: #506360; --teal: #006e70; --coral: #ca492e; --line: #ccd9d5; --wash: #eef4f2; }
+    * { box-sizing: border-box; }
+    html { background: #dfe8e4; color: var(--ink); font-family: "Aptos", "Candara", sans-serif; letter-spacing: 0; }
+    body { margin: 0; font-size: 10.5pt; line-height: 1.42; }
+    a { color: var(--teal); text-decoration-thickness: 1px; text-underline-offset: 2px; overflow-wrap: anywhere; }
+    .preview-nav { max-width: 210mm; margin: 18px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 12px 24px; font-size: 14px; }
+    .page { width: 210mm; height: 297mm; margin: 0 auto 18px; padding: 12mm 15mm 12mm; background: white; display: flex; flex-direction: column; gap: 6mm; break-after: page; }
+    .page:last-child { break-after: auto; }
+    .running, .page-footer { display: flex; align-items: baseline; justify-content: space-between; gap: 8mm; font-size: 8pt; color: var(--muted); }
+    .running { border-top: 2px solid var(--teal); padding-top: 3mm; }
+    .running strong { color: var(--ink); font-weight: 700; }
+    .page-content { flex: 1; min-height: 0; }
+    .page-footer { border-top: 1px solid var(--line); padding-top: 3mm; }
+    .page-footer a { color: inherit; text-decoration: none; }
+    h1, h2, h3, .number { font-family: "Bahnschrift", "Aptos Display", "Candara", sans-serif; font-weight: 650; }
+    h1 { font-size: 53pt; line-height: 1.04; margin: 4mm 0; }
+    h2 { font-size: 27pt; line-height: 1.12; margin: 1mm 0 5mm; }
+    h3 { font-size: 13.5pt; line-height: 1.2; margin: 0 0 2mm; }
+    p { margin: 0 0 3.5mm; }
+    ul { margin: 2mm 0 4mm; padding-left: 5mm; }
+    li { margin-bottom: 1.5mm; }
+    .eyebrow { color: var(--coral); font-weight: 750; font-size: 9pt; margin-bottom: 3mm; text-transform: uppercase; }
+    .lead { font-size: 13pt; line-height: 1.36; }
+    .subtitle { color: var(--teal); font-size: 21pt; line-height: 1.15; margin-bottom: 5mm; }
+    .small { font-size: 8.5pt; line-height: 1.4; color: var(--muted); }
+    .columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6mm; margin: 5mm 0; }
+    .columns > * { min-width: 0; }
+    .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5mm; border-top: 1px solid var(--line); padding-top: 4mm; margin-top: 5mm; }
+    .number { display: block; font-size: 25pt; line-height: 1.12; color: var(--teal); margin-bottom: 1.5mm; }
+    .facts p { font-size: 9pt; margin: 0; }
+    .statement { font-size: 22pt; line-height: 1.2; color: var(--teal); border-left: 4px solid var(--coral); padding-left: 5mm; margin: 7mm 0; }
+    .note { background: var(--wash); border-left: 3px solid var(--teal); padding: 3.5mm 4mm; margin: 4mm 0; }
+    .note p:last-child { margin-bottom: 0; }
+    .rule { border-top: 1px solid var(--line); padding-top: 4mm; margin-top: 5mm; }
+    figure { margin: 5mm 0; }
+    figure img { display: block; width: 100%; height: 76mm; object-fit: contain; object-position: center; background: white; border: 1px solid var(--line); }
+    .cover-visual img { height: 95mm; }
+    .pedestrian-visual img { height: 60mm; }
+    .road-stats-visual img { height: 70mm; }
+    .map-pair { margin: 4mm 0; }
+    .map-pair img { height: 59mm; }
+    .analysis-pair { margin: 4mm 0; }
+    .analysis-pair img { height: 82mm; }
+    figcaption { margin-top: 2mm; font-size: 8pt; line-height: 1.35; color: var(--muted); }
+    .timeline { list-style: none; padding: 0; margin: 5mm 0; }
+    .timeline li { display: grid; grid-template-columns: 29mm minmax(0, 1fr); gap: 4mm; padding: 3mm 0; border-top: 1px solid var(--line); }
+    .timeline strong { color: var(--teal); }
+    .audience { display: grid; grid-template-columns: 42mm minmax(0, 1fr); gap: 6mm; align-items: center; margin: 5mm 0; padding: 4mm 0; border-block: 1px solid var(--line); }
+    .audience .number { font-size: 35pt; }
+    .audience p { margin: 0; }
+    table { border-collapse: collapse; width: 100%; margin: 4mm 0; font-size: 9.1pt; }
+    th, td { text-align: left; vertical-align: top; padding: 3mm 2mm; border-bottom: 1px solid var(--line); }
+    th { background: var(--wash); color: var(--teal); font-size: 9pt; }
+    th:first-child, td:first-child { width: 32%; padding-left: 0; }
+    th:first-child { padding-left: 2mm; }
+    .links { list-style: none; padding: 0; }
+    .links li { margin-bottom: 3mm; }
+    .links a { font-weight: 650; }
+    .contact { border-block: 2px solid var(--teal); padding: 5mm 0; margin: 5mm 0; }
+    .contact h3 { font-size: 21pt; }
+    @page { size: A4; margin: 0; }
+    @media print {
+      html, body { background: white; }
+      body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .preview-nav { display: none; }
+      .page { margin: 0; }
+    }
+    @media screen and (max-width: 820px) {
+      .page { width: calc(100% - 24px); height: auto; min-height: 0; padding: 22px; gap: 22px; margin-bottom: 16px; }
+      h1 { font-size: 40pt; }
+      h2 { font-size: 23pt; }
+      .subtitle { font-size: 18pt; }
+      .columns { grid-template-columns: 1fr; gap: 18px; }
+      .facts { grid-template-columns: 1fr; gap: 15px; }
+      .running, .page-footer { flex-wrap: wrap; gap: 6px 16px; }
+      .audience { grid-template-columns: 1fr; gap: 8px; }
+      figure img, .cover-visual img, .pedestrian-visual img, .road-stats-visual img, .map-pair img, .analysis-pair img { height: auto; min-height: 140px; }
+      .timeline li { grid-template-columns: 1fr; gap: 5px; }
+      table { font-size: 9pt; }
+      .number { font-size: 26pt; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="preview-nav" aria-label="Documents de presse">
+    <a href="dossier-presse.pdf">Télécharger le PDF</a>
+    <a href="https://cestdejalenfer.ca/fr/">Ouvrir le site</a>
+  </nav>
+  <main>
+    <section class="page" aria-labelledby="cover-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>Dossier de presse · 3 octobre 2026</span></header>
+      <div class="page-content">
+        <p class="eyebrow">Données ouvertes et renseignements publics</p>
+        <h1 id="cover-title">C'est déjà<br>l'enfer</h1>
+        <p class="subtitle">Des données publiques.<br>Des rues plus compréhensibles.</p>
+        <p class="lead">Une initiative citoyenne indépendante pour consulter les entraves du Grand Montréal et explorer les signalements de nids-de-poule et les colmatages de Montréal.</p>
+        <figure class="cover-visual">
+          <img src="visuels/carte-auto.png" width="1440" height="900" alt="Carte automobile de C'est déjà l'enfer, avec les entraves documentées et leurs types d'impact dans le secteur affiché.">
+          <figcaption>La carte automobile rassemble les restrictions publiées. Capture du 3 octobre 2026; le contenu évolue selon les sources. Fond de carte : OpenStreetMap.</figcaption>
+        </figure>
+        <p>Créé par <strong>Shelsea Saint-Fleur</strong>, le site réunit des informations dispersées dans des cartes, des bilans et des statistiques. Il aide à comprendre ce qui est annoncé et à examiner les données disponibles, sans se substituer aux autorités ni à une inspection sur place.</p>
+        <div class="facts">
+          <div><span class="number">5 sept.</span><p>Lancement en 2026,<br>selon la créatrice</p></div>
+          <div><span class="number">FR / EN</span><p>Consultation gratuite,<br>sans compte</p></div>
+          <div><span class="number">19</span><p>Portraits d'arrondissement<br>pour les nids-de-poule à Montréal</p></div>
+        </div>
+      </div>
+      <footer class="page-footer"><a href="https://cestdejalenfer.ca/">cestdejalenfer.ca</a><span>Présentation</span><span>01 / 08</span></footer>
+    </section>
+
+    <section class="page" aria-labelledby="creator-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>La démarche</span></header>
+      <div class="page-content">
+        <p class="eyebrow">Un projet porté par Shelsea Saint-Fleur</p>
+        <h2 id="creator-title">Rendre utile une information<br>qui existe déjà.</h2>
+        <p class="lead">Savoir où une rue ferme, quand une restriction s'applique et quelle source consulter peut demander de parcourir plusieurs sites. C'est de cette difficulté qu'est né le projet.</p>
+        <p>Shelsea Saint-Fleur est diplômée d'un baccalauréat en génie logiciel et spécialisée dans les données. Elle a créé C'est déjà l'enfer pendant son temps libre pour rendre l'information routière plus facile à consulter. Son travail consiste à repérer les sources, organiser leurs renseignements et en expliquer les limites.</p>
+        <p>Le nom fait écho à la frustration des déplacements compliqués. L'objectif est concret : réunir des renseignements utiles, permettre de revenir à leur origine et faciliter leur lecture. Le projet demeure personnel et indépendant; il n'est pas exploité ni approuvé par les municipalités dont il utilise les données.</p>
+        <p class="statement">Repérer. Rassembler.<br>Structurer. Expliquer.</p>
+        <div class="columns">
+          <div><h3>Au-delà de la carte</h3><p>Les sources ne publient pas toutes les mêmes champs, les mêmes formats ou les mêmes périodes. Le travail de mise en cohérence fait partie de la valeur du site.</p></div>
+          <div><h3>Des retours qui orientent le travail</h3><p>Les commentaires aident à repérer les informations manquantes et les obstacles d'utilisation. Le mode lecteur d'écran a notamment évolué à partir de retours avec VoiceOver sur iPhone.</p></div>
+        </div>
+        <ul class="timeline">
+          <li><strong>5 septembre 2026</strong><span>Lancement du projet, date communiquée par sa créatrice.</span></li>
+          <li><strong>Septembre 2026</strong><span>Première couverture médiatique, dont une entrevue à QUB avec Mario Dumont sur la première version du site.</span></li>
+          <li><strong>Édition actuelle</strong><span>Cartes Auto et Piétons, statistiques routières, cartes et analyses des nids-de-poule et des colmatages, portraits des arrondissements.</span></li>
+        </ul>
+        <div class="audience"><span class="number">6 715</span><p><strong>visiteurs uniques annoncés</strong><br>Du 5 septembre au 1er octobre 2026.<br><span class="small">Chiffre communiqué par Shelsea Saint-Fleur, non audité indépendamment. Il ne s'agit ni d'un nombre de visites ni d'un nombre de trajets.</span></p></div>
+      </div>
+      <footer class="page-footer"><a href="https://cestdejalenfer.ca/">cestdejalenfer.ca</a><span>La créatrice et l'origine du projet</span><span>02 / 08</span></footer>
+    </section>
+
+    <section class="page" aria-labelledby="restrictions-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>Entraves · Grand Montréal</span></header>
+      <div class="page-content">
+        <p class="eyebrow">Deux cartes, des impacts distincts</p>
+        <h2 id="restrictions-title">Une rue fermée aux voitures<br>n'est pas toujours fermée à pied.</h2>
+        <p class="lead">Les modes Auto et Piétons distinguent les restrictions selon les personnes concernées. Une fermeture de voie automobile n'est pas automatiquement une fermeture de trottoir.</p>
+        <div class="columns">
+          <div><h3>Auto</h3><p>Rues, autoroutes, ponts, viaducs et accès : la carte différencie les fermetures complètes, les voies touchées, les accès limités et les restrictions de stationnement.</p><p>La couverture vise le Grand Montréal, notamment Montréal, Laval, Longueuil et des municipalités des couronnes, selon les renseignements disponibles.</p></div>
+          <div><h3>Piétons</h3><p>Trottoirs, parcs, sentiers et certaines pistes cyclables : la carte distingue les fermetures documentées des aménagements ou travaux annoncés.</p><p>Les restrictions propres aux cyclistes sont identifiées comme telles. La couverture ne constitue pas un inventaire exhaustif des obstacles.</p></div>
+        </div>
+        <figure class="pedestrian-visual">
+          <img src="visuels/carte-pietons.png" width="1440" height="900" alt="Carte Piétons montrant les travaux et restrictions documentés, séparément de la circulation automobile.">
+          <figcaption>Carte Piétons, capture du 3 octobre 2026. Les couleurs distinguent fermeture confirmée et aménagement ou travaux. La géométrie ne garantit pas le côté du trottoir ni l'accessibilité du passage. Fond : OpenStreetMap.</figcaption>
+        </figure>
+        <h3>Préparer une consultation, pas calculer un trajet</h3>
+        <p>Une recherche et des filtres de dates, de moment des travaux et d'impact permettent d'examiner un secteur. Chaque fiche conserve les renseignements disponibles : localisation, dates, horaires, direction, responsable et lien vers la source. La liste suit la zone visible de la carte.</p>
+        <div class="note"><p><strong>Un affichage adapté aux lecteurs d'écran.</strong> Sur téléphone et tablette, le mode dédié de la carte Piétons rend la recherche et la liste plus directement accessibles. Ce n'est ni un guidage vocal, ni un calculateur d'itinéraires accessibles, ni une certification d'accessibilité.</p></div>
+        <p class="small">Le site complète la consultation des avis officiels et les outils de navigation habituels. Une absence d'entrave affichée ne garantit jamais un passage libre. La signalisation sur place demeure prioritaire.</p>
+      </div>
+      <footer class="page-footer"><a href="https://cestdejalenfer.ca/fr/pedestrian.html">Découvrir les cartes Auto et Piétons</a><span>Consultation des entraves</span><span>03 / 08</span></footer>
+    </section>
+
+    <section class="page" aria-labelledby="road-stats-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>Statistiques · Entraves routières</span></header>
+      <div class="page-content">
+        <p class="eyebrow">Passer des fiches au portrait d'ensemble</p>
+        <h2 id="road-stats-title">Quels axes sont touchés?<br>Quels travaux sont annoncés?</h2>
+        <p class="lead">Les statistiques routières utilisent les mêmes entraves que la carte pour explorer leur répartition dans l'ensemble de la région chargée, indépendamment du cadrage.</p>
+        <figure class="road-stats-visual">
+          <img src="visuels/statistiques-entraves.png" width="1440" height="1000" alt="Vue des statistiques routières présentant des indicateurs et graphiques calculés à partir des entraves chargées.">
+          <figcaption>Exemple de la vue Général, le 3 octobre 2026, avec le filtre des entraves actives pendant la période choisie. Les chiffres dépendent des sources reçues et des filtres; ils ne constituent pas un recensement de chantiers uniques.</figcaption>
+        </figure>
+        <div class="columns">
+          <div>
+            <h3>Lire les impacts et les durées</h3><p>Répartition des restrictions, durées prévues publiées, ancienneté depuis la date de début et débuts ou fins annoncés dans les sept prochains jours.</p>
+            <h3>Explorer les axes</h3><p>Autoroutes, routes numérotées, ponts et tunnels concernés, avec les directions lorsqu'elles sont publiées.</p>
+            <h3>Examiner les territoires</h3><p>Portraits par municipalité ou arrondissement et classements de rues selon les informations disponibles.</p>
+          </div>
+          <div>
+            <h3>Comprendre les responsables</h3><p>Les sections Public &amp; Privé distinguent qui réalise les travaux et pour le compte de qui, lorsque la source permet de le déterminer.</p>
+            <h3>Retrouver les chiffres</h3><p>Filtres, tris, tableaux associés aux graphiques et explications méthodologiques permettent d'examiner les résultats.</p>
+            <h3>Garder la source à portée</h3><p>Les liens d'origine permettent de revenir aux avis et aux renseignements publiés.</p>
+          </div>
+        </div>
+        <div class="note"><p><strong>Un portrait des données chargées, pas une tendance historique.</strong> Les sources retirent généralement les travaux terminés. Une entrée peut représenter un tronçon ou un impact; un chantier peut produire plusieurs entrées, voire apparaître dans plusieurs sources. Les classements reflètent aussi les différences de couverture et de publication, pas une note de performance municipale.</p></div>
+      </div>
+      <footer class="page-footer"><a href="https://cestdejalenfer.ca/fr/?view=stats">Ouvrir les statistiques routières</a><span>Portrait régional</span><span>04 / 08</span></footer>
+    </section>
+
+    <section class="page" aria-labelledby="potholes-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>Nids-de-poule et colmatages · Montréal</span></header>
+      <div class="page-content">
+        <p class="eyebrow">Deux ensembles de données complémentaires</p>
+        <h2 id="potholes-title">Ce qui a été signalé.<br>Ce qui a été enregistré.</h2>
+        <p class="lead">Une section distincte permet d'explorer les demandes 311 liées aux nids-de-poule et les traces de colmatage mécanisé publiées par la Ville de Montréal.</p>
+        <h3>La carte des signalements</h3>
+        <p>Recherche par rue, intersection ou identifiant 311, sélection d'années et d'arrondissement, historique d'un emplacement public : la carte permet de retrouver les demandes et les colmatages enregistrés à proximité.</p>
+        <figure class="map-pair">
+          <img src="visuels/nids-de-poule.png" width="1440" height="900" alt="Carte des signalements 311 de nids-de-poule à Montréal avec ses filtres et ses groupes de positions publiques.">
+          <figcaption>Nids-de-poule, années d'activité : 2026, tous les statuts. Capture du 3 octobre 2026. Les groupes comptent des positions publiques distinctes, pas des trous uniques. Fond : OpenStreetMap.</figcaption>
+        </figure>
+        <h3>La carte des colmatages</h3>
+        <p>Les interventions GPS publiées s'explorent par fichier annuel, mois et appareil. Les compteurs distinguent les interventions des positions; les fiches conservent les dates et les identifiants disponibles.</p>
+        <figure class="map-pair">
+          <img src="visuels/colmatages.png" width="1440" height="900" alt="Carte des positions GPS de colmatage mécanisé, affichées en vert pour le fichier annuel 2025.">
+          <figcaption>Colmatages, fichier 2025 : événements du 18 janvier au 20 mai 2025. Capture du 3 octobre 2026. Ce ne sont pas les réparations de 2026. Fond : OpenStreetMap.</figcaption>
+        </figure>
+        <p class="small"><strong>Un lien possible, pas une confirmation.</strong> Une intervention dans un rayon de 25 m d'une position 311 peut concerner un autre trou. « Réparation présumée » est une estimation du site, distincte du statut administratif du dossier. Les positions 311 sont approximatives.</p>
+      </div>
+      <footer class="page-footer"><a href="https://cestdejalenfer.ca/fr/potholes.html">Explorer les deux cartes</a><span>Données de la Ville de Montréal</span><span>05 / 08</span></footer>
+    </section>
+
+    <section class="page" aria-labelledby="pothole-stats-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>Statistiques · Nids-de-poule et colmatages</span></header>
+      <div class="page-content">
+        <p class="eyebrow">Bilans, graphiques et portraits territoriaux</p>
+        <h2 id="pothole-stats-title">Où les signalements<br>se répètent-ils?</h2>
+        <p class="lead">Ce volet ne se limite pas à des marqueurs : il permet une lecture historique et géographique des signalements et des interventions disponibles.</p>
+        <div class="columns">
+          <div><h3>Des bilans et des classements</h3><p>Volumes annuels, rues et emplacements les plus signalés, colmatages recensés par rue et données par appareil. Les demandes d'information restent séparées des signalements.</p></div>
+          <div><h3>Six analyses</h3><p>Volumes annuels, persistance sur plusieurs années, concentration des demandes, nouveaux signalements après colmatage présumé, demandes répétées sans colmatage recensé et récurrence par arrondissement.</p></div>
+        </div>
+        <figure class="analysis-pair">
+          <img src="visuels/statistiques-nids-de-poule.png" width="1362" height="602" alt="Nombre d'emplacements selon le nombre d'années avec signalements : une année, 11 183; deux années, 4 567; trois, 2 212; quatre, 1 059; cinq ou plus, 434. Période 2022 à 2026.">
+          <figcaption>Persistance des signalements, période 2022-2026 : <strong>8 272 emplacements sur 19 455</strong> ont reçu des signalements dans au moins deux années distinctes. Capture du 3 octobre 2026; l'année 2026 est partielle. Un emplacement public peut correspondre à plusieurs trous.</figcaption>
+        </figure>
+        <h3>Un portrait pour chacun des 19 arrondissements</h3>
+        <p>Indicateurs, graphiques, tableaux de rues et d'emplacements, recherche et liens vers la carte donnent une lecture locale. La comparaison avec le reste de Montréal exclut l'arrondissement sélectionné du groupe de comparaison.</p>
+        <p>La période récente couvre <strong>2022-2026</strong>; une seconde vue permet d'explorer l'ensemble de l'historique disponible. Ces portraits décrivent des emplacements signalés, pas l'état de toutes les rues ni l'efficacité des équipes municipales.</p>
+        <p class="small"><strong>Une absence de trace n'est pas une preuve de non-réparation.</strong> Le corpus de colmatage mécanisé ne fournit ni les réparations manuelles ni les interventions des arrondissements. Un nouveau signalement près d'un colmatage ne prouve pas que la réparation a échoué ou que le même trou est revenu.</p>
+      </div>
+      <footer class="page-footer"><a href="https://cestdejalenfer.ca/fr/potholes.html?mode=statistics">Ouvrir les statistiques des nids-de-poule</a><span>Historique et arrondissements</span><span>06 / 08</span></footer>
+    </section>
+
+    <section class="page" aria-labelledby="method-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>Sources et méthode</span></header>
+      <div class="page-content">
+        <p class="eyebrow">La provenance fait partie de l'information</p>
+        <h2 id="method-title">Montrer les données.<br>Expliquer leurs limites.</h2>
+        <p>La plateforme utilise des données ouvertes et des renseignements publics, notamment ceux de Montréal, du ministère des Transports et de la Mobilité durable, de Laval, de Longueuil et d'autres organismes municipaux ou régionaux. Les déclarations citoyennes et les compléments non officiels sont distingués des avis officiels.</p>
+        <table>
+          <thead><tr><th scope="col">Ensemble</th><th scope="col">Périmètre et actualisation</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Entraves automobiles</th><td>Grand Montréal, couverture variable. Des flux sont demandés à l'ouverture ou à l'actualisation; d'autres informations proviennent de copies datées. La fraîcheur dépend de chaque source.</td></tr>
+            <tr><th scope="row">Entraves piétonnes</th><td>Portrait consolidé de sources municipales et régionales, actualisé séparément. Ce n'est pas un flux en temps réel ni un relevé exhaustif d'accessibilité.</td></tr>
+            <tr><th scope="row">Demandes 311</th><td>Montréal, fichiers de 2014 à 2026. Les demandes d'information sont séparées des signalements dans les statistiques. Les périodes et la qualité des coordonnées varient.</td></tr>
+            <tr><th scope="row">Colmatage mécanisé</th><td>Fichiers de 2016 à 2025, parfois partiels. Derniers événements disponibles : 20 mai 2025. Réparations manuelles et interventions des arrondissements non fournies; coordonnées 2021 non exploitables dans le traitement actuel.</td></tr>
+          </tbody>
+        </table>
+        <div class="columns">
+          <div><h3>Une entrée n'est pas un chantier</h3><p>Les statistiques routières comptent des entrées publiées : tronçons, zones ou impacts. Les chevauchements et différences de publication limitent les comparaisons entre territoires.</p><h3>Une durée prévue n'est pas un délai constaté</h3><p>Les dates annoncées peuvent changer. Les longueurs de voies touchées sont des mesures ou estimations géométriques, pas une mesure de congestion.</p></div>
+          <div><h3>Un dossier n'est pas un trou unique</h3><p>Les positions publiques 311 sont déplacées sur des tronçons. Une clôture administrative ne confirme pas une réparation. Le rayon de comparaison de 25 m est un choix technique, non une validation terrain.</p><h3>Une date de fichier n'est pas une date de travaux</h3><p>Une vérification ou publication récente peut porter sur des événements anciens. Les dates des signalements et des colmatages restent distinctes.</p></div>
+        </div>
+        <h3>Des explications accessibles depuis le site</h3>
+        <p>La <a href="https://cestdejalenfer.ca/fr/faq.html">FAQ générale</a> et les sections <a href="https://cestdejalenfer.ca/fr/?view=stats&amp;tab=how">Méthode des statistiques routières</a> et <a href="https://cestdejalenfer.ca/fr/potholes.html?mode=how">Comment ça marche : nids-de-poule</a> détaillent les règles de lecture. Le <a href="https://github.com/alwaysbeshels/cestdejalenfer">code du projet est consultable sur GitHub</a>.</p>
+        <div class="note"><p><strong>Consulter avant de se déplacer.</strong> Le site ne garantit pas qu'une rue est ouverte ni qu'un passage est accessible. Les avis officiels, les consignes des autorités et la signalisation demeurent prioritaires.</p></div>
+      </div>
+      <footer class="page-footer"><a href="https://cestdejalenfer.ca/fr/faq.html">Sources et questions fréquentes</a><span>Repères de l'édition du 3 octobre 2026</span><span>07 / 08</span></footer>
+    </section>
+
+    <section class="page" aria-labelledby="contact-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>Pour les médias</span></header>
+      <div class="page-content">
+        <p class="eyebrow">Entrevues, démonstrations et renseignements</p>
+        <h2 id="contact-title">De l'information dispersée<br>à une consultation commune.</h2>
+        <p class="lead">Le projet peut être abordé par son utilité quotidienne, par le travail sur les données publiques ou par l'expérience d'une créatrice qui fait évoluer son outil avec les retours d'utilisation.</p>
+        <div class="contact">
+          <h3>Shelsea Saint-Fleur</h3>
+          <p>Créatrice de C'est déjà l'enfer · Spécialiste des données</p>
+          <p><strong>Prise de contact :</strong> <a href="https://www.linkedin.com/in/shelseastf/">linkedin.com/in/shelseastf</a></p>
+          <p><strong>Site :</strong> <a href="https://cestdejalenfer.ca/">cestdejalenfer.ca</a></p>
+        </div>
+        <div class="columns">
+          <div>
+            <h3>Explorer le projet</h3>
+            <ul class="links">
+              <li><a href="https://cestdejalenfer.ca/fr/">Entraves automobiles</a></li>
+              <li><a href="https://cestdejalenfer.ca/fr/pedestrian.html">Entraves piétonnes</a></li>
+              <li><a href="https://cestdejalenfer.ca/fr/?view=stats">Statistiques routières</a></li>
+              <li><a href="https://cestdejalenfer.ca/fr/potholes.html">Nids-de-poule</a> · <a href="https://cestdejalenfer.ca/fr/potholes.html?mode=repairs">Colmatages</a></li>
+              <li><a href="https://cestdejalenfer.ca/fr/potholes.html?mode=statistics">Bilans et analyses</a> · <a href="https://cestdejalenfer.ca/fr/potholes.html?mode=statistics&amp;tab=boroughs">Arrondissements</a></li>
+              <li><a href="https://cestdejalenfer.ca/en/">English version</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Trois démonstrations possibles</h3>
+            <ul>
+              <li>Consulter les entraves annoncées dans un secteur à une date donnée et retrouver l'avis d'origine.</li>
+              <li>Examiner une répartition d'impacts ou une durée prévue dans les statistiques routières.</li>
+              <li>Explorer les signalements répétés d'un arrondissement et comprendre les limites des liens avec le colmatage.</li>
+            </ul>
+          </div>
+        </div>
+        <h3>Première couverture médiatique</h3>
+        <p><a href="https://www.youtube.com/watch?v=RSDo3Ex-2wo&amp;t=175s">QUB, entrevue avec Mario Dumont</a> : présentation de la première version du projet, en septembre 2026. Cette référence ne décrit pas l'ensemble des fonctions de l'édition actuelle.</p>
+        <h3 class="rule">Quelques sources de référence</h3>
+        <p class="small"><a href="https://donnees.montreal.ca/dataset/info-travaux">Montréal : entraves et travaux</a> · <a href="https://www.quebec511.info/">Québec 511</a> · <a href="https://donnees.montreal.ca/dataset/requete-311">Montréal : demandes 311</a> · <a href="https://donnees.montreal.ca/dataset/refection-de-chaussee-par-remplissage-mecanise-de-nid-de-poule">Montréal : colmatage mécanisé</a>.</p>
+        <p class="small"><strong>Illustrations.</strong> Captures du site réalisées le 3 octobre 2026. Pour toute reprise, conserver le contexte, la date, les limites de lecture et les crédits cartographiques. Fonds de carte : <a href="https://www.openstreetmap.org/copyright">OpenStreetMap et ses contributeurs</a>. Les données et fonds restent soumis aux conditions de leurs éditeurs.</p>
+        <p class="small">Dossier de presse, édition du 3 octobre 2026. Les fonctionnalités, données et disponibilités des sources sont susceptibles d'évoluer. Le site peut être ajouté à l'écran d'accueil depuis un navigateur compatible; une connexion Internet reste nécessaire.</p>
+      </div>
+      <footer class="page-footer"><a href="https://cestdejalenfer.ca/">cestdejalenfer.ca</a><span>Contact et références</span><span>08 / 08</span></footer>
+    </section>
+  </main>
+</body>
+</html>

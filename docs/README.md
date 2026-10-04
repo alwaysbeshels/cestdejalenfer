@@ -2,6 +2,8 @@
 
 Documentation complete du projet. Consultez aussi le [guide utilisateur des prompts Copilot](GUIDE_PROMPTS.md) ou revenez a l'[index du depot](../README.md).
 
+Le [dossier de presse](presse/README.md) regroupe une edition francaise de huit pages, sa source HTML modifiable, les captures du site et les points a confirmer avant un envoi aux medias. Sa preparation locale ne constitue pas une publication.
+
 Les [annonces GitHub](annonces/README.md) sont classees par date, avec une version francaise et anglaise dans chaque fichier et une proposition de versions et de tags. Elles deviennent consultables dans le depot lors de la publication autorisee qui les inclut, sans statut manuel dans leur tableau.
 
 Les commandes et les chemins de fichiers mentionnes ci-dessous sont relatifs a la racine du projet, pas au dossier `docs/`. Les mises a jour de cette documentation doivent etre faites ici; le README a la racine reste un index.
