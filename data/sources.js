@@ -15,6 +15,9 @@ const SOURCE_CATALOG = [
   { name: "Signalements citoyens - Snapshot du formulaire", url: "data/citizen-reports-snapshot.json", dataType: "snapshot", extractedAt: "2026-10-05T04:00:15.436Z" },
   { name: "Noovo Moi - Complément et image fournie (non officiel)", url: "https://www.noovomoi.ca/tendances/infos-pratiques/article/cyclisme-a-montreal-voici-les-rues-et-secteurs-a-eviter-en-septembre/" },
   { name: "Noovo Moi - Snapshot complémentaire (non officiel)", url: "data/noovo-road-closures-snapshot.json", dataType: "snapshot", extractedAt: "2026-09-08" },
+  { name: "Marathon Beneva 2026 - Export Waze fourni (communautaire)", url: "data/Marathon-Beneva-Mtl-2026.json", dataType: "snapshot" },
+  { name: "Marathon Beneva de Montreal - Fermetures officielles 2026", url: "https://couronsmtl.com/wp-content/uploads/2026/09/Depliant-Fermetures-de-rues-2026-web.pdf", dataType: "snapshot", extractedAt: "2026-10-05T15:59:03.349Z" },
+  { name: "RTRT.me - Marathon Beneva 2026 (geometrie des parcours)", url: "https://track.rtrt.me/map/CM-BENEVA-MONTREAL-2026", dataType: "snapshot", extractedAt: "2026-10-05T15:09:35.472Z" },
 
   // Agglomeration de Montreal
   { name: "Montreal - Carte des entraves", url: "https://services.montreal.ca/cartes/entraves/" },
@@ -209,6 +212,9 @@ const MAP_SOURCE_NAMES = new Set([
   "Signalements citoyens - Snapshot du formulaire",
   "Noovo Moi - Complément et image fournie (non officiel)",
   "Noovo Moi - Snapshot complémentaire (non officiel)",
+  "Marathon Beneva 2026 - Export Waze fourni (communautaire)",
+  "Marathon Beneva de Montreal - Fermetures officielles 2026",
+  "RTRT.me - Marathon Beneva 2026 (geometrie des parcours)",
   "OpenStreetMap - Fond de carte",
   "OSRM - Alignement des trajets sur le reseau routier",
   "Overpass / OpenStreetMap - Geometrie des rues nommees",

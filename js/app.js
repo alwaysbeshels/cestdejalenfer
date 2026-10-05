@@ -78,6 +78,7 @@ const LIVE_SOURCES = {
   montrealResolvedGeometries: "data/montreal-entraves-geometries-snapshot.json",
   noovoRoadClosuresSnapshot: "data/noovo-road-closures-snapshot.json",
   citizenReportsSnapshot: "data/citizen-reports-snapshot.json",
+  marathonBenevaSnapshot: "data/Marathon-Beneva-Mtl-2026.json",
   montSaintHilaireWorks: "https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_10Septembre2026_WFL1/FeatureServer",
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
@@ -1220,7 +1221,10 @@ function formatInputDate(date) {
 function getDateRange() {
   const start = parseDate(dateStart.value);
   const end = dateEndUsesOpenDefault ? parseDate("2099-12-31") : parseDate(dateEnd.value || "2099-12-31");
-  return start <= end ? { start, end } : { start: end, end: start };
+  const range = start <= end ? { start, end } : { start: end, end: start };
+  range.start.setHours(0, 0, 0, 0);
+  range.end.setHours(23, 59, 59, 999);
+  return range;
 }
 
 function hasExpiredToday(closure, now = new Date()) {
@@ -2246,6 +2250,148 @@ async function loadCitizenReportClosures() {
           [t("citizen.verified"), snapshot.extractedAt]
         ]
       })));
+}
+
+function normalizeMarathonBenevaSnapshot(snapshot) {
+  const collection = (key) => {
+    const rows = snapshot?.[key]?.objects;
+    if (!Array.isArray(rows) || rows.some((row) => row?.id == null) || new Set(rows.map((row) => row.id)).size !== rows.length) {
+      throw new Error(`Invalid marathon collection: ${key}`);
+    }
+    return new Map(rows.map((row) => [row.id, row]));
+  };
+  const closures = collection("roadClosures");
+  const segments = collection("segments");
+  const streets = collection("streets");
+  const cities = collection("cities");
+  const events = collection("majorTrafficEvents");
+  const dateParts = (value) => {
+    const match = /^(\d{4}-\d{2}-\d{2}) ([01]\d|2[0-3]):([0-5]\d)$/.exec(value || "");
+    if (!match || formatInputDate(parseDate(match[1])) !== match[1]) throw new Error("Invalid marathon date");
+    return [match[1], `${match[2]}:${match[3]}`];
+  };
+  return [...closures.values()].map((record) => {
+    const segment = segments.get(record.segID);
+    const street = streets.get(segment?.primaryStreetID);
+    const city = cities.get(street?.cityID);
+    const event = events.get(record.eventId);
+    const coordinates = record.geometry?.coordinates;
+    if (record.closureType !== "SEGMENT" || typeof record.forward !== "boolean" || !street?.name || !city?.name || !event
+      || !Number.isInteger(segment.fromNodeID) || !Number.isInteger(segment.toNodeID)
+      || record.geometry?.type !== "LineString" || !Array.isArray(coordinates) || coordinates.length < 2
+      || !coordinates.every((pair) => Array.isArray(pair) && pair.length === 2 && pair.every(Number.isFinite)
+        && pair[0] >= GREATER_MONTREAL_BOUNDS.west && pair[0] <= GREATER_MONTREAL_BOUNDS.east
+        && pair[1] >= GREATER_MONTREAL_BOUNDS.south && pair[1] <= GREATER_MONTREAL_BOUNDS.north)) {
+      throw new Error(`Invalid marathon restriction: ${record.id}`);
+    }
+    const [startDate, startTime] = dateParts(record.startDate);
+    const [endDate, endTime] = dateParts(record.endDate);
+    if (record.startDate >= record.endDate) throw new Error(`Reversed marathon period: ${record.id}`);
+    const geometry = { type: "LineString", coordinates: coordinates.map((pair) => [...pair]) };
+    if (!record.forward) geometry.coordinates.reverse();
+    const fromNode = record.forward ? segment.fromNodeID : segment.toNodeID;
+    const toNode = record.forward ? segment.toNodeID : segment.fromNodeID;
+    const startMinutes = minutesFromTime(startTime);
+    const endMinutes = minutesFromTime(endTime);
+    const periods = startDate !== endDate ? ["day", "night"]
+      : [touchesDay(startMinutes, endMinutes) ? "day" : null, touchesNight(startMinutes, endMinutes) ? "night" : null].filter(Boolean);
+    return {
+      id: `marathon-beneva-${record.id}`,
+      sourceRecordId: record.id,
+      reference: record.id,
+      sourceKind: "marathon-beneva-waze",
+      category: "event",
+      automobileImpact: true,
+      title: record.reason,
+      municipality: city.name,
+      borough: city.name,
+      streets: street.name,
+      startDate, startTime, endDate, endTime,
+      sourceStartDateTime: record.startDate,
+      sourceEndDateTime: record.endDate,
+      severity: "critical",
+      color: SEVERITY_META.critical.color,
+      roadType: "street",
+      trafficLabel: t("severity.critical"),
+      impact: t("marathon.impact"),
+      direction: t("marathon.direction").replace("{from}", String(fromNode)).replace("{to}", String(toNode)),
+      directionIsSegmentDescription: true,
+      sourceDirection: { forward: record.forward, fromNodeId: segment.fromNodeID, toNodeId: segment.toNodeID, fromNodeClosed: record.fromNodeClosed },
+      sourceEvent: { id: event.id, published: event.published, ready: event.ready, active: event.active },
+      sourceClosureStatus: record.closureStatus,
+      sourceCreatedOn: record.createdOn,
+      sourceUpdatedOn: record.updatedOn,
+      source: "Marathon Beneva 2026 - Export Waze fourni (communautaire)",
+      sourceUrl: LIVE_SOURCES.marathonBenevaSnapshot,
+      periods, geometry,
+      point: representativePoint(geometry),
+      geometryNote: t("marathon.geometry"),
+      scheduleText: t("marathon.scope"),
+      details: [
+        [t("marathon.segment"), String(record.segID)],
+        [t("marathon.provenance"), [...new Set((record.attributions || []).map((entry) => entry.channel).filter(Boolean))].join(", ")],
+        [t("marathon.status"), record.closureStatus],
+        [t("marathon.eventStatus"), JSON.stringify({ published: event.published, ready: event.ready, active: event.active })],
+        [t("marathon.nodeRestriction"), `fromNodeClosed=${record.fromNodeClosed}`]
+      ]
+    };
+  });
+}
+
+function normalizeMarathonPdfClosures(snapshot) {
+  const reference = snapshot?.officialClosureReference;
+  if (reference?.schemaVersion !== 1 || !Array.isArray(reference.records) || !Array.isArray(reference.schedule)
+    || new Set(reference.records.map((record) => record.id)).size !== reference.records.length) {
+    throw new Error("Invalid marathon PDF reference");
+  }
+  return reference.records.filter((record) => record.kind === "road").map((record) => {
+    const page = reference.schedule.find((entry) => entry.page === record.pdfPage);
+    const window = page?.rows.find((entry) => entry.row === record.pdfRow);
+    const lines = record.geometry?.type === "LineString" ? [record.geometry.coordinates]
+      : record.geometry?.type === "MultiLineString" ? record.geometry.coordinates : [];
+    if (!record.id || !record.streetName || record.startDate !== page?.date || record.endDate !== page?.date
+      || !/^\d{4}-\d{2}-\d{2}$/.test(record.startDate) || formatInputDate(parseDate(record.startDate)) !== record.startDate
+      || !/^([01]\d|2[0-3]):[0-5]\d$/.test(record.startTime) || !/^([01]\d|2[0-3]):[0-5]\d$/.test(record.endTime)
+      || record.startTime !== window?.startTime || record.endTime !== window?.endTime || record.startTime >= record.endTime
+      || record.geometryRole !== "pdf-closure-matched-to-rtrt" || !lines.length
+      || !lines.every((line) => Array.isArray(line) && line.length >= 2 && line.every((pair) => Array.isArray(pair) && pair.length === 2
+        && pair.every(Number.isFinite) && pair[0] >= GREATER_MONTREAL_BOUNDS.west && pair[0] <= GREATER_MONTREAL_BOUNDS.east
+        && pair[1] >= GREATER_MONTREAL_BOUNDS.south && pair[1] <= GREATER_MONTREAL_BOUNDS.north))) {
+      throw new Error(`Invalid marathon PDF closure: ${record.id}`);
+    }
+    return {
+      id: record.id, reference: record.id, sourceKind: "marathon-beneva-pdf", category: "event", automobileImpact: true,
+      title: `Marathon Beneva de Montreal 2026 - ${record.streetName}`, municipality: "Montréal", borough: "Montréal",
+      streets: record.streetName, responsible: "Marathon Beneva de Montreal",
+      startDate: record.startDate, endDate: record.endDate, startTime: record.startTime, endTime: record.endTime,
+      source: reference.source, sourceUrl: reference.sourceUrl, sourceVerifiedAt: reference.pdfCheckedAt,
+      severity: "critical", color: SEVERITY_META.critical.color, roadType: "street", trafficLabel: t("severity.critical"),
+      impact: t("marathon.pdfImpact"), direction: t("popup.notPublished"), suppressDirectionArrows: true,
+      periods: ["day"], geometry: record.geometry, point: representativePoint(record.geometry),
+      geometryNote: t("marathon.pdfGeometry"), scheduleText: t("marathon.pdfScope"),
+      details: [
+        [t("marathon.courses"), record.courseIds.map((id) => snapshot.officialCourseReference.courses.find((course) => course.id === id)?.title || id).join("; ")],
+        [t("marathon.pdfReference"), `${record.pdfPage} / ${record.pdfRow + 1}`],
+        [t("marathon.geometrySource"), reference.geometrySourceUrl],
+        [t("pedestrian.sourceChecked"), reference.pdfCheckedAt]
+      ]
+    };
+  });
+}
+
+let marathonSnapshotFailed = false;
+
+async function loadMarathonBenevaClosures() {
+  try {
+    const snapshot = await fetchJson(LIVE_SOURCES.marathonBenevaSnapshot);
+    const closures = [...normalizeMarathonBenevaSnapshot(snapshot), ...normalizeMarathonPdfClosures(snapshot)];
+    marathonSnapshotFailed = false;
+    return closures;
+  } catch (error) {
+    marathonSnapshotFailed = true;
+    showMapStatus(t("marathon.loadError"), "error");
+    throw error;
+  }
 }
 
 async function loadNoovoRoadClosuresSnapshot() {
@@ -3410,6 +3556,7 @@ async function loadOfficialData() {
     loadMontrealPedestrianSnapshotClosures(),
     loadNoovoRoadClosuresSnapshot(),
     loadCitizenReportClosures(),
+    loadMarathonBenevaClosures(),
     loadPjcciClosures()
   ]);
   const localSnapshotClosures = localSnapshotResults
@@ -3485,7 +3632,7 @@ async function loadBackgroundOfficialData() {
     updateView({ fit: false });
   }
   // Toujours retirer l'indicateur de chargement une fois le fond charge.
-  showMapStatus(`Donnees chargees: ${allClosures.length} entraves actives dans la region.`, "ready");
+  showMapStatus(marathonSnapshotFailed ? t("marathon.loadError") : `Donnees chargees: ${allClosures.length} entraves actives dans la region.`, marathonSnapshotFailed ? "error" : "ready");
 
   enrichMunicipalGeometriesInBackground();
 }
@@ -4020,7 +4167,7 @@ function isMeaningfulLavalValue(value) {
 }
 
 function addDirectionArrows(latLngs, closure, targetLayer) {
-  if (PEDESTRIAN_MODE || latLngs.length < 2) {
+  if (PEDESTRIAN_MODE || closure.suppressDirectionArrows || latLngs.length < 2) {
     return;
   }
 
@@ -4305,6 +4452,15 @@ function updateView({ fit = false } = {}) {
 
 window.addEventListener("languagechange", () => {
   if (PEDESTRIAN_MODE) window.PEDESTRIAN_MAP.refresh();
+  const marathonSnapshot = !PEDESTRIAN_MODE && memoryFetchCache.get(LIVE_SOURCES.marathonBenevaSnapshot);
+  if (marathonSnapshot && !marathonSnapshotFailed) {
+    const translatedClosures = new Map([...normalizeMarathonBenevaSnapshot(marathonSnapshot), ...normalizeMarathonPdfClosures(marathonSnapshot)].map((closure) => [closure.id, closure]));
+    allClosures = dedupeClosures(allClosures.map((closure) => translatedClosures.get(closure.id) || closure));
+    updateView({ fit: false });
+    const selected = currentClosures.find((closure) => closure.id === selectedClosureId && ["marathon-beneva-waze", "marathon-beneva-pdf"].includes(closure.sourceKind));
+    if (selected && activeMapPopup) openGroupedPopup(selected, activeMapPopup.getLatLng());
+  }
+  if (marathonSnapshotFailed) showMapStatus(t("marathon.loadError"), "error");
   updateLocationControl();
   translateZoomControl();
   menuToggle.setAttribute("aria-label", t(menuToggle.classList.contains("is-open") ? "menu.close" : "menu.open"));
@@ -4319,6 +4475,10 @@ window.addEventListener("languagechange", () => {
 });
 
 function showMapStatus(message, mode = "loading") {
+  if (!PEDESTRIAN_MODE && marathonSnapshotFailed) {
+    message = t("marathon.loadError");
+    mode = "error";
+  }
   mapStatus.textContent = correctFrenchText(message);
   mapStatus.dataset.mode = mode;
   mapStatus.hidden = mode === "ready";

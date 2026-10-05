@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T04:09:30.675Z",
+  "generatedAt": "2026-10-05T16:03:48.388Z",
   "policy": "Pedestrian and cycling impacts. Cycling-only records identify affectedUsers explicitly and do not confirm pedestrian restrictions. Per-source checkedAt is authoritative; local snapshots are not reverified. Unknown sidewalk sides are never inferred. Geometry is the published worksite unless explicitly identified otherwise. Selected documentary review notices are displayed separately without geometry or inferred dates.",
   "sources": [
     {
@@ -291,6 +291,16 @@
       "received": 965,
       "retained": 0,
       "role": "labels-and-notice-details"
+    },
+    {
+      "key": "marathon-pdf",
+      "url": "data/Marathon-Beneva-Mtl-2026.json",
+      "status": "local-snapshot",
+      "checkedAt": null,
+      "sourceExtractedAt": "2026-10-05T15:59:03.349Z",
+      "received": 72,
+      "retained": 3,
+      "reviewCount": 0
     }
   ],
   "records": [
@@ -445,6 +455,888 @@
       ],
       "sourceKey": "laval",
       "sourceCheckedAt": "2026-10-05T04:09:28.617Z"
+    },
+    {
+      "id": "pedestrian-marathon-pdf-2026-10-10-734cec23a1c1",
+      "title": "Marathon Beneva de Montreal 2026",
+      "streets": "",
+      "category": "event",
+      "sourceKind": "pedestrian-marathon-pdf",
+      "source": "Marathon Beneva de Montreal - Fermetures officielles 2026",
+      "sourceUrl": "https://couronsmtl.com/wp-content/uploads/2026/09/Depliant-Fermetures-de-rues-2026-web.pdf",
+      "sourceKey": "marathon-pdf",
+      "sourceCheckedAt": "2026-10-05T15:59:03.349Z",
+      "responsible": "Marathon Beneva de Montreal",
+      "borough": "Montréal",
+      "pedestrianArea": "path",
+      "affectedUsers": [
+        "pedestrians"
+      ],
+      "automobileImpact": false,
+      "startDate": "2026-10-10",
+      "endDate": "2026-10-10",
+      "startTime": "06:45",
+      "endTime": "12:35",
+      "openEnded": false,
+      "periods": [
+        "day"
+      ],
+      "severity": "critical",
+      "impact": "HORAIRE RUES FERMÉES",
+      "impactKey": "marathon.pathImpact",
+      "geometryNoteKey": "marathon.pdfGeometry",
+      "scheduleTextKey": "marathon.pdfScope",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.554978,
+              45.562595
+            ],
+            [
+              -73.555141,
+              45.562412
+            ],
+            [
+              -73.55524,
+              45.562266
+            ],
+            [
+              -73.555355,
+              45.56217
+            ],
+            [
+              -73.555456,
+              45.562107
+            ],
+            [
+              -73.555632,
+              45.562066
+            ],
+            [
+              -73.555781,
+              45.562041
+            ],
+            [
+              -73.555942,
+              45.56201
+            ]
+          ],
+          [
+            [
+              -73.554967,
+              45.562605
+            ],
+            [
+              -73.555058,
+              45.562494
+            ],
+            [
+              -73.555168,
+              45.562346
+            ],
+            [
+              -73.555266,
+              45.562224
+            ],
+            [
+              -73.555334,
+              45.562174
+            ],
+            [
+              -73.555451,
+              45.562111
+            ],
+            [
+              -73.555716,
+              45.562042
+            ],
+            [
+              -73.555923,
+              45.56201
+            ]
+          ],
+          [
+            [
+              -73.554804,
+              45.562523
+            ],
+            [
+              -73.555119,
+              45.56228
+            ],
+            [
+              -73.555278,
+              45.562154
+            ],
+            [
+              -73.555334,
+              45.562108
+            ],
+            [
+              -73.555563,
+              45.562046
+            ],
+            [
+              -73.555816,
+              45.562005
+            ],
+            [
+              -73.555885,
+              45.56199
+            ]
+          ]
+        ]
+      },
+      "point": [
+        -73.555456,
+        45.562107
+      ],
+      "side": {
+        "code": "not-applicable",
+        "published": null,
+        "geometryStatus": "pdf-matched-course"
+      },
+      "evidence": {
+        "kind": "pdf-vector-and-published-path",
+        "text": "HORAIRE RUES FERMÉES",
+        "pdfPage": 1,
+        "pdfRow": 0,
+        "courseIds": [
+          "10k",
+          "5k",
+          "1k"
+        ],
+        "sections": [
+          {
+            "courseId": "10k",
+            "firstCoordinateIndex": 164,
+            "lastCoordinateIndex": 171,
+            "referenceIds": [
+              "osm:way:1050400699",
+              "osm:way:1253365278"
+            ],
+            "referenceTypes": [
+              "cycleway",
+              "footway"
+            ],
+            "maximumGapPdfPoints": 1.756,
+            "maximumReferenceDistanceMeters": 8.632149349442175
+          },
+          {
+            "courseId": "5k",
+            "firstCoordinateIndex": 97,
+            "lastCoordinateIndex": 104,
+            "referenceIds": [
+              "osm:way:1050400699",
+              "osm:way:1202594772",
+              "osm:way:1253365278"
+            ],
+            "referenceTypes": [
+              "cycleway",
+              "footway"
+            ],
+            "maximumGapPdfPoints": 1.527,
+            "maximumReferenceDistanceMeters": 9.623351579282833
+          },
+          {
+            "courseId": "1k",
+            "firstCoordinateIndex": 19,
+            "lastCoordinateIndex": 25,
+            "referenceIds": [
+              "osm:way:1050400699",
+              "osm:way:1202594772",
+              "osm:way:1253365278"
+            ],
+            "referenceTypes": [
+              "cycleway",
+              "footway"
+            ],
+            "maximumGapPdfPoints": 1.762,
+            "maximumReferenceDistanceMeters": 6.665879904970215
+          }
+        ]
+      },
+      "details": [
+        {
+          "labelKey": "marathon.courses",
+          "value": "10 km - Fondation du cancer du sein du Québec; 5 km - Sports Experts; 1 km"
+        },
+        {
+          "labelKey": "marathon.pdfReference",
+          "value": "1 / 1"
+        },
+        {
+          "labelKey": "marathon.geometrySource",
+          "value": "https://api.rtrt.me/events/CM-BENEVA-MONTREAL-2026/map"
+        }
+      ]
+    },
+    {
+      "id": "pedestrian-marathon-pdf-2026-10-10-964f92d0b373",
+      "title": "Marathon Beneva de Montreal 2026",
+      "streets": "",
+      "category": "event",
+      "sourceKind": "pedestrian-marathon-pdf",
+      "source": "Marathon Beneva de Montreal - Fermetures officielles 2026",
+      "sourceUrl": "https://couronsmtl.com/wp-content/uploads/2026/09/Depliant-Fermetures-de-rues-2026-web.pdf",
+      "sourceKey": "marathon-pdf",
+      "sourceCheckedAt": "2026-10-05T15:59:03.349Z",
+      "responsible": "Marathon Beneva de Montreal",
+      "borough": "Montréal",
+      "pedestrianArea": "path",
+      "affectedUsers": [
+        "pedestrians"
+      ],
+      "automobileImpact": false,
+      "startDate": "2026-10-10",
+      "endDate": "2026-10-10",
+      "startTime": "07:30",
+      "endTime": "11:00",
+      "openEnded": false,
+      "periods": [
+        "day"
+      ],
+      "severity": "critical",
+      "impact": "HORAIRE RUES FERMÉES",
+      "impactKey": "marathon.pathImpact",
+      "geometryNoteKey": "marathon.pdfGeometry",
+      "scheduleTextKey": "marathon.pdfScope",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.554635,
+              45.556476
+            ],
+            [
+              -73.554787,
+              45.556481
+            ]
+          ],
+          [
+            [
+              -73.55487,
+              45.556536
+            ],
+            [
+              -73.554837,
+              45.556834
+            ]
+          ],
+          [
+            [
+              -73.555431,
+              45.558545
+            ],
+            [
+              -73.555449,
+              45.558562
+            ],
+            [
+              -73.555527,
+              45.55879
+            ],
+            [
+              -73.555609,
+              45.55902
+            ],
+            [
+              -73.55569,
+              45.559162
+            ],
+            [
+              -73.555795,
+              45.559335
+            ],
+            [
+              -73.55591,
+              45.559468
+            ],
+            [
+              -73.556036,
+              45.559593
+            ],
+            [
+              -73.55612,
+              45.559659
+            ],
+            [
+              -73.556305,
+              45.55977
+            ],
+            [
+              -73.556367,
+              45.559796
+            ],
+            [
+              -73.556684,
+              45.559911
+            ],
+            [
+              -73.557266,
+              45.5601
+            ],
+            [
+              -73.557823,
+              45.560285
+            ],
+            [
+              -73.558638,
+              45.560545
+            ],
+            [
+              -73.559547,
+              45.560839
+            ]
+          ],
+          [
+            [
+              -73.560525,
+              45.561171
+            ],
+            [
+              -73.561333,
+              45.561399
+            ],
+            [
+              -73.562274,
+              45.561661
+            ]
+          ],
+          [
+            [
+              -73.570027,
+              45.564081
+            ],
+            [
+              -73.569887,
+              45.564167
+            ]
+          ],
+          [
+            [
+              -73.569677,
+              45.564349
+            ],
+            [
+              -73.569832,
+              45.564411
+            ],
+            [
+              -73.569945,
+              45.564449
+            ],
+            [
+              -73.57005,
+              45.564476
+            ],
+            [
+              -73.570314,
+              45.564416
+            ]
+          ],
+          [
+            [
+              -73.554642,
+              45.556478
+            ],
+            [
+              -73.554783,
+              45.556482
+            ]
+          ],
+          [
+            [
+              -73.554867,
+              45.556533
+            ],
+            [
+              -73.554836,
+              45.556833
+            ]
+          ],
+          [
+            [
+              -73.555431,
+              45.558545
+            ],
+            [
+              -73.555447,
+              45.558563
+            ],
+            [
+              -73.555527,
+              45.55879
+            ],
+            [
+              -73.555609,
+              45.55902
+            ],
+            [
+              -73.55569,
+              45.559162
+            ],
+            [
+              -73.555795,
+              45.559335
+            ],
+            [
+              -73.55591,
+              45.559468
+            ],
+            [
+              -73.556036,
+              45.559593
+            ],
+            [
+              -73.55612,
+              45.559659
+            ],
+            [
+              -73.556305,
+              45.55977
+            ],
+            [
+              -73.556367,
+              45.559796
+            ],
+            [
+              -73.556684,
+              45.559911
+            ],
+            [
+              -73.557266,
+              45.5601
+            ],
+            [
+              -73.557823,
+              45.560285
+            ],
+            [
+              -73.558638,
+              45.560545
+            ],
+            [
+              -73.559547,
+              45.560839
+            ]
+          ],
+          [
+            [
+              -73.560525,
+              45.561171
+            ],
+            [
+              -73.561333,
+              45.561399
+            ]
+          ],
+          [
+            [
+              -73.570031,
+              45.564077
+            ],
+            [
+              -73.569877,
+              45.564166
+            ]
+          ],
+          [
+            [
+              -73.569665,
+              45.564343
+            ],
+            [
+              -73.569973,
+              45.564458
+            ],
+            [
+              -73.570023,
+              45.564477
+            ],
+            [
+              -73.570053,
+              45.564479
+            ]
+          ]
+        ]
+      },
+      "point": [
+        -73.55612,
+        45.559659
+      ],
+      "side": {
+        "code": "not-applicable",
+        "published": null,
+        "geometryStatus": "pdf-matched-course"
+      },
+      "evidence": {
+        "kind": "pdf-vector-and-published-path",
+        "text": "HORAIRE RUES FERMÉES",
+        "pdfPage": 1,
+        "pdfRow": 1,
+        "courseIds": [
+          "10k",
+          "5k"
+        ],
+        "sections": [
+          {
+            "courseId": "10k",
+            "firstCoordinateIndex": 9,
+            "lastCoordinateIndex": 10,
+            "referenceIds": [
+              "osm:way:1126551994"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 1.182,
+            "maximumReferenceDistanceMeters": 6.509223650147969
+          },
+          {
+            "courseId": "10k",
+            "firstCoordinateIndex": 11,
+            "lastCoordinateIndex": 12,
+            "referenceIds": [
+              "osm:way:1126551994"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 1.201,
+            "maximumReferenceDistanceMeters": 7.045278242836998
+          },
+          {
+            "courseId": "10k",
+            "firstCoordinateIndex": 16,
+            "lastCoordinateIndex": 31,
+            "referenceIds": [
+              "osm:way:89533676",
+              "osm:way:1235602123",
+              "osm:way:1235602125"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 1.373,
+            "maximumReferenceDistanceMeters": 5.136954595302267
+          },
+          {
+            "courseId": "10k",
+            "firstCoordinateIndex": 32,
+            "lastCoordinateIndex": 34,
+            "referenceIds": [
+              "osm:way:118255244",
+              "osm:way:118255240",
+              "osm:way:1304186043",
+              "osm:way:1202594249"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 0.537,
+            "maximumReferenceDistanceMeters": 9.992557041408416
+          },
+          {
+            "courseId": "10k",
+            "firstCoordinateIndex": 67,
+            "lastCoordinateIndex": 68,
+            "referenceIds": [
+              "osm:way:1202630709"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 0.744,
+            "maximumReferenceDistanceMeters": 3.6509921560792633
+          },
+          {
+            "courseId": "10k",
+            "firstCoordinateIndex": 71,
+            "lastCoordinateIndex": 75,
+            "referenceIds": [
+              "osm:way:1253369023",
+              "osm:way:1202630708",
+              "osm:way:1181474266"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 0.454,
+            "maximumReferenceDistanceMeters": 9.131982505163515
+          },
+          {
+            "courseId": "5k",
+            "firstCoordinateIndex": 10,
+            "lastCoordinateIndex": 11,
+            "referenceIds": [
+              "osm:way:1126551994"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 1.205,
+            "maximumReferenceDistanceMeters": 6.360081593013877
+          },
+          {
+            "courseId": "5k",
+            "firstCoordinateIndex": 12,
+            "lastCoordinateIndex": 13,
+            "referenceIds": [
+              "osm:way:1126551994"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 1.162,
+            "maximumReferenceDistanceMeters": 6.826054380520404
+          },
+          {
+            "courseId": "5k",
+            "firstCoordinateIndex": 17,
+            "lastCoordinateIndex": 32,
+            "referenceIds": [
+              "osm:way:89533676",
+              "osm:way:1235602123",
+              "osm:way:1235602125"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 1.373,
+            "maximumReferenceDistanceMeters": 5.1373189144106
+          },
+          {
+            "courseId": "5k",
+            "firstCoordinateIndex": 33,
+            "lastCoordinateIndex": 34,
+            "referenceIds": [
+              "osm:way:118255244",
+              "osm:way:118255240"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 0.277,
+            "maximumReferenceDistanceMeters": 7.990192201132715
+          },
+          {
+            "courseId": "5k",
+            "firstCoordinateIndex": 64,
+            "lastCoordinateIndex": 65,
+            "referenceIds": [
+              "osm:way:1202630709"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 0.788,
+            "maximumReferenceDistanceMeters": 4.022002997829923
+          },
+          {
+            "courseId": "5k",
+            "firstCoordinateIndex": 68,
+            "lastCoordinateIndex": 71,
+            "referenceIds": [
+              "osm:way:1253369023",
+              "osm:way:1202630708"
+            ],
+            "referenceTypes": [
+              "footway"
+            ],
+            "maximumGapPdfPoints": 0.447,
+            "maximumReferenceDistanceMeters": 8.910107678982605
+          }
+        ]
+      },
+      "details": [
+        {
+          "labelKey": "marathon.courses",
+          "value": "10 km - Fondation du cancer du sein du Québec; 5 km - Sports Experts"
+        },
+        {
+          "labelKey": "marathon.pdfReference",
+          "value": "1 / 2"
+        },
+        {
+          "labelKey": "marathon.geometrySource",
+          "value": "https://api.rtrt.me/events/CM-BENEVA-MONTREAL-2026/map"
+        }
+      ]
+    },
+    {
+      "id": "pedestrian-marathon-pdf-2026-10-11-4efd1bfa387c",
+      "title": "Marathon Beneva de Montreal 2026",
+      "streets": "",
+      "category": "event",
+      "sourceKind": "pedestrian-marathon-pdf",
+      "source": "Marathon Beneva de Montreal - Fermetures officielles 2026",
+      "sourceUrl": "https://couronsmtl.com/wp-content/uploads/2026/09/Depliant-Fermetures-de-rues-2026-web.pdf",
+      "sourceKey": "marathon-pdf",
+      "sourceCheckedAt": "2026-10-05T15:59:03.349Z",
+      "responsible": "Marathon Beneva de Montreal",
+      "borough": "Montréal",
+      "pedestrianArea": "path",
+      "affectedUsers": [
+        "pedestrians"
+      ],
+      "automobileImpact": false,
+      "startDate": "2026-10-11",
+      "endDate": "2026-10-11",
+      "startTime": "06:30",
+      "endTime": "15:25",
+      "openEnded": false,
+      "periods": [
+        "day"
+      ],
+      "severity": "critical",
+      "impact": "HORAIRE RUES FERMÉES",
+      "impactKey": "marathon.pathImpact",
+      "geometryNoteKey": "marathon.pdfGeometry",
+      "scheduleTextKey": "marathon.pdfScope",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.554727,
+              45.562583
+            ],
+            [
+              -73.555012,
+              45.562364
+            ],
+            [
+              -73.555191,
+              45.562224
+            ],
+            [
+              -73.555338,
+              45.562106
+            ],
+            [
+              -73.555636,
+              45.56203
+            ],
+            [
+              -73.555883,
+              45.561997
+            ]
+          ],
+          [
+            [
+              -73.55482,
+              45.562601
+            ],
+            [
+              -73.554919,
+              45.562522
+            ],
+            [
+              -73.555034,
+              45.562439
+            ],
+            [
+              -73.555171,
+              45.562322
+            ],
+            [
+              -73.555262,
+              45.562244
+            ],
+            [
+              -73.555357,
+              45.562169
+            ],
+            [
+              -73.555447,
+              45.562116
+            ],
+            [
+              -73.55556,
+              45.562089
+            ],
+            [
+              -73.555778,
+              45.562046
+            ],
+            [
+              -73.555889,
+              45.562025
+            ]
+          ]
+        ]
+      },
+      "point": [
+        -73.555357,
+        45.562169
+      ],
+      "side": {
+        "code": "not-applicable",
+        "published": null,
+        "geometryStatus": "pdf-matched-course"
+      },
+      "evidence": {
+        "kind": "pdf-vector-and-published-path",
+        "text": "HORAIRE RUES FERMÉES",
+        "pdfPage": 2,
+        "pdfRow": 7,
+        "courseIds": [
+          "marathon",
+          "halfmarathon"
+        ],
+        "sections": [
+          {
+            "courseId": "marathon",
+            "firstCoordinateIndex": 566,
+            "lastCoordinateIndex": 571,
+            "referenceIds": [
+              "osm:way:1050400699",
+              "osm:way:1202594772",
+              "osm:way:1253365278"
+            ],
+            "referenceTypes": [
+              "cycleway",
+              "footway"
+            ],
+            "maximumGapPdfPoints": 2.517,
+            "maximumReferenceDistanceMeters": 6.508783928451383
+          },
+          {
+            "courseId": "halfmarathon",
+            "firstCoordinateIndex": 349,
+            "lastCoordinateIndex": 358,
+            "referenceIds": [
+              "osm:way:1050400699",
+              "osm:way:1202594772",
+              "osm:way:1253365278"
+            ],
+            "referenceTypes": [
+              "cycleway",
+              "footway"
+            ],
+            "maximumGapPdfPoints": 2.705,
+            "maximumReferenceDistanceMeters": 6.591949756579556
+          }
+        ]
+      },
+      "details": [
+        {
+          "labelKey": "marathon.courses",
+          "value": "Marathon; Demi-marathon Shop Santé"
+        },
+        {
+          "labelKey": "marathon.pdfReference",
+          "value": "2 / 8"
+        },
+        {
+          "labelKey": "marathon.geometrySource",
+          "value": "https://api.rtrt.me/events/CM-BENEVA-MONTREAL-2026/map"
+        }
+      ]
     },
     {
       "id": "pedestrian-mont-royal-1939d03c-b4b2-4c2d-b3a6-871f2dba4a6c-sidewalk-unknown-critical",

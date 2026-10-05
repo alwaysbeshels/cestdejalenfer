@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
+import { mergeMarathonPedestrianSnapshot } from "./build-marathon-closures.mjs";
 
 const OUTPUT = "data/pedestrian-closures-snapshot.json";
 const baseUrl = process.env.PEDESTRIAN_VALIDATION_URL || "http://localhost:5500";
@@ -58,6 +59,14 @@ async function montSaintHilaireLayers() {
 async function main() {
   let previous = { records: [], sources: [] };
   try { previous = JSON.parse(await readFile(OUTPUT, "utf8")); } catch (error) { if (error.code !== "ENOENT") throw error; }
+  if (process.argv.includes("--marathon-only")) {
+    if (previous.schemaVersion !== 1) throw new Error("Existing pedestrian snapshot required");
+    const marathon = JSON.parse(await readFile("data/Marathon-Beneva-Mtl-2026.json", "utf8"));
+    const result = mergeMarathonPedestrianSnapshot(previous, marathon);
+    await writeFile(OUTPUT, `${JSON.stringify(result, null, 2)}\n`, "utf8");
+    console.log(JSON.stringify({ output: OUTPUT, marathonPaths: result.records.filter(record => record.sourceKey === "marathon-pdf").length, otherSources: "unchanged, not reverified", generatedAt: result.generatedAt }));
+    return;
+  }
   const browser = await chromium.launch({ headless: true });
   const records = [];
   const sources = [];
@@ -280,8 +289,10 @@ async function main() {
   const snapshot = { schemaVersion: 1, generatedAt: new Date().toISOString(),
     policy: "Pedestrian and cycling impacts. Cycling-only records identify affectedUsers explicitly and do not confirm pedestrian restrictions. Per-source checkedAt is authoritative; local snapshots are not reverified. Unknown sidewalk sides are never inferred. Geometry is the published worksite unless explicitly identified otherwise. Selected documentary review notices are displayed separately without geometry or inferred dates.",
     sources, records: records.sort((first, second) => first.id.localeCompare(second.id)), review };
-  await writeFile(OUTPUT, `${JSON.stringify(snapshot, null, 2)}\n`, "utf8");
-  console.log(JSON.stringify({ output: OUTPUT, generatedAt: snapshot.generatedAt, records: records.length, sources: sources.length, failed: sources.filter((source) => source.status === "failed").map((source) => source.key), review: review.length }));
+  const marathon = JSON.parse(await readFile("data/Marathon-Beneva-Mtl-2026.json", "utf8"));
+  const result = mergeMarathonPedestrianSnapshot(snapshot, marathon);
+  await writeFile(OUTPUT, `${JSON.stringify(result, null, 2)}\n`, "utf8");
+  console.log(JSON.stringify({ output: OUTPUT, generatedAt: result.generatedAt, records: result.records.length, sources: result.sources.length, failed: result.sources.filter((source) => source.status === "failed").map((source) => source.key), review: review.length }));
 }
 
 main().catch((error) => { console.error(error); process.exitCode = 1; });

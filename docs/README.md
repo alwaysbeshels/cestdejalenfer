@@ -26,6 +26,18 @@ Dans la PWA installee, le dernier mode Auto/Pietons est conserve localement et r
 
 Pour tester sans Chrome sur Mac : installez Xcode depuis l'App Store, ouvrez Xcode > Settings > Components et installez un simulateur iOS si necessaire, puis lancez Xcode > Open Developer Tool > Simulator. Depuis le simulateur, ouvrez Safari sur `http://localhost:5500/index.html` apres avoir demarre le serveur local; utilisez Partager > Sur l'ecran d'accueil et ouvrez l'icone ajoutee. Le simulateur iOS requiert l'installation complete de Xcode; les seuls outils en ligne de commande ne suffisent pas. Testez egalement sur un vrai iPhone via l'URL HTTPS de GitHub Pages avant publication : le simulateur ne reproduit pas tous les comportements du materiel. L'application installee ne fonctionne pas hors ligne et ne remplace pas une application native App Store.
 
+### Navigation entre les pages
+
+Les cartes auto, pietonne, nids-de-poule et la FAQ utilisent [un chargeur commun](../js/navigation.js) et [une transition commune](../css/navigation.css). Les routes FR/EN recuperent toujours le HTML racine et conservent une base vers la racine du projet, mais elles inserent maintenant le contenu et executent ses scripts dans l'ordre, sans reconstruire le document avec `document.write`.
+
+Le survol ou le focus prepare la destination; un clic normal garde la page actuelle visible pendant la preparation. Un transfert HTML de session, valable 15 secondes et consomme une seule fois, evite une seconde requete du meme HTML dans la page de langue. Un rechargement explicite redemande le HTML. Seules les ressources statiques de la page sont preparees : les flux de circulation, snapshots de donnees et tuiles ne sont pas mis en cache par ce mecanisme, et le service worker reste reseau uniquement.
+
+Les navigateurs compatibles conservent l'ancienne vue jusqu'a l'initialisation de la destination puis appliquent un fondu de 140 ms. La preference de mouvement reduit supprime le fondu; sans support des transitions, les liens restent fonctionnels. Les vues internes carte/statistiques et nids-de-poule gardent leurs gestionnaires existants. Les liens externes, ouvertures dans un nouvel onglet, telechargements, ancres et clics avec Ctrl/Cmd ne sont pas detournes. Le mode statistiques est applique avant le premier rendu pour ne pas afficher la carte transitoirement.
+
+Les clics directs Auto vers Statistiques utilisent aussi une transition native dans le meme document. Depuis Pietons, le chargeur attend la fin du premier rendu des statistiques avant de reveler la destination. Le panneau gauche atteint sa largeur finale en une seule mise en page; son effet de retrecissement utilise une capture animee sur 160 ms, sans recalculer la grille, les tableaux et les graphiques a chaque image. Les mises a jour de contenu requises par une transition se terminent sans attendre `requestAnimationFrame`, car le navigateur peut suspendre ces callbacks pendant la capture. Le mouvement reduit conserve un changement direct sans animation.
+
+Les routes de langue suivent la racine effective du script, y compris sous un sous-dossier de projet, et conservent les parametres et ancres au changement de langue. Validation : `node tools/validate-navigation.mjs`, sur le serveur local existant `http://localhost:5000`; definir `NAVIGATION_VALIDATION_URL` pour une autre origine. Le test couvre les clics reels, FR/EN, mobile, historique, ancres, rechargement, destination lente et absence de transition native. Safari et Firefox n'etaient pas installes lors de cette validation.
+
 ## Développement local (optionnel)
 
 ### Carte des nids-de-poule et du colmatage
@@ -161,6 +173,18 @@ Le snapshot de details enrichit seulement les permis presents dans le WFS au mom
 Longueuil conserve uniquement `Sentier_Ferme`, avec statut officiel en cours ou planifie (1 ou 2), dates et geometrie publiees. Le champ combine `Trottoirs_Liens_Cyclable_Inacces` n'est pas une preuve suffisante, a lui seul, d'une fermeture pietonne. Les echecs sont isoles par source lors de la consolidation et restent consultables dans le panneau Sources, sans bandeau persistant sur une carte chargee avec succes. Une panne du fichier commun reste signalee et ne charge aucune fermeture automobile de remplacement.
 
 Validation Chromium : avis Gordon, Duquette et Percy-Walters compares aux pages officielles; filtre Parcs et popup Duquette; bascule FR/EN du popup; filtres de zones et d'impacts; compteurs au deplacement; panneau mobile; panne de Longueuil; chargement et rendu de la carte automobile. Les sources live changent a chaque visite; les nombres charges ne sont pas les nombres visibles ni necessairement actifs a la date selectionnee.
+
+### Marathon Beneva 2026
+
+La carte automobile charge [l'export Waze fourni](../data/Marathon-Beneva-Mtl-2026.json) : 88 fermetures directionnelles du 10 octobre sur 76 segments et 11 voies, conservees sans modification. Le meme fichier ajoute maintenant 69 groupes routiers issus du PDF officiel rapproche des parcours RTRT : 15 le samedi 10 et 54 le dimanche 11 octobre. Les horaires Waze et PDF restent distincts, avec leur provenance dans les popups.
+
+`officialCourseReference` conserve les six parcours geographiques et les jours/departs de course publies. `officialClosureReference` contient les 20 plages horaires du PDF, les portions verifiees, les references des objets PDF et les indices des coordonnees RTRT utilisees. Trois groupes de chemins sont integres au snapshot pieton consolide, sans y recopier les fermetures automobiles. Le sens de course n'est jamais affiche comme sens de circulation automobile.
+
+L'[analyse detaillee du marathon](ANALYSE_MARATHON_BENEVA_2026.md) donne les horaires, la methode et les limites : 297 aretes du parcours restent exclues, faute d'identification de voie ou de rattachement horaire suffisamment sur. Selon la clarification de l'utilisatrice, le 9 octobre est une exposition interieure sans fermeture a ajouter; ce n'est plus une question en attente. Les interdictions de stationnement restent distinctes des fermetures routieres. Aucune fermeture generale du parc ou du jardin n'est deduite. Les autres sources pietonnes et leurs dates de verification restent inchangees.
+
+Regeneration locale : `node tools/build-marathon-closures.mjs`, puis `node tools/build-pedestrian-snapshot.mjs --marathon-only`. Le premier recharge le PDF et OSM, utilise PyMuPDF et la geobase locale existante, et synchronise le catalogue. Ces outils ne sont pas des dependances de production.
+
+Validation locale : `node tools/validate-marathon.mjs`, avec le serveur sur `http://localhost:5000` ou `MARATHON_VALIDATION_URL` pour une autre origine. Le filtre de dates commun inclut maintenant toute la journee choisie, y compris les fermetures se terminant avant midi.
 
 ### Statistiques
 

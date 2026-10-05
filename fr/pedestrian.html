@@ -4,15 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="../">
+  <link rel="stylesheet" href="css/navigation.css?v=20261005-nav2">
+  <script defer blocking="render" src="js/navigation.js?v=20261005-nav2" data-page="pedestrian.html"></script>
   <title>Entraves pi&eacute;tonnes - Grand Montr&eacute;al</title>
 </head>
 <body>
-  <script>
-    fetch("../pedestrian.html").then((response) => response.text()).then((html) => {
-      document.open();
-      document.write(html.replace("<head>", "<head><base href=\"../\">"));
-      document.close();
-    });
-  </script>
 </body>
 </html>

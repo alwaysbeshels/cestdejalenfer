@@ -53,18 +53,20 @@
   ];
   const TWO_COLUMN_MIN_WIDTH = 760;
 
-  const MONTREAL_KINDS = new Set(["montreal-wfs", "uci-wfs", "seasonal-pedestrian-street", "montreal-pedestrian-opendata"]);
+  const MONTREAL_KINDS = new Set(["montreal-wfs", "uci-wfs", "marathon-beneva-waze", "marathon-beneva-pdf", "seasonal-pedestrian-street", "montreal-pedestrian-opendata"]);
   // Sources whose street field is the bare street name, without a type word.
   const BARE_STREET_KINDS = new Set(["montreal-wfs", "mont-royal-snapshot"]);
   const REGIONAL_KINDS = new Set(["mobilite-montreal", "noovo-road-snapshot", "pjcci"]);
   const MTMD_KINDS = new Set(["quebec511-mtmd-wfs", "quebec511-event"]);
   const CURATED_KINDS = new Set(["mobilite-montreal", "seasonal-pedestrian-street", "linked-city-work"]);
   const STREET_EXCLUDED_KINDS = new Set(["uci-wfs", "pjcci"]);
-  const EVENT_SNAPSHOT_KINDS = new Set(["uci-wfs", "noovo-road-snapshot"]);
+  const EVENT_SNAPSHOT_KINDS = new Set(["uci-wfs", "noovo-road-snapshot", "marathon-beneva-waze", "marathon-beneva-pdf"]);
   const AGE_BUCKETS = [[0, 30, "lessMonth"], [31, 182, "months1to6"], [183, 365, "months6to12"], [366, Infinity, "overYear"]];
   const AGE_COLORS = ["#a8d5c2", "#5fae8f", "#2f7d62", "#174a3a"];
   const SNAPSHOT_URLS = {
     "uci-wfs": "data/montreal-uci-closures-snapshot.json",
+    "marathon-beneva-waze": "data/Marathon-Beneva-Mtl-2026.json",
+    "marathon-beneva-pdf": "https://couronsmtl.com/wp-content/uploads/2026/09/Depliant-Fermetures-de-rues-2026-web.pdf",
     "mont-royal-snapshot": "data/mont-royal-snapshot.json",
     "beaconsfield-snapshot": "data/beaconsfield-snapshot.json",
     "noovo-road-snapshot": "data/noovo-road-closures-snapshot.json",
@@ -102,6 +104,11 @@
   const statsLink = document.querySelector('.map-mode-nav a[data-view="stats"]');
   const autoLink = document.querySelector('.map-mode-nav a[data-language-page="map"]:not([data-view])');
   let renderQueued = false;
+  let renderCompletion = Promise.resolve();
+  let activeViewTransition = null;
+  let changingView = false;
+  let pendingRender = null;
+  let renderFrame = null;
   let lastHtml = "";
   let chartSpecs = [];
   let charts = [];
@@ -188,7 +195,7 @@
       if (/priv/i.test(responsible)) return "private";
       return "unknown";
     }
-    if (kind === "uci-wfs") return "event";
+    if (kind === "uci-wfs" || kind === "marathon-beneva-waze" || kind === "marathon-beneva-pdf") return "event";
     if (kind === "citizen-report") return "citizenReport";
     if (kind === "noovo-road-snapshot") return "unknown";
     if (MTMD_KINDS.has(kind) || kind === "pjcci") return "publicOrg";
@@ -2330,7 +2337,7 @@
       const street = streetName(closure);
       const start = dateKey(closure.startDate);
       const end = closure.endDate < "2099" ? dateKey(closure.endDate) : null;
-      const basis = closure.sourceKind === "citizen-report" ? "declared" : closure.sourceKind === "montreal-pedestrian-opendata" ? "estimated" : ["quebec511-event", "pjcci", "fallback"].includes(closure.sourceKind) ? "unknown" : "published";
+      const basis = ["citizen-report", "marathon-beneva-waze"].includes(closure.sourceKind) ? "declared" : closure.sourceKind === "montreal-pedestrian-opendata" ? "estimated" : ["quebec511-event", "pjcci", "fallback"].includes(closure.sourceKind) ? "unknown" : "published";
       const reliable = basis === "published";
       const length = ["line", "estimated"].includes(item.length.kind) && Number.isFinite(item.length.meters) ? item.length.meters : null;
       const direction = closure.directionIsSegmentDescription ? null : directionKey(closure);
@@ -2580,13 +2587,19 @@
       return;
     }
     if (loadingNow) lastLoadingRender = performance.now();
-    if (renderQueued) return;
+    if (renderQueued) {
+      if (changingView && pendingRender) {
+        cancelAnimationFrame(renderFrame);
+        queueMicrotask(pendingRender);
+      }
+      return;
+    }
     renderQueued = true;
-    requestAnimationFrame(() => {
+    const renderContent = async () => {
       renderQueued = false;
       if (!statsViewActive) return;
       document.body.classList.toggle("view-custom-stats", activeTab === "custom");
-      if (activeTab === "custom") { renderCustomView(); return; }
+      if (activeTab === "custom") { await renderCustomView(); return; }
       if (customView) { customRenderVersion++; customView.destroy(); customView = null; }
       const stats = activeTab === "territory" ? territoryScope(computeStats()) : computeStats();
       if (activeTab === "territory") syncUrl(true);
@@ -2640,6 +2653,16 @@
         if (focus.caret !== null) control?.setSelectionRange?.(focus.caret, focus.caret);
       }
       drawCharts();
+    };
+    renderCompletion = new Promise((resolve, reject) => {
+      const run = () => {
+        if (pendingRender !== run) return;
+        pendingRender = null;
+        renderContent().then(resolve, reject);
+      };
+      pendingRender = run;
+      if (changingView || !container.childElementCount) queueMicrotask(run);
+      else renderFrame = requestAnimationFrame(run);
     });
   }
 
@@ -2781,16 +2804,41 @@
     return event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
   }
 
+  function transitionStatsView(active) {
+    const change = async () => {
+      changingView = true;
+      try {
+        setStatsView(active);
+        if (active) await renderCompletion;
+      } finally {
+        changingView = false;
+      }
+    };
+    activeViewTransition?.skipTransition();
+    if (!document.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      change();
+      return;
+    }
+    document.documentElement.classList.add("stats-view-changing");
+    const transition = document.startViewTransition(change);
+    activeViewTransition = transition;
+    transition.finished.catch(() => {}).finally(() => {
+      if (activeViewTransition !== transition) return;
+      activeViewTransition = null;
+      document.documentElement.classList.remove("stats-view-changing");
+    });
+  }
+
   statsLink?.addEventListener("click", (event) => {
     if (!isPlainClick(event)) return;
     event.preventDefault();
-    if (!statsViewActive) setStatsView(true);
+    if (!statsViewActive) transitionStatsView(true);
   });
 
   autoLink?.addEventListener("click", (event) => {
     if (!statsViewActive || !isPlainClick(event)) return;
     event.preventDefault();
-    setStatsView(false);
+    transitionStatsView(false);
   });
 
   window.addEventListener("languagechange", () => {
@@ -2800,7 +2848,7 @@
     render();
   });
 
-  window.STATS_VIEW = { render };
+  window.STATS_VIEW = { render, whenReady: () => renderCompletion };
 
   if (new URLSearchParams(window.location.search).get("view") === "stats") {
     setStatsView(true, { updateUrl: false });

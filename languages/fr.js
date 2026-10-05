@@ -1,5 +1,23 @@
 window.TRANSLATIONS = window.TRANSLATIONS || {};
 window.TRANSLATIONS.fr = {
+  "marathon.impact": "Fermeture du segment routier dans le sens indiqué par l'export Waze fourni.",
+  "marathon.direction": "Sens du segment Waze : du nœud {from} vers le nœud {to}. Direction cardinale non publiée.",
+  "marathon.geometry": "Tracé du segment de l'export Waze fourni, et non géométrie du dépliant officiel. L'ordre des points respecte le sens de fermeture indiqué.",
+  "marathon.scope": "Export communautaire fourni, sans date d'extraction ni fuseau horaire explicites. La couverture de l'événement et des accès piétons n'est pas complète.",
+  "marathon.segment": "Segment Waze",
+  "marathon.provenance": "Provenance de l'export",
+  "marathon.status": "Statut dans l'export",
+  "marathon.eventStatus": "Indicateurs de l'événement dans l'export",
+  "marathon.nodeRestriction": "Restriction de nœud publiée",
+  "marathon.loadError": "Les fermetures du marathon n'ont pas pu être chargées. Les autres sources disponibles restent affichées.",
+  "marathon.pdfImpact": "Rue fermée pendant la plage horaire du dépliant officiel.",
+  "marathon.pathImpact": "Portions de chemins occupées par la course pendant la plage horaire du dépliant. Cela ne signifie pas que le parc ou le jardin entier est fermé.",
+  "marathon.pathName": "Chemins du parcours",
+  "marathon.pdfGeometry": "Coordonnées du parcours RTRT rapprochées des sections horaires du PDF. Seules les portions vérifiées sont tracées; les transitions ambiguës restent sans tracé. Le sens de course ne donne pas le sens de circulation automobile.",
+  "marathon.pdfScope": "Heures du dépliant, en heure de Montréal, et non heures de départ de course. Les horaires de l'export Waze peuvent différer; les deux sources restent distinctes.",
+  "marathon.courses": "Courses associées",
+  "marathon.pdfReference": "PDF : page / ligne du tableau",
+  "marathon.geometrySource": "Source du parcours",
   "language.name": "Français",
   "language.switch": "EN",
   "language.switchLabel": "Passer à l'anglais",
@@ -793,7 +811,7 @@ window.TRANSLATIONS.fr = {
   ,"stats.documentTitle.places": "Classements | Statistiques des entraves routières - Grand Montréal"
   ,"stats.documentTitle.custom": "Personnalisé | Statistiques des entraves routières - Grand Montréal"
   ,"stats.documentTitle.how": "Comment ça marche | Statistiques des entraves routières - Grand Montréal"
-  ,"stats.disclaimer": "Portrait des données reçues au chargement de la page, pour toutes les sources et toute la région, peu importe le cadrage de la carte. Ce ne sont pas des données historiques : les chantiers terminés ne sont plus publiés, donc aucune tendance ni comparaison dans le temps n'est possible. Les durées sont les durées prévues publiées par les sources. Une même entrave peut être publiée par plus d'une source."
+  ,"stats.disclaimer": "Données reçues au chargement, toutes sources et toute la région, indépendamment de la carte. Sans historique ni comparaison dans le temps : les chantiers terminés ne sont plus publiés. Durées prévues et doublons possibles entre sources."
   ,"stats.loading": "Chargement des sources en cours… les chiffres se mettent à jour à mesure que les données arrivent."
   ,"stats.error": "Certaines sources principales sont indisponibles : les chiffres sont partiels."
   ,"stats.loadedAt": "Toutes les sources ont répondu — données chargées le {time}."

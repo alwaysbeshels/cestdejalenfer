@@ -1,0 +1,61 @@
+@view-transition {
+  navigation: auto;
+}
+
+html[data-page-loading] body {
+  visibility: hidden;
+}
+
+html[data-navigation-pending]::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: 2px;
+  background: #0f7b66;
+  z-index: 10000;
+}
+
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: none;
+  opacity: 0;
+  mix-blend-mode: normal;
+}
+
+html[data-page-ready]::view-transition-new(root) {
+  animation: page-arrival 140ms ease-out both;
+}
+
+@keyframes page-arrival {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.stats-view-changing #sidePanel {
+  view-transition-name: stats-panel;
+}
+
+::view-transition-group(stats-panel) {
+  animation-duration: 160ms;
+  animation-timing-function: ease-out;
+  overflow: clip;
+}
+
+::view-transition-old(stats-panel),
+::view-transition-new(stats-panel) {
+  height: 100%;
+  object-fit: none;
+  object-position: left top;
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-page-ready]::view-transition-new(root) {
+    animation: none;
+    opacity: 1;
+  }
+}

@@ -157,8 +157,11 @@ window.PEDESTRIAN_MAP = (() => {
     allClosures = dedupeClosures(consolidatedSnapshot.records.map((record) => ({
       ...record,
       color: SEVERITY_META[record.severity].color,
+      streets: record.streets || (record.sourceKind === "pedestrian-marathon-pdf" ? t("marathon.pathName") : record.streets),
+      impact: record.impactKey ? t(record.impactKey) : record.impact,
+      scheduleText: record.scheduleTextKey ? t(record.scheduleTextKey) : record.scheduleText,
       direction: record.side?.published || t("pedestrian.directionUnknown"),
-      geometryNote: t(record.geometry.type === "Point" ? "pedestrian.pointNote" : "pedestrian.geometryNote"),
+      geometryNote: t(record.geometryNoteKey || (record.geometry.type === "Point" ? "pedestrian.pointNote" : "pedestrian.geometryNote")),
       details: [
         ...(record.details || []).map((detail) => [detail.labelKey ? t(detail.labelKey) : detail.label, detail.valueKey ? t(detail.valueKey) : detail.value]),
         ...(record.affectedUsers?.includes("cyclists") ? [[t("pedestrian.affectedUsers"), t("pedestrian.cyclists")]] : []),

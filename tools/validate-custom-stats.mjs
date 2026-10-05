@@ -393,18 +393,25 @@ if (process.argv.includes("--browser")) {
     await checkHelp("page");
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.setViewportSize({ width: 1100, height: 1000 });
-    const sampleTransition = async tab => page.evaluate(target => new Promise(resolve => {
+    const sampleTransition = async tab => page.evaluate(async target => {
       const widths = [document.querySelector("#sidePanel").getBoundingClientRect().width];
       const link = target === "auto" ? document.querySelector('#sidePanel > .map-mode-nav a[data-language-page="map"]:not([data-view])') : target === "stats" ? document.querySelector('#sidePanel > .map-mode-nav a[data-view="stats"]') : document.querySelector(`[data-stats-tab="${target}"]`);
+      const startTransition = document.startViewTransition.bind(document);
+      let transition;
+      document.startViewTransition = callback => { transition = startTransition(callback); return transition; };
       link.click();
+      document.startViewTransition = startTransition;
       const start = performance.now();
-      const frame = () => {
-        widths.push(document.querySelector("#sidePanel").getBoundingClientRect().width);
-        if (performance.now() - start < 550) requestAnimationFrame(frame);
-        else resolve(widths);
-      };
-      requestAnimationFrame(frame);
-    }), tab);
+      await new Promise(resolve => {
+        const frame = () => {
+          widths.push(document.querySelector("#sidePanel").getBoundingClientRect().width);
+          if (performance.now() - start < 550) requestAnimationFrame(frame);
+          else resolve();
+        };
+        requestAnimationFrame(frame);
+      });
+      return { widths, finished: transition ? await transition.finished.then(() => true, () => false) : false };
+    }, tab);
     await page.locator('[data-stats-tab="general"]').click();
     await page.waitForSelector(".stats-common-filters");
     assert.equal(await page.locator("#sidePanel").evaluate(element => Math.round(element.getBoundingClientRect().width)), 96);
@@ -431,10 +438,13 @@ if (process.argv.includes("--browser")) {
     await page.locator('[data-stats-tab="custom"]').click();
     await chartReady();
     const widening = await sampleTransition("auto");
-    assert.ok(widening.some(width => width > 100 && width < 500), "Sidebar should animate to its normal width");
+    const normalWidth = widening.widths.at(-1);
+    assert.ok(normalWidth > 100 && widening.finished, "Sidebar snapshot transition should finish at its normal width");
+    assert.ok(widening.widths.every(width => Math.abs(width - 96) < 1 || Math.abs(width - normalWidth) < 1), "Sidebar layout must not resize every animation frame");
     assert.ok(await page.locator("#sidePanel .intro").isVisible());
     const shrinking = await sampleTransition("stats");
-    assert.ok(shrinking.some(width => width > 100 && width < 500), "Sidebar should animate back to its compact width");
+    assert.ok(shrinking.finished && Math.abs(shrinking.widths.at(-1) - 96) < 1, "Sidebar snapshot transition should finish at compact width");
+    assert.ok(shrinking.widths.every(width => Math.abs(width - 96) < 1 || Math.abs(width - normalWidth) < 1), "Compact transition must not resize charts every animation frame");
     await page.waitForFunction(() => Math.abs(document.querySelector("#sidePanel").getBoundingClientRect().width - 96) < 1, null, { polling: 100, timeout: 5000 });
     await page.setViewportSize({ width: 1440, height: 1000 });
     await chartReady();

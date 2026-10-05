@@ -1,5 +1,23 @@
 window.TRANSLATIONS = window.TRANSLATIONS || {};
 window.TRANSLATIONS.en = {
+  "marathon.impact": "Road segment closed in the direction indicated by the supplied Waze export.",
+  "marathon.direction": "Waze segment direction: from node {from} to node {to}. Compass direction not published.",
+  "marathon.geometry": "Segment geometry from the supplied Waze export, not from the official leaflet. Coordinate order follows the reported closure direction.",
+  "marathon.scope": "Supplied community export with no explicit extraction date or time zone. Event and pedestrian-access coverage is incomplete.",
+  "marathon.segment": "Waze segment",
+  "marathon.provenance": "Export provenance",
+  "marathon.status": "Status in the export",
+  "marathon.eventStatus": "Event flags in the export",
+  "marathon.nodeRestriction": "Published node restriction",
+  "marathon.loadError": "Marathon closures could not be loaded. Other available sources remain displayed.",
+  "marathon.pdfImpact": "Street closed during the time window in the official leaflet.",
+  "marathon.pathImpact": "Path sections occupied by the race during the leaflet's time window. This does not mean the entire park or garden is closed.",
+  "marathon.pathName": "Course paths",
+  "marathon.pdfGeometry": "RTRT course coordinates matched to the PDF's timed sections. Only verified portions are drawn; ambiguous transitions are left unmapped. Race direction does not establish vehicle traffic direction.",
+  "marathon.pdfScope": "Leaflet times in Montreal local time, not race start times. Waze export times may differ; the two sources remain separate.",
+  "marathon.courses": "Associated races",
+  "marathon.pdfReference": "PDF: page / table row",
+  "marathon.geometrySource": "Course geometry source",
   "language.name": "English",
   "language.switch": "FR",
   "language.switchLabel": "Switch to French",
@@ -793,7 +811,7 @@ window.TRANSLATIONS.en = {
   ,"stats.documentTitle.places": "Rankings | Road restriction statistics - Greater Montreal"
   ,"stats.documentTitle.custom": "Custom | Road restriction statistics - Greater Montreal"
   ,"stats.documentTitle.how": "How it works | Road restriction statistics - Greater Montreal"
-  ,"stats.disclaimer": "Snapshot of the data received when the page loaded, for every source and the whole region, regardless of the map view. This is not historical data: completed work is no longer published, so no trend or comparison over time is possible. Durations are the planned durations published by the sources. The same restriction may be published by more than one source."
+  ,"stats.disclaimer": "Data received at page load, across all sources and the whole region, regardless of the map view. No history or comparisons over time: completed work is no longer published. Planned durations; possible duplicates across sources."
   ,"stats.loading": "Sources are still loading… figures update as data arrives."
   ,"stats.error": "Some primary sources are unavailable: figures are partial."
   ,"stats.loadedAt": "All sources responded — data loaded on {time}."

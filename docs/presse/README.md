@@ -1,6 +1,74 @@
-# Dossier de presse
+# Dossiers de présentation et de presse
 
-Édition du **3 octobre 2026**, en français. Les notes ci-dessous sont destinées à la préparation et à la maintenance du dossier; elles ne font pas partie du PDF à transmettre aux médias.
+Les notes ci-dessous sont destinées à la préparation et à la maintenance des documents; elles ne font pas partie des fichiers à transmettre. Les éditions précédentes sont conservées séparément.
+
+## Présentation générale du 5 octobre 2026
+
+Une présentation française révisée de **28 diapositives 16:9**, destinée aux médias, entreprises, commerces, organismes et autres interlocuteurs, sans destinataire imposé ni champ à compléter dans le document :
+
+- [presentation-generale.pdf](presentation-generale.pdf) : **6,01 Mo**, format recommandé pour l'envoi; texte sélectionnable, 25 liens et 28 signets.
+- [presentation-generale.pptx](presentation-generale.pptx) : **12,55 Mo**, véritable fichier PowerPoint 16:9, 28 diapositives, 25 liens cliquables et texte dans les notes.
+- [presentation-generale.html](presentation-generale.html) : source modifiable, autonome et responsive; ouverture locale possible sans serveur.
+- [presentation-generale-couverture.png](visuels/presentation-generale-couverture.png) : aperçu de la couverture extrait du PDF final.
+- [presentation-generale-apercu-statistiques.png](visuels/presentation-generale-apercu-statistiques.png) : aperçu d'une diapositive statistique extrait du PDF final.
+
+Le PowerPoint conserve la composition sous forme d'une image haute résolution intégrée par diapositive, avec des zones de liens et des notes natives. **Les textes et graphiques visibles ne sont pas des objets PowerPoint individuellement modifiables.** Pour changer la composition ou le texte, modifier la source HTML puis réexporter. Les images sont incorporées dans le PDF et le PowerPoint : chacun peut être transmis seul. Le HTML utilise les images du dossier voisin `visuels/`.
+
+### Contenu et traitement éditorial
+
+Le parcours couvre le projet, le besoin, plusieurs usages possibles, les cartes Auto/Piétons, le mobile, le mode lecteur d'écran, les sources, huit diapositives de statistiques routières, quatre pages du volet nids-de-poule/colmatages, les limites, la créatrice, trois pages d'audience/visibilité et le contact général. Il reprend le style et les montages ordinateur/téléphone du kit Infoman, sans ses références à l'émission, au tournage ou à une production particulière.
+
+Les diapositives 10 à 17 montrent les impacts, les axes routiers, la comparaison des municipalités, les durées prévues, Public & Privé, le résultat du configurateur, un graphique en anneau et son tableau. La version locale du configurateur a été exécutée avec **15 dimensions, 5 mesures et 7 familles de graphiques**; les anciennes mentions de neuf familles et de fonction « non encore publiée » ne sont pas recopiées. La présentation ne certifie pas l'identité de la version publique avec les fichiers locaux et ne constitue pas une nouvelle publication du site.
+
+Le contact utilise uniquement le site et le profil LinkedIn public de Shelsea Saint-Fleur. Aucun courriel, téléphone, portrait, client, témoignage, service commercial, objectif de croissance ou gain de temps n'est inventé. Les usages pour des entreprises et organismes sont des exemples, pas une liste de partenaires.
+
+Les pages 24 à 26 utilisent le relevé fourni par Shelsea le 5 octobre et sa correction ultérieure, pour la période du **5 septembre au 4 octobre 2026** : **7 019 utilisateurs uniques**, **46 935 sessions**, **7 000 utilisateurs actifs sur 30 jours**, **4 294 impressions** dans la recherche Google et **720 clics** depuis cette recherche. Les impressions/clics ne sont pas les recherches internes au site et ne sont pas attribués à un produit analytique différent sans preuve. Aucun accès au compte Analytics ni audit indépendant n'a été effectué.
+
+Répartition par appareil reprise telle que fournie : mobile **4 536 (64,62 %)**, ordinateur **2 093 (29,82 %)**, tablette **388 (5,54 %)**. La ventilation totalise 7 017 et les pourcentages 99,98 %; l'écart avec 7 019 est signalé sans inventer une catégorie ou corriger silencieusement les valeurs. Les **19 municipalités** et **35 à 40 sources** sont présentées séparément comme une couverture annoncée par la créatrice, non comme une mesure de Google Analytics ni un décompte audité.
+
+### Nouveaux visuels statistiques
+
+Captures réelles refaites le **5 octobre 2026**, sur la version locale à `http://127.0.0.1:5500`, viewport 1 360 × 950 et densité 2. Cette densité augmente la résolution des images, pas le zoom du navigateur. Sélection commune : **5 octobre au 5 octobre 2026, jour et nuit, stationnement exclu**. Les captures ne reconstruisent ni les chiffres ni les tracés.
+
+La première édition rognait le bas des captures de page avec un conteneur de hauteur maximale et `overflow: hidden`, ce qui donnait trop de place aux menus. Cette révision supprime ce rognage et remplace les cinq vues de page par des captures de panneaux de résultats, sans la navigation générale. Les images sont affichées entières avec leur ratio; les tableaux déroulants montrent leurs lignes effectivement visibles, sans prétendre représenter toutes les lignes disponibles.
+
+| Visuel | Contexte |
+| --- | --- |
+| [presentation-statistiques-2026-10-05.png](visuels/presentation-statistiques-2026-10-05.png) | Panneau complet de répartition par type d'impact, dans Général. |
+| [presentation-autoroutes-2026-10-05.png](visuels/presentation-autoroutes-2026-10-05.png) | Panneau du tableau Autoroutes et routes numérotées, avec ses lignes visibles. |
+| [presentation-territoires-2026-10-05.png](visuels/presentation-territoires-2026-10-05.png) | Graphique complet Par municipalité de l'onglet Classements, pas un portrait de municipalité sélectionnée. |
+| [presentation-durees-2026-10-05.png](visuels/presentation-durees-2026-10-05.png) | Panneau des durées prévues, classes de durée annoncée et accès aux valeurs. |
+| [presentation-acteurs-2026-10-05.png](visuels/presentation-acteurs-2026-10-05.png) | Panneau complet Public & Privé : secteur, exécutant et bénéficiaire selon les informations disponibles. |
+| [presentation-personnalise-2026-10-05.png](visuels/presentation-personnalise-2026-10-05.png) | Résultat du configurateur, sans le panneau de choix : nombre d'entrées par municipalité et par impact, barres verticales. |
+| [presentation-repartition-2026-10-05.png](visuels/presentation-repartition-2026-10-05.png) | Graphique en anneau, nombre d'entrées par impact; même période, autre dimension. |
+| [presentation-tableau-2026-10-05.png](visuels/presentation-tableau-2026-10-05.png) | Valeurs du graphique précédent : catégories, valeurs, effectifs et données manquantes. |
+
+Les cartes, téléphones et le mode lecteur d'écran réutilisent les captures du 4 octobre déjà présentes. Les crédits OpenStreetMap et les ratios d'écran sont conservés. Les appareils sont des montages de présentation, pas des photographies ni une certification matérielle.
+
+**Nids-de-poule et colmatages : aucune nouvelle collecte ni analyse des jeux de données.** Les trois visuels du kit précédent sont réutilisés avec leur date. Le chiffre de persistance de 42,5 % (8 272 / 19 455 emplacements, 2022-2026) reste un exemple historique non recalculé, associé aux signalements jusqu'au 1er octobre 2026 et aux 1 584 signalements non localisables exclus du calcul illustré. Les dates et limites du visuel de colmatage restent celles de l'exemple 2025. Le navigateur utilisé pour les nouvelles captures bloque les chemins de données de nids-de-poule; aucun accès à ces chemins n'a été tenté. Leur actualisation relève du prompt dédié.
+
+Le volet occupe désormais les pages 18 à 21 : cartes existantes, panorama des six analyses documentées, exemple historique de persistance et fonctionnement des 19 portraits d'arrondissement. Les deux nouvelles pages sont documentaires : elles ne constituent pas deux nouveaux graphiques chiffrés. Les autres captures statistiques nids-de-poule demandées restent à produire dans le flux dédié; elles ne sont pas remplacées par des chiffres inventés ou par plusieurs copies du même graphique.
+
+### Export et contrôles de cette édition
+
+- Chromium : 28 sections au format 1 280 × 720, 18 occurrences d'images chargées, contrôle des limites de texte, absence de débordement horizontal sur mobile et aucune erreur JavaScript. Les cinq conteneurs de capture ne rognent plus les images. Les graphiques visibles sont attendus puis contrôlés par leurs pixels; certains tableaux et diagrammes de l'interface ne sont pas des canvas.
+- PDF : chaque diapositive est exportée séparément à 100 %, puis assemblée en 960 × 540 points pour éviter la réduction globale rencontrée avec l'ancien export multipage. Les images dépassant 240 ppp sont rééchantillonnées à 200 ppp, qualité JPEG 88. Les 28 pages, leur texte, les 25 liens, les 28 signets et les métriques corrigées sont revérifiés après compression.
+- PowerPoint : images intégrées de 2 560 × 1 440 pixels, qualité JPEG 92, format natif 16:9, 28 pages et notes, 25 liens. Archive Open XML, images incorporées, relations, espaces de noms et absence de liens vers des fichiers locaux vérifiés. Métadonnées automatiques d'Office nettoyées pour ne conserver que les informations publiques du projet.
+- Le fichier PowerPoint final a été rouvert en lecture seule dans PowerPoint; les diapositives 1, 10, 15, 20, 24, 25, 26 et 28 ont été rendues nativement. Les captures de contrôle restent hors dépôt. Aucun aperçu n'a été envoyé au transport d'images du chat et aucune inspection visuelle humaine n'est revendiquée.
+- Les PDF et HTML des éditions A4 et Infoman restent identiques. Aucun fichier d'application, snapshot ou donnée de nids-de-poule n'a été modifié pour cette présentation; les changements déjà présents dans le dépôt sont préservés. Aucune dépendance installée, aucun commit, push ou déploiement.
+
+Les scripts temporaires, le manifeste des captures et les rapports d'export sont conservés hors dépôt pour cette préparation. Lors d'une nouvelle édition, conserver la méthode d'export page par page, la date propre à chaque capture, les liens et les réserves; un changement de date de présentation ne constitue pas une actualisation des sources.
+
+### Message d'accompagnement général
+
+Bonjour,
+
+Je vous partage une présentation de C'est déjà l'enfer, mon projet indépendant consacré aux entraves et aux données routières. Il réunit des cartes, des statistiques et des outils d'exploration pour faciliter la consultation des informations publiques du Grand Montréal et de Montréal.
+
+Le document présente le fonctionnement du site, plusieurs usages possibles et des exemples visuels, avec les sources et les limites des données. Je serais heureuse d'échanger sur les aspects qui vous intéressent ou sur un besoin d'information particulier.
+
+Shelsea Saint-Fleur
+[cestdejalenfer.ca](https://cestdejalenfer.ca/) · [LinkedIn](https://www.linkedin.com/in/shelseastf/)
 
 ## Présentation pour Infoman
 

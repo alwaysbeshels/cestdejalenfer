@@ -1,5 +1,6 @@
 const DEFAULT_LANGUAGE = "fr";
 const LANGUAGE_STORAGE_KEY = "preferredLanguage";
+const LANGUAGE_ROOT_URL = new URL("../", document.currentScript.src);
 
 function languageFromPath() {
   const match = window.location.pathname.match(/(?:^|\/)(fr|en)(?:\/|$)/);
@@ -11,14 +12,10 @@ function languagePath(language, pageOverride = null) {
   const page = pageOverride === null ? (["pedestrian.html", "potholes.html", "faq.html"].find((name) => path.endsWith(name)) || "") : pageOverride;
   const isLocalFile = window.location.protocol === "file:";
   if (isLocalFile) {
-    return page ? `/${language}/${page}` : `/${language}/`;
+    return new URL(`${language}/${page}`, LANGUAGE_ROOT_URL).href;
   }
 
-  const segments = path.split("/").filter(Boolean);
-  const projectBase = window.location.hostname.endsWith(".github.io") && segments.length
-    ? `/${segments[0]}/`
-    : "/";
-  return `${projectBase}${language}/${page}`;
+  return `${LANGUAGE_ROOT_URL.pathname}${language}/${page}`;
 }
 
 function currentLanguage() {
@@ -138,7 +135,7 @@ function setLanguage(language) {
   }
 
   window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
-  window.history.replaceState({}, "", languagePath(language));
+  window.history.replaceState(window.history.state, "", languagePath(language) + window.location.search + window.location.hash);
   applyTranslations(language);
 }
 

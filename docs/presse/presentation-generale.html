@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="C'est déjà l'enfer : présentation générale du projet, de ses cartes, de ses statistiques et de sa démarche autour des données publiques routières.">
+  <title>C'est déjà l'enfer | Présentation générale | Octobre 2026</title>
+  <style>
+    :root { --ink: #192f2d; --teal: #006d6a; --coral: #cb4d30; --gold: #a36c12; --muted: #516461; --line: #cbd9d4; --wash: #edf4f1; }
+    * { box-sizing: border-box; }
+    html { background: #dde6e2; color: var(--ink); font-family: "Aptos", "Candara", sans-serif; letter-spacing: 0; }
+    body { margin: 0; font-size: 22px; line-height: 1.38; }
+    a { color: var(--teal); text-underline-offset: 3px; overflow-wrap: anywhere; }
+    .preview-nav { display: flex; flex-wrap: wrap; gap: 12px 26px; max-width: 1280px; margin: 20px auto; padding: 0 24px; font-size: 16px; }
+    .slide { width: 1280px; height: 720px; padding: 30px 58px 26px; margin: 0 auto 24px; background: #fff; display: flex; flex-direction: column; gap: 20px; position: relative; break-after: page; }
+    .slide:last-child { break-after: auto; }
+    .running { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 3px solid var(--teal); padding-top: 10px; font-size: 13px; font-weight: 650; color: var(--muted); }
+    .running strong { color: var(--ink); }
+    .content { flex: 1; min-height: 0; }
+    .footer { display: flex; justify-content: space-between; align-items: end; gap: 24px; border-top: 1px solid var(--line); padding-top: 10px; font-size: 12.5px; line-height: 1.3; color: var(--muted); }
+    .footer p { margin: 0; max-width: 1050px; }
+    .page-number { white-space: nowrap; }
+    h1, h2, h3, .metric { font-family: "Bahnschrift", "Aptos Display", "Candara", sans-serif; font-weight: 650; }
+    h2 { font-size: 45px; line-height: 1.1; margin: 0 0 20px; }
+    h3 { font-size: 26px; line-height: 1.2; margin: 0 0 12px; }
+    p { margin: 0 0 16px; }
+    .eyebrow { font-size: 14px; font-weight: 750; color: var(--coral); text-transform: uppercase; margin-bottom: 12px; }
+    .lead { font-size: 27px; line-height: 1.35; }
+    .small { font-size: 17px; line-height: 1.4; color: var(--muted); }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 38px; align-items: start; }
+    .split > * { min-width: 0; }
+    .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; border-block: 1px solid var(--line); padding: 22px 0; margin: 24px 0; }
+    .facts .metric { font-size: 50px; line-height: 1.05; color: var(--teal); margin-bottom: 12px; }
+    .facts p { margin: 0; }
+    .cover { padding: 0; overflow: hidden; background: #eef1f0; }
+    .cover-top, .cover-meta { position: absolute; left: 58px; right: 58px; display: flex; justify-content: space-between; gap: 24px; font-size: 12px; color: var(--muted); }
+    .cover-top { top: 24px; font-weight: 750; color: var(--teal); }
+    .cover-copy { position: absolute; top: 62px; left: 58px; right: 58px; }
+    .cover-copy h1 { font-size: 72px; line-height: 1.06; margin: 0; }
+    .cover-copy .lead { margin: 12px 0 0; font-size: 24px; line-height: 1.3; }
+    .cover-meta { bottom: 20px; align-items: end; }
+    .device-scene { position: relative; width: 100%; aspect-ratio: 1040 / 490; }
+    .cover .device-scene { position: absolute; top: 190px; left: 50%; width: calc(100% - 116px); max-width: 1040px; transform: translateX(-50%); }
+    .device-laptop { position: absolute; width: 78.846%; left: 0; top: 0; filter: drop-shadow(0 14px 13px rgba(27,45,37,.2)); }
+    .laptop-lid { position: relative; width: 87.317%; margin: 0 auto; padding: 1.46% 1.22% 2.2%; background: #111716; border: 2px solid #5d6965; border-radius: 15px 15px 5px 5px; }
+    .laptop-lid::before { content: ""; position: absolute; top: 4px; left: calc(50% - 2px); width: 4px; height: 4px; border-radius: 50%; background: #354d49; }
+    .laptop-lid > img { display: block; width: 100%; height: auto; aspect-ratio: 1360 / 850; object-fit: contain; border-radius: 2px; }
+    .laptop-base { position: relative; width: 100%; aspect-ratio: 41 / 1; margin-top: -1px; background: linear-gradient(#c7ceca 0%, #f0f2f0 28%, #afb8b3 42%, #76847c 100%); border-bottom: 3px solid #59665f; border-radius: 2px 2px 14px 14px; clip-path: polygon(1% 0,99% 0,100% 60%,98% 100%,2% 100%,0 60%); }
+    .laptop-base::before { content: ""; position: absolute; top: 0; left: 43%; width: 14%; height: 25%; background: #84938b; border-radius: 0 0 7px 7px; }
+    .device-phone { position: relative; width: 212px; padding: 10px 6px; background: #111716; border: 3px solid #697771; border-radius: 28px; box-shadow: 0 17px 23px rgba(21,39,29,.2); }
+    .device-phone::before { content: ""; position: absolute; top: 4px; left: 42%; width: 16%; height: 3px; border-radius: 3px; background: #34453c; }
+    .device-phone > img { display: block; width: 100%; height: auto; aspect-ratio: 390 / 844; object-fit: contain; border-radius: 16px; }
+    .device-scene > .device-phone { position: absolute; left: 73.65%; top: 3%; width: 20.385%; }
+    figure { margin: 0; min-width: 0; }
+    figcaption { margin-top: 9px; color: var(--muted); font-size: 13px; line-height: 1.35; }
+    .band { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 22px; }
+    .callout { border-left: 4px solid var(--coral); padding: 8px 0 8px 20px; margin-top: 22px; }
+    .callout p:last-child { margin-bottom: 0; }
+    .triptych { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 28px; }
+    .triptych > div { border-top: 3px solid var(--teal); padding-top: 18px; }
+    .triptych .step { display: block; color: var(--coral); font-family: "Bahnschrift", sans-serif; font-size: 38px; line-height: 1; margin-bottom: 18px; }
+    .matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 46px; margin-top: 28px; }
+    .matrix > div { border-top: 1px solid var(--line); padding-top: 18px; }
+    .matrix h3 { color: var(--teal); }
+    .matrix p { font-size: 21px; margin-bottom: 0; }
+    .line-list { list-style: none; padding: 0; margin: 16px 0 0; }
+    .line-list li { border-top: 1px solid var(--line); padding: 13px 0; }
+    .line-list strong { color: var(--teal); }
+    .screen-figure { width: 1040px; max-width: 100%; margin: 0 auto; }
+    .browser-frame { border: 1px solid #a4b1aa; border-radius: 7px; overflow: hidden; background: #fff; box-shadow: 0 7px 20px rgba(35,54,43,.10); }
+    .browser-top { padding: 5px 14px; background: #e4eae6; color: #51645a; font-size: 11px; line-height: 16px; }
+    .browser-frame img { display: block; width: 100%; height: auto; }
+    .showcase h2 { margin-bottom: 12px; }
+    .showcase-intro { font-size: 21px; margin-bottom: 16px; }
+    .capture-window { height: 395px; }
+    .capture-window > img { width: 100%; height: 100%; object-fit: contain; }
+    .capture-window.compact-capture { height: auto; }
+    .capture-window.compact-capture > img { height: auto; max-height: 395px; }
+    .full-map img { max-height: 390px; object-fit: contain; }
+    .visual-split { display: grid; grid-template-columns: .83fr 1.45fr; gap: 38px; align-items: start; }
+    .visual-split > * { min-width: 0; }
+    .visual-split p { font-size: 22px; }
+    .visual-split .small { font-size: 17px; }
+    .detail-image { display: block; width: 100%; height: 390px; object-fit: contain; object-position: top; }
+    .phone-layout { display: grid; grid-template-columns: 1fr 456px; gap: 60px; }
+    .phone-pair { display: flex; gap: 28px; justify-content: center; }
+    .phone-column { width: 198px; }
+    .phone-column .device-phone { width: 100%; }
+    .phone-column figcaption { margin: 0 0 9px; text-align: center; font-size: 14px; }
+    .phone-layout .lead { font-size: 24px; }
+    .phone-layout .line-list { font-size: 21px; }
+    .reader-layout { display: grid; grid-template-columns: 1fr 260px; gap: 78px; }
+    .reader-layout .device-phone { width: 204px; margin: 0 auto; }
+    .metric { color: var(--teal); font-size: 88px; line-height: 1; margin: 0 0 14px; }
+    .metric.large { font-size: 122px; }
+    .metric-label { font-size: 25px; line-height: 1.25; }
+    .metric-layout { grid-template-columns: .78fr 1.35fr; align-items: center; margin-top: 28px; }
+    .chart-detail img { display: block; width: 100%; height: 270px; object-fit: contain; }
+    .map-pair img { display: block; width: 100%; height: auto; }
+    .map-pair p { font-size: 18px; margin-top: 16px; }
+    .wide-detail { max-width: 1060px; margin: 24px auto; }
+    .wide-detail img { display: block; width: 100%; max-height: 280px; object-fit: contain; }
+    .plain-table { width: 100%; border-collapse: collapse; font-size: 20px; }
+    .plain-table th, .plain-table td { text-align: left; vertical-align: top; padding: 17px 16px; border-bottom: 1px solid var(--line); }
+    .plain-table th { width: 29%; color: var(--teal); padding-left: 0; }
+    .plain-table td { padding-right: 0; }
+    .bio-name { font-size: 62px; color: var(--teal); }
+    .source-list { list-style: none; padding: 0; margin: 0; font-size: 19px; }
+    .source-list li { margin-bottom: 18px; }
+    .source-list span { display: block; font-size: 15px; color: var(--muted); margin-top: 5px; }
+    .contact-link { display: block; font-size: 36px; font-family: "Bahnschrift", sans-serif; margin-bottom: 14px; }
+    .closing { background: #edf4f1; }
+    .closing .content { padding-top: 28px; }
+    .closing h2 { font-size: 64px; margin-bottom: 20px; }
+    .closing .split { margin-top: 40px; grid-template-columns: 1.05fr 1fr; }
+    .analysis-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 25px 30px; margin-top: 26px; }
+    .analysis-grid > div { border-top: 3px solid var(--teal); padding-top: 14px; }
+    .analysis-grid h3 { font-size: 24px; }
+    .analysis-grid p { font-size: 18px; line-height: 1.35; margin-bottom: 0; }
+    .audience-facts { margin-top: 30px; padding: 30px 0; }
+    .audience-facts .metric { font-size: 66px; }
+    .audience-facts .small { margin-top: 12px; font-size: 16px; }
+    .device-distribution { margin: 26px 0 0; display: grid; gap: 25px; }
+    .device-distribution > div { display: grid; grid-template-columns: 170px 1fr 235px; align-items: center; gap: 25px; }
+    .device-distribution dt { font-weight: 650; }
+    .device-distribution dd { margin: 0; }
+    .device-distribution .device-value { text-align: right; font-size: 24px; font-variant-numeric: tabular-nums; }
+    .device-bar { height: 22px; background: #edf1ef; }
+    .device-bar > span { display: block; height: 100%; background: var(--teal); }
+    .device-bar.desktop > span { background: var(--coral); }
+    .device-bar.tablet > span { background: var(--gold); }
+    .territorial-steps { margin-top: 24px; }
+    .territorial-steps li { padding: 15px 0; }
+    @page { size: 13.333333in 7.5in; margin: 0; }
+    @media print {
+      html, body { background: #fff; }
+      body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .slide { margin: 0; }
+      .preview-nav { display: none; }
+    }
+    @media screen and (max-width: 1320px) {
+      .slide { width: calc(100% - 24px); height: auto; min-height: 720px; padding: 30px; }
+      .cover { height: 720px; padding: 0; }
+      .cover-top, .cover-copy, .cover-meta { left: 30px; right: 30px; }
+    }
+    @media screen and (max-width: 760px) {
+      body { font-size: 19px; }
+      .slide { padding: 24px; min-height: 0; }
+      h2 { font-size: 34px; }
+      .split, .facts { grid-template-columns: 1fr; gap: 22px; }
+      .lead { font-size: 23px; }
+      .running, .footer, .cover-top, .cover-meta { flex-wrap: wrap; gap: 8px 18px; }
+      .cover { height: 720px; padding: 0; }
+      .cover-copy { top: 105px; }
+      .cover-copy h1 { font-size: 46px; }
+      .cover-copy .lead { font-size: 21px; }
+      .cover .device-scene { top: 345px; width: calc(100% - 30px); }
+      .device-scene > .device-phone { padding: 4px 2px; border-width: 2px; border-radius: 10px; }
+      .device-scene > .device-phone > img { border-radius: 6px; }
+      .device-scene .laptop-lid { border-radius: 6px 6px 2px 2px; }
+      .triptych, .matrix, .visual-split, .phone-layout, .reader-layout, .metric-layout, .closing .split { grid-template-columns: 1fr; gap: 24px; }
+      .capture-window { height: auto; }
+      .capture-window > img { height: auto; }
+      .phone-pair { flex-wrap: wrap; }
+      .detail-image, .chart-detail img { height: auto; max-height: none; }
+      .plain-table { font-size: 17px; }
+      .plain-table th, .plain-table td { padding: 12px 7px; }
+      .metric.large { font-size: 94px; }
+      .bio-name { font-size: 42px; }
+      .closing h2 { font-size: 42px; }
+      .contact-link { font-size: 29px; }
+      .analysis-grid { grid-template-columns: 1fr; }
+      .audience-facts .metric { font-size: 54px; }
+      .device-distribution > div { grid-template-columns: 1fr; gap: 8px; }
+      .device-distribution .device-value { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="preview-nav" aria-label="Documents de présentation">
+    <a href="presentation-generale.pdf">Présentation PDF</a>
+    <a href="presentation-generale.pptx">Présentation PowerPoint</a>
+    <a href="https://cestdejalenfer.ca/fr/">Le site</a>
+    <a href="https://www.linkedin.com/in/shelseastf/">Contacter Shelsea Saint-Fleur</a>
+  </nav>
+  <main>
+    <section class="slide cover" aria-labelledby="cover-title">
+      <div class="cover-top"><span>UNE INITIATIVE CITOYENNE INDÉPENDANTE</span><span>PRÉSENTATION GÉNÉRALE · OCTOBRE 2026</span></div>
+      <div class="cover-copy">
+        <h1 id="cover-title">C'est déjà l'enfer</h1>
+        <p class="lead">Les entraves et les données des rues, réunies pour mieux s'informer.</p>
+      </div>
+      <div class="device-scene" role="group" aria-label="Captures réelles du site sur ordinateur et téléphone">
+        <div class="device-laptop"><div class="laptop-lid"><img src="visuels/infoman-auto-desktop.png" width="2720" height="1700" alt="La carte Auto du Grand Montréal sur ordinateur."></div><div class="laptop-base" aria-hidden="true"></div></div>
+        <div class="device-phone"><img src="visuels/infoman-auto-mobile.png" width="780" height="1688" alt="La carte Auto dans sa version mobile."></div>
+      </div>
+      <div class="cover-meta"><span>Shelsea Saint-Fleur · <a href="https://cestdejalenfer.ca/">cestdejalenfer.ca</a></span><span>Captures du 4 octobre 2026 · © OpenStreetMap contributors · 01 / 28</span></div>
+    </section>
+    <section class="slide" aria-labelledby="brief-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>LE PROJET EN BREF</span></header>
+      <div class="content">
+        <p class="eyebrow">Des données publiques, une lecture plus accessible</p>
+        <h2 id="brief-title">Consulter les entraves.<br>Explorer les données des rues.</h2>
+        <p class="lead">Des cartes, des statistiques et des outils d'exploration pour les citoyens, les médias, les entreprises et les organismes qui s'intéressent aux déplacements et au territoire.</p>
+        <div class="facts">
+          <div><p class="metric">0 $</p><p>Consultation gratuite<br>sans compte</p></div>
+          <div><p class="metric">FR / EN</p><p>Une interface<br>dans les deux langues</p></div>
+          <div><p class="metric">Multiécran</p><p>Ordinateur, téléphone<br>et tablette</p></div>
+        </div>
+        <div class="split">
+          <div><h3>Entraves : Grand Montréal</h3><p>Routes, ponts et accès; lectures distinctes pour les déplacements automobiles et piétons.</p></div>
+          <div><h3>Nids-de-poule : Montréal</h3><p>Signalements 311 et colmatages mécanisés publiés par la Ville, avec cartes, bilans et analyses.</p></div>
+        </div>
+      </div>
+      <footer class="footer"><p>Projet indépendant porté par Shelsea Saint-Fleur. Couverture variable selon les sources; aucune garantie de circulation ou d'accessibilité sur place.</p><span class="page-number">02 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="need-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>LE BESOIN</span></header>
+      <div class="content">
+        <p class="eyebrow">L'information existe, mais elle est dispersée</p>
+        <h2 id="need-title">Une rue. Plusieurs sources.<br>Des réponses à réunir.</h2>
+        <p class="lead">Un déplacement traverse des territoires et des réseaux qui ne publient pas tous l'information au même endroit, dans le même format ou au même rythme.</p>
+        <div class="triptych">
+          <div><span class="step">Où?</span><h3>Repérer le lieu</h3><p>Retrouver la rue, le tronçon, le pont ou la zone réellement mentionnés.</p></div>
+          <div><span class="step">Quand?</span><h3>Lire la période</h3><p>Distinguer les dates annoncées, les horaires et la dernière vérification de la source.</p></div>
+          <div><span class="step">Quel effet?</span><h3>Comprendre l'impact</h3><p>Séparer fermeture, voie touchée, aménagement piéton et stationnement.</p></div>
+        </div>
+      </div>
+      <footer class="footer"><p>Le projet facilite la consultation de ce qui est publié. Il ne coordonne pas les chantiers et ne mesure pas la congestion.</p><span class="page-number">03 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="audiences-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>DES USAGES VARIÉS</span></header>
+      <div class="content">
+        <h2 id="audiences-title">Un même outil.<br>Plusieurs façons de s'en servir.</h2>
+        <div class="matrix">
+          <div><h3>Citoyens et personnes en déplacement</h3><p>Consulter une rue, une période et les restrictions annoncées avant de partir.</p></div>
+          <div><h3>Médias et équipes de recherche</h3><p>Explorer une question, retrouver les sources et préciser ce que compte un indicateur.</p></div>
+          <div><h3>Entreprises et commerces</h3><p>Examiner les informations publiées autour d'un secteur d'activité ou d'un lieu fréquenté.</p></div>
+          <div><h3>Organismes et collectivités</h3><p>Lire un territoire, documenter un besoin d'information et faire remonter les lacunes constatées.</p></div>
+        </div>
+        <p class="small band">Exemples d'usages possibles, pas une liste de clients ni une promesse de résultat opérationnel.</p>
+      </div>
+      <footer class="footer"><p>Consultation publique gratuite. Aucune prestation commerciale, licence de données ou intégration technique n'est présumée par cette présentation.</p><span class="page-number">04 / 28</span></footer>
+    </section>
+
+    <section class="slide showcase" aria-labelledby="auto-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>LA CARTE AUTO</span></header>
+      <div class="content">
+        <h2 id="auto-title">Une rue, une date, les détails publiés.</h2>
+        <p class="showcase-intro">Carte, recherche, filtres et fiches d'entraves dans une même vue.</p>
+        <figure class="screen-figure full-map"><div class="browser-frame"><img src="visuels/infoman-auto-detail.png" width="2720" height="1120" alt="Carte Auto : entraves, liste des résultats et filtres de période sur la version ordinateur."></div><figcaption>Capture réelle du 4 octobre 2026. © OpenStreetMap contributors. Les données affichées dépendent de la période et des sources reçues.</figcaption></figure>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/">Ouvrir la carte Auto</a> · À consulter avant de conduire; la signalisation et les consignes des autorités restent prioritaires.</p><span class="page-number">05 / 28</span></footer>
+    </section>
+
+    <section class="slide showcase" aria-labelledby="walking-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>LA CARTE PIÉTONS</span></header>
+      <div class="content">
+        <h2 id="walking-title">À pied, d'autres impacts à connaître.</h2>
+        <p class="showcase-intro">Trottoirs, parcs et sentiers : une lecture distincte des fermetures automobiles.</p>
+        <figure class="screen-figure full-map"><div class="browser-frame"><img src="visuels/infoman-pietons-desktop.png" width="2720" height="1120" alt="Carte Piétons avec les restrictions et aménagements documentés, ses filtres et sa liste."></div><figcaption>Capture du 4 octobre 2026. © OpenStreetMap contributors. Une rue fermée aux automobiles ne signifie pas automatiquement un trottoir fermé.</figcaption></figure>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/pedestrian.html">Ouvrir la carte Piétons</a> · Données consolidées, pas un guidage piéton ni une garantie de passage accessible.</p><span class="page-number">06 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="mobile-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>SUR TÉLÉPHONE ET TABLETTE</span></header>
+      <div class="content">
+        <h2 id="mobile-title">La même information, sur petit écran.</h2>
+        <div class="phone-layout">
+          <div><p class="lead">La carte conserve sa place; le panneau des filtres s'ouvre au besoin.</p><ul class="line-list"><li><strong>Rechercher et filtrer.</strong> Choisir un secteur, une date et les impacts à consulter.</li><li><strong>Passer du français à l'anglais.</strong> L'interface suit la langue sélectionnée.</li><li><strong>Retrouver le site facilement.</strong> Ajout à l'écran d'accueil depuis un navigateur compatible.</li></ul><p class="small band">Une connexion Internet reste nécessaire. Consultation avant le départ, jamais au volant.</p></div>
+          <div class="phone-pair"><figure class="phone-column"><figcaption>La carte mobile</figcaption><div class="device-phone"><img src="visuels/infoman-auto-mobile.png" width="780" height="1688" alt="Vue mobile native de la carte Auto, menu replié."></div></figure><figure class="phone-column"><figcaption>Les filtres ouverts</figcaption><div class="device-phone"><img src="visuels/infoman-mobile-filtres.png" width="780" height="1688" alt="Panneau des filtres ouvert dans la version mobile."></div></figure></div>
+        </div>
+      </div>
+      <footer class="footer"><p>Captures natives du 4 octobre 2026, 390 × 844 pixels. Montages d'appareils, pas photographies. © OpenStreetMap contributors.</p><span class="page-number">07 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="accessibility-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>ACCESSIBILITÉ DE L'INFORMATION</span></header>
+      <div class="content">
+        <h2 id="accessibility-title">Un mode pensé pour les lecteurs d'écran.</h2>
+        <div class="reader-layout">
+          <div><p class="lead">Sur la carte Piétons, les fiches et les commandes utiles deviennent directement accessibles sous la carte.</p><ul class="line-list"><li><strong>Recherche et localisation</strong> hors du menu repliable.</li><li><strong>Titres structurés</strong> pour naviguer entre les fiches d'entraves.</li><li><strong>Choix mémorisé</strong> pour retrouver le mode préféré.</li></ul><p class="small band">Une évolution issue de retours d'utilisation avec VoiceOver sur iPhone. Le mode complète le lecteur d'écran de l'appareil.</p></div>
+          <figure><div class="device-phone"><img src="visuels/infoman-lecteur-ecran.png" width="780" height="1688" alt="Mode lecteur d'écran activé, avec recherche, localisation et fiches accessibles sous la carte."></div><figcaption>Mode activé et capturé le 4 octobre 2026.</figcaption></figure>
+        </div>
+      </div>
+      <footer class="footer"><p>Aucune certification d'accessibilité ni nouvelle séance VoiceOver revendiquée pour cette présentation. La carte ne garantit pas l'accessibilité physique d'un passage. © OpenStreetMap contributors.</p><span class="page-number">08 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="sources-method-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>LA PROVENANCE FAIT PARTIE DU PRODUIT</span></header>
+      <div class="content">
+        <p class="eyebrow">Réunir ne veut pas dire tout confondre</p>
+        <h2 id="sources-method-title">Garder l'origine de chaque information.</h2>
+        <div class="triptych">
+          <div><span class="step">01</span><h3>Sources publiques</h3><p>Avis et flux de municipalités ou d'organismes responsables d'infrastructures.</p><p class="small">Dates, impacts et limites géographiques conservés lorsqu'ils sont publiés.</p></div>
+          <div><span class="step">02</span><h3>Copies datées</h3><p>Des sources livrées sous forme de fichiers statiques vérifiés à une date donnée.</p><p class="small">Une date de vérification n'est pas une information en temps réel.</p></div>
+          <div><span class="step">03</span><h3>Contributions identifiées</h3><p>Des déclarations citoyennes et compléments distingués des avis officiels.</p><p class="small">Une déclaration n'est pas présentée comme un permis confirmé.</p></div>
+        </div>
+        <p class="small band">La couverture varie. Une source peut être indisponible ou ne fournir aucun résultat admissible; l'absence de fiche ne prouve pas l'absence de travaux.</p>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/faq.html">Sources, fonctionnement et limites</a> · La carte ne remplace pas les avis des autorités.</p><span class="page-number">09 / 28</span></footer>
+    </section>
+
+    <section class="slide showcase" aria-labelledby="statistics-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>STATISTIQUES · VUE D'ENSEMBLE</span></header>
+      <div class="content">
+        <h2 id="statistics-title">De la carte au portrait des données.</h2>
+        <p class="showcase-intro">Lire les impacts, les durées prévues et les informations disponibles pour la période choisie.</p>
+        <figure class="screen-figure"><div class="browser-frame"><div class="browser-top">Statistiques des entraves · Répartition des impacts</div><div class="capture-window compact-capture"><img src="visuels/presentation-statistiques-2026-10-05.png" alt="Panneau complet de répartition des impacts pour le 5 octobre 2026, sans le menu de navigation."></div></div><figcaption>Capture ciblée du 5 octobre 2026. Période du 5 octobre, jour et nuit, stationnement exclu; panneau conservé en entier.</figcaption></figure>
+        <div class="triptych"><div><h3>Lire les impacts</h3><p class="small">Fermeture complète, voie touchée ou accès limité : des restrictions différentes.</p></div><div><h3>Choisir la période</h3><p class="small">Les chiffres changent selon les dates, les horaires et les filtres sélectionnés.</p></div><div><h3>Garder la source</h3><p class="small">Revenir aux avis publiés pour approfondir les détails et les limites.</p></div></div>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/?view=stats">Ouvrir les statistiques</a> · Portrait des entraves chargées, pas un recensement de chantiers uniques ni un historique complet.</p><span class="page-number">10 / 28</span></footer>
+    </section>
+
+    <section class="slide showcase" aria-labelledby="roads-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>STATISTIQUES · AXES ROUTIERS</span></header>
+      <div class="content">
+        <h2 id="roads-title">Quels axes sont concernés?</h2>
+        <p class="showcase-intro">Autoroutes, routes numérotées, directions et fermetures complètes : explorer le réseau autrement.</p>
+        <figure class="screen-figure"><div class="browser-frame"><div class="browser-top">Autoroutes et routes numérotées · Tableau du site</div><div class="capture-window"><img src="visuels/presentation-autoroutes-2026-10-05.png" alt="Panneau du tableau des autoroutes et routes numérotées, avec les lignes visibles et les contrôles du site."></div></div><figcaption>Capture ciblée du 5 octobre 2026, sans menu de page. Les lignes visibles correspondent à la portion affichée du tableau déroulant.</figcaption></figure>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/?view=stats&amp;tab=roads">Explorer les axes</a> · Même période et mêmes impacts que la vue précédente. Ces nombres ne mesurent pas le trafic ni le temps perdu.</p><span class="page-number">11 / 28</span></footer>
+    </section>
+
+    <section class="slide showcase" aria-labelledby="territory-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>STATISTIQUES · TERRITOIRES</span></header>
+      <div class="content">
+        <h2 id="territory-title">Comparer les territoires couverts.</h2>
+        <p class="showcase-intro">Un graphique par municipalité pour explorer la répartition des entraves de la sélection.</p>
+        <figure class="screen-figure"><div class="browser-frame"><div class="browser-top">Classements · Par municipalité</div><div class="capture-window"><img src="visuels/presentation-territoires-2026-10-05.png" alt="Graphique complet par municipalité de l'onglet Classements, sans la navigation de page."></div></div><figcaption>Capture du 5 octobre 2026. Comparaison des données disponibles; la couverture et les pratiques de publication diffèrent entre territoires.</figcaption></figure>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/?view=stats&amp;tab=places">Explorer les classements</a> · Un classement reflète aussi la façon de publier les données; ce n'est pas une note de performance municipale.</p><span class="page-number">12 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="duration-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>STATISTIQUES · DURÉES ANNONCÉES</span></header>
+      <div class="content">
+        <h2 id="duration-title">Une journée ou plusieurs mois?</h2>
+        <div class="visual-split">
+          <div><p class="lead">Les dates publiées permettent d'explorer les durées prévues.</p><ul class="line-list"><li><strong>Voir la distribution</strong> entre plusieurs classes de durée.</li><li><strong>Examiner les valeurs</strong> dans le tableau associé.</li><li><strong>Garder la nuance</strong> entre ce qui est annoncé et ce qui a réellement eu lieu.</li></ul></div>
+          <figure><img class="detail-image" src="visuels/presentation-durees-2026-10-05.png" alt="Graphique complet des durées prévues, avec les catégories allant d'un jour à plus de 365 jours."><figcaption>Panneau réel du site, capturé le 5 octobre 2026. La distribution porte sur la sélection de cette capture.</figcaption></figure>
+        </div>
+      </div>
+      <footer class="footer"><p>Durées prévues, pas constatées. Une fin annoncée peut changer; une valeur manquante n'est pas une durée nulle.</p><span class="page-number">13 / 28</span></footer>
+    </section>
+
+    <section class="slide showcase" aria-labelledby="actors-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>STATISTIQUES · PUBLIC ET PRIVÉ</span></header>
+      <div class="content">
+        <h2 id="actors-title">Qui réalise? Pour le compte de qui?</h2>
+        <p class="showcase-intro">Distinguer le secteur, l'exécutant et le bénéficiaire lorsque la source permet de les identifier.</p>
+        <figure class="screen-figure"><div class="browser-frame"><div class="browser-top">Public &amp; Privé · Les rôles publiés</div><div class="capture-window compact-capture"><img src="visuels/presentation-acteurs-2026-10-05.png" alt="Panneau complet des répartitions par secteur, exécutant et bénéficiaire, sans les menus de page."></div></div><figcaption>Capture ciblée du 5 octobre 2026. Les catégories indéterminées restent visibles; le panneau est conservé en entier.</figcaption></figure>
+        <div class="split band"><div><h3>L'exécutant et le bénéficiaire</h3><p class="small">Une entreprise peut réaliser des travaux pour le compte d'un organisme public.</p></div><div><h3>Ce qui reste indéterminé</h3><p class="small">Un rôle non publié n'est pas remplacé par une déduction sur le nom ou la couleur.</p></div></div>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/?view=stats&amp;tab=private">Explorer Public &amp; Privé</a> · Ces classifications ne prouvent ni une responsabilité juridique ni la cause d'un retard.</p><span class="page-number">14 / 28</span></footer>
+    </section>
+
+    <section class="slide showcase" aria-labelledby="custom-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>STATISTIQUES · PERSONNALISÉ</span></header>
+      <div class="content">
+        <h2 id="custom-title">Partir de sa propre question.</h2>
+        <p class="showcase-intro">Choisir les dimensions, la mesure et les filtres, puis composer une représentation compatible.</p>
+        <figure class="screen-figure"><div class="browser-frame"><div class="browser-top">Personnalisé · Résultat du choix des données</div><div class="capture-window"><img src="visuels/presentation-personnalise-2026-10-05.png" alt="Résultat complet du graphique personnalisé : nombre d'entraves par municipalité et par type d'impact, sans le panneau des choix."></div></div><figcaption>Capture du résultat le 5 octobre 2026. Le configurateur propose 15 dimensions, 5 mesures et 7 familles de graphiques.</figcaption></figure>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/?view=stats&amp;tab=custom">Ouvrir Personnalisé</a> · Les combinaisons proposées dépendent de la mesure; une médiane n'est pas additionnée comme un effectif.</p><span class="page-number">15 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="chart-choice-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>STATISTIQUES · CHOISIR LA LECTURE</span></header>
+      <div class="content">
+        <h2 id="chart-choice-title">Comparer des volumes ou lire une répartition.</h2>
+        <div class="visual-split">
+          <div><p>Des barres pour comparer; un anneau pour lire les parts d'une sélection.</p><p>Courbe comparative, radar, graphique mixte, camembert et aire polaire complètent les choix compatibles.</p><p class="small band">Une courbe entre catégories n'est pas une évolution dans le temps. Le choix graphique doit suivre la question.</p></div>
+          <figure><img class="detail-image" src="visuels/presentation-repartition-2026-10-05.png" alt="Graphique personnalisé en anneau représentant la répartition par type d'impact."><figcaption>Vue en anneau, capturée le 5 octobre 2026. Période identique; découpage par impact, distinct du graphique par municipalité.</figcaption></figure>
+        </div>
+      </div>
+      <footer class="footer"><p>Le graphique décrit les données sélectionnées, pas l'ensemble des conditions routières. Les parts doivent toujours être lues avec leur dénominateur.</p><span class="page-number">16 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="table-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>STATISTIQUES · RETROUVER LES VALEURS</span></header>
+      <div class="content">
+        <h2 id="table-title">Un graphique ne devrait pas cacher ses chiffres.</h2>
+        <p class="lead">Les tableaux associés permettent de vérifier les valeurs, les effectifs et les données manquantes.</p>
+        <figure class="wide-detail"><img src="visuels/presentation-tableau-2026-10-05.png" alt="Tableau réel associé au graphique personnalisé, avec types d'impact, valeurs, effectifs et données manquantes."><figcaption>Tableau du graphique précédent, ouvert et capturé le 5 octobre 2026. Aucune valeur n'a été recomposée pour la présentation.</figcaption></figure>
+        <div class="split band"><div><h3>Comparer sur une base commune</h3><p class="small">Même période, même sélection et même unité avant d'interpréter un écart.</p></div><div><h3>Garder les inconnues visibles</h3><p class="small">L'absence de donnée ne signifie pas zéro; le périmètre du calcul compte autant que son résultat.</p></div></div>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/?view=stats&amp;tab=how">Consulter la méthode</a> · Les données sources restent accessibles pour approfondir une question.</p><span class="page-number">17 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="potholes-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>NIDS-DE-POULE ET COLMATAGES · MONTRÉAL</span></header>
+      <div class="content">
+        <h2 id="potholes-title">Ce qui a été signalé. Ce qui a été enregistré.</h2>
+        <div class="split map-pair">
+          <div><h3>Signalements 311</h3><figure><div class="browser-frame"><img src="visuels/infoman-nids-de-poule.png" width="2240" height="1360" alt="Carte existante des signalements de nids-de-poule, filtrée sur l'année d'activité 2026."></div><figcaption>Capture du 4 octobre 2026. © OpenStreetMap contributors.</figcaption></figure><p>Retrouver une rue, un dossier et l'historique d'un emplacement public.</p></div>
+          <div><h3>Colmatages mécanisés</h3><figure><div class="browser-frame"><img src="visuels/infoman-colmatages.png" width="2240" height="1360" alt="Carte existante des colmatages mécanisés, avec les positions et les filtres du fichier 2025."></div><figcaption>Capture du 4 octobre 2026. © OpenStreetMap contributors.</figcaption></figure><p>Explorer les traces disponibles par année, mois et appareil.</p></div>
+        </div>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/potholes.html">Explorer ce volet</a> · Visuels existants réutilisés, sans nouvelle collecte. Le visuel des colmatages porte sur des événements jusqu'au 20 mai 2025, pas sur les réparations de 2026.</p><span class="page-number">18 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="pothole-analyses-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>STATISTIQUES · NIDS-DE-POULE ET COLMATAGES</span></header>
+      <div class="content">
+        <p class="eyebrow">Plus qu'un compteur de signalements</p>
+        <h2 id="pothole-analyses-title">Six angles pour explorer les données.</h2>
+        <div class="analysis-grid">
+          <div><h3>Volumes annuels</h3><p>Combien de demandes sont recensées dans chaque année disponible?</p></div>
+          <div><h3>Persistance</h3><p>Quels emplacements sont signalés dans plusieurs années distinctes?</p></div>
+          <div><h3>Concentration</h3><p>Les demandes se concentrent-elles sur un petit nombre d'emplacements?</p></div>
+          <div><h3>Retours après colmatage présumé</h3><p>Des demandes apparaissent-elles après une intervention enregistrée à proximité?</p></div>
+          <div><h3>Demandes répétées</h3><p>Où des signalements reviennent-ils sans trace de colmatage recensée dans le corpus?</p></div>
+          <div><h3>Récurrence locale</h3><p>Comment les emplacements signalés se répartissent-ils entre les arrondissements?</p></div>
+        </div>
+      </div>
+      <footer class="footer"><p>Vue d'ensemble des analyses décrites dans le dossier existant, pas six nouveaux résultats chiffrés. Données 2026 partielles; aucune nouvelle collecte ni recalcul pour cette édition.</p><span class="page-number">19 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="recurrence-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>STATISTIQUES · UN EXEMPLE HISTORIQUE DATÉ</span></header>
+      <div class="content">
+        <h2 id="recurrence-title">Où les signalements se répètent-ils?</h2>
+        <div class="split metric-layout">
+          <div><p class="metric">42,5 %</p><p class="metric-label">8 272 emplacements<br>sur 19 455</p><p class="small">signalés dans au moins deux années de la période <strong>2022-2026</strong>, dans l'exemple conservé.</p></div>
+          <figure class="chart-detail"><img src="visuels/infoman-persistance.png" alt="Graphique existant de persistance des signalements : une année 11 183 emplacements; deux années 4 567; trois 2 212; quatre 1 059; cinq ou plus 434."><figcaption>Visuel du 4 octobre 2026 repris du dossier précédent. L'année 2026 est partielle; un emplacement peut correspondre à plusieurs trous.</figcaption></figure>
+        </div>
+        <div class="split band"><div><h3>Une lecture dans le temps</h3><p class="small">Bilans annuels, persistance, concentration des demandes et rapprochements avec les colmatages disponibles.</p></div><div><h3>Une lecture locale</h3><p class="small">Portraits par arrondissement, rues et emplacements pour approfondir les données d'un secteur.</p></div></div>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/potholes.html?mode=statistics">Bilans et analyses</a> · Exemple non recalculé : signalements jusqu'au 1er octobre 2026; 1 584 signalements non localisables exclus du calcul illustré.</p><span class="page-number">20 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="pothole-territories-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>STATISTIQUES · UNE LECTURE LOCALE</span></header>
+      <div class="content">
+        <h2 id="pothole-territories-title">De Montréal à son arrondissement.</h2>
+        <div class="split metric-layout">
+          <div><p class="metric large">19</p><p class="metric-label">portraits d'arrondissement<br>décrits dans le site</p><p class="small band">À ne pas confondre avec le nombre de municipalités couvertes par les cartes d'entraves.</p></div>
+          <div><ul class="line-list territorial-steps"><li><strong>Choisir une période.</strong> Historique disponible ou période récente 2022-2026.</li><li><strong>Explorer les rues et emplacements.</strong> Indicateurs, tableaux et liens vers la carte.</li><li><strong>Comparer avec le reste de Montréal.</strong> L'arrondissement choisi est exclu du groupe de comparaison.</li><li><strong>Lire les limites.</strong> Des demandes localisées, pas un inventaire de tous les trous.</li></ul></div>
+        </div>
+      </div>
+      <footer class="footer"><p>Fonctionnement documenté dans l'édition précédente; aucun nouveau portrait chiffré ni capture d'arrondissement n'a été calculé ici. Les classements ne constituent pas une note de performance municipale.</p><span class="page-number">21 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="limits-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>BIEN LIRE LES RÉSULTATS</span></header>
+      <div class="content">
+        <h2 id="limits-title">Ce que les données montrent.<br>Ce qu'elles ne prouvent pas.</h2>
+        <table class="plain-table"><tbody>
+          <tr><th scope="row">Une entrave</th><td>Un impact, un tronçon ou une zone; pas nécessairement un chantier unique.</td></tr>
+          <tr><th scope="row">Un dossier 311 terminé</th><td>Un statut administratif; pas une confirmation automatique de réparation.</td></tr>
+          <tr><th scope="row">Un colmatage proche</th><td>Un rapprochement géographique; pas la preuve qu'il concerne le même trou.</td></tr>
+          <tr><th scope="row">Aucune trace recensée</th><td>Les réparations manuelles et celles des arrondissements ne sont pas couvertes par le corpus mécanisé utilisé.</td></tr>
+          <tr><th scope="row">Une vérification récente</th><td>Une source consultée à une date donnée; pas une confirmation des conditions sur le terrain.</td></tr>
+        </tbody></table>
+      </div>
+      <footer class="footer"><p><a href="https://cestdejalenfer.ca/fr/faq.html">FAQ et limites</a> · <a href="https://cestdejalenfer.ca/fr/?view=stats&amp;tab=how">Méthode des statistiques routières</a>. Les différences de couverture doivent accompagner toute comparaison.</p><span class="page-number">22 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="founder-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>LA CRÉATRICE</span></header>
+      <div class="content">
+        <p class="eyebrow">La personne derrière le projet</p>
+        <h2 id="founder-title" class="bio-name">Shelsea Saint-Fleur</h2>
+        <div class="split">
+          <div><p class="lead">Diplômée d'un baccalauréat en génie logiciel et spécialisée dans les données, le big data et l'analytique.</p><p>Un projet développé sur son temps libre pour rendre plus simple la consultation d'informations routières dispersées.</p><p><a href="https://www.linkedin.com/in/shelseastf/">Consulter son profil professionnel</a></p></div>
+          <div><h3>Une démarche concrète</h3><ul class="line-list"><li><strong>Réunir</strong> des sources aux formats différents.</li><li><strong>Structurer</strong> les lieux, les dates et les impacts.</li><li><strong>Expliquer</strong> les calculs et leurs limites.</li><li><strong>Faire évoluer</strong> l'outil à partir des usages et des retours.</li></ul></div>
+        </div>
+      </div>
+      <footer class="footer"><p>Biographie et démarche communiquées par la créatrice. Initiative personnelle et indépendante; aucun lien institutionnel ou titre professionnel supplémentaire n'est sous-entendu.</p><span class="page-number">23 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="audience-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>AUDIENCE · GOOGLE ANALYTICS</span></header>
+      <div class="content">
+        <p class="eyebrow">Du 5 septembre au 4 octobre 2026</p>
+        <h2 id="audience-title">Un premier mois d'utilisation.</h2>
+        <div class="facts audience-facts">
+          <div><p class="metric">7 019</p><p>utilisateurs uniques</p><p class="small">Total communiqué pour la période.</p></div>
+          <div><p class="metric">46 935</p><p>sessions</p><p class="small">Des sessions, pas autant de personnes distinctes.</p></div>
+          <div><p class="metric">7 000</p><p>utilisateurs actifs<br>sur 30 jours</p><p class="small">Indicateur distinct des utilisateurs uniques.</p></div>
+        </div>
+        <p class="lead">Une initiative indépendante, lancée le 5 septembre 2026, qui trouve ses premiers usages.</p>
+        <p class="small">Ces indicateurs ne mesurent ni des clients payants, ni des trajets, ni des gains de temps.</p>
+      </div>
+      <footer class="footer"><p>Source : relevé Google Analytics communiqué par Shelsea le 5 octobre 2026, pour le 5 septembre au 4 octobre inclus. Chiffres fournis par la créatrice, sans audit indépendant.</p><span class="page-number">24 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="audience-devices-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>AUDIENCE · LES APPAREILS</span></header>
+      <div class="content">
+        <p class="eyebrow">Du 5 septembre au 4 octobre 2026</p>
+        <h2 id="audience-devices-title">Le mobile au premier plan.</h2>
+        <p class="lead">La répartition fournie confirme l'importance d'une consultation adaptée au téléphone.</p>
+        <dl class="device-distribution">
+          <div><dt>Mobile</dt><dd class="device-bar" aria-hidden="true"><span style="width:64.62%"></span></dd><dd class="device-value">4 536 · 64,62 %</dd></div>
+          <div><dt>Ordinateur</dt><dd class="device-bar desktop" aria-hidden="true"><span style="width:29.82%"></span></dd><dd class="device-value">2 093 · 29,82 %</dd></div>
+          <div><dt>Tablette</dt><dd class="device-bar tablet" aria-hidden="true"><span style="width:5.54%"></span></dd><dd class="device-value">388 · 5,54 %</dd></div>
+        </dl>
+        <p class="small band">Effectifs et pourcentages repris tels que communiqués. La ventilation totalise 7 017, soit un écart de 2 avec les 7 019 utilisateurs uniques; aucune catégorie supplémentaire n'est supposée.</p>
+      </div>
+      <footer class="footer"><p>Source : relevé communiqué par la créatrice, non audité. Les trois pourcentages fournis totalisent 99,98 %; ils ne sont pas recalculés silencieusement.</p><span class="page-number">25 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="discovery-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>VISIBILITÉ ET PÉRIMÈTRE ANNONCÉ</span></header>
+      <div class="content">
+        <p class="eyebrow">Recherche Google · Du 5 septembre au 4 octobre 2026</p>
+        <h2 id="discovery-title">Être trouvé lorsqu'on cherche une réponse.</h2>
+        <div class="split band">
+          <div><p class="metric">4 294</p><p>impressions dans la recherche Google</p></div>
+          <div><p class="metric">720</p><p>clics depuis la recherche Google</p></div>
+        </div>
+        <div class="split band">
+          <div><h3>19 municipalités</h3><p class="small">Couverture annoncée par la créatrice.</p></div>
+          <div><h3>35 à 40 sources</h3><p class="small">Ordre de grandeur des sources de données agrégées, communiqué par la créatrice.</p></div>
+        </div>
+        <p class="small">Les impressions et clics Google ne sont pas les recherches effectuées à l'intérieur du site.</p>
+      </div>
+      <footer class="footer"><p>Relevé fourni le 5 octobre 2026. La couverture annoncée est distincte des métriques Analytics; sa convention de décompte n'est pas auditée dans cette présentation.</p><span class="page-number">26 / 28</span></footer>
+    </section>
+
+    <section class="slide" aria-labelledby="references-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>POUR APPROFONDIR</span></header>
+      <div class="content">
+        <h2 id="references-title">Des sources et des explications à ouvrir.</h2>
+        <div class="split">
+          <div><h3>Le projet</h3><ul class="source-list">
+            <li><a href="https://cestdejalenfer.ca/fr/">Cartes et outils de consultation</a><span>Entraves du Grand Montréal; volets Auto et Piétons.</span></li>
+            <li><a href="https://cestdejalenfer.ca/fr/?view=stats">Statistiques routières</a><span>Vues générales, axes, territoires, acteurs et graphiques personnalisés.</span></li>
+            <li><a href="https://cestdejalenfer.ca/fr/faq.html">FAQ, sources et limites</a><span>Origine des données, fonctionnement et précautions de lecture.</span></li>
+            <li><a href="https://github.com/alwaysbeshels/cestdejalenfer">Code et documentation du projet</a><span>Choix de traitement, évolutions et documentation des vérifications.</span></li>
+          </ul></div>
+          <div><h3>Les données et la méthode</h3><ul class="source-list">
+            <li><a href="https://donnees.montreal.ca/dataset/info-travaux">Ville de Montréal · Info-travaux</a><span>Données sources sur les entraves et travaux.</span></li>
+            <li><a href="https://donnees.montreal.ca/dataset/requete-311">Ville de Montréal · Demandes 311</a><span>Statuts, définitions et limites des positions publiques.</span></li>
+            <li><a href="https://donnees.montreal.ca/dataset/refection-de-chaussee-par-remplissage-mecanise-de-nid-de-poule">Ville de Montréal · Colmatage mécanisé</a><span>Traces d'intervention et couverture du jeu municipal.</span></li>
+            <li><a href="https://cestdejalenfer.ca/fr/?view=stats&amp;tab=how">Comment lire les statistiques</a><span>Calculs du projet, distincts des statistiques officielles de la Ville.</span></li>
+          </ul></div>
+        </div>
+      </div>
+      <footer class="footer"><p>Édition du 5 octobre 2026. Captures de la version locale les 4 et 5 octobre; la version en ligne évolue. Visuels nids-de-poule réutilisés sans nouvelle vérification de leurs sources. © OpenStreetMap contributors pour les cartes.</p><span class="page-number">27 / 28</span></footer>
+    </section>
+
+    <section class="slide closing" aria-labelledby="contact-title">
+      <header class="running"><strong>C'EST DÉJÀ L'ENFER</strong><span>CONTACT</span></header>
+      <div class="content">
+        <p class="eyebrow">Une question, un sujet ou un besoin à explorer?</p>
+        <h2 id="contact-title">Parlons des données<br>qui vous intéressent.</h2>
+        <div class="split">
+          <div><h3>Shelsea Saint-Fleur</h3><p>Créatrice de C'est déjà l'enfer</p><a class="contact-link" href="https://cestdejalenfer.ca/">cestdejalenfer.ca</a><p><a href="https://www.linkedin.com/in/shelseastf/">Contacter Shelsea sur LinkedIn</a></p></div>
+          <div><ul class="line-list"><li><strong>Découvrir le projet</strong> et ses possibilités de consultation.</li><li><strong>Échanger sur un usage</strong> citoyen, médiatique, professionnel ou territorial.</li><li><strong>Partager un retour</strong> ou un besoin d'information.</li></ul></div>
+        </div>
+      </div>
+      <footer class="footer"><p>Présentation générale indépendante de tout destinataire. Les modalités d'un éventuel échange ou partenariat se discutent directement avec la créatrice.</p><span class="page-number">28 / 28</span></footer>
+    </section>
+  </main>
+</body>
+</html>
