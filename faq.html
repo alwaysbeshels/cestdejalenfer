@@ -21,6 +21,7 @@
   <meta name="theme-color" content="#d96d00">
   <title>Questions fréquentes | Carte des entraves</title>
   <link rel="stylesheet" href="css/faq.css?v=20261001-potholes62">
+  <link rel="stylesheet" href="css/social.css?v=20261005-social1">
 </head>
 <body data-document-title="document.faqTitle">
   <main class="faq-shell">
@@ -30,6 +31,10 @@
         <h1 data-i18n="faq.title"></h1>
         <p class="intro" data-i18n="faq.intro"></p>
       </div>
+      <nav class="social-links" data-i18n-aria-label="nav.social">
+        <a href="https://www.facebook.com/share/19VNe7RUkS/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" data-i18n-title="nav.facebook" data-i18n-aria-label="nav.facebook"><img src="https://unpkg.com/lucide-static@0.468.0/icons/facebook.svg" width="22" height="22" alt="" aria-hidden="true"></a>
+        <a href="https://www.instagram.com/cestdejalenfer.ca/" target="_blank" rel="noopener noreferrer" data-i18n-title="nav.instagram" data-i18n-aria-label="nav.instagram"><img src="https://unpkg.com/lucide-static@0.468.0/icons/instagram.svg" width="22" height="22" alt="" aria-hidden="true"></a>
+      </nav>
       <nav class="faq-nav" data-i18n-aria-label="nav.main">
         <a href="index.html" class="pothole-road-link" data-language-page="map" data-i18n-title="potholes.roadMapLabel" data-i18n-aria-label="potholes.roadMapLabel"><img src="https://unpkg.com/lucide-static@0.468.0/icons/route.svg" width="17" height="17" alt="" aria-hidden="true"><span data-i18n="potholes.roadMap"></span></a>
         <a href="potholes.html" class="potholes-link" data-language-page="potholes" data-i18n-title="nav.potholes"><img src="https://unpkg.com/lucide-static@0.468.0/icons/circle-dot.svg" width="17" height="17" alt="" aria-hidden="true"><span data-i18n="nav.potholes"></span></a>
@@ -59,11 +64,17 @@
           <summary data-i18n="faq.q.aboutName"></summary>
           <p data-i18n="faq.a.aboutName"></p>
         </details>
-        <details>
+        <details data-sort-priority="-1">
           <summary data-i18n="faq.q.aboutCreator"></summary>
           <p data-i18n="faq.a.aboutCreator"></p>
           <p class="profile-link"><strong data-i18n="faq.profile"></strong> <a href="https://www.linkedin.com/in/shelseastf/" target="_blank" rel="noreferrer">linkedin.com/in/shelseastf</a></p>
           <p class="profile-link"><strong data-i18n="faq.instagram"></strong> <a href="https://www.instagram.com/alwaysbeshels.perso/" target="_blank" rel="noreferrer">instagram.com/alwaysbeshels.perso</a></p>
+        </details>
+        <details id="social-media" data-sort-priority="1">
+          <summary data-i18n="faq.q.social"></summary>
+          <p data-i18n="faq.a.social"></p>
+          <p class="profile-link"><a href="https://www.facebook.com/share/19VNe7RUkS/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Facebook · cestdejalenfer.ca</a></p>
+          <p class="profile-link"><a href="https://www.instagram.com/cestdejalenfer.ca/" target="_blank" rel="noopener noreferrer">Instagram · @cestdejalenfer.ca</a></p>
         </details>
         <details>
           <summary data-i18n="faq.q.aboutCode"></summary>
@@ -198,11 +209,11 @@
     </footer>
   </main>
   <button id="backToTop" class="back-to-top" type="button" data-i18n-aria-label="faq.top" hidden>↑</button>
-  <script src="languages/fr.js?v=20261005-marathon2"></script>
-  <script src="languages/en.js?v=20261005-marathon2"></script>
+  <script src="languages/fr.js?v=20261005-social1"></script>
+  <script src="languages/en.js?v=20261005-social1"></script>
   <script src="js/i18n.js?v=20261005-nav1"></script>
   <script src="data/sources.js?v=20261005-marathon2"></script>
-  <script src="js/faq.js?v=20261001-potholes62"></script>
+  <script src="js/faq.js?v=20261005-faq-order1"></script>
   <script src="js/analytics.js?v=20261003-analytics1"></script>
   <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
 </body>

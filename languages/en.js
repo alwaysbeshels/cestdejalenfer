@@ -744,6 +744,11 @@ window.TRANSLATIONS.en = {
   "faq.top": "Back to top",
   "faq.profile": "My LinkedIn:",
   "faq.instagram": "My Instagram:",
+  "nav.social": "Site social media",
+  "nav.facebook": "Follow cestdejalenfer.ca on Facebook (new tab)",
+  "nav.instagram": "Follow cestdejalenfer.ca on Instagram (new tab)",
+  "faq.q.social": "Where can I follow the site on social media?",
+  "faq.a.social": "Find cestdejalenfer.ca on Facebook and Instagram:",
   "faq.feedbackLink": "Comments & Improvements",
   "faq.sourceLink": "Open source"
   ,"faq.q.aboutCreated": "Why was this map created?"

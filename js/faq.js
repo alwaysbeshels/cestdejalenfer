@@ -233,7 +233,10 @@ function renderFaqSources(openKey = null) {
 function sortFaqLists() {
   document.querySelectorAll(".faq-list").forEach((list) => {
     [...list.querySelectorAll(":scope > details")]
-      .sort((first, second) => first.querySelector("summary").textContent.localeCompare(second.querySelector("summary").textContent, currentLanguage(), { sensitivity: "base" }))
+      .sort((first, second) => {
+        const priority = Number(first.dataset.sortPriority || 0) - Number(second.dataset.sortPriority || 0);
+        return priority || first.querySelector("summary").textContent.localeCompare(second.querySelector("summary").textContent, currentLanguage(), { sensitivity: "base" });
+      })
       .forEach((item) => list.append(item));
   });
 }

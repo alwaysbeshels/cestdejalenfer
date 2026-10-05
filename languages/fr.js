@@ -744,6 +744,11 @@ window.TRANSLATIONS.fr = {
   "faq.top": "Remonter en haut de la page",
   "faq.profile": "Mon LinkedIn:",
   "faq.instagram": "Mon Instagram:",
+  "nav.social": "Réseaux sociaux du site",
+  "nav.facebook": "Suivre cestdejalenfer.ca sur Facebook (nouvel onglet)",
+  "nav.instagram": "Suivre cestdejalenfer.ca sur Instagram (nouvel onglet)",
+  "faq.q.social": "Où suivre le site sur les réseaux sociaux?",
+  "faq.a.social": "Retrouvez cestdejalenfer.ca sur Facebook et Instagram:",
   "faq.feedbackLink": "Commentaires & Améliorations",
   "faq.sourceLink": "Ouvrir la source"
   ,"faq.q.aboutCreated": "Pourquoi cette carte a-t-elle été créée?"

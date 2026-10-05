@@ -1,0 +1,86 @@
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.social-links a,
+.site-nav a.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+}
+
+.social-links img,
+.site-nav a.social-link img {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.social-links a:hover,
+.site-nav a.social-link:hover {
+  background: #e7f2ee;
+}
+
+.social-links a:focus-visible,
+.site-nav a.social-link:focus-visible {
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 2px;
+}
+
+.brand-block > .social-links {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.brand-block:has(> .social-links) > :is(.eyebrow, h1, .intro) {
+  padding-right: 54px;
+}
+
+.faq-header > .social-links {
+  grid-area: intro;
+  justify-self: end;
+}
+
+.faq-header:has(> .social-links) > div {
+  padding-right: 60px;
+}
+
+.view-stats .brand-block > .social-links {
+  position: static;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.view-stats .brand-block > .social-links a {
+  flex-basis: 40px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+@media (max-width: 640px) {
+  .pothole-toolbar .brand-block:has(.social-link) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "region" "title" "links";
+    row-gap: 6px;
+  }
+
+  .pothole-toolbar .brand-block:has(.social-link) .site-nav {
+    justify-content: flex-end;
+  }
+}

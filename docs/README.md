@@ -28,6 +28,8 @@ Pour tester sans Chrome sur Mac : installez Xcode depuis l'App Store, ouvrez Xco
 
 ### Navigation entre les pages
 
+Les en-tetes de la carte auto et de la FAQ affichent les icones Facebook et Instagram du site a droite du titre. Dans les statistiques des entraves, elles se trouvent sous le bouton de langue du menu gauche, meme sans titre, avec le meme ordre au clavier. Sur la page des nids-de-poule, elles precedent le lien Entraves routieres; sur petit ecran, cette navigation occupe une ligne sous le titre. Les liens ouvrent un nouvel onglet avec des libelles accessibles FR/EN; l'ouverture d'une application native depend du telephone et de ses reglages. La FAQ rassemble aussi les deux comptes dans la question sur les reseaux sociaux, separement du profil personnel de la creatrice. Leur presentation commune est dans [css/social.css](../css/social.css).
+
 Les cartes auto, pietonne, nids-de-poule et la FAQ utilisent [un chargeur commun](../js/navigation.js) et [une transition commune](../css/navigation.css). Les routes FR/EN recuperent toujours le HTML racine et conservent une base vers la racine du projet, mais elles inserent maintenant le contenu et executent ses scripts dans l'ordre, sans reconstruire le document avec `document.write`.
 
 Le survol ou le focus prepare la destination; un clic normal garde la page actuelle visible pendant la preparation. Un transfert HTML de session, valable 15 secondes et consomme une seule fois, evite une seconde requete du meme HTML dans la page de langue. Un rechargement explicite redemande le HTML. Seules les ressources statiques de la page sont preparees : les flux de circulation, snapshots de donnees et tuiles ne sont pas mis en cache par ce mecanisme, et le service worker reste reseau uniquement.
