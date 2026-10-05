@@ -1046,7 +1046,7 @@ function dismissMapFirstVisitHint() {
 function mapLineWidth(width) {
   const zoom = map.getZoom();
   const scale = Math.max(0.3, Math.min(1, 0.3 + (zoom - 10) * 0.1167));
-  return Math.max(1, Math.round(width * scale));
+  return Math.max(1, Math.round(width * scale * 0.8));
 }
 
 // Overpass est utilise en GET: Nominatim est bloque par CORS depuis un site statique.

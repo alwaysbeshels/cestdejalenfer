@@ -1,0 +1,597 @@
+{
+  "createdAt": "2026-10-05T20:05:44.244Z",
+  "dateSelection": "2026-10-05",
+  "captures": [
+    {
+      "filename": "04-fr-general-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:05:54.073Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "general",
+      "headings": [
+        "Statistiques des entraves — Général",
+        "Répartition par type d'impact",
+        "Durées prévues",
+        "Longueur de voies touchées",
+        "Âge des chantiers",
+        "Les plus longues encore actives",
+        "Débuts et fins de travaux prévus d'ici 7 jours",
+        "Couverture par source"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 3018
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-fr-general-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:05:54.783Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "language": "fr",
+      "viewport": [
+        1440,
+        3018
+      ],
+      "tab": "general",
+      "headings": [
+        "Statistiques des entraves — Général",
+        "Répartition par type d'impact",
+        "Durées prévues",
+        "Longueur de voies touchées",
+        "Âge des chantiers",
+        "Les plus longues encore actives",
+        "Débuts et fins de travaux prévus d'ici 7 jours",
+        "Couverture par source"
+      ],
+      "statsScroll": {
+        "client": 3018,
+        "total": 3018
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-fr-roads-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:05:55.154Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=roads",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "roads",
+      "headings": [
+        "Statistiques des entraves — Autoroutes et routes numérotées",
+        "Répartition par type de voie",
+        "Autoroutes et routes numérotées",
+        "Autoroutes et routes numérotées par direction",
+        "Fermetures complètes sur autoroutes, ponts et tunnels"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 1759
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-fr-roads-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:05:55.530Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=roads",
+      "language": "fr",
+      "viewport": [
+        1440,
+        1759
+      ],
+      "tab": "roads",
+      "headings": [
+        "Statistiques des entraves — Autoroutes et routes numérotées",
+        "Répartition par type de voie",
+        "Autoroutes et routes numérotées",
+        "Autoroutes et routes numérotées par direction",
+        "Fermetures complètes sur autoroutes, ponts et tunnels"
+      ],
+      "statsScroll": {
+        "client": 1759,
+        "total": 1759
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-fr-private-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:05:55.988Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=private",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "private",
+      "headings": [
+        "Statistiques des entraves — Public & Privé",
+        "Secteur public ou privé",
+        "Travaux pour le secteur public, par organisme",
+        "Ville de Montréal : en régie ou à contrat",
+        "Ville de Montréal : part à contrat par arrondissement",
+        "Chantiers publics les plus longs",
+        "Responsables : public ou privé",
+        "Proportion des travaux par type de mandat",
+        "Public ou privé : comparaison",
+        "Entreprises avec le plus d'entraves"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 2944
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-fr-private-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:05:56.709Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=private",
+      "language": "fr",
+      "viewport": [
+        1440,
+        2944
+      ],
+      "tab": "private",
+      "headings": [
+        "Statistiques des entraves — Public & Privé",
+        "Secteur public ou privé",
+        "Travaux pour le secteur public, par organisme",
+        "Ville de Montréal : en régie ou à contrat",
+        "Ville de Montréal : part à contrat par arrondissement",
+        "Chantiers publics les plus longs",
+        "Responsables : public ou privé",
+        "Proportion des travaux par type de mandat",
+        "Public ou privé : comparaison",
+        "Entreprises avec le plus d'entraves"
+      ],
+      "statsScroll": {
+        "client": 2944,
+        "total": 2944
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-fr-territory-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:05:57.302Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=territory",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "territory",
+      "headings": [
+        "Statistiques des entraves — Par municipalité",
+        "Répartition par type d'impact",
+        "Répartition par type de voie",
+        "Âge des chantiers",
+        "Secteur public ou privé",
+        "Rues et routes avec le plus d'entraves",
+        "Les plus longues encore actives",
+        "Débuts et fins de travaux prévus d'ici 7 jours"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 2890
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-fr-territory-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:05:58.094Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=territory",
+      "language": "fr",
+      "viewport": [
+        1440,
+        2890
+      ],
+      "tab": "territory",
+      "headings": [
+        "Statistiques des entraves — Par municipalité",
+        "Répartition par type d'impact",
+        "Répartition par type de voie",
+        "Âge des chantiers",
+        "Secteur public ou privé",
+        "Rues et routes avec le plus d'entraves",
+        "Les plus longues encore actives",
+        "Débuts et fins de travaux prévus d'ici 7 jours"
+      ],
+      "statsScroll": {
+        "client": 2890,
+        "total": 2890
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "08-fr-bars-screen.png",
+      "kind": "custom-full-interface",
+      "capturedAt": "2026-10-05T20:05:59.313Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=custom",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "custom",
+      "headings": [
+        "Statistiques des entraves / Personnalisé",
+        "Choix des données",
+        "Nombre d'entraves / Municipalité"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 900
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "08-fr-doughnut-screen.png",
+      "kind": "custom-full-interface",
+      "capturedAt": "2026-10-05T20:05:59.661Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=custom",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "custom",
+      "headings": [
+        "Statistiques des entraves / Personnalisé",
+        "Choix des données",
+        "Nombre d'entraves / Type d'impact"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 900
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-en-general-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:06:03.000Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "general",
+      "headings": [
+        "Road restriction statistics — General",
+        "Breakdown by impact type",
+        "Planned durations",
+        "Length of affected roads",
+        "Age of the work",
+        "Longest still active",
+        "Work starting or ending within 7 days",
+        "Coverage by source"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 3009
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-en-general-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:06:03.975Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "language": "en",
+      "viewport": [
+        1440,
+        3009
+      ],
+      "tab": "general",
+      "headings": [
+        "Road restriction statistics — General",
+        "Breakdown by impact type",
+        "Planned durations",
+        "Length of affected roads",
+        "Age of the work",
+        "Longest still active",
+        "Work starting or ending within 7 days",
+        "Coverage by source"
+      ],
+      "statsScroll": {
+        "client": 3009,
+        "total": 3009
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-en-roads-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:06:04.351Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=roads",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "roads",
+      "headings": [
+        "Road restriction statistics — Highways and numbered routes",
+        "Split by type of road",
+        "Highways and numbered routes",
+        "Highways and numbered routes by direction",
+        "Full closures on highways, bridges and tunnels"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 1776
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-en-roads-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:06:04.845Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=roads",
+      "language": "en",
+      "viewport": [
+        1440,
+        1776
+      ],
+      "tab": "roads",
+      "headings": [
+        "Road restriction statistics — Highways and numbered routes",
+        "Split by type of road",
+        "Highways and numbered routes",
+        "Highways and numbered routes by direction",
+        "Full closures on highways, bridges and tunnels"
+      ],
+      "statsScroll": {
+        "client": 1776,
+        "total": 1776
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-en-private-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:06:05.456Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=private",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "private",
+      "headings": [
+        "Road restriction statistics — Public & Private",
+        "Public or private sector",
+        "Work for the public sector, by body",
+        "City of Montreal: own crews or contract",
+        "City of Montreal: share by contract per borough",
+        "Longest public worksites",
+        "Responsible parties: public or private",
+        "Share of work by mandate type",
+        "Public or private: comparison",
+        "Companies with the most restrictions"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 2942
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-en-private-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:06:06.141Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=private",
+      "language": "en",
+      "viewport": [
+        1440,
+        2942
+      ],
+      "tab": "private",
+      "headings": [
+        "Road restriction statistics — Public & Private",
+        "Public or private sector",
+        "Work for the public sector, by body",
+        "City of Montreal: own crews or contract",
+        "City of Montreal: share by contract per borough",
+        "Longest public worksites",
+        "Responsible parties: public or private",
+        "Share of work by mandate type",
+        "Public or private: comparison",
+        "Companies with the most restrictions"
+      ],
+      "statsScroll": {
+        "client": 2942,
+        "total": 2942
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-en-territory-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:06:06.761Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=territory",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "territory",
+      "headings": [
+        "Road restriction statistics — By municipality",
+        "Breakdown by impact type",
+        "Split by type of road",
+        "Age of the work",
+        "Public or private sector",
+        "Streets and roads with the most restrictions",
+        "Longest still active",
+        "Work starting or ending within 7 days"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 2890
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "04-en-territory-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:06:07.357Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=territory",
+      "language": "en",
+      "viewport": [
+        1440,
+        2890
+      ],
+      "tab": "territory",
+      "headings": [
+        "Road restriction statistics — By municipality",
+        "Breakdown by impact type",
+        "Split by type of road",
+        "Age of the work",
+        "Public or private sector",
+        "Streets and roads with the most restrictions",
+        "Longest still active",
+        "Work starting or ending within 7 days"
+      ],
+      "statsScroll": {
+        "client": 2890,
+        "total": 2890
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "08-en-bars-screen.png",
+      "kind": "custom-full-interface",
+      "capturedAt": "2026-10-05T20:06:08.342Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=custom",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "custom",
+      "headings": [
+        "Road restriction statistics / Custom",
+        "Data choices",
+        "Number of restrictions / Municipality"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 900
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "08-en-doughnut-screen.png",
+      "kind": "custom-full-interface",
+      "capturedAt": "2026-10-05T20:06:08.741Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=custom",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "tab": "custom",
+      "headings": [
+        "Road restriction statistics / Custom",
+        "Data choices",
+        "Number of restrictions / Impact type"
+      ],
+      "statsScroll": {
+        "client": 900,
+        "total": 900
+      },
+      "appHelp": null
+    },
+    {
+      "filename": "09-fr-iphone-help.png",
+      "kind": "site-install-help-mobile-emulation",
+      "capturedAt": "2026-10-05T20:06:12.788Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?startDate=2026-10-05&endDate=2026-10-05",
+      "language": "fr",
+      "viewport": [
+        390,
+        844
+      ],
+      "tab": null,
+      "headings": [],
+      "statsScroll": {
+        "client": 0,
+        "total": 0
+      },
+      "appHelp": "Dans Safari, touchez Partager, puis Sur l'écran d'accueil."
+    },
+    {
+      "filename": "09-fr-android-help.png",
+      "kind": "site-install-help-mobile-emulation",
+      "capturedAt": "2026-10-05T20:06:17.826Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?startDate=2026-10-05&endDate=2026-10-05",
+      "language": "fr",
+      "viewport": [
+        390,
+        844
+      ],
+      "tab": null,
+      "headings": [],
+      "statsScroll": {
+        "client": 0,
+        "total": 0
+      },
+      "appHelp": "Dans Chrome, ouvrez le menu ⋮, puis choisissez Installer la page en tant qu'application ou Ajouter à l'écran d'accueil."
+    },
+    {
+      "filename": "09-en-iphone-help.png",
+      "kind": "site-install-help-mobile-emulation",
+      "capturedAt": "2026-10-05T20:06:22.096Z",
+      "url": "http://127.0.0.1:5500/en/index.html?startDate=2026-10-05&endDate=2026-10-05",
+      "language": "en",
+      "viewport": [
+        390,
+        844
+      ],
+      "tab": null,
+      "headings": [],
+      "statsScroll": {
+        "client": 0,
+        "total": 0
+      },
+      "appHelp": "In Safari, tap Share, then Add to Home Screen."
+    },
+    {
+      "filename": "09-en-android-help.png",
+      "kind": "site-install-help-mobile-emulation",
+      "capturedAt": "2026-10-05T20:06:25.570Z",
+      "url": "http://127.0.0.1:5500/en/index.html?startDate=2026-10-05&endDate=2026-10-05",
+      "language": "en",
+      "viewport": [
+        390,
+        844
+      ],
+      "tab": null,
+      "headings": [],
+      "statsScroll": {
+        "client": 0,
+        "total": 0
+      },
+      "appHelp": "In Chrome, open the ⋮ menu, then choose Install page as app or Add to Home Screen."
+    }
+  ],
+  "pageErrors": [],
+  "prohibitedRequests": 0,
+  "nativeInstallationTested": false
+}

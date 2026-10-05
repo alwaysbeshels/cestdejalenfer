@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Publications indépendantes de C'est déjà l'enfer, en français et en anglais, pour Instagram et Facebook.">
+  <title>C'est déjà l'enfer | Publications FR et EN</title>
+  <style>
+    :root { --ink: #18332f; --teal: #006d68; --coral: #c94c35; --gold: #a47222; --muted: #4d625d; --paper: #f4f7f5; --line: #c9d6d1; }
+    * { box-sizing: border-box; }
+    html { background: #dbe4df; color: var(--ink); font-family: "Aptos", "Candara", sans-serif; letter-spacing: 0; }
+    body { margin: 0; }
+    .preview-nav { max-width: 1080px; margin: 24px auto; padding: 0 18px; display: flex; flex-wrap: wrap; gap: 12px 24px; font-size: 17px; }
+    a { color: var(--teal); text-underline-offset: 4px; }
+    main { max-width: 1112px; padding: 0 16px 24px; margin: auto; }
+    .sheet { position: relative; width: 100%; aspect-ratio: 1; margin: 0 auto 24px; }
+    .artboard { position: absolute; inset: 0 auto auto 0; width: 1080px; height: 1080px; padding: 56px; transform: scale(var(--preview-scale, 1)); transform-origin: top left; background: var(--paper); overflow: hidden; }
+    h1, h2, h3, .display, .brand, .site-address { font-family: "Bahnschrift", "Aptos Display", "Candara", sans-serif; font-weight: 650; }
+    h1, h2, h3, p, figure { margin: 0; }
+    .cover-title { font-size: 102px; line-height: .98; }
+    .cover-title > span { display: block; }
+    .cover-hook { margin-top: 22px; font-size: 52px; line-height: 1.08; color: var(--coral); }
+    .cover { background: linear-gradient(180deg, #f4f7f5 0%, #f4f7f5 64%, #e5efeb 100%); }
+    .cover-stage { position: absolute; left: 30px; top: 370px; width: 1020px; height: 650px; }
+    .laptop { position: absolute; width: 930px; top: 10px; left: 0; filter: drop-shadow(0 19px 18px rgba(19, 47, 38, .22)); }
+    .laptop-lid { position: relative; width: 88%; margin: 0 auto; padding: 14px 12px 22px; border: 3px solid #74827c; border-radius: 19px 19px 5px 5px; background: #101916; box-shadow: inset 0 0 0 2px #273730; }
+    .laptop-lid::before { content: ""; position: absolute; top: 5px; left: calc(50% - 2px); width: 4px; height: 4px; border-radius: 50%; background: #738f82; }
+    .laptop-lid img { display: block; width: 100%; height: auto; aspect-ratio: 1360 / 850; object-fit: contain; background: #fff; border-radius: 2px; }
+    .laptop-base { width: 100%; height: 28px; margin-top: -1px; position: relative; border-bottom: 3px solid #62756a; border-radius: 3px 3px 17px 17px; background: linear-gradient(#c8d3ce, #f2f5f3 30%, #9fafa6 55%, #6c8073); clip-path: polygon(1% 0,99% 0,100% 60%,98% 100%,2% 100%,0 60%); }
+    .laptop-base::before { content: ""; position: absolute; left: 43%; top: 0; width: 14%; height: 7px; background: #87998e; border-radius: 0 0 7px 7px; }
+    .phone { position: relative; padding: 13px 7px; border: 4px solid #74837a; border-radius: 38px; background: #111b16; box-shadow: 0 22px 32px rgba(17, 41, 31, .25), inset 0 0 0 1px #060d09; }
+    .phone::before { content: ""; position: absolute; top: 5px; left: 42%; width: 16%; height: 4px; background: #52685b; border-radius: 3px; }
+    .phone img { display: block; width: 100%; height: auto; aspect-ratio: 390 / 844; object-fit: contain; border-radius: 24px; background: #fff; }
+    .cover-stage .phone { position: absolute; z-index: 2; left: 726px; top: 62px; width: 268px; }
+    .attribution { margin-top: 10px; color: var(--muted); font-size: 16px; line-height: 1.35; }
+    .cover-stage .attribution { position: absolute; left: 52px; top: 617px; margin: 0; }
+    .page-title { font-size: 80px; line-height: 1.04; }
+    .page-title .accent { color: var(--coral); }
+    .intro { margin-top: 20px; font-size: 32px; line-height: 1.3; }
+    .maps .page-title { font-size: 70px; }
+    .maps .intro { font-size: 30px; margin-top: 14px; }
+    .screen-pair { display: grid; gap: 16px; width: 850px; margin: 22px auto 0; }
+    .screen-label { margin-bottom: 9px; font-size: 28px; line-height: 1.2; color: var(--teal); }
+    .screen-image { display: block; width: 100%; height: auto; object-fit: contain; border: 1px solid #b8cbc1; border-radius: 6px; background: #fff; }
+    .maps .attribution { width: 850px; margin: 12px auto 0; }
+    .potholes { background: #fff; }
+    .potholes .page-title { font-size: 77px; }
+    .potholes .intro { font-size: 33px; }
+    .pothole-screen { width: 920px; margin: 32px auto 0; }
+    .image-caption { margin-top: 20px; font-size: 29px; line-height: 1.3; }
+    .statistics { background: #eef4f1; }
+    .statistics .page-title { font-size: 80px; }
+    .chart-figure { width: 865px; margin: 28px auto 0; }
+    .reader { background: linear-gradient(90deg, #f7f9f7 0%, #f7f9f7 62%, #e6efea 62%, #e6efea 100%); }
+    .reader .page-title { font-size: 78px; }
+    .reader-layout { display: grid; grid-template-columns: 560px 290px; align-items: start; gap: 60px; margin-top: 32px; }
+    .reader-layout .phone { width: 290px; }
+    .reader-copy { padding-top: 12px; }
+    .reader-copy h3 { font-size: 40px; line-height: 1.16; color: var(--teal); }
+    .reader-points { list-style: none; padding: 0; margin: 24px 0 0; }
+    .reader-points li { padding: 19px 0; border-top: 1px solid var(--line); font-size: 31px; line-height: 1.35; }
+    .reader-note { margin-top: 20px; font-size: 26px; line-height: 1.35; }
+    .closing { background: #153b34; color: #fff; }
+    .closing .page-title { font-size: 111px; line-height: 1; }
+    .closing .page-title .accent { color: #ffc0ad; }
+    .closing-url { margin-top: 28px; font-size: 70px; line-height: 1.1; color: #fff; }
+    .closing-layout { display: grid; grid-template-columns: 540px 274px; gap: 90px; margin-top: 45px; }
+    .closing-copy { padding-top: 8px; }
+    .closing-copy > p { font-size: 38px; line-height: 1.3; }
+    .closing-copy .closing-question { margin-top: 37px; font-size: 48px; line-height: 1.12; }
+    .closing-copy .closing-availability { margin-top: 32px; font-size: 34px; color: #dcece5; }
+    .closing .phone { width: 274px; border-color: #96a99c; }
+    .closing .attribution { color: #dcece5; font-size: 15px; }
+    .series-post { background: #eef4f1; }
+    .series-title { font-size: 76px; line-height: 1.05; }
+    .series-title > span { color: var(--coral); }
+    .series-intro { font-size: 30px; line-height: 1.3; margin-top: 18px; }
+    .series-figure { margin-top: 26px; }
+    .series-figure > img { display: block; width: 100%; height: auto; object-fit: contain; border: 1px solid var(--line); border-radius: 6px; background: #fff; }
+    .series-figure > figcaption { margin-top: 18px; font-size: 27px; line-height: 1.3; }
+    .installation-post { background: #f4f7f5; }
+    .installation-post .series-title { font-size: 72px; }
+    .install-layout { display: grid; grid-template-columns: 566px 294px; gap: 72px; align-items: start; margin-top: 28px; }
+    .install-layout .phone { width: 294px; }
+    .install-steps { margin: 0; padding-left: 43px; font-size: 33px; line-height: 1.32; }
+    .install-steps li { padding-left: 7px; margin-bottom: 28px; }
+    .install-steps li::marker { color: var(--teal); font-weight: 700; }
+    .install-note { margin-top: 22px; font-size: 26px; line-height: 1.35; color: var(--muted); }
+    .installation-credit { margin-top: 10px; font-size: 16px; line-height: 1.3; color: var(--muted); }
+    body.export { background: #fff; }
+    body.export .preview-nav { display: none; }
+    body.export main { max-width: none; padding: 0; }
+    body.export .sheet { width: 1080px; height: 1080px; margin: 0; }
+    body.export .artboard { transform: none; }
+  </style>
+</head>
+<body>
+  <nav class="preview-nav" aria-label="Fichiers et langues des publications">
+    <a href="?lang=fr">Français</a>
+    <a href="?lang=en">English</a>
+    <a href="README.md" data-preview-link="guide">Fichiers et légendes</a>
+    <a href="https://cestdejalenfer.ca/fr/" data-preview-link="site">Le site</a>
+  </nav>
+  <main>
+    <div class="sheet">
+      <section class="artboard cover" data-export="01-bienvenue" aria-labelledby="cover-title">
+        <h1 id="cover-title" class="cover-title"><span>C'est déjà</span><span>l'enfer.</span></h1>
+        <p class="cover-hook display">Autant savoir où.</p>
+        <figure class="cover-stage" aria-label="Montage original d'un ordinateur et d'un téléphone affichant le site">
+          <div class="laptop"><div class="laptop-lid"><img src="_sources/current/fr/auto-desktop.png" width="2720" height="1700" alt="Carte Auto de C'est déjà l'enfer sur ordinateur, avec les filtres et les entraves affichées."></div><div class="laptop-base" aria-hidden="true"></div></div>
+          <div class="phone"><img src="_sources/current/fr/auto-mobile.png" width="780" height="1688" alt="Le téléphone au premier plan montre la version mobile de la carte Auto."></div>
+          <figcaption class="attribution">© OpenStreetMap contributors</figcaption>
+        </figure>
+      </section>
+    </div>
+
+    <div class="sheet">
+      <section class="artboard maps" data-export="02-auto-et-pietons" aria-labelledby="maps-title">
+        <h2 id="maps-title" class="page-title">En auto <span class="accent">ou à pied.</span></h2>
+        <p class="intro">Deux cartes, des impacts différents.</p>
+        <div class="screen-pair">
+          <figure><figcaption class="screen-label display">La carte Auto</figcaption><img class="screen-image" src="_sources/current/fr/auto-detail.png" width="2720" height="1120" alt="Capture complète de la carte Auto, avec sa navigation, ses filtres, sa liste et les tracés sur la carte."></figure>
+          <figure><figcaption class="screen-label display">La carte Piétons</figcaption><img class="screen-image" src="_sources/current/fr/pedestrian-desktop.png" width="2720" height="1120" alt="Capture complète de la carte Piétons, avec ses filtres, ses fiches et les restrictions documentées."></figure>
+        </div>
+        <p class="attribution">© OpenStreetMap contributors</p>
+      </section>
+    </div>
+
+    <div class="sheet">
+      <section class="artboard potholes" data-export="03-nids-de-poule" aria-labelledby="potholes-title">
+        <h2 id="potholes-title" class="page-title">Et les <span class="accent">nids-de-poule?</span></h2>
+        <p class="intro">Les signalements 311 et les colmatages<br>publiés pour Montréal.</p>
+        <figure class="pothole-screen"><img class="screen-image" src="_sources/current/fr/potholes-map.png" width="2240" height="1360" alt="Écran complet du volet Nids-de-poule, avec ses filtres et sa carte de positions publiques."><figcaption><p class="image-caption">Retrouver une rue, un dossier<br>et l'historique d'un emplacement.</p><p class="attribution">© OpenStreetMap contributors</p></figcaption></figure>
+      </section>
+    </div>
+
+    <template id="statistics-series-anchor"></template>
+
+    <div class="sheet">
+      <section class="artboard reader" data-export="05-le-projet" aria-labelledby="reader-title">
+        <h2 id="reader-title" class="page-title">Piétons : un mode<br><span class="accent">lecteur d'écran.</span></h2>
+        <p class="intro">Pensé pour les personnes qui utilisent VoiceOver.</p>
+        <div class="reader-layout">
+          <div class="reader-copy"><h3>Une lecture plus directe.</h3><ul class="reader-points"><li>Recherche et localisation<br>accessibles hors du menu.</li><li>Fiches d'entraves<br>directement sous la carte.</li><li>Un choix mémorisé<br>pour la prochaine visite.</li></ul><p class="reader-note">Un mode de la carte Piétons,<br>à utiliser avec le lecteur d'écran<br>de l'appareil.</p></div>
+          <figure><div class="phone"><img src="_sources/current/fr/pedestrian-reader.png" width="780" height="1688" alt="Mode lecteur d'écran de la carte Piétons réellement activé : carte en haut, recherche, localisation et fiches en dessous."></div><figcaption class="attribution">© OpenStreetMap contributors</figcaption></figure>
+        </div>
+      </section>
+    </div>
+
+    <div class="sheet">
+      <section class="artboard closing" data-export="06-explore-ton-secteur" aria-labelledby="closing-title">
+        <h2 id="closing-title" class="page-title">Explore<br><span class="accent">ton secteur.</span></h2>
+        <p class="closing-url site-address">cestdejalenfer.ca</p>
+        <div class="closing-layout">
+          <div class="closing-copy"><p>Découvre le site.<br>Abonne-toi pour suivre<br>le projet.</p><p class="closing-question display">Quel secteur<br>veux-tu explorer?</p><p class="closing-availability">Gratuit · FR / EN</p></div>
+          <figure><div class="phone"><img src="_sources/current/fr/auto-mobile.png" width="780" height="1688" alt="Écran mobile complet de la carte Auto, pour accompagner l'invitation à explorer son secteur."></div><figcaption class="attribution">© OpenStreetMap contributors</figcaption></figure>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="english.js"></script>
+  <script src="series.js"></script>
+  <script>
+    const exportMode = new URLSearchParams(location.search).has("export");
+    document.body.classList.toggle("export", exportMode);
+    if (!exportMode) {
+      const observer = new ResizeObserver(entries => {
+        for (const entry of entries) entry.target.style.setProperty("--preview-scale", entry.contentRect.width / 1080);
+      });
+      document.querySelectorAll(".sheet").forEach(element => observer.observe(element));
+    }
+  </script>
+</body>
+</html>

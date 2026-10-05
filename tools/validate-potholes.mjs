@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { districtBounds, clampResultsPanelWidth, RESULTS_PANEL_MIN_WIDTH, RESULTS_PANEL_MAX_WIDTH, summarizePotholeCatalog } from "../js/potholes-data.mjs";
 import { readFileSync } from "node:fs";
+import { DatabaseSync } from "node:sqlite";
+import { lireReferenceGeoPackage, pointGeoPackageVersWgs84 } from "./build-nids-de-poule-snapshot.mjs";
 import { createPotholeAnalyses, analysisDistrict } from "./potholes-analysis.mjs";
 import { createBoroughProfiles } from "./potholes-boroughs.mjs";
 import { createStreetMatcher, createPotholeRankings, isGenericStreetName, rtssRoadsFromFeatures, resolveNumberedStreets } from "./potholes-rankings.mjs";
@@ -11,6 +13,65 @@ import {
 } from "../js/potholes-data.mjs";
 
 const readSnapshot = (name) => JSON.parse(readFileSync(new URL(`../data/nids-de-poule/${name}`, import.meta.url), "utf8"));
+const geographicWgs84Definition = 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AXIS["Longitude",EAST],AXIS["Latitude",NORTH]]';
+function geoPackageReferenceFixture(reference, geometryType = "POINT") {
+  const database = new DatabaseSync(":memory:");
+  try {
+    database.exec("CREATE TABLE gpkg_geometry_columns (table_name TEXT, column_name TEXT, geometry_type_name TEXT, srs_id INTEGER); CREATE TABLE gpkg_spatial_ref_sys (srs_name TEXT, srs_id INTEGER, organization TEXT, organization_coordsys_id INTEGER, definition TEXT);");
+    database.prepare("INSERT INTO gpkg_geometry_columns VALUES (?, ?, ?, ?)").run("repairs", "shape", geometryType, reference.srs_id);
+    database.prepare("INSERT INTO gpkg_spatial_ref_sys VALUES (?, ?, ?, ?, ?)")
+      .run(reference.srs_name, reference.srs_id, reference.organization, reference.organization_coordsys_id, reference.definition);
+    return lireReferenceGeoPackage(database);
+  } finally {
+    database.close();
+  }
+}
+function geoPackagePointFixture(east, north, srsId, littleEndian = true, withEnvelope = false) {
+  const offset = withEnvelope ? 40 : 8;
+  const blob = Buffer.alloc(offset + 21);
+  const view = new DataView(blob.buffer, blob.byteOffset, blob.byteLength);
+  blob.write("GP");
+  view.setUint8(3, Number(littleEndian) | (withEnvelope ? 2 : 0));
+  view.setInt32(4, srsId, littleEndian);
+  view.setUint8(offset, Number(littleEndian));
+  view.setUint32(offset + 1, 1, littleEndian);
+  view.setFloat64(offset + 5, east, littleEndian);
+  view.setFloat64(offset + 13, north, littleEndian);
+  return blob;
+}
+const official2021Reference = {
+  srs_name: "WGS 84", srs_id: 100000, organization: "NONE", organization_coordsys_id: 100000,
+  definition: geographicWgs84Definition,
+};
+const geographicReference = geoPackageReferenceFixture(official2021Reference);
+assert.equal(geographicReference.epsg, 4326);
+assert.equal(geographicReference.colonne, "shape");
+assert.equal(geographicReference.reference.definition, geographicWgs84Definition);
+for (const littleEndian of [true, false]) {
+  for (const withEnvelope of [true, false]) {
+    const point = geoPackagePointFixture(-73.70349884033203, 45.583255767822266, 100000, littleEndian, withEnvelope);
+    assert.deepEqual(pointGeoPackageVersWgs84(point, geographicReference), [45.583255767822266, -73.70349884033203]);
+  }
+}
+const standardWgs84 = geoPackageReferenceFixture({ ...official2021Reference, srs_id: 4326, organization: "EPSG", organization_coordsys_id: 4326 });
+assert.deepEqual(pointGeoPackageVersWgs84(geoPackagePointFixture(-73.6, 45.5, 4326), standardWgs84), [45.5, -73.6]);
+const alternateLocalId = geoPackageReferenceFixture({ ...official2021Reference, srs_id: 77777, organization_coordsys_id: 77777 });
+assert.deepEqual(pointGeoPackageVersWgs84(geoPackagePointFixture(-73.6, 45.5, 77777), alternateLocalId), [45.5, -73.6]);
+const projectedReference = geoPackageReferenceFixture({ srs_name: "NAD83 / MTM zone 8", srs_id: 2950, organization: "EPSG", organization_coordsys_id: 2950, definition: "" });
+assert.deepEqual(pointGeoPackageVersWgs84(geoPackagePointFixture(304800, 0, 2950), projectedReference), [0, -73.5]);
+const publishedControl = readSnapshot("signalements-2026.json").signalements.find((record) => record.positionFiable && Number.isFinite(record.x) && Number.isFinite(record.y) && hasLocalCoordinates(record));
+assert.ok(publishedControl);
+const [controlLatitude, controlLongitude] = pointGeoPackageVersWgs84(geoPackagePointFixture(publishedControl.x, publishedControl.y, 2950), projectedReference);
+assert.ok(Math.abs(controlLatitude - publishedControl.latitude) < 0.000002 && Math.abs(controlLongitude - publishedControl.longitude) < 0.000002);
+assert.throws(() => pointGeoPackageVersWgs84(geoPackagePointFixture(-73.6, 45.5, 2950), geographicReference), /differente/);
+assert.throws(() => pointGeoPackageVersWgs84(geoPackagePointFixture(NaN, 45.5, 100000), geographicReference), /non finies/);
+assert.throws(() => geoPackageReferenceFixture({ ...official2021Reference, organization: "EPSG", organization_coordsys_id: 3857 }), /non prise en charge/);
+assert.throws(() => geoPackageReferenceFixture({ ...official2021Reference, definition: "undefined" }), /non prise en charge/);
+assert.throws(() => geoPackageReferenceFixture({ ...official2021Reference, definition: geographicWgs84Definition.replace('UNIT["degree",0.0174532925199433', 'UNIT["radian",1') }), /non prise en charge/);
+assert.throws(() => geoPackageReferenceFixture(official2021Reference, "LINESTRING"), /POINT/);
+console.log("PASS: declared GeoPackage references preserve official 2021 WGS84 coordinates, retain EPSG:2950 accuracy and reject unknown or inconsistent references");
+if (process.argv.includes("--geopackage")) process.exit(0);
+
 const catalogFixture = {
   signalements: [{ annee: 2024, nombre: 10 }, { annee: 2026, nombre: 6, nombreOuverts: 2 }],
   reparations: [{ annee: 2023, nombre: 20 }, { annee: 2025, nombre: 4 }],
@@ -418,6 +479,12 @@ for (const entry of index.reparations) {
   }
   const result = selectRepairRecords(snapshot.interventions);
   assert.equal(result.mappedCount + result.unmappedCount, entry.nombre);
+  if (entry.annee === 2021) {
+    assert.equal(snapshot.versionGeometrieGeoPackage, 1);
+    assert.equal(snapshot.referenceSpatiale.definition, geographicWgs84Definition);
+    assert.equal(snapshot.origineGeometrie, "GeoPackage WGS84 publie (sans reprojection)");
+    assert.equal(result.unmappedCount, 0, "2021 WGS84 coordinates must not be reprojected as EPSG:2950");
+  }
   const groups = buildRepairGroups(snapshot.interventions);
   assert.equal(groups.groups.reduce((count, group) => count + group.count, 0), result.mappedCount);
   assert.equal(new Set(groups.groups.map((group) => group.positionId)).size, groups.groups.length);

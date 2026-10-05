@@ -1,0 +1,5 @@
+FR : ♿ La carte Piétons propose un mode lecteur d'écran pensé pour VoiceOver : recherche et localisation hors du menu, fiches sous la carte et choix mémorisé. À utiliser avec le lecteur d'écran de l'appareil.
+
+EN : ♿ The walking map has a screen reader mode designed for VoiceOver: search and location outside the menu, details below the map and a remembered preference. Use it with your device's screen reader.
+
+#CestDejaLenfer #VoiceOver #Accessibility

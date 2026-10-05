@@ -119,8 +119,8 @@ window.TRANSLATIONS.en = {
   "potholes.how.a.manualRepairs": "<p>The source publishes GPS positions from the central service's mechanical equipment. Its documentation excludes manual repairs and borough interventions. These are not records removed by our map.</p><p>In the Montreal and Données Québec catalogues consulted, we did not find an open dataset giving the locations and dates of manual pothole repairs in Montreal. This does not mean the work did not happen or that the City lacks internal records. A completed 311 request or an aggregate total does not provide evidence of a geolocated repair. The next step is to request those data from the City.</p>",
   "potholes.how.requestManualData": "Contact Montreal's open-data team",
   "potholes.how.a.partial": "<p>An annual filename does not guarantee twelve months of coverage. Some files contain partial periods, and a few dates can belong to a different year from the filename. Patching's Year filter chooses the source file; its Month filter follows the dates actually present.</p><p>The first and last displayed dates are observed bounds, not a guarantee of continuous records in between. An absent month does not necessarily mean that no crews worked.</p>",
-  "potholes.how.q.coordinates2021": "Why does the 2021 patching file display no points?",
-  "potholes.how.a.coordinates2021": "<p>In the current dataset, all 50,320 interventions listed for 2021 have coordinates incompatible with Montreal. They are excluded from the map and matching instead of being arbitrarily relocated. The original file's coordinate system still needs verification before correcting the conversion.</p><p>The interventions remain in the source data file, with a warning in the interface. This gap makes history incomplete: it does not prove those repairs never occurred and can leave locations classified Active without usable patching evidence.</p>",
+  "potholes.how.q.coordinates2021": "What was corrected for the 2021 patching records?",
+  "potholes.how.a.coordinates2021": "<p>The official 2021 file already contains WGS84 longitude and latitude coordinates. Our import incorrectly treated them as projected coordinates in metres. This error was corrected on October 5, 2026: all 50,320 interventions are now displayed at their published positions and included in histories and repair estimates.</p><p>These are restored historical interventions, not new work carried out in 2026. A nearby patching record remains an indication, not confirmation that the reported pothole was repaired.</p>",
   "potholes.how.q.statistics": "Can these figures compare years or rank boroughs?",
   "potholes.how.a.statistics": "<p>Only with caution. 311 requests also reflect service usage, reporting habits and archive coverage. Patching covers only one repair method, and published periods vary. A partial year is not directly comparable with a full year.</p><p>The tables distinguish problem reports from information requests by creation year. Patching interventions have their own table. These are neither road-quality rankings nor repair rates. Requests without mappable coordinates remain counted in their category, and several reports may concern the same location.</p>",
   "potholes.how.q.absence": "Can the absence of a point or patching record prove anything?",
@@ -590,12 +590,12 @@ window.TRANSLATIONS.en = {
   "filters.sourceGroupLabel": "Restriction authority or source",
   "filters.impact": "Traffic impact",
   "filters.impactHelpLabel": "Information about traffic impact types",
-  "filters.impactHelp": "<p><strong>Full closure:</strong> traffic is prohibited on the published segment.</p><p><strong>Lane affected:</strong> a traffic lane is removed.</p><p><strong>Limited access:</strong> local traffic or a temporary direction.</p><p><strong>Parking:</strong> the street remains open, but parking is removed or prohibited.</p>",
+  "filters.impactHelp": "<p><strong>Full closure:</strong> traffic is prohibited on the published segment.</p><p><strong>Lane affected:</strong> a traffic lane is removed.</p><p><strong>Limited access:</strong> local traffic or a temporary direction.</p><p><strong>Parking affected:</strong> the street remains open to traffic, but parking spaces are temporarily removed or prohibited, for example due to roadwork or construction.</p>",
   "filters.impactGroupLabel": "Traffic impact types",
   "filters.critical": "Full closure",
   "filters.major": "Lane affected",
   "filters.moderate": "Limited access",
-  "filters.parking": "Parking",
+  "filters.parking": "Parking affected",
   "summary.visible": "visible restrictions",
   "summary.reset": "Recenter",
   "municipalities.title": "Linked-city work sources",
@@ -632,7 +632,7 @@ window.TRANSLATIONS.en = {
   "severity.closedTunnel": "Tunnel closed",
   "severity.major": "Lane affected",
   "severity.moderate": "Limited access",
-  "severity.parking": "Parking",
+  "severity.parking": "Parking affected",
   "severity.minor": "Minor impact",
   "category.municipal": "City",
   "category.citizen": "Citizen reports",
@@ -763,8 +763,8 @@ window.TRANSLATIONS.en = {
   ,"faq.q.aboutFeedback": "Would you like to leave feedback or suggest an improvement?"
   ,"faq.a.aboutFeedback": "You can share your comments and ideas through the form"
   ,"faq.q.colors": "What do the colors mean?"
-  ,"faq.a.colors": "<p>The colors represent the traffic impact assigned by the map:</p><ul><li><strong><span class=\"impact-word critical\">Red</span> - Full closure:</strong> motor-vehicle traffic is prohibited on the published segment or access.</li><li><strong><span class=\"impact-word major\">Orange</span> - Lane affected:</strong> at least one traffic lane is removed, closed or reorganized, while the street generally remains open.</li><li><strong><span class=\"impact-word moderate\">Yellow</span> - Limited access:</strong> local traffic, the direction of travel or access conditions are temporarily restricted.</li><li><strong><span class=\"impact-word parking\">Pink</span> - Parking:</strong> car parking spaces are removed or prohibited for a defined period, without a full street closure.</li></ul><p>These are the map's colors; they are not an interpretation of colors used by the original data sources.</p>"
-  ,"faq.q.parkingImpact": "What does the « Parking » impact type mean?"
+  ,"faq.a.colors": "<p>The colors represent the traffic impact assigned by the map:</p><ul><li><strong><span class=\"impact-word critical\">Red</span> - Full closure:</strong> motor-vehicle traffic is prohibited on the published segment or access.</li><li><strong><span class=\"impact-word major\">Orange</span> - Lane affected:</strong> at least one traffic lane is removed, closed or reorganized, while the street generally remains open.</li><li><strong><span class=\"impact-word moderate\">Yellow</span> - Limited access:</strong> local traffic, the direction of travel or access conditions are temporarily restricted.</li><li><strong><span class=\"impact-word parking\">Pink</span> - Parking affected:</strong> car parking spaces are removed or prohibited for a defined period, without a full street closure.</li></ul><p>These are the map's colors; they are not an interpretation of colors used by the original data sources.</p>"
+  ,"faq.q.parkingImpact": "What does the « Parking affected » impact type mean?"
   ,"faq.a.parkingImpact": "<p>This category is used when the street remains open, but car parking spaces are removed or prohibited for a defined period. It can include:</p><ul><li><strong>Road work:</strong> parking spaces removed or reserved during construction, even when no traffic lane is closed.</li><li><strong>Temporary restrictions:</strong> parking prohibited for an event, delivery, maintenance operation or other published intervention.</li><li><strong>On-street BIXI stations:</strong> parking spaces occupied by a station that official data identifies as installed in curbside parking. BIXI stations located on a sidewalk, in a park or in an off-street parking facility are not shown as an impact on car parking.</li></ul>"
   ,"faq.q.legend": "Why are some colors missing from the legend?"
   ,"faq.a.legend": "The legend at the bottom of the map follows the choices in the Traffic impact filter. An unchecked category is hidden from the map and removed from the legend."
@@ -879,7 +879,7 @@ window.TRANSLATIONS.en = {
   ,"stats.info.authority": "Who is responsible for the restriction, as published by each source.<br><strong>City / municipality</strong>: work done by the municipality itself.<br><strong>Contractor hired by the City</strong>: private company hired by the City for municipal work.<br><strong>Private company</strong>: private work on its own behalf (e.g. building construction).<br><strong>Utilities</strong>: Hydro-Québec, Bell, Énergir, Vidéotron, CSEM, telecoms.<br><strong>Public body</strong>: MTMD, STM, PJCCI, etc.<br>Details are published by Montreal, Laval and Longueuil; for other sources, the type is inferred from the publishing organization.<br><strong>Selector</strong>: “All” shows the three groups in the centre and their types around them. Choosing a group shows its types in the centre and their detail on the outer ring: network (Hydro-Québec, Bell, Énergir…), company, municipality, body or source. Percentages are then within that group. Beyond 6 details per type, the rest is grouped (e.g. “44 other companies”: 44 more companies, with their total restrictions shown beside)."
   ,"stats.info.critical": "Number of “Full closure” restrictions (red): the street or road is closed to car traffic on the indicated segment."
   ,"stats.info.major": "Number of “Lane affected” restrictions (orange): at least one lane is closed, but the road stays open."
-  ,"stats.info.other": "“Limited access” (yellow) and “Parking” (pink) restrictions, when that type is checked in the panel."
+  ,"stats.info.other": "“Limited access” (yellow) and “Parking affected” (pink) restrictions, when that type is checked in the panel."
   ,"stats.info.impact": "Breakdown of the restrictions kept by the panel filters by impact on car traffic, with the same colours as the map. Only the types checked in the “Impact types” panel are counted."
   ,"stats.info.company": "The mandate type comes from the source, not from us. Montreal publishes the applicant type of each permit, and Longueuil a responsible-party code. The English labels are ours.<br><strong>On its own behalf</strong>: private company doing work for itself (Montreal “company”, Longueuil “contractor or developer”).<br><strong>Hired by the City</strong>: private contractor hired by the City of Montreal for municipal work (“contractorCity”).<br><strong>Utility</strong>: Hydro-Québec, Bell, Énergir, Vidéotron, CSEM and other networks (“contractorRTU”, “csem”).<br>Company names are as published; when missing, the restriction is counted without a name."
   ,"stats.mandateTitle": "Share of work by mandate type"
@@ -900,14 +900,14 @@ window.TRANSLATIONS.en = {
   ,"stats.info.routeDirection": "Same table as “Highways and numbered routes”, split by the affected direction as published by the source. “East / West”: both directions are affected. “Other”: the source describes the direction differently (e.g. “toward downtown”). The MTMD (Québec 511) publishes a direction for every worksite; the City of Montreal publishes none for highways in its feed, so those restrictions are excluded from this table."
   ,"stats.info.upper": "Full closures (red) on a highway, a bridge or a named tunnel, according to the panel filters. Click the source to open the official notice."
   ,"stats.info.axis": "Highway or numbered route (published number or read from the location), otherwise the name of the bridge or tunnel."
-  ,"stats.info.municipality": "Number of restrictions per municipality, split by impact type with the map colours: full closure (red), lane affected (orange), limited access (yellow) and parking (pink, when checked in the panel). The chart shows the top 15 municipalities; “Show the figures” lists them all. “Intermunicipal” groups bridges and major axes linking several cities. MTMD restrictions are classified by the municipality named in their location."
+  ,"stats.info.municipality": "Number of restrictions per municipality, split by impact type with the map colours: full closure (red), lane affected (orange), limited access (yellow) and parking affected (pink, when checked in the panel). The chart shows the top 15 municipalities; “Show the figures” lists them all. “Intermunicipal” groups bridges and major axes linking several cities. MTMD restrictions are classified by the municipality named in their location."
   ,"stats.info.days": "Planned duration between the published start and end dates, both days included, in years, months and days."
   ,"stats.info.moderate": "Number of “Limited access” restrictions (yellow): traffic remains possible with restrictions (local access, detour, alternating)."
-  ,"stats.info.parking": "Number of “Parking” restrictions (pink): only parking is removed. Counted only when that type is checked in the panel."
+  ,"stats.info.parking": "Number of “Parking affected” restrictions (pink): only parking spaces are removed or prohibited, for example due to roadwork or construction. Counted only when that type is checked in the panel."
   ,"stats.colImpact.critical": "Closures"
   ,"stats.colImpact.major": "Lanes affected"
   ,"stats.colImpact.moderate": "Limited access"
-  ,"stats.colImpact.parking": "Parking"
+  ,"stats.colImpact.parking": "Parking affected"
   ,"stats.authorityGroup.public": "Public sector"
   ,"stats.authorityGroup.companies": "Companies"
   ,"stats.authorityGroup.other": "Other / not published"
@@ -955,7 +955,7 @@ window.TRANSLATIONS.en = {
   ,"stats.forAccount.cityContractor": "Hired by the City"
   ,"stats.forAccount.utility": "Utility"
   ,"stats.routeTitle": "Highways and numbered routes"
-  ,"stats.routeNote": "Number published by the MTMD, otherwise read from the title or location (A-xx, R-xxx, Décarie expressway, etc.).<br><strong>Total</strong>: every restriction on the route. Then one column per impact type: closures (red), lanes affected (orange), limited access (yellow) and parking (pink, when checked in the panel).<br>Example: the City of Montreal never publishes the affected direction on a highway. Its restrictions are counted here, but not in the table by direction, which keeps only restrictions with a published direction."
+  ,"stats.routeNote": "Number published by the MTMD, otherwise read from the title or location (A-xx, R-xxx, Décarie expressway, etc.).<br><strong>Total</strong>: every restriction on the route. Then one column per impact type: closures (red), lanes affected (orange), limited access (yellow) and parking affected (pink, when checked in the panel).<br>Example: the City of Montreal never publishes the affected direction on a highway. Its restrictions are counted here, but not in the table by direction, which keeps only restrictions with a published direction."
   ,"stats.streetTitle": "Streets and roads with the most restrictions"
   ,"stats.streetNote": "Published street name, grouped by municipality. Highways are in the “Highways and numbered routes” tab."
   ,"stats.upperTitle": "Full closures on highways, bridges and tunnels"
@@ -1316,7 +1316,7 @@ window.TRANSLATIONS.en = {
   ,"stats.custom.help.dates": "Planned duration requires valid start and end dates treated as published. Age requires a published start that has already occurred. Estimated dates or dates of unknown provenance do not enter these medians; an open end such as 2099 is not converted into several decades of duration."
   ,"stats.custom.help.field.municipality": "City associated with the restriction. Bridges and routes linking cities can belong to the intermunicipal group."
   ,"stats.custom.help.field.borough": "Borough published by Montreal. Choosing this category automatically limits the chart to Montreal data."
-  ,"stats.custom.help.field.impact": "Effect on traffic: full closure, affected lane, limited access or parking. Colors match the map."
+  ,"stats.custom.help.field.impact": "Effect on traffic: full closure, affected lane, limited access or parking affected. Colors match the map."
   ,"stats.custom.help.field.roadKind": "Highway, numbered route, bridge/tunnel/major road or local road, based on available information."
   ,"stats.custom.help.field.route": "Identified highway or route number, such as A-40. A local street without a number is not a missing numbered route."
   ,"stats.custom.help.field.street": "Street name recognized in the data. Missing or ambiguous names are not invented."

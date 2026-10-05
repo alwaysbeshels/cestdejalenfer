@@ -1,16 +1,16 @@
 {
-  "extractedAt": "2026-10-05T03:51:53.404Z",
+  "extractedAt": "2026-10-05T20:57:34.244Z",
   "sourceUrl": "https://montreal.ca/entraves-travaux/entraves",
   "apiUrl": "https://montreal.ca/entraves-travaux/api/recherche",
-  "sourceRecordCount": 1815,
-  "pageCount": 182,
+  "sourceRecordCount": 1823,
+  "pageCount": 183,
   "verification": {
     "wfsUrl": "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal:entraves-ponctuelles&outputFormat=application/json",
-    "expectedPedestrianNotices": 983,
-    "duplicateSearchResults": 3,
-    "recoveredDirectly": 1
+    "expectedPedestrianNotices": 990,
+    "duplicateSearchResults": 1,
+    "recoveredDirectly": 0
   },
-  "retainedRecordCount": 965,
+  "retainedRecordCount": 979,
   "note": "Official notice attributes only. Joined to live WFS by permit ID; never used to invent geometry or seed stale closures. Source labels remain in French.",
   "labels": {
     "sidewalk": {
@@ -23277,90 +23277,6 @@
       "workImpact": null
     },
     {
-      "permitId": "OCC-2608NR17145995",
-      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2608NR17145995",
-      "title": "Rue Dickson entre Pierre-De Coubertin et Chauveau",
-      "startDate": "2026-08-29",
-      "endDate": "2026-10-04",
-      "reasonCategory": "constructionRevovationWorkWithExcavation",
-      "occupancyImpact": {
-        "affectedArea": [
-          "street",
-          "sidewalk"
-        ],
-        "alleyBlockedType": "noImpact",
-        "parkBlockedType": null,
-        "parkName": null,
-        "impactsOfSection": [
-          {
-            "streetId": "rue Dickson ",
-            "sidewalk": {
-              "blockedType": "obstructed",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "obstructed",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_6to9meters",
-            "streetImpactType": "blocked",
-            "nbFreeParkingPlace": 0,
-            "chargingTerminalAdditionalInformation": null,
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "move",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "rue Dickson ",
-              "shortName": "Dickson",
-              "fromName": "avenue Pierre-De Coubertin ",
-              "fromShortName": "Pierre-De Coubertin",
-              "toName": "rue Chauveau ",
-              "toShortName": "Chauveau",
-              "area": null,
-              "length": 407.88,
-              "isArterial": true,
-              "roadSectionIds": [
-                "1420189",
-                "1420190",
-                "1420191"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          }
-        ],
-        "impactAssets": [
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 1420189,
-            "boroughId": null
-          }
-        ]
-      },
-      "workImpact": null
-    },
-    {
       "permitId": "OCC-2608PF15291000",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2608PF15291000",
       "title": "Autoroute 13",
@@ -28282,149 +28198,6 @@
       "workImpact": null
     },
     {
-      "permitId": "OCC-2609AM14484442",
-      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609AM14484442",
-      "title": "Autoroute 15",
-      "startDate": "2026-09-21",
-      "endDate": "2026-10-04",
-      "reasonCategory": "constructionRevovationWorkWithoutExcavation",
-      "occupancyImpact": {
-        "affectedArea": [
-          "sidewalk",
-          "street"
-        ],
-        "alleyBlockedType": "noImpact",
-        "parkBlockedType": null,
-        "parkName": null,
-        "impactsOfSection": [
-          {
-            "streetId": "autoroute 15 ",
-            "sidewalk": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_0to3meters",
-            "streetImpactType": "trafficLane",
-            "nbFreeParkingPlace": 0,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "autoroute 15 ",
-              "shortName": "15",
-              "fromName": "autoroute 15 ",
-              "fromShortName": "15",
-              "toName": "autoroute 15 ",
-              "toShortName": "15",
-              "area": null,
-              "length": 137.41,
-              "isArterial": false,
-              "roadSectionIds": [
-                "4015321",
-                "4015328"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          },
-          {
-            "streetId": "chemin de la Côte-Saint-Luc ",
-            "sidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_0to3meters",
-            "streetImpactType": "trafficLane",
-            "nbFreeParkingPlace": 0,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "chemin de la Côte-Saint-Luc ",
-              "shortName": "Côte-Saint-Luc",
-              "fromName": "boulevard Décarie ",
-              "fromShortName": "Décarie",
-              "toName": "boulevard Décarie ",
-              "toShortName": "Décarie",
-              "area": null,
-              "length": 42.33,
-              "isArterial": true,
-              "roadSectionIds": [
-                "4009107"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          }
-        ],
-        "impactAssets": [
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 4015321,
-            "boroughId": null
-          },
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 4009107,
-            "boroughId": null
-          }
-        ]
-      },
-      "workImpact": null
-    },
-    {
       "permitId": "OCC-2609AN25597441",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609AN25597441",
       "title": "Avenue Clanranald près de Jean-Talon",
@@ -30141,6 +29914,87 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 1607411,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2609BE20359079",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609BE20359079",
+      "title": "Boulevard Saint-Jean-Baptiste  (P.-A.-T.) entre Saint-Joseph et Notre-Dame",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-08",
+      "reasonCategory": "constructionRevovationWorkWithoutExcavation",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "boulevard Saint-Jean-Baptiste  (P.-A.-T.)",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "noImpact",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "boulevard Saint-Jean-Baptiste  (P.-A.-T.)",
+              "shortName": "Saint-Jean-Baptiste",
+              "fromName": "rue Saint-Joseph ",
+              "fromShortName": "Saint-Joseph",
+              "toName": "rue Notre-Dame Est ",
+              "toShortName": "Notre-Dame",
+              "area": null,
+              "length": 90.87,
+              "isArterial": false,
+              "roadSectionIds": [
+                "1490792"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1490792,
             "boroughId": null
           }
         ]
@@ -32678,6 +32532,96 @@
       "workImpact": null
     },
     {
+      "permitId": "OCC-2609CU23760729",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609CU23760729",
+      "title": "Rue Willibrord entre Wellington et Verdun",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "otherSpecify",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "rue Willibrord ",
+            "sidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 23,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue Willibrord ",
+              "shortName": "Willibrord",
+              "fromName": "rue Wellington ",
+              "fromShortName": "Wellington",
+              "toName": "rue de Verdun ",
+              "toShortName": "Verdun",
+              "area": null,
+              "length": 338.25,
+              "isArterial": false,
+              "roadSectionIds": [
+                "1601404"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1601404,
+            "boroughId": null
+          },
+          {
+            "assetType": "parkingWithParkingMeter",
+            "assetId": "VQ591",
+            "action": "reserveWithoutCaping",
+            "otherParkingMeterHead": "VQ592",
+            "roadSectionId": 1601404,
+            "boroughId": "VRD"
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
       "permitId": "OCC-2609CU25763678",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609CU25763678",
       "title": "Boulevard Henri-Bourassa Ouest près de Marcel-Laurin",
@@ -35022,6 +34966,89 @@
       "workImpact": null
     },
     {
+      "permitId": "OCC-2609EL25756392",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609EL25756392",
+      "title": "Rue des Bassins entre Richmond et Basin",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-09",
+      "reasonCategory": "s_2MjrUndrgInfrstrcGasNetworks",
+      "occupancyImpact": {
+        "affectedArea": [
+          "street",
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "rue des Bassins ",
+            "sidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_9to12meters",
+            "streetImpactType": "blocked",
+            "nbFreeParkingPlace": 20,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue des Bassins ",
+              "shortName": "Bassins",
+              "fromName": "rue Richmond ",
+              "fromShortName": "Richmond",
+              "toName": "rue Basin ",
+              "toShortName": "Basin",
+              "area": null,
+              "length": 159.89,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1370107",
+                "1370108"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1370107,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
       "permitId": "OCC-2609EN21175875",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609EN21175875",
       "title": "5e avenue  Sud entre Hornell et 7e",
@@ -36241,6 +36268,88 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 1150011,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2609EY19520996",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609EY19520996",
+      "title": "Avenue Harvard entre Côte-Saint-Antoine et Notre-Dame-de-Grâce",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "constructionRevovationWorkWithoutExcavation",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "avenue Harvard ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "avenue Harvard ",
+              "shortName": "Harvard",
+              "fromName": "chemin de la Côte-Saint-Antoine ",
+              "fromShortName": "Côte-Saint-Antoine",
+              "toName": "avenue Notre-Dame-de-Grâce ",
+              "toShortName": "Notre-Dame-de-Grâce",
+              "area": null,
+              "length": 192.87,
+              "isArterial": false,
+              "roadSectionIds": [
+                "1330264"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1330264,
             "boroughId": null
           }
         ]
@@ -38569,150 +38678,6 @@
       "workImpact": null
     },
     {
-      "permitId": "OCC-2609FZ17952324",
-      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609FZ17952324",
-      "title": "Rue Arthur-Champoux entre Gariépy et Pie-IX",
-      "startDate": "2026-09-24",
-      "endDate": "2026-10-04",
-      "reasonCategory": "constructionRevovationWorkWithExcavation",
-      "occupancyImpact": {
-        "affectedArea": [
-          "bikePath",
-          "street",
-          "sidewalk",
-          "alley"
-        ],
-        "alleyBlockedType": "obstructed",
-        "parkBlockedType": null,
-        "parkName": null,
-        "impactsOfSection": [
-          {
-            "streetId": "rue Arthur-Champoux ",
-            "sidewalk": {
-              "blockedType": "obstructed",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "obstructed",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_6to9meters",
-            "streetImpactType": "blocked",
-            "nbFreeParkingPlace": 20,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "rue Arthur-Champoux ",
-              "shortName": "Arthur-Champoux",
-              "fromName": "avenue Gariépy ",
-              "fromShortName": "Gariépy",
-              "toName": "boulevard Pie-IX ",
-              "toShortName": "Pie-IX",
-              "area": null,
-              "length": 118.56,
-              "isArterial": false,
-              "roadSectionIds": [
-                "1610501"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          },
-          {
-            "streetId": "avenue Gariépy ",
-            "sidewalk": {
-              "blockedType": "obstructed",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "obstructed",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_6to9meters",
-            "streetImpactType": "blocked",
-            "nbFreeParkingPlace": 10,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "avenue Gariépy ",
-              "shortName": "Gariépy",
-              "fromName": "rue Arthur-Champoux ",
-              "fromShortName": "Arthur-Champoux",
-              "toName": "rue Arthur-Champoux ",
-              "toShortName": "Arthur-Champoux",
-              "area": null,
-              "length": 30.39,
-              "isArterial": false,
-              "roadSectionIds": [
-                "1610502"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          }
-        ],
-        "impactAssets": [
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 1610501,
-            "boroughId": null
-          },
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 1610502,
-            "boroughId": null
-          }
-        ]
-      },
-      "workImpact": null
-    },
-    {
       "permitId": "OCC-2609FZ21280241",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609FZ21280241",
       "title": "Rue Sainte-Suzanne entre Saint-Gabriel et Gouin",
@@ -40121,90 +40086,6 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 1622354,
-            "boroughId": null
-          }
-        ]
-      },
-      "workImpact": null
-    },
-    {
-      "permitId": "OCC-2609HA20597236",
-      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609HA20597236",
-      "title": "Rue Berri entre Jean-Talon et Faillon",
-      "startDate": "2026-06-24",
-      "endDate": "2026-10-04",
-      "reasonCategory": "constructionRevovationWorkWithExcavation",
-      "occupancyImpact": {
-        "affectedArea": [
-          "street",
-          "sidewalk",
-          "bikePath"
-        ],
-        "alleyBlockedType": "noImpact",
-        "parkBlockedType": null,
-        "parkName": null,
-        "impactsOfSection": [
-          {
-            "streetId": "rue Berri ",
-            "sidewalk": {
-              "blockedType": "obstructed",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "obstructed",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_9to12meters",
-            "streetImpactType": "blocked",
-            "nbFreeParkingPlace": 0,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "rue Berri ",
-              "shortName": "Berri",
-              "fromName": "rue Jean-Talon Est ",
-              "fromShortName": "Jean-Talon",
-              "toName": "rue Faillon Est ",
-              "toShortName": "Faillon",
-              "area": null,
-              "length": 490.74,
-              "isArterial": false,
-              "roadSectionIds": [
-                "1120005",
-                "1120006"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          }
-        ],
-        "impactAssets": [
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 1120005,
             "boroughId": null
           }
         ]
@@ -42235,88 +42116,6 @@
       "workImpact": null
     },
     {
-      "permitId": "OCC-2609HX24850883",
-      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609HX24850883",
-      "title": "Boulevard Henri-Bourassa Ouest près de Wilfrid-Reid",
-      "startDate": "2026-10-03",
-      "endDate": "2026-10-04",
-      "reasonCategory": "excavationForSewerAndAqueduct",
-      "occupancyImpact": {
-        "affectedArea": [
-          "sidewalk",
-          "street"
-        ],
-        "alleyBlockedType": "noImpact",
-        "parkBlockedType": null,
-        "parkName": null,
-        "impactsOfSection": [
-          {
-            "streetId": "boulevard Henri-Bourassa Ouest ",
-            "sidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_9to12meters",
-            "streetImpactType": "trafficLane",
-            "nbFreeParkingPlace": 0,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "boulevard Henri-Bourassa Ouest ",
-              "shortName": "Henri-Bourassa",
-              "fromName": "rue Wilfrid-Reid ",
-              "fromShortName": "Wilfrid-Reid",
-              "toName": "boulevard Henri-Bourassa Ouest ",
-              "toShortName": "Henri-Bourassa",
-              "area": null,
-              "length": 211.03,
-              "isArterial": true,
-              "roadSectionIds": [
-                "4013120"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          }
-        ],
-        "impactAssets": [
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 4013120,
-            "boroughId": null
-          }
-        ]
-      },
-      "workImpact": null
-    },
-    {
       "permitId": "OCC-2609HY17900751",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609HY17900751",
       "title": "90e avenue près de Centrale",
@@ -43361,6 +43160,89 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 4010369,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2609IO24638768",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609IO24638768",
+      "title": "Rue Saint-Denis entre Bellechasse et Beaubien",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "excavationForSewerAndAqueduct",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "bikePath",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "rue Saint-Denis ",
+            "sidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue Saint-Denis ",
+              "shortName": "Saint-Denis",
+              "fromName": "rue de Bellechasse ",
+              "fromShortName": "Bellechasse",
+              "toName": "rue Beaubien Est ",
+              "toShortName": "Beaubien",
+              "area": null,
+              "length": 290.45,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1140306"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1140306,
             "boroughId": null
           }
         ]
@@ -49299,6 +49181,88 @@
       "workImpact": null
     },
     {
+      "permitId": "OCC-2609LQ25746525",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609LQ25746525",
+      "title": "Rue des Bassins près de Richmond",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-09",
+      "reasonCategory": "s_2MjrUndrgInfrstrcGasNetworks",
+      "occupancyImpact": {
+        "affectedArea": [
+          "street",
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "rue des Bassins ",
+            "sidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_3to6meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 14,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue des Bassins ",
+              "shortName": "Bassins",
+              "fromName": "rue des Bassins ",
+              "fromShortName": "Bassins",
+              "toName": "rue Richmond ",
+              "toShortName": "Richmond",
+              "area": null,
+              "length": 49.31,
+              "isArterial": true,
+              "roadSectionIds": [
+                "4017828"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 4017828,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
       "permitId": "OCC-2609LS19738309",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609LS19738309",
       "title": "Boulevard Saint-Michel entre Émile-Journault et Louvain",
@@ -49621,149 +49585,6 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 1040221,
-            "boroughId": null
-          }
-        ]
-      },
-      "workImpact": null
-    },
-    {
-      "permitId": "OCC-2609MA15363650",
-      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609MA15363650",
-      "title": "Autoroute 15",
-      "startDate": "2026-09-22",
-      "endDate": "2026-10-04",
-      "reasonCategory": "constructionRevovationWorkWithoutExcavation",
-      "occupancyImpact": {
-        "affectedArea": [
-          "street",
-          "sidewalk"
-        ],
-        "alleyBlockedType": "noImpact",
-        "parkBlockedType": null,
-        "parkName": null,
-        "impactsOfSection": [
-          {
-            "streetId": "chemin de la Côte-Saint-Luc ",
-            "sidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_0to3meters",
-            "streetImpactType": "trafficLane",
-            "nbFreeParkingPlace": 0,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "chemin de la Côte-Saint-Luc ",
-              "shortName": "Côte-Saint-Luc",
-              "fromName": "boulevard Décarie ",
-              "fromShortName": "Décarie",
-              "toName": "boulevard Décarie ",
-              "toShortName": "Décarie",
-              "area": null,
-              "length": 42.09,
-              "isArterial": true,
-              "roadSectionIds": [
-                "4009106"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          },
-          {
-            "streetId": "autoroute 15 ",
-            "sidewalk": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_0to3meters",
-            "streetImpactType": "trafficLane",
-            "nbFreeParkingPlace": 0,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "autoroute 15 ",
-              "shortName": "15",
-              "fromName": "autoroute 15 ",
-              "fromShortName": "15",
-              "toName": "autoroute 15 ",
-              "toShortName": "15",
-              "area": null,
-              "length": 137.41,
-              "isArterial": false,
-              "roadSectionIds": [
-                "4015321",
-                "4015328"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          }
-        ],
-        "impactAssets": [
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 4009106,
-            "boroughId": null
-          },
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 4015321,
             "boroughId": null
           }
         ]
@@ -62322,6 +62143,88 @@
       "workImpact": null
     },
     {
+      "permitId": "OCC-2609TX12797209",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609TX12797209",
+      "title": "Avenue Merritt entre Sauriol et Fleury",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "constructionRevovationWorkWithoutExcavation",
+      "occupancyImpact": {
+        "affectedArea": [
+          "street",
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "avenue Merritt ",
+            "sidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_6to9meters",
+            "streetImpactType": "blocked",
+            "nbFreeParkingPlace": 10,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "avenue Merritt ",
+              "shortName": "Merritt",
+              "fromName": "rue Sauriol Est ",
+              "fromShortName": "Sauriol",
+              "toName": "rue Fleury Est ",
+              "toShortName": "Fleury",
+              "area": null,
+              "length": 264.99,
+              "isArterial": false,
+              "roadSectionIds": [
+                "1060234"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1060234,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
       "permitId": "OCC-2609TY09335998",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609TY09335998",
       "title": "Boulevard Marcel-Laurin près de Poirier",
@@ -63462,6 +63365,88 @@
               "primary": "occupied",
               "secondary": "occupied"
             }
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2609UN25460251",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609UN25460251",
+      "title": "4e avenue entre Holt et Rosemont",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-21",
+      "reasonCategory": "constructionRevovationWorkWithoutExcavation",
+      "occupancyImpact": {
+        "affectedArea": [
+          "street",
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "4e avenue  ",
+            "sidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "4e avenue  ",
+              "shortName": "4e",
+              "fromName": "rue Holt ",
+              "fromShortName": "Holt",
+              "toName": "boulevard Rosemont ",
+              "toShortName": "Rosemont",
+              "area": null,
+              "length": 220.08,
+              "isArterial": false,
+              "roadSectionIds": [
+                "1200360"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1200360,
+            "boroughId": null
           }
         ]
       },
@@ -67004,100 +66989,6 @@
             "otherParkingMeterHead": null,
             "roadSectionId": 1040578,
             "boroughId": null
-          }
-        ]
-      },
-      "workImpact": null
-    },
-    {
-      "permitId": "OCC-2609WQ25570396",
-      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609WQ25570396",
-      "title": "Boulevard des Trinitaires entre Jogues et Parc-Angrignon",
-      "startDate": "2026-10-04",
-      "endDate": "2026-10-04",
-      "reasonCategory": "otherSpecify",
-      "occupancyImpact": {
-        "affectedArea": [
-          "park",
-          "street"
-        ],
-        "alleyBlockedType": "noImpact",
-        "parkBlockedType": "blocked",
-        "parkName": "Parc Angrignon",
-        "impactsOfSection": [
-          {
-            "streetId": "boulevard des Trinitaires ",
-            "sidewalk": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_0to3meters",
-            "streetImpactType": "parkingLane",
-            "nbFreeParkingPlace": 3,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "boulevard des Trinitaires ",
-              "shortName": "Trinitaires",
-              "fromName": "rue Jogues ",
-              "fromShortName": "Jogues",
-              "toName": "chemin du Parc-Angrignon ",
-              "toShortName": "Parc-Angrignon",
-              "area": null,
-              "length": 170.02,
-              "isArterial": true,
-              "roadSectionIds": [
-                "1340583"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          }
-        ],
-        "impactAssets": [
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 1340583,
-            "boroughId": null
-          },
-          {
-            "assetType": "parkingWithParkingMeter",
-            "assetId": "SV502",
-            "action": "reserveWithoutCaping",
-            "otherParkingMeterHead": "SV503",
-            "roadSectionId": 1340583,
-            "boroughId": "SO",
-            "parkingPlaces": {
-              "primary": "occupied",
-              "secondary": "occupied"
-            }
           }
         ]
       },
@@ -70843,6 +70734,88 @@
             "otherParkingMeterHead": "P918",
             "roadSectionId": 1380379,
             "boroughId": "VM"
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2609YF25755409",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609YF25755409",
+      "title": "Boulevard Saint-Laurent entre Sauriol et Fleury",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "constructionRevovationWorkWithoutExcavation",
+      "occupancyImpact": {
+        "affectedArea": [
+          "street",
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "boulevard Saint-Laurent ",
+            "sidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_6to9meters",
+            "streetImpactType": "trafficLaneAndParkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "move",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "boulevard Saint-Laurent ",
+              "shortName": "Saint-Laurent",
+              "fromName": "rue Sauriol Ouest ",
+              "fromShortName": "Sauriol",
+              "toName": "rue Fleury Ouest ",
+              "toShortName": "Fleury",
+              "area": null,
+              "length": 198.82,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1030510"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1030510,
+            "boroughId": null
           }
         ]
       },
@@ -74700,90 +74673,6 @@
       "workImpact": null
     },
     {
-      "permitId": "OCC-2609ZP14418258",
-      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609ZP14418258",
-      "title": "Boulevard Jules-Poitras entre Côte-Vertu et Boa",
-      "startDate": "2026-08-21",
-      "endDate": "2026-10-04",
-      "reasonCategory": "sideWalkConstruction",
-      "occupancyImpact": {
-        "affectedArea": [
-          "sidewalk",
-          "street"
-        ],
-        "alleyBlockedType": "noImpact",
-        "parkBlockedType": null,
-        "parkName": null,
-        "impactsOfSection": [
-          {
-            "streetId": "boulevard Jules-Poitras ",
-            "sidewalk": {
-              "blockedType": "obstructed",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "obstructed",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_0to3meters",
-            "streetImpactType": "trafficLane",
-            "nbFreeParkingPlace": 2,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "boulevard Jules-Poitras ",
-              "shortName": "Jules-Poitras",
-              "fromName": "boulevard de la Côte-Vertu ",
-              "fromShortName": "Côte-Vertu",
-              "toName": "passage Boa ",
-              "toShortName": "Boa",
-              "area": null,
-              "length": 1046.89,
-              "isArterial": true,
-              "roadSectionIds": [
-                "1607841",
-                "1607850",
-                "1607847"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          }
-        ],
-        "impactAssets": [
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 1607841,
-            "boroughId": null
-          }
-        ]
-      },
-      "workImpact": null
-    },
-    {
       "permitId": "OCC-2609ZQ19545771",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2609ZQ19545771",
       "title": "Boulevard Robert-Bourassa entre Sainte-Catherine et De Maisonneuve",
@@ -75497,6 +75386,90 @@
       "workImpact": null
     },
     {
+      "permitId": "OCC-2610AQ01288139",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610AQ01288139",
+      "title": "Rue de Verdun entre Henri-Duhamel et Régina",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-08",
+      "reasonCategory": "a_1ExistingAerial",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "rue de Verdun ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_3to6meters",
+            "streetImpactType": "blocked",
+            "nbFreeParkingPlace": 100,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "move",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue de Verdun ",
+              "shortName": "Verdun",
+              "fromName": "rue Henri-Duhamel ",
+              "fromShortName": "Henri-Duhamel",
+              "toName": "rue Régina ",
+              "toShortName": "Régina",
+              "area": null,
+              "length": 548.31,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1601171",
+                "1601202",
+                "1601216"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1601171,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
       "permitId": "OCC-2610AS00484075",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610AS00484075",
       "title": "Rue Saint-Ambroise entre Saint-Rémi et Philippe-Lalonde",
@@ -75736,152 +75709,6 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 1610052,
-            "boroughId": null
-          }
-        ]
-      },
-      "workImpact": null
-    },
-    {
-      "permitId": "OCC-2610BG01379697",
-      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610BG01379697",
-      "title": "Rue Saint-Jacques entre Guy et Seigneurs",
-      "startDate": "2026-08-17",
-      "endDate": "2026-10-04",
-      "reasonCategory": "excavationForSewerAndAqueduct",
-      "occupancyImpact": {
-        "affectedArea": [
-          "bikePath",
-          "sidewalk",
-          "street"
-        ],
-        "alleyBlockedType": "noImpact",
-        "parkBlockedType": null,
-        "parkName": null,
-        "impactsOfSection": [
-          {
-            "streetId": "rue Guy ",
-            "sidewalk": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_6to9meters",
-            "streetImpactType": "blocked",
-            "nbFreeParkingPlace": 0,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "move",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "rue Guy ",
-              "shortName": "Guy",
-              "fromName": "rue Saint-Jacques ",
-              "fromShortName": "Saint-Jacques",
-              "toName": "rue Saint-Antoine Ouest ",
-              "toShortName": "Saint-Antoine",
-              "area": null,
-              "length": 218.96,
-              "isArterial": true,
-              "roadSectionIds": [
-                "1370601",
-                "1370602"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          },
-          {
-            "streetId": "rue Saint-Jacques ",
-            "sidewalk": {
-              "blockedType": "obstructed",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "noImpact",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_3to6meters",
-            "streetImpactType": "trafficLane",
-            "nbFreeParkingPlace": 32,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "rue Saint-Jacques ",
-              "shortName": "Saint-Jacques",
-              "fromName": "rue Guy ",
-              "fromShortName": "Guy",
-              "toName": "rue des Seigneurs ",
-              "toShortName": "Seigneurs",
-              "area": null,
-              "length": 302.73,
-              "isArterial": true,
-              "roadSectionIds": [
-                "1371072",
-                "1371073",
-                "1371074"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          }
-        ],
-        "impactAssets": [
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 1370601,
-            "boroughId": null
-          },
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 1371072,
             "boroughId": null
           }
         ]
@@ -77247,211 +77074,6 @@
       "workImpact": null
     },
     {
-      "permitId": "OCC-2610CQ01523005",
-      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610CQ01523005",
-      "title": "Avenue Laurier Est entre Saint-André et Christophe-Colomb",
-      "startDate": "2026-09-29",
-      "endDate": "2026-10-04",
-      "reasonCategory": "s_3MjrUndrgInfrstrcElecNetwrksTelecomDstribCablsNewMassifsCndits20MtrsMor",
-      "occupancyImpact": {
-        "affectedArea": [
-          "bikePath",
-          "sidewalk",
-          "street"
-        ],
-        "alleyBlockedType": "noImpact",
-        "parkBlockedType": null,
-        "parkName": null,
-        "impactsOfSection": [
-          {
-            "streetId": "avenue Christophe-Colomb ",
-            "sidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_6to9meters",
-            "streetImpactType": "blocked",
-            "nbFreeParkingPlace": 3,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "avenue Christophe-Colomb ",
-              "shortName": "Christophe-Colomb",
-              "fromName": "boulevard Saint-Joseph Est ",
-              "fromShortName": "Saint-Joseph",
-              "toName": "avenue Laurier Est ",
-              "toShortName": "Laurier",
-              "area": null,
-              "length": 160.33,
-              "isArterial": true,
-              "roadSectionIds": [
-                "1230108"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          },
-          {
-            "streetId": "rue de Mentana ",
-            "sidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_0to3meters",
-            "streetImpactType": "trafficLane",
-            "nbFreeParkingPlace": 3,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "rue de Mentana ",
-              "shortName": "Mentana",
-              "fromName": "boulevard Saint-Joseph Est ",
-              "fromShortName": "Saint-Joseph",
-              "toName": "avenue Laurier Est ",
-              "toShortName": "Laurier",
-              "area": null,
-              "length": 155.29,
-              "isArterial": false,
-              "roadSectionIds": [
-                "1230324"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          },
-          {
-            "streetId": "avenue Laurier Est ",
-            "sidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "backSidewalk": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "bikePath": {
-              "blockedType": "blocked",
-              "intermitentClosure": null
-            },
-            "streetImpactWidth": "_0to3meters",
-            "streetImpactType": "trafficLane",
-            "nbFreeParkingPlace": 3,
-            "chargingTerminalAdditionalInformation": "",
-            "additionalInformation": null,
-            "publicTransportImpact": {
-              "stmImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "otherProviderNames": "",
-              "otherProviderImpact": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              },
-              "reservedLane": {
-                "blockedType": "noImpact",
-                "intermitentClosure": null
-              }
-            },
-            "spatialAnalysis": {
-              "name": "avenue Laurier Est ",
-              "shortName": "Laurier",
-              "fromName": "rue Saint-André ",
-              "fromShortName": "Saint-André",
-              "toName": "avenue Christophe-Colomb ",
-              "toShortName": "Christophe-Colomb",
-              "area": null,
-              "length": 207.7,
-              "isArterial": true,
-              "roadSectionIds": [
-                "1230256",
-                "1230257",
-                "1230258"
-              ],
-              "lineGeometry": null
-            },
-            "intermitentClosure": null,
-            "locationType": null
-          }
-        ],
-        "impactAssets": [
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 1230108,
-            "boroughId": null
-          },
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 1230324,
-            "boroughId": null
-          },
-          {
-            "assetType": "bixiStation",
-            "assetId": "",
-            "action": "noImpact",
-            "otherParkingMeterHead": null,
-            "roadSectionId": 1230256,
-            "boroughId": null
-          }
-        ]
-      },
-      "workImpact": null
-    },
-    {
       "permitId": "OCC-2610CT00573889",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610CT00573889",
       "title": "Avenue du Mont-Royal Est entre Saint-Hubert et Boyer",
@@ -78544,6 +78166,88 @@
       "workImpact": null
     },
     {
+      "permitId": "OCC-2610DK01353971",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610DK01353971",
+      "title": "Avenue Grosvenor près de Queen-Mary",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "reroofing",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "avenue Grosvenor ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "avenue Grosvenor ",
+              "shortName": "Grosvenor",
+              "fromName": "avenue Grosvenor ",
+              "fromShortName": "Grosvenor",
+              "toName": "chemin Queen-Mary ",
+              "toShortName": "Queen-Mary",
+              "area": null,
+              "length": 729.52,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1270158"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1270158,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
       "permitId": "OCC-2610DR01499548",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610DR01499548",
       "title": "Rue de Marseille entre Langelier et Parkville",
@@ -79174,6 +78878,104 @@
             "otherParkingMeterHead": null,
             "roadSectionId": 1380848,
             "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2610ED01433117",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610ED01433117",
+      "title": "Rue Jean-Talon Est entre De Chateaubriand et Saint-Hubert",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "otherSpecify",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "rue Jean-Talon Est ",
+            "sidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_3to6meters",
+            "streetImpactType": "trafficLaneAndParkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue Jean-Talon Est ",
+              "shortName": "Jean-Talon",
+              "fromName": "avenue De Chateaubriand ",
+              "fromShortName": "De Chateaubriand",
+              "toName": "rue Saint-Hubert ",
+              "toShortName": "Saint-Hubert",
+              "area": null,
+              "length": 94.52,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1120168"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1120168,
+            "boroughId": null
+          },
+          {
+            "assetType": "parkingWithParkingMeter",
+            "assetId": "RB115",
+            "action": "cap",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1120168,
+            "boroughId": "RPP"
+          },
+          {
+            "assetType": "parkingWithParkingMeter",
+            "assetId": "RB116",
+            "action": "cap",
+            "otherParkingMeterHead": "RB117",
+            "roadSectionId": 1120168,
+            "boroughId": "RPP"
           }
         ]
       },
@@ -83088,6 +82890,87 @@
       "workImpact": null
     },
     {
+      "permitId": "OCC-2610HR01395594",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610HR01395594",
+      "title": "Côte du Beaver Hall entre Square-Victoria et De La Gauchetière",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-14",
+      "reasonCategory": "constructionRevovationWorkWithoutExcavation",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "côte du Beaver Hall ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "noImpact",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "côte du Beaver Hall ",
+              "shortName": "Beaver Hall",
+              "fromName": "rue du Square-Victoria ",
+              "fromShortName": "Square-Victoria",
+              "toName": "rue De La Gauchetière Ouest ",
+              "toShortName": "De La Gauchetière",
+              "area": null,
+              "length": 88.64,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1260047"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1260047,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
       "permitId": "OCC-2610HR01492994",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610HR01492994",
       "title": "Rue Sherbrooke Est entre Assomption et Dickson",
@@ -83252,6 +83135,149 @@
       "workImpact": null
     },
     {
+      "permitId": "OCC-2610IA00620879",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610IA00620879",
+      "title": "Rue Saint-Hubert entre Sauvé et Sauriol",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-13",
+      "reasonCategory": "as_2AerosouterExisting",
+      "occupancyImpact": {
+        "affectedArea": [
+          "street",
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "rue Saint-Hubert ",
+            "sidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 16,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "move",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue Saint-Hubert ",
+              "shortName": "Saint-Hubert",
+              "fromName": "rue Sauvé Est ",
+              "fromShortName": "Sauvé",
+              "toName": "rue Sauriol Est ",
+              "toShortName": "Sauriol",
+              "area": null,
+              "length": 257.75,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1050419"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          },
+          {
+            "streetId": "rue Sauvé Est ",
+            "sidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "trafficLaneAndParkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": null,
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "move",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue Sauvé Est ",
+              "shortName": "Sauvé",
+              "fromName": "avenue Durham ",
+              "fromShortName": "Durham",
+              "toName": "avenue Péloquin ",
+              "toShortName": "Péloquin",
+              "area": null,
+              "length": 173.93,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1050377",
+                "1050378"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1050419,
+            "boroughId": null
+          },
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1050377,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
       "permitId": "OCC-2610IB00553565",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610IB00553565",
       "title": "Boulevard Langelier entre Villeneuve et Léger",
@@ -83387,6 +83413,88 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 1611240,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2610ID01361516",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610ID01361516",
+      "title": "Avenue Laval entre Pins et Roy",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-21",
+      "reasonCategory": "otherSpecify",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "avenue Laval ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "avenue Laval ",
+              "shortName": "Laval",
+              "fromName": "avenue des Pins Est ",
+              "fromShortName": "Pins",
+              "toName": "rue Roy Est ",
+              "toShortName": "Roy",
+              "area": null,
+              "length": 76.12,
+              "isArterial": false,
+              "roadSectionIds": [
+                "1250147"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1250147,
             "boroughId": null
           }
         ]
@@ -84785,6 +84893,210 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 1381357,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2610JP00647939",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610JP00647939",
+      "title": "Boulevard Henri-Bourassa Est entre Papineau et Séguin",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-19",
+      "reasonCategory": "constructionRepairOfTrafficLights",
+      "occupancyImpact": {
+        "affectedArea": [
+          "street",
+          "bikePath",
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "avenue Papineau ",
+            "sidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "trafficLaneAndParkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "avenue Papineau ",
+              "shortName": "Papineau",
+              "fromName": "rue Struan ",
+              "fromShortName": "Struan",
+              "toName": "boulevard Henri-Bourassa Est ",
+              "toShortName": "Henri-Bourassa",
+              "area": null,
+              "length": 153.84,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1060243"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          },
+          {
+            "streetId": "boulevard Henri-Bourassa Est ",
+            "sidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "trafficLaneAndParkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "boulevard Henri-Bourassa Est ",
+              "shortName": "Henri-Bourassa",
+              "fromName": "avenue Papineau ",
+              "fromShortName": "Papineau",
+              "toName": "rue Séguin ",
+              "toShortName": "Séguin",
+              "area": null,
+              "length": 382.45,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1060131",
+                "1060425"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          },
+          {
+            "streetId": "autoroute 19 ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "trafficLaneAndParkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "autoroute 19 ",
+              "shortName": "19",
+              "fromName": "avenue Papineau ",
+              "fromShortName": "Papineau",
+              "toName": "avenue Papineau ",
+              "toShortName": "Papineau",
+              "area": null,
+              "length": 139.4,
+              "isArterial": false,
+              "roadSectionIds": [
+                "4016000"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1060243,
+            "boroughId": null
+          },
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1060131,
+            "boroughId": null
+          },
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 4016000,
             "boroughId": null
           }
         ]
@@ -86789,6 +87101,88 @@
       "workImpact": null
     },
     {
+      "permitId": "OCC-2610MC01299777",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610MC01299777",
+      "title": "Avenue de l'Hôtel-de-Ville entre Duluth et Rachel",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "reroofing",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "avenue de l'Hôtel-de-Ville ",
+            "sidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_3to6meters",
+            "streetImpactType": "trafficLaneAndParkingLane",
+            "nbFreeParkingPlace": 3,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "avenue de l'Hôtel-de-Ville ",
+              "shortName": "Hôtel-de-Ville",
+              "fromName": "avenue Duluth Est ",
+              "fromShortName": "Duluth",
+              "toName": "rue Rachel Est ",
+              "toShortName": "Rachel",
+              "area": null,
+              "length": 212.18,
+              "isArterial": false,
+              "roadSectionIds": [
+                "1250112"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1250112,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
       "permitId": "OCC-2610MG00539547",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610MG00539547",
       "title": "Avenue L'Archevêque entre Léger et Gouin",
@@ -86946,6 +87340,148 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 1150216,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2610MO00720527",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610MO00720527",
+      "title": "Avenue Ducharme entre Outremont et Wiseman",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "reroofing",
+      "occupancyImpact": {
+        "affectedArea": [
+          "street",
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "avenue Outremont ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "avenue Outremont ",
+              "shortName": "Outremont",
+              "fromName": "avenue Ducharme ",
+              "fromShortName": "Ducharme",
+              "toName": "avenue Manseau ",
+              "toShortName": "Manseau",
+              "area": null,
+              "length": 91.47,
+              "isArterial": false,
+              "roadSectionIds": [
+                "4014143"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          },
+          {
+            "streetId": "avenue Ducharme ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 3,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "avenue Ducharme ",
+              "shortName": "Ducharme",
+              "fromName": "avenue Outremont ",
+              "fromShortName": "Outremont",
+              "toName": "avenue Wiseman ",
+              "toShortName": "Wiseman",
+              "area": null,
+              "length": 124.96,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1603918"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 4014143,
+            "boroughId": null
+          },
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1603918,
             "boroughId": null
           }
         ]
@@ -88163,6 +88699,88 @@
       "workImpact": null
     },
     {
+      "permitId": "OCC-2610OE01317704",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610OE01317704",
+      "title": "Avenue Louis-Hébert entre Elsdale et Saint-Zotique",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-20",
+      "reasonCategory": "constructionRevovationWorkWithoutExcavation",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "avenue Louis-Hébert ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "avenue Louis-Hébert ",
+              "shortName": "Louis-Hébert",
+              "fromName": "avenue Elsdale ",
+              "fromShortName": "Elsdale",
+              "toName": "rue Saint-Zotique Est ",
+              "toShortName": "Saint-Zotique",
+              "area": null,
+              "length": 156.63,
+              "isArterial": false,
+              "roadSectionIds": [
+                "1160303"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1160303,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
       "permitId": "OCC-2610OE01420870",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610OE01420870",
       "title": "Boulevard Couture entre Copernic et Lionel-Groulx",
@@ -88816,6 +89434,170 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 1270158,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2610OU01551333",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610OU01551333",
+      "title": "Rue Lambert-Closse entre De Maisonneuve et Lincoln",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "as_2AerosouterExisting",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "rue Lambert-Closse ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue Lambert-Closse ",
+              "shortName": "Lambert-Closse",
+              "fromName": "boulevard De Maisonneuve Ouest ",
+              "fromShortName": "De Maisonneuve",
+              "toName": "avenue Lincoln ",
+              "toShortName": "Lincoln",
+              "area": null,
+              "length": 97.42,
+              "isArterial": false,
+              "roadSectionIds": [
+                "1260132"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1260132,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2610PA00665689",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610PA00665689",
+      "title": "Rue De Bullion entre Duluth et Rachel",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-14",
+      "reasonCategory": "constructionRevovationWorkWithoutExcavation",
+      "occupancyImpact": {
+        "affectedArea": [
+          "street",
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "rue De Bullion ",
+            "sidewalk": {
+              "blockedType": "blocked",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 2,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue De Bullion ",
+              "shortName": "De Bullion",
+              "fromName": "avenue Duluth Est ",
+              "fromShortName": "Duluth",
+              "toName": "rue Rachel Est ",
+              "toShortName": "Rachel",
+              "area": null,
+              "length": 212.04,
+              "isArterial": false,
+              "roadSectionIds": [
+                "1250020"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1250020,
             "boroughId": null
           }
         ]
@@ -90376,6 +91158,88 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 1410280,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2610QI00646040",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610QI00646040",
+      "title": "Boulevard Henri-Bourassa Est entre Lambert et Papineau",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-19",
+      "reasonCategory": "constructionRevovationWorkWithExcavation",
+      "occupancyImpact": {
+        "affectedArea": [
+          "street",
+          "sidewalk"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "boulevard Henri-Bourassa Est ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "trafficLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": null,
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "boulevard Henri-Bourassa Est ",
+              "shortName": "Henri-Bourassa",
+              "fromName": "rue Lambert ",
+              "fromShortName": "Lambert",
+              "toName": "avenue Papineau ",
+              "toShortName": "Papineau",
+              "area": null,
+              "length": 43.48,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1050215"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1050215,
             "boroughId": null
           }
         ]
@@ -93266,6 +94130,88 @@
       "workImpact": null
     },
     {
+      "permitId": "OCC-2610UP01399221",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610UP01399221",
+      "title": "Rue Saint-Jacques entre Gauvin et Robert-Bourassa",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "otherSpecify",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "rue Saint-Jacques ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue Saint-Jacques ",
+              "shortName": "Saint-Jacques",
+              "fromName": "rue Gauvin ",
+              "fromShortName": "Gauvin",
+              "toName": "boulevard Robert-Bourassa ",
+              "toShortName": "Robert-Bourassa",
+              "area": null,
+              "length": 176.06,
+              "isArterial": true,
+              "roadSectionIds": [
+                "1371055"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1371055,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
       "permitId": "OCC-2610US00573078",
       "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610US00573078",
       "title": "Rue Maguire entre Saint-Dominique et Casgrain",
@@ -93512,37 +94458,36 @@
       "workImpact": null
     },
     {
-      "permitId": "OCC-2610VD01445575",
-      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610VD01445575",
-      "title": "Avenue Saint-Julien entre Castille et Charleroi",
-      "startDate": "2026-10-03",
-      "endDate": "2026-10-04",
-      "reasonCategory": "excavationForSewerAndAqueduct",
+      "permitId": "OCC-2610VC01398872",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610VC01398872",
+      "title": "Rue Saint-Antoine Ouest entre Gauvin et Robert-Bourassa",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "reasonCategory": "otherSpecify",
       "occupancyImpact": {
         "affectedArea": [
-          "sidewalk",
-          "street"
+          "sidewalk"
         ],
         "alleyBlockedType": "noImpact",
         "parkBlockedType": null,
         "parkName": null,
         "impactsOfSection": [
           {
-            "streetId": "avenue Saint-Julien ",
+            "streetId": "rue Saint-Antoine Ouest ",
             "sidewalk": {
-              "blockedType": "blocked",
+              "blockedType": "obstructed",
               "intermitentClosure": null
             },
             "backSidewalk": {
-              "blockedType": "blocked",
+              "blockedType": "noImpact",
               "intermitentClosure": null
             },
             "bikePath": {
               "blockedType": "noImpact",
               "intermitentClosure": null
             },
-            "streetImpactWidth": "_6to9meters",
-            "streetImpactType": "blocked",
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "noImpact",
             "nbFreeParkingPlace": 0,
             "chargingTerminalAdditionalInformation": "",
             "additionalInformation": null,
@@ -93562,17 +94507,17 @@
               }
             },
             "spatialAnalysis": {
-              "name": "avenue Saint-Julien ",
-              "shortName": "Saint-Julien",
-              "fromName": "rue de Castille ",
-              "fromShortName": "Castille",
-              "toName": "rue de Charleroi ",
-              "toShortName": "Charleroi",
+              "name": "rue Saint-Antoine Ouest ",
+              "shortName": "Saint-Antoine",
+              "fromName": "rue Gauvin ",
+              "fromShortName": "Gauvin",
+              "toName": "boulevard Robert-Bourassa ",
+              "toShortName": "Robert-Bourassa",
               "area": null,
-              "length": 248.11,
-              "isArterial": false,
+              "length": 197.52,
+              "isArterial": true,
               "roadSectionIds": [
-                "1610353"
+                "1260817"
               ],
               "lineGeometry": null
             },
@@ -93586,7 +94531,7 @@
             "assetId": "",
             "action": "noImpact",
             "otherParkingMeterHead": null,
-            "roadSectionId": 1610353,
+            "roadSectionId": 1260817,
             "boroughId": null
           }
         ]
@@ -95134,6 +96079,88 @@
             "action": "noImpact",
             "otherParkingMeterHead": null,
             "roadSectionId": 1220346,
+            "boroughId": null
+          }
+        ]
+      },
+      "workImpact": null
+    },
+    {
+      "permitId": "OCC-2610YA01491420",
+      "sourceUrl": "https://montreal.ca/entraves-travaux/entraves/OCC-2610YA01491420",
+      "title": "Rue Eadie entre Desmarchais et Émard",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-08",
+      "reasonCategory": "reroofing",
+      "occupancyImpact": {
+        "affectedArea": [
+          "sidewalk",
+          "street"
+        ],
+        "alleyBlockedType": "noImpact",
+        "parkBlockedType": null,
+        "parkName": null,
+        "impactsOfSection": [
+          {
+            "streetId": "rue Eadie ",
+            "sidewalk": {
+              "blockedType": "obstructed",
+              "intermitentClosure": null
+            },
+            "backSidewalk": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "bikePath": {
+              "blockedType": "noImpact",
+              "intermitentClosure": null
+            },
+            "streetImpactWidth": "_0to3meters",
+            "streetImpactType": "parkingLane",
+            "nbFreeParkingPlace": 0,
+            "chargingTerminalAdditionalInformation": "",
+            "additionalInformation": null,
+            "publicTransportImpact": {
+              "stmImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "otherProviderNames": "",
+              "otherProviderImpact": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              },
+              "reservedLane": {
+                "blockedType": "noImpact",
+                "intermitentClosure": null
+              }
+            },
+            "spatialAnalysis": {
+              "name": "rue Eadie ",
+              "shortName": "Eadie",
+              "fromName": "boulevard Desmarchais ",
+              "fromShortName": "Desmarchais",
+              "toName": "avenue Émard ",
+              "toShortName": "Émard",
+              "area": null,
+              "length": 81.04,
+              "isArterial": false,
+              "roadSectionIds": [
+                "1600259"
+              ],
+              "lineGeometry": null
+            },
+            "intermitentClosure": null,
+            "locationType": null
+          }
+        ],
+        "impactAssets": [
+          {
+            "assetType": "bixiStation",
+            "assetId": "",
+            "action": "noImpact",
+            "otherParkingMeterHead": null,
+            "roadSectionId": 1600259,
             "boroughId": null
           }
         ]

@@ -171,6 +171,16 @@ You are the maintenance engineer for the static web application **Carte des entr
 - A single network failure must never disable enrichment for the whole session; use a consecutive-failure counter.
 - For municipal ArcGIS layers, filter terminated, expired, test, empty, or no-automobile-impact records. One failed municipal endpoint must not discard other fulfilled municipal sources; use per-source failure isolation.
 
+### Potholes And GeoPackage Coordinate Systems
+
+- The pothole snapshots are used by the separate `potholes.html` page, its map, statistics and borough profiles. Follow `.github/prompts/actualiser-nids-de-poule.prompt.md`; only `tools/build-nids-de-poule-snapshot.mjs` may write their data files.
+- This corpus is an exception to the general snapshot freshness rule: `verification.json` owns verification dates, while the other files keep their last content-change date in `contenuModifieLe`. Never add `extractedAt` or advance source verification after a local-only rebuild.
+- Never assume that every GeoPackage uses EPSG:2950. Read `gpkg_geometry_columns`, join its `srs_id` to `gpkg_spatial_ref_sys`, and check each geometry header against the layer reference. An unknown definition or inconsistent reference must fail explicitly, not fall back to a guessed projection.
+- Verified on 2026-10-05: the 2021 colmatage GeoPackage uses longitude/latitude WGS84 degrees under the local `srs_id: 100000`, `organization: NONE`. Recognize its full published geographic definition, not the numeric local identifier or coordinate magnitude. Preserve these coordinates without reprojection. The 2022-2025 GeoPackages explicitly declare EPSG:2950 and retain the existing validated conversion.
+- The former 50,320 invalid 2021 points were an importer defect, not bad municipal coordinates: reprojecting published `[-73.70349884033203, 45.583255767822266]` as metres produced longitude `-76.237951`, latitude `0.000412`. Inspect the original CRS before attributing invalid coordinates to the source.
+- Store `referenceSpatiale` and `versionGeometrieGeoPackage` in imported snapshots. A missing or obsolete geometry version requires reimport even when CKAN `last_modified` is unchanged. A geometry correction requires the normal generator run to rebuild annual matches and all derived map/statistics/borough files; `--carte-locale` alone cannot repair a malformed annual snapshot.
+- Run `node tools/validate-potholes.mjs --geopackage`, then the complete data/browser validator and a real 2021 Colmatages detail. Compare all corrected coordinates to the source, confirm the other years and published 311 fields are unchanged, and keep the configured matching radius. Do not weaken the Montreal coordinate guard to hide an import error.
+
 ## Map And Filtering Behavior
 
 - Use Leaflet with OpenStreetMap and the Canvas renderer for performance. Do not replace the working Leaflet map with an SVG-only map or another map stack without user approval.

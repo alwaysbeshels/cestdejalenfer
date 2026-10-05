@@ -1,5 +1,5 @@
 {
-  "extractedAt": "2026-10-05T03:49:21.773Z",
+  "extractedAt": "2026-10-05T20:55:48.351Z",
   "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
   "municipality": "Ville de Mont-Royal",
   "records": [
@@ -9852,6 +9852,450 @@
       }
     },
     {
+      "id": "054e7735-7d2e-4ec4-87b2-a53248a85afa",
+      "title": "Montview - HQ",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "impact": "Une voie barrée - circulation en alternance\nUne voie barrée - circulation en alternance",
+      "trafficLabels": [
+        "Entrave partielle",
+        "Présence de signaleurs"
+      ],
+      "streets": "Montview",
+      "direction": "Direction non publiée.",
+      "reference": "",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.66951999999876,
+            45.491895599999225
+          ],
+          [
+            -73.6704421243179,
+            45.49245634181614
+          ]
+        ]
+      },
+      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
+      "publishedProject": {
+        "data": {
+          "informations": {
+            "name": "Montview - HQ",
+            "comment": "<p>Une voie barrée - circulation en alternance</p>",
+            "notes": "<p>Une voie barrée - circulation en alternance</p>",
+            "inchargeof": "Ann-Lise Annoual",
+            "phone": "(514)734-3037",
+            "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
+            "role": "Coordonatrice technique",
+            "agents": [],
+            "district": [],
+            "city": [],
+            "entity": [
+              "5"
+            ],
+            "step": "2",
+            "status": "1",
+            "workType": [],
+            "serviceInfra": "",
+            "servicePublic": "",
+            "workType1": [],
+            "workCategory": [],
+            "sector": [],
+            "dista": [],
+            "distp": "",
+            "publish": true,
+            "publishReport": true,
+            "citizenOpinions": false,
+            "notification": false,
+            "internalCommunication": false,
+            "externalCommunication": false,
+            "publicWork": false,
+            "publicMap": false,
+            "publicMapWork": true,
+            "typeMap": {
+              "waze": false,
+              "map": true
+            },
+            "passanger": {
+              "key": "passanger",
+              "title": {
+                "label": "Type d'usager",
+                "label_fr": "Type d'usager",
+                "label_en": "Passenger type"
+              },
+              "title1": {
+                "label": "Type d'impact",
+                "label_fr": "Type d'impact",
+                "label_en": "Impact type"
+              },
+              "show": true,
+              "showInList": false,
+              "search": false,
+              "value": [
+                {
+                  "value": "type1",
+                  "status": false,
+                  "content": "",
+                  "label": "Local ou usager du site",
+                  "label_fr": "Local ou usager du site",
+                  "label_en": "Local or site user"
+                },
+                {
+                  "value": "type2",
+                  "status": false,
+                  "content": "",
+                  "label": "Automobiliste",
+                  "label_fr": "Automobiliste",
+                  "label_en": "Driver"
+                },
+                {
+                  "value": "type3",
+                  "status": false,
+                  "content": "",
+                  "label": "Cycliste",
+                  "label_fr": "Cycliste",
+                  "label_en": "Cyclist"
+                },
+                {
+                  "value": "type4",
+                  "status": false,
+                  "content": "",
+                  "label": "Piéton",
+                  "label_fr": "Piéton",
+                  "label_en": "Pedestrian"
+                },
+                {
+                  "value": "type5",
+                  "status": false,
+                  "content": "",
+                  "label": "Transport collectif",
+                  "label_fr": "Transport collectif",
+                  "label_en": "Public transport"
+                },
+                {
+                  "value": "type6",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité véhicules d'urgence",
+                  "label_fr": "Accessibilité véhicules d'urgence",
+                  "label_en": "Emergency vehicles accessibility"
+                },
+                {
+                  "value": "type7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité personnes à mobilité réduite",
+                  "label_fr": "Accessibilité personnes à mobilité réduite",
+                  "label_en": "Accessibility for people with reduced mobility"
+                }
+              ]
+            },
+            "trafficImpact": {
+              "key": "trafficImpact",
+              "title": {
+                "label": "Impacts - Gestion de la circulation",
+                "label_fr": "Impacts - Gestion de la circulation",
+                "label_en": "Impacts - Traffic Management"
+              },
+              "title1": {
+                "label": "Impacts - Précisions",
+                "label_fr": "Impacts - Précisions",
+                "label_en": "Impacts - Details"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture complète",
+                  "label_fr": "Fermeture complète",
+                  "label_en": "Complete closure"
+                },
+                {
+                  "value": "2",
+                  "status": true,
+                  "content": "",
+                  "label": "Entrave partielle",
+                  "label_fr": "Entrave partielle",
+                  "label_en": "Partial obstruction"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Circulation locale seulement",
+                  "label_fr": "Circulation locale seulement",
+                  "label_en": "Local Traffic only"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Modification de stationnement",
+                  "label_fr": "Modification de stationnement",
+                  "label_en": "Parking modification"
+                },
+                {
+                  "value": "5",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet de détour",
+                  "label_fr": "Trajet de détour",
+                  "label_en": "Detour route"
+                },
+                {
+                  "value": "6",
+                  "status": true,
+                  "content": "",
+                  "label": "Présence de signaleurs",
+                  "label_fr": "Présence de signaleurs",
+                  "label_en": "Presence of flaggers"
+                },
+                {
+                  "value": "7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accès aux commerces maintenu",
+                  "label_fr": "Accès aux commerces maintenu",
+                  "label_en": "Access to shops maintained"
+                },
+                {
+                  "value": "8",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet ou arrêt de la STM",
+                  "label_fr": "Trajet ou arrêt de la STM",
+                  "label_en": "Routes or Stops STM"
+                },
+                {
+                  "value": "9",
+                  "status": false,
+                  "content": "",
+                  "label": "Corridor scolaire entravé",
+                  "label_fr": "Corridor scolaire entravé",
+                  "label_en": "Blocked school corridor"
+                },
+                {
+                  "value": "10",
+                  "status": false,
+                  "content": "",
+                  "label": "Réduction de la vitesse légale",
+                  "label_fr": "Réduction de la vitesse légale",
+                  "label_en": "Reduced legal speed limit"
+                },
+                {
+                  "value": "11",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de trottoir",
+                  "label_fr": "Fermeture de trottoir",
+                  "label_en": "Closure of sidewalk"
+                },
+                {
+                  "value": "12",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de piste cyclable",
+                  "label_fr": "Fermeture de piste cyclable",
+                  "label_en": "Closure of cycling path"
+                },
+                {
+                  "value": "13",
+                  "status": false,
+                  "content": "",
+                  "label": "Collectes des matières résiduelles",
+                  "label_fr": "Collectes des matières résiduelles",
+                  "label_en": "Collection of residual materials"
+                },
+                {
+                  "value": "14",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_fr": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_en": "Temporary closure of municipal services (Park, Chalet etc)"
+                }
+              ]
+            },
+            "portableWater": {
+              "key": "portableWater",
+              "title": {
+                "label": "Impacts - Alimentation en eau potable",
+                "label_fr": "Impacts - Alimentation en eau potable",
+                "label_en": "Impacts - Potable water supply"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": false,
+                  "content": "",
+                  "label": "Réseau temporaire d’eau potable",
+                  "label_fr": "Réseau temporaire d’eau potable",
+                  "label_en": "Temporary potable water network"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Interruption d’eau potable",
+                  "label_fr": "Interruption d’eau potable",
+                  "label_en": "Interruption of potable water"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Perte de pression temporaire",
+                  "label_fr": "Perte de pression temporaire",
+                  "label_en": "Temporary pressure loss"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Changement de couleur de l’eau - non nocif",
+                  "label_fr": "Changement de couleur de l’eau - non nocif",
+                  "label_en": "Water color change - not harmful"
+                }
+              ]
+            },
+            "documents": {
+              "allowed": false,
+              "plan": false,
+              "other": ""
+            },
+            "typeProject": "linear",
+            "requestDate": "",
+            "authorizeDate": "",
+            "cost": "",
+            "departments": [],
+            "eventType": "",
+            "permitInfo": {
+              "timeRange": "",
+              "applicantType": "",
+              "details": [],
+              "equipments": [],
+              "applicant": {
+                "name": "",
+                "phone": "",
+                "email": "",
+                "address": "",
+                "postalCode": ""
+              },
+              "isWeekendWork": false
+            }
+          },
+          "entraves": {
+            "date": [
+              1791390600000,
+              1791401400000
+            ],
+            "perimeter": 3.95,
+            "entraves": [
+              {
+                "selected": {
+                  "path": [
+                    {
+                      "geometry": {
+                        "type": "polyline",
+                        "paths": [
+                          [
+                            [
+                              -8200853.453384745,
+                              5699295.671714276
+                            ],
+                            [
+                              -8200956.1037944,
+                              5699384.717221925
+                            ]
+                          ]
+                        ],
+                        "hasM": false,
+                        "hasZ": false,
+                        "spatialReference": {
+                          "latestWkid": 3857,
+                          "wkid": 102100
+                        }
+                      },
+                      "attributes": {
+                        "ID_TRC": 1603073,
+                        "NOM_VOIE": "Montview",
+                        "TYP_VOIE": "chemin",
+                        "DIR_VOIE": " "
+                      }
+                    }
+                  ],
+                  "startPoint": {
+                    "type": "point",
+                    "latitude": 45.49189559999847,
+                    "longitude": -73.66951999999752,
+                    "x": -8200853.453384606,
+                    "y": 5699295.671714156,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "endPoint": {
+                    "type": "point",
+                    "latitude": 45.49245634181536,
+                    "longitude": -73.67044212431666,
+                    "x": -8200956.103794262,
+                    "y": 5699384.717221803,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "streetsTrack": [
+                    {
+                      "name": "Montview",
+                      "distance": 95.28755566917854
+                    }
+                  ]
+                },
+                "type": "linear",
+                "value": "Montview [Sur 95 m] ",
+                "label": "Montview <span class=\"paths-distance\">[Sur 95 m]</span> ",
+                "name": "Montview",
+                "showError": false,
+                "entraveId": "91da3a80-86a5-11f1-aa1d-853b18ab817f"
+              }
+            ],
+            "layer": "roadworks",
+            "validateEntraves": true,
+            "timeRange": "",
+            "timeOfDay": ""
+          },
+          "phases": [],
+          "projectType": {
+            "isQuick": false,
+            "isDraft": false,
+            "isPublished": true
+          },
+          "uuid": "054e7735-7d2e-4ec4-87b2-a53248a85afa",
+          "conflicts": []
+        },
+        "archives": []
+      },
+      "geometrySource": {
+        "crs": "EPSG:3857",
+        "field": "data.entraves.entraves[].selected.path[].geometry.paths",
+        "outputCrs": "EPSG:4326"
+      }
+    },
+    {
       "id": "bd32f505-9f58-4d77-b1dc-b44f5191bd06",
       "title": "Travaux pour la bibliothèque VMR",
       "startDate": "2026-09-28",
@@ -11500,6 +11944,1284 @@
         "field": "data.entraves.entraves[].selected.path[].geometry.paths",
         "outputCrs": "EPSG:4326"
       }
+    },
+    {
+      "id": "c5cd3a47-7b55-4705-bf70-e2928f9c39a7",
+      "title": "Strathcona (Dunkirk.Kildare) - HQ",
+      "startDate": "2026-10-07",
+      "endDate": "2026-10-07",
+      "impact": "Fermeture complète dans les deux sens sur Strathcona, entre Dunkirk et Kildare.\nFermeture complète dans les deux sens sur Strathcona, entre Dunkirk et Kildare.",
+      "trafficLabels": [
+        "Fermeture complète",
+        "Modification de stationnement",
+        "Trajet de détour",
+        "Fermeture de trottoir"
+      ],
+      "streets": "Strathcona",
+      "direction": "Direction non publiée.",
+      "reference": "2026-00307",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.64992090760983,
+            45.518164095757044
+          ],
+          [
+            -73.6499546662982,
+            45.5181131184755
+          ],
+          [
+            -73.65035404020553,
+            45.51754725867343
+          ],
+          [
+            -73.65038325341858,
+            45.51750479340353
+          ]
+        ]
+      },
+      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
+      "publishedProject": {
+        "data": {
+          "informations": {
+            "permitInfo": {
+              "timeRange": [],
+              "applicantType": "",
+              "details": [],
+              "equipments": [],
+              "applicant": {
+                "name": "",
+                "phone": "",
+                "email": "",
+                "address": "",
+                "postalCode": "",
+                "company": ""
+              }
+            },
+            "name": "Strathcona (Dunkirk.Kildare) - HQ",
+            "comment": "<p>Fermeture complète dans les deux sens sur Strathcona, entre Dunkirk et Kildare.</p>",
+            "notes": "<p>Fermeture complète dans les deux sens sur Strathcona, entre Dunkirk et Kildare.</p>",
+            "inchargeof": "Ann-Lise Annoual",
+            "phone": "(514)734-3037",
+            "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
+            "role": "Coordonatrice technique",
+            "agents": [
+              {
+                "name": "Ann-Lise Annoual",
+                "role": "Coordonatrice technique",
+                "phone": "(514)734-3037",
+                "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
+                "organization": "",
+                "isAuthor": true
+              }
+            ],
+            "district": [],
+            "city": [],
+            "entity": [
+              "5"
+            ],
+            "step": "2",
+            "status": "1",
+            "workType": [
+              "1"
+            ],
+            "serviceInfra": "",
+            "servicePublic": "",
+            "workType1": [],
+            "workCategory": [],
+            "sector": [],
+            "dista": [],
+            "distp": "",
+            "publish": true,
+            "publishReport": true,
+            "citizenOpinions": true,
+            "notification": false,
+            "internalCommunication": true,
+            "externalCommunication": true,
+            "publicWork": false,
+            "publicMap": false,
+            "publicMapWork": true,
+            "typeMap": {
+              "waze": false,
+              "map": true
+            },
+            "passanger": {
+              "key": "passanger",
+              "title": {
+                "label": "Type d'usager",
+                "label_fr": "Type d'usager",
+                "label_en": "Passenger type"
+              },
+              "title1": {
+                "label": "Type d'impact",
+                "label_fr": "Type d'impact",
+                "label_en": "Impact type"
+              },
+              "show": true,
+              "showInList": false,
+              "search": false,
+              "value": [
+                {
+                  "value": "type1",
+                  "status": false,
+                  "content": "",
+                  "label": "Local ou usager du site",
+                  "label_fr": "Local ou usager du site",
+                  "label_en": "Local or site user"
+                },
+                {
+                  "value": "type2",
+                  "status": false,
+                  "content": "",
+                  "label": "Automobiliste",
+                  "label_fr": "Automobiliste",
+                  "label_en": "Driver"
+                },
+                {
+                  "value": "type3",
+                  "status": false,
+                  "content": "",
+                  "label": "Cycliste",
+                  "label_fr": "Cycliste",
+                  "label_en": "Cyclist"
+                },
+                {
+                  "value": "type4",
+                  "status": false,
+                  "content": "",
+                  "label": "Piéton",
+                  "label_fr": "Piéton",
+                  "label_en": "Pedestrian"
+                },
+                {
+                  "value": "type5",
+                  "status": false,
+                  "content": "",
+                  "label": "Transport collectif",
+                  "label_fr": "Transport collectif",
+                  "label_en": "Public transport"
+                },
+                {
+                  "value": "type6",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité véhicules d'urgence",
+                  "label_fr": "Accessibilité véhicules d'urgence",
+                  "label_en": "Emergency vehicles accessibility"
+                },
+                {
+                  "value": "type7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accessibilité personnes à mobilité réduite",
+                  "label_fr": "Accessibilité personnes à mobilité réduite",
+                  "label_en": "Accessibility for people with reduced mobility"
+                }
+              ]
+            },
+            "trafficImpact": {
+              "key": "trafficImpact",
+              "title": {
+                "label": "Impacts - Gestion de la circulation",
+                "label_fr": "Impacts - Gestion de la circulation",
+                "label_en": "Impacts - Traffic Management"
+              },
+              "title1": {
+                "label": "Impacts - Précisions",
+                "label_fr": "Impacts - Précisions",
+                "label_en": "Impacts - Details"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": true,
+                  "content": "Strathcona, entre Dunkirk et Kildare.",
+                  "label": "Fermeture complète",
+                  "label_fr": "Fermeture complète",
+                  "label_en": "Complete closure"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Entrave partielle",
+                  "label_fr": "Entrave partielle",
+                  "label_en": "Partial obstruction"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Circulation locale seulement",
+                  "label_fr": "Circulation locale seulement",
+                  "label_en": "Local Traffic only"
+                },
+                {
+                  "value": "4",
+                  "status": true,
+                  "content": "",
+                  "label": "Modification de stationnement",
+                  "label_fr": "Modification de stationnement",
+                  "label_en": "Parking modification"
+                },
+                {
+                  "value": "5",
+                  "status": true,
+                  "content": "",
+                  "label": "Trajet de détour",
+                  "label_fr": "Trajet de détour",
+                  "label_en": "Detour route"
+                },
+                {
+                  "value": "6",
+                  "status": false,
+                  "content": "",
+                  "label": "Présence de signaleurs",
+                  "label_fr": "Présence de signaleurs",
+                  "label_en": "Presence of flaggers"
+                },
+                {
+                  "value": "7",
+                  "status": false,
+                  "content": "",
+                  "label": "Accès aux commerces maintenu",
+                  "label_fr": "Accès aux commerces maintenu",
+                  "label_en": "Access to shops maintained"
+                },
+                {
+                  "value": "8",
+                  "status": false,
+                  "content": "",
+                  "label": "Trajet ou arrêt de la STM",
+                  "label_fr": "Trajet ou arrêt de la STM",
+                  "label_en": "Routes or Stops STM"
+                },
+                {
+                  "value": "9",
+                  "status": false,
+                  "content": "",
+                  "label": "Corridor scolaire entravé",
+                  "label_fr": "Corridor scolaire entravé",
+                  "label_en": "Blocked school corridor"
+                },
+                {
+                  "value": "10",
+                  "status": false,
+                  "content": "",
+                  "label": "Réduction de la vitesse légale",
+                  "label_fr": "Réduction de la vitesse légale",
+                  "label_en": "Reduced legal speed limit"
+                },
+                {
+                  "value": "11",
+                  "status": true,
+                  "content": "",
+                  "label": "Fermeture de trottoir",
+                  "label_fr": "Fermeture de trottoir",
+                  "label_en": "Closure of sidewalk"
+                },
+                {
+                  "value": "12",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture de piste cyclable",
+                  "label_fr": "Fermeture de piste cyclable",
+                  "label_en": "Closure of cycling path"
+                },
+                {
+                  "value": "13",
+                  "status": false,
+                  "content": "",
+                  "label": "Collectes des matières résiduelles",
+                  "label_fr": "Collectes des matières résiduelles",
+                  "label_en": "Collection of residual materials"
+                },
+                {
+                  "value": "14",
+                  "status": false,
+                  "content": "",
+                  "label": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_fr": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                  "label_en": "Temporary closure of municipal services (Park, Chalet etc)"
+                }
+              ]
+            },
+            "portableWater": {
+              "key": "portableWater",
+              "title": {
+                "label": "Impacts - Alimentation en eau potable",
+                "label_fr": "Impacts - Alimentation en eau potable",
+                "label_en": "Impacts - Potable water supply"
+              },
+              "show": true,
+              "showInList": false,
+              "search": true,
+              "value": [
+                {
+                  "value": "1",
+                  "status": false,
+                  "content": "",
+                  "label": "Réseau temporaire d’eau potable",
+                  "label_fr": "Réseau temporaire d’eau potable",
+                  "label_en": "Temporary potable water network"
+                },
+                {
+                  "value": "2",
+                  "status": false,
+                  "content": "",
+                  "label": "Interruption d’eau potable",
+                  "label_fr": "Interruption d’eau potable",
+                  "label_en": "Interruption of potable water"
+                },
+                {
+                  "value": "3",
+                  "status": false,
+                  "content": "",
+                  "label": "Perte de pression temporaire",
+                  "label_fr": "Perte de pression temporaire",
+                  "label_en": "Temporary pressure loss"
+                },
+                {
+                  "value": "4",
+                  "status": false,
+                  "content": "",
+                  "label": "Changement de couleur de l’eau - non nocif",
+                  "label_fr": "Changement de couleur de l’eau - non nocif",
+                  "label_en": "Water color change - not harmful"
+                }
+              ]
+            },
+            "documents": {
+              "allowed": false,
+              "plan": false,
+              "other": ""
+            },
+            "typeProject": "linear",
+            "requestDate": "",
+            "authorizeDate": "",
+            "cost": "",
+            "departments": [],
+            "reference": "2026-00307"
+          },
+          "entraves": {
+            "date": [
+              1791370800000,
+              1791406800000
+            ],
+            "perimeter": 7.08,
+            "entraves": [
+              {
+                "selected": {
+                  "path": [
+                    {
+                      "geometry": {
+                        "type": "polyline",
+                        "paths": [
+                          [
+                            [
+                              -8198671.692399999,
+                              5703468.047600001
+                            ],
+                            [
+                              -8198675.450399999,
+                              5703459.948700003
+                            ],
+                            [
+                              -8198719.908499999,
+                              5703370.049500003
+                            ],
+                            [
+                              -8198723.160499999,
+                              5703363.303000003
+                            ]
+                          ]
+                        ],
+                        "hasM": false,
+                        "hasZ": false,
+                        "spatialReference": {
+                          "latestWkid": 3857,
+                          "wkid": 102100
+                        }
+                      },
+                      "attributes": {
+                        "FID": 17722,
+                        "ID_TRC": 1603704,
+                        "DEB_GCH": 6,
+                        "FIN_GCH": 30,
+                        "ARR_GCH": "N/A",
+                        "SENS_CIR": 0,
+                        "CLASSE": 0,
+                        "LIE_VOIE": " ",
+                        "TYP_VOIE": "chemin",
+                        "DIR_VOIE": " ",
+                        "NOM_VOIE": "Strathcona",
+                        "DEB_DRT": 5,
+                        "FIN_DRT": 19,
+                        "ARR_DRT": "N/A",
+                        "LIM_GCH": "Mont-Royal",
+                        "LIM_DRT": "Mont-Royal",
+                        "Shape__Length": 0.0008052864701240877
+                      }
+                    }
+                  ],
+                  "startPoint": {
+                    "type": "point",
+                    "latitude": 45.51816409575704,
+                    "longitude": -73.64992090760983,
+                    "x": -8198671.692399999,
+                    "y": 5703468.047600001,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "endPoint": {
+                    "type": "point",
+                    "latitude": 45.51750479340353,
+                    "longitude": -73.65038325341858,
+                    "x": -8198723.160499999,
+                    "y": 5703363.303000003,
+                    "spatialReference": {
+                      "latestWkid": 3857,
+                      "wkid": 102100
+                    },
+                    "hasM": false,
+                    "hasZ": false
+                  },
+                  "streetsTrack": [
+                    {
+                      "name": "Strathcona",
+                      "distance": 81.69880653035848
+                    }
+                  ]
+                },
+                "type": "linear",
+                "value": "Strathcona [Sur 81 m] ",
+                "label": "Strathcona <span class=\"paths-distance\">[Sur 81 m]</span> ",
+                "name": "Strathcona",
+                "showError": false,
+                "entraveId": "454a4eb0-0b46-11f1-8df3-79d055085104"
+              }
+            ],
+            "layer": "roadworks",
+            "validateEntraves": true
+          },
+          "phases": [
+            {
+              "phaseId": "b3d36d30-0b46-11f1-8df3-79d055085104",
+              "closing": [
+                {
+                  "closingId": "b3d36d31-0b46-11f1-8df3-79d055085104",
+                  "selected": {
+                    "path": [
+                      {
+                        "geometry": {
+                          "type": "polyline",
+                          "paths": [
+                            [
+                              [
+                                -8198671.692399999,
+                                5703468.047600001
+                              ],
+                              [
+                                -8198675.450399999,
+                                5703459.948700003
+                              ],
+                              [
+                                -8198719.908499999,
+                                5703370.049500003
+                              ],
+                              [
+                                -8198723.160499999,
+                                5703363.303000003
+                              ]
+                            ]
+                          ],
+                          "hasM": false,
+                          "hasZ": false,
+                          "spatialReference": {
+                            "latestWkid": 3857,
+                            "wkid": 102100
+                          }
+                        },
+                        "attributes": {
+                          "FID": 17722,
+                          "ID_TRC": 1603704,
+                          "DEB_GCH": 6,
+                          "FIN_GCH": 30,
+                          "ARR_GCH": "N/A",
+                          "SENS_CIR": 0,
+                          "CLASSE": 0,
+                          "LIE_VOIE": " ",
+                          "TYP_VOIE": "chemin",
+                          "DIR_VOIE": " ",
+                          "NOM_VOIE": "Strathcona",
+                          "DEB_DRT": 5,
+                          "FIN_DRT": 19,
+                          "ARR_DRT": "N/A",
+                          "LIM_GCH": "Mont-Royal",
+                          "LIM_DRT": "Mont-Royal",
+                          "Shape__Length": 0.0008052864701240877
+                        }
+                      }
+                    ],
+                    "startPoint": {
+                      "type": "point",
+                      "latitude": 45.51816409575549,
+                      "longitude": -73.64992090760734,
+                      "x": -8198671.692399721,
+                      "y": 5703468.047599753,
+                      "spatialReference": {
+                        "latestWkid": 3857,
+                        "wkid": 102100
+                      },
+                      "hasM": false,
+                      "hasZ": false
+                    },
+                    "endPoint": {
+                      "type": "point",
+                      "latitude": 45.51750479340199,
+                      "longitude": -73.65038325341608,
+                      "x": -8198723.160499722,
+                      "y": 5703363.302999756,
+                      "spatialReference": {
+                        "latestWkid": 3857,
+                        "wkid": 102100
+                      },
+                      "hasM": false,
+                      "hasZ": false
+                    },
+                    "streetsTrack": [
+                      {
+                        "name": "Strathcona",
+                        "distance": 81.69880653004026
+                      }
+                    ]
+                  },
+                  "value": "Strathcona",
+                  "label": "Strathcona <span class=\"paths-distance\">[Sur 81 m]</span> ",
+                  "showError": false,
+                  "type": "linear",
+                  "dates": [
+                    {
+                      "dateId": "b3d34620-0b46-11f1-8df3-79d055085104",
+                      "sdate": 1791370800000,
+                      "edate": 1791406800000,
+                      "days": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      "closingType": [
+                        "complete"
+                      ],
+                      "closingSide": [],
+                      "typeStreet": [],
+                      "comment": "",
+                      "dates": [
+                        1791370800000,
+                        1791406800000
+                      ]
+                    }
+                  ],
+                  "detours": [
+                    {
+                      "detourId": "bade40a1-0b46-11f1-8df3-79d055085104",
+                      "selected": {
+                        "path": [
+                          {
+                            "geometry": {
+                              "type": "polyline",
+                              "paths": [
+                                [
+                                  [
+                                    -8198671.692399999,
+                                    5703468.047600001
+                                  ],
+                                  [
+                                    -8198679.914199999,
+                                    5703471.3068
+                                  ],
+                                  [
+                                    -8198924.2916,
+                                    5703570.1844
+                                  ],
+                                  [
+                                    -8198931.2919,
+                                    5703573.193999998
+                                  ]
+                                ]
+                              ],
+                              "hasM": false,
+                              "hasZ": false,
+                              "spatialReference": {
+                                "latestWkid": 3857,
+                                "wkid": 102100
+                              }
+                            },
+                            "attributes": {
+                              "FID": 17816,
+                              "ID_TRC": 1603811,
+                              "DEB_GCH": 1904,
+                              "FIN_GCH": 2196,
+                              "ARR_GCH": "N/A",
+                              "SENS_CIR": 0,
+                              "CLASSE": 0,
+                              "LIE_VOIE": "de",
+                              "TYP_VOIE": "chemin",
+                              "DIR_VOIE": " ",
+                              "NOM_VOIE": "Dunkirk",
+                              "DEB_DRT": 0,
+                              "FIN_DRT": 0,
+                              "ARR_DRT": "N/A",
+                              "LIM_GCH": "Mont-Royal",
+                              "LIM_DRT": "Mont-Royal",
+                              "Shape__Length": 0.0024241256186506473
+                            }
+                          },
+                          {
+                            "geometry": {
+                              "type": "polyline",
+                              "paths": [
+                                [
+                                  [
+                                    -8198931.2919,
+                                    5703573.193999998
+                                  ],
+                                  [
+                                    -8198934.978699999,
+                                    5703565.888999999
+                                  ],
+                                  [
+                                    -8198977.317,
+                                    5703487.272200003
+                                  ],
+                                  [
+                                    -8198986.098299999,
+                                    5703471.149800003
+                                  ]
+                                ]
+                              ],
+                              "hasM": false,
+                              "hasZ": false,
+                              "spatialReference": {
+                                "latestWkid": 3857,
+                                "wkid": 102100
+                              }
+                            },
+                            "attributes": {
+                              "FID": 17316,
+                              "ID_TRC": 1603228,
+                              "DEB_GCH": 0,
+                              "FIN_GCH": 0,
+                              "ARR_GCH": "N/A",
+                              "SENS_CIR": 0,
+                              "CLASSE": 0,
+                              "LIE_VOIE": " ",
+                              "TYP_VOIE": "avenue",
+                              "DIR_VOIE": " ",
+                              "NOM_VOIE": "Devon",
+                              "DEB_DRT": 0,
+                              "FIN_DRT": 0,
+                              "ARR_DRT": "N/A",
+                              "LIM_GCH": "Mont-Royal",
+                              "LIM_DRT": "Mont-Royal",
+                              "Shape__Length": 0.000809311496971867
+                            }
+                          },
+                          {
+                            "geometry": {
+                              "type": "polyline",
+                              "paths": [
+                                [
+                                  [
+                                    -8198953.643299999,
+                                    5703453.931000002
+                                  ],
+                                  [
+                                    -8198966.3259,
+                                    5703461.329000004
+                                  ],
+                                  [
+                                    -8198976.702299999,
+                                    5703466.756700002
+                                  ],
+                                  [
+                                    -8198986.098299999,
+                                    5703471.149800003
+                                  ]
+                                ]
+                              ],
+                              "hasM": false,
+                              "hasZ": false,
+                              "spatialReference": {
+                                "latestWkid": 3857,
+                                "wkid": 102100
+                              }
+                            },
+                            "attributes": {
+                              "FID": 17335,
+                              "ID_TRC": 1603251,
+                              "DEB_GCH": 0,
+                              "FIN_GCH": 0,
+                              "ARR_GCH": "N/A",
+                              "SENS_CIR": 0,
+                              "CLASSE": 0,
+                              "LIE_VOIE": " ",
+                              "TYP_VOIE": "chemin",
+                              "DIR_VOIE": " ",
+                              "NOM_VOIE": "Kildare",
+                              "DEB_DRT": 2167,
+                              "FIN_DRT": 2167,
+                              "ARR_DRT": "N/A",
+                              "LIM_GCH": "Mont-Royal",
+                              "LIM_DRT": "Mont-Royal",
+                              "Shape__Length": 0.00031117399041756956
+                            }
+                          },
+                          {
+                            "geometry": {
+                              "type": "polyline",
+                              "paths": [
+                                [
+                                  [
+                                    -8198846.429099999,
+                                    5703414.177000001
+                                  ],
+                                  [
+                                    -8198881.172999999,
+                                    5703428.521200001
+                                  ],
+                                  [
+                                    -8198925.880199999,
+                                    5703446.822800003
+                                  ],
+                                  [
+                                    -8198953.643299999,
+                                    5703453.931000002
+                                  ]
+                                ]
+                              ],
+                              "hasM": false,
+                              "hasZ": false,
+                              "spatialReference": {
+                                "latestWkid": 3857,
+                                "wkid": 102100
+                              }
+                            },
+                            "attributes": {
+                              "FID": 33953,
+                              "ID_TRC": 4000411,
+                              "DEB_GCH": 0,
+                              "FIN_GCH": 0,
+                              "ARR_GCH": "N/A",
+                              "SENS_CIR": 0,
+                              "CLASSE": 0,
+                              "LIE_VOIE": " ",
+                              "TYP_VOIE": "chemin",
+                              "DIR_VOIE": " ",
+                              "NOM_VOIE": "Kildare",
+                              "DEB_DRT": 2055,
+                              "FIN_DRT": 2165,
+                              "ARR_DRT": "N/A",
+                              "LIM_GCH": "Mont-Royal",
+                              "LIM_DRT": "Mont-Royal",
+                              "Shape__Length": 0.0009960950850464033
+                            }
+                          }
+                        ],
+                        "startPoint": {
+                          "type": "point",
+                          "latitude": 45.51816409575549,
+                          "longitude": -73.64992090760734,
+                          "x": -8198671.692399721,
+                          "y": 5703468.047599753,
+                          "spatialReference": {
+                            "latestWkid": 3857,
+                            "wkid": 102100
+                          },
+                          "hasM": false,
+                          "hasZ": false
+                        },
+                        "endPoint": {
+                          "type": "point",
+                          "latitude": 45.51782501467346,
+                          "longitude": -73.65149059409042,
+                          "x": -8198846.429099723,
+                          "y": 5703414.176999754,
+                          "spatialReference": {
+                            "latestWkid": 3857,
+                            "wkid": 102100
+                          },
+                          "hasM": false,
+                          "hasZ": false
+                        },
+                        "streetsTrack": [
+                          {
+                            "name": "Dunkirk",
+                            "distance": 196.49513477778913
+                          },
+                          {
+                            "name": "Devon",
+                            "distance": 81.09291233644207
+                          },
+                          {
+                            "name": "Kildare",
+                            "distance": 106.15760060156224
+                          }
+                        ]
+                      },
+                      "value": "De: Dunkirk [196m]   &xrarr; Devon [81m]  À: Kildare [106m] ",
+                      "showError": false,
+                      "dates": [
+                        {
+                          "dateId": "bade40a0-0b46-11f1-8df3-79d055085104",
+                          "sdate": 1791370800000,
+                          "edate": 1791406800000,
+                          "days": [
+                            4,
+                            1,
+                            2,
+                            3,
+                            5,
+                            6,
+                            7
+                          ],
+                          "nbVoice": 1,
+                          "detourSensValue": "1"
+                        }
+                      ],
+                      "label": "<span class=\"paths-keys\">De: </span>Dunkirk <span class=\"paths-distance\">[196m]</span> <span class=\"paths-keys\">  &xrarr; </span>Devon <span class=\"paths-distance\">[81m]</span>  <span class=\"paths-keys\">À: </span>Kildare <span class=\"paths-distance\">[106m]</span> "
+                    },
+                    {
+                      "detourId": "d656e031-0b46-11f1-8df3-79d055085104",
+                      "selected": {
+                        "path": [
+                          {
+                            "geometry": {
+                              "type": "polyline",
+                              "paths": [
+                                [
+                                  [
+                                    -8198568.404999999,
+                                    5703425.576700002
+                                  ],
+                                  [
+                                    -8198576.198199999,
+                                    5703428.808600001
+                                  ],
+                                  [
+                                    -8198664.0594,
+                                    5703464.9454
+                                  ],
+                                  [
+                                    -8198671.692399999,
+                                    5703468.047600001
+                                  ]
+                                ]
+                              ],
+                              "hasM": false,
+                              "hasZ": false,
+                              "spatialReference": {
+                                "latestWkid": 3857,
+                                "wkid": 102100
+                              }
+                            },
+                            "attributes": {
+                              "FID": 17724,
+                              "ID_TRC": 1603706,
+                              "DEB_GCH": 1808,
+                              "FIN_GCH": 1890,
+                              "ARR_GCH": "N/A",
+                              "SENS_CIR": 0,
+                              "CLASSE": 0,
+                              "LIE_VOIE": "de",
+                              "TYP_VOIE": "chemin",
+                              "DIR_VOIE": " ",
+                              "NOM_VOIE": "Dunkirk",
+                              "DEB_DRT": 0,
+                              "FIN_DRT": 0,
+                              "ARR_DRT": "N/A",
+                              "LIM_GCH": "Mont-Royal",
+                              "LIM_DRT": "Mont-Royal",
+                              "Shape__Length": 0.0009655901657707276
+                            }
+                          },
+                          {
+                            "geometry": {
+                              "type": "polyline",
+                              "paths": [
+                                [
+                                  [
+                                    -8198568.404999999,
+                                    5703425.576700002
+                                  ],
+                                  [
+                                    -8198571.829399999,
+                                    5703417.879200004
+                                  ],
+                                  [
+                                    -8198599.8292,
+                                    5703356.849200003
+                                  ],
+                                  [
+                                    -8198687.4254,
+                                    5703168.993299998
+                                  ],
+                                  [
+                                    -8198690.675899999,
+                                    5703161.982000001
+                                  ]
+                                ]
+                              ],
+                              "hasM": false,
+                              "hasZ": false,
+                              "spatialReference": {
+                                "latestWkid": 3857,
+                                "wkid": 102100
+                              }
+                            },
+                            "attributes": {
+                              "FID": 17732,
+                              "ID_TRC": 1603716,
+                              "DEB_GCH": 6,
+                              "FIN_GCH": 88,
+                              "ARR_GCH": "N/A",
+                              "SENS_CIR": 0,
+                              "CLASSE": 0,
+                              "LIE_VOIE": " ",
+                              "TYP_VOIE": "avenue",
+                              "DIR_VOIE": " ",
+                              "NOM_VOIE": "Morrison",
+                              "DEB_DRT": 7,
+                              "FIN_DRT": 87,
+                              "ARR_DRT": "N/A",
+                              "LIM_GCH": "Mont-Royal",
+                              "LIM_DRT": "Mont-Royal",
+                              "Shape__Length": 0.001989829706404282
+                            }
+                          },
+                          {
+                            "geometry": {
+                              "type": "polyline",
+                              "paths": [
+                                [
+                                  [
+                                    -8198690.675899999,
+                                    5703161.982000001
+                                  ],
+                                  [
+                                    -8198698.360299999,
+                                    5703165.412900001
+                                  ],
+                                  [
+                                    -8198791.2760999985,
+                                    5703203.1679000035
+                                  ],
+                                  [
+                                    -8198800.156499999,
+                                    5703206.907000005
+                                  ]
+                                ]
+                              ],
+                              "hasM": false,
+                              "hasZ": false,
+                              "spatialReference": {
+                                "latestWkid": 3857,
+                                "wkid": 102100
+                              }
+                            },
+                            "attributes": {
+                              "FID": 17734,
+                              "ID_TRC": 1603718,
+                              "DEB_GCH": 0,
+                              "FIN_GCH": 0,
+                              "ARR_GCH": "N/A",
+                              "SENS_CIR": 0,
+                              "CLASSE": 0,
+                              "LIE_VOIE": " ",
+                              "TYP_VOIE": "chemin",
+                              "DIR_VOIE": " ",
+                              "NOM_VOIE": "Athlone",
+                              "DEB_DRT": 0,
+                              "FIN_DRT": 0,
+                              "ARR_DRT": "N/A",
+                              "LIM_GCH": "Mont-Royal",
+                              "LIM_DRT": "Mont-Royal",
+                              "Shape__Length": 0.001023352440397914
+                            }
+                          }
+                        ],
+                        "startPoint": {
+                          "type": "point",
+                          "latitude": 45.51816409575549,
+                          "longitude": -73.64992090760734,
+                          "x": -8198671.692399721,
+                          "y": 5703468.047599753,
+                          "spatialReference": {
+                            "latestWkid": 3857,
+                            "wkid": 102100
+                          },
+                          "hasM": false,
+                          "hasZ": false
+                        },
+                        "endPoint": {
+                          "type": "point",
+                          "latitude": 45.51652036311235,
+                          "longitude": -73.65107492025224,
+                          "x": -8198800.15649972,
+                          "y": 5703206.906999761,
+                          "spatialReference": {
+                            "latestWkid": 3857,
+                            "wkid": 102100
+                          },
+                          "hasM": false,
+                          "hasZ": false
+                        },
+                        "streetsTrack": [
+                          {
+                            "name": "Dunkirk",
+                            "distance": 78.34776427568593
+                          },
+                          {
+                            "name": "Morrison",
+                            "distance": 203.39902365524483
+                          },
+                          {
+                            "name": "Athlone",
+                            "distance": 83.02682530603165
+                          }
+                        ]
+                      },
+                      "value": "De: Dunkirk [78m]   &xrarr; Morrison [203m]  À: Athlone [83m] ",
+                      "showError": false,
+                      "dates": [
+                        {
+                          "dateId": "d656e030-0b46-11f1-8df3-79d055085104",
+                          "sdate": 1791370800000,
+                          "edate": 1791406800000,
+                          "days": [
+                            4,
+                            1,
+                            2,
+                            3,
+                            5,
+                            6,
+                            7
+                          ],
+                          "nbVoice": 1,
+                          "detourSensValue": "1"
+                        }
+                      ],
+                      "label": "<span class=\"paths-keys\">De: </span>Dunkirk <span class=\"paths-distance\">[78m]</span> <span class=\"paths-keys\">  &xrarr; </span>Morrison <span class=\"paths-distance\">[203m]</span>  <span class=\"paths-keys\">À: </span>Athlone <span class=\"paths-distance\">[83m]</span> "
+                    }
+                  ],
+                  "workType1": [],
+                  "trafficImpact": {
+                    "key": "trafficImpact",
+                    "title": {
+                      "label": "Impacts - Gestion de la circulation",
+                      "label_fr": "Impacts - Gestion de la circulation",
+                      "label_en": "Impacts - Traffic Management"
+                    },
+                    "title1": {
+                      "label": "Impacts - Précisions",
+                      "label_fr": "Impacts - Précisions",
+                      "label_en": "Impacts - Details"
+                    },
+                    "show": true,
+                    "showInList": false,
+                    "search": true,
+                    "value": [
+                      {
+                        "value": "1",
+                        "status": true,
+                        "content": "Strathcona, entre Dunkirk et Kildare.",
+                        "label": "Fermeture complète",
+                        "label_fr": "Fermeture complète",
+                        "label_en": "Complete closure"
+                      },
+                      {
+                        "value": "2",
+                        "status": false,
+                        "content": "",
+                        "label": "Entrave partielle",
+                        "label_fr": "Entrave partielle",
+                        "label_en": "Partial obstruction"
+                      },
+                      {
+                        "value": "3",
+                        "status": false,
+                        "content": "",
+                        "label": "Circulation locale seulement",
+                        "label_fr": "Circulation locale seulement",
+                        "label_en": "Local Traffic only"
+                      },
+                      {
+                        "value": "4",
+                        "status": true,
+                        "content": "",
+                        "label": "Modification de stationnement",
+                        "label_fr": "Modification de stationnement",
+                        "label_en": "Parking modification"
+                      },
+                      {
+                        "value": "5",
+                        "status": true,
+                        "content": "",
+                        "label": "Trajet de détour",
+                        "label_fr": "Trajet de détour",
+                        "label_en": "Detour route"
+                      },
+                      {
+                        "value": "6",
+                        "status": false,
+                        "content": "",
+                        "label": "Présence de signaleurs",
+                        "label_fr": "Présence de signaleurs",
+                        "label_en": "Presence of flaggers"
+                      },
+                      {
+                        "value": "7",
+                        "status": false,
+                        "content": "",
+                        "label": "Accès aux commerces maintenu",
+                        "label_fr": "Accès aux commerces maintenu",
+                        "label_en": "Access to shops maintained"
+                      },
+                      {
+                        "value": "8",
+                        "status": false,
+                        "content": "",
+                        "label": "Trajet ou arrêt de la STM",
+                        "label_fr": "Trajet ou arrêt de la STM",
+                        "label_en": "Routes or Stops STM"
+                      },
+                      {
+                        "value": "9",
+                        "status": false,
+                        "content": "",
+                        "label": "Corridor scolaire entravé",
+                        "label_fr": "Corridor scolaire entravé",
+                        "label_en": "Blocked school corridor"
+                      },
+                      {
+                        "value": "10",
+                        "status": false,
+                        "content": "",
+                        "label": "Réduction de la vitesse légale",
+                        "label_fr": "Réduction de la vitesse légale",
+                        "label_en": "Reduced legal speed limit"
+                      },
+                      {
+                        "value": "11",
+                        "status": true,
+                        "content": "",
+                        "label": "Fermeture de trottoir",
+                        "label_fr": "Fermeture de trottoir",
+                        "label_en": "Closure of sidewalk"
+                      },
+                      {
+                        "value": "12",
+                        "status": false,
+                        "content": "",
+                        "label": "Fermeture de piste cyclable",
+                        "label_fr": "Fermeture de piste cyclable",
+                        "label_en": "Closure of cycling path"
+                      },
+                      {
+                        "value": "13",
+                        "status": false,
+                        "content": "",
+                        "label": "Collectes des matières résiduelles",
+                        "label_fr": "Collectes des matières résiduelles",
+                        "label_en": "Collection of residual materials"
+                      },
+                      {
+                        "value": "14",
+                        "status": false,
+                        "content": "",
+                        "label": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                        "label_fr": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
+                        "label_en": "Temporary closure of municipal services (Park, Chalet etc)"
+                      }
+                    ]
+                  },
+                  "portableWater": {
+                    "key": "portableWater",
+                    "title": {
+                      "label": "Impacts - Alimentation en eau potable",
+                      "label_fr": "Impacts - Alimentation en eau potable",
+                      "label_en": "Impacts - Potable water supply"
+                    },
+                    "show": true,
+                    "showInList": false,
+                    "search": true,
+                    "value": [
+                      {
+                        "value": "1",
+                        "status": false,
+                        "content": "",
+                        "label": "Réseau temporaire d’eau potable",
+                        "label_fr": "Réseau temporaire d’eau potable",
+                        "label_en": "Temporary potable water network"
+                      },
+                      {
+                        "value": "2",
+                        "status": false,
+                        "content": "",
+                        "label": "Interruption d’eau potable",
+                        "label_fr": "Interruption d’eau potable",
+                        "label_en": "Interruption of potable water"
+                      },
+                      {
+                        "value": "3",
+                        "status": false,
+                        "content": "",
+                        "label": "Perte de pression temporaire",
+                        "label_fr": "Perte de pression temporaire",
+                        "label_en": "Temporary pressure loss"
+                      },
+                      {
+                        "value": "4",
+                        "status": false,
+                        "content": "",
+                        "label": "Changement de couleur de l’eau - non nocif",
+                        "label_fr": "Changement de couleur de l’eau - non nocif",
+                        "label_en": "Water color change - not harmful"
+                      }
+                    ]
+                  },
+                  "publish": true
+                }
+              ]
+            }
+          ],
+          "projectType": {
+            "isQuick": false,
+            "isDraft": false,
+            "isPublished": true
+          },
+          "uuid": "c5cd3a47-7b55-4705-bf70-e2928f9c39a7",
+          "conflicts": []
+        },
+        "archives": []
+      },
+      "geometrySource": {
+        "crs": "EPSG:3857",
+        "field": "data.entraves.entraves[].selected.path[].geometry.paths",
+        "outputCrs": "EPSG:4326"
+      }
     }
   ],
   "extraction": {
@@ -11512,8 +13234,8 @@
       "publish": true,
       "nopublish": false,
       "ranges": [
-        1775459397027,
-        1806563397027
+        1775681746452,
+        1806785746452
       ],
       "city": "montroyal",
       "tags": {
@@ -11534,22 +13256,9 @@
       "modeMap": "0",
       "lang": "fr"
     },
-    "sourceRecordCount": 14,
-    "retainedRecordCount": 11,
-    "excluded": [
-      {
-        "id": "52d1cb5e-195d-4e9e-9ab2-3d7caf1521f5",
-        "reason": "expired"
-      },
-      {
-        "id": "46ee9bc2-e0b5-41d1-8bc5-8d6f9c9d9195",
-        "reason": "expired"
-      },
-      {
-        "id": "5b493f50-e7d1-459d-9246-5b81463f239d",
-        "reason": "expired"
-      }
-    ],
+    "sourceRecordCount": 13,
+    "retainedRecordCount": 13,
+    "excluded": [],
     "limitation": "Snapshot limited to the date window and public filters sent by the official map; not live."
   }
 }

@@ -14,8 +14,8 @@ Ce dossier **ne suit pas** la convention `extractedAt` de l'[agent Snapshots off
 
 ## Perimetre
 
-- Le seul outil autorise est `tools/build-nids-de-poule-snapshot.mjs`. N'ecris jamais a la main dans un fichier de `data/nids-de-poule/`.
-- Ne touche ni a la carte, ni a `js/app.js`, ni aux pages HTML, ni au CSS dans le cadre de cette demande. Ces snapshots ne sont pas encore consommes par l'application.
+- Seul `tools/build-nids-de-poule-snapshot.mjs` est autorise a ecrire les snapshots. Les outils de validation en lecture seule sont autorises. N'ecris jamais a la main dans un fichier de `data/nids-de-poule/`.
+- Ne touche ni au code de la carte, ni a `js/app.js`, ni aux pages HTML, ni au CSS dans le cadre d'un rafraichissement. Ces snapshots sont consommes par `potholes.html`, ses cartes, ses statistiques et ses profils d'arrondissement; le generateur regenere automatiquement leurs fichiers derives.
 - Ne cree pas de nouvelle source de nids-de-poule. Aucune autre municipalite du Grand Montreal ne publie ce type de donnees : verification faite sur Donnees Quebec (Laval 130 jeux, Longueuil 31, Repentigny 39) et sur le flux MTMD (624 chantiers, zero mention de nid-de-poule ou de colmatage). Ne reouvre pas cette recherche sans demande explicite.
 - N'ajoute pas ces sources a `MAP_SOURCE_NAMES` dans `data/sources.js`. Leurs quatre entrees doivent rester `inMap: false` tant que la carte ne les charge pas.
 - Ne fais aucun commit, push, deploiement ni installation de dependances sans demande explicite distincte. Une autorisation de publication d'une session precedente ne vaut pas pour cette execution.
@@ -29,6 +29,9 @@ Ce dossier **ne suit pas** la convention `extractedAt` de l'[agent Snapshots off
 | `signalements-2014.json` a `signalements-2026.json` | Signalements 311 de categorie `Nid-de-poule`, tous champs publies. |
 | `reparations-2016.json` a `reparations-2025.json` | Traces GPS du colmatage mecanise reel. |
 | `positions.json` | Recurrence par position. **Seul** endroit ou vivent les compteurs cumulatifs. |
+| `carte.json`, `historique-colmatages.json` | Index de carte, periodes actives et historique des colmatages rapproches. |
+| `statistiques.json`, `analyses.json` | Bilans, classements et analyses derives des fichiers annuels. |
+| `arrondissements.json`, `arrondissements/*.json` | Index et profils des 19 arrondissements, avec leur provenance. |
 
 Le cache des GeoPackage est dans `tools/cache-nids-de-poule/`, ignore par Git. Ne le versionne pas et ne le supprime pas sans raison : il evite de retelecharger une cinquantaine de megaoctets.
 
@@ -36,7 +39,7 @@ Le cache des GeoPackage est dans `tools/cache-nids-de-poule/`, ignore par Git. N
 
 - `verification.json` porte la **date de verification**. Il est reecrit a chaque execution, meme si rien n'a change.
 - Chaque autre fichier porte `contenuModifieLe`, qui est la **date du dernier changement de contenu**, pas une date de verification.
-- Un fichier n'est reecrit que si l'empreinte SHA-256 de son contenu change. C'est volontaire : cela evite de reecrire 191 Mo a chaque passage.
+- Un fichier n'est reecrit que si l'empreinte SHA-256 de son contenu change. C'est volontaire : cela evite de reecrire tout le corpus a chaque passage.
 - N'inscris jamais une date de verification dans un fichier de donnees. N'ajoute pas d'`extractedAt` a ces fichiers.
 - Ne mets pas de date dans les quatre entrees de `data/sources.js` liees aux nids-de-poule. Leur fraicheur est portee par `verification.json`, ce qui est indique en commentaire dans le catalogue.
 
@@ -48,7 +51,7 @@ Par defaut, l'outil recharge **uniquement l'annee courante**. Pour chaque annee 
 2. `max(DDS_DATE_CREATION)`,
 3. `max(DATE_DERNIER_STATUT)`, qui detecte une requete ancienne dont le statut a bouge.
 
-L'annee n'est rechargee que si l'un des trois differe. Pour le colmatage, l'outil compare le `last_modified` CKAN de la ressource : une annee inchangee n'est ni retelechargee, ni relue.
+L'annee n'est rechargee que si l'un des trois differe. Pour le colmatage, l'outil compare le `last_modified` CKAN de la ressource et la version d'import geographique : un GeoPackage dont `versionGeometrieGeoPackage` est absente ou obsolete doit etre relu, meme si la source est inchangee. Une correction de conversion impose le recalcul des appariements et des fichiers derives par la commande normale; `--carte-locale` ne corrige pas un snapshot annuel mal importe.
 
 Deux garde-fous independants cohabitent. La sonde decide s'il faut **relire la source**. L'empreinte decide s'il faut **reecrire le fichier**. Une relecture qui redonne exactement le meme contenu ne produit aucune ecriture, et c'est le comportement attendu.
 
@@ -60,7 +63,9 @@ Deux garde-fous independants cohabitent. La sonde decide s'il faut **relire la s
 - **Liste blanche de fonctions SQL.** `cast`, `to_char` et `EXTRACT` sont refuses (`Not authorized to call function`). `count`, `max`, `min` et `substr` passent. Les comparaisons de plages ISO (`>= '2019-01-01' AND < '2020-01-01'`) fonctionnent sur les colonnes texte comme sur les colonnes timestamp : c'est la seule methode portable entre la ressource courante et les archives.
 - **Annee 2016 publiee en double.** Les ressources `f62595b0` (2014-2016) et `dbc02208` (2016-2018) contiennent chacune les memes 8 768 nids-de-poule de 2016. L'outil ne lit 2016 que depuis `f62595b0`. Ne fusionne jamais les archives sans dedupliquer 2016.
 - **Ressource fantome.** `f180b33d` (archives 2017-2018) est annoncee `datastore_active: true` mais sa table n'existe pas (`relation does not exist`). 2017 et 2018 viennent de `dbc02208`. Ne tente pas de la reactiver.
-- **Colmatage disponible en deux formats.** 2016 a 2020 sont dans le datastore CSV en WGS84. 2021 a 2025 sont des GeoPackage en **EPSG:2950 (NAD83 MTM zone 8)**, lus avec `node:sqlite` et reprojetes. La reprojection a ete validee contre 4 000 enregistrements 311 publiant a la fois `LOC_X`/`LOC_Y` et `LOC_LAT`/`LOC_LONG` : ecart maximal 0,17 mm. Ne la remplace pas par une approximation.
+- **Colmatage disponible en deux formats, mais pas une projection unique.** 2016 a 2020 sont dans le datastore CSV en WGS84. Pour chaque GeoPackage, lire `gpkg_geometry_columns` et `gpkg_spatial_ref_sys`, puis verifier le `srs_id` des geometries. Conserver `referenceSpatiale` et `versionGeometrieGeoPackage` dans le snapshot. Refuser une reference inconnue ou incoherente au lieu de deviner a partir de l'annee, d'un identifiant local ou de l'ordre de grandeur des coordonnees.
+- **2021 est deja en WGS84.** Verification du fichier officiel le 5 octobre 2026 : reference locale `srs_id: 100000`, `organization: NONE`, definition geographique WGS84 avec axes longitude/latitude et unite degre. Ses 50 320 points sont dans l'enveloppe de Montreal sans reprojection. L'ancienne conversion EPSG:2950 produisait latitude `0.000412`, longitude `-76.237951` a partir de longitude `-73.70349884033203`, latitude `45.583255767822266`. C'etait un bogue de notre import, pas des coordonnees municipales invalides. Ne jamais retablir cette conversion ni assouplir l'enveloppe pour la masquer.
+- **2022 a 2025 declarent EPSG:2950.** Ces GeoPackage utilisent NAD83(CSRS) / MTM zone 8; garder la conversion existante vers WGS84, validee contre les coordonnees projetees et geographiques publiees des requetes 311. Toute nouvelle reference doit etre analysee avant ajout; ne jamais appliquer cette conversion automatiquement a tous les fichiers.
 - **`DateHeure` de 2016 est en format 12 h** (`11:16:39 AM`) alors que les autres annees sont en 24 h. L'outil normalise les deux.
 
 ## Regles d'exactitude a ne jamais assouplir
@@ -80,7 +85,7 @@ Deux garde-fous independants cohabitent. La sonde decide s'il faut **relire la s
 
 1. Verifie l'etat du depot avec `git status --porcelain` et preserve les modifications deja presentes. Lis `data/nids-de-poule/verification.json` et `tools/build-nids-de-poule-snapshot.mjs` avant d'agir.
 2. Prends une base de comparaison hors depot :
-   `shasum -a 256 data/nids-de-poule/*.json | sort > /tmp/nids-avant.txt`
+   `shasum -a 256 data/nids-de-poule/*.json data/nids-de-poule/arrondissements/*.json | sort > /tmp/nids-avant.txt`
 3. Choisis la commande selon la demande :
    - rafraichissement normal : `node tools/build-nids-de-poule-snapshot.mjs`
    - annees precises : `node tools/build-nids-de-poule-snapshot.mjs --annees=2019,2020`
@@ -98,23 +103,25 @@ Execute reellement ces controles et rapporte leur sortie. Un HTTP 200 ou une abs
 
 1. **Syntaxe des fichiers reellement modifies.**
    `node --check tools/build-nids-de-poule-snapshot.mjs` si l'outil a ete touche.
+   `node --check tools/validate-potholes.mjs` si le validateur a ete touche.
    `node --check data/sources.js` si le catalogue a ete touche.
    Ne lance pas `node --check` sur un fichier que tu n'as pas modifie : cela ne prouve rien.
 2. **Diff reel des fichiers.**
    ```
-   shasum -a 256 data/nids-de-poule/*.json | sort > /tmp/nids-apres.txt
+   shasum -a 256 data/nids-de-poule/*.json data/nids-de-poule/arrondissements/*.json | sort > /tmp/nids-apres.txt
    diff /tmp/nids-avant.txt /tmp/nids-apres.txt
    ```
-   Croise ce resultat avec `fichiersModifiesCetteExecution` de `verification.json`. Les deux doivent concorder. Si un fichier a change sans apparaitre dans la liste, ou l'inverse, c'est un bug : enquete avant de conclure.
-3. **Invariant du rafraichissement a vide.** Si rien n'a change cote source, seul `verification.json` doit differer. Si d'autres fichiers changent alors que toutes les annees sont annoncees `inchange`, arrete-toi et cherche la cause.
+   Croise ce resultat avec `fichiersModifiesCetteExecution` de `verification.json`, qui liste les changements de contenu sans se lister lui-meme. Les changements reels doivent correspondre exactement a cette liste plus `verification.json`. Si un autre fichier a change sans apparaitre dans la liste, ou l'inverse, enquete avant de conclure.
+3. **Invariant du rafraichissement a vide.** Si ni la source, ni les regles d'import ou de calcul n'ont change, seul `verification.json` doit differer. Une correction geographique peut legitimement modifier les appariements et leurs derives sans changement de source; en demontrer la cause et la conservation des champs publies. Sinon, si d'autres fichiers changent alors que toutes les annees sont annoncees `inchange`, arrete-toi et cherche la cause.
 4. **Integrite de la jointure.** Verifie qu'aucun `positionId` de signalement n'est absent de `positions.json`. Le resultat attendu est zero orphelin.
 5. **Coherence des compteurs.** La somme des `nombre` des treize fichiers de signalements doit correspondre au total attendu, et `index.json` doit refleter les memes valeurs que les fichiers.
 6. **Controle de contenu sur un echantillon.** Ouvre un signalement apparie avec `confiance: "elevee"` et verifie que `distanceM` respecte le rayon demande, que `joursApresSignalement` est positif et que `avantClotureDeLaRequete` est coherent avec `dateDernierStatut`.
 7. **Absence de regression structurelle.** Les enregistrements ne doivent pas contenir de bloc `position` : les compteurs cumulatifs appartiennent a `positions.json`. Les reintroduire forcerait la reecriture des treize millesimes a chaque nouveau signalement.
 8. **Poids et propriete du depot.** Controle `du -sh data/nids-de-poule` et confirme que `tools/cache-nids-de-poule/` reste ignore via `git check-ignore -v`. Aucun GeoPackage ne doit apparaitre dans `git status`.
 9. **Nettoyage.** Supprime les fichiers temporaires hors depot que tu as crees. Ne laisse aucun `console.log` de debogage dans l'outil.
+10. **References geographiques.** Execute `node tools/validate-potholes.mjs --geopackage`. Pour une correction, compare les coordonnees avec le fichier officiel, confirme la conservation des autres millesimes et des champs 311 publies, et verifie que les 50 320 points 2021 ne sont plus exclus. Une reference non reconnue doit rester un echec explicite, jamais une conversion supposee.
 
-Aucune validation navigateur n'est requise tant que ces snapshots ne sont pas charges par la carte. Ne demarre pas de serveur statique pour cette demande.
+Execute `node tools/validate-potholes.mjs --browser` sur le serveur local existant a `http://localhost:5500`, ou un serveur temporaire de validation si aucun n'est disponible. La commande controle les fichiers annuels, les derives et l'affichage FR/EN sur ordinateur et mobile. Apres une correction de geometrie, ouvrir aussi un point et sa fiche dans le mode Colmatages, annee 2021. Ne declare pas le probleme resolu sur la seule foi des compteurs JSON.
 
 ## Bilan attendu
 

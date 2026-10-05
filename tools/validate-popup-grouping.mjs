@@ -118,7 +118,7 @@ try {
         map.stop();
         map.setView([record.point[1], record.point[0]], 18, { animate: false });
         updateView({ fit: false });
-        const layer = renderedClosureLayers.get(id)?.closures.getLayers()[0];
+        const layer = renderedClosureLayers.get(id)?.closures.getLayers().find((candidate) => candidate.listens("click"));
         if (!layer) throw new Error(`No rendered layer for ${id}`);
         layer.fire("click", { latlng: L.latLng(record.point[1], record.point[0]) });
         const popup = document.querySelector(".leaflet-popup-content");

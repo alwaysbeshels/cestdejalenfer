@@ -115,8 +115,8 @@ Cette app est un **cockpit de trafic** pour le Grand Montreal (métro + villes l
 - Sinon SKIP = pas de flicker
 
 ### Parking Filter
-**Comportement**: Doit être UNCHECKED par défaut
-**Vérification**: Aucun attribut `checked` sur l'input
+**Comportement**: Le filtre « Stationnement impacté » est coché par défaut.
+**Vérification**: L'attribut `checked` est présent sur l'input de valeur `parking`.
 
 ---
 

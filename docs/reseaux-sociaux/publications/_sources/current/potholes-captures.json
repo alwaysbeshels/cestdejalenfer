@@ -1,0 +1,38 @@
+{
+  "startedAt": "2026-10-05T20:25:00.632Z",
+  "captures": [
+    {
+      "filename": "fr/potholes-map.png",
+      "capturedAt": "2026-10-05T20:25:10.376Z",
+      "language": "fr",
+      "title": "Nids-de-poule",
+      "counts": "Signalements connus : 73 975 · Positions : 20 938",
+      "years": "2026",
+      "visibleRecords": 16,
+      "error": false,
+      "tiles": 12,
+      "viewport": [
+        1120,
+        680
+      ]
+    },
+    {
+      "filename": "en/potholes-map.png",
+      "capturedAt": "2026-10-05T20:25:12.708Z",
+      "language": "en",
+      "title": "Potholes",
+      "counts": "Known reports: 73,975 · Locations: 20,938",
+      "years": "2026",
+      "visibleRecords": 16,
+      "error": false,
+      "tiles": 12,
+      "viewport": [
+        1120,
+        680
+      ]
+    }
+  ],
+  "pageErrors": [],
+  "snapshotWrites": 0,
+  "remoteDataRequests": []
+}

@@ -62,7 +62,9 @@ try {
     }, record);
     await page.locator("#closureList .closure-card[tabindex]").filter({ has: page.locator(`a[href="${record.sourceUrl}"]`) }).first().click();
     await page.locator(".leaflet-popup-content").waitFor();
-    assert(comparable(await page.locator(".leaflet-popup-content").innerText()).includes(comparable(record.impact)));
+    const expectedImpact = await page.evaluate((record) => record.impactKey ? t(record.impactKey) : record.impact, record);
+    assert(expectedImpact && expectedImpact !== record.impactKey);
+    assert(comparable(await page.locator(".leaflet-popup-content").innerText()).includes(comparable(expectedImpact)));
     assert((await page.locator(".leaflet-popup-content").innerText()).includes(record.sourceCheckedAt));
     assert(await page.evaluate((id) => renderedClosureLayers.has(id), record.id));
     console.log(`Popup and geometry: ${key}`);

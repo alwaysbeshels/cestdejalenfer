@@ -1,0 +1,5 @@
+FR : 📊 Ta question, ton graphique. Dans Personnalisé, choisis une dimension, une mesure et des filtres pour explorer les entraves routières. Compare les résultats avec leurs effectifs et leurs données manquantes.
+
+EN : 📊 Your question, your chart. In Custom, choose a dimension, a measure and filters to explore road restrictions. Compare the results alongside their counts and missing data.
+
+#CestDejaLenfer #Montréal #DataViz

@@ -1,0 +1,1495 @@
+{
+  "startedAt": "2026-10-05T20:27:32.192Z",
+  "baseUrl": "http://127.0.0.1:5500",
+  "snapshotsRefreshed": false,
+  "installationEmulated": true,
+  "applicationHashes": {
+    "index.html": "624423d46220ba4070b88ca6017f607aef46dc05d39d98751abe783825a09291",
+    "pedestrian.html": "3b89fbd782320d56c34de4d370a884a45163936be4f066e3c7d28439f55fec45",
+    "potholes.html": "39e40e393e66bb27be5556e2da43fac00e7bdff6594e04dcb60992cdaa9deb0e",
+    "js/app.js": "8074260b66528bb13904e1024be048fdf364577bbb78f734beb3ca33e43687d6",
+    "js/potholes.mjs": "8d94e3c7e6f0af76df46e3cfe6be348205ce3bae741f5e4c000358804a4a1b86",
+    "js/stats.js": "7f61102d9ac1171e82d315b914e9b943557ef1be7263131a47c9378bf3c77267",
+    "js/i18n.js": "7e06926bd40dd43ff2f41cc263b320d445d0fc57ce85de22a2ae6706287568ad",
+    "js/navigation.js": "80401af02458f75812cbe36ad4bdee35dbf92bb6ad554141f5e5edbeec58e900",
+    "css/styles.css": "7e2fba1891a738baec60ddf94068f25fbebf628806346ea87d6cdc1b06b8d5f8",
+    "css/potholes.css": "9a1e82af53a8957bc15b0add6b10402dd6065f47e981f2ba0921683522f62da5",
+    "css/navigation.css": "2681e894bb8fce5efb6e2a94fe5b95b91ec3c19a76e871658a78ac70921922ab",
+    "css/social.css": "ebea5c5af01274453d62734e7531aa970bda16c9af41ebe8cb7fe2920fae7484",
+    "languages/fr.js": "56d237e2a2212c3e7f33934ea59e63b88c9752437a5312db5c03b29db2291113",
+    "languages/en.js": "6c4ef9c920998b511d033b9007c3c7a6d9cb4be6c26f4974c12c65f3c9ccc3ff",
+    "data/sources.js": "abf35b4a1c6da939688d3752563b850a01960d1e4348d52c91f5999bb81185b2",
+    "data/nids-de-poule/index.json": "271aba70b86a0d31d55c2652ad55316d8ec880c68aa7b824ce75ed3b6b8523b5",
+    "data/nids-de-poule/verification.json": "f45d605c55c499415157481aa36d49020731353e5754e3214f12575327865c68"
+  },
+  "captures": [
+    {
+      "filename": "fr/auto-desktop.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:37.968Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "1a30c87a9e3ab38d699b17bed12711cc035c6bfe24fbccc3a3dd42f9342ebe13",
+      "language": "fr",
+      "viewport": [
+        1360,
+        850
+      ],
+      "title": "Carte des entraves routières - Grand Montréal",
+      "headings": [
+        "Carte des entraves routières"
+      ],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "fr/auto-detail.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:38.760Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "dbe55e9ed72e496980a29c8f71abb55a33cadbcf7a6daa097afbfb833a39b423",
+      "language": "fr",
+      "viewport": [
+        1360,
+        560
+      ],
+      "title": "Carte des entraves routières - Grand Montréal",
+      "headings": [
+        "Carte des entraves routières"
+      ],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "fr/auto-mobile.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:39.603Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "f66e8abad51f7a891e6b94a51f123c6016163ab2fe6b7dbdd2cf97cfefe8513d",
+      "language": "fr",
+      "viewport": [
+        390,
+        844
+      ],
+      "title": "Carte des entraves routières - Grand Montréal",
+      "headings": [],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "fr/pedestrian-desktop.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:41.289Z",
+      "url": "http://127.0.0.1:5500/fr/pedestrian.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "3f3827228fc4e1161773a2a351080cfd21952a0795e04aef8e8c66e1656451b0",
+      "language": "fr",
+      "viewport": [
+        1360,
+        560
+      ],
+      "title": "Entraves piétonnes - Grand Montréal",
+      "headings": [
+        "Entraves piétonnes"
+      ],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "fr/pedestrian-reader.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:42.749Z",
+      "url": "http://127.0.0.1:5500/fr/pedestrian.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "002dc03c5a0c4ad4bf9b254a1e6bab5113fcfbb37126248364d1aad604c213c9",
+      "language": "fr",
+      "viewport": [
+        390,
+        844
+      ],
+      "title": "Entraves piétonnes - Grand Montréal",
+      "headings": [
+        "Entraves piétonnes"
+      ],
+      "tab": null,
+      "readerMode": true,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-fr-general-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:45.083Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "0cd3545292ee5085b8f6a0e61ec49a17a2e1afcbc5493d2a683dd91e65a182b1",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Statistiques des entraves routières - Grand Montréal",
+      "headings": [
+        "Statistiques des entraves — Général",
+        "Répartition par type d'impact",
+        "Durées prévues",
+        "Longueur de voies touchées",
+        "Âge des chantiers"
+      ],
+      "tab": "general",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-fr-general-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:27:45.670Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "ce5894a6cc2d0ac34ba5a276c04551927fbcaa88f90330339581df965af97b52",
+      "language": "fr",
+      "viewport": [
+        1440,
+        3050
+      ],
+      "title": "Statistiques des entraves routières - Grand Montréal",
+      "headings": [
+        "Statistiques des entraves — Général",
+        "Répartition par type d'impact",
+        "Durées prévues",
+        "Longueur de voies touchées",
+        "Âge des chantiers",
+        "Les plus longues encore actives",
+        "Débuts et fins de travaux prévus d'ici 7 jours",
+        "Couverture par source"
+      ],
+      "tab": "general",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-fr-roads-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:45.964Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=roads",
+      "sha256": "cc6cb77085d722dbb6d2aa89ceb70c369ae072dc982e7f4d114af74fd33906c2",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Autoroutes et routes numérotées | Statistiques des entraves routières - Grand Montréal",
+      "headings": [
+        "Statistiques des entraves — Autoroutes et routes numérotées",
+        "Répartition par type de voie",
+        "Autoroutes et routes numérotées",
+        "Autoroutes et routes numérotées par direction"
+      ],
+      "tab": "roads",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-fr-roads-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:27:46.326Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=roads",
+      "sha256": "1dad962eaa7db64f210b2e055ba3beaadc278b617d015bf601201c5a0e4a81c0",
+      "language": "fr",
+      "viewport": [
+        1440,
+        1759
+      ],
+      "title": "Autoroutes et routes numérotées | Statistiques des entraves routières - Grand Montréal",
+      "headings": [
+        "Statistiques des entraves — Autoroutes et routes numérotées",
+        "Répartition par type de voie",
+        "Autoroutes et routes numérotées",
+        "Autoroutes et routes numérotées par direction",
+        "Fermetures complètes sur autoroutes, ponts et tunnels"
+      ],
+      "tab": "roads",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-fr-private-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:46.751Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=private",
+      "sha256": "d034497112e7224c3b5537912aaed51faa229a5bbaa7a40cf63b77a0bda55282",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Public et privé | Statistiques des entraves routières - Grand Montréal",
+      "headings": [
+        "Statistiques des entraves — Public & Privé",
+        "Secteur public ou privé",
+        "Travaux pour le secteur public, par organisme",
+        "Ville de Montréal : en régie ou à contrat",
+        "Ville de Montréal : part à contrat par arrondissement"
+      ],
+      "tab": "private",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-fr-private-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:27:47.261Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=private",
+      "sha256": "8e27fed172b1e7c3ca4fd10f80f32b1c0b3187b3253b8b2fc23e81f3f43af48c",
+      "language": "fr",
+      "viewport": [
+        1440,
+        2944
+      ],
+      "title": "Public et privé | Statistiques des entraves routières - Grand Montréal",
+      "headings": [
+        "Statistiques des entraves — Public & Privé",
+        "Secteur public ou privé",
+        "Travaux pour le secteur public, par organisme",
+        "Ville de Montréal : en régie ou à contrat",
+        "Ville de Montréal : part à contrat par arrondissement",
+        "Chantiers publics les plus longs",
+        "Responsables : public ou privé",
+        "Proportion des travaux par type de mandat",
+        "Public ou privé : comparaison",
+        "Entreprises avec le plus d'entraves"
+      ],
+      "tab": "private",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-fr-territory-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:47.867Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=territory",
+      "sha256": "3ad7daebafe708fa5944ac239754971145c94f0fe3f948a0a830c06abb682fa0",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Par municipalité | Statistiques des entraves routières - Grand Montréal",
+      "headings": [
+        "Statistiques des entraves — Par municipalité",
+        "Répartition par type d'impact",
+        "Répartition par type de voie",
+        "Âge des chantiers",
+        "Secteur public ou privé",
+        "Rues et routes avec le plus d'entraves"
+      ],
+      "tab": "territory",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-fr-territory-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:27:48.374Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=territory",
+      "sha256": "e9333fd13108204c928158b3a4bf928c41be66b85110e261ecb8a11159855a95",
+      "language": "fr",
+      "viewport": [
+        1440,
+        2890
+      ],
+      "title": "Par municipalité | Statistiques des entraves routières - Grand Montréal",
+      "headings": [
+        "Statistiques des entraves — Par municipalité",
+        "Répartition par type d'impact",
+        "Répartition par type de voie",
+        "Âge des chantiers",
+        "Secteur public ou privé",
+        "Rues et routes avec le plus d'entraves",
+        "Les plus longues encore actives",
+        "Débuts et fins de travaux prévus d'ici 7 jours"
+      ],
+      "tab": "territory",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "08-fr-bars-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:49.145Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=custom",
+      "sha256": "e8116f6844f2f05cc0dd98923737ad7624a59faeccc49cd5e3b5319cb49818ea",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Personnalisé | Statistiques des entraves routières - Grand Montréal",
+      "headings": [
+        "Statistiques des entraves / Personnalisé",
+        "Choix des données",
+        "Nombre d'entraves / Municipalité"
+      ],
+      "tab": "custom",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "08-fr-doughnut-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:49.425Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=custom",
+      "sha256": "a3cff9afe2babe8a44961b8bd83ad28bbb735a5f9edec3b6e657e07e2dd780c4",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Personnalisé | Statistiques des entraves routières - Grand Montréal",
+      "headings": [
+        "Statistiques des entraves / Personnalisé",
+        "Choix des données",
+        "Nombre d'entraves / Type d'impact"
+      ],
+      "tab": "custom",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-fr-summary-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:50.014Z",
+      "url": "http://127.0.0.1:5500/fr/potholes.html?mode=statistics",
+      "sha256": "8192cfbea07b398ea680d74de75636c0f3d4c10bac09153cf93512870cf0465e",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Bilan | Statistiques | Nids-de-poule et colmatages",
+      "headings": [
+        "Statistiques",
+        "Bilan des données disponibles",
+        "Demandes 311 par année de création",
+        "Colmatage mécanisé par fichier annuel"
+      ],
+      "tab": "summary",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-fr-summary-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:27:50.625Z",
+      "url": "http://127.0.0.1:5500/fr/potholes.html?mode=statistics",
+      "sha256": "8ec874f81fcba9a8837cae6b01f6cc783b9579b39da3b9662b97ebfe84d29459",
+      "language": "fr",
+      "viewport": [
+        1440,
+        4364
+      ],
+      "title": "Bilan | Statistiques | Nids-de-poule et colmatages",
+      "headings": [
+        "Statistiques",
+        "Bilan des données disponibles",
+        "Demandes 311 par année de création",
+        "Colmatage mécanisé par fichier annuel",
+        "Emplacements, rues et colmateuses",
+        "Les 5 emplacements les plus signalés",
+        "Les 5 emplacements avec le plus de colmatages",
+        "Les 5 rues avec le plus d'emplacements signalés",
+        "Les 5 rues avec le plus d'emplacements revenus",
+        "Les 5 rues avec le plus de colmatages",
+        "Les 5 emplacements les plus signalés sans colmatage recensé",
+        "Les 5 rues aux signalements sans colmatage les plus anciens",
+        "Les 5 rues avec le plus de colmatages par signalement",
+        "Colmatages par colmateuse",
+        "Colmateuses non recensées en 2025"
+      ],
+      "tab": "summary",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-fr-charts-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:50.928Z",
+      "url": "http://127.0.0.1:5500/fr/potholes.html?mode=statistics&tab=charts",
+      "sha256": "74727e4b5fccc220dacf9403a69c5057f0a80ec30039c56b8fc78dcd6b6c58a7",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Graphiques | Statistiques | Nids-de-poule et colmatages",
+      "headings": [
+        "Statistiques",
+        "Les nids-de-poule dans les données",
+        "Les signalements augmentent-ils ?",
+        "Des emplacements signalés année après année"
+      ],
+      "tab": "charts",
+      "readerMode": false,
+      "borough": null,
+      "period": "recent",
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-fr-charts-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:27:51.315Z",
+      "url": "http://127.0.0.1:5500/fr/potholes.html?mode=statistics&tab=charts",
+      "sha256": "e33ad2a6922e6189ba975965be6f52482ce84839169aee5010fc682ff1f116ef",
+      "language": "fr",
+      "viewport": [
+        1440,
+        2366
+      ],
+      "title": "Graphiques | Statistiques | Nids-de-poule et colmatages",
+      "headings": [
+        "Statistiques",
+        "Les nids-de-poule dans les données",
+        "Les signalements augmentent-ils ?",
+        "Des emplacements signalés année après année",
+        "Des demandes répétées sans colmatage recensé",
+        "De nouveaux signalements après colmatage",
+        "Combien de signalements par emplacement ?",
+        "Où les mêmes emplacements sont-ils signalés plusieurs années ?"
+      ],
+      "tab": "charts",
+      "readerMode": false,
+      "borough": null,
+      "period": "recent",
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-fr-boroughs-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:51.626Z",
+      "url": "http://127.0.0.1:5500/fr/potholes.html?mode=statistics&tab=boroughs&borough=villeray-saint-michel-parc-extension&period=recent",
+      "sha256": "673f61a61d8b3e0dfffcf7528b82089729dfd1ad517415d089d02c87523f84ed",
+      "language": "fr",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Par arrondissement | Statistiques | Nids-de-poule et colmatages",
+      "headings": [
+        "Statistiques",
+        "Portrait de Villeray-Saint-Michel-Parc-Extension",
+        "Les signalements dans cet arrondissement",
+        "Les mêmes emplacements reviennent-ils ?"
+      ],
+      "tab": "boroughs",
+      "readerMode": false,
+      "borough": "Villeray-Saint-Michel-Parc-Extension",
+      "period": "recent",
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-fr-boroughs-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:27:52.060Z",
+      "url": "http://127.0.0.1:5500/fr/potholes.html?mode=statistics&tab=boroughs&borough=villeray-saint-michel-parc-extension&period=recent",
+      "sha256": "6ebacf147a583ef26ac154a38e7aab94354dd4ff2f1ff7249484c4aa4edba88a",
+      "language": "fr",
+      "viewport": [
+        1440,
+        3274
+      ],
+      "title": "Par arrondissement | Statistiques | Nids-de-poule et colmatages",
+      "headings": [
+        "Statistiques",
+        "Portrait de Villeray-Saint-Michel-Parc-Extension",
+        "Les signalements dans cet arrondissement",
+        "Les mêmes emplacements reviennent-ils ?",
+        "De nouveaux signalements après colmatage",
+        "La persistance par rapport au reste de Montréal",
+        "Les rues et leurs demandes répétées",
+        "Les emplacements à examiner"
+      ],
+      "tab": "boroughs",
+      "readerMode": false,
+      "borough": "Villeray-Saint-Michel-Parc-Extension",
+      "period": "recent",
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "en/auto-desktop.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:55.597Z",
+      "url": "http://127.0.0.1:5500/en/index.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "096487ecc09b5f47a3a150601434c2cd3e71f4629f208347f5d61154e23c2709",
+      "language": "en",
+      "viewport": [
+        1360,
+        850
+      ],
+      "title": "Road restrictions map - Greater Montreal",
+      "headings": [
+        "Road restrictions map"
+      ],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "en/auto-detail.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:56.370Z",
+      "url": "http://127.0.0.1:5500/en/index.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "5f2078de37482440679855360863985c2d802cc4afef6509f4ff5f6b58adbe42",
+      "language": "en",
+      "viewport": [
+        1360,
+        560
+      ],
+      "title": "Road restrictions map - Greater Montreal",
+      "headings": [
+        "Road restrictions map"
+      ],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "en/auto-mobile.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:57.125Z",
+      "url": "http://127.0.0.1:5500/en/index.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "006c131eb3ebcdd91eb6c0c93d3c63e3faeb156a5e97558cd2b41e5ea94a62fa",
+      "language": "en",
+      "viewport": [
+        390,
+        844
+      ],
+      "title": "Road restrictions map - Greater Montreal",
+      "headings": [
+        "Road restrictions map"
+      ],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "en/pedestrian-desktop.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:27:58.656Z",
+      "url": "http://127.0.0.1:5500/en/pedestrian.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "799ee3f29b8d1fd1539892c938098a32c59de6a14675358d5cb8cad0c72a0f2e",
+      "language": "en",
+      "viewport": [
+        1360,
+        560
+      ],
+      "title": "Pedestrian restrictions - Greater Montreal",
+      "headings": [
+        "Pedestrian restrictions"
+      ],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "en/pedestrian-reader.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:28:00.141Z",
+      "url": "http://127.0.0.1:5500/en/pedestrian.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "50d5a0885f819b700e267b2e4af8a3f877ba2c5c17738c0f8769c5f8e3b2bbab",
+      "language": "en",
+      "viewport": [
+        390,
+        844
+      ],
+      "title": "Pedestrian restrictions - Greater Montreal",
+      "headings": [
+        "Pedestrian restrictions"
+      ],
+      "tab": null,
+      "readerMode": true,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-en-general-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:28:02.167Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "e8c1eecf74d825f3e2463ba7d55d47c0fab42cba4bb4a5ca8250185d731b5dae",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Road restriction statistics - Greater Montreal",
+      "headings": [
+        "Road restriction statistics — General",
+        "Breakdown by impact type",
+        "Planned durations",
+        "Length of affected roads",
+        "Age of the work"
+      ],
+      "tab": "general",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-en-general-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:28:02.729Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "8c21959b5b9b203b77a411e3c6f27fabb0ffc461f1aa1bb30cf6f5fc39986124",
+      "language": "en",
+      "viewport": [
+        1440,
+        3009
+      ],
+      "title": "Road restriction statistics - Greater Montreal",
+      "headings": [
+        "Road restriction statistics — General",
+        "Breakdown by impact type",
+        "Planned durations",
+        "Length of affected roads",
+        "Age of the work",
+        "Longest still active",
+        "Work starting or ending within 7 days",
+        "Coverage by source"
+      ],
+      "tab": "general",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-en-roads-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:28:03.016Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=roads",
+      "sha256": "5ad51836e6e59c1bfc1565d30b14faca540146c3cc5d044505f43d861b22d88a",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Highways and numbered routes | Road restriction statistics - Greater Montreal",
+      "headings": [
+        "Road restriction statistics — Highways and numbered routes",
+        "Split by type of road",
+        "Highways and numbered routes",
+        "Highways and numbered routes by direction"
+      ],
+      "tab": "roads",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-en-roads-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:28:03.366Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=roads",
+      "sha256": "f33f6a1826ddad9cfbdebaace223879bb1bf7f0877e9f506f38e2a3f955cec16",
+      "language": "en",
+      "viewport": [
+        1440,
+        1776
+      ],
+      "title": "Highways and numbered routes | Road restriction statistics - Greater Montreal",
+      "headings": [
+        "Road restriction statistics — Highways and numbered routes",
+        "Split by type of road",
+        "Highways and numbered routes",
+        "Highways and numbered routes by direction",
+        "Full closures on highways, bridges and tunnels"
+      ],
+      "tab": "roads",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-en-private-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:28:03.794Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=private",
+      "sha256": "6caf376431987e8256b0a0c06c194573bb205ae6e75fa1b3c274f90cd49d8c65",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Public & Private | Road restriction statistics - Greater Montreal",
+      "headings": [
+        "Road restriction statistics — Public & Private",
+        "Public or private sector",
+        "Work for the public sector, by body",
+        "City of Montreal: own crews or contract",
+        "City of Montreal: share by contract per borough"
+      ],
+      "tab": "private",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-en-private-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:28:04.284Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=private",
+      "sha256": "6058f520ac5f89d687e2474226bf00d03db36a4630c059d053b4d425bb984386",
+      "language": "en",
+      "viewport": [
+        1440,
+        2942
+      ],
+      "title": "Public & Private | Road restriction statistics - Greater Montreal",
+      "headings": [
+        "Road restriction statistics — Public & Private",
+        "Public or private sector",
+        "Work for the public sector, by body",
+        "City of Montreal: own crews or contract",
+        "City of Montreal: share by contract per borough",
+        "Longest public worksites",
+        "Responsible parties: public or private",
+        "Share of work by mandate type",
+        "Public or private: comparison",
+        "Companies with the most restrictions"
+      ],
+      "tab": "private",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-en-territory-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:28:04.792Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=territory",
+      "sha256": "ca1ce962e0e732e0f10a4b8ca91725b039ab70d518d45ceecc01b8b48dad6c57",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "By municipality | Road restriction statistics - Greater Montreal",
+      "headings": [
+        "Road restriction statistics — By municipality",
+        "Breakdown by impact type",
+        "Split by type of road",
+        "Age of the work",
+        "Public or private sector",
+        "Streets and roads with the most restrictions"
+      ],
+      "tab": "territory",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "04-en-territory-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:28:05.277Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=territory",
+      "sha256": "5674a9650369bea016d73b8622eefd540466267a9f345b5d115c9c4d01adb0b2",
+      "language": "en",
+      "viewport": [
+        1440,
+        2890
+      ],
+      "title": "By municipality | Road restriction statistics - Greater Montreal",
+      "headings": [
+        "Road restriction statistics — By municipality",
+        "Breakdown by impact type",
+        "Split by type of road",
+        "Age of the work",
+        "Public or private sector",
+        "Streets and roads with the most restrictions",
+        "Longest still active",
+        "Work starting or ending within 7 days"
+      ],
+      "tab": "territory",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "08-en-bars-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:28:05.902Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=custom",
+      "sha256": "6f9102376ddfb00c7d2c7f7bf8b713078099f5950a2d218e63e67c1376c306fe",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Custom | Road restriction statistics - Greater Montreal",
+      "headings": [
+        "Road restriction statistics / Custom",
+        "Data choices",
+        "Number of restrictions / Municipality"
+      ],
+      "tab": "custom",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "08-en-doughnut-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:28:06.219Z",
+      "url": "http://127.0.0.1:5500/en/index.html?view=stats&startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight&tab=custom",
+      "sha256": "19a93972d325a458e12260edcb1533cc8a0a83d9ccceb6cff9b5b38a1c532899",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Custom | Road restriction statistics - Greater Montreal",
+      "headings": [
+        "Road restriction statistics / Custom",
+        "Data choices",
+        "Number of restrictions / Impact type"
+      ],
+      "tab": "custom",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-en-summary-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:28:06.809Z",
+      "url": "http://127.0.0.1:5500/en/potholes.html?mode=statistics",
+      "sha256": "1e4d532ac0ec65fd7eb7a18f22ef284613ae0a753ce0212c0903b7098c21fa57",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Overview | Statistics | Potholes and patching",
+      "headings": [
+        "Statistics",
+        "Available data overview",
+        "311 requests by creation year",
+        "Mechanical patching by annual file"
+      ],
+      "tab": "summary",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-en-summary-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:28:07.391Z",
+      "url": "http://127.0.0.1:5500/en/potholes.html?mode=statistics",
+      "sha256": "0af15845040d2150db139d07c564b8c084fdd3b78fbf75e563b727eefaf1a5bc",
+      "language": "en",
+      "viewport": [
+        1440,
+        4294
+      ],
+      "title": "Overview | Statistics | Potholes and patching",
+      "headings": [
+        "Statistics",
+        "Available data overview",
+        "311 requests by creation year",
+        "Mechanical patching by annual file",
+        "Locations, streets and patching machines",
+        "The 5 most reported locations",
+        "The 5 locations with the most patching",
+        "The 5 streets with the most reported locations",
+        "The 5 streets with the most returning locations",
+        "The 5 streets with the most patching",
+        "The 5 most reported locations without recorded patching",
+        "The 5 streets with the oldest reports without patching",
+        "The 5 streets with the most patching per report",
+        "Patching by machine",
+        "Machines not recorded in 2025"
+      ],
+      "tab": "summary",
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-en-charts-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:28:07.643Z",
+      "url": "http://127.0.0.1:5500/en/potholes.html?mode=statistics&tab=charts",
+      "sha256": "68fa39ffa25e4e606fc4958380db0a8c3d851b0041b1a0636112a996c890f710",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "Charts | Statistics | Potholes and patching",
+      "headings": [
+        "Statistics",
+        "Potholes in the data",
+        "Are reports increasing?",
+        "Locations reported year after year"
+      ],
+      "tab": "charts",
+      "readerMode": false,
+      "borough": null,
+      "period": "recent",
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-en-charts-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:28:08.013Z",
+      "url": "http://127.0.0.1:5500/en/potholes.html?mode=statistics&tab=charts",
+      "sha256": "911ab31523b708c657ebfddaa54a1909a96d39dceaff620c87f464bafe5323fc",
+      "language": "en",
+      "viewport": [
+        1440,
+        2345
+      ],
+      "title": "Charts | Statistics | Potholes and patching",
+      "headings": [
+        "Statistics",
+        "Potholes in the data",
+        "Are reports increasing?",
+        "Locations reported year after year",
+        "Repeated requests without recorded patching",
+        "New reports after patching",
+        "How many reports per location?",
+        "Where are the same locations reported in multiple years?"
+      ],
+      "tab": "charts",
+      "readerMode": false,
+      "borough": null,
+      "period": "recent",
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-en-boroughs-screen.png",
+      "kind": "complete-viewport",
+      "capturedAt": "2026-10-05T20:28:08.290Z",
+      "url": "http://127.0.0.1:5500/en/potholes.html?mode=statistics&tab=boroughs&borough=villeray-saint-michel-parc-extension&period=recent",
+      "sha256": "7786fb78a87974fa459b8941b7dab406d396d7872625446c44f01b68b486b367",
+      "language": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "title": "By borough | Statistics | Potholes and patching",
+      "headings": [
+        "Statistics",
+        "Profile of Villeray-Saint-Michel-Parc-Extension",
+        "Reports in this borough",
+        "Do the same locations keep returning?"
+      ],
+      "tab": "boroughs",
+      "readerMode": false,
+      "borough": "Villeray-Saint-Michel-Parc-Extension",
+      "period": "recent",
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "07-en-boroughs-complete.png",
+      "kind": "entire-scrollable-view",
+      "capturedAt": "2026-10-05T20:28:08.735Z",
+      "url": "http://127.0.0.1:5500/en/potholes.html?mode=statistics&tab=boroughs&borough=villeray-saint-michel-parc-extension&period=recent",
+      "sha256": "e81d56331cdd0d611150dc30b0f22c1d9cba55ca82540b02bf54deb4f5275408",
+      "language": "en",
+      "viewport": [
+        1440,
+        3253
+      ],
+      "title": "By borough | Statistics | Potholes and patching",
+      "headings": [
+        "Statistics",
+        "Profile of Villeray-Saint-Michel-Parc-Extension",
+        "Reports in this borough",
+        "Do the same locations keep returning?",
+        "New reports after patching",
+        "Persistence compared with the rest of Montreal",
+        "Streets and repeated requests",
+        "Locations to examine"
+      ],
+      "tab": "boroughs",
+      "readerMode": false,
+      "borough": "Villeray-Saint-Michel-Parc-Extension",
+      "period": "recent",
+      "impacts": [],
+      "installHelp": null
+    },
+    {
+      "filename": "09-fr-iphone-help.png",
+      "kind": "site-install-help-mobile-emulation",
+      "capturedAt": "2026-10-05T20:28:11.792Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "7894028f9cbf4407e93aec0e6a9fcd7b5bc305473ebc98b763272487f4cf394e",
+      "language": "fr",
+      "viewport": [
+        390,
+        844
+      ],
+      "title": "Carte des entraves routières - Grand Montréal",
+      "headings": [],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": "Dans Safari, touchez Partager, puis Sur l'écran d'accueil."
+    },
+    {
+      "filename": "09-fr-android-help.png",
+      "kind": "site-install-help-mobile-emulation",
+      "capturedAt": "2026-10-05T20:28:14.895Z",
+      "url": "http://127.0.0.1:5500/fr/index.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "3e509dc4b384fb3814ef1539373b1490f12887ba8d0bb4f9eef35db03be2c38a",
+      "language": "fr",
+      "viewport": [
+        390,
+        844
+      ],
+      "title": "Carte des entraves routières - Grand Montréal",
+      "headings": [],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": "Dans Chrome, ouvrez le menu ⋮, puis choisissez Installer la page en tant qu'application ou Ajouter à l'écran d'accueil."
+    },
+    {
+      "filename": "09-en-iphone-help.png",
+      "kind": "site-install-help-mobile-emulation",
+      "capturedAt": "2026-10-05T20:28:18.131Z",
+      "url": "http://127.0.0.1:5500/en/index.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "8b5805a647a1ab684dad5acb7f5784dacfc0d61a96af5fffc7831c160949b389",
+      "language": "en",
+      "viewport": [
+        390,
+        844
+      ],
+      "title": "Road restrictions map - Greater Montreal",
+      "headings": [],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": "In Safari, tap Share, then Add to Home Screen."
+    },
+    {
+      "filename": "09-en-android-help.png",
+      "kind": "site-install-help-mobile-emulation",
+      "capturedAt": "2026-10-05T20:28:21.157Z",
+      "url": "http://127.0.0.1:5500/en/index.html?startDate=2026-10-05&endDate=2026-10-05&periods=day%2Cnight",
+      "sha256": "266a6e86b7524a2b7e04d314b0a1d4706f237024ad91e9735ccaaadc0225b702",
+      "language": "en",
+      "viewport": [
+        390,
+        844
+      ],
+      "title": "Road restrictions map - Greater Montreal",
+      "headings": [],
+      "tab": null,
+      "readerMode": false,
+      "borough": null,
+      "period": null,
+      "impacts": [],
+      "installHelp": "In Chrome, open the ⋮ menu, then choose Install page as app or Add to Home Screen."
+    },
+    {
+      "filename": "fr/potholes-map.png",
+      "capturedAt": "2026-10-05T20:25:10.376Z",
+      "language": "fr",
+      "title": "Nids-de-poule",
+      "counts": "Signalements connus : 73 975 · Positions : 20 938",
+      "years": "2026",
+      "visibleRecords": 16,
+      "error": false,
+      "tiles": 12,
+      "viewport": [
+        1120,
+        680
+      ]
+    },
+    {
+      "filename": "en/potholes-map.png",
+      "capturedAt": "2026-10-05T20:25:12.708Z",
+      "language": "en",
+      "title": "Potholes",
+      "counts": "Known reports: 73,975 · Locations: 20,938",
+      "years": "2026",
+      "visibleRecords": 16,
+      "error": false,
+      "tiles": 12,
+      "viewport": [
+        1120,
+        680
+      ]
+    }
+  ],
+  "pageErrors": [],
+  "failedRequests": [
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "info-travaux.ville.repentigny.qc.ca",
+      "error": "net::ERR_CONNECTION_RESET"
+    },
+    {
+      "host": "info-travaux.ville.repentigny.qc.ca",
+      "error": "net::ERR_CONNECTION_RESET"
+    },
+    {
+      "host": "127.0.0.1:5500",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "info-travaux.ville.repentigny.qc.ca",
+      "error": "net::ERR_CONNECTION_RESET"
+    },
+    {
+      "host": "info-travaux.ville.repentigny.qc.ca",
+      "error": "net::ERR_CONNECTION_RESET"
+    },
+    {
+      "host": "127.0.0.1:5500",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "info-travaux.ville.repentigny.qc.ca",
+      "error": "net::ERR_CONNECTION_RESET"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "info-travaux.ville.repentigny.qc.ca",
+      "error": "net::ERR_CONNECTION_RESET"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "info-travaux.ville.repentigny.qc.ca",
+      "error": "net::ERR_CONNECTION_RESET"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "info-travaux.ville.repentigny.qc.ca",
+      "error": "net::ERR_CONNECTION_RESET"
+    }
+  ],
+  "completedAt": "2026-10-05T20:28:21.175Z"
+}

@@ -35,6 +35,8 @@ const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36";
 const CKAN = "https://donnees.montreal.ca/api/3/action";
 const PAGE_SIZE = 20000; // le serveur plafonne une reponse SQL a 32 000 lignes
+const VERSION_GEOMETRIE_GEOPACKAGE = 1;
+const DEFINITION_WGS84_GEOGRAPHIQUE = 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AXIS["Longitude",EAST],AXIS["Latitude",NORTH]]';
 
 const DATASET_311 = "https://donnees.montreal.ca/dataset/requete-311";
 const DATASET_COLMATAGE =
@@ -223,6 +225,37 @@ function decoderPointGeoPackage(blob) {
   return [vue.getFloat64(debut + 5, petitBoutiste), vue.getFloat64(debut + 13, petitBoutiste)];
 }
 
+export function lireReferenceGeoPackage(database) {
+  const couches = database.prepare("SELECT table_name, column_name, geometry_type_name, srs_id FROM gpkg_geometry_columns").all();
+  if (couches.length !== 1 || couches[0].geometry_type_name !== "POINT") {
+    throw new Error("GeoPackage : une seule couche POINT est requise");
+  }
+  const couche = couches[0];
+  const reference = database.prepare("SELECT srs_name, srs_id, organization, organization_coordsys_id, definition FROM gpkg_spatial_ref_sys WHERE srs_id = ?").get(couche.srs_id);
+  if (!reference) throw new Error(`GeoPackage : reference spatiale ${couche.srs_id} absente`);
+  const definition = (reference.definition || "").replace(/\s+/g, "").toUpperCase();
+  const epsg = reference.organization?.toUpperCase() === "EPSG"
+    ? Number(reference.organization_coordsys_id)
+    : definition === DEFINITION_WGS84_GEOGRAPHIQUE.replace(/\s+/g, "").toUpperCase() ? 4326 : null;
+  if (epsg !== 4326 && epsg !== 2950) {
+    throw new Error(`GeoPackage : reference spatiale non prise en charge (${reference.srs_id}, ${reference.srs_name})`);
+  }
+  return { table: couche.table_name, colonne: couche.column_name, reference, epsg };
+}
+
+export function pointGeoPackageVersWgs84(blob, reference) {
+  const vue = new DataView(blob.buffer, blob.byteOffset, blob.byteLength);
+  const srsId = vue.getInt32(4, Boolean(vue.getUint8(3) & 1));
+  if (srsId !== reference.reference.srs_id) {
+    throw new Error(`GeoPackage : reference de geometrie ${srsId} differente de celle de la couche`);
+  }
+  const [est, nord] = decoderPointGeoPackage(blob);
+  if (!Number.isFinite(est) || !Number.isFinite(nord)) throw new Error("GeoPackage : coordonnees non finies");
+  if (reference.epsg === 4326) return [nord, est];
+  if (reference.epsg === 2950) return mtm8VersWgs84(est, nord);
+  throw new Error("GeoPackage : conversion de reference spatiale non prise en charge");
+}
+
 async function metaRessource(resourceId) {
   const r = await ckanPost("resource_show", { id: resourceId });
   return { url: r.url, derniereModification: r.last_modified ?? null };
@@ -278,26 +311,32 @@ async function telechargerColmatage(source, url) {
 
   const fichier = await telechargerGeoPackage(source.resourceId, source.annee, url);
   const db = new DatabaseSync(fichier, { readOnly: true });
-  const [{ table_name: table }] = db.prepare("SELECT table_name FROM gpkg_contents").all();
-  const colonnes = db.prepare(`PRAGMA table_info("${table}")`).all().map((c) => c.name);
-  const colGeom = colonnes.find((c) => /^geom/i.test(c)) ?? "geom";
-  const colDate = colonnes.find((c) => sansAccent(c).toLowerCase().startsWith("date")) ?? "Date";
-  const colAppareil = colonnes.find((c) => /vehic|appareil/i.test(sansAccent(c))) ?? null;
-  for (const ligne of db.prepare(`SELECT * FROM "${table}"`).iterate()) {
-    const [x, y] = decoderPointGeoPackage(ligne[colGeom]);
-    const [lat, lon] = mtm8VersWgs84(x, y);
-    const brut = String(ligne[colDate] ?? "").trim();
-    interventions.push(
-      compacter({
-        horodatage: brut ? brut.replace(" ", "T").replace(/\.\d+$/, "") : null,
-        appareil: colAppareil && ligne[colAppareil] != null ? String(ligne[colAppareil]) : null,
-        latitude: arrondir(lat, 6),
-        longitude: arrondir(lon, 6),
-      })
-    );
+  try {
+    const reference = lireReferenceGeoPackage(db);
+    const table = reference.table.replaceAll('"', '""');
+    const colonnes = db.prepare(`PRAGMA table_info("${table}")`).all().map((colonne) => colonne.name);
+    const colDate = colonnes.find((colonne) => sansAccent(colonne).toLowerCase().startsWith("date")) ?? "Date";
+    const colAppareil = colonnes.find((colonne) => /vehic|appareil/i.test(sansAccent(colonne))) ?? null;
+    for (const ligne of db.prepare(`SELECT * FROM "${table}"`).iterate()) {
+      const [latitude, longitude] = pointGeoPackageVersWgs84(ligne[reference.colonne], reference);
+      const brut = String(ligne[colDate] ?? "").trim();
+      interventions.push(
+        compacter({
+          horodatage: brut ? brut.replace(" ", "T").replace(/\.\d+$/, "") : null,
+          appareil: colAppareil && ligne[colAppareil] != null ? String(ligne[colAppareil]) : null,
+          latitude: arrondir(latitude, 6),
+          longitude: arrondir(longitude, 6),
+        })
+      );
+    }
+    return {
+      interventions,
+      origine: reference.epsg === 4326 ? "GeoPackage WGS84 publie (sans reprojection)" : "GeoPackage EPSG:2950 reprojete en WGS84",
+      referenceSpatiale: reference.reference,
+    };
+  } finally {
+    db.close();
   }
-  db.close();
-  return { interventions, origine: "GeoPackage EPSG:2950 reprojete en WGS84" };
 }
 
 // Grille reguliere en metres : les coordonnees projetees rendent la distance exacte.
@@ -623,14 +662,15 @@ async function main() {
       const precedent = etat.reparations?.[source.annee];
       const snapshot = lireJson(fichier);
       const inchange =
-        !TOUT && !FORCE_TELECHARGEMENT && snapshot && precedent?.ressourceDerniereModification === derniereModification;
+        !TOUT && !FORCE_TELECHARGEMENT && snapshot && precedent?.ressourceDerniereModification === derniereModification
+        && (source.format !== "gpkg" || snapshot.versionGeometrieGeoPackage === VERSION_GEOMETRIE_GEOPACKAGE);
 
       let contenu;
       if (inchange) {
         contenu = snapshot;
         console.log(`  ${source.annee} : inchange (${snapshot.nombre} interventions)`);
       } else {
-        const { interventions, origine } = await telechargerColmatage(source, url);
+        const { interventions, origine, referenceSpatiale } = await telechargerColmatage(source, url);
         const dates = interventions.map((i) => i.horodatage).filter(Boolean).sort();
         contenu = {
           annee: source.annee,
@@ -639,6 +679,7 @@ async function main() {
           ressourceUrl: url,
           ressourceDerniereModification: derniereModification,
           origineGeometrie: origine,
+          ...(source.format === "gpkg" ? { referenceSpatiale, versionGeometrieGeoPackage: VERSION_GEOMETRIE_GEOPACKAGE } : {}),
           nombre: interventions.length,
           premiereIntervention: dates[0] ?? null,
           derniereIntervention: dates[dates.length - 1] ?? null,
@@ -875,8 +916,10 @@ async function main() {
   console.log(`\nTermine en ${((Date.now() - debut) / 1000).toFixed(1)} s -> ${path.relative(ROOT, OUT_DIR)}/`);
 }
 
-const execution = args.includes("--carte-locale") ? Promise.resolve().then(construireCarteLocale) : main();
-execution.catch((erreur) => {
-  console.error("Echec :", erreur.message);
-  process.exitCode = 1;
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const execution = args.includes("--carte-locale") ? Promise.resolve().then(construireCarteLocale) : main();
+  execution.catch((erreur) => {
+    console.error("Echec :", erreur.message);
+    process.exitCode = 1;
+  });
+}

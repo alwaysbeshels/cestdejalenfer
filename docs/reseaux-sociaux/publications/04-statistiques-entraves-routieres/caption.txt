@@ -1,0 +1,5 @@
+FR : 📊 Quelles entraves, sur quels axes et pour combien de temps? Explore les statistiques routières par impact, territoire et responsable publié. Les résultats suivent les sources et les filtres; une entrée n'est pas toujours un chantier unique.
+
+EN : 📊 Which restrictions, on which roads and for how long? Explore road statistics by impact, area and published authority. Results depend on sources and filters; one entry does not always mean one worksite.
+
+#CestDejaLenfer #Montréal #OpenData

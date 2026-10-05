@@ -1,0 +1,5 @@
+FR : 📊 Où les signalements de nids-de-poule se répètent-ils? Les bilans et portraits d'arrondissement permettent d'explorer les données publiées pour Montréal. Ils ne constituent pas un inventaire de tous les trous ni une note de performance.
+
+EN : 📊 Where do pothole reports recur? Summaries and borough profiles help explore Montréal's published records. They are not an inventory of every pothole or a performance score.
+
+#CestDejaLenfer #Montréal #OpenData
