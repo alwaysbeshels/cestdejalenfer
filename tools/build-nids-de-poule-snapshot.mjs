@@ -484,17 +484,25 @@ async function construireCarteLocale() {
       positions: historique,
     },
   };
+  const fichiers = {};
+  const fichiersModifies = [];
   for (const [fichier, contenu] of Object.entries(sorties)) {
     const precedent = lireJson(fichier);
-    if (precedent && empreinteDe(precedent) === empreinteDe(contenu)) {
+    const empreinte = empreinteDe(contenu);
+    if (precedent && empreinteDe(precedent) === empreinte) {
+      fichiers[fichier] = { empreinte, contenuModifieLe: precedent.contenuModifieLe };
       console.log(`  ${fichier} : inchange`);
       continue;
     }
     mkdirSync(path.dirname(path.join(OUT_DIR, fichier)), { recursive: true });
-    writeFileSync(path.join(OUT_DIR, fichier), JSON.stringify({ ...contenu, contenuModifieLe: new Date().toISOString() }));
+    const contenuModifieLe = new Date().toISOString();
+    writeFileSync(path.join(OUT_DIR, fichier), JSON.stringify({ ...contenu, contenuModifieLe }));
+    fichiers[fichier] = { empreinte, contenuModifieLe };
+    fichiersModifies.push(fichier);
     console.log(`  ${fichier} : genere depuis les snapshots locaux`);
   }
   console.log(`  carte : ${carte.length} positions; colmatages exclus : ${sources.reduce((total, source) => total + source.exclus, 0)}`);
+  return { fichiers, fichiersModifies };
 }
 
 function normaliser(r) {
@@ -840,6 +848,10 @@ async function main() {
     contenuModifieLe: ecritureIndex.contenuModifieLe,
   };
 
+  const fichiersDerives = await construireCarteLocale();
+  Object.assign(etat.fichiers, fichiersDerives.fichiers);
+  fichiersModifies.push(...fichiersDerives.fichiersModifies);
+
   writeFileSync(
     path.join(OUT_DIR, FICHIER_VERIFICATION),
     JSON.stringify(
@@ -858,7 +870,6 @@ async function main() {
     )
   );
 
-  await construireCarteLocale();
   console.log(`\n  positions.json : ${positions.length} positions${ecriturePositions.modifie ? " (reecrit)" : " (inchange)"}`);
   console.log(`  fichiers modifies : ${fichiersModifies.length ? [...new Set(fichiersModifies)].sort().join(", ") : "aucun"}`);
   console.log(`\nTermine en ${((Date.now() - debut) / 1000).toFixed(1)} s -> ${path.relative(ROOT, OUT_DIR)}/`);
