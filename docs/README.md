@@ -2,6 +2,10 @@
 
 Documentation complete du projet. Consultez aussi le [guide utilisateur des prompts Copilot](GUIDE_PROMPTS.md) ou revenez a l'[index du depot](../README.md).
 
+L'[inventaire des données des entraves routières](INVENTAIRE_DONNEES_ENTRAVES_ROUTIERES.md) détaille les champs affichés, stockés ou reçus des sources, leurs types, les indicateurs calculés et leurs limites, hors nids-de-poule et colmatage.
+
+Le [modèle des graphiques personnalisés](MODELE_GRAPHIQUES_PERSONNALISES.md) décrit l'onglet Personnalisé : 15 dimensions, 5 mesures agrégées, 7 familles de graphiques et 12 combinaisons. Les styles Nuage de points et Bulles ont été retirés; les durées restent affichées en mois avec au plus une décimale. Les filtres, structures de données, limites et commandes de validation y sont précisés.
+
 Le [dossier de presse](presse/README.md) regroupe une edition francaise de huit pages, sa source HTML modifiable, les captures du site et les points a confirmer avant un envoi aux medias. Sa preparation locale ne constitue pas une publication.
 
 Les [annonces GitHub](annonces/README.md) sont classees par date, avec une version francaise et anglaise dans chaque fichier et une proposition de versions et de tags. Elles deviennent consultables dans le depot lors de la publication autorisee qui les inclut, sans statut manuel dans leur tableau.

@@ -2,6 +2,20 @@
 
 Édition du **3 octobre 2026**, en français. Les notes ci-dessous sont destinées à la préparation et à la maintenance du dossier; elles ne font pas partie du PDF à transmettre aux médias.
 
+## Présentation pour Infoman
+
+Une édition distincte du **4 octobre 2026**, spécifiquement préparée pour l'entrevue et le reportage demandés à Shelsea, est disponible en **20 diapositives 16:9**, sans photo de la créatrice :
+
+- [infoman-mediakit.pdf](infoman-mediakit.pdf) : présentation PDF, environ 8,22 Mo, avec captures haute résolution et sources cliquables.
+- [infoman-mediakit.html](infoman-mediakit.html) : source modifiable de la présentation, indépendante des scripts de l'application.
+- [infoman-recherche.md](infoman-recherche.md) : recherche Web sourcée sur l'émission, propositions d'angles, provenance des chiffres et questions à compléter.
+- [infoman-couverture.png](visuels/infoman-couverture.png) : aperçu du montage ordinateur et téléphone, extrait du PDF final.
+- [infoman-apercu-mobile.png](visuels/infoman-apercu-mobile.png) et [infoman-apercu-lecteur.png](visuels/infoman-apercu-lecteur.png) : les deux nouvelles diapositives consacrées au mobile et au mode lecteur d'écran.
+
+Le kit Infoman couvre les neuf rubriques demandées, mais reste une version de préparation : courriel, téléphone, langues d'entrevue et modalités du tournage attendent confirmation. La nouveauté Personnalisé est identifiée comme locale et non publiée. Les deux volets statistiques sont distincts. Aucun engagement commercial, anecdote ou témoignage n'est inventé; aucune photo n'est attendue pour cette édition. Rien n'est publié par sa création locale, et le dossier général du 3 octobre ci-dessous reste conservé.
+
+La refonte visuelle remplace toutes les illustrations du kit par de nouvelles captures du 4 octobre. La couverture présente un ordinateur et un téléphone; les écrans conservent leur ratio d'origine. Les diapositives 8 et 10 présentent respectivement l'interface mobile et le mode lecteur d'écran pour les personnes aveugles ou malvoyantes. Le montage d'appareils est une illustration de présentation, pas une photographie ni une certification sur les appareils représentés. Le mode a été activé et son affichage contrôlé dans Chromium, sans revendiquer une nouvelle séance VoiceOver.
+
 ## Documents
 
 - [dossier-presse.pdf](dossier-presse.pdf) : dossier de huit pages destiné aux médias.

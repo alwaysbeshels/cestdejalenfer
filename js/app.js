@@ -4398,11 +4398,13 @@ new ResizeObserver(() => map.invalidateSize({ pan: false })).observe(map.getCont
 menuToggle.addEventListener("click", () => {
   if (window.matchMedia("(max-width: 880px)").matches) {
     setMobileMenuOpen(!sidePanel.classList.contains("is-open"));
-  } else {
-    setDesktopPanelOpen(appShell.classList.contains("panel-collapsed"));
   }
 });
 menuBackdrop.addEventListener("click", () => setMobileMenuOpen(false));
+window.matchMedia("(max-width: 880px)").addEventListener("change", (event) => {
+  setMobileMenuOpen(false);
+  if (!event.matches) setDesktopPanelOpen(true);
+});
 
 const visualAssistToggle = document.querySelector("#visualAssistToggle");
 const accessibleListPanel = document.querySelector("#accessibleListPanel");

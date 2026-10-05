@@ -5,6 +5,7 @@
   "description": "Outils de developpement local pour la Carte des entraves auto du Grand Montreal (site statique, aucune dependance de production).",
   "scripts": {
     "serve": "python -m http.server 5500",
+    "test:custom-stats": "node tools/validate-custom-stats.mjs",
     "test:potholes": "node tools/validate-potholes.mjs",
     "snapshot:potholes:map": "node tools/build-nids-de-poule-snapshot.mjs --carte-locale",
     "snapshot:montreal": "node tools/build-montreal-resolved-geometries.mjs",

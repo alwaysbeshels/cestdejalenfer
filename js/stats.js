@@ -44,7 +44,7 @@
   const DETAIL_PALETTE = ["#1f77b4", "#2ca02c", "#9467bd", "#e377c2", "#17becf", "#bcbd22", "#8c564b", "#ff7f0e", "#d62728", "#393b79", "#637939", "#843c39", "#7b4173", "#3182bd", "#e6550d", "#31a354", "#756bb1", "#636363"];
   const DETAIL_OTHERS_COLOR = "#d9d4c9";
   const DETAIL_NOUNS = { utility: "networks", cityContractor: "companies", private: "companies", city: "municipalities", publicOrg: "bodies" };
-  const TABS = ["general", "roads", "private", "territory", "places", "how"];
+  const TABS = ["general", "roads", "private", "territory", "places", "custom", "how"];
   // "How it works" questions, grouped; general map questions stay in the FAQ and are not repeated here.
   const HOW_GROUPS = [
     ["data", ["source", "history", "changes", "modes", "duplicates"]],
@@ -111,6 +111,11 @@
   const requestedTab = new URLSearchParams(window.location.search).get("tab");
   let activeTab = TABS.includes(requestedTab) ? requestedTab : "general";
   let resetScroll = false;
+  let customView = null;
+  let customModulePromise = null;
+  let customRenderVersion = 0;
+  const customLabels = new Map();
+  let commonFiltersOpen = window.matchMedia("(min-width: 881px)").matches;
 
   function tf(key, values = {}) {
     return String(t(key)).replace(/\{(\w+)\}/g, (match, name) => (name in values ? values[name] : match));
@@ -206,6 +211,14 @@
     }
     if (responsible.includes(" / ")) return responsible.split(" / ")[0].trim();
     return UTILITY_PATTERN.test(responsible) ? responsible : null;
+  }
+
+  function customOrganizationName(closure, type) {
+    const company = organizationName(closure, type);
+    if (company) return company;
+    if (!["city", "publicOrg", "event"].includes(type)) return null;
+    const responsible = String(closure.responsible || "").trim();
+    return responsible && !/non pr[ée]cis|non publi|unknown|not published|^autre$/i.test(responsible) ? responsible : null;
   }
 
   // Who does the work: the city's own crews or a public body, or a company (contractor included).
@@ -2109,7 +2122,7 @@
       multiButton.nextElementSibling.hidden = !open;
       return;
     }
-    const sortButton = event.target.closest(".stats-sort");
+    const sortButton = event.target.closest(".stats-sort[data-col]");
     if (sortButton) {
       const wrap = sortButton.closest(".stats-table-wrap");
       const column = Number(sortButton.dataset.col);
@@ -2181,6 +2194,15 @@
   });
 
   container.addEventListener("change", (event) => {
+    const scopeKey = event.target.dataset.statsScope;
+    if (scopeKey) {
+      if (scopeKey === "allDates") setCustomScope({ allDates: event.target.value === "all" });
+      else if (scopeKey === "start" || scopeKey === "end") {
+        if (event.target.validity.valid) setCustomScope({ [scopeKey]: event.target.value });
+      } else if (scopeKey.startsWith("time:")) setCustomScope({ periods: [...container.querySelectorAll('[data-stats-scope^="time:"]:checked')].map((input) => input.value) });
+      else if (scopeKey.startsWith("impact:")) setCustomScope({ impacts: [...container.querySelectorAll('[data-stats-scope^="impact:"]:checked')].map((input) => input.value) });
+      return;
+    }
     if (event.target.matches('[data-filter="age-ongoing"]')) {
       ageOngoingOnly = event.target.checked;
       render();
@@ -2207,6 +2229,7 @@
     const active = document.activeElement;
     if (!active || !container.contains(active)) return null;
     if (active.dataset.statsTab) return { card: null, selector: `[data-stats-tab="${active.dataset.statsTab}"]`, caret: null };
+    if (active.dataset.statsScope) return { card: null, selector: `[data-stats-scope="${active.dataset.statsScope}"]`, caret: null };
     const multi = active.closest(".stats-multi");
     if (multi) return { card: active.closest(".stats-card")?.dataset.card, selector: `.stats-multi[data-name="${multi.dataset.name}"] .stats-multi-button`, caret: null };
     if (!active.dataset.filter) return null;
@@ -2291,6 +2314,141 @@
   });
   container.addEventListener("scroll", () => closeInfo(), { passive: true });
 
+  function customRecords() {
+    const scoped = new Set(computeStats().items.map((item) => item.closure.id));
+    const today = formatInputDate(new Date());
+    const projects = new Map((memoryFetchCache.get(LIVE_SOURCES.quebec511)?.features || []).map((feature) => [`q511-${feature.properties?.identifiant || feature.id}`, feature.properties]));
+    const nullable = (value) => value === null || value === undefined || String(value).trim() === "" ? null : String(value);
+    const dateKey = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value || "") && Number.isFinite(parseDate(value).valueOf()) && formatInputDate(parseDate(value)) === value ? value : null;
+    return allClosures.map((closure) => {
+      const type = authorityType(closure);
+      const item = { closure, type, route: routeLabel(closure), organization: organizationName(closure, type), length: lengthInfo(closure.geometry) };
+      const namedOrganization = customOrganizationName(closure, type);
+      const municipality = municipalityLabel(closure);
+      const municipalityKey = REGIONAL_KINDS.has(closure.sourceKind) || (MTMD_KINDS.has(closure.sourceKind) && /^\s*entre\s/i.test(closure.streets || "")) ? "intermunicipal" : municipality ? normalizeSearchText(municipality) : null;
+      const borough = closure.sourceKind === "montreal-wfs" ? closure.borough : null;
+      const street = streetName(closure);
+      const start = dateKey(closure.startDate);
+      const end = closure.endDate < "2099" ? dateKey(closure.endDate) : null;
+      const basis = closure.sourceKind === "citizen-report" ? "declared" : closure.sourceKind === "montreal-pedestrian-opendata" ? "estimated" : ["quebec511-event", "pjcci", "fallback"].includes(closure.sourceKind) ? "unknown" : "published";
+      const reliable = basis === "published";
+      const length = ["line", "estimated"].includes(item.length.kind) && Number.isFinite(item.length.meters) ? item.length.meters : null;
+      const direction = closure.directionIsSegmentDescription ? null : directionKey(closure);
+      const project = projects.get(closure.id);
+      const reference = popupReference(closure);
+      const record = {
+        id: closure.id, sourceRecordId: nullable(closure.sourceRecordId ?? project?.identifiant),
+        permitReference: reference.isSourceId ? null : reference.value, projectId: nullable(project?.identifiantChantier),
+        sourceKind: closure.sourceKind, sourceLabel: closure.source, sourceUrl: closure.sourceUrl,
+        municipalityKey, municipalityLabel: municipality,
+        boroughKey: borough ? `montreal:${borough}` : null, boroughLabel: borough ? boroughLabel(borough) : null,
+        streetKey: street ? JSON.stringify([municipalityKey || closure.sourceKind, normalizeSearchText(street)]) : null,
+        streetLabel: street ? `${street}${municipality ? ` (${municipality})` : ""}` : null,
+        routeNumber: item.route, roadKind: roadKind(item), directionCode: direction === "unpublished" ? null : direction,
+        impactType: closure.severity, authorityType: type === "unknown" ? null : type,
+        organizationKey: namedOrganization ? organizationKey(namedOrganization) : null, organizationLabel: namedOrganization,
+        performerSector: sectorBy(item) === "undetermined" ? null : sectorBy(item),
+        beneficiarySector: sectorFor(item) === "undetermined" ? null : sectorFor(item),
+        startDate: start, endDate: end,
+        temporalStatus: !start || !end ? "unknown" : end < today ? "ended" : start > today ? "upcoming" : "ongoing",
+        plannedDurationDays: reliable && start && end ? plannedDays(closure) : null,
+        ageDays: reliable && start && start <= today ? Math.max(0, Math.round((parseDate(end && end < today ? end : today) - parseDate(start)) / DAY_MS)) : null,
+        timePeriod: closure.periods?.includes("day") && closure.periods?.includes("night") ? "both" : closure.periods?.[0] || "unknown",
+        timePeriodBasis: closure.sourceKind === "citizen-report" ? "declared" : closure.sourceKind === "montreal-wfs" && closure.schedule?.length ? "published" : closure.sourceKind === "quebec511-mtmd-wfs" ? "inferred" : "default",
+        lengthMeters: length, lengthMethod: length === null ? null : item.length.kind,
+        startDateBasis: start ? basis : "unknown", endDateBasis: end ? basis : "unknown",
+        _inScope: scoped.has(closure.id)
+      };
+      for (const [key, label] of [["municipalityKey", record.municipalityLabel], ["boroughKey", record.boroughLabel], ["streetKey", record.streetLabel], ["organizationKey", record.organizationLabel], ["sourceKind", record.sourceLabel]]) {
+        if (record[key] !== null && label) customLabels.set(JSON.stringify([key, record[key]]), label);
+      }
+      return record;
+    });
+  }
+
+  function customLabel(key, value, record) {
+    if (value === null || value === undefined || value === "unknown") {
+      const specific = `stats.custom.unknown.${key}`;
+      return t(specific) === specific ? t("stats.custom.unknown") : t(specific);
+    }
+    const labels = { municipalityKey: "municipalityLabel", boroughKey: "boroughLabel", streetKey: "streetLabel", organizationKey: "organizationLabel", sourceKind: "sourceLabel" };
+    if (labels[key]) return record?.[labels[key]] || customLabels.get(JSON.stringify([key, value])) || String(value);
+    if (key === "impactType") return severityLabel(value);
+    if (key === "roadKind") return t(`stats.roadKind.${value}`);
+    if (key === "authorityType") return t(`stats.authority.${value}`);
+    if (["performerSector", "beneficiarySector"].includes(key)) return t(`stats.sector.${value}`);
+    if (key === "directionCode") return directionLabel(value);
+    if (["temporalStatus", "timePeriod", "lengthMethod"].includes(key)) return t(`stats.custom.value.${value}`);
+    return String(value);
+  }
+
+  function customScope() {
+    return { language: currentLanguage(), allDates: statsAllDates, start: dateStart.value,
+      end: dateEndUsesOpenDefault ? "" : dateEnd.value, periods: [...getActiveTimePeriods()],
+      impacts: [...getActiveImpacts()], loading: mapStatus.dataset.mode === "loading" };
+  }
+
+  function setCustomScope(change) {
+    if (change.reset) change = { allDates: false, start: formatInputDate(new Date()), end: formatInputDate(new Date()), periods: ["day", "night"], impacts: ["critical", "major", "moderate"] };
+    if (typeof change.allDates === "boolean") statsAllDates = change.allDates;
+    if (change.start) dateStart.value = change.start;
+    if (Object.hasOwn(change, "end")) { dateEnd.value = change.end; dateEndUsesOpenDefault = !change.end; }
+    if (!dateEndUsesOpenDefault && dateEnd.value && dateStart.value > dateEnd.value) dateEnd.value = dateStart.value;
+    if (change.periods) timeFilters.forEach((input) => { input.checked = change.periods.includes(input.value); });
+    if (change.impacts) impactFilters.forEach((input) => { input.checked = change.impacts.includes(input.value); });
+    syncDateMode();
+    syncUrl(true);
+    updateView({ fit: false });
+  }
+
+  function commonFiltersHtml() {
+    const scope = customScope();
+    return `<details class="stats-common-filters"${commonFiltersOpen ? " open" : ""}><summary>${t("filters.label")}</summary>
+      <div class="stats-common-fields">
+        <fieldset class="stats-common-period"><legend>${t("stats.custom.period")}</legend>
+          <select data-stats-scope="allDates" aria-label="${escapeAttr(t("stats.custom.period"))}"><option value="period"${scope.allDates ? "" : " selected"}>${t("stats.custom.activePeriod")}</option><option value="all"${scope.allDates ? " selected" : ""}>${t("stats.custom.allDates")}</option></select>
+          ${scope.allDates ? "" : `<div class="custom-date-row"><label>${t("stats.custom.start")}<input type="date" data-stats-scope="start" value="${escapeAttr(scope.start)}"></label><label>${t("stats.custom.end")}<input type="date" data-stats-scope="end" value="${escapeAttr(scope.end)}" min="${escapeAttr(scope.start)}"></label></div>`}
+        </fieldset>
+        <fieldset class="custom-checks stats-common-time"><legend>${t("stats.custom.time")}</legend>${["day", "night"].map((value) => `<label><input type="checkbox" data-stats-scope="time:${value}" value="${value}"${scope.periods.includes(value) ? " checked" : ""}>${t(`stats.custom.time.${value}`)}</label>`).join("")}</fieldset>
+        <fieldset class="custom-checks stats-common-impact"><legend>${t("stats.custom.field.impact")}</legend>${IMPACT_ORDER.map((value) => `<label><input type="checkbox" data-stats-scope="impact:${value}" value="${value}"${scope.impacts.includes(value) ? " checked" : ""}><i class="impact-dot ${value}"></i>${escapeHtml(severityLabel(value))}</label>`).join("")}</fieldset>
+      </div></details>`;
+  }
+
+  async function renderCustomView() {
+    const version = ++customRenderVersion;
+    let host = container.querySelector("#customStatsHost");
+    if (!host) {
+      destroyCharts();
+      container.innerHTML = `<div class="stats-inner">${tabsHtml({})}<div id="customStatsHost" class="stats-custom"><header class="stats-header"><p class="eyebrow">${t("map.region")}</p><h1>${t("stats.title")} / ${t("stats.tab.custom")}</h1></header><p role="status">${t("map.loading")}</p></div></div>`;
+      host = container.querySelector("#customStatsHost");
+      lastHtml = "";
+    } else {
+      const tabFocus = document.activeElement?.dataset.statsTab;
+      container.querySelector(".stats-dock").outerHTML = tabsHtml({});
+      if (tabFocus) container.querySelector(`[data-stats-tab="${tabFocus}"]`)?.focus({ preventScroll: true });
+    }
+    if (resetScroll) { container.scrollTop = 0; resetScroll = false; }
+    try {
+      customModulePromise ||= import("./stats-custom.mjs?v=20261004-stats12");
+      const module = await customModulePromise;
+      if (version !== customRenderVersion || !statsViewActive || activeTab !== "custom" || !host.isConnected) return;
+      if (!customView || customView.root !== host) {
+        customView?.destroy();
+        customView = module.createCustomView(host, { t, escapeHtml, escapeAttr, numberFormat, normalizeSearchText,
+          labelOf: customLabel, colorOf: (key, value) => key === "impactType" ? SEVERITY_META[value]?.color : key === "roadKind" ? ROAD_KIND_COLORS[value] : ["performerSector", "beneficiarySector"].includes(key) ? SECTOR_COLORS[value] : null,
+          loadChart: loadChartLibrary, setScope: setCustomScope, limitTable,
+          sortIcon: (direction) => svgIcon(SORT_ICONS[direction === 1 ? "asc" : direction === -1 ? "desc" : "none"], "stats-sort-icon") });
+      }
+      customView.update(customRecords(), customScope());
+    } catch (error) {
+      if (version !== customRenderVersion || !host.isConnected) return;
+      customModulePromise = null;
+      host.innerHTML = `<p role="alert">${escapeHtml(t("stats.custom.loadError"))}</p><button type="button">${escapeHtml(t("stats.custom.retry"))}</button>`;
+      host.querySelector("button").addEventListener("click", () => render());
+      console.warn("Custom statistics unavailable", error);
+    }
+  }
+
   // --- Tabs and independent columns ------------------------------------------------
 
   function syncDocumentTitle() {
@@ -2328,6 +2486,8 @@
         return [impactSection(stats, { row: "3" }), roadKindSection(stats, { row: "3" }), ageSection(stats, { row: "3" }), sectorSection(stats), streetSection(stats), longestSection(stats), upcomingSection(stats)];
       case "places":
         return [municipalitySection(stats), boroughSection(stats), streetSection(stats)];
+      case "custom":
+        return [];
       case "how":
         return [howSection()];
       default:
@@ -2415,7 +2575,7 @@
     if (!statsViewActive) return;
     const loadingNow = !mapStatus || !["ready", "error"].includes(mapStatus.dataset.mode);
     clearTimeout(loadingRenderTimer);
-    if (loadingNow && lastHtml && performance.now() - lastLoadingRender < LOADING_RENDER_GAP) {
+    if (loadingNow && lastHtml && !resetScroll && performance.now() - lastLoadingRender < LOADING_RENDER_GAP) {
       loadingRenderTimer = setTimeout(render, LOADING_RENDER_GAP);
       return;
     }
@@ -2425,22 +2585,26 @@
     requestAnimationFrame(() => {
       renderQueued = false;
       if (!statsViewActive) return;
+      document.body.classList.toggle("view-custom-stats", activeTab === "custom");
+      if (activeTab === "custom") { renderCustomView(); return; }
+      if (customView) { customRenderVersion++; customView.destroy(); customView = null; }
       const stats = activeTab === "territory" ? territoryScope(computeStats()) : computeStats();
       if (activeTab === "territory") syncUrl(true);
       chartSpecs = [];
       multiSelectCount = 0;
       const loading = !["ready", "error"].includes(mapStatus.dataset.mode);
       // The explanation tab does not depend on the data: stable HTML keeps opened questions open while feeds load.
-      const isHow = activeTab === "how";
+      const isStaticTab = activeTab === "how" || activeTab === "custom";
       const html = `<div class="stats-inner">
-        ${loading && !isHow ? `<div class="map-status stats-loading" role="status" data-mode="loading">${escapeHtml(t("map.loading"))}</div>` : ""}
+        ${loading && !isStaticTab ? `<div class="map-status stats-loading" role="status" data-mode="loading">${escapeHtml(t("map.loading"))}</div>` : ""}
         ${tabsHtml(stats)}
         <header class="stats-header">
           <p class="eyebrow">${t("map.region")}</p>
           <div class="stats-title-row"><h1>${t("stats.title")} \u2014 ${escapeHtml(t(`stats.tab.${activeTab}`))}</h1>${activeTab === "roads" ? infoButton("stats.info.roadTypes", t("stats.tab.roads")) : ""}</div>
-          ${isHow ? "" : `<p class="stats-scope">${escapeHtml(periodLabel(stats.range))}</p>
+          ${isStaticTab ? "" : `<p class="stats-scope">${escapeHtml(periodLabel(stats.range))}</p>
           ${statusHtml()}`}
         </header>
+        ${isStaticTab ? "" : commonFiltersHtml()}
         ${activeTab === "general" ? `<p class="stats-disclaimer">${t("stats.disclaimer")}</p>${kpis(stats)}` : ""}
         ${activeTab === "roads" ? roadsKpis(stats) : ""}
         ${activeTab === "territory" ? kpis(stats) : ""}
@@ -2480,7 +2644,7 @@
   }
 
   let resizeQueued = false;
-  window.addEventListener("resize", () => {
+  function resizeStatsView() {
     if (!statsViewActive || resizeQueued) return;
     resizeQueued = true;
     requestAnimationFrame(() => {
@@ -2498,10 +2662,13 @@
       limitTableRows();
       if (expanded) fitExpanded(expanded.card);
     });
-  });
+  }
+  window.addEventListener("resize", resizeStatsView);
+  new ResizeObserver(resizeStatsView).observe(container);
   // "toggle" does not bubble; a capture listener still sees the figures tables being opened.
   // The enlarge animation opens them itself and has already sized its tables: skip that relayout.
-  container.addEventListener("toggle", () => {
+  container.addEventListener("toggle", (event) => {
+    if (event.target.classList.contains("stats-common-filters")) commonFiltersOpen = event.target.open;
     if (performance.now() < ignoreToggleUntil) return;
     limitTableRows();
   }, true);
@@ -2594,6 +2761,8 @@
     closeInfo();
     syncPanelSections(active);
     document.body.classList.toggle("view-stats", active);
+    document.body.classList.toggle("view-custom-stats", active && activeTab === "custom");
+    if (!active && customView) { customRenderVersion++; customView.destroy(); customView = null; }
     container.hidden = !active;
     autoLink?.toggleAttribute("aria-current", !active);
     if (!active) autoLink?.setAttribute("aria-current", "page");
