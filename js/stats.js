@@ -122,7 +122,7 @@
   let customModulePromise = null;
   let customRenderVersion = 0;
   const customLabels = new Map();
-  let commonFiltersOpen = window.matchMedia("(min-width: 881px)").matches;
+  let commonFiltersOpen = false;
 
   function tf(key, values = {}) {
     return String(t(key)).replace(/\{(\w+)\}/g, (match, name) => (name in values ? values[name] : match));
@@ -2490,7 +2490,7 @@
       case "private":
         return [sectorSection(stats), publicOwnerSection(stats), cityModeSection(stats), cityModeBoroughSection(stats), publicLongestSection(stats), authoritySection(stats), mandateSection(stats), sectorCompareSection(stats), companySection(stats)];
       case "territory":
-        return [impactSection(stats, { row: "3" }), roadKindSection(stats, { row: "3" }), ageSection(stats, { row: "3" }), sectorSection(stats), streetSection(stats), longestSection(stats), upcomingSection(stats)];
+        return [sectorSection(stats), impactSection(stats, { row: "3" }), roadKindSection(stats, { row: "3" }), ageSection(stats, { row: "3" }), streetSection(stats), longestSection(stats), upcomingSection(stats)];
       case "places":
         return [municipalitySection(stats), boroughSection(stats), streetSection(stats)];
       case "custom":
@@ -2763,14 +2763,14 @@
     });
   }
 
-  // Only Dates, Time of work and Impact types stay in the panel in this view: open them on desktop.
+  // Keep map filter sections collapsed in statistics, then restore their map state on return.
   let panelSectionsBeforeStats = null;
 
   function syncPanelSections(active) {
     const sections = [...document.querySelectorAll("#sidePanel .controls > details.filter-section:not(.map-only)")];
-    if (active && !panelSectionsBeforeStats && window.matchMedia("(min-width: 881px)").matches) {
+    if (active && !panelSectionsBeforeStats) {
       panelSectionsBeforeStats = sections.map((section) => section.open);
-      sections.forEach((section) => { section.open = true; });
+      sections.forEach((section) => { section.open = false; });
     } else if (!active && panelSectionsBeforeStats) {
       sections.forEach((section, index) => { section.open = panelSectionsBeforeStats[index]; });
       panelSectionsBeforeStats = null;
