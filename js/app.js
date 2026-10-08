@@ -1573,7 +1573,7 @@ function normalizeQuebec511Feature(feature) {
     streets: properties.localisation || properties.routeAutoroute || "Localisation non publiée",
     source: "MTMD - Travaux routiers / Quebec 511",
     sourceUrl: properties.urlFrancais || "https://www.quebec511.info/fr/Carte/Default.aspx",
-    periods: quebec511Periods(properties.entrave),
+    periods: quebec511Periods(properties),
     geometry: feature.geometry,
     point: representativePoint(feature.geometry),
     tunnelNote: /tunnel/i.test(`${properties.localisation || ""} ${properties.descriptionFrancais || ""} ${properties.identificationDesTravaux || ""}`)
@@ -1613,12 +1613,15 @@ function quebec511TrafficDetails(properties) {
   return { severity: "moderate", label: "Accès limite" };
 }
 
-function quebec511Periods(entrave) {
-  const text = String(entrave || "").toLowerCase();
-  if (/nuit|22 h|23 h|0 h|tous les jours|en tout temps/.test(text)) {
+function quebec511Periods(properties) {
+  const start = minutesFromTime(publishedTime(properties.debut));
+  const end = minutesFromTime(publishedTime(properties.fin));
+  const duration = (Date.parse(dateOnlyFromTimestamp(properties.fin)) - Date.parse(dateOnlyFromTimestamp(properties.debut))) / 60000
+    + end - start;
+  if (start === null || end === null || !Number.isFinite(duration) || duration <= 0 || duration >= 1440) {
     return ["day", "night"];
   }
-  return ["day"];
+  return [touchesDay(start, end) ? "day" : null, touchesNight(start, end) ? "night" : null].filter(Boolean);
 }
 
 function quebec511LocationLabel(location) {

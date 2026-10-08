@@ -1282,7 +1282,12 @@ if (process.argv.includes("--browser")) {
       if (request.url().includes("/data/nids-de-poule/")) detailRequests.push(new URL(request.url()));
     });
     await mobilePage.addInitScript(() => {
-      window.potholeControlsAudit = { metadata: [] };
+      window.potholeControlsAudit = { metadata: [], detailRequests: [] };
+      const showModal = HTMLDialogElement.prototype.showModal;
+      HTMLDialogElement.prototype.showModal = function (...args) {
+        if (this.id === "potholeDialog") window.potholeControlsAudit.dialogView = window.potholeControlsAudit.view;
+        return Reflect.apply(showModal, this, args);
+      };
       const originalFetch = window.fetch;
       window.fetch = function (input, options) {
         const url = new URL(typeof input === "string" || input instanceof URL ? input : input.url, location.href);
@@ -1302,6 +1307,7 @@ if (process.argv.includes("--browser")) {
         postMessage(message, ...rest) {
           if (message.type === "filter" && message.kind === "reports") window.potholeControlsAudit.requested = message;
           if (message.type === "viewport") window.potholeControlsAudit.view = message;
+          if (message.type === "detail") window.potholeControlsAudit.detailRequests.push(message.id);
           return super.postMessage(message, ...rest);
         }
       };
@@ -1618,6 +1624,99 @@ if (process.argv.includes("--browser")) {
       await mobilePage.locator("#closeDetail").click();
       console.log(`PASS: ${language} ${width}px real point click, official detail, newest-first history on every page, unchanged source chronology, versioned requests and bright-red Canvas pixels`);
     }
+    const prepareListClick = async (language = "fr", kind = "reports", zoom = 17) => {
+      await mobilePage.goto(`http://localhost:5500/${language}/potholes.html?mode=${kind}&mapView=45.5019,-73.5674,${zoom}`);
+      await mobilePage.waitForFunction((kind) => {
+        const audit = window.potholeControlsAudit;
+        return document.querySelector("#mapStatus")?.hidden && audit.viewport?.requestId === audit.view?.requestId
+          && audit.viewport.layers[kind]?.features.length > 1;
+      }, kind, { polling: 100, timeout: 30000 });
+      const menu = mobilePage.locator("#menuToggle");
+      if (await menu.isVisible() && await menu.getAttribute("aria-expanded") === "false") await menu.click();
+      return mobilePage.evaluate((kind) => [...window.potholeControlsAudit.viewport.layers[kind].features]
+        .sort((left, right) => right.properties.count - left.properties.count).slice(0, 2), kind);
+    };
+    const checkListDetail = async (feature, zoom, previousRequest = 0) => {
+      await mobilePage.waitForFunction(({ id, previousRequest }) => {
+        const audit = window.potholeControlsAudit;
+        return document.querySelector("#potholeDialog")?.open && audit.detail?.type === "detail"
+          && audit.detail.id === id && audit.detail.requestId > previousRequest;
+      }, { id: feature.properties.id, previousRequest }, { polling: 100, timeout: 30000 });
+      const result = await mobilePage.evaluate((coordinates) => {
+        const audit = window.potholeControlsAudit;
+        const view = audit.dialogView;
+        const [west, south, east, north] = view.bounds;
+        const southwest = L.CRS.EPSG3857.latLngToPoint(L.latLng(south, west), view.zoom);
+        const northeast = L.CRS.EPSG3857.latLngToPoint(L.latLng(north, east), view.zoom);
+        const target = L.CRS.EPSG3857.latLngToPoint(L.latLng([...coordinates].reverse()), view.zoom);
+        return { zoom: view.zoom, drift: southwest.add(northeast).divideBy(2).distanceTo(target),
+          requestId: audit.detail.requestId, requests: audit.detailRequests,
+          panelClosed: !document.querySelector("#sidePanel").classList.contains("is-open") };
+      }, feature.geometry.coordinates);
+      assert.equal(result.zoom, zoom);
+      assert.ok(result.drift <= 1, `List focus drift: ${result.drift}px`);
+      assert.ok(result.panelClosed);
+      return result;
+    };
+    for (const [language, width, kind, motion] of [["fr", 1440, "reports", "no-preference"], ["en", 390, "reports", "reduce"], ["fr", 1440, "repairs", "no-preference"]]) {
+      await mobilePage.setViewportSize({ width, height: 960 });
+      await mobilePage.emulateMedia({ reducedMotion: motion });
+      const [target] = await prepareListClick(language, kind);
+      assert.ok(!target.properties.cluster);
+      await mobilePage.locator("#potholeResults button").first().click();
+      const opened = await checkListDetail(target, 18);
+      await mobilePage.locator("#closeDetail").click();
+      const menu = mobilePage.locator("#menuToggle");
+      if (await menu.isVisible()) await menu.click();
+      const row = await mobilePage.evaluate(({ kind, id }) => [...window.potholeControlsAudit.viewport.layers[kind].features]
+        .sort((left, right) => right.properties.count - left.properties.count).findIndex((feature) => feature.properties.id === id), { kind, id: target.properties.id });
+      assert.ok(row >= 0 && row < 16);
+      await mobilePage.locator("#potholeResults button").nth(row).click();
+      await checkListDetail(target, 18, opened.requestId);
+      await mobilePage.locator("#closeDetail").click();
+      const [closeTarget] = await prepareListClick(language, kind, 19);
+      await mobilePage.locator("#potholeResults button").first().click();
+      await checkListDetail(closeTarget, 19);
+      await mobilePage.locator("#closeDetail").click();
+      console.log(`PASS: ${language} ${width}px ${kind} list zoom settles before details, repeated centered clicks work, zoom 19 is retained, motion preference respected`);
+    }
+    await mobilePage.setViewportSize({ width: 1440, height: 960 });
+    await mobilePage.emulateMedia({ reducedMotion: "no-preference" });
+    const rapidTargets = await prepareListClick();
+    await mobilePage.evaluate(() => {
+      const buttons = document.querySelectorAll("#potholeResults button");
+      buttons[0].click();
+      buttons[1].click();
+    });
+    const rapid = await checkListDetail(rapidTargets[1], 18);
+    assert.deepEqual(rapid.requests, [rapidTargets[1].properties.id]);
+    await mobilePage.locator("#closeDetail").click();
+    await prepareListClick();
+    await mobilePage.evaluate(() => {
+      document.querySelector("#potholeResults button").click();
+      const filter = document.querySelector("#reportState");
+      filter.value = "presumed-repaired";
+      filter.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+    await mobilePage.waitForFunction(() => window.potholeControlsAudit.view?.zoom === 18 && document.querySelector("#mapStatus").hidden, null, { polling: 100 });
+    await mobilePage.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    assert.equal(await mobilePage.locator("#potholeDialog").evaluate((element) => element.open), false);
+    assert.deepEqual(await mobilePage.evaluate(() => window.potholeControlsAudit.detailRequests), []);
+    await prepareListClick();
+    await mobilePage.evaluate(() => {
+      document.querySelector("#potholeResults button").click();
+      document.querySelector("[data-pothole-mode=repairs]").click();
+    });
+    await mobilePage.waitForFunction(() => document.body.dataset.potholeView === "repairs" && document.querySelector("#mapStatus").hidden
+      && window.potholeControlsAudit.viewport?.layers.repairs, null, { polling: 100 });
+    assert.equal(await mobilePage.locator("#potholeDialog").evaluate((element) => element.open), false);
+    assert.deepEqual(await mobilePage.evaluate(() => window.potholeControlsAudit.detailRequests), []);
+    await prepareListClick("fr", "reports", 12);
+    await mobilePage.locator("#potholeResults button").first().click();
+    await mobilePage.waitForFunction(() => window.potholeControlsAudit.view.zoom > 12, null, { polling: 100 });
+    assert.equal(await mobilePage.locator("#potholeDialog").evaluate((element) => element.open), false);
+    assert.deepEqual(await mobilePage.evaluate(() => window.potholeControlsAudit.detailRequests), []);
+    console.log("PASS: rapid selections show only the latest detail, filter/mode changes cancel pending details, cluster clicks still only zoom");
     assert.deepEqual(mobileErrors, []);
     await mobilePage.close();
     console.log("PASS: mobile map disclosures, keyboard and desktop transition, compact four-mode navigation, responsive FAQ headers, translated help links and reporting guidance");

@@ -20,6 +20,36 @@ try {
     const report = await page.evaluate(() => {
       const check = (condition, message) => { if (!condition) throw new Error(message); };
       const original = JSON.stringify(allClosures);
+      const timeGeometry = allClosures.find((closure) => closure.geometry)?.geometry;
+      check(timeGeometry, "No published geometry available for the MTMD time test");
+      const timeCases = [
+        ["2026/10/08 22:30:00", "2026/10/09 05:00:00", ["night"]],
+        ["2026/10/08 22:00:00", "2026/10/09 05:00:00", ["night"]],
+        ["2026/10/08 05:00:00", "2026/10/08 22:00:00", ["day"]],
+        ["2026/10/08 21:30:00", "2026/10/09 05:00:00", ["day", "night"]],
+        ["2026/10/08 22:30:00", "2026/10/09 05:30:00", ["day", "night"]],
+        ["2026/10/08 22:30:00", "2026/10/10 05:00:00", ["day", "night"]],
+        ["2026/10/08 12:00:00", "2026/10/09 12:00:00", ["day", "night"]],
+        ["2026/10/08 00:30:00", "2026/10/08 04:30:00", ["night"]],
+        ["2026/10/08 23:00:00", "2026/10/08 23:45:00", ["night"]],
+        ["2026-10-08T22:30:00", "2026-10-09T05:00:00", ["night"]],
+        ["2026-10-08", "2026-10-09", ["day", "night"]],
+        ["invalid", "", ["day", "night"]],
+        ["2026/10/09 22:30:00", "2026/10/08 05:00:00", ["day", "night"]],
+        ["2026/10/08 05:00:00", "2026/10/08 05:00:00", ["day", "night"]]
+      ];
+      for (const [debut, fin, expected] of timeCases) {
+        const record = normalizeQuebec511Feature({ geometry: timeGeometry, properties: {
+          identifiant: "time-test", debut, fin, entrave: "Autoroute fermée", direction: "Est"
+        } });
+        check(JSON.stringify(record.periods) === JSON.stringify(expected), `Wrong MTMD periods: ${debut} -> ${fin}`);
+        check(matchesTimePeriod(record, new Set(["day"])) === expected.includes("day"), "Wrong day-only filtering");
+        check(matchesTimePeriod(record, new Set(["night"])) === expected.includes("night"), "Wrong night-only filtering");
+        check(!matchesTimePeriod(record, new Set()), "Unchecked periods still match");
+        check(record.startDate === dateOnlyFromTimestamp(debut) && record.endDate === dateOnlyFromTimestamp(fin), "Published dates changed");
+        check(record.startTime === publishedTime(debut) && record.endTime === publishedTime(fin), "Published times changed");
+        check(record.geometry === timeGeometry && record.direction === "Est", "Time filtering changed geometry or direction");
+      }
       const mobilityGeometry = { paths: [[[-73.65, 45.69], [-73.651, 45.691]]] };
       const terrebonneBase = { globalid: "mobility-test", statut_avis: "Actif", date_fin: Date.UTC(2099, 11, 31), type_entrave: "Fermeture complete" };
       const terrebonneCases = [

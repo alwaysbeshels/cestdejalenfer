@@ -418,8 +418,10 @@ function featureTitle(feature) {
   return feature.properties.label || text("unknownStreet");
 }
 
-function chooseFeature(feature, kind) {
+function chooseFeature(feature, kind, { focus = false } = {}) {
   if (state[kind].loading || !state[kind].ready) return;
+  const selection = ++state.detailRequest;
+  state.map.stop();
   if (feature.properties.cluster) {
     state.worker.postMessage({
       type: "expand", kind, version: state[kind].version,
@@ -428,8 +430,25 @@ function chooseFeature(feature, kind) {
     if (compact.matches) setPanel(false);
     return;
   }
-  state.detailQuery = { kind, id: feature.properties.id, version: state[kind].version, offset: 0 };
-  requestDetail();
+  const query = { kind, id: feature.properties.id, version: state[kind].version, offset: 0 };
+  const openDetail = () => {
+    if (selection !== state.detailRequest || state.mode !== kind || query.version !== state[kind].version || !state[kind].ready) return;
+    state.detailQuery = query;
+    requestDetail();
+  };
+  if (!focus) { openDetail(); return; }
+  if (compact.matches) setPanel(false);
+  const center = L.latLng([...feature.geometry.coordinates].reverse());
+  const zoom = Math.max(18, state.map.getZoom());
+  const atTarget = () => state.map.getZoom() === zoom
+    && state.map.project(state.map.getCenter(), zoom).distanceTo(state.map.project(center, zoom)) <= 1;
+  const openAfterMove = () => requestAnimationFrame(() => { if (atTarget()) openDetail(); });
+  if (atTarget()) { openAfterMove(); return; }
+  state.map.once("moveend", openAfterMove);
+  state.map.flyTo(center, zoom, {
+    animate: !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    duration: 0.45,
+  });
 }
 
 function renderFeatures(kind) {
@@ -536,7 +555,7 @@ function renderResults() {
       : kind === "repairs" ? [formatDate(feature.properties.date, true), feature.properties.devices.join(", ")].filter(Boolean).join(" \u00b7 ")
       : [text(`mapStatus.${feature.properties.status}`), feature.properties.district].filter(Boolean).join(" \u00b7 ")));
     button.append(swatch, content, element("span", "pothole-result-count", number(feature.properties.cluster ? featurePositionCount(feature) : featureCount(feature))));
-    button.addEventListener("click", () => chooseFeature(feature, kind));
+    button.addEventListener("click", () => chooseFeature(feature, kind, { focus: true }));
     item.append(button);
     list.append(item);
   });
