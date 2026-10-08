@@ -119,6 +119,15 @@ export function classifyPosition(lastReportDate, repairs = [], complete = true) 
   return lastRepairTime > reportTime ? "presumed-repaired" : "active";
 }
 
+export function countReportsSinceLastRepair(records, lastRepairDate) {
+  if (!lastRepairDate) return records.length;
+  const repairTime = Date.parse(lastRepairDate);
+  if (!Number.isFinite(repairTime)) return null;
+  const reportTimes = records.map((record) => Date.parse(record.dateCreation));
+  if (reportTimes.some((time) => !Number.isFinite(time))) return null;
+  return reportTimes.filter((time) => time >= repairTime).length;
+}
+
 export function buildPositionTimeline(records, repairs = []) {
   const repairEvents = new Map();
   repairs.forEach((repair) => {
@@ -175,6 +184,11 @@ export function pointRadiusForZoom(zoom) {
   return 1 + 6 * progress ** 2;
 }
 
+export function clusterSizeForCount(count) {
+  const positions = Number.isFinite(count) ? Math.max(1, count) : 1;
+  return Math.round(Math.max(30, Math.min(84, 26 + 4 * Math.log2(positions))));
+}
+
 export function clusterProperties(properties) {
   return {
     reports: properties.count,
@@ -201,7 +215,14 @@ export function clusterStatus(properties) {
 export function selectMapPositions(positions, filters = {}) {
   const years = filters.years ? new Set(filters.years.map(Number)) : null;
   const search = normalizeSearch(filters.search);
+  const minReports = filters.minReports ?? 0;
+  const maxReports = filters.maxReports ?? Infinity;
+  if (!Number.isSafeInteger(minReports) || minReports < 0
+    || (maxReports !== Infinity && (!Number.isSafeInteger(maxReports) || maxReports < 0))
+    || minReports > maxReports) return [];
   return positions.flatMap((position) => {
+    if (position.signalements.length < minReports || position.signalements.length > maxReports) return [];
+    if (filters.withoutRepairs && position.nombreColmatages !== 0) return [];
     if (filters.district && !position.arrondissements.includes(filters.district)) return [];
     if (years && ![...years].some((year) => activeInYear(position.periodesActives || [], year))) return [];
     const mapStatus = classifyPosition(position.dernierSignalement,

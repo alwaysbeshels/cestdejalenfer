@@ -8,8 +8,8 @@ import { createBoroughProfiles } from "./potholes-boroughs.mjs";
 import { createStreetMatcher, createPotholeRankings, isGenericStreetName, rtssRoadsFromFeatures, resolveNumberedStreets } from "./potholes-rankings.mjs";
 import {
   buildReportGroups, buildRepairGroups, hasLocalCoordinates, normalizeSearch, reportStreet, selectRepairRecords, snapshotSummary,
-  classifyPosition, buildPositionTimeline, selectMapPositions, decodeMapReport, decodeMapRepair,
-  buildActivePeriods, activeInYear, pointRadiusForZoom, clusterProperties, mergeClusterProperties, clusterStatus, rankPotholePositions,
+  classifyPosition, countReportsSinceLastRepair, buildPositionTimeline, selectMapPositions, decodeMapReport, decodeMapRepair,
+  buildActivePeriods, activeInYear, pointRadiusForZoom, clusterSizeForCount, clusterProperties, mergeClusterProperties, clusterStatus, rankPotholePositions,
 } from "../js/potholes-data.mjs";
 
 const readSnapshot = (name) => JSON.parse(readFileSync(new URL(`../data/nids-de-poule/${name}`, import.meta.url), "utf8"));
@@ -381,6 +381,21 @@ assert.deepEqual(timeline.map((event) => event.kind), ["report", "repair", "repo
 assert.equal(classifyPosition(timeline.at(-1).date, [matchedRepair]), "active");
 console.log("PASS: presumed repair, later reopening, unknown history and chronological event deduplication");
 
+const reportsSinceRepair = [
+  { dateCreation: "2025-04-01T12:00:00", etat: "ferme" },
+  { dateCreation: matchedRepair.horodatage, etat: "ferme" },
+  { dateCreation: "2026-01-01T12:00:00", etat: "ouvert" },
+];
+assert.equal(countReportsSinceLastRepair(reportsSinceRepair, matchedRepair.horodatage), 2);
+assert.equal(countReportsSinceLastRepair(reportsSinceRepair, "2026-02-01T12:00:00"), 0);
+assert.equal(countReportsSinceLastRepair(reportsSinceRepair, ""), 3);
+assert.equal(countReportsSinceLastRepair(reportsSinceRepair, null), 3);
+assert.equal(countReportsSinceLastRepair([], matchedRepair.horodatage), 0);
+assert.equal(countReportsSinceLastRepair(reportsSinceRepair, "invalid"), null);
+assert.equal(countReportsSinceLastRepair([{ dateCreation: "invalid" }], matchedRepair.horodatage), null);
+assert.equal(reportsSinceRepair[0].dateCreation, "2025-04-01T12:00:00");
+console.log("PASS: reports since latest patching include equal timestamps, all 311 statuses and explicit no-patching or invalid-date cases");
+
 const compactPosition = {
   positionId: base.positionId, rues: [base.rue], arrondissements: ["Verdun"],
   dernierSignalement: "2026-01-01T12:00:00", dernierColmatage: matchedRepair.horodatage,
@@ -394,6 +409,46 @@ assert.deepEqual(selectMapPositions([compactPosition], { years: [2025, 2026], se
 assert.equal(decodeMapReport(compactPosition.signalements[0]).idUnique, "25-1");
 assert.equal(decodeMapRepair([matchedRepair.horodatage, "NP100", 12, 45.5, -73.6]).distanceM, 12);
 console.log("PASS: multi-year selection preserves all-time status and includes closed 311 requests");
+
+const rangePositions = [1, 2, 4, 12].map((count) => ({
+  ...compactPosition, positionId: `range-${count}`,
+  signalements: Array.from({ length: count }, (unused, index) => compactPosition.signalements[index % 2]),
+}));
+const selectedReportCounts = (filters) => selectMapPositions(rangePositions, filters).map((entry) => entry.position.signalements.length);
+assert.deepEqual(selectedReportCounts({}), [1, 2, 4, 12]);
+assert.deepEqual(selectedReportCounts({ minReports: 4 }), [4, 12]);
+assert.deepEqual(selectedReportCounts({ maxReports: 2 }), [1, 2]);
+assert.deepEqual(selectedReportCounts({ minReports: 2, maxReports: 4 }), [2, 4]);
+assert.deepEqual(selectedReportCounts({ minReports: 4, maxReports: 4 }), [4]);
+assert.deepEqual(selectedReportCounts({ minReports: 0, maxReports: 0 }), []);
+assert.deepEqual(selectedReportCounts({ minReports: null, maxReports: null }), [1, 2, 4, 12]);
+for (const filters of [{ minReports: 5, maxReports: 2 }, { minReports: -1 }, { maxReports: -1 },
+  { minReports: 1.5 }, { maxReports: 2.5 }, { minReports: NaN }, { maxReports: NaN }, { minReports: Infinity }]) {
+  assert.deepEqual(selectedReportCounts(filters), []);
+}
+assert.deepEqual(selectMapPositions([compactPosition], {
+  years: [2025], minReports: 2, maxReports: 2, district: "Verdun", status: "active", search: "26-1",
+})[0].selectedIndices, [1]);
+assert.equal(selectMapPositions([compactPosition], { years: [], minReports: 2 }).length, 0);
+assert.equal(selectMapPositions([compactPosition], { status: "presumed-repaired", minReports: 2 }).length, 0);
+assert.deepEqual(rangePositions.map((position) => position.signalements.length), [1, 2, 4, 12]);
+console.log("PASS: inclusive report-count bounds support minimum, maximum and exact ranges using all-time totals before search and clustering");
+
+const patchHistoryPositions = [
+  { ...compactPosition, positionId: "no-patching", nombreColmatages: 0, dernierColmatage: "" },
+  { ...compactPosition, positionId: "past-patching", nombreColmatages: 3 },
+  { ...compactPosition, positionId: "unknown-patching" },
+];
+assert.equal(selectMapPositions(patchHistoryPositions).length, 3);
+assert.equal(selectMapPositions(patchHistoryPositions, { withoutRepairs: false }).length, 3);
+assert.deepEqual(selectMapPositions(patchHistoryPositions, { withoutRepairs: true }).map((entry) => entry.position.positionId), ["no-patching"]);
+assert.deepEqual(selectMapPositions(patchHistoryPositions, {
+  withoutRepairs: true, minReports: 2, maxReports: 2, years: [2026], district: "Verdun", search: "26-1", status: "active",
+})[0].selectedIndices, [1]);
+assert.equal(selectMapPositions(patchHistoryPositions, { withoutRepairs: true, minReports: 3 }).length, 0);
+assert.equal(selectMapPositions(patchHistoryPositions, { withoutRepairs: true, status: "presumed-repaired" }).length, 0);
+assert.equal(selectMapPositions([patchHistoryPositions[1]], { status: "active" }).length, 1);
+console.log("PASS: no-recorded-patching filter excludes past and unknown histories, including currently active locations repaired previously");
 
 const activity = buildActivePeriods(
   ["2020-08-01T12:00:00", "2020-09-01T12:00:00", "2025-03-01T12:00:00"],
@@ -423,6 +478,12 @@ assert.equal(pointRadiusForZoom(21), 7);
 assert.ok(pointRadiusForZoom(12) < 1.5);
 assert.ok(pointRadiusForZoom(12) < pointRadiusForZoom(15) && pointRadiusForZoom(15) < pointRadiusForZoom(18));
 console.log("PASS: activity-year overlap, inactive gaps, one current status per position and zoom-scaled point radius");
+
+assert.deepEqual([2, 10, 100, 1000, 10000].map(clusterSizeForCount), [30, 39, 53, 66, 79]);
+assert.equal(clusterSizeForCount(1000000), 84);
+for (const count of [0, -1, NaN, Infinity]) assert.equal(clusterSizeForCount(count), 30);
+for (let count = 2; count <= 30000; count += 1) assert.ok(clusterSizeForCount(count) >= clusterSizeForCount(count - 1));
+console.log("PASS: cluster diameter grows with distinct positions and stays within readable 30-84 pixel bounds");
 
 const cluster = clusterProperties({ count: 40, status: "active" });
 mergeClusterProperties(cluster, clusterProperties({ count: 5, status: "active" }));
@@ -1216,6 +1277,85 @@ if (process.argv.includes("--browser")) {
     await mobilePage.emulateMedia({ reducedMotion: "reduce" });
     const mobileErrors = [];
     mobilePage.on("pageerror", (error) => mobileErrors.push(error.message));
+    const detailRequests = [];
+    mobilePage.on("request", (request) => {
+      if (request.url().includes("/data/nids-de-poule/")) detailRequests.push(new URL(request.url()));
+    });
+    await mobilePage.addInitScript(() => {
+      window.potholeControlsAudit = { metadata: [] };
+      const originalFetch = window.fetch;
+      window.fetch = function (input, options) {
+        const url = new URL(typeof input === "string" || input instanceof URL ? input : input.url, location.href);
+        if (url.pathname.includes("/data/nids-de-poule/")) window.potholeControlsAudit.metadata.push({ url: url.href, cache: options?.cache });
+        return Reflect.apply(originalFetch, this, [input, options]);
+      };
+      const OriginalWorker = window.Worker;
+      window.Worker = class extends OriginalWorker {
+        constructor(...args) {
+          super(...args);
+          this.addEventListener("message", ({ data }) => {
+            if (data.type === "filtered" && data.kind === "reports") window.potholeControlsAudit.filtered = data;
+            if (data.type === "detail" || data.type === "error") window.potholeControlsAudit.detail = data;
+            if (data.type === "viewport") window.potholeControlsAudit.viewport = data;
+          });
+        }
+        postMessage(message, ...rest) {
+          if (message.type === "filter" && message.kind === "reports") window.potholeControlsAudit.requested = message;
+          if (message.type === "viewport") window.potholeControlsAudit.view = message;
+          return super.postMessage(message, ...rest);
+        }
+      };
+    });
+    const checkReportCounts = async (previousVersion = 0) => {
+      await mobilePage.waitForFunction((previous) => {
+        const audit = window.potholeControlsAudit;
+        return audit.filtered?.version > previous && audit.filtered.version === audit.requested?.version
+          && document.querySelector("#mapStatus").hidden;
+      }, previousVersion, { polling: 100, timeout: 30000 });
+      const observed = await mobilePage.evaluate(() => window.potholeControlsAudit);
+      const expected = selectMapPositions(mapSnapshot.positions, observed.requested.filters);
+      assert.equal(observed.filtered.counts.positions, expected.length);
+      assert.equal(observed.filtered.counts.mapped, expected.reduce((sum, entry) => sum + entry.selectedIndices.length, 0));
+      return { observed, expected };
+    };
+    const setReportRange = async (minimum, maximum) => {
+      const previous = await mobilePage.evaluate(() => window.potholeControlsAudit.requested.version);
+      await mobilePage.locator("#reportCountMin").fill(minimum);
+      await mobilePage.locator("#reportCountMax").fill(maximum);
+      const result = await checkReportCounts(previous);
+      assert.equal(result.observed.requested.filters.minReports, minimum === "" ? null : Number(minimum));
+      assert.equal(result.observed.requested.filters.maxReports, maximum === "" ? null : Number(maximum));
+      return result;
+    };
+    const checkResultsDock = async (kind) => {
+      await mobilePage.waitForFunction((kind) => {
+        const audit = window.potholeControlsAudit;
+        return document.querySelector("#mapStatus").hidden && audit.viewport?.requestId === audit.view?.requestId
+          && audit.viewport.layers[kind]?.version === audit.view.versions[kind];
+      }, kind, { polling: 100, timeout: 30000 });
+      const menu = mobilePage.locator("#menuToggle");
+      if (await menu.isVisible() && await menu.getAttribute("aria-expanded") === "false") await menu.click();
+      const observed = await mobilePage.evaluate((kind) => ({
+        features: window.potholeControlsAudit.viewport.layers[kind].features,
+        primary: Number(document.querySelector("#viewportPrimaryCount").textContent.replace(/\D/g, "")),
+        secondary: Number(document.querySelector("#viewportSecondaryCount").textContent.replace(/\D/g, "")),
+        textFits: [...document.querySelectorAll(".pothole-viewport-metric")].every((element) =>
+          [...element.children].every((child) => child.scrollWidth <= child.clientWidth)),
+      }), kind);
+      const positions = observed.features.reduce((sum, feature) => sum + (feature.properties.cluster ? feature.properties.point_count : 1), 0);
+      const events = observed.features.reduce((sum, feature) => sum + (feature.properties.cluster
+        ? feature.properties[kind === "reports" ? "reports" : "interventions"] : feature.properties.count), 0);
+      assert.equal(observed.primary, kind === "reports" ? positions : events);
+      assert.equal(observed.secondary, kind === "reports" ? events : positions);
+      assert.ok(observed.textFits);
+      const before = await mobilePage.locator("#resultsDock").boundingBox();
+      await mobilePage.locator("#resultsScroll").evaluate((element) => { element.scrollTop = 0; element.scrollTop = 400; });
+      assert.deepEqual(await mobilePage.locator("#resultsDock").boundingBox(), before);
+      assert.equal(await mobilePage.locator("#sidePanel").evaluate((element) => element.scrollTop), 0);
+      assert.ok(await mobilePage.locator("#resultsScroll").evaluate((element) => element.clientHeight > 100
+        && (element.scrollHeight <= element.clientHeight || element.scrollTop > 0)));
+      await mobilePage.locator("#resultsScroll").evaluate((element) => { element.scrollTop = 0; });
+    };
     for (const language of ["fr", "en"]) {
       await mobilePage.setViewportSize({ width: 375, height: 812 });
       for (const mode of ["reports", "repairs"]) {
@@ -1238,6 +1378,81 @@ if (process.argv.includes("--browser")) {
         const disclosure = mobilePage.locator("#mapFilters > summary");
         await disclosure.click();
         assert.equal(await input.isVisible(), true);
+        if (mode === "reports") {
+          const initialCounts = (await checkReportCounts()).observed.filtered.counts;
+          for (const [minimum, maximum] of [["10", "20"], ["", "2"], ["20", ""], ["5", "5"], ["0", "0"],
+            ["10", "2"], ["-1", ""], ["1.5", ""]]) {
+            const { expected } = await setReportRange(minimum, maximum);
+            const invalidMinimum = minimum !== "" && (Number(minimum) < 0 || !Number.isInteger(Number(minimum)));
+            const invalidMaximum = maximum !== "" && (Number(maximum) < 0 || !Number.isInteger(Number(maximum)));
+            const inverted = minimum !== "" && maximum !== "" && Number(minimum) > Number(maximum);
+            assert.equal(await mobilePage.locator("#reportCountError").isVisible(), invalidMinimum || invalidMaximum || inverted);
+            assert.equal(await mobilePage.locator("#reportCountMin").getAttribute("aria-invalid"), String(invalidMinimum || inverted));
+            assert.equal(await mobilePage.locator("#reportCountMax").getAttribute("aria-invalid"), String(invalidMaximum || inverted));
+            if (invalidMinimum || invalidMaximum || inverted) assert.equal(expected.length, 0);
+          }
+          await mobilePage.locator("#languageToggle").click();
+          assert.equal(await mobilePage.locator("#reportCountMin").inputValue(), "1.5");
+          assert.ok((await mobilePage.locator("#reportCountError").innerText()).includes(language === "fr" ? "whole numbers" : "nombres entiers"));
+          await setReportRange("5", "10");
+          await mobilePage.locator("[data-pothole-mode=repairs]").click();
+          assert.equal(await mobilePage.locator("#reportCountMin").isVisible(), false);
+          await mobilePage.locator("[data-pothole-mode=reports]").click();
+          assert.equal(await mobilePage.locator("#reportCountMin").inputValue(), "5");
+          assert.equal(await mobilePage.locator("#reportCountMax").inputValue(), "10");
+          await mobilePage.locator("#languageToggle").click();
+          let previous = await mobilePage.evaluate(() => window.potholeControlsAudit.requested.version);
+          await mobilePage.locator("#reportDistrict").selectOption("Verdun");
+          const districtSelection = await checkReportCounts(previous);
+          const reportId = districtSelection.expected[0].position.signalements.at(-1)[0];
+          previous = districtSelection.observed.requested.version;
+          await mobilePage.locator("#reportSearch").fill(reportId);
+          const searched = await checkReportCounts(previous);
+          assert.equal(searched.observed.filtered.counts.positions, 1);
+          assert.equal(searched.observed.filtered.counts.mapped, 1);
+          assert.ok(searched.expected[0].position.signalements.length >= 5);
+          previous = searched.observed.requested.version;
+          await mobilePage.locator("#reportSearch").fill("");
+          await mobilePage.locator("#reportDistrict").selectOption("");
+          await checkReportCounts(previous);
+          previous = await mobilePage.evaluate(() => window.potholeControlsAudit.requested.version);
+          await mobilePage.locator("#resetReportCount").focus();
+          await mobilePage.keyboard.press("Enter");
+          const resetCounts = (await checkReportCounts(previous)).observed.filtered.counts;
+          assert.deepEqual(resetCounts, initialCounts);
+          assert.equal(await mobilePage.locator("#reportCountMin").inputValue(), "");
+          assert.equal(await mobilePage.locator("#reportCountMax").inputValue(), "");
+          assert.equal(await mobilePage.locator("#resetReportCount").isDisabled(), true);
+          await mobilePage.locator("#resetMap").click();
+          await mobilePage.waitForFunction(() => window.potholeControlsAudit.view?.zoom === 12
+            && document.querySelectorAll(".pothole-marker > span[data-position-count]").length > 2, null, { polling: 100, timeout: 30000 });
+          const markers = await mobilePage.locator(".pothole-marker > span[data-position-count]").evaluateAll((elements) => elements.map((element) => {
+            const bounds = element.getBoundingClientRect();
+            const text = document.createRange();
+            text.selectNodeContents(element);
+            const label = text.getBoundingClientRect();
+            return { count: Number(element.dataset.positionCount), width: bounds.width, height: bounds.height,
+              textFits: label.left >= bounds.left && label.right <= bounds.right && label.top >= bounds.top && label.bottom <= bounds.bottom };
+          }));
+          for (const marker of markers) {
+            assert.equal(marker.width, clusterSizeForCount(marker.count));
+            assert.equal(marker.height, marker.width);
+            assert.ok(marker.textFits);
+          }
+          assert.ok(new Set(markers.map((marker) => marker.width)).size > 2);
+          const clusterTarget = await mobilePage.evaluate(() => {
+            const map = document.querySelector("#map").getBoundingClientRect();
+            return [...document.querySelectorAll(".pothole-marker > span[data-position-count]")].map((element) => {
+              const bounds = element.getBoundingClientRect();
+              return { count: Number(element.dataset.positionCount), x: bounds.left + bounds.width / 2, y: bounds.top + bounds.height / 2 };
+            }).filter((point) => point.x > map.left + 90 && point.x < map.right - 80 && point.y > map.top + 100 && point.y < map.bottom - 80)
+              .sort((left, right) => right.count - left.count)[0];
+          });
+          assert.ok(clusterTarget);
+          await mobilePage.mouse.click(clusterTarget.x, clusterTarget.y);
+          await mobilePage.waitForFunction(() => window.potholeControlsAudit.view.zoom > 12, null, { polling: 100 });
+          console.log(`PASS: ${language} report-count ranges, invalid input, all-time totals with search, language and mode retention, keyboard reset, scaled group labels and real cluster zoom`);
+        }
         await disclosure.focus();
         await mobilePage.keyboard.press("Enter");
         assert.equal(await input.isVisible(), false);
@@ -1245,10 +1460,69 @@ if (process.argv.includes("--browser")) {
         await mobilePage.waitForFunction(() => document.querySelector("#mapFilters").open, null, { polling: 100 });
         assert.equal(await input.isVisible(), true);
         assert.equal(await disclosure.isVisible(), false);
+        await checkResultsDock(mode);
+        const knownReportsHelp = mobilePage.locator("#countsHelpButton");
+        assert.equal(await knownReportsHelp.isVisible(), mode === "reports");
+        if (mode === "reports") {
+          assert.equal(await knownReportsHelp.locator("svg.lucide-info").count(), 1);
+          await knownReportsHelp.click();
+          assert.equal(await knownReportsHelp.getAttribute("aria-expanded"), "true");
+          const explanation = await mobilePage.locator("#countsHelp").innerText();
+          assert.ok(explanation.includes("311") && explanation.includes("40"));
+          assert.ok(explanation.includes(language === "fr" ? "toutes années disponibles" : "all available years"));
+          await mobilePage.keyboard.press("Escape");
+          assert.equal(await mobilePage.locator("#countsHelp").isVisible(), false);
+          assert.equal(await knownReportsHelp.getAttribute("aria-expanded"), "false");
+          assert.equal(await knownReportsHelp.evaluate((element) => element === document.activeElement), true);
+          await mobilePage.keyboard.press("Enter");
+          assert.equal(await mobilePage.locator("#countsHelp").isVisible(), true);
+          await mobilePage.locator("#viewportPrimaryCount").click();
+          assert.equal(await mobilePage.locator("#countsHelp").isVisible(), false);
+        }
+        await mobilePage.locator("#panelResizeHandle").focus();
+        await mobilePage.keyboard.press("Home");
+        await checkResultsDock(mode);
+        await mobilePage.keyboard.press("End");
+        if (mode === "reports") {
+          let previous = await mobilePage.evaluate(() => window.potholeControlsAudit.requested.version);
+          await mobilePage.locator("#withoutRepairs").focus();
+          await mobilePage.keyboard.press("Space");
+          const filtered = await checkReportCounts(previous);
+          assert.ok(filtered.expected.length > 0 && filtered.expected.every((entry) => entry.position.nombreColmatages === 0));
+          assert.equal(filtered.observed.requested.filters.withoutRepairs, true);
+          await checkResultsDock("reports");
+          await mobilePage.locator("#languageToggle").click();
+          assert.equal(await mobilePage.locator("#withoutRepairs").isChecked(), true);
+          await checkResultsDock("reports");
+          await mobilePage.locator("#languageToggle").click();
+          await mobilePage.locator("[data-pothole-mode=repairs]").click();
+          await checkResultsDock("repairs");
+          assert.equal(await mobilePage.locator("#withoutRepairsControl").isVisible(), false);
+          await mobilePage.locator("[data-pothole-mode=reports]").click();
+          await checkResultsDock("reports");
+          assert.equal(await mobilePage.locator("#withoutRepairs").isChecked(), true);
+          previous = await mobilePage.evaluate(() => window.potholeControlsAudit.requested.version);
+          await mobilePage.locator("#withoutRepairs").uncheck();
+          await checkReportCounts(previous);
+        }
         await mobilePage.setViewportSize({ width: 375, height: 812 });
+        await checkResultsDock(mode);
+        assert.equal(await mobilePage.locator("#withoutRepairsControl").isVisible(), mode === "reports");
+        await mobilePage.locator("#menuToggle").click();
+        const previousView = await mobilePage.evaluate(() => window.potholeControlsAudit.view.requestId);
+        const mapBounds = await mobilePage.locator("#map").boundingBox();
+        await mobilePage.mouse.move(mapBounds.x + mapBounds.width / 2, mapBounds.y + mapBounds.height / 2);
+        await mobilePage.mouse.down();
+        await mobilePage.mouse.move(mapBounds.x + mapBounds.width / 2 + 85, mapBounds.y + mapBounds.height / 2 + 45, { steps: 6 });
+        await mobilePage.mouse.up();
+        await mobilePage.waitForFunction((previous) => window.potholeControlsAudit.view.requestId > previous, previousView, { polling: 100 });
+        await checkResultsDock(mode);
+        await mobilePage.locator("#menuToggle").click();
+        console.log(`PASS: ${language} ${mode} viewport counters, fixed results header, scrolling list, 220px panel, mobile and map drag`);
       }
       await mobilePage.goto(`http://localhost:5500/${language}/faq.html`);
-      await mobilePage.waitForFunction(() => document.querySelector("#potholesFaqLink")?.textContent, null, { polling: 100 });
+      await mobilePage.waitForFunction(() => document.documentElement.hasAttribute("data-page-ready")
+        && document.querySelector("#potholesFaqLink")?.textContent, null, { polling: 100 });
       for (const width of [1440, 800, 640, 375, 320]) {
         await mobilePage.setViewportSize({ width, height: 900 });
         const layout = await mobilePage.evaluate(() => {
@@ -1278,6 +1552,71 @@ if (process.argv.includes("--browser")) {
       assert.equal(await mobilePage.locator('#how-report a[href="tel:311"]').count(), 1);
       assert.equal(await mobilePage.locator('[data-i18n="potholes.how.q.radius"]').count(), 1);
       assert.equal(await mobilePage.locator('[data-i18n="potholes.how.q.manualRepairs"]').count(), 1);
+    }
+    const detailPosition = selectMapPositions(mapSnapshot.positions, { years: [realStatistics.latestReports.annee], minReports: 5 })
+      .map((entry) => entry.position).find((position) => position.signalements.length + (repairHistory.positions[position.positionId]?.length || 0) > 80
+        && mapSnapshot.positions.every((other) => other.positionId === position.positionId
+          || Math.hypot(other.latitude - position.latitude, other.longitude - position.longitude) > 0.0001));
+    assert.ok(detailPosition);
+    for (const [language, width] of [["fr", 1440], ["en", 390]]) {
+      detailRequests.length = 0;
+      await mobilePage.setViewportSize({ width, height: 960 });
+      await mobilePage.goto(`http://localhost:5500/${language}/potholes.html?mapView=${detailPosition.latitude},${detailPosition.longitude},19`);
+      await mobilePage.waitForFunction(() => document.querySelector("#mapStatus").hidden
+        && document.querySelectorAll("#potholeResults button").length > 0, null, { polling: 100, timeout: 30000 });
+      const bounds = await mobilePage.locator("#map").boundingBox();
+      const center = { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 };
+      const brightRed = await mobilePage.evaluate((center) => [...document.querySelectorAll(".leaflet-overlay-pane canvas")].some((canvas) => {
+        const bounds = canvas.getBoundingClientRect();
+        const horizontal = Math.floor((center.x - bounds.left) * canvas.width / bounds.width);
+        const vertical = Math.floor((center.y - bounds.top) * canvas.height / bounds.height);
+        if (horizontal < 0 || vertical < 0 || horizontal >= canvas.width || vertical >= canvas.height) return false;
+        const pixel = canvas.getContext("2d").getImageData(horizontal, vertical, 1, 1).data;
+        return pixel[0] > 245 && pixel[1] < 35 && pixel[2] < 80 && pixel[3] > 200;
+      }), center);
+      assert.equal(brightRed, true);
+      await mobilePage.mouse.click(center.x, center.y);
+      await mobilePage.waitForFunction(() => document.querySelector("#detailContent .pothole-detail-fields, #detailContent .pothole-error"), null, { polling: 100, timeout: 30000 });
+      const result = await mobilePage.evaluate(() => window.potholeControlsAudit);
+      assert.equal(result.detail.type, "detail", result.detail.message);
+      assert.equal(result.detail.id, detailPosition.positionId);
+      assert.equal(result.detail.history.available, true);
+      const expectedSinceRepair = detailPosition.signalements.filter((record) => !detailPosition.dernierColmatage
+        || Date.parse(record[1]) >= Date.parse(detailPosition.dernierColmatage)).length;
+      assert.equal(result.detail.reportsSinceLastRepair, expectedSinceRepair);
+      const detailSummary = await mobilePage.locator("#detailContent > dl").first().evaluate((element) =>
+        [...element.querySelectorAll("dt")].map((label) => [label.textContent, label.nextElementSibling.textContent]));
+      assert.equal(detailSummary[1][0], language === "fr" ? "Signalements depuis le dernier colmatage" : "Reports since the latest patching");
+      assert.equal(detailSummary[1][1], new Intl.NumberFormat(`${language}-CA`).format(expectedSinceRepair));
+      const reference = decodeMapReport(detailPosition.signalements.at(-1));
+      const annual = readSnapshot(`signalements-${reference.annee}.json`);
+      assert.deepEqual(result.detail.record, annual.signalements[reference.index]);
+      assert.ok((await mobilePage.locator("#detailContent").innerText()).includes(reference.idUnique));
+      assert.equal(await mobilePage.locator("#detailContent .pothole-error").count(), 0);
+      assert.equal(result.metadata.length, 3);
+      assert.ok(result.metadata.every((request) => request.cache === "no-store"));
+      for (const [file, revision] of [["carte.json", index.contenuModifieLe],
+        [`signalements-${reference.annee}.json`, annual.contenuModifieLe], ["historique-colmatages.json", mapSnapshot.version]]) {
+        assert.equal(detailRequests.find((url) => url.pathname.endsWith(`/${file}`))?.searchParams.get("v"), revision);
+      }
+      const sourceHistory = buildPositionTimeline(detailPosition.signalements.map(decodeMapReport),
+        (repairHistory.positions[detailPosition.positionId] || []).map(decodeMapRepair));
+      assert.deepEqual(result.detail.history.timeline, sourceHistory);
+      const expectedHistory = [...sourceHistory].reverse().map((event) => ({ date: event.date, kind: event.kind }));
+      assert.ok(expectedHistory.length > 80);
+      await mobilePage.locator("#positionHistory > summary").click();
+      for (let limit = 40; ; limit += 40) {
+        const shown = await mobilePage.locator("#positionHistory li").evaluateAll((elements) => elements.map((element) => ({
+          date: element.dataset.eventDate, kind: element.className,
+        })));
+        assert.deepEqual(shown, expectedHistory.slice(0, limit));
+        assert.equal(await mobilePage.locator("#positionHistory button").isVisible(), limit < expectedHistory.length);
+        if (limit >= expectedHistory.length) break;
+        await mobilePage.locator("#positionHistory button").click();
+      }
+      assert.ok((await mobilePage.locator("#positionHistory").innerText()).includes(language === "fr" ? "plus récent au plus ancien" : "Newest to oldest"));
+      await mobilePage.locator("#closeDetail").click();
+      console.log(`PASS: ${language} ${width}px real point click, official detail, newest-first history on every page, unchanged source chronology, versioned requests and bright-red Canvas pixels`);
     }
     assert.deepEqual(mobileErrors, []);
     await mobilePage.close();

@@ -1,7 +1,7 @@
 import {
-  normalizeSearch, reportStreet, reportDistrict, pointRadiusForZoom,
+  normalizeSearch, reportStreet, reportDistrict, pointRadiusForZoom, clusterSizeForCount,
   clampResultsPanelWidth, RESULTS_PANEL_MIN_WIDTH, RESULTS_PANEL_MAX_WIDTH, summarizePotholeCatalog,
-} from "./potholes-data.mjs?v=20261001-potholes25";
+} from "./potholes-data.mjs?v=20261008-potholes7";
 
 const byId = (id) => document.getElementById(id);
 const locale = () => currentLanguage() === "en" ? "en-CA" : "fr-CA";
@@ -135,10 +135,31 @@ function initializeYears(entries) {
   renderYears();
 }
 
+function reportCountFilters() {
+  const minimum = byId("reportCountMin");
+  const maximum = byId("reportCountMax");
+  const value = (input) => input.value === "" && !input.validity.badInput ? null : input.valueAsNumber;
+  const minReports = value(minimum);
+  const maxReports = value(maximum);
+  const invalidMinimum = minReports !== null && (!Number.isSafeInteger(minReports) || minReports < 0);
+  const invalidMaximum = maxReports !== null && (!Number.isSafeInteger(maxReports) || maxReports < 0);
+  const inverted = !invalidMinimum && !invalidMaximum && minReports !== null && maxReports !== null && minReports > maxReports;
+  const message = invalidMinimum || invalidMaximum ? text("reportCountInvalid") : inverted ? text("reportCountOrder") : "";
+  for (const [input, invalid] of [[minimum, invalidMinimum], [maximum, invalidMaximum]]) {
+    input.setCustomValidity(invalid || inverted ? message : "");
+    input.setAttribute("aria-invalid", String(invalid || inverted));
+  }
+  byId("reportCountError").textContent = message;
+  byId("reportCountError").hidden = !message;
+  byId("resetReportCount").disabled = minReports === null && maxReports === null;
+  return { minReports, maxReports };
+}
+
 function renderFilterOptions(kind) {
   if (kind === "reports") {
     setOptions("reportDistrict", state.reports.summary?.districts || [], "allDistricts");
     renderYears();
+    reportCountFilters();
   } else {
     const summary = state.repairs.summary;
     setOptions("repairMonth", summary?.months || [], "allMonths", (value) => new Intl.DateTimeFormat(locale(), {
@@ -202,6 +223,8 @@ function renderMode() {
   for (const [id, key] of [
     ["potholePageTitle", titleKey],
     ["potholeMapCaption", repairs ? "potholes.repairsTitle" : "nav.potholes"],
+    ["viewportPrimaryLabel", repairs ? "potholes.repairsTitle" : "potholes.visiblePotholes"],
+    ["viewportSecondaryLabel", repairs ? "potholes.repairLocationsLabel" : "potholes.knownReportsLabel"],
   ]) {
     byId(id).dataset.i18n = key;
     translateElement(byId(id));
@@ -319,6 +342,12 @@ function renderStatus() {
   byId("mapNotice").hidden = !state.notice;
   byId("mapNotice").textContent = state.notice ? text(state.notice) : "";
   byId("potholeResults").setAttribute("aria-busy", String(busy));
+  byId("viewportCounts").setAttribute("aria-busy", String(busy));
+  if (busy || state.fatal) {
+    byId("viewportPrimaryCount").textContent = "-";
+    byId("viewportSecondaryCount").textContent = "-";
+  }
+  byId("withoutRepairs").disabled = state.mode !== "reports" || !state.catalog || state.catalogLoading || state.fatal;
   const statisticsError = state.catalogError || Boolean(state.catalog && !state.catalogLoading && !state.annualCounts);
   byId("infoStatus").hidden = state.mode !== "statistics" || (!state.catalogLoading && !statisticsError);
   byId("infoStatus").textContent = text(statisticsError ? "statisticsLoadError" : "loading");
@@ -359,6 +388,8 @@ function requestLayer(kind) {
   const filters = kind === "reports" ? {
     years: selectedYears(), status: byId("reportState").value,
     district: byId("reportDistrict").value, search: byId("reportSearch").value,
+    withoutRepairs: byId("withoutRepairs").checked,
+    ...reportCountFilters(),
   } : { year: Number(byId("repairYear").value), month: byId("repairMonth").value, device: byId("repairDevice").value };
   state.worker.postMessage({ type: "filter", kind, version: layer.version, catalog: state.catalog, filters });
 }
@@ -444,7 +475,7 @@ function renderFeatures(kind) {
     let icon;
     if (clustered) {
       const count = featurePositionCount(feature);
-      const size = count >= 1000 ? 44 : 30;
+      const size = clusterSizeForCount(count);
       const label = element("span", "", number(count));
       label.dataset.positionCount = String(count);
       label.style.width = `${size}px`;
@@ -488,9 +519,9 @@ function renderResults() {
   }
   const counts = Object.fromEntries(kinds.map((kind) => [kind, state[kind].features.reduce((sum, feature) => sum + featureCount(feature), 0)]));
   const positionCount = rows.reduce((count, entry) => count + featurePositionCount(entry.feature), 0);
-  byId("viewportCounts").textContent = text(state.mode === "repairs" ? "repairViewCounts" : "viewCounts", {
-    reports: number(counts.reports), count: number(counts.repairs), positions: number(positionCount),
-  });
+  const ready = state[state.mode].ready && !state[state.mode].loading;
+  byId("viewportPrimaryCount").textContent = ready ? number(state.mode === "repairs" ? counts.repairs : positionCount) : "-";
+  byId("viewportSecondaryCount").textContent = ready ? number(state.mode === "repairs" ? positionCount : counts.reports) : "-";
   const list = byId("potholeResults");
   list.replaceChildren();
   rows.slice(0, state.listLimit).forEach(({ feature, kind }) => {
@@ -528,12 +559,13 @@ function renderHistory(container, history) {
   } else {
     section.append(element("p", "", text("timelineCounts", { reports: number(history.reportCount), repairs: number(history.repairCount) })));
     if (!history.available) section.append(element("p", "pothole-warning", text("historyUnavailable")));
+    const timeline = [...history.timeline].reverse();
     const list = element("ol", "pothole-timeline");
     const more = element("button", "pothole-text-button", text("moreHistory"));
     more.type = "button";
     let limit = 0;
     const appendEvents = () => {
-      history.timeline.slice(limit, limit + 40).forEach((event) => {
+      timeline.slice(limit, limit + 40).forEach((event) => {
         const item = element("li", event.kind);
         item.dataset.eventDate = event.date;
         const date = element("time", "", formatDate(event.date, true));
@@ -545,7 +577,7 @@ function renderHistory(container, history) {
         list.append(item);
       });
       limit += 40;
-      more.hidden = limit >= history.timeline.length;
+      more.hidden = limit >= timeline.length;
     };
     more.addEventListener("click", appendEvents);
     appendEvents();
@@ -594,7 +626,9 @@ function renderDetail() {
     content.append(status);
     const summary = element("dl", "pothole-detail-fields");
     row(summary, "totalReports", number(detail.totalReports));
-    row(summary, "selectedReports", number(detail.total));
+    const sinceRepair = detail.reportsSinceLastRepair;
+    row(summary, "reportsSinceLastRepair", !Number.isInteger(sinceRepair) ? text("reportCountUnavailable")
+      : detail.history.latestRepair ? number(sinceRepair) : text("reportsWithoutRepair"));
     row(summary, "latestReport", formatDate(detail.history.latestReport, true));
     row(summary, "latestRepair", formatDate(detail.history.latestRepair, true));
     content.append(summary, element("p", "pothole-detail-note", text("mapStatusNote")));
@@ -769,7 +803,7 @@ function initializeMap() {
 }
 
 async function fetchJson(file) {
-  const response = await fetch(new URL(`../data/nids-de-poule/${file}`, import.meta.url), { cache: "no-cache" });
+  const response = await fetch(new URL(`../data/nids-de-poule/${file}`, import.meta.url), { cache: "no-store" });
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   return response.json();
 }
@@ -1052,7 +1086,7 @@ function ensureMapEngine() {
     if (state.savedMapView) state.map.setView(state.savedMapView.center, state.savedMapView.zoom, { animate: false });
   }
   if (!state.worker) {
-    state.worker = new Worker(new URL("./potholes-worker.mjs?v=20261001-potholes18", import.meta.url), { type: "module" });
+    state.worker = new Worker(new URL("./potholes-worker.mjs?v=20261008-potholes7", import.meta.url), { type: "module" });
     state.worker.addEventListener("message", handleWorker);
     state.worker.addEventListener("error", fatalError);
   }
@@ -1117,14 +1151,21 @@ async function start() {
 }
 
 let searchTimer;
-byId("reportSearch").addEventListener("input", () => {
+["reportSearch", "reportCountMin", "reportCountMax"].forEach((id) => byId(id).addEventListener("input", () => {
+  reportCountFilters();
   clearTimeout(searchTimer);
   state.reports.loading = true;
   state.reports.ready = false;
   renderStatus();
   searchTimer = setTimeout(() => requestLayer("reports"), 250);
+}));
+byId("resetReportCount").addEventListener("click", () => {
+  byId("reportCountMin").value = "";
+  byId("reportCountMax").value = "";
+  requestLayer("reports");
 });
 byId("reportState").addEventListener("change", () => requestLayer("reports"));
+byId("withoutRepairs").addEventListener("change", () => requestLayer("reports"));
 byId("reportDistrict").addEventListener("change", () => {
   state.pendingDistrict = byId("reportDistrict").value || null;
   requestLayer("reports");
@@ -1245,7 +1286,7 @@ document.addEventListener("keydown", (event) => {
   if (dialog.open || !compact.matches || !byId("sidePanel").classList.contains("is-open")) return;
   if (event.key === "Escape") setPanel(false);
   if (event.key === "Tab") {
-    const targets = [...byId("potholeToolbar").querySelectorAll('a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), summary'), byId("menuToggle"), ...byId("sidePanel").querySelectorAll('a[href], button:not(:disabled), summary')].filter((node) => node.getClientRects().length);
+    const targets = [...byId("potholeToolbar").querySelectorAll('a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), summary'), byId("menuToggle"), ...byId("sidePanel").querySelectorAll('a[href], button:not(:disabled), input:not(:disabled), summary')].filter((node) => node.getClientRects().length);
     const first = targets[0];
     const last = targets.at(-1);
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }

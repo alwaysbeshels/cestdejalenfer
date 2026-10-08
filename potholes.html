@@ -23,7 +23,7 @@
   <meta name="theme-color" content="#0f7b66">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="css/styles.css?v=20261005-nav2">
-  <link rel="stylesheet" href="css/potholes.css?v=20261001-potholes59">
+  <link rel="stylesheet" href="css/potholes.css?v=20261008-potholes6">
   <link rel="stylesheet" href="css/social.css?v=20261005-social1">
 </head>
 <body class="potholes-page" data-document-title="potholes.documentTitle" data-map-mode="potholes">
@@ -70,19 +70,22 @@
             <option value="presumed-repaired" data-i18n="potholes.mapStatus.presumed-repaired"></option>
             <option value="unknown" data-i18n="potholes.mapStatus.unknown"></option>
           </select></label>
+          <div class="field pothole-count-filter">
+            <span id="reportCountLabel" data-i18n="potholes.reportCountLabel"></span>
+            <div class="pothole-count-range" role="group" aria-labelledby="reportCountLabel">
+              <input id="reportCountMin" type="number" min="0" step="1" inputmode="numeric" data-i18n-placeholder="potholes.reportCountMinPlaceholder" data-i18n-aria-label="potholes.reportCountMinimum" data-i18n-title="potholes.reportCountMinimum" aria-describedby="reportCountError">
+              <span aria-hidden="true">-</span>
+              <input id="reportCountMax" type="number" min="0" step="1" inputmode="numeric" data-i18n-placeholder="potholes.reportCountMaxPlaceholder" data-i18n-aria-label="potholes.reportCountMaximum" data-i18n-title="potholes.reportCountMaximum" aria-describedby="reportCountError">
+              <button id="resetReportCount" class="pothole-icon-button" type="button" data-i18n-title="potholes.resetReportCount" data-i18n-aria-label="potholes.resetReportCount" disabled><i data-lucide="rotate-ccw" aria-hidden="true"></i></button>
+            </div>
+            <p id="reportCountError" class="pothole-error" role="status" hidden></p>
+          </div>
           <label class="field pothole-full-width"><span data-i18n="potholes.district"></span><select id="reportDistrict"></select></label>
-          <label class="field pothole-full-width"><span class="visually-hidden" data-i18n="potholes.search"></span><input id="reportSearch" type="search" data-i18n-placeholder="potholes.searchPlaceholder" autocomplete="off"></label>
+          <label class="field pothole-full-width pothole-search-field"><span class="visually-hidden" data-i18n="potholes.search"></span><input id="reportSearch" type="search" data-i18n-placeholder="potholes.searchPlaceholder" autocomplete="off"></label>
         </div>
         <div id="reportsSummary" hidden>
           <p id="reportsCoverage" class="pothole-coverage"></p>
-          <div id="countsHelpArea" class="pothole-counts-area">
-            <div class="pothole-counts-row"><p id="reportsCounts" class="pothole-counts" aria-live="polite"></p><button id="countsHelpButton" class="pothole-icon-button pothole-info-button" type="button" aria-controls="countsHelp" aria-expanded="false" data-i18n-title="potholes.countsHelp" data-i18n-aria-label="potholes.countsHelp"><i data-lucide="info" aria-hidden="true"></i></button></div>
-            <div id="countsHelp" class="pothole-counts-help" role="note" hidden>
-              <strong data-i18n="potholes.knownReportsLabel"></strong><p data-i18n="potholes.knownReportsDefinition"></p>
-              <strong data-i18n="potholes.positionsLabel"></strong><p data-i18n="potholes.positionsDefinition"></p>
-              <p data-i18n="potholes.clusterDefinition"></p>
-            </div>
-          </div>
+          <p id="reportsCounts" class="pothole-counts" aria-live="polite"></p>
           <p id="reportsWarning" class="pothole-warning" hidden></p>
         </div>
         <p id="reportsError" class="pothole-error" role="alert" hidden></p>
@@ -115,8 +118,26 @@
       </details>
     </section>
     <aside id="sidePanel" class="panel potholes-panel" data-i18n-aria-label="potholes.results" tabindex="-1">
-      <div class="pothole-result-heading"><h2 data-i18n="potholes.results"></h2></div>
-      <p id="viewportCounts" class="pothole-coverage" aria-live="polite"></p>
+      <div id="resultsDock" class="pothole-results-dock">
+        <div class="pothole-result-heading"><h2 data-i18n="potholes.results"></h2></div>
+        <div id="viewportCounts" class="pothole-viewport-counts" aria-live="polite" aria-atomic="true" aria-busy="true">
+          <div class="pothole-viewport-metric"><strong id="viewportPrimaryCount">-</strong><span id="viewportPrimaryLabel" data-i18n="potholes.visiblePotholes"></span></div>
+          <div id="countsHelpArea" class="pothole-viewport-metric pothole-counts-area">
+            <strong id="viewportSecondaryCount">-</strong>
+            <button id="countsHelpButton" class="pothole-icon-button pothole-info-button" type="button" aria-controls="countsHelp" aria-expanded="false" data-source-mode="reports" data-i18n-title="potholes.knownReportsHelp" data-i18n-aria-label="potholes.knownReportsHelp"><i data-lucide="info" aria-hidden="true"></i></button>
+            <span id="viewportSecondaryLabel" data-i18n="potholes.knownReportsLabel"></span>
+            <div id="countsHelp" class="pothole-counts-help" role="note" aria-live="off" hidden>
+              <p data-i18n="potholes.knownReportsDefinition"></p>
+              <p data-i18n="potholes.knownReportsYearNote"></p>
+            </div>
+          </div>
+        </div>
+        <label id="withoutRepairsControl" class="pothole-history-filter" data-source-mode="reports" data-i18n-title="potholes.withoutRepairsHelp">
+          <input id="withoutRepairs" type="checkbox" aria-describedby="withoutRepairsHelp" disabled><span data-i18n="potholes.withoutRepairs"></span>
+        </label>
+        <span id="withoutRepairsHelp" class="visually-hidden" data-i18n="potholes.withoutRepairsHelp"></span>
+      </div>
+      <div id="resultsScroll" class="pothole-results-scroll">
       <ol id="potholeResults" class="pothole-results"></ol>
       <p id="emptyResults" class="pothole-coverage" hidden></p>
       <button id="moreResults" class="pothole-text-button" type="button" data-i18n="potholes.more" hidden></button>
@@ -137,6 +158,7 @@
         <a href="https://donnees.montreal.ca/dataset/refection-de-chaussee-par-remplissage-mecanise-de-nid-de-poule" target="_blank" rel="noreferrer" data-i18n="potholes.sourcesRepairs"></a>
         <a href="data/nids-de-poule/index.json" target="_blank" rel="noreferrer" data-i18n="potholes.snapshotIndex"></a>
       </details>
+      </div>
     </aside>
 
     <button id="panelResizeHandle" class="panel-resize-handle pothole-results-resize" type="button" role="separator" aria-orientation="vertical" aria-controls="sidePanel" aria-valuemin="220" aria-valuemax="340" aria-valuenow="340" data-i18n-aria-label="menu.resize" data-i18n-title="menu.resize"><i data-lucide="move-horizontal" aria-hidden="true"></i></button>
@@ -385,10 +407,10 @@
   <noscript>JavaScript est n&eacute;cessaire pour afficher cette carte.</noscript>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <script src="languages/fr.js?v=20261005-release1"></script>
-  <script src="languages/en.js?v=20261005-release1"></script>
+  <script src="languages/fr.js?v=20261008-potholes8"></script>
+  <script src="languages/en.js?v=20261008-potholes8"></script>
   <script src="js/i18n.js?v=20261005-nav1"></script>
-  <script type="module" src="js/potholes.mjs?v=20261001-potholes60"></script>
+  <script type="module" src="js/potholes.mjs?v=20261008-potholes8"></script>
   <script src="js/analytics.js?v=20261003-analytics1"></script>
   <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
 </body>

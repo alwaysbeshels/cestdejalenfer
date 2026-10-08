@@ -1,22 +1,24 @@
 import Supercluster from "https://cdn.jsdelivr.net/npm/supercluster@8.0.1/+esm";
 import {
-  selectMapPositions, decodeMapReport, decodeMapRepair, buildPositionTimeline,
+  selectMapPositions, decodeMapReport, decodeMapRepair, buildPositionTimeline, countReportsSinceLastRepair,
   clusterProperties, mergeClusterProperties, clusterStatus, buildRepairGroups, snapshotSummary, districtBounds,
-} from "./potholes-data.mjs?v=20261001-potholes18";
+} from "./potholes-data.mjs?v=20261008-potholes7";
 
 const store = { version: 0, features: [], groups: new Map(), reports: new Map(), index: null };
 const repairStore = { version: 0, features: [], groups: new Map(), index: null, request: null };
 let mapPromise;
 let historyPromise;
 
-async function fetchSnapshot(file, options = {}) {
-  const response = await fetch(new URL(`../data/nids-de-poule/${file}`, import.meta.url), { cache: "no-cache", ...options });
+async function fetchSnapshot(file, { revision, ...options } = {}) {
+  const url = new URL(`../data/nids-de-poule/${file}`, import.meta.url);
+  if (revision) url.searchParams.set("v", revision);
+  const response = await fetch(url, { cache: "no-cache", ...options });
   if (!response.ok) throw new Error(`Snapshot HTTP ${response.status}`);
   return response.json();
 }
 
-function loadMap() {
-  if (!mapPromise) mapPromise = fetchSnapshot("carte.json").catch((error) => { mapPromise = null; throw error; });
+function loadMap(revision) {
+  if (!mapPromise) mapPromise = fetchSnapshot("carte.json", { revision }).catch((error) => { mapPromise = null; throw error; });
   return mapPromise;
 }
 
@@ -26,7 +28,7 @@ async function filterRecords(message) {
   store.features = [];
   store.index = null;
   store.groups.clear();
-  const snapshot = await loadMap();
+  const snapshot = await loadMap(catalog.contenuModifieLe);
   if (version !== store.version) return;
   if (snapshot.schemaVersion !== 2 || snapshot.origine.indexModifieLe !== catalog.contenuModifieLe) throw new Error("Map index is stale");
   store.snapshot = snapshot;
@@ -82,7 +84,7 @@ async function filterRepairs(message) {
     repairStore.request?.controller.abort();
     const request = { file: entry.fichier, controller: new AbortController() };
     repairStore.request = request;
-    request.promise = fetchSnapshot(entry.fichier, { signal: request.controller.signal }).catch((error) => {
+    request.promise = fetchSnapshot(entry.fichier, { revision: entry.contenuModifieLe, signal: request.controller.signal }).catch((error) => {
       if (repairStore.request === request) repairStore.request = null;
       throw error;
     });
@@ -144,8 +146,9 @@ function expandCluster(message) {
 }
 
 async function loadRecord(reference) {
+  const expectedDate = store.snapshot.origine.signalements.find(([file]) => file === `signalements-${reference.annee}.json`)?.[1];
   if (!store.reports.has(reference.annee)) {
-    const promise = fetchSnapshot(`signalements-${reference.annee}.json`).catch((error) => {
+    const promise = fetchSnapshot(`signalements-${reference.annee}.json`, { revision: expectedDate }).catch((error) => {
       store.reports.delete(reference.annee);
       throw error;
     });
@@ -153,7 +156,6 @@ async function loadRecord(reference) {
     if (store.reports.size > 2) store.reports.delete(store.reports.keys().next().value);
   }
   const snapshot = await store.reports.get(reference.annee);
-  const expectedDate = store.snapshot.origine.signalements.find(([file]) => file === `signalements-${reference.annee}.json`)?.[1];
   const record = snapshot.signalements?.[reference.index];
   if (snapshot.contenuModifieLe !== expectedDate || record?.idUnique !== reference.idUnique || record.dateCreation !== reference.dateCreation) {
     throw new Error("Report index is stale");
@@ -162,7 +164,7 @@ async function loadRecord(reference) {
 }
 
 async function loadHistory(positionId, version) {
-  if (!historyPromise) historyPromise = fetchSnapshot("historique-colmatages.json").catch((error) => { historyPromise = null; throw error; });
+  if (!historyPromise) historyPromise = fetchSnapshot("historique-colmatages.json", { revision: version }).catch((error) => { historyPromise = null; throw error; });
   const snapshot = await historyPromise;
   if (snapshot.version !== version) { historyPromise = null; throw new Error("Repair history is stale"); }
   return (snapshot.positions[positionId] || []).map(decodeMapRepair);
@@ -185,6 +187,7 @@ async function queryDetail(message) {
   self.postMessage({
     type: "detail", kind: "reports", version, requestId, id, offset,
     total: selected.length, totalReports: group.position.signalements.length, mapStatus: group.mapStatus,
+    reportsSinceLastRepair: countReportsSinceLastRepair(records, group.position.dernierColmatage),
     record, history: {
       timeline: buildPositionTimeline(records, repairs || []), available: repairs !== null,
       reportCount: records.length, repairCount: repairs?.length ?? group.position.nombreColmatages,
