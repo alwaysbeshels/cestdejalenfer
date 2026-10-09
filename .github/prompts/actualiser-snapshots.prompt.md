@@ -1,7 +1,7 @@
 ---
 name: actualiser-snapshots
-description: "Actualiser les snapshots auto et pietons consolides, hors nids-de-poule et colmatage, verifier leurs sources et leur affichage, sans publication automatique."
-argument-hint: "Toutes les sources du perimetre par defaut, ou une selection : PJCCI, Mont-Royal, signalements citoyens, entraves pietonnes consolidees, avis pietons Montreal..."
+description: "Actualiser les snapshots auto et pietons consolides, hors nids-de-poule, colmatage et evenements archives UCI/Marathon 2026, verifier leurs sources et leur affichage, sans publication automatique."
+argument-hint: "Toutes les sources du perimetre par defaut, ou une selection : PJCCI, parc Jean-Drapeau, Mont-Royal, signalements citoyens, entraves pietonnes consolidees, avis pietons Montreal..."
 agent: "Snapshots officiels"
 ---
 
@@ -15,8 +15,11 @@ Respecte aussi les [regles de publication](./deployment-rules.md).
 
 - Les donnees de nids-de-poule et de colmatage sont toujours hors perimetre : exclue tout le dossier `data/nids-de-poule/`, y compris les signalements 311, reparations annuelles, positions, cartes, statistiques, analyses, fiches d'arrondissements et metadonnees de verification. Leur actualisation releve exclusivement du [prompt actualiser-nids-de-poule](./actualiser-nids-de-poule.prompt.md). Cette exclusion s'applique aussi a une demande de « tous les snapshots » ou nommant ces sources : renvoie alors vers le prompt dedie sans les traiter.
 - N'interroge ni ne sonde ces sources et ne lance pas `tools/build-nids-de-poule-snapshot.mjs`, quelles que soient ses options, ni `npm run snapshot:potholes:map`. Ne modifie aucun de leurs fichiers ni leurs metadonnees dans le catalogue dans le cadre de cette commande.
+- L'evenement UCI 2026 est termine : `data/montreal-uci-closures-snapshot.json` est une archive hors perimetre de cette commande. Ne consulte plus les couches WFS UCI et ne lance pas `tools/build-montreal-uci-snapshot.mjs` ni les commandes `snapshot:montreal-uci`. Conserve le fichier existant, ses geometries et toutes ses dates, ainsi que ses metadonnees de catalogue; ne le supprime pas et ne modifie pas son chargement sur la carte.
+- Le Marathon Beneva 2026 des 10 et 11 octobre est exclu de cette commande des maintenant, a la demande du site, en prevision de son archivage apres ce week-end. Ne reverifie plus ses articles, PDF, parcours RTRT ou geometries, et ne lance pas `tools/build-marathon-closures.mjs`, `tools/build-marathon-course-reference.mjs`, `tools/build-marathon-supplement.mjs` ni une regeneration `--marathon-only`. Conserve `data/Marathon-Beneva-Mtl-2026.json`, ses sources historiques, sa representation dedupliquee et ses dates. Ne supprime ni le fichier ni son chargement; les filtres de dates assurent sa disparition apres les periodes publiees. Cette exclusion ne concerne pas la source autonome du parc Jean-Drapeau, meme si un de ses avis mentionne le Marathon.
+- Le parc Jean-Drapeau est une source active distincte : actualise `data/parc-jean-drapeau-snapshot.json` avec `node tools/build-parc-jean-drapeau-snapshot.mjs`. Lis toutes les pages de l'[index officiel des avis](https://www.parcjeandrapeau.com/fr/avis-et-alertes/) et les textes complets des avis admissibles, avec leurs modes de transport et exceptions. Conserve le snapshot en cas de reponse incomplete ou d'echec. Ne colore jamais tout le parc comme une fermeture de toutes ses routes; les acces explicitement autorises, notamment le Casino par Concorde, restent sans couleur de fermeture. Synchronise toutes ses entrees de catalogue utilisees par la FAQ.
 - Si le message accompagnant cette commande nomme des sources, ne traite que celles-ci dans le perimetre autorise ci-dessus.
-- Sans precision, inventorie et traite tous les snapshots existants dans `data/` hors `data/nids-de-poule/`, y compris les signalements citoyens et les sources complementaires comme Noovo. Ne presente pas ces deux dernieres comme des avis officiels.
+- Sans precision, inventorie et traite tous les snapshots existants dans `data/` hors `data/nids-de-poule/` et hors archives UCI et Marathon 2026, y compris les signalements citoyens et les sources complementaires comme Noovo. Ne presente pas ces deux dernieres comme des avis officiels.
 - Ne cree pas de nouvelle source, ne modifie pas l'interface et ne rafraichis pas les flux uniquement live dans le cadre de cette demande. Leur consultation pour valider une jointure existante ou alimenter le snapshot pieton consolide, lorsqu'il est dans le perimetre, reste permise.
 - « Entraves pietonnes consolidees » cible `data/pedestrian-closures-snapshot.json`; « avis pietons Montreal » cible son entree `data/montreal-pedestrian-notices-snapshot.json`. Ne les confonds pas avec les rues pietonnisees temporaires de la carte auto. Si « snapshot pieton » est ambigu, clarifie lequel avant execution.
 - Pour une actualisation globale, traite les snapshots d'entree avant la consolidation pietonne. Pour la seule consolidation, conserve les dates des entrees locales reutilisees et indique qu'elles n'ont pas ete reverifiees.
@@ -35,6 +38,12 @@ Respecte aussi les [regles de publication](./deployment-rules.md).
 
 Pour le snapshot pieton consolide, applique l'exception de l'agent aux etapes 7 et 8 : `generatedAt` date l'assemblage, `sources[].checkedAt` date chaque verification live, `sourceExtractedAt` conserve la date des entrees locales. Les sources reussies peuvent etre actualisees en conservant les anciennes donnees admissibles des sources echouees. N'ajoute pas de faux `extractedAt` global. Execute `node tools/build-pedestrian-snapshot.mjs` apres les entrees autorisees, avec le serveur statique local et Chromium disponibles; aucune installation implicite.
 
+Si le consolidateur lit encore l'archive UCI, il s'agit uniquement d'une entree `local-snapshot` historique, non reverifiee. Conserve sa date d'origine dans `sourceExtractedAt`, sans requete live UCI ni nouveau `checkedAt`; ne la presente pas comme actualisee dans le bilan.
+
+La meme regle s'applique aux entrees Marathon `marathon-pdf` du snapshot pieton consolide : leur reutilisation locale par la consolidation est autorisee, sans reverification ni reconstruction. Conserve leurs fiches, horaires, chemins et dates sources; `generatedAt` ne renouvelle pas leur fraicheur. L'ancien polygone `marathon-access-notices` est delegue au snapshot autonome du parc et ne doit pas etre retabli.
+
+Actualise le parc Jean-Drapeau avant la consolidation. La fusion ciblee `node tools/build-pedestrian-snapshot.mjs --parc-jean-drapeau-only` est autorisee pour son seul ajout : elle conserve les autres sources et leurs dates. L'entree consolidee `parc-jean-drapeau` reste `local-snapshot` avec `sourceExtractedAt` egal a l'extraction du snapshot d'entree, sans nouveau `checkedAt` lors de sa simple lecture. Ne recree pas de doublon avec l'archive Marathon.
+
 ## Validation
 
 - Sur ce poste, applique le contournement de transport d'images de l'agent : pas de `view_image` ni de capture jointe au chat pendant l'actualisation. Conserve les captures hors depot et execute les validations Chromium avec resultats textuels. Le 400 Copilot « Error while downloading file / Upstream 404 » est distinct d'un echec de source; ne relance pas toutes les extractions reussies a cause de cette erreur. Signale toute inspection visuelle non effectuee.
@@ -48,6 +57,7 @@ Pour le snapshot pieton consolide, applique l'exception de l'agent aux etapes 7 
 ## Bilan attendu
 
 Reponds en francais avec un tableau par snapshot : source publique, etat (`modifie`, `verifie sans changement`, `echec / non verifie`), derniere verification reussie avec fuseau, nombres recus et retenus, exclusions motivees et types de geometries.
+Precise les unites comparees. Pour Montreal dans la consolidation pietonne, distingue les permis recus, les permis retenus et les impacts produits, car un permis peut donner plusieurs impacts. Detaille les motifs d'exclusion avec leurs comptes verifies; ne presente pas une soustraction entre permis et impacts comme une perte de donnees.
 Resume les changements importants, les segments sans trace, les declarations en attente de revue, les limites de fraicheur et les validations executees ou bloquees.
 Pour la consolidation pietonne, ajoute un bilan par source et distingue les entrees locales reutilisees des verifications live reussies et echouees. Le nombre de flux echoues n'est pas un nombre de municipalites.
 Precise les fichiers modifies et rappelle que les changements restent locaux, sans commit ni push. Cette verification des sources ne confirme pas les conditions sur le terrain.

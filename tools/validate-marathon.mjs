@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { chromium } from "playwright";
+import { validateParkAndMarathon } from "./validate-parc-jean-drapeau.mjs";
 
 const snapshotPath = "data/Marathon-Beneva-Mtl-2026.json";
 const snapshot = JSON.parse(readFileSync(snapshotPath, "utf8"));
@@ -28,7 +29,49 @@ for (const record of pdfReference.records) {
   assert.ok(lines.every(line => line.length > 1 && sourceLines.some(source => JSON.stringify(source) === JSON.stringify(line))), "Geometry not copied from consecutive source vertices");
   assert.ok(record.sections.every(section => section.maximumGapPdfPoints <= 3.5));
 }
-const baseUrl = process.env.MARATHON_VALIDATION_URL || "http://localhost:5000";
+const baseUrl = process.env.MARATHON_VALIDATION_URL || "http://localhost:5500";
+async function clickRecord(page, id) {
+  await page.evaluate(selectedId => {
+    const record = allClosures.find(entry => entry.id === selectedId);
+    if (!record) throw new Error(`Missing selected record: ${selectedId}`);
+    dateStart.value = record.startDate;
+    dateEnd.value = record.endDate;
+    dateEndUsesOpenDefault = false;
+    categoryFilters.forEach(input => { input.checked = true; });
+    impactFilters.forEach(input => { input.checked = true; });
+    timeFilters.forEach(input => { input.checked = true; });
+    searchFilter.value = record.streets;
+    const line = record.geometry.type === "LineString" ? record.geometry.coordinates : record.geometry.type === "MultiLineString" ? record.geometry.coordinates.reduce((first, second) => first.length >= second.length ? first : second) : null;
+    window.marathonClickPosition = line ? line[Math.floor(line.length / 2)] : record.point;
+    map.stop();
+    map.setView([marathonClickPosition[1], marathonClickPosition[0]], 17, { animate: false });
+    updateView({ fit: false });
+  }, id);
+  await page.waitForFunction(selectedId => renderedClosureLayers.has(selectedId), id);
+  const target = await page.evaluate(async selectedId => {
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const record = allClosures.find(entry => entry.id === selectedId);
+    const point = map.latLngToContainerPoint([marathonClickPosition[1], marathonClickPosition[0]]);
+    const bounds = map.getContainer().getBoundingClientRect();
+    return { id: selectedId, x: bounds.left + point.x, y: bounds.top + point.y, start: record.startTime, end: record.endTime, street: record.streets, source: record.source };
+  }, id);
+  await page.mouse.click(target.x, target.y);
+  await page.locator(".leaflet-popup-content").waitFor();
+  await page.waitForFunction(() => {
+    const popup = document.querySelector(".leaflet-popup-content");
+    const bounds = popup.getBoundingClientRect();
+    return bounds.left >= 0 && bounds.right <= innerWidth && bounds.top >= 0 && bounds.bottom <= innerHeight;
+  });
+  const text = await page.locator(".leaflet-popup-content").innerText();
+  assert.ok(text.includes(target.start) && text.includes(target.end) && text.includes(target.source), `Wrong popup for ${id}: ${text.slice(0, 250)}`);
+  assert.equal(await page.locator(".leaflet-popup-content").evaluate(element => element.scrollWidth <= element.clientWidth + 1), true, "Popup text overflows");
+  await page.locator(".popup-close-button").click();
+  return { id, start: target.start, end: target.end, source: target.source };
+}
+
+if (snapshot.displayGeometryReference) {
+  await validateParkAndMarathon(baseUrl);
+} else {
 const browser = await chromium.launch({ headless: true });
 try {
   const context = await browser.newContext({ serviceWorkers: "block", timezoneId: "America/Toronto", viewport: { width: 1440, height: 1000 } });
@@ -48,7 +91,7 @@ try {
     localStorage.setItem("mapClickHintSeen", "1");
   });
   await page.goto(`${baseUrl}/fr/`, { waitUntil: "domcontentloaded" });
-  await page.waitForFunction(() => typeof allClosures !== "undefined" && allClosures.some(record => record.sourceKind === "marathon-beneva-waze"), null, { polling: 100 });
+  await page.waitForFunction(() => typeof allClosures !== "undefined" && allClosures.some(record => record.sourceKind === "marathon-beneva-article") && document.querySelector("#mapStatus")?.dataset.mode === "ready", null, { polling: 100, timeout: 90000 });
   const report = await page.evaluate(raw => {
     const check = (condition, message) => { if (!condition) throw new Error(message); };
     const original = JSON.stringify(raw);
@@ -80,17 +123,39 @@ try {
       try { normalizeMarathonBenevaSnapshot(data); } catch { rejected = true; }
       check(rejected, "Invalid source accepted");
     }
-    const loaded = allClosures.filter(record => record.sourceKind === "marathon-beneva-waze");
+    const wazeIds = new Set(normalized.map(record => record.id));
+    const loaded = allClosures.filter(record => wazeIds.has(record.id));
     check(loaded.length === raw.roadClosures.objects.length, "Not all closures loaded");
     check(new Set(loaded.map(record => record.id)).size === loaded.length, "Duplicate closures");
     check(loaded.every(record => record.geometry.type === "LineString"), "Line reduced to a point");
-    const sources = [...new Map(loaded.map(record => [record.source, record.sourceUrl])).entries()];
+    const sources = [...new Map(loaded.map(record => {
+      const original = record.originalPublishedSchedule || record;
+      return [original.source, original.sourceUrl];
+    })).entries()];
     check(sources.length === 1, "Unexpected provenance");
     check(window.SOURCE_CATALOG.some(source => source.name === sources[0][0] && source.url === sources[0][1] && source.inMap === true), "Loaded source absent from catalog");
-    const pdf = allClosures.filter(record => record.sourceKind === "marathon-beneva-pdf");
+    const pdfIds = new Set(raw.officialClosureReference.records.filter(record => record.kind === "road").map(record => record.id));
+    const pdf = allClosures.filter(record => pdfIds.has(record.id));
     check(pdf.length === raw.officialClosureReference.records.filter(record => record.kind === "road").length, "PDF road closures not loaded");
     check(pdf.every(record => record.suppressDirectionArrows && record.automobileImpact), "Race direction used as traffic direction");
-    check(window.SOURCE_CATALOG.some(source => source.name === pdf[0].source && source.url === pdf[0].sourceUrl && source.inMap), "PDF source missing from active catalog");
+    check(window.SOURCE_CATALOG.some(source => source.name === raw.officialClosureReference.source && source.url === raw.officialClosureReference.sourceUrl && source.inMap), "PDF source missing from active catalog");
+    for (const source of [raw.articleScheduleReference, raw.officialAccessNotices.records[0]]) {
+      check(window.SOURCE_CATALOG.some(entry => entry.name === source.source && entry.url === source.sourceUrl && entry.inMap), "Supplement source missing from active catalog");
+    }
+    const unchangedGeometry = new Map([...normalized, ...normalizeMarathonPdfClosures(raw)].map(record => [record.id, record.geometry]));
+    for (const adjustment of raw.articleScheduleReference.adjustments) for (const id of adjustment.targetIds) {
+      const record = allClosures.find(record => record.id === id);
+      check(record && record.startTime === adjustment.startTime && record.endTime === adjustment.endTime, `Article hours not applied: ${id}`);
+      check(record.sourceKind === "marathon-beneva-article" && record.originalPublishedSchedule, "Article provenance lost");
+      check(JSON.stringify(record.geometry) === JSON.stringify(unchangedGeometry.get(id)), "Article adjustment moved an existing geometry");
+    }
+    const supplements = normalizeMarathonSupplement(raw);
+    check(supplements.every(record => allClosures.some(loaded => loaded.id === record.id)), "New geometry not loaded");
+    const parking = allClosures.filter(record => record.sourceKind.startsWith("marathon-beneva-") && record.severity === "parking");
+    check(parking.length === 81, "Parking restrictions missing");
+    check(parking.filter(record => record.endDate === "2026-10-10").every(record => record.startTime === "00:00" && record.endTime === "12:00"), "Saturday article parking hours lost");
+    const concorde = allClosures.find(record => record.id === "marathon-pdf-2026-10-11-5f22071439e4");
+    check(concorde.endTime === "15:25" && concorde.originalPublishedSchedule.endTime === "11:15" && concorde.scheduleText.includes("Casino"), "Concorde schedule or exception lost");
     check(raw.officialClosureReference.records.filter(record => record.kind === "path").every(record => !allClosures.some(closure => closure.id === record.id)), "Park path leaked onto driving map");
     const damagedPdf = structuredClone(raw);
     damagedPdf.officialClosureReference.records.find(record => record.kind === "road").startTime = "07:01";
@@ -101,35 +166,37 @@ try {
     dateEnd.value = "2026-10-10";
     dateEndUsesOpenDefault = false;
     updateView({ fit: false });
-    const visible = getFilteredClosures().filter(record => record.sourceKind === "marathon-beneva-waze");
+    const visible = getFilteredClosures().filter(record => wazeIds.has(record.id));
     check(visible.length === loaded.length, `October 10 coverage lost: ${JSON.stringify({ loaded: loaded.length, visible: visible.length, categories: [...getActiveCategories()], impacts: [...getActiveImpacts()], periods: [...getActiveTimePeriods()], range: getDateRange(), dateMatches: loaded.filter(record => overlapsDateRange(record, getDateRange())).length, periodMatches: loaded.filter(record => matchesTimePeriod(record, getActiveTimePeriods())).length, now: new Date().toISOString() })}`);
     dateStart.value = "2026-10-11";
     dateEnd.value = "2026-10-11";
     updateView({ fit: false });
-    check(getFilteredClosures().every(record => record.sourceKind !== "marathon-beneva-waze"), "Invented Sunday closure");
-    const sunday = getFilteredClosures().filter(record => record.sourceKind === "marathon-beneva-pdf");
+    check(getFilteredClosures().every(record => !wazeIds.has(record.id)), "Invented Sunday closure");
+    const sunday = getFilteredClosures().filter(record => pdfIds.has(record.id));
     check(sunday.length > 0 && sunday.length === pdf.filter(record => record.startDate === "2026-10-11").length, "Sunday PDF coverage missing");
     dateStart.value = "2026-10-10";
     dateEnd.value = "2026-10-10";
     updateView({ fit: false });
-    return { count: loaded.length, pdfCount: pdf.length, sundayCount: sunday.length, pdfSampleId: sunday.find(record => record.streets === "rue Notre-Dame Est").id, sources, sampleIds: [loaded.find(record => record.sourceDirection.forward).id, loaded.find(record => !record.sourceDirection.forward).id] };
+    const sundayParking = parking.find(record => record.startTime === "22:00");
+    check(!matchesTimePeriod(sundayParking, new Set(["day"])) && matchesTimePeriod(sundayParking, new Set(["night"])), "Saturday 22:00 parking appeared in day filter");
+    dateStart.value = "2026-10-11"; dateEnd.value = "2026-10-11";
+    check(matchesTimePeriod(sundayParking, new Set(["day"])) && matchesTimePeriod(sundayParking, new Set(["night"])), "Sunday parking period missing");
+    dateStart.value = "2026-10-12"; dateEnd.value = "2026-10-12";
+    check(!matchesTimePeriod(sundayParking, new Set(["day", "night"])), "Parking leaked after the event");
+    dateStart.value = "2026-10-10"; dateEnd.value = "2026-10-10";
+    updateView({ fit: false });
+    return { count: loaded.length, pdfCount: pdf.length, sundayCount: sunday.length, parkingCount: parking.length, supplementCount: supplements.length,
+      adjustedTargets: raw.articleScheduleReference.adjustments.reduce((count, adjustment) => count + adjustment.targetIds.length, 0),
+      pdfSampleId: sunday.find(record => record.streets === "rue Notre-Dame Est").id, sources, sampleIds: [loaded.find(record => record.sourceDirection.forward).id, loaded.find(record => !record.sourceDirection.forward).id] };
   }, snapshot);
+  const actualClicks = [];
   for (const id of report.sampleIds) {
-    const details = await page.evaluate(selectedId => {
-      const record = allClosures.find(entry => entry.id === selectedId);
-      map.stop();
-      map.setView([record.point[1], record.point[0]], 18, { animate: false });
-      updateView({ fit: false });
-      const layer = renderedClosureLayers.get(selectedId)?.closures.getLayers()[0];
-      if (!layer) throw new Error("Marathon line not rendered");
-      layer.fire("click", { latlng: L.latLng(record.point[1], record.point[0]) });
-      return { text: document.querySelector(".leaflet-popup-content")?.innerText, start: record.startTime, end: record.endTime, street: record.streets };
-    }, id);
-    assert.ok(details.text.includes(details.start) && details.text.includes(details.end) && details.text.includes(details.street));
-    assert.match(details.text, /Waze/);
-    assert.match(details.text, /communautaire/);
-    await page.locator(".popup-close-button").click();
+    actualClicks.push(await clickRecord(page, id));
   }
+  for (const id of ["marathon-article-geobase-2026-10-10-viau", "marathon-article-geobase-2026-10-11-notre-dame", "marathon-parking-2026-10-10-10k-marathon-article-geobase-2026-10-10-viau", "marathon-parc-jean-drapeau-3269"]) {
+    actualClicks.push(await clickRecord(page, id));
+  }
+  await page.evaluate(() => { searchFilter.value = ""; });
   await page.locator("#languageToggle").click();
   await page.waitForFunction(() => document.documentElement.lang === "en", null, { polling: 100 });
   assert.equal(await page.evaluate(() => allClosures.filter(record => record.sourceKind === "marathon-beneva-waze").every(record => record.impact.startsWith("Road segment closed"))), true);
@@ -141,7 +208,7 @@ try {
     map.setView([record.point[1], record.point[0]], 17, { animate: false });
     updateView({ fit: false });
     const layers = renderedClosureLayers.get(id);
-    layers.closures.getLayers()[0].fire("click", { latlng: L.latLng(record.point[1], record.point[0]) });
+    layers.closures.getLayers().find(layer => layer.listens("click")).fire("click", { latlng: L.latLng(record.point[1], record.point[0]) });
     return { text: document.querySelector(".leaflet-popup-content").innerText, arrows: layers.arrows.getLayers().length, start: record.startTime, end: record.endTime };
   }, report.pdfSampleId);
   assert.ok(pdfPopup.text.includes(pdfPopup.start) && pdfPopup.text.includes(pdfPopup.end));
@@ -165,6 +232,10 @@ try {
     return bounds.left >= 0 && bounds.right <= innerWidth && bounds.top >= 0 && bounds.bottom <= innerHeight;
   }, null, { polling: 100 });
   assert.doesNotMatch(await page.locator(".leaflet-popup-content").innerText(), /marathon\.(?:impact|direction|scope|geometry)/);
+  await page.locator(".popup-close-button").click();
+  for (const id of ["marathon-article-geobase-2026-10-10-viau", "marathon-parking-2026-10-10-10k-marathon-article-geobase-2026-10-10-viau", "marathon-parc-jean-drapeau-3269"]) {
+    actualClicks.push(await clickRecord(page, id));
+  }
   assert.deepEqual(errors, []);
   const pedestrianSnapshot = JSON.parse(readFileSync("data/pedestrian-closures-snapshot.json", "utf8"));
   const pedestrianRecords = pedestrianSnapshot.records.filter(record => record.sourceKey === "marathon-pdf");
@@ -180,7 +251,7 @@ try {
     map.stop();
     map.setView([record.point[1], record.point[0]], 18, { animate: false });
     updateView({ fit: false });
-    const layer = renderedClosureLayers.get(record.id)?.closures.getLayers()[0];
+    const layer = renderedClosureLayers.get(record.id)?.closures.getLayers().find(layer => layer.listens("click"));
     if (!layer) throw new Error("Garden course path not drawn");
     const point = map.latLngToContainerPoint([record.point[1], record.point[0]]);
     const bounds = map.getContainer().getBoundingClientRect();
@@ -207,6 +278,16 @@ try {
   await page.locator("#menuToggle").click();
   await page.locator("#languageToggle").click();
   assert.equal(await page.evaluate(() => allClosures.filter(record => record.sourceKind === "pedestrian-marathon-pdf").every(record => record.impact === t("marathon.pathImpact") && record.geometryNote === t("marathon.pdfGeometry"))), true);
+  if (await page.locator("#menuToggle").getAttribute("aria-expanded") === "true") await page.locator("#menuToggle").click();
+  const accessId = "pedestrian-marathon-parc-jean-drapeau-3269";
+  assert.equal(await page.evaluate(id => {
+    const record = allClosures.find(record => record.id === id);
+    return record && record.pedestrianArea === "park" && record.severity === "critical" && record.automobileImpact === false && record.geometry.coordinates.length === 4;
+  }, accessId), true);
+  actualClicks.push(await clickRecord(page, accessId));
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.waitForFunction(() => !compactLayoutQuery.matches);
+  actualClicks.push(await clickRecord(page, accessId));
   assert.deepEqual(errors, []);
   await context.close();
   const failureContext = await browser.newContext({ serviceWorkers: "block" });
@@ -218,7 +299,8 @@ try {
   assert.equal(await failedPage.evaluate(() => allClosures.some(record => record.sourceKind === "marathon-beneva-waze")), false);
   await failureContext.close();
   assert.equal(fingerprint(), originalHash, "Original snapshot changed during validation");
-  console.log(JSON.stringify({ ...report, hostsObserved: [...hosts].sort(), sourceFileSha256: originalHash, checks: "source integrity, geometry direction, hours, invalid input, dates, catalog, vector popups, FR/EN, mobile and isolated source failure passed" }, null, 2));
+  console.log(JSON.stringify({ ...report, actualClicks, hostsObserved: [...hosts].sort(), sourceFileSha256: originalHash, checks: "source integrity, geometry direction, article hours, parking, pedestrian access, invalid input, dates, catalog, actual clicks, FR/EN, mobile and isolated source failure passed" }, null, 2));
 } finally {
   await browser.close();
+}
 }

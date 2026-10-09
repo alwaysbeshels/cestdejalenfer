@@ -128,13 +128,15 @@ La fiche affiche le nombre total de signalements, le nombre depuis le dernier co
 
 Signalements depuis le dernier colmatage compte les demandes de toute la position dont la date de creation est posterieure ou egale au dernier colmatage connu, tous statuts 311 confondus. Un horodatage identique est inclus comme dans la chronologie d'activite existante. Sans colmatage connu, seule la mention Aucun colmatage connu est affichee, sans nombre; si les dates ne permettent pas le calcul, la fiche indique Non calculable. Ce compteur ne depend ni du dossier consulte ni des filtres de recherche ou d'annees, et ne modifie pas la pagination des dossiers selectionnes.
 
-Inventaire local du 7 octobre 2026 :
+Inventaire local du 8 octobre 2026 :
 
 | Corpus | Enregistrements | Limites observees |
 | --- | --- | --- |
-| Demandes 311, 2014-2026 | 134 516 | 21 002 demandes d'information; 90 077 demandes avec position cartographiable; 27 975 positions publiques historiques |
+| Demandes 311, 2014-2026 | 134 552 | 21 009 demandes d'information; 90 106 demandes avec position cartographiable; 27 981 positions publiques historiques |
 | Colmatage mecanise, 2016-2025 | 1 027 267 | Periodes annuelles souvent partielles; certaines dates appartiennent a une autre annee que le nom du fichier |
 | Dernier fichier de colmatage, 2025 | 74 159 | Dates presentes du 18 janvier au 20 mai 2025; aucune donnee de colmatage 2026 dans ce corpus |
+
+**Actualisation du 8 octobre 2026, 22:38:44 UTC :** `node tools/build-nids-de-poule-snapshot.mjs` a termine en 216,922 s, sans option et au rayon conserve de 25 m. L'annee courante a ete relue : 24 160 requetes en 2026, soit 36 de plus. Les sondes des douze annees 311 anterieures et les metadata CKAN des dix millesimes de colmatage sont inchangees; aucun echec de source. Le diff SHA-256 confirme exactement les 27 fichiers de contenu annonces, plus [verification.json](../data/nids-de-poule/verification.json). Aucun fichier annuel anterieur ou de colmatage n'a change. Les controles de jointure et compteurs donnent zero position orpheline; `node tools/validate-potholes.mjs --geopackage` et `node tools/validate-potholes.mjs --browser` reussissent, avec 43 groupes de controles de donnees et navigateur FR/EN. Les changements restent locaux, sans commit, push ou deploiement; cette verification ne confirme pas l'etat physique des trous ni une reparation individuelle.
 
 **Limites geographiques :** les positions 311 sont obfusquees au milieu de troncons, pas a l'emplacement exact des trous. Les informations, positions administratives et coordonnees non exploitables sont exclues des marqueurs mais leur presence reste explicite dans les compteurs et les sources. Les fichiers 311 de 2014 a 2016 ne contiennent aucune position marquee fiable par le generateur actuel. Le garde-fou de coordonnees est une enveloppe de plausibilite autour de Montreal, pas une frontiere municipale precise.
 
@@ -196,15 +198,19 @@ Validation Chromium : avis Gordon, Duquette et Percy-Walters compares aux pages 
 
 ### Marathon Beneva 2026
 
-La carte automobile charge [l'export Waze fourni](../data/Marathon-Beneva-Mtl-2026.json) : 88 fermetures directionnelles du 10 octobre sur 76 segments et 11 voies, conservees sans modification. Le meme fichier ajoute maintenant 69 groupes routiers issus du PDF officiel rapproche des parcours RTRT : 15 le samedi 10 et 54 le dimanche 11 octobre. Les horaires Waze et PDF restent distincts, avec leur provenance dans les popups.
+Etat courant pour publication : **989 portions geobase uniques**, sans doublons spatiaux de meme route/date/impact. Les sources originales et les horaires prioritaires de l'article restent conserves; les acces autorises au Casino ne portent aucune couleur de fermeture. Le parc dispose maintenant de son propre [snapshot d'avis de mobilite](../data/parc-jean-drapeau-snapshot.json), avec 81 portions routieres, 164 chemins pietons et 26 segments d'acces proteges. Il reste dans le prompt d'actualisation et dans la FAQ, independamment du Marathon archive. Aucun polygone du parc n'est dessine comme fermeture de toutes ses routes.
 
-`officialCourseReference` conserve les six parcours geographiques et les jours/departs de course publies. `officialClosureReference` contient les 20 plages horaires du PDF, les portions verifiees, les references des objets PDF et les indices des coordonnees RTRT utilisees. Trois groupes de chemins sont integres au snapshot pieton consolide, sans y recopier les fermetures automobiles. Le sens de course n'est jamais affiche comme sens de circulation automobile.
+La validation complete `node tools/validate-marathon.mjs` passe en FR/EN, ordinateur/mobile, y compris la FAQ, les clics, les acces non colores et la panne isolee. Les paragraphes suivants retracent l'integration initiale avant cette deduplication; les chiffres et echecs intermediaires y sont conserves comme historique.
 
-L'[analyse detaillee du marathon](ANALYSE_MARATHON_BENEVA_2026.md) donne les horaires, la methode et les limites : 297 aretes du parcours restent exclues, faute d'identification de voie ou de rattachement horaire suffisamment sur. Selon la clarification de l'utilisatrice, le 9 octobre est une exposition interieure sans fermeture a ajouter; ce n'est plus une question en attente. Les interdictions de stationnement restent distinctes des fermetures routieres. Aucune fermeture generale du parc ou du jardin n'est deduite. Les autres sources pietonnes et leurs dates de verification restent inchangees.
+La carte automobile charge [le snapshot Marathon](../data/Marathon-Beneva-Mtl-2026.json) : ses 88 fermetures Waze et 69 groupes routiers PDF restent conserves comme donnees sources. A la demande du site, le complement La Presse applique ses horaires a 113 fiches geographiquement correspondantes, en gardant les anciennes heures et les reserves dans les popups. Il ajoute 14 traces geobase complets, des interdictions de stationnement et un avis officiel d'acces : 253 fiches Marathon Auto au total, dont 81 groupes de stationnement, pas 253 rues distinctes.
 
-Regeneration locale : `node tools/build-marathon-closures.mjs`, puis `node tools/build-pedestrian-snapshot.mjs --marathon-only`. Le premier recharge le PDF et OSM, utilise PyMuPDF et la geobase locale existante, et synchronise le catalogue. Ces outils ne sont pas des dependances de production.
+`officialCourseReference` conserve les six parcours geographiques et les jours/departs de course publies. `officialClosureReference` contient les 20 plages horaires du PDF et les deux periodes de stationnement; `articleScheduleReference` porte les ajustements journalistiques et les traces geobase; `officialAccessNotices` conserve les avis du parc Jean-Drapeau. Le snapshot pieton charge les trois groupes de chemins existants et le nouvel avis 3269 : ile Notre-Dame inaccessible au grand public dimanche de 06:30 a 11:00, sur le polygone municipal verifie, avec les exceptions de l'avis 3270. Le sens de course n'est jamais affiche comme sens de circulation automobile.
 
-Validation locale : `node tools/validate-marathon.mjs`, avec le serveur sur `http://localhost:5000` ou `MARATHON_VALIDATION_URL` pour une autre origine. Le filtre de dates commun inclut maintenant toute la journee choisie, y compris les fermetures se terminant avant midi.
+L'[analyse detaillee du marathon](ANALYSE_MARATHON_BENEVA_2026.md) donne les horaires appliques, les limites resolues et la preuve du decoupage Notre-Dame/Atateken. Les 297 aretes en revue du PDF historique ne mesurent plus les lacunes de la carte enrichie; elles restent preservees pour tracabilite. Saint-Laurent et une portion de Gouin gardent leurs heures propres lorsque l'article ne fournit pas les limites permettant de choisir une autre plage. Le 9 octobre reste exclu des fermetures selon la clarification de l'utilisatrice. Les autres sources pietonnes et leurs dates de verification restent inchangees.
+
+Le [prompt d'actualisation](../.github/prompts/actualiser-snapshots.prompt.md) exclut maintenant le Marathon 2026 en prevision de la fin du week-end; ne pas relancer automatiquement ses extractions ou generateurs. Le complement a ete produit avec [build-marathon-supplement.mjs](../tools/build-marathon-supplement.mjs) a partir de captures verifiees, puis fusionne avec `node tools/build-pedestrian-snapshot.mjs --marathon-only`. La consolidation courante peut reutiliser les entrees Marathon localement, sans les reverifier ni changer leurs dates. Ces outils ne sont pas des dependances de production.
+
+Validation : controles cibles des heures, geometries, stationnements et popups Auto; avis pieton verifie par clic reel en FR/EN, ordinateur/mobile; `node tools/validate-popup-grouping.mjs` reussi sur les deux cartes. Le test global `MARATHON_VALIDATION_URL=http://localhost:5500 node tools/validate-marathon.mjs` reste bloque a l'attente du chargement global avec son horloge simulee; il n'est pas declare reussi. Le filtre de dates inclut toute la journee choisie et le stationnement distingue le samedi soir du dimanche.
 
 ### Statistiques
 
@@ -259,6 +265,100 @@ npm run serve
 ### Date de vérification des snapshots
 
 Lors de chaque mise à jour demandée des snapshots, `extractedAt` indique la dernière vérification réussie de la source, même si aucune nouvelle donnée admissible n'est trouvée. Les métadonnées de fraîcheur correspondantes dans `data/sources.js` doivent porter la même date. Si les données sont inchangées, seuls ces horodatages sont actualisés : les enregistrements, géométries et dates publiées par les organismes restent intacts. Une consultation échouée, partielle ou limitée au cache local ne fait pas avancer la date. Cette date ne signifie ni que la source vient de publier de nouvelles données, ni que les géométries ont été reconstruites.
+
+### Snapshots routiers : actualisation du 8 octobre 2026
+
+Actualisation des onze snapshots routiers et pietons, a partir d'une base de comparaison conservee hors depot. Les donnees de nids-de-poule et de colmatage sont exclues de cette execution. Les entrees sont verifiees avant la consolidation pietonne. Aucun changement d'interface, ajout de dependance, commit, push ou deploiement n'est effectue dans cette actualisation.
+
+Toutes les heures du 8 octobre ci-dessous sont en UTC (`Z`); Montreal est a UTC moins quatre heures. `extractedAt` date la verification reussie, pas la publication de nouvelles donnees. Le consolide utilise exclusivement les dates par source; son `generatedAt` est une date d'assemblage.
+
+#### Bilan du 8 octobre
+
+| Snapshot et source publique | Etat | Verification reussie ou date conservee | Recus / retenus et exclusions | Geometries conservees |
+| --- | --- | --- | --- | --- |
+| [Mont-Royal](https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr) | Modifie | `2026-10-08T22:34:59.500Z` | 12 projets / 11; un projet recu expire | 7 LineString, 4 MultiLineString |
+| [Avis pietons Montreal](https://montreal.ca/entraves-travaux/entraves) | Modifie | `2026-10-08T22:36:52.716Z` | 1 993 resultats sur 200 pages, un avis recupere directement / 985 avis; trois doublons identiques; filtrage des dates et zones | Attributs et libelles, sans geometrie propre |
+| [Geometries Montreal](https://donnees.montreal.ca/dataset/info-travaux) | Modifie | `2026-10-08T22:38:28.062Z` | 1 670 permis / 1 962 impacts; 1 679 resolutions geobase, quatre lignes publiees, 279 emprises | 1 680 LineString, 3 MultiLineString, 279 Polygon |
+| [UCI Montreal](https://services.montreal.ca/cartes/uci) | Verifie sans changement | `2026-10-08T22:38:34.108Z` | 5 305 restrictions et 17 parcours / tous conserves selon la politique d'evenement complet; aucune date absente | 5 322 LineString |
+| [Rues pietonnisees Montreal](https://donnees.montreal.ca/dataset/rues-pietonnes-et-partagees) | Verifie sans changement | `2026-10-08T22:43:34.497Z` | 53 projets / 10 temporaires; 34 permanents et neuf temporaires a permanents exclus; sept fiches manuelles conservees | 7 LineString et 3 Point CKAN; 7 LineString manuels |
+| [Citoyens, non officiel](https://forms.gle/TKL6WkmPsWPmAUMV8) | Verifie sans changement | `2026-10-08T22:43:45.091Z` | Neuf reponses, 14 colonnes lues / 10 fiches et 11 impacts; trois fiches admissibles donnant quatre impacts, sept en attente | 3 LineString, 1 MultiLineString, 6 sans trace |
+| [Beaconsfield](https://www.beaconsfield.ca/fr/carte-interactive/info-travaux) | Verifie sans changement | `2026-10-08T22:52:25.007Z` | 78 POI, sept POI de travaux, six KML et 494 reperes / 103 reperes dans deux fiches; 391 exclusions | 2 MultiLineString |
+| [PJCCI archive](https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/) et [carte](https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/) | Verifie sans changement | `2026-10-08T22:46:42.537Z` | 138 avis uniques / deux parents actifs et neuf segments; 136 parents historiques exclus; quatre entrees de carte identiques | 1 LineString, 1 MultiLineString, 7 sans trace |
+| [Noovo, complement non officiel](https://www.noovomoi.ca/tendances/infos-pratiques/article/cyclisme-a-montreal-voici-les-rues-et-secteurs-a-eviter-en-septembre/) | Echec / non verifie integralement | `2026-09-08` conserve, heure et fuseau absents | Article relu / trois fiches preservees; image et heures precises non reverifiees | 2 LineString, 1 sans geometrie stockee |
+| [Marathon : PDF](https://couronsmtl.com/wp-content/uploads/2026/09/Depliant-Fermetures-de-rues-2026-web.pdf), [RTRT](https://track.rtrt.me/map/CM-BENEVA-MONTREAL-2026) et export Waze fourni | Echec / non verifie integralement | PDF `2026-10-05T15:59:03.349Z`; parcours `2026-10-05T15:09:35.472Z`, dates conservees | PDF et six parcours identiques; 88 fermetures Waze et 72 groupes PDF preserves, dont 69 routiers et trois chemins; 297 aretes restent en revue | Groupes PDF : 29 LineString, 43 MultiLineString; six parcours LineString |
+| [Consolide pieton](../data/pedestrian-closures-snapshot.json) | Modifie, un flux en echec | Assemblage `2026-10-08T22:54:58.981Z`; dates par source ci-dessous | 30 entrees sources / 1 206 restrictions; 198 candidats en revue | 1 194 Polygon, 8 LineString, 4 MultiLineString |
+
+Mont-Royal : dix fiches sont identiques et un projet est ajoute, la fermeture de Cote-de-Liesse pour travaux de chaussee du 14 au 26 octobre. Trois anciennes fiches terminees le 7 octobre ne sont plus retenues : Strathcona, encore recu puis exclu comme expire, Lucerne/Glengarry et Montview, absents de la reponse actuelle. La geometrie des projets inchanges n'est pas reconstruite.
+
+Avis Montreal : 840 fiches identiques, 90 ajouts, 55 changements du seul bloc `occupancyImpact`, 118 retraits. Parmi les anciennes fiches retirees, 78 etaient expirees; 40 avaient encore une fin annoncee au 8 octobre ou apres et ne figurent plus dans le nouveau jeu admissible. Cela ne confirme pas une fin de travaux sur place. La verification WFS porte sur 1 078 avis pietons attendus; un avis manquant a ete recupere directement et les libelles officiels ont ete verifies. Aucun `workImpact` personnalise n'est publie.
+
+Geometries Montreal : les 1 794 fiches communes, leurs attributs et leurs traces sont exactement conserves. Les 168 nouveaux impacts sont resolus contre la geobase disponible ou restent des emprises publiees; 227 anciens identifiants ne sont plus dans le flux. Aucun point de repli n'est ajoute. Le cache geobase est reutilise : cette verification du flux ne signifie pas une nouvelle lecture de tous les troncons geobase deja connus.
+
+Les cinq verifications sans changement ne modifient que `extractedAt`, tous les autres octets et toutes les geometries restant identiques a la base. Les onze dates de catalogue correspondantes concordent; aucun autre champ du catalogue ne change. Les dix projets temporaires CKAN ont ete compares avant tout appel geographique; aucun geocodage ni Overpass n'a ete execute. La divergence preexistante Wellington entre les deux copies manuelles est preservee, sans retouche de leur date ou de leur trace.
+
+Citoyens : toutes les lignes, les 13 colonnes exportables, les cellules vides et les commentaires complets concordent avec les fiches existantes. La colonne de contact est analysee comme personnelle et exclue. Aucun contact, lien ni identifiant du tableur n'est ajoute aux fichiers publics. Les reserves de dates, les horaires distincts et les sept fiches en attente restent intacts; aucune nouvelle resolution geographique n'est faite.
+
+Beaconsfield : les deux ensembles sanitaires, 13 et 90 reperes, concordent avec les identifiants, types, descriptions et coordonnees KML. Les 391 exclusions comprennent quatre echeanciers insuffisants, 107 travaux termines en juillet, 142 reperes portant la date invalide « 32 octobre 2026 » et 138 travaux termines le 2 octobre. Les differences de separation des blocs HTML ont ete distinguees des vrais changements de texte. Devon n'a ni KML ni description exploitable dans la reponse API actuelle; aucune restriction datee ou geometrie n'en est deduite. Le generateur aux dates fixes n'est pas execute.
+
+PJCCI : 14 reponses cumulatives donnent 1 048 occurrences, mais exactement 138 URL uniques sans copie contradictoire. Tous les champs des deux parents actifs et les quatre entrees brutes de carte sont identiques. Les anciennes metadonnees de construction, dont `asOf` et les comptes historiques d'archive, sont preservees. Les sept segments sans trace verifiable restent `pepsc-local`, `pepsc-access-bonaventure`, `sortie-3-vers-sud`, `gaetan-laberge-vers-sud`, `gaetan-laberge-vers-centre-ville`, `voies-victoria-clement-vers-sud` et `voies-victoria-clement-vers-centre-ville`.
+
+Noovo : l'article annonce toujours Parc du 4 septembre au 4 octobre, contre un debut au 7 septembre dans le fichier. L'image initiale n'a pas d'URL identifiable; elle n'est pas inspectee. Les heures A-10 `06:30-16:30` et la fin Champlain `11:30` ne sont pas confirmees par l'article. Fichier et date sont preserves.
+
+Marathon : le PDF recu a `2026-10-08T22:50:32.506Z` conserve l'empreinte `07303c423b638b5b5b858e0d4b12515139acb39a8827bf7a9a8567324d156269`. Carte et configuration RTRT sont verifiees a `2026-10-08T22:50:43.157Z` : six parcours, noms, cles, distances et coordonnees identiques; la modification source reste datee du 2 octobre. L'export Waze fourni n'a pas de source live enregistree et les horaires de course et references de classification ne sont pas tous reverifies. Le generateur lisant un cache du perimetre exclu n'est pas execute. Le fichier composite et toutes ses dates restent inchanges.
+
+#### Fraicheur du consolide pieton
+
+Precision sur les unites Montreal, controlee le 8 octobre a `23:30:06.260Z` sans modifier les snapshots : les 1 993 entrees recues sont des dossiers de permis, alors que les 1 194 entrees retenues sont des impacts pietons. Il y a 849 dossiers sans impact de trottoir ou de parc admissible et 159 dossiers expires avant le 8 octobre, soit 985 permis retenus. Ces permis donnent 819 impacts uniques, 125 groupes de deux impacts, 39 groupes de trois et deux groupes de quatre, donc 1 194 impacts au total. Aucun autre rejet pour date invalide, liste d'impacts invalide, geometrie ou localisation manquante n'est constate. Les 1 194 identifiants de cette relecture correspondent exactement a ceux du snapshot; soustraire directement 1 194 de 1 993 ne mesure pas une perte de dossiers.
+
+Les heures sont en UTC le 8 octobre, sauf date explicitement anterieure. `checked` designe une reponse live validee; `local-snapshot` conserve la date de son entree sans verification supplementaire par le consolidateur. Les sept entrees locales datees hors Noovo et Marathon ont ete verifiees en amont dans cette execution. Les listes manuelles restent non datees.
+
+| Source | Etat | `checkedAt` ou date de l'entree locale | Recus / retenus / revue |
+| --- | --- | --- | --- |
+| Montreal | checked | `22:54:38.925Z` | 1 993 permis / 985 permis donnant 1 194 impacts / 0 |
+| Longueuil | checked | `22:54:42.406Z` | 365 / 0 / 106 |
+| Dorval | checked | `22:54:44.237Z` | 596 / 0 / 13 |
+| Boisbriand | checked | `22:54:44.688Z` | 69 / 0 / 10 |
+| Saint-Eustache lignes | checked | `22:54:45.582Z` | 166 / 0 / 20 |
+| Saint-Eustache points | checked | `22:54:46.836Z` | 322 / 0 / 22 |
+| Chateauguay | checked | `22:54:47.590Z` | 38 / 0 / 0 |
+| L'Assomption | checked | `22:54:48.362Z` | 8 / 0 / 0 |
+| Terrebonne lignes | checked | `22:54:48.720Z` | 7 / 2 / 1 |
+| Terrebonne points | checked | `22:54:49.020Z` | 2 / 0 / 0 |
+| Mont-Saint-Hilaire 3 | checked | `22:54:51.620Z` | 1 / 0 / 1 |
+| Mont-Saint-Hilaire 4 | checked | `22:54:52.064Z` | 1 / 0 / 1 |
+| Mont-Saint-Hilaire 5 | checked | `22:54:52.480Z` | 1 / 0 / 1 |
+| Mont-Saint-Hilaire 6 | checked | `22:54:52.890Z` | 1 / 0 / 1 |
+| Mont-Saint-Hilaire 15 | checked | `22:54:53.332Z` | 1 / 0 / 1 |
+| MTMD chantiers | checked | `22:54:54.239Z` | 611 / 0 / 2 |
+| MTMD evenements | checked | `22:54:55.097Z` | 21 / 0 / 0 |
+| Repentigny | failed, `ECONNRESET` | Aucune verification reussie enregistree | Non recu / 0 / sans objet |
+| Laval | checked | `22:54:56.071Z` | 171 / 4 / 6 |
+| Mont-Royal | local-snapshot | `22:34:59.500Z` | 11 / 3 / 0 |
+| Beaconsfield | local-snapshot | `22:52:25.007Z` | 2 / 0 / 0 |
+| PJCCI | local-snapshot | `22:46:42.537Z` | 9 / 0 / 0 |
+| Citoyens | local-snapshot | `22:43:45.091Z` | 10 / 0 / 1 |
+| Noovo | local-snapshot, verification incomplete | `2026-09-08`, sans fuseau | 3 / 0 / 0 |
+| Rues pietonnisees | local-snapshot | `22:43:34.497Z` | 17 / 0 / 8 |
+| UCI | local-snapshot | `22:38:34.108Z` | 5 305 / 0 / 0 |
+| Listes regionales | local-snapshot, non reverifie | Non datees | 7 / 0 / 0 |
+| Villes liees | local-snapshot, non reverifie | Non datees | 25 / 0 / 4 |
+| Details Montreal | local-snapshot | `22:36:52.716Z` | 985 / 0 / sans compte de revue |
+| Marathon, chemins | local-snapshot, composite incomplet | `2026-10-05T15:59:03.349Z` conserve | 72 / 3 / 0 |
+
+Bilan : 18 flux verifies, 11 entrees locales et un flux en echec, pas trente municipalites. Les 1 100 fiches communes sont identiques hors metadonnees de verification, y compris la date de consultation d'avis conservee dans les details. Il y a 106 ajouts, 133 retraits et 198 candidats en revue. Les cinq familles affichees sont Montreal (1 194), Mont-Royal (3), Laval (4), Terrebonne (2) et Marathon (3). Les cinq projets saisonniers Mont-Saint-Hilaire restent en revue; le tunnel Terrebonne garde son statut explicitement actif sans fin inventee. Repentigny conserve son erreur de transport et ses dates anterieures nulles, sans ancienne fiche admissible disponible.
+
+#### Controles du 8 octobre
+
+- Les JSON, identifiants, comptes, dates, preuves, cotes et coordonnees finies sont controles. Un garde temporaire hors depot verifie 37 requetes sources et l'identite exacte des 16 lots ArcGIS; la seule erreur de transport est Repentigny `ECONNRESET`.
+- `node tools/validate-pedestrian-snapshot.mjs` passe sur 1 206 fiches et cinq familles affichees : popups, geometries, preuves, cotes, FR/EN, filtres, mobile et panne sans repli automobile. Aucun acces direct aux flux d'entraves par la page pietonne.
+- `node tools/validate-popup-grouping.mjs` passe : Pietons, 1 206 entrees / 1 077 cartes / 110 groupes fusionnes; Auto, 8 122 entrees / 7 971 cartes / 124 groupes fusionnes. Identites, impacts, geometries, langues, popups mobiles et maintien du cadrage sont preserves. Les volumes live peuvent evoluer; ils ne comptent pas les seules fermetures actives aujourd'hui.
+- Un controle complementaire passe sur dix horaires citoyens Foucher : dates limites, semaine/week-end, avant/pendant/apres la fermeture et stationnement permanent. Quatorze vrais clics souris couvrent Mont-Royal, Beaconsfield, PJCCI, les citoyens, Berri en ligne geobase, une emprise Montreal et le Marathon, a 1 440 et 390 px. Les popups restent dans la carte, sans debordement de texte, sans erreur JavaScript et sans requete au tableur. Le conseil normal de premiere visite a ete ferme par son bouton avant les clics; aucun changement d'interface n'a ete necessaire.
+- Les controles `node --check` passent sur le catalogue et les scripts requis Montreal/PJCCI et `js/app.js`. Aucune dependance n'est installee. L'editeur ne pouvant traiter le gros JSON UCI, sa seule date a ete remplacee mecaniquement puis comparee octet pour octet a la base.
+- La limite preexistante du lien Mont-Royal en francais reste constatee : le rendu transforme `detours=true` en `détours=true`. Elle ne vient pas du snapshot; l'interface n'est pas corrigee dans ce perimetre.
+- Les pages editoriales liees ne sont toujours pas systematiquement consultees. Les exemples Longueuil Roland-Therrien et Louise-Gravel ne sont pas nouvellement examines ni integres; les succes de flux ne prouvent pas une couverture exhaustive des avis. Aucune inspection visuelle humaine, aucun `view_image` ni capture jointe au chat; les controles rapportes sont ceux executes dans Chromium.
+- Des modifications concurrentes dans le dossier exclu des nids-de-poule et sa documentation sont preservees sans lecture, annulation ni attribution a cette actualisation.
+
+Fichiers actualises par cette execution : `data/mont-royal-snapshot.json`, `data/montreal-pedestrian-notices-snapshot.json`, `data/montreal-entraves-geometries-snapshot.json`, `data/montreal-uci-closures-snapshot.json`, `data/montreal-pedestrian-snapshot.json`, `data/citizen-reports-snapshot.json`, `data/beaconsfield-snapshot.json`, `data/pjcci-work-advisories-snapshot.json`, `data/pedestrian-closures-snapshot.json`, `data/sources.js` et ce bilan. Noovo, le Marathon et les fiches manuelles restent exactement preserves. Les changements restent locaux, sans commit ni push. La verification des sources ne confirme pas les conditions sur le terrain.
 
 ### Snapshots routiers : actualisation du 7 octobre 2026
 

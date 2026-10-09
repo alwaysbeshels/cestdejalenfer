@@ -79,6 +79,7 @@ const LIVE_SOURCES = {
   noovoRoadClosuresSnapshot: "data/noovo-road-closures-snapshot.json",
   citizenReportsSnapshot: "data/citizen-reports-snapshot.json",
   marathonBenevaSnapshot: "data/Marathon-Beneva-Mtl-2026.json",
+  parcJeanDrapeauSnapshot: "data/parc-jean-drapeau-snapshot.json",
   montSaintHilaireWorks: "https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_10Septembre2026_WFL1/FeatureServer",
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
@@ -1301,6 +1302,28 @@ function getActiveTimePeriods() {
 }
 
 function matchesTimePeriod(closure, activePeriods) {
+  if (["marathon-beneva-pdf", "marathon-beneva-article"].includes(closure.sourceKind) && closure.severity === "parking" && !(statsViewActive && statsAllDates)) {
+    const range = getDateRange();
+    const lower = Math.max(parseDateTime(closure.startDate, closure.startTime).valueOf(), range.start.valueOf());
+    const upper = Math.min(parseDateTime(closure.endDate, closure.endTime).valueOf(), range.end.valueOf());
+    const day = new Date(lower);
+    day.setHours(0, 0, 0, 0);
+    const windows = [
+      ...(activePeriods.has("day") ? [[5, 22]] : []),
+      ...(activePeriods.has("night") ? [[0, 5], [22, 24]] : [])
+    ];
+    while (day.valueOf() <= upper) {
+      for (const [startHour, endHour] of windows) {
+        const start = new Date(day);
+        const end = new Date(day);
+        start.setHours(startHour);
+        end.setHours(endHour);
+        if (lower < end.valueOf() && upper > start.valueOf()) return true;
+      }
+      day.setDate(day.getDate() + 1);
+    }
+    return false;
+  }
   return closure.periods.some((period) => activePeriods.has(period));
 }
 
@@ -1373,6 +1396,7 @@ function getFilterBaseClosures() {
 
 // Looked up once per allClosures change instead of once per UCI record (thousands of records).
 let complementaryUciCache = { source: null, length: -1, closure: null };
+let marathonGeometryOwnerCache = { source: null, length: -1, ids: new Set() };
 
 function complementaryUciClosure() {
   if (complementaryUciCache.source !== allClosures || complementaryUciCache.length !== allClosures.length) {
@@ -1382,6 +1406,12 @@ function complementaryUciClosure() {
 }
 
 function isCoveredByComplementaryClosure(closure) {
+  if (closure.marathonGeometryReplacementId) {
+    if (marathonGeometryOwnerCache.source !== allClosures || marathonGeometryOwnerCache.length !== allClosures.length) {
+      marathonGeometryOwnerCache = { source: allClosures, length: allClosures.length, ids: new Set(allClosures.map((record) => record.id)) };
+    }
+    return marathonGeometryOwnerCache.ids.has(closure.marathonGeometryReplacementId);
+  }
   if (closure.sourceKind !== "uci-wfs") return false;
   const complementary = complementaryUciClosure();
   if (!complementary || !overlapsDateRange(closure, {
@@ -2347,7 +2377,7 @@ function normalizeMarathonPdfClosures(snapshot) {
     || new Set(reference.records.map((record) => record.id)).size !== reference.records.length) {
     throw new Error("Invalid marathon PDF reference");
   }
-  return reference.records.filter((record) => record.kind === "road").map((record) => {
+  const closures = reference.records.filter((record) => record.kind === "road").map((record) => {
     const page = reference.schedule.find((entry) => entry.page === record.pdfPage);
     const window = page?.rows.find((entry) => entry.row === record.pdfRow);
     const lines = record.geometry?.type === "LineString" ? [record.geometry.coordinates]
@@ -2380,6 +2410,290 @@ function normalizeMarathonPdfClosures(snapshot) {
       ]
     };
   });
+  const parkingRestrictions = reference.parkingRestrictions || [];
+  if (!Array.isArray(parkingRestrictions) || new Set(parkingRestrictions.map((record) => record.id)).size !== parkingRestrictions.length) {
+    throw new Error("Invalid marathon parking restrictions");
+  }
+  for (const restriction of parkingRestrictions) {
+    const course = snapshot.officialCourseReference.courses.find((course) => course.id === restriction.courseId);
+    if (!restriction.id || restriction.kind !== "parking" || !course || restriction.timeZone !== reference.timeZone
+      || restriction.geometryPolicy !== "existing-verified-road-sections-of-course-only"
+      || restriction.sourceUrl !== reference.sourceUrl || !restriction.evidence || !Number.isFinite(Date.parse(restriction.sourceCheckedAt))
+      || ![restriction.startDate, restriction.endDate].every((date) => /^\d{4}-\d{2}-\d{2}$/.test(date) && formatInputDate(parseDate(date)) === date)
+      || ![restriction.startTime, restriction.endTime].every((time) => /^([01]\d|2[0-3]):[0-5]\d$/.test(time))
+      || `${restriction.startDate} ${restriction.startTime}` >= `${restriction.endDate} ${restriction.endTime}`) {
+      throw new Error(`Invalid marathon parking restriction: ${restriction.id}`);
+    }
+    const roads = reference.records.filter((record) => record.kind === "road" && record.sections?.some((section) => section.courseId === course.id));
+    if (!roads.length) throw new Error(`Missing verified parking geometry: ${restriction.id}`);
+    for (const road of roads) {
+      const sourceLines = road.geometry.type === "LineString" ? [road.geometry.coordinates] : road.geometry.coordinates;
+      const lines = road.sections.filter((section) => section.courseId === course.id).map((section) => {
+        if (!Number.isInteger(section.firstCoordinateIndex) || !Number.isInteger(section.lastCoordinateIndex)
+          || section.firstCoordinateIndex < 0 || section.lastCoordinateIndex <= section.firstCoordinateIndex
+          || section.lastCoordinateIndex >= course.geometry.coordinates.length) {
+          throw new Error(`Invalid marathon parking section: ${road.id}`);
+        }
+        const line = course.geometry.coordinates.slice(section.firstCoordinateIndex, section.lastCoordinateIndex + 1);
+        if (!sourceLines.some((sourceLine) => JSON.stringify(sourceLine) === JSON.stringify(line))) {
+          throw new Error(`Unverified marathon parking geometry: ${road.id}`);
+        }
+        return line;
+      });
+      const geometry = lines.length === 1 ? { type: "LineString", coordinates: lines[0] } : { type: "MultiLineString", coordinates: lines };
+      const startMinutes = minutesFromTime(restriction.startTime);
+      const endMinutes = minutesFromTime(restriction.endTime);
+      const periods = restriction.startDate !== restriction.endDate ? ["day", "night"]
+        : [touchesDay(startMinutes, endMinutes) ? "day" : null, touchesNight(startMinutes, endMinutes) ? "night" : null].filter(Boolean);
+      closures.push({
+        ...closures.find((closure) => closure.id === road.id),
+        id: `${restriction.id}-${road.id}`, reference: restriction.id, sourceRecordId: restriction.id,
+        title: `${t("marathon.parkingTitle")} - ${course.title}`,
+        startDate: restriction.startDate, endDate: restriction.endDate, startTime: restriction.startTime, endTime: restriction.endTime,
+        severity: "parking", color: SEVERITY_META.parking.color, trafficLabel: t("severity.parking"),
+        impact: restriction.impact, sourceVerifiedAt: restriction.sourceCheckedAt,
+        geometryRef: { recordId: road.id, courseId: course.id }, geometry, point: representativePoint(geometry), periods,
+        geometryNote: t("marathon.parkingGeometry"), scheduleText: t("marathon.parkingScope"),
+        details: [
+          [t("marathon.courses"), course.title],
+          [t("marathon.parkingEvidence"), restriction.evidence],
+          [t("marathon.pdfReference"), String(restriction.pdfPage)],
+          [t("marathon.geometrySource"), reference.geometrySourceUrl],
+          [t("pedestrian.sourceChecked"), restriction.sourceCheckedAt]
+        ]
+      });
+    }
+  }
+  return closures;
+}
+
+function applyMarathonArticleSchedules(closures, snapshot) {
+  const reference = snapshot.articleScheduleReference;
+  if (!reference) return closures;
+  if (reference.schemaVersion !== 1 || reference.sourceKind !== "journalistic-supplement"
+    || !Array.isArray(reference.adjustments) || !reference.sourceUrl || !Number.isFinite(Date.parse(reference.checkedAt))) {
+    throw new Error("Invalid marathon article reference");
+  }
+  const adjustments = new Map();
+  const originals = new Map(closures.map((closure) => [closure.id, closure]));
+  for (const adjustment of reference.adjustments) {
+    if (!adjustment.id || !Array.isArray(adjustment.targetIds) || !adjustment.targetIds.length || !adjustment.evidence || !adjustment.geometryMatch
+      || ![adjustment.startDate, adjustment.endDate].every((date) => /^\d{4}-\d{2}-\d{2}$/.test(date) && formatInputDate(parseDate(date)) === date)
+      || ![adjustment.startTime, adjustment.endTime].every((time) => /^([01]\d|2[0-3]):[0-5]\d$/.test(time))
+      || `${adjustment.startDate} ${adjustment.startTime}` >= `${adjustment.endDate} ${adjustment.endTime}`) {
+      throw new Error(`Invalid marathon article schedule: ${adjustment.id}`);
+    }
+    for (const id of adjustment.targetIds) {
+      const original = originals.get(id);
+      if (!original || adjustments.has(id) || original.startDate !== adjustment.startDate || original.endDate !== adjustment.endDate) {
+        throw new Error(`Unmatched or conflicting marathon article target: ${id}`);
+      }
+      adjustments.set(id, adjustment);
+    }
+  }
+  return closures.map((closure) => {
+    const adjustment = adjustments.get(closure.id);
+    if (!adjustment) return closure;
+    const startMinutes = minutesFromTime(adjustment.startTime);
+    const endMinutes = minutesFromTime(adjustment.endTime);
+    const warnings = (adjustment.warnings || []).join("\n");
+    return {
+      ...closure,
+      originalSourceKind: closure.sourceKind,
+      originalPublishedSchedule: { source: closure.source, sourceUrl: closure.sourceUrl, startDate: closure.startDate, endDate: closure.endDate, startTime: closure.startTime, endTime: closure.endTime },
+      sourceKind: "marathon-beneva-article", source: reference.source, sourceUrl: reference.sourceUrl, sourceVerifiedAt: reference.checkedAt,
+      impact: closure.severity === "parking" ? closure.impact : t("marathon.articleImpact"),
+      startDate: adjustment.startDate, endDate: adjustment.endDate, startTime: adjustment.startTime, endTime: adjustment.endTime,
+      sourceStartDateTime: `${adjustment.startDate} ${adjustment.startTime}`, sourceEndDateTime: `${adjustment.endDate} ${adjustment.endTime}`,
+      endTimeApproximate: adjustment.endTimeApproximate === true,
+      periods: adjustment.startDate !== adjustment.endDate ? ["day", "night"]
+        : [touchesDay(startMinutes, endMinutes) ? "day" : null, touchesNight(startMinutes, endMinutes) ? "night" : null].filter(Boolean),
+      scheduleText: [t("marathon.articleScope"), warnings].filter(Boolean).join("\n"),
+      details: [
+        ...closure.details,
+        [t("marathon.articleEvidence"), adjustment.evidence],
+        [t("marathon.originalHours"), `${closure.startDate} ${closure.startTime} - ${closure.endDate} ${closure.endTime} (${closure.source})`],
+        [t("marathon.relatedNotices"), (adjustment.relatedSourceUrls || []).join("\n")],
+        [t("pedestrian.sourceChecked"), reference.checkedAt]
+      ]
+    };
+  });
+}
+
+function normalizeMarathonSupplement(snapshot) {
+  const article = snapshot.articleScheduleReference;
+  const resolvedRoads = article?.resolvedRoads || [];
+  const notices = snapshot.officialAccessNotices?.managedBy ? [] : snapshot.officialAccessNotices?.records || [];
+  if (!Array.isArray(resolvedRoads) || !Array.isArray(notices)) throw new Error("Invalid marathon supplement");
+  const result = [];
+  for (const record of [...resolvedRoads, ...notices]) {
+    const notice = notices.includes(record);
+    const points = [];
+    const visit = (coordinates) => {
+      if (!Array.isArray(coordinates)) throw new Error("Invalid marathon coordinates");
+      if (typeof coordinates[0] === "number") points.push(coordinates);
+      else coordinates.forEach(visit);
+    };
+    if (!record.id || !["LineString", "MultiLineString", "Polygon", "MultiPolygon"].includes(record.geometry?.type)
+      || ![record.startDate, record.endDate].every((date) => /^\d{4}-\d{2}-\d{2}$/.test(date) && formatInputDate(parseDate(date)) === date)
+      || ![record.startTime, record.endTime].every((time) => /^([01]\d|2[0-3]):[0-5]\d$/.test(time))
+      || `${record.startDate} ${record.startTime}` >= `${record.endDate} ${record.endTime}`
+      || !record.geometrySource?.sourceUrl || !Number.isFinite(Date.parse(record.geometrySource.verifiedAt))) {
+      throw new Error(`Invalid marathon supplement record: ${record.id}`);
+    }
+    visit(record.geometry.coordinates);
+    if (!points.length || !points.every((pair) => pair.length === 2 && pair.every(Number.isFinite)
+      && pair[0] >= GREATER_MONTREAL_BOUNDS.west && pair[0] <= GREATER_MONTREAL_BOUNDS.east
+      && pair[1] >= GREATER_MONTREAL_BOUNDS.south && pair[1] <= GREATER_MONTREAL_BOUNDS.north)) throw new Error(`Invalid marathon supplement geometry: ${record.id}`);
+    const accessWarnings = (record.relatedNotices || []).map((related) => `${related.startDate} ${related.startTime}-${related.endTime}: ${related.text}`);
+    const closure = {
+      id: record.id, reference: record.id, sourceRecordId: record.id, category: "event", municipality: "Montréal", borough: "Montréal", automobileImpact: true,
+      sourceKind: notice ? "marathon-beneva-access" : "marathon-beneva-article",
+      title: record.title || `Marathon Beneva de Montreal 2026 - ${record.streetName}`,
+      streets: record.streets || `${record.streetName}: ${record.fromStreet} - ${record.toStreet}`,
+      startDate: record.startDate, endDate: record.endDate, startTime: record.startTime, endTime: record.endTime,
+      endTimeApproximate: record.endTimeApproximate === true,
+      source: notice ? record.source : article.source, sourceUrl: notice ? record.sourceUrl : article.sourceUrl,
+      sourceVerifiedAt: notice ? record.sourceCheckedAt : article.checkedAt,
+      severity: record.severity, color: SEVERITY_META[record.severity].color, trafficLabel: t(`severity.${record.severity}`), roadType: notice ? "other" : "street",
+      impact: record.impact, direction: t("popup.notPublished"), suppressDirectionArrows: true,
+      periods: ["day"], geometry: record.geometry, point: representativePoint(record.geometry),
+      geometryNote: t(notice ? "marathon.accessGeometry" : "marathon.geobaseGeometry"),
+      scheduleText: notice ? accessWarnings.join("\n") : [t("marathon.articleScope"), record.evidence.approximateEnd].filter(Boolean).join("\n"),
+      details: [
+        [t("marathon.articleEvidence"), record.evidence.text || record.evidence.scope],
+        [t("marathon.geometrySource"), record.geometrySource.sourceUrl],
+        [t("marathon.relatedNotices"), (record.relatedNotices || []).map((related) => related.sourceUrl).join("\n")],
+        [t("pedestrian.sourceChecked"), notice ? record.sourceCheckedAt : article.checkedAt]
+      ]
+    };
+    result.push(closure);
+    if (notice) continue;
+    for (const restriction of snapshot.officialClosureReference.parkingRestrictions || []) {
+      if (!record.courseIds.includes(restriction.courseId)) continue;
+      const override = article.adjustments.find((adjustment) => adjustment.targetIds.some((id) => id.startsWith(`${restriction.id}-`)));
+      const startTime = override?.startTime || restriction.startTime;
+      const endTime = override?.endTime || restriction.endTime;
+      result.push({
+        ...closure, id: `${restriction.id}-${record.id}`, reference: restriction.id, sourceRecordId: restriction.id,
+        sourceKind: override ? "marathon-beneva-article" : "marathon-beneva-pdf",
+        title: t("marathon.parkingTitle"), severity: "parking", color: SEVERITY_META.parking.color, trafficLabel: t("severity.parking"),
+        startDate: restriction.startDate, endDate: restriction.endDate, startTime, endTime, endTimeApproximate: false,
+        source: override ? article.source : snapshot.officialClosureReference.source,
+        sourceUrl: override ? article.sourceUrl : restriction.sourceUrl,
+        sourceVerifiedAt: override ? article.checkedAt : restriction.sourceCheckedAt,
+        impact: restriction.impact, geometryRef: { recordId: record.id, courseId: restriction.courseId },
+        periods: restriction.startDate !== restriction.endDate ? ["day", "night"]
+          : [touchesDay(minutesFromTime(startTime), minutesFromTime(endTime)) ? "day" : null, touchesNight(minutesFromTime(startTime), minutesFromTime(endTime)) ? "night" : null].filter(Boolean),
+        scheduleText: [t("marathon.parkingScope"), ...(override?.warnings || [])].join("\n"),
+        details: [
+          [t("marathon.parkingEvidence"), override?.evidence || restriction.evidence],
+          [t("marathon.originalHours"), `${restriction.startDate} ${restriction.startTime} - ${restriction.endDate} ${restriction.endTime}`],
+          [t("marathon.geometrySource"), record.geometrySource.sourceUrl],
+          [t("pedestrian.sourceChecked"), override ? article.checkedAt : restriction.sourceCheckedAt]
+        ]
+      });
+    }
+  }
+  if (new Set(result.map((record) => record.id)).size !== result.length) throw new Error("Duplicate marathon supplement IDs");
+  return result;
+}
+
+function normalizeMarathonDisplayClosures(snapshot) {
+  const originals = applyMarathonArticleSchedules([...normalizeMarathonBenevaSnapshot(snapshot), ...normalizeMarathonPdfClosures(snapshot)], snapshot);
+  const supplements = normalizeMarathonSupplement(snapshot);
+  const display = snapshot.displayGeometryReference;
+  if (display) {
+    if (display.schemaVersion !== 1 || !Array.isArray(display.records) || !Array.isArray(display.roadFeatures)
+      || new Set(display.records.map((record) => record.id)).size !== display.records.length) throw new Error("Invalid marathon display geometry reference");
+    const sources = new Map([...originals, ...supplements].map((record) => [record.id, record]));
+    const roads = new Map(display.roadFeatures.map((feature) => [feature.properties.id, feature]));
+    return display.records.map((record) => {
+      const owner = sources.get(record.ownerRecordId);
+      const road = roads.get(record.geobaseId);
+      if (!owner || !road || owner.severity !== record.severity || record.geometry?.type !== "LineString"
+        || record.geometry.coordinates.length < 2 || !record.sourceRecordIds.every((id) => sources.has(id))
+        || !record.geometry.coordinates.every((point) => point.length === 2 && point.every(Number.isFinite)
+          && point[0] >= GREATER_MONTREAL_BOUNDS.west && point[0] <= GREATER_MONTREAL_BOUNDS.east
+          && point[1] >= GREATER_MONTREAL_BOUNDS.south && point[1] <= GREATER_MONTREAL_BOUNDS.north)) throw new Error(`Invalid marathon display line: ${record.id}`);
+      const geometryUrl = new URL(display.sourceUrl);
+      geometryUrl.searchParams.set("CQL_FILTER", `"id" = ${record.geobaseId}`);
+      const members = record.sourceRecordIds.map((id) => sources.get(id));
+      const windows = record.windows || [{ startDate: record.startDate, endDate: record.endDate, startTime: record.startTime, endTime: record.endTime }];
+      const periods = new Set();
+      for (const window of windows) {
+        const start = minutesFromTime(window.startTime);
+        const end = minutesFromTime(window.endTime);
+        if (window.startDate !== window.endDate || touchesDay(start, end)) periods.add("day");
+        if (window.startDate !== window.endDate || touchesNight(start, end)) periods.add("night");
+      }
+      return { ...owner, id: record.id, streets: record.streetName,
+        startDate: record.startDate, endDate: record.endDate, startTime: record.startTime, endTime: record.endTime,
+        sourceStartDateTime: `${record.startDate} ${record.startTime}`, sourceEndDateTime: `${record.endDate} ${record.endTime}`,
+        geometry: record.geometry, point: representativePoint(record.geometry), periods: [...periods], geobaseId: record.geobaseId,
+        linearReferenceInterval: record.interval, originalSourceRecordIds: record.sourceRecordIds,
+        sourceDirections: members.filter((member) => member.sourceDirection).map((member) => ({ recordId: member.id, ...member.sourceDirection })),
+        suppressDirectionArrows: true, geometryNote: t("marathon.canonicalGeometry"),
+        details: [...owner.details.filter(([label]) => label !== t("marathon.geometrySource")), [t("marathon.geometrySource"), geometryUrl.href]] };
+    });
+  }
+  const byId = new Map(supplements.map((record) => [record.id, record]));
+  const replacements = new Map();
+  for (const adjustment of snapshot.articleScheduleReference?.adjustments || []) {
+    if (!byId.has(adjustment.geometryReferenceId)) continue;
+    for (const id of adjustment.targetIds) replacements.set(id, adjustment.geometryReferenceId);
+  }
+  for (const record of originals) {
+    const replacementId = record.severity === "parking"
+      ? replacements.has(record.geometryRef?.recordId) ? `${record.reference}-${replacements.get(record.geometryRef.recordId)}` : null
+      : replacements.get(record.id);
+    const replacement = byId.get(replacementId);
+    if (!replacement || replacement.severity !== record.severity
+      || ["startDate", "endDate", "startTime", "endTime"].some((key) => replacement[key] !== record[key])) continue;
+    record.marathonGeometryReplacementId = replacementId;
+    replacement.matchedSourceRecords ||= [];
+    replacement.matchedSourceRecords.push({ id: record.id, source: record.source, sourceUrl: record.sourceUrl,
+      sourceDirection: record.sourceDirection || null, originalPublishedSchedule: record.originalPublishedSchedule || null });
+  }
+  return [...originals, ...supplements];
+}
+
+let parcJeanDrapeauSnapshot = null;
+let parcJeanDrapeauSnapshotFailed = false;
+
+function normalizeParcJeanDrapeauClosures(snapshot) {
+  if (snapshot?.schemaVersion !== 1 || !Array.isArray(snapshot.records) || !Array.isArray(snapshot.automobileRecords)
+    || !Array.isArray(snapshot.accessExceptions) || !Number.isFinite(Date.parse(snapshot.extractedAt))) throw new Error("Invalid Parc Jean-Drapeau snapshot");
+  const ids = new Set();
+  return snapshot.automobileRecords.map((record) => {
+    const notice = snapshot.records.find((notice) => notice.id === record.sourceNoticeId);
+    const lines = record.geometry?.type === "LineString" ? [record.geometry.coordinates]
+      : record.geometry?.type === "MultiLineString" ? record.geometry.coordinates : [];
+    if (!record.id || ids.has(record.id) || !notice || !SEVERITY_META[record.severity]
+      || ["startDate", "endDate", "startTime", "endTime"].some((key) => record[key] !== notice[key])
+      || !lines.length || !lines.every((line) => line.length >= 2 && line.every((point) => point.length === 2 && point.every(Number.isFinite)
+        && point[0] >= GREATER_MONTREAL_BOUNDS.west && point[0] <= GREATER_MONTREAL_BOUNDS.east
+        && point[1] >= GREATER_MONTREAL_BOUNDS.south && point[1] <= GREATER_MONTREAL_BOUNDS.north))) throw new Error(`Invalid park road: ${record.id}`);
+    ids.add(record.id);
+    return { ...record, color: SEVERITY_META[record.severity].color, trafficLabel: t(`severity.${record.severity}`),
+      direction: t("popup.notPublished"), suppressDirectionArrows: true, point: representativePoint(record.geometry),
+      geometryNote: t(record.geometryNoteKey), sourceVerifiedAt: snapshot.extractedAt,
+      details: [...record.details.map((detail) => [t(detail.labelKey), detail.value]), [t("pedestrian.sourceChecked"), snapshot.extractedAt]] };
+  });
+}
+
+async function loadParcJeanDrapeauClosures() {
+  try {
+    const snapshot = await fetchJson(LIVE_SOURCES.parcJeanDrapeauSnapshot);
+    const records = normalizeParcJeanDrapeauClosures(snapshot);
+    parcJeanDrapeauSnapshot = snapshot;
+    parcJeanDrapeauSnapshotFailed = false;
+    return records;
+  } catch (error) {
+    parcJeanDrapeauSnapshotFailed = true;
+    showMapStatus(t("parcJeanDrapeau.loadError"), "error");
+    throw error;
+  }
 }
 
 let marathonSnapshotFailed = false;
@@ -2387,7 +2701,7 @@ let marathonSnapshotFailed = false;
 async function loadMarathonBenevaClosures() {
   try {
     const snapshot = await fetchJson(LIVE_SOURCES.marathonBenevaSnapshot);
-    const closures = [...normalizeMarathonBenevaSnapshot(snapshot), ...normalizeMarathonPdfClosures(snapshot)];
+    const closures = normalizeMarathonDisplayClosures(snapshot);
     marathonSnapshotFailed = false;
     return closures;
   } catch (error) {
@@ -3560,6 +3874,7 @@ async function loadOfficialData() {
     loadNoovoRoadClosuresSnapshot(),
     loadCitizenReportClosures(),
     loadMarathonBenevaClosures(),
+    loadParcJeanDrapeauClosures(),
     loadPjcciClosures()
   ]);
   const localSnapshotClosures = localSnapshotResults
@@ -3635,7 +3950,8 @@ async function loadBackgroundOfficialData() {
     updateView({ fit: false });
   }
   // Toujours retirer l'indicateur de chargement une fois le fond charge.
-  showMapStatus(marathonSnapshotFailed ? t("marathon.loadError") : `Donnees chargees: ${allClosures.length} entraves actives dans la region.`, marathonSnapshotFailed ? "error" : "ready");
+  const snapshotError = [marathonSnapshotFailed ? t("marathon.loadError") : null, parcJeanDrapeauSnapshotFailed ? t("parcJeanDrapeau.loadError") : null].filter(Boolean).join(" ");
+  showMapStatus(snapshotError || `Donnees chargees: ${allClosures.length} entraves actives dans la region.`, snapshotError ? "error" : "ready");
 
   enrichMunicipalGeometriesInBackground();
 }
@@ -3980,7 +4296,7 @@ function renderMap(closures) {
     const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
     const lineWidth = mapLineWidth(severity.width);
     const commonStyle = { color: closure.color, weight: lineWidth, opacity: severity.opacity, renderer: fastRenderer };
-    const hitStyle = { color: closure.color, weight: Math.max(34, severity.width + 20), opacity: 0.01, renderer: fastRenderer };
+    const hitStyle = { color: closure.color, weight: Math.max(34, severity.width + 20), opacity: 0, renderer: fastRenderer };
     let mainLayer = null;
 
     if (closure.geometry?.type === "LineString") {
@@ -4457,13 +4773,17 @@ window.addEventListener("languagechange", () => {
   if (PEDESTRIAN_MODE) window.PEDESTRIAN_MAP.refresh();
   const marathonSnapshot = !PEDESTRIAN_MODE && memoryFetchCache.get(LIVE_SOURCES.marathonBenevaSnapshot);
   if (marathonSnapshot && !marathonSnapshotFailed) {
-    const translatedClosures = new Map([...normalizeMarathonBenevaSnapshot(marathonSnapshot), ...normalizeMarathonPdfClosures(marathonSnapshot)].map((closure) => [closure.id, closure]));
+    const translatedClosures = new Map(normalizeMarathonDisplayClosures(marathonSnapshot).map((closure) => [closure.id, closure]));
     allClosures = dedupeClosures(allClosures.map((closure) => translatedClosures.get(closure.id) || closure));
     updateView({ fit: false });
-    const selected = currentClosures.find((closure) => closure.id === selectedClosureId && ["marathon-beneva-waze", "marathon-beneva-pdf"].includes(closure.sourceKind));
+    const selected = currentClosures.find((closure) => closure.id === selectedClosureId && ["marathon-beneva-waze", "marathon-beneva-pdf", "marathon-beneva-article", "marathon-beneva-access"].includes(closure.sourceKind));
     if (selected && activeMapPopup) openGroupedPopup(selected, activeMapPopup.getLatLng());
   }
-  if (marathonSnapshotFailed) showMapStatus(t("marathon.loadError"), "error");
+  if (parcJeanDrapeauSnapshot && !parcJeanDrapeauSnapshotFailed) {
+    const translatedPark = new Map(normalizeParcJeanDrapeauClosures(parcJeanDrapeauSnapshot).map((record) => [record.id, record]));
+    allClosures = allClosures.map((record) => translatedPark.get(record.id) || record);
+  }
+  if (marathonSnapshotFailed || parcJeanDrapeauSnapshotFailed) showMapStatus([marathonSnapshotFailed ? t("marathon.loadError") : null, parcJeanDrapeauSnapshotFailed ? t("parcJeanDrapeau.loadError") : null].filter(Boolean).join(" "), "error");
   updateLocationControl();
   translateZoomControl();
   menuToggle.setAttribute("aria-label", t(menuToggle.classList.contains("is-open") ? "menu.close" : "menu.open"));

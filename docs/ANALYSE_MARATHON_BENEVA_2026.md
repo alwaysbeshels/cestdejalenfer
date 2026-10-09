@@ -1,6 +1,113 @@
 # Marathon Beneva de Montreal 2026 : analyse des fermetures
 
+## Etat valide pour publication
+
+La representation courante du Marathon comporte **989 portions geobase uniques**; les collections originales restent conservees. Les portions non appariees restent explicitement en revue. Les acces autorises au Casino sont exclus des couleurs de fermeture et de stationnement.
+
+Le [snapshot autonome du parc Jean-Drapeau](../data/parc-jean-drapeau-snapshot.json) remplace l'ancien polygone colore : **81 portions routieres, 164 chemins pietons et 26 segments d'acces proteges**. Il est actualisable independamment du Marathon archive; ses deux entrees de FAQ reprennent `extractedAt: 2026-10-09T02:01:12.427Z`.
+
+`node tools/validate-marathon.mjs` passe desormais completement : FR/EN a 1 440 et 390 pixels, clics reels, dates, absence de doublons, absence de polygone du parc, six sondes de pixels sur les acces Casino par configuration, sources FAQ et panne isolee. Le test attend l'interface prete et ouvre la section repliee des sources avant de lire son texte. Les controles de regroupement des deux cartes, des statistiques, de syntaxe JavaScript et de lecture JSON passent aussi. Les echecs mentionnes plus bas sont l'historique des validations precedentes.
+
 Analyse locale du 5 octobre 2026. Guide recoupe a `2026-10-05T14:39:33.446Z`; six parcours RTRT verifies a `2026-10-05T15:09:35.472Z`; PDF recharge et verifie a `2026-10-05T15:59:03.349Z`. Aucune publication effectuee par cette integration.
+
+## Corrections integrees le 8 octobre
+
+Etat intermediaire apres les premieres demandes de correction de l'utilisatrice, avant la deduplication et la creation du snapshot autonome du parc decrites plus haut. Les sections d'audit et d'integration ci-dessous conservent l'historique des changements et des validations.
+
+### Horaires et stationnement
+
+Le [snapshot Marathon](../data/Marathon-Beneva-Mtl-2026.json) conserve ses collections sources Waze/PDF/RTRT exactement. `articleScheduleReference` porte les horaires prioritaires de La Presse, appliques par le chargeur a **113 fiches existantes** dont les traces concordent avec les secteurs de l'article. Les anciennes heures restent dans `originalPublishedSchedule` a l'execution, ainsi que dans les collections sources du JSON; elles ne sont pas presentees comme les heures appliquees.
+
+| Troncon ou restriction | Horaire applique, heure locale |
+| --- | --- |
+| Viau, Rosemont-Sherbrooke, samedi | 07:30 a environ 12:30 |
+| Rosemont, Pie-IX-Viau, samedi | 07:45 a environ 12:30 |
+| Rosemont, Viau-44e, samedi | 08:45 a environ 12:30 |
+| Pourtour de la Louisiane, samedi | 08:45-11:30 |
+| Pourtour de Joseph-Pare et liaisons 43e/44e, samedi | 08:45-12:15 |
+| Concorde, dimanche | 06:30-15:25 selon La Presse; acces Casino de l'avis officiel 3270 conserve dans le popup |
+| Notre-Dame, McGill-Atateken, dimanche | 06:30-11:45 |
+| Saint-Joseph Est, Saint-Denis-16e, dimanche | 06:30 a environ 14:50 |
+| Stationnement, parcours du samedi | Samedi 00:00-12:00 selon l'article; 00:01 du PDF conserve comme horaire source |
+| Stationnement, parcours du marathon | Samedi 22:00 a dimanche 15:00 |
+
+Les heures journalistiques sont explicitement attribuees a La Presse, pas au depliant officiel. Les fins « environ » sont conservees comme approximatives. Les horaires non divergents restent en place. Saint-Laurent comporte plusieurs plages sans limites individualisees dans l'article; une portion de Gouin a 13:35 ne peut pas etre identifiee au secteur d'Ahuntsic a 13:00 par son seul nom. Ces deux cas sont conserves dans `unresolvedAdjustments`, sans choix arbitraire d'horaire.
+
+**81 groupes de stationnement** sont charges : 67 sur les portions RTRT deja verifiees et 14 sur les nouveaux traces geobase. Il s'agit de groupes de geometries et non de 81 rues distinctes. Le stationnement ne prolonge pas les fermetures de circulation; son filtre jour/nuit respecte la date selectionnee, notamment le debut du samedi a 22:00. Aucun emplacement precedemment autorise n'est deduit de cette interdiction.
+
+### Traces resolus
+
+Le [generateur du complement](../tools/build-marathon-supplement.mjs) produit **14 traces routiers complets** a partir des segments WFS officiels `montreal:geobase`, demandes en `EPSG:4326`. Il suit les identifiants de noeuds entre les intersections publiees et conserve les segments en `LineString`/`MultiLineString`, sans routeur ni raccord droit invente. Les champs de longueur a zero ne bloquent plus une ligne valide : seule la ponderation du graphe est calculee depuis ses coordonnees; la valeur source zero est conservee.
+
+Viau est resolu avec 12 segments officiels. Les extremites des 14 traces sont verifiees par les noeuds communs aux vraies rues croisees, sans supposer que l'ordre des libelles `de`/`a` correspond a celui des coordonnees; les sources de ces intersections sont conservees dans `intersectionSources`. Notre-Dame est resolue jusqu'a Atateken avec 17 segments entiers et une portion du segment `4014012`, coupee a son unique croisement geometrique avec le segment Atateken `4017820`. La derniere coordonnee `[-73.55021686863356, 45.514302255554114]` est calculee par intersection des deux lignes publiees. Les geometries originales, indices et fraction de decoupage sont conserves; ce croisement n'est pas presente comme une connexion routiere. Les rues des deux pourtours de parcs sont recoupees avec les contours municipaux et le parcours deja verifie.
+
+Les **297 aretes en revue du rapprochement PDF/RTRT historique** restent conservees pour tracabilite. Ce nombre ne mesure plus les lacunes de la carte enrichie : les nouveaux traces geobase couvrent des portions auparavant absentes, sans reconstruire ni supprimer les anciens objets de revue. Aucune couverture exhaustive de toutes les rues du parcours n'est revendiquee.
+
+### Entrave pietonne ajoutee
+
+L'article n'annonce pas explicitement de fermeture de trottoir ou de sentier. L'[avis officiel 3269](https://www.parcjeandrapeau.com/fr/avis-et-alertes/3269/) fournit en revanche une restriction de marche, velo et automobile : **ile Notre-Dame inaccessible au grand public le dimanche 11 octobre, 06:30-11:00**. Il est conserve dans `officialAccessNotices` avec les exceptions automobiles de l'[avis 3270](https://www.parcjeandrapeau.com/fr/avis-et-alertes/3270/) : acces Casino par Concorde, Sainte-Helene/La Ronde par Jacques-Cartier et transit interdit entre les ponts pendant cette periode.
+
+La geometrie vient du [GeoJSON municipal des parcs](https://donnees.montreal.ca/dataset/2e9e4d2f-173a-4c3d-a5e3-565d79baa27d/resource/35796624-15df-4503-a569-797665f8768e/download/espace_vert.json), entite `OBJECTID: 3610`, parc Jean-Drapeau sur l'ile Notre-Dame. Les 79 points de controle du circuit Gilles-Villeneuve y sont contenus; le depart a Sainte-Helene appartient a l'autre entite. Le polygone et ses quatre anneaux sont conserves, y compris les exclusions interieures. Il localise la surface municipale du parc concernee, pas chaque entree ni une limite cadastrale legale; les espaces hors de cette surface ne sont pas inventes.
+
+La carte pietonne charge maintenant **quatre fiches Marathon** : les trois groupes de chemins existants et ce nouvel avis surfacique, sous `marathon-access-notices`. La fusion ciblee produit 1 207 fiches au total, sans changement aux 1 203 fiches des autres sources, a leurs dates ni aux 198 candidats en revue. Aucun flux automobile ne sert de remplacement a la carte pietonne.
+
+### Fraicheur et validation
+
+- Article : `2026-10-08T23:54:32.614Z`; PDF justifiant le stationnement : `2026-10-08T23:35:34.753Z`.
+- Avis 3269 et 3270 : `2026-10-08T23:47:59.770Z` et `2026-10-08T23:47:59.871Z`; contours municipaux : `2026-10-09T00:02:26.989Z`.
+- Assemblage pieton : `2026-10-09T00:16:31.063Z`, sans fausse date de verification globale. Ces instants du 9 octobre UTC correspondent encore au 8 octobre a Montreal. Les anciennes dates PDF/RTRT et les metadonnees sources precedentes restent preservees.
+- JSON, identifiants, geometries, dates, 113 cibles horaires et 81 groupes de stationnement verifies. Les collections sources precedentes restent identiques; les deux nouvelles dates de catalogue concordent avec leurs sources. Les rues croisees complementaires Pie-IX, 16e et Berri sont verifiees a `2026-10-09T00:35:16.436Z`.
+- Le chargeur produit 253 fiches Marathon Auto : 139 attribuees a l'article, 7 Waze sans ajustement, 106 PDF dont du stationnement, et un avis officiel d'acces. Les nouveaux popups Auto montrent les horaires et provenances attendus. Les abreviations Saint/Sainte sont reconnues pour ne pas omettre les quatre fiches Waze `St-Zotique`.
+- Le nouvel avis pieton passe les clics souris reels en FR/EN a 1 440 et 390 pixels : polygone rouge non vide, quatre anneaux, heures, exception Casino, dates du 10/11/12 octobre, absence de debordement et d'erreur JavaScript, aucune requete au tableur prive.
+- `node tools/validate-popup-grouping.mjs` passe sur les deux cartes : 1 207 fiches pietonnes / 1 078 cartes de popup et, dans cette execution live, 8 223 fiches Auto / 7 996 cartes. Les identifiants, impacts distincts et geometries restent preserves. Un flux externe signale toujours `ERR_CONNECTION_RESET`; ce n'est pas un echec du Marathon.
+- Le validateur Marathon enrichi a passe ses controles Auto et s'est arrete sur le menu mobile du test; ce controle a ete corrige. Ses relances completes restent bloquees a l'attente de chargement global avec l'horloge simulee. **Ce test complet n'est pas declare reussi**; les controles cibles ci-dessus sont des executions distinctes concluantes, pas un remplacement silencieux de son resultat.
+
+Le [prompt d'actualisation](../.github/prompts/actualiser-snapshots.prompt.md) exclut desormais le Marathon 2026, en prevision de la fin du week-end. Le fichier, ses sources et son chargement restent en place. La consolidation peut reutiliser ses quatre fiches localement, sans nouvelle verification, date inventee ni reconstruction. Le generateur PDF historique n'a pas ete execute dans cette correction.
+
+## Audit du 8 octobre : article de La Presse
+
+**Etat historique avant les corrections ci-dessus.** Les recommandations de conserver les heures originales pour l'affichage ont ensuite ete remplacees par la demande explicite d'appliquer celles de l'article aux traces correspondants.
+
+Comparaison avec [l'article du 7 octobre](https://www.lapresse.ca/actualites/grand-montreal/2026-10-07/marathon-de-montreal/les-entraves-a-surveiller-pour-eviter-les-coureurs-et-les-fermetures.php), le depliant officiel et les avis du parc Jean-Drapeau. Le [guide de l'organisateur](https://couronsmtl.com/marathon-beneva/guide-coureur/) renvoie toujours au meme PDF, recharge a `2026-10-08T23:35:34.753Z` avec une empreinte identique a celle documentee ci-dessous. Cette verification du PDF n'est pas une nouvelle verification complete du snapshot composite; ses dates, ses geometries et le catalogue restent inchanges.
+
+**Le snapshot n'est pas exhaustif.** Les principaux secteurs cites possedent des portions routieres, mais deux periodes de stationnement et des restrictions d'acces aux iles manquent. Certains horaires de l'article ne concordent pas avec les groupes PDF stockes. La presence d'un nom de rue ne garantit pas la couverture de toutes les limites annoncees.
+
+### Manques et contradictions
+
+1. **Stationnement non integre.** Le PDF confirme l'interdiction le samedi 10 octobre de **00:01 a 12:00 sur le parcours 10 km**, puis du **samedi 10 a 22:00 au dimanche 11 a 15:00 sur le parcours du marathon**. Les collections actuelles ne produisent aucun impact de stationnement. L'article resume le premier debut a minuit; conserver 00:01, explicitement publie par l'organisateur. Ces restrictions ne doivent pas prolonger les fermetures de circulation.
+2. **Acces aux iles et exceptions non integres.** L'[avis 3269](https://www.parcjeandrapeau.com/fr/avis-et-alertes/3269/), publie le 6 octobre et mis a jour le 7, annonce l'ile Notre-Dame inaccessible au grand public le **11 octobre de 06:30 a 11:00**, pour les modes marche, automobile et velo. L'[avis 3270](https://www.parcjeandrapeau.com/fr/avis-et-alertes/3270/), publie le 7 octobre, precise pendant cette periode l'acces a Sainte-Helene et a La Ronde par Jacques-Cartier, l'acces des clients du Casino par Concorde et l'impossibilite de transiter entre les deux ponts. Ces avis nouveaux par rapport a l'analyse du 5 octobre exigent des impacts distincts et la conservation des exceptions; les lignes des parcours ne representent pas a elles seules ces regles d'acces.
+3. **Pont de la Concorde : ne pas remplacer l'horaire par celui de l'article.** La Presse annonce 06:30-15:25; le groupe `marathon-pdf-2026-10-11-5f22071439e4` conserve **06:30-11:15**, rattache a la page 2, ligne 2 du PDF (`pdfRow: 1`). L'avis 3270 maintient explicitement l'acces au Casino par ce pont pendant les restrictions 06:30-11:00. Ni une fermeture totale jusqu'a 15:25 ni une ouverture universelle a 11:00 ne peuvent etre deduites de ces informations. La portee, les voies et les exceptions doivent etre recoupees avant correction.
+4. **Viau le samedi : debut divergent.** L'article annonce 07:30 entre Rosemont et Sherbrooke. Le groupe PDF correspondant commence a **07:45** et finit a 12:30; les 18 fermetures Waze de Viau commencent aussi a 07:45. Le debut a 07:30 n'est pas corrobore par ces deux collections. La plage PDF 07:30-11:00 associee a des chemins ne justifie pas de l'appliquer a cette rue.
+5. **Geometries incompletes.** Les **297 aretes RTRT en revue** restent non integrees au complement PDF : 231 identifications de rue/chemin non confirmees et 66 transitions horaires ambigues. Ce ne sont ni 297 rues ni 297 fermetures distinctes; certains parcours se recoupent et Waze peut couvrir des portions du samedi. L'article ne fournit pas la preuve geographique necessaire pour completer automatiquement ces lacunes.
+
+### Comparaison par secteur
+
+Les heures sont locales. « Present » ci-dessous signifie present sur les portions deja verifiees, sans certification de couverture geometrique exhaustive. Les heures Waze a la minute, parfois differentes du PDF, restent conservees dans leur collection d'origine.
+
+| Secteur cite | Contenu PDF du snapshot | Conclusion de l'audit |
+| --- | --- | --- |
+| Samedi, Sherbrooke Est pres de Maisonneuve | 06:45-12:35 | Present; heures concordantes |
+| Samedi, Viau entre Rosemont et Sherbrooke | 07:45-12:30 | Present; debut 15 minutes plus tard que dans l'article, a recouper |
+| Samedi, Rosemont Pie-IX-Viau puis Viau-44e | 07:45-12:20 puis 08:45-12:20 | Presents; fin vers 12:30 dans l'article, sans remplacer les 12:20 du PDF |
+| Samedi, pourtour de la Louisiane | Bellechasse, 31e, Beaubien Est et 35e, 08:45-11:30 | Quatre voies presentes; heures concordantes |
+| Samedi, Joseph-Pare et liaisons 43e/44e | Beaubien Est, 41e, Saint-Zotique Est, 43e et 44e, 08:45-12:15 | Presents; un petit groupe 43e au raccord Rosemont garde aussi 08:45-12:20 |
+| Dimanche, pont de la Concorde | 06:30-11:15 | Conflit avec les 15:25 de l'article; exceptions officielles a examiner |
+| Dimanche, Notre-Dame | Notre-Dame Ouest et Est, 06:30-11:45 | Presents; la generalisation McGill-Atateken de l'article n'etablit pas chaque limite du trace |
+| Dimanche, Atateken, Ontario, Cherrier et Berri | 06:30-12:40 | Presents; heures concordantes |
+| Dimanche, Rachel et avenue du Parc-La Fontaine | 06:30-12:40 | Presents; heures concordantes |
+| Dimanche, Saint-Laurent | 06:30-11:45, 07:15-13:45 et 07:30-13:35, selon les groupes | Present; l'article resume les fins entre 13:00 et 13:45, sans rendre compte du groupe a 11:45 |
+| Dimanche, Saint-Joseph Est | 06:30-11:35, 06:30-14:30 et 06:30-14:50, selon les groupes | Present; ne pas imposer les 14:50 resumes dans l'article a toutes les portions |
+| Dimanche, Saint-Denis et Saint-Gregoire pres de Laurier | 07:45-14:15 | Presents; heures concordantes |
+| Dimanche, Rosemont, Viau et Sherbrooke pres de l'arrivee | 06:30-15:25 | Presents; heures concordantes pour ces groupes |
+| Dimanche, bord de riviere a Ahuntsic | Somerville, Park Stanley, Saint-Charles, Gouin Est, Basile-Routhier et de Florence, 07:30-13:00 | Presents; une autre portion de Gouin garde 07:30-13:35 |
+
+### Controle technique de cet audit
+
+Le JSON contient toujours **88 fermetures Waze**, **69 groupes routiers PDF** (15 samedi, 54 dimanche) et **3 groupes de chemins**. Les 20 lignes horaires et les sommets RTRT consecutifs passent les assertions initiales du validateur.
+
+La commande `MARATHON_VALIDATION_URL=http://localhost:5500 node tools/validate-marathon.mjs` s'est arretee sur l'assertion du texte d'un popup Waze, avant ses controles finaux FR/EN, mobiles et de panne isolee. **Le test complet n'est donc pas declare reussi.** Un controle cible apres attente de la fin du chargement et de la presence des couches retrouve bien Boul Rosemont, 08:45 et 12:19 dans les deux popups Waze examines. Il ne remplace pas les etapes non executees du test complet.
+
+Aucune fermeture, geometrie, heure ou date de verification du snapshot n'a ete modifiee par cet audit. Aucun generateur de reconstruction n'a ete execute. Les constats ci-dessus ne constituent ni une publication ni une confirmation des conditions sur le terrain.
 
 ## Conclusion
 
@@ -178,7 +285,7 @@ Le JSON conserve les six `LineString`, leurs distances de progression publiees, 
 
 Les 297 aretes reservees a la verification et les interdictions de stationnement restent des manques de couverture. Les fermetures du dimanche sont maintenant integrees sur les parties verifiees. Les departs a 07:45 ne sont pas substitues aux fermetures annoncees plus tot, ni etendus jusqu'a la derniere reouverture de tout le parcours.
 
-Le controle complementaire des avis du parc Jean-Drapeau n'a pas apporte de nouvel avis horaire pour le 11 octobre dans la liste recente consultee. Les recherches de texte dans le WFS municipal peuvent retourner l'entreprise « Marathon Division Gaz » : ces chantiers ne constituent pas des fermetures de l'evenement Beneva.
+Au 5 octobre, le controle complementaire des avis du parc Jean-Drapeau n'avait pas apporte de nouvel avis horaire pour le 11 octobre dans la liste recente consultee. Ce constat historique est depasse par les avis 3269 et 3270 publies les 6 et 7 octobre, decrits dans l'audit du 8 octobre ci-dessus. Les recherches de texte dans le WFS municipal peuvent retourner l'entreprise « Marathon Division Gaz » : ces chantiers ne constituent pas des fermetures de l'evenement Beneva.
 
 Clarification de l'utilisatrice le 5 octobre : le 9 octobre concerne une exposition interieure, sans fermeture a ajouter. Cette journee est retiree des questions en attente et inscrite dans `excludedDates`, avec une provenance `user-clarification`. Les references RTRT brutes sont conservees pour la tracabilite, sans generer de fermeture pour le 9. Pour les entrees du parc ou du jardin, une restriction d'acces distincte des portions de parcours exige encore un avis specifique.
 

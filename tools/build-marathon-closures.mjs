@@ -161,6 +161,8 @@ export function mergeMarathonPedestrianSnapshot(previous, marathon) {
   const reference = marathon.officialClosureReference;
   assert.equal(reference?.schemaVersion, 1, "Missing verified marathon closure reference");
   const key = "marathon-pdf";
+  const accessKey = "marathon-access-notices";
+  const ownedKeys = new Set([key, accessKey]);
   const records = reference.records.filter(record => record.kind === "path").map(record => {
     const lines = record.geometry.type === "LineString" ? [record.geometry.coordinates] : record.geometry.coordinates;
     const longest = lines.reduce((first, second) => first.length >= second.length ? first : second);
@@ -182,13 +184,34 @@ export function mergeMarathonPedestrianSnapshot(previous, marathon) {
       ]
     };
   });
+  const accessNotices = marathon.officialAccessNotices?.managedBy ? [] : (marathon.officialAccessNotices?.records || []).filter(record => record.affectedUsers.includes("pedestrians"));
+  const accessRecords = accessNotices.map(record => {
+    assert.ok(record.geometry && record.evidence?.text && record.sourceCheckedAt, "Incomplete marathon pedestrian access notice");
+    const control = reference.records.find(entry => entry.id === record.geometrySource.control.courseRecordId);
+    assert.ok(control, "Missing verified access-area control point");
+    const controlLine = control.geometry.type === "LineString" ? control.geometry.coordinates : control.geometry.coordinates[0];
+    return {
+      ...record, id: `pedestrian-${record.id}`, sourceKey: accessKey, sourceKind: "pedestrian-marathon-access", category: "event", borough: "Montréal",
+      automobileImpact: false, affectedUsers: record.affectedUsers.filter(user => user !== "motorists"), openEnded: false, periods: ["day"],
+      point: controlLine[0], side: { code: "not-applicable", published: null, geometryStatus: "official-park-surface" },
+      geometryNoteKey: "marathon.accessGeometry", scheduleText: (record.relatedNotices || []).map(notice => `${notice.startDate} ${notice.startTime}-${notice.endTime}: ${notice.text}`).join("\n"),
+      details: [
+        { labelKey: "marathon.geometrySource", value: record.geometrySource.sourceUrl },
+        { labelKey: "marathon.relatedNotices", value: (record.relatedNotices || []).map(notice => notice.sourceUrl).join("\n") }
+      ]
+    };
+  });
   const result = {
     ...previous, generatedAt: new Date().toISOString(),
-    records: [...previous.records.filter(record => record.sourceKey !== key), ...records].sort((first, second) => first.id.localeCompare(second.id)),
-    sources: [...previous.sources.filter(source => source.key !== key), { key, url: "data/Marathon-Beneva-Mtl-2026.json", status: "local-snapshot", checkedAt: null, sourceExtractedAt: reference.pdfCheckedAt, received: reference.records.length, retained: records.length, reviewCount: 0 }]
+    records: [...previous.records.filter(record => !ownedKeys.has(record.sourceKey)), ...records, ...accessRecords].sort((first, second) => first.id.localeCompare(second.id)),
+    sources: [...previous.sources.filter(source => !ownedKeys.has(source.key)),
+      { key, url: "data/Marathon-Beneva-Mtl-2026.json", status: "local-snapshot", checkedAt: null, sourceExtractedAt: reference.pdfCheckedAt, received: reference.records.length, retained: records.length, reviewCount: 0 },
+      ...(accessNotices.length ? [{ key: accessKey, url: "data/Marathon-Beneva-Mtl-2026.json", status: "local-snapshot", checkedAt: null,
+        sourceExtractedAt: accessNotices.map(notice => notice.sourceCheckedAt).sort()[0], received: accessNotices.length, retained: accessRecords.length, reviewCount: 0 }] : [])]
   };
-  assert.deepEqual(result.records.filter(record => record.sourceKey !== key), [...previous.records.filter(record => record.sourceKey !== key)].sort((first, second) => first.id.localeCompare(second.id)), "Other pedestrian records changed");
-  assert.deepEqual(result.sources.filter(source => source.key !== key), previous.sources.filter(source => source.key !== key), "Other source verification dates changed");
+  assert.deepEqual(result.records.filter(record => !ownedKeys.has(record.sourceKey)), [...previous.records.filter(record => !ownedKeys.has(record.sourceKey))].sort((first, second) => first.id.localeCompare(second.id)), "Other pedestrian records changed");
+  assert.deepEqual(result.sources.filter(source => !ownedKeys.has(source.key)), previous.sources.filter(source => !ownedKeys.has(source.key)), "Other source verification dates changed");
+  assert.deepEqual(result.review, previous.review, "Other review candidates changed");
   return result;
 }
 

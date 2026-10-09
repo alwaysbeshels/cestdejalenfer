@@ -472,6 +472,22 @@ Ce cas contrôle l'interprétation de la réponse vérifiée le 16 septembre 202
 - B + C + D + M et la géobase vérifiée établissent Montréal, Ahuntsic - Cartierville, rue Foucher entre Chabanel Est et de Louvain Est : segment officiel `1040221`, `noTronconSq: 1100421`, longueur publiée `260.212` m, `LineString` exact `[[-73.647503,45.550485],[-73.650514,45.55136],[-73.650583,45.551379]]`.
 - `review.mapEligible: true`, `geometryVerified: true`, `restrictionOfficiallyVerified: false` sont compatibles. `inMap` reste faux tant que l'intégration n'est pas réellement faite. Ne pas attribuer les permis d'autres tronçons de Foucher à cette réponse.
 
+## Parc Jean-Drapeau - independent mobility notices
+
+The authority is **Societe du parc Jean-Drapeau**, in Montreal's Ville-Marie borough, not PJCCI and not the City of Montreal roadwork feed. Its ongoing notice source is independent of archived Marathon/UCI event snapshots.
+
+- Official index: `https://www.parcjeandrapeau.com/fr/avis-et-alertes/`.
+- Generator: `node tools/build-parc-jean-drapeau-snapshot.mjs`; output: `data/parc-jean-drapeau-snapshot.json`.
+- Extraction: Chromium request-context GET of the index and every published `?page=N&year=&category=&transport=` link. Parse the HTML response with `DOMParser`; `.notice-list > div` supplies the notice URL, title, published/updated text and textual status. Require the number of unique notice IDs to equal the published total; reject conflicting copies and changed totals. No separate structured XHR feed was observed.
+- Retrieve every active/planned detail page at `/fr/avis-et-alertes/{id}/`. Preserve its full description and published transport modes. `Termine` notices are excluded. Keep only active/future published periods; a genuinely current open-ended notice remains in review until its scope and geometry are verified. A new or ambiguous notice must never silently inherit a previous mapping.
+- Dates come from the actual title and publication year, with weekday/date validation; local time is `America/Montreal`. Do not invent an exact date for approximate periods. The 2026-10-11 06:30-11:00 notices 3269/3270 are reviewed examples, not dates to reuse for future notices.
+- Source geometry: municipal `montreal:geobase` WFS, explicitly `srsname=EPSG:4326`, with exact feature counts and IDs. Preserve `sensCir` and official nodes. The municipal park GeoJSON is a reference area, not a blanket automobile closure. OSM XML supplies actual paths; parse coordinates and typed access tags, preserve attribution and timestamps, exclude private/no-access/customer paths from public-path claims. Never geocode a guessed line or substitute a driving router.
+- Keep notice records, `automobileRecords`, `pedestrianRecords`, `accessExceptions`, exclusions and review separate. An authorized Casino route must not be coloured as closed or as no-parking; this does not declare parking allowed. Preserve both entry and exit paths and their published one-way semantics. Do not infer pedestrian access from a motorists-only exception.
+- The Casino location published by the park is a control point, not a worksite or an invented entrance. This workstation blocks the Casino's own website under a corporate policy; do not bypass it or publish details from the block page.
+- On unchanged complete notice verification, update only `extractedAt` and the matching FAQ/catalog freshness. Preserve the records and geometries exactly. `--from-captures DIR` is an explicit local rebuild and does not advance an existing successful verification time. Any failed/incomplete source response leaves the previous snapshot intact.
+- Load only the final JSON on Auto. Merge pedestrian paths with `node tools/build-pedestrian-snapshot.mjs --parc-jean-drapeau-only`, or during full consolidation. Preserve other source records/freshness and per-source failures. The legacy Marathon access polygon must not be resurrected by its old merge helper.
+- Validate JSON, stable IDs, all index pages, textual modes, dates, no source-colour classification, exact/proven clipped lines, one-way entry/exit continuity and no coloured Casino corridor. In Chromium, test actual road/path clicks, pixel alpha on entry/exit routes, FR/EN desktop/mobile, FAQ source links/freshness, and isolated source failure. No screenshots are attached to the chat.
+
 ## Other source sections
 
 When a new municipality or infrastructure authority snapshot is added, create a section here with:

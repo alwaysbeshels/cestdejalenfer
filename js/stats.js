@@ -53,20 +53,23 @@
   ];
   const TWO_COLUMN_MIN_WIDTH = 760;
 
-  const MONTREAL_KINDS = new Set(["montreal-wfs", "uci-wfs", "marathon-beneva-waze", "marathon-beneva-pdf", "seasonal-pedestrian-street", "montreal-pedestrian-opendata"]);
+  const MONTREAL_KINDS = new Set(["montreal-wfs", "uci-wfs", "marathon-beneva-waze", "marathon-beneva-pdf", "marathon-beneva-article", "marathon-beneva-access", "parc-jean-drapeau", "seasonal-pedestrian-street", "montreal-pedestrian-opendata"]);
   // Sources whose street field is the bare street name, without a type word.
   const BARE_STREET_KINDS = new Set(["montreal-wfs", "mont-royal-snapshot"]);
   const REGIONAL_KINDS = new Set(["mobilite-montreal", "noovo-road-snapshot", "pjcci"]);
   const MTMD_KINDS = new Set(["quebec511-mtmd-wfs", "quebec511-event"]);
   const CURATED_KINDS = new Set(["mobilite-montreal", "seasonal-pedestrian-street", "linked-city-work"]);
   const STREET_EXCLUDED_KINDS = new Set(["uci-wfs", "pjcci"]);
-  const EVENT_SNAPSHOT_KINDS = new Set(["uci-wfs", "noovo-road-snapshot", "marathon-beneva-waze", "marathon-beneva-pdf"]);
+  const EVENT_SNAPSHOT_KINDS = new Set(["uci-wfs", "noovo-road-snapshot", "marathon-beneva-waze", "marathon-beneva-pdf", "marathon-beneva-article", "marathon-beneva-access"]);
   const AGE_BUCKETS = [[0, 30, "lessMonth"], [31, 182, "months1to6"], [183, 365, "months6to12"], [366, Infinity, "overYear"]];
   const AGE_COLORS = ["#a8d5c2", "#5fae8f", "#2f7d62", "#174a3a"];
   const SNAPSHOT_URLS = {
     "uci-wfs": "data/montreal-uci-closures-snapshot.json",
     "marathon-beneva-waze": "data/Marathon-Beneva-Mtl-2026.json",
     "marathon-beneva-pdf": "https://couronsmtl.com/wp-content/uploads/2026/09/Depliant-Fermetures-de-rues-2026-web.pdf",
+    "marathon-beneva-article": "data/Marathon-Beneva-Mtl-2026.json",
+    "marathon-beneva-access": "data/Marathon-Beneva-Mtl-2026.json",
+    "parc-jean-drapeau": "data/parc-jean-drapeau-snapshot.json",
     "mont-royal-snapshot": "data/mont-royal-snapshot.json",
     "beaconsfield-snapshot": "data/beaconsfield-snapshot.json",
     "noovo-road-snapshot": "data/noovo-road-closures-snapshot.json",
@@ -195,7 +198,7 @@
       if (/priv/i.test(responsible)) return "private";
       return "unknown";
     }
-    if (kind === "uci-wfs" || kind === "marathon-beneva-waze" || kind === "marathon-beneva-pdf") return "event";
+    if (kind === "uci-wfs" || kind === "marathon-beneva-waze" || kind === "marathon-beneva-pdf" || kind === "marathon-beneva-article" || kind === "marathon-beneva-access") return "event";
     if (kind === "citizen-report") return "citizenReport";
     if (kind === "noovo-road-snapshot") return "unknown";
     if (MTMD_KINDS.has(kind) || kind === "pjcci") return "publicOrg";
