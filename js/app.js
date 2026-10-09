@@ -64,6 +64,7 @@ const LIVE_SOURCES = {
   lavalMapService: "https://gis.laval.ca/arcgis/rest/services/ing/Obstruction_14_jours/MapServer",
   // Repentigny Open511 events with official road geometry
   repentignyOpen511: "https://info-travaux.ville.repentigny.qc.ca/api/events/",
+  repentignyRoadworksSnapshot: "data/repentigny-roadworks-snapshot.json",
   dorvalEntraves: "https://services2.arcgis.com/UfBk83iw7IIXzPRW/arcgis/rest/services/Entraves2410_Vue/FeatureServer/34",
   boisbriandWorks: "https://services3.arcgis.com/x2965icj4V1l01th/arcgis/rest/services/Info_travaux_2026/FeatureServer/2",
   saintEustacheLines: "https://services2.arcgis.com/wvG4T9QXold5hjxu/arcgis/rest/services/Entraves_routieres/FeatureServer/0",
@@ -2013,20 +2014,33 @@ async function loadPjcciClosures() {
 }
 
 async function loadRepentignyClosures() {
-  const data = await fetchJson(LIVE_SOURCES.repentignyOpen511);
-  return (data.events || [])
+  const data = await fetchJson(LIVE_SOURCES.repentignyRoadworksSnapshot);
+  if (!Array.isArray(data.records)) {
+    throw new Error("Repentigny roadworks snapshot has no records array");
+  }
+  return data.records
     .filter((event) => event.status === "ACTIVE" && event.geography?.coordinates?.length && event.schedule?.intervals?.length)
     .map(normalizeRepentignyEvent)
     .filter(Boolean);
 }
 
 function normalizeRepentignyEvent(event) {
-  const interval = event.schedule.intervals[0] || "";
-  const [startDate, endDate] = interval.split("/");
+  const intervals = (event.schedule?.intervals || []).map((interval) => {
+    const [start, end] = interval.split("/");
+    const startTime = Date.parse(start);
+    const endTime = Date.parse(end);
+    return start && end && Number.isFinite(startTime) && Number.isFinite(endTime) && endTime >= startTime
+      ? { start, end, startTime, endTime }
+      : null;
+  }).filter(Boolean);
   const road = event.roads?.[0];
-  if (!startDate || !endDate || !road || !event.geography) {
+  if (intervals.length === 0 || !road || !event.geography) {
     return null;
   }
+  const firstInterval = intervals.reduce((earliest, interval) =>
+    interval.startTime < earliest.startTime ? interval : earliest);
+  const lastInterval = intervals.reduce((latest, interval) =>
+    interval.endTime > latest.endTime ? interval : latest);
 
   // Open511 publie UNKNOWN, MINOR, MODERATE ou MAJOR: aucune de ces valeurs ne
   // signifie une fermeture complete, seul le texte publie l'indique.
@@ -2044,8 +2058,8 @@ function normalizeRepentignyEvent(event) {
     sourceKind: "repentigny-open511",
     responsible: "Ville de Repentigny",
     borough: "Repentigny",
-    startDate: startDate.slice(0, 10),
-    endDate: endDate.split("T")[0],
+    startDate: firstInterval.start.slice(0, 10),
+    endDate: lastInterval.end.split("T")[0],
     publishedIntervals: event.schedule.intervals,
     impact: [event.description, event.detour].filter(Boolean).join(" - ") || "Impact automobile publié par la Ville de Repentigny.",
     trafficLabel: traffic.label,

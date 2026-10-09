@@ -8,6 +8,7 @@
     "test:custom-stats": "node tools/validate-custom-stats.mjs",
     "test:potholes": "node tools/validate-potholes.mjs",
     "snapshot:potholes:map": "node tools/build-nids-de-poule-snapshot.mjs --carte-locale",
+    "snapshot:repentigny": "node tools/build-repentigny-roadworks-snapshot.mjs",
     "snapshot:montreal": "node tools/build-montreal-resolved-geometries.mjs",
     "snapshot:pjcci": "node tools/build-pjcci-work-advisories-snapshot.mjs",
     "snapshot:montreal-uci": "node tools/build-montreal-uci-snapshot.mjs",

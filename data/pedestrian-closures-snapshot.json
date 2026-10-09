@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-09T02:02:41.331Z",
+  "generatedAt": "2026-10-09T03:10:59.951Z",
   "policy": "Pedestrian and cycling impacts. Cycling-only records identify affectedUsers explicitly and do not confirm pedestrian restrictions. Per-source checkedAt is authoritative; local snapshots are not reverified. Unknown sidewalk sides are never inferred. Geometry is the published worksite unless explicitly identified otherwise. Selected documentary review notices are displayed separately without geometry or inferred dates.",
   "sources": [
     {
@@ -176,11 +176,12 @@
     {
       "key": "repentigny",
       "url": "https://info-travaux.ville.repentigny.qc.ca/api/events/",
-      "status": "failed",
-      "checkedAt": null,
+      "status": "checked",
+      "checkedAt": "2026-10-09T03:10:59.888Z",
       "sourceExtractedAt": null,
-      "retained": 0,
-      "error": "fetch failed (ECONNRESET)"
+      "received": 9,
+      "retained": 2,
+      "reviewCount": 1
     },
     {
       "key": "laval",
@@ -218641,6 +218642,124 @@
       }
     },
     {
+      "id": "pedestrian-repentigny-repentigny-open511-ville.repentigny.qc.ca/1982-sidewalk-unknown-critical",
+      "title": "Fermeture partielle boulevard Iberville (entre Laurentien et Contrecoeur)",
+      "streets": "Boulevard Iberville, entre Boulevard Laurentien et Rue Contrecoeur",
+      "category": "municipal",
+      "sourceKind": "pedestrian-repentigny",
+      "source": "Ville de Repentigny - Open511",
+      "sourceUrl": "https://info-travaux.ville.repentigny.qc.ca/api/events/ville.repentigny.qc.ca/1982/",
+      "responsible": "Ville de Repentigny",
+      "borough": "Repentigny",
+      "pedestrianArea": "sidewalk",
+      "startDate": "2026-05-11",
+      "endDate": "2026-10-16",
+      "openEnded": false,
+      "periods": [
+        "day",
+        "night"
+      ],
+      "schedule": null,
+      "scheduleText": null,
+      "publishedIntervals": [
+        "2026-05-11T07:00/2026-10-16T17:00"
+      ],
+      "publishedDirection": null,
+      "sourceDescription": "- Trottoir fermé",
+      "severity": "critical",
+      "impact": "- Trottoir fermé",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.41903448104858,
+            45.77645829609627
+          ],
+          [
+            -73.41279029846191,
+            45.78328231047924
+          ]
+        ]
+      },
+      "point": [
+        -73.41279029846191,
+        45.78328231047924
+      ],
+      "side": {
+        "code": "unknown",
+        "published": null,
+        "geometryStatus": "worksite-only"
+      },
+      "evidence": {
+        "kind": "published-text",
+        "text": "- Trottoir fermé"
+      },
+      "details": [],
+      "sourceKey": "repentigny",
+      "sourceCheckedAt": "2026-10-09T03:10:59.888Z"
+    },
+    {
+      "id": "pedestrian-repentigny-repentigny-open511-ville.repentigny.qc.ca/2023-sidewalk-unknown-critical",
+      "title": "Fermeture partielle rue Cherrier et boul. de la Rochelle",
+      "streets": "Rue Cherrier",
+      "category": "municipal",
+      "sourceKind": "pedestrian-repentigny",
+      "source": "Ville de Repentigny - Open511",
+      "sourceUrl": "https://info-travaux.ville.repentigny.qc.ca/api/events/ville.repentigny.qc.ca/2023/",
+      "responsible": "Ville de Repentigny",
+      "borough": "Repentigny",
+      "pedestrianArea": "sidewalk",
+      "startDate": "2026-09-08",
+      "endDate": "2027-02-26",
+      "openEnded": false,
+      "periods": [
+        "day",
+        "night"
+      ],
+      "schedule": null,
+      "scheduleText": null,
+      "publishedIntervals": [
+        "2026-09-08T07:00/2027-02-26T17:00"
+      ],
+      "publishedDirection": null,
+      "sourceDescription": "- Fermeture du trottoir du côté des travaux",
+      "severity": "critical",
+      "impact": "- Fermeture du trottoir du côté des travaux",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.46778631210327,
+            45.733313752308355
+          ],
+          [
+            -73.46787214279175,
+            45.73333247409837
+          ],
+          [
+            -73.46786141395569,
+            45.733384895076995
+          ]
+        ]
+      },
+      "point": [
+        -73.46787214279175,
+        45.73333247409837
+      ],
+      "side": {
+        "code": "unknown",
+        "published": null,
+        "geometryStatus": "worksite-only"
+      },
+      "evidence": {
+        "kind": "published-text",
+        "text": "- Fermeture du trottoir du côté des travaux"
+      },
+      "details": [],
+      "sourceKey": "repentigny",
+      "sourceCheckedAt": "2026-10-09T03:10:59.888Z"
+    },
+    {
       "id": "pedestrian-terrebonneEntraveLines-terrebonne-8af1f11f-a23c-425a-8987-b15476731c65-path-not-applicable-critical-cyclists",
       "title": "Fermeture complete - Piste cyclable située entre le chemin Comtois et le chemin Martin",
       "streets": "Piste cyclable située entre le chemin Comtois et le chemin Martin",
@@ -220159,6 +220278,15 @@
       "reason": "pedestrian-mention-without-explicit-restriction",
       "text": "Réfection de chaussées, bordures et trottoirs - Malard\nTravaux en cours sur Malard; ralentissements locaux possibles.\nMalard",
       "sourceKey": "linkedCities"
+    },
+    {
+      "id": "ville.repentigny.qc.ca/2000",
+      "reason": "missing-dates-or-geometry",
+      "title": "Entrave déraillement - Fermeture complète de la piste cyclable et des accès piétons pour une durée indéterminée",
+      "sourceUrl": "https://info-travaux.ville.repentigny.qc.ca/api/events/",
+      "publishedSchedule": null,
+      "text": "Fermeture\nEntrave déraillement - Fermeture complète de la piste cyclable et des accès piétons pour une durée indéterminée\nAucun",
+      "sourceKey": "repentigny"
     }
   ]
 }

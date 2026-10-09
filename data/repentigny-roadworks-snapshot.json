@@ -1,0 +1,542 @@
+{
+  "extractedAt": "2026-10-09T04:43:32.661Z",
+  "sourceUrl": "https://info-travaux.ville.repentigny.qc.ca/api/events/",
+  "municipality": "Repentigny",
+  "extractionMethod": "Open511 JSON API, retrieved with Chromium; all pagination pages validated.",
+  "receivedEventCount": 9,
+  "activeEventCount": 9,
+  "retainedRecordCount": 8,
+  "limitations": [
+    "Only active events with published schedule intervals, road references, and official geometry are retained for the automobile map.",
+    "An ACTIVE event without a published schedule interval is not shown as a dated road restriction."
+  ],
+  "records": [
+    {
+      "detour": "- Une voie d'ouverte dans chaque direction;\n- Piste cyclable ouverte;\n- Une signalisation adéquate sera installée afin de bien diriger les automobilistes.",
+      "url": "/api/events/ville.repentigny.qc.ca/2027/",
+      "roads": [
+        {
+          "direction": "BOTH",
+          "state": "SOME_LANES_CLOSED",
+          "name": "Pont Le Gardeur"
+        }
+      ],
+      "severity": "MODERATE",
+      "created": "2026-09-28T19:16:34+00:00",
+      "updated": "2026-09-28T19:19:50+00:00",
+      "status": "ACTIVE",
+      "attachments": [
+        {
+          "type": "application/pdf",
+          "url": "https://info-travaux-repentigny.s3.amazonaws.com/attachments/dc2a1010c7d94e4bb0ee687208a74725/Planche signalisation 1.2 et 2.2.pdf",
+          "length": "2495940"
+        }
+      ],
+      "description": "Réfection du pont Le Gardeur",
+      "schedule": {
+        "intervals": [
+          "2026-10-05T07:00/2026-11-13T17:00"
+        ]
+      },
+      "event_type": "CONSTRUCTION",
+      "headline": "Fermeture partielle du pont Le Gardeur",
+      "geography": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.48349332809448,
+            45.70124160537742
+          ],
+          [
+            -73.48399758338928,
+            45.706404055526924
+          ],
+          [
+            -73.48410487174988,
+            45.70754287729696
+          ],
+          [
+            -73.48408341407776,
+            45.708179708303554
+          ],
+          [
+            -73.48382592201233,
+            45.7090113237532
+          ],
+          [
+            -73.48323583602905,
+            45.709850418693485
+          ],
+          [
+            -73.48232388496398,
+            45.71061458348287
+          ],
+          [
+            -73.47715258598328,
+            45.71338646611083
+          ]
+        ]
+      },
+      "jurisdiction_url": "https://info-travaux.ville.repentigny.qc.ca/api/jurisdictions/ville.repentigny.qc.ca/",
+      "id": "ville.repentigny.qc.ca/2027"
+    },
+    {
+      "detour": "- Une signalisation adéquate sera installée afin de bien diriger les automobilistes.",
+      "url": "/api/events/ville.repentigny.qc.ca/2032/",
+      "roads": [
+        {
+          "direction": "BOTH",
+          "to": "Rue Morel",
+          "state": "CLOSED",
+          "from": "Rue Notre-Dame",
+          "name": "Boulevard Claude-David"
+        }
+      ],
+      "severity": "MAJOR",
+      "created": "2026-10-05T17:34:15+00:00",
+      "updated": "2026-10-05T17:37:37+00:00",
+      "status": "ACTIVE",
+      "attachments": [
+        {
+          "type": "application/pdf",
+          "url": "https://info-travaux-repentigny.s3.amazonaws.com/attachments/5975a6400be14c9f8cba000c451c22b2/MPRO-26-009-01_FC_CLAUDE-DAVID_(MOREL_NOTRE-DAME)_RÉV.1.pdf",
+          "length": "6914684"
+        }
+      ],
+      "description": "Travaux pavage et bordure",
+      "schedule": {
+        "intervals": [
+          "2026-10-05T07:00/2026-11-20T17:00"
+        ]
+      },
+      "event_type": "CONSTRUCTION",
+      "headline": "Fermeture complète boulevard Claude-David (entre les rues Notre-Dame et Morel)",
+      "geography": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.47361207008362,
+            45.717461633080674
+          ],
+          [
+            -73.47128391265868,
+            45.71667508907071
+          ]
+        ]
+      },
+      "jurisdiction_url": "https://info-travaux.ville.repentigny.qc.ca/api/jurisdictions/ville.repentigny.qc.ca/",
+      "id": "ville.repentigny.qc.ca/2032"
+    },
+    {
+      "detour": "- Une voie d'ouverte dans chaque direction;\n- Trottoir fermé;\n- Une signalisation adéquate sera installée afin de bien diriger les automobilistes.",
+      "url": "/api/events/ville.repentigny.qc.ca/1982/",
+      "roads": [
+        {
+          "direction": "BOTH",
+          "to": "Rue Contrecoeur",
+          "state": "SOME_LANES_CLOSED",
+          "from": "Boulevard Laurentien",
+          "name": "Boulevard Iberville"
+        }
+      ],
+      "severity": "MAJOR",
+      "created": "2026-05-05T14:18:20+00:00",
+      "updated": "2026-09-18T12:37:41+00:00",
+      "status": "ACTIVE",
+      "attachments": [
+        {
+          "type": "application/pdf",
+          "url": "https://info-travaux-repentigny.s3.amazonaws.com/attachments/27362767f5e444798295f7fca563fb39/2026-0~3.PDF",
+          "length": "1382609"
+        }
+      ],
+      "description": "Travaux réfection de pavage",
+      "schedule": {
+        "intervals": [
+          "2026-05-11T07:00/2026-10-16T17:00"
+        ]
+      },
+      "event_type": "CONSTRUCTION",
+      "headline": "Fermeture partielle boulevard Iberville (entre Laurentien et Contrecoeur)",
+      "geography": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.41903448104858,
+            45.77645829609627
+          ],
+          [
+            -73.41279029846191,
+            45.78328231047924
+          ]
+        ]
+      },
+      "jurisdiction_url": "https://info-travaux.ville.repentigny.qc.ca/api/jurisdictions/ville.repentigny.qc.ca/",
+      "id": "ville.repentigny.qc.ca/1982"
+    },
+    {
+      "detour": "- Fermeture de la voie de virage à droite sur\nla rue Cherrier vers le boul. de la Rochelle nord;\n- Fermeture de la direction nord du boul. de la Rochelle avec déviation en direction sud;\n- Fermeture du trottoir du côté des travaux\navec déviation sur la piste multifonction;\n- Une signalisation adéquate sera installée afin de bien diriger les automobilistes.",
+      "url": "/api/events/ville.repentigny.qc.ca/2023/",
+      "roads": [
+        {
+          "direction": "N",
+          "state": "SOME_LANES_CLOSED",
+          "name": "Rue Cherrier"
+        },
+        {
+          "direction": "N",
+          "state": "SOME_LANES_CLOSED",
+          "name": "Boulevard de La Rochelle"
+        }
+      ],
+      "severity": "MODERATE",
+      "created": "2026-09-04T13:40:24+00:00",
+      "updated": "2026-09-04T13:44:19+00:00",
+      "status": "ACTIVE",
+      "attachments": [
+        {
+          "type": "application/pdf",
+          "url": "https://info-travaux-repentigny.s3.amazonaws.com/attachments/d9f4eb2c9d5343a0b37aaf3bc68258ae/CIV-04_Plan signalisation.pdf",
+          "length": "1018092"
+        }
+      ],
+      "description": "Travaux station de pompage Larochelle",
+      "schedule": {
+        "intervals": [
+          "2026-09-08T07:00/2027-02-26T17:00"
+        ]
+      },
+      "event_type": "CONSTRUCTION",
+      "headline": "Fermeture partielle rue Cherrier et boul. de la Rochelle",
+      "geography": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.46778631210327,
+            45.733313752308355
+          ],
+          [
+            -73.46787214279175,
+            45.73333247409837
+          ],
+          [
+            -73.46786141395569,
+            45.733384895076995
+          ]
+        ]
+      },
+      "jurisdiction_url": "https://info-travaux.ville.repentigny.qc.ca/api/jurisdictions/ville.repentigny.qc.ca/",
+      "id": "ville.repentigny.qc.ca/2023"
+    },
+    {
+      "detour": "- Nouvelle configuration temporaire;\n- Des signaleurs seront présents de 7h à 17h du lundi au vendredi afin de bien diriger les automobilistes;\n- Une signalisation adéquate sera installée afin de bien diriger les automobilistes.",
+      "url": "/api/events/ville.repentigny.qc.ca/2021/",
+      "roads": [
+        {
+          "direction": "BOTH",
+          "state": "ALL_LANES_OPEN",
+          "name": "Boulevard Pierre-Le Gardeur"
+        }
+      ],
+      "severity": "MODERATE",
+      "created": "2026-08-27T20:14:32+00:00",
+      "updated": "2026-08-27T20:15:51+00:00",
+      "status": "ACTIVE",
+      "attachments": [
+        {
+          "type": "application/pdf",
+          "url": "https://info-travaux-repentigny.s3.amazonaws.com/attachments/0e372277d19f4da98653b850068614f7/IC-S.LEGAULT-PH1-001R2.pdf",
+          "length": "598782"
+        }
+      ],
+      "description": "Travaux General Dynamics",
+      "schedule": {
+        "intervals": [
+          "2026-08-31T07:00/2027-08-27T17:00"
+        ]
+      },
+      "event_type": "CONSTRUCTION",
+      "headline": "Nouvelle configuration sur Pierre-Le Gardeur (Général Dynamics)",
+      "geography": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.48259747028351,
+            45.743242908584094
+          ],
+          [
+            -73.48381519317627,
+            45.74130738582389
+          ]
+        ]
+      },
+      "jurisdiction_url": "https://info-travaux.ville.repentigny.qc.ca/api/jurisdictions/ville.repentigny.qc.ca/",
+      "id": "ville.repentigny.qc.ca/2021"
+    },
+    {
+      "detour": "- Circulation locale permise;\n- Accès au commerces permis;\n- Des signaleurs seront présents afin de bien diriger les automobilistes;\n- Une signalisation adéquate sera installée afin de bien diriger les automobilistes.",
+      "url": "/api/events/ville.repentigny.qc.ca/1974/",
+      "roads": [
+        {
+          "direction": "BOTH",
+          "to": "Rue Saint-Étienne",
+          "state": "CLOSED",
+          "from": "Rue Joffre",
+          "name": "Rue Notre-Dame"
+        }
+      ],
+      "severity": "MAJOR",
+      "created": "2026-04-23T12:43:19+00:00",
+      "updated": "2026-10-07T19:32:16+00:00",
+      "status": "ACTIVE",
+      "attachments": [
+        {
+          "type": "application/pdf",
+          "url": "https://info-travaux-repentigny.s3.amazonaws.com/attachments/3b484772754e4689a493b95c75cf88b1/20260416-SDV-19714-004-Rev0.pdf",
+          "length": "8602149"
+        }
+      ],
+      "description": "Travaux de réfection des infrastructures",
+      "schedule": {
+        "intervals": [
+          "2026-04-27T07:00/2026-10-09T17:00"
+        ]
+      },
+      "event_type": "CONSTRUCTION",
+      "headline": "Fermeture complète de la rue Notre-Dame (entre Joffre et Saint-Étienne)",
+      "geography": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.43482732772827,
+            45.74894426166421
+          ],
+          [
+            -73.4308362007141,
+            45.75340610946442
+          ]
+        ]
+      },
+      "jurisdiction_url": "https://info-travaux.ville.repentigny.qc.ca/api/jurisdictions/ville.repentigny.qc.ca/",
+      "id": "ville.repentigny.qc.ca/1974"
+    },
+    {
+      "url": "/api/events/ville.repentigny.qc.ca/2026/",
+      "roads": [
+        {
+          "direction": "W",
+          "to": "A-640",
+          "state": "CLOSED",
+          "from": "Boulevard de La Rochelle",
+          "name": "Autoroute Félix-Leclerc"
+        }
+      ],
+      "severity": "MAJOR",
+      "created": "2026-09-25T12:20:14+00:00",
+      "updated": "2026-10-08T20:04:44+00:00",
+      "status": "ACTIVE",
+      "schedule": {
+        "intervals": [
+          "2026-09-25T23:00/2026-09-26T07:00",
+          "2026-09-27T21:30/2026-09-28T04:30",
+          "2026-09-29T21:30/2026-09-30T04:30",
+          "2026-09-30T21:30/2026-10-01T04:30",
+          "2026-10-01T21:30/2026-10-02T04:30",
+          "2026-10-08T21:30/2026-10-09T04:30",
+          "2026-10-09T23:00/2026-10-10T07:00"
+        ]
+      },
+      "event_type": "CONSTRUCTION",
+      "headline": "Fermeture complète de l'A-40 Ouest",
+      "geography": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.46555471420288,
+            45.73944293101383
+          ],
+          [
+            -73.46650958061218,
+            45.738649208466285
+          ],
+          [
+            -73.46728205680847,
+            45.7381100697351
+          ],
+          [
+            -73.46855878829956,
+            45.73745860348954
+          ],
+          [
+            -73.46976041793823,
+            45.736994335549845
+          ],
+          [
+            -73.47154140472412,
+            45.736574993447825
+          ],
+          [
+            -73.47318291664124,
+            45.73633536797564
+          ],
+          [
+            -73.47680926322937,
+            45.736020857982915
+          ],
+          [
+            -73.4794270992279,
+            45.73586360232228
+          ],
+          [
+            -73.48279595375061,
+            45.73559402015949
+          ],
+          [
+            -73.48443746566771,
+            45.73545922859007
+          ],
+          [
+            -73.4859824180603,
+            45.735137225190584
+          ],
+          [
+            -73.48732352256775,
+            45.73475531177489
+          ],
+          [
+            -73.48863244056702,
+            45.7342011582529
+          ],
+          [
+            -73.48974823951721,
+            45.73360206717855
+          ],
+          [
+            -73.49055290222168,
+            45.733025435949735
+          ],
+          [
+            -73.49129319190979,
+            45.73238139922733
+          ],
+          [
+            -73.49398612976073,
+            45.73001487493099
+          ],
+          [
+            -73.49719405174255,
+            45.727168921781875
+          ],
+          [
+            -73.50126028060913,
+            45.723611276433644
+          ]
+        ]
+      },
+      "jurisdiction_url": "https://info-travaux.ville.repentigny.qc.ca/api/jurisdictions/ville.repentigny.qc.ca/",
+      "id": "ville.repentigny.qc.ca/2026"
+    },
+    {
+      "url": "/api/events/ville.repentigny.qc.ca/2034/",
+      "roads": [
+        {
+          "direction": "W",
+          "state": "CLOSED",
+          "name": "Bretelle d'accès de l'autoroute 40 Ouest"
+        }
+      ],
+      "severity": "MAJOR",
+      "created": "2026-10-07T17:24:11+00:00",
+      "updated": "2026-10-08T20:06:09+00:00",
+      "status": "ACTIVE",
+      "description": "Planage/Pavage",
+      "schedule": {
+        "intervals": [
+          "2026-10-08T21:00/2026-10-09T05:00",
+          "2026-10-09T22:30/2026-10-10T07:30"
+        ]
+      },
+      "event_type": "CONSTRUCTION",
+      "headline": "Fermeture complète Entrée vers A40 Ouest",
+      "geography": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.47000181674957,
+            45.73820367058268
+          ],
+          [
+            -73.4701520204544,
+            45.73815874219541
+          ],
+          [
+            -73.4702968597412,
+            45.738087605508326
+          ],
+          [
+            -73.47048997879028,
+            45.73795656400539
+          ],
+          [
+            -73.4705650806427,
+            45.73784424247239
+          ],
+          [
+            -73.47060799598694,
+            45.73775064102229
+          ],
+          [
+            -73.47063481807709,
+            45.73759339023292
+          ],
+          [
+            -73.47063481807709,
+            45.73743613900069
+          ],
+          [
+            -73.47066164016724,
+            45.737222725905795
+          ],
+          [
+            -73.47070455551147,
+            45.737099170583306
+          ],
+          [
+            -73.47075819969177,
+            45.73701680021645
+          ],
+          [
+            -73.47089767456055,
+            45.73688950031956
+          ],
+          [
+            -73.47100496292114,
+            45.73683333850809
+          ],
+          [
+            -73.47129464149475,
+            45.736747223620796
+          ],
+          [
+            -73.47173988819122,
+            45.736668596868604
+          ],
+          [
+            -73.4726357460022,
+            45.736511343032056
+          ],
+          [
+            -73.47344040870665,
+            45.73639527444009
+          ],
+          [
+            -73.47362279891968,
+            45.736376553676834
+          ]
+        ]
+      },
+      "jurisdiction_url": "https://info-travaux.ville.repentigny.qc.ca/api/jurisdictions/ville.repentigny.qc.ca/",
+      "id": "ville.repentigny.qc.ca/2034"
+    }
+  ]
+}

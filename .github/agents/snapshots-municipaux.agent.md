@@ -503,3 +503,12 @@ When a new municipality or infrastructure authority snapshot is added, create a 
 - focused browser validation procedure.
 
 Use one section per municipality or infrastructure authority. Do not combine several source APIs into an undocumented generic snapshot.
+
+## City of Repentigny - Open511 automobile roadworks
+
+- Official map and API: `https://info-travaux.ville.repentigny.qc.ca/` and `https://info-travaux.ville.repentigny.qc.ca/api/events/`.
+- Generator: `npm run snapshot:repentigny` (`node tools/build-repentigny-roadworks-snapshot.mjs`); output: `data/repentigny-roadworks-snapshot.json`.
+- The generator uses Chromium to fetch the Open511 JSON pages, validates the response type, event IDs, pagination, official coordinates and schedule intervals, and writes only after the full response succeeds. Pagination URLs must remain HTTPS on the official Repentigny host.
+- Retain active events only when they have published schedule intervals, a road reference and official geometry. Active events with no published dates are excluded from the automobile snapshot; do not invent dates or infer a restriction period.
+- `js/app.js` loads the final local snapshot for the automobile map and applies the existing `normalizeRepentignyEvent` traffic labels and severity rules. Preserve every published interval; the displayed date span must run from the earliest interval start to the latest interval end. Keep the official API URL available for pedestrian snapshot extraction; do not replace it with the automobile snapshot URL.
+- Update the matching snapshot `extractedAt` entries in `data/sources.js` only after successful extraction. Validate that the map loads the snapshot without issuing a live `/api/events/` request, and test representative geometry and popup content in Chromium.

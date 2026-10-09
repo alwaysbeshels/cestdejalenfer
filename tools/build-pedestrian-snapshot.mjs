@@ -1,7 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { chromium } from "playwright";
-import { mergeMarathonPedestrianSnapshot } from "./build-marathon-closures.mjs";
-import { mergeParkPedestrianSnapshot } from "./build-parc-jean-drapeau-snapshot.mjs";
 
 const OUTPUT = "data/pedestrian-closures-snapshot.json";
 const baseUrl = process.env.PEDESTRIAN_VALIDATION_URL || "http://localhost:5500";
@@ -36,6 +34,29 @@ function geojsonFeatures(data) {
   return data.features;
 }
 
+async function fetchRepentignyEvents(page, endpoint) {
+  return page.evaluate(async (startUrl) => {
+    const events = [];
+    const seen = new Set();
+    let url = startUrl;
+    while (url) {
+      const parsedUrl = new URL(url);
+      if (parsedUrl.protocol !== "https:" || parsedUrl.hostname !== "info-travaux.ville.repentigny.qc.ca") {
+        throw new Error("Unexpected Open511 pagination URL");
+      }
+      if (seen.has(parsedUrl.href)) throw new Error("Open511 pagination cycle");
+      seen.add(parsedUrl.href);
+      const response = await fetch(parsedUrl.href);
+      if (!response.ok) throw new Error(`Open511 HTTP ${response.status}`);
+      const data = await response.json();
+      if (!Array.isArray(data.events)) throw new Error("Missing Open511 events");
+      events.push(...data.events.filter((event) => event.status === "ACTIVE"));
+      url = data.pagination?.next_url ? new URL(data.pagination.next_url, parsedUrl).href : null;
+    }
+    return events;
+  }, endpoint);
+}
+
 async function montSaintHilaireLayers() {
   const experienceUrl = "https://www.arcgis.com/sharing/rest/content/items/f6ea6c5a42f5440c970ec7a8bb5b17d4/data?f=json";
   const experience = await json(experienceUrl);
@@ -58,10 +79,12 @@ async function montSaintHilaireLayers() {
 }
 
 async function main() {
+  const REPENTIGNY_ONLY = process.argv.includes("--repentigny-only");
   let previous = { records: [], sources: [] };
   try { previous = JSON.parse(await readFile(OUTPUT, "utf8")); } catch (error) { if (error.code !== "ENOENT") throw error; }
   if (process.argv.includes("--parc-jean-drapeau-only")) {
     if (previous.schemaVersion !== 1) throw new Error("Existing pedestrian snapshot required");
+    const { mergeParkPedestrianSnapshot } = await import("./build-parc-jean-drapeau-snapshot.mjs");
     const park = JSON.parse(await readFile("data/parc-jean-drapeau-snapshot.json", "utf8"));
     const result = mergeParkPedestrianSnapshot(previous, park);
     await writeFile(OUTPUT, `${JSON.stringify(result, null, 2)}\n`, "utf8");
@@ -70,6 +93,7 @@ async function main() {
   }
   if (process.argv.includes("--marathon-only")) {
     if (previous.schemaVersion !== 1) throw new Error("Existing pedestrian snapshot required");
+    const { mergeMarathonPedestrianSnapshot } = await import("./build-marathon-closures.mjs");
     const marathon = JSON.parse(await readFile("data/Marathon-Beneva-Mtl-2026.json", "utf8"));
     const result = mergeMarathonPedestrianSnapshot(previous, marathon);
     await writeFile(OUTPUT, `${JSON.stringify(result, null, 2)}\n`, "utf8");
@@ -106,7 +130,15 @@ async function main() {
             if (key === "citizen") fields.push(JSON.stringify(attributes.reportedFields || {}));
             const location = attributes.LOCALISATION ?? attributes["Localisation :"];
             if (typeof location === "string") fields.push(location);
+            if (key === "repentigny" && typeof attributes.detour === "string") fields.push(attributes.detour);
             const text = fields.join("\n");
+            if (normalize === "normalizeRepentignyEvent"
+              && (!attributes.schedule?.intervals?.length || !attributes.geography?.coordinates?.length)) {
+              pending.push({ id: String(attributes.id || attributes.url || index), reason: "missing-dates-or-geometry",
+                title: attributes.headline || attributes.description, sourceUrl: options.sourceUrl,
+                publishedSchedule: attributes.schedule?.intervals || null, text });
+              return;
+            }
             if (key.startsWith("montSaintHilaire-")) {
               pending.push({ id: String(attributes.OBJECTID ?? attributes.FID ?? index),
                 reason: "project-without-dated-pedestrian-impact", title: attributes.PROJET,
@@ -138,7 +170,9 @@ async function main() {
                 side: { code: "not-applicable", published: null, geometryStatus: "worksite-only" } });
             }
             if (!cyclingImpacts.length && !/pi[ée]ton|trottoir|sidewalk|pedestrian|sentier|footpath/i.test(text)) {
-              if (/\b(?:cyclab\w*|cyclist\w*|v[ée]los?|bicycle\w*|bikes?|cycling)\b/i.test(text)) {
+              const explicitlyOpenRepentignyCycleway = key === "repentigny" && /\bpiste cyclable ouverte\b/i.test(text);
+              if (!explicitlyOpenRepentignyCycleway
+                && /\b(?:cyclab\w*|cyclist\w*|v[ée]los?|bicycle\w*|bikes?|cycling)\b/i.test(text)) {
                 pending.push({ id: String(attributes.globalid || attributes.OBJECTID || attributes.FID || attributes.id || index), reason: "cycling-mention-without-pedestrian-evidence", text });
               }
               return;
@@ -216,90 +250,115 @@ async function main() {
       }
     }
 
-    const montrealUrl = new URL(urls.montreal);
-    montrealUrl.searchParams.delete("CQL_FILTER");
-    await collect("montreal", montrealUrl.href, async () => geojsonFeatures(await json(montrealUrl)), "montreal");
-    await collect("longueuil", urls.longueuilSurfaces, async () => geojsonFeatures(await json(urls.longueuilSurfaces)), "longueuil");
-    const municipal = [
-      ["dorvalEntraves", "normalizeDorvalFeature"], ["boisbriandWorks", "normalizeBoisbriandFeature"],
-      ["saintEustacheLines", "normalizeSaintEustacheFeature"], ["saintEustachePoints", "normalizeSaintEustacheFeature"],
-      ["chateauguayWorks", "normalizeChateauguayFeature"], ["assomptionIncidents", "normalizeAssomptionFeature"],
-      ["terrebonneEntraveLines", "normalizeTerrebonneFeature"], ["terrebonneEntravePoints", "normalizeTerrebonneFeature"]
-    ];
-    for (const [key, normalize] of municipal) await collect(key, urls[key], () => arcgis(urls[key]), normalize);
-    let montSaintHilaire;
-    try {
-      montSaintHilaire = await montSaintHilaireLayers();
-    } catch (error) {
-      for (const layer of [3, 4, 5, 6, 15]) {
-        await collect(`montSaintHilaire-${layer}`, `${urls.montSaintHilaireWorks}/${layer}`, async () => { throw error; }, "review");
+    if (REPENTIGNY_ONLY) {
+      await collect("repentigny", urls.repentignyOpen511,
+        () => fetchRepentignyEvents(page, urls.repentignyOpen511), "normalizeRepentignyEvent",
+        { sourceUrl: urls.repentignyOpen511 });
+    } else {
+      const montrealUrl = new URL(urls.montreal);
+      montrealUrl.searchParams.delete("CQL_FILTER");
+      await collect("montreal", montrealUrl.href, async () => geojsonFeatures(await json(montrealUrl)), "montreal");
+      await collect("longueuil", urls.longueuilSurfaces, async () => geojsonFeatures(await json(urls.longueuilSurfaces)), "longueuil");
+      const municipal = [
+        ["dorvalEntraves", "normalizeDorvalFeature"], ["boisbriandWorks", "normalizeBoisbriandFeature"],
+        ["saintEustacheLines", "normalizeSaintEustacheFeature"], ["saintEustachePoints", "normalizeSaintEustacheFeature"],
+        ["chateauguayWorks", "normalizeChateauguayFeature"], ["assomptionIncidents", "normalizeAssomptionFeature"],
+        ["terrebonneEntraveLines", "normalizeTerrebonneFeature"], ["terrebonneEntravePoints", "normalizeTerrebonneFeature"]
+      ];
+      for (const [key, normalize] of municipal) await collect(key, urls[key], () => arcgis(urls[key]), normalize);
+      let montSaintHilaire;
+      try {
+        montSaintHilaire = await montSaintHilaireLayers();
+      } catch (error) {
+        for (const layer of [3, 4, 5, 6, 15]) {
+          await collect(`montSaintHilaire-${layer}`, `${urls.montSaintHilaireWorks}/${layer}`, async () => { throw error; }, "review");
+        }
       }
-    }
-    for (const layer of montSaintHilaire || []) {
-      await collect(`montSaintHilaire-${layer.id}`, layer.url, () => arcgis(layer.url), "review", { sourceUrl: layer.url });
-    }
-    for (const [key, normalize] of [["quebec511", "normalizeQuebec511Feature"], ["quebec511Events", "normalizeQuebec511Event"]]) {
-      await collect(key, urls[key], async () => geojsonFeatures(await json(urls[key])), normalize);
-    }
-    await collect("repentigny", urls.repentignyOpen511, async () => {
-      const events = [];
-      let url = urls.repentignyOpen511;
-      const seen = new Set();
-      while (url) {
-        if (seen.has(url)) throw new Error("Open511 pagination cycle");
-        seen.add(url);
-        const data = await json(url);
-        if (!Array.isArray(data.events)) throw new Error("Missing Open511 events");
-        events.push(...data.events.filter((event) => event.status === "ACTIVE"));
-        url = data.pagination?.next_url ? new URL(data.pagination.next_url, url).href : null;
+      for (const layer of montSaintHilaire || []) {
+        await collect(`montSaintHilaire-${layer.id}`, layer.url, () => arcgis(layer.url), "review", { sourceUrl: layer.url });
       }
-      return events;
-    }, "normalizeRepentignyEvent");
-    const lavalUrl = await page.evaluate(() => {
-      const west = map.options.crs.project(L.latLng(LAVAL_OFFICIAL_BOUNDS.south, LAVAL_OFFICIAL_BOUNDS.west));
-      const east = map.options.crs.project(L.latLng(LAVAL_OFFICIAL_BOUNDS.north, LAVAL_OFFICIAL_BOUNDS.east));
-      const envelope = { xmin: west.x, ymin: west.y, xmax: east.x, ymax: east.y, spatialReference: { wkid: 102100 } };
-      return `${LIVE_SOURCES.lavalMapService}/identify?${new URLSearchParams({ f: "json", geometry: JSON.stringify(envelope), geometryType: "esriGeometryEnvelope", sr: "3857", mapExtent: `${west.x},${west.y},${east.x},${east.y}`, imageDisplay: "2000,1400,96", tolerance: "1", layers: "all:0,2,3", returnGeometry: "true", maxAllowableOffset: "1" })}`;
-    });
-    await collect("laval", lavalUrl, async () => {
-      const data = await json(lavalUrl);
-      if (!Array.isArray(data.results)) throw new Error("Missing Laval identify results");
-      return data.results;
-    }, "normalizeLavalIdentifyResult");
+      for (const [key, normalize] of [["quebec511", "normalizeQuebec511Feature"], ["quebec511Events", "normalizeQuebec511Event"]]) {
+        await collect(key, urls[key], async () => geojsonFeatures(await json(urls[key])), normalize);
+      }
+      await collect("repentigny", urls.repentignyOpen511,
+        () => fetchRepentignyEvents(page, urls.repentignyOpen511), "normalizeRepentignyEvent",
+        { sourceUrl: urls.repentignyOpen511 });
+      const lavalUrl = await page.evaluate(() => {
+        const west = map.options.crs.project(L.latLng(LAVAL_OFFICIAL_BOUNDS.south, LAVAL_OFFICIAL_BOUNDS.west));
+        const east = map.options.crs.project(L.latLng(LAVAL_OFFICIAL_BOUNDS.north, LAVAL_OFFICIAL_BOUNDS.east));
+        const envelope = { xmin: west.x, ymin: west.y, xmax: east.x, ymax: east.y, spatialReference: { wkid: 102100 } };
+        return `${LIVE_SOURCES.lavalMapService}/identify?${new URLSearchParams({ f: "json", geometry: JSON.stringify(envelope), geometryType: "esriGeometryEnvelope", sr: "3857", mapExtent: `${west.x},${west.y},${east.x},${east.y}`, imageDisplay: "2000,1400,96", tolerance: "1", layers: "all:0,2,3", returnGeometry: "true", maxAllowableOffset: "1" })}`;
+      });
+      await collect("laval", lavalUrl, async () => {
+        const data = await json(lavalUrl);
+        if (!Array.isArray(data.results)) throw new Error("Missing Laval identify results");
+        return data.results;
+      }, "normalizeLavalIdentifyResult");
 
-    const localSources = [
-      ["mont-royal", "data/mont-royal-snapshot.json", "Ville de Mont-Royal", "Mont-Royal"],
-      ["beaconsfield", "data/beaconsfield-snapshot.json", "Ville de Beaconsfield", "Beaconsfield"],
-      ["pjcci", "data/pjcci-work-advisories-snapshot.json", "PJCCI", "Grand Montreal"],
-      ["citizen", "data/citizen-reports-snapshot.json", "Signalements citoyens", "Grand Montreal"],
-      ["noovo", "data/noovo-road-closures-snapshot.json", "Noovo", "Grand Montreal"],
-      ["pedestrian-streets", "data/montreal-pedestrian-snapshot.json", "Rues pietonnisees", "Montreal"],
-      ["uci", "data/montreal-uci-closures-snapshot.json", "UCI", "Montreal"]
-    ];
-    for (const [key, file, name, municipality] of localSources) {
-      let snapshot;
-      try { snapshot = JSON.parse(await readFile(file, "utf8")); } catch (error) {
-        await collect(key, file, async () => { throw error; }, "review", { local: true });
-        continue;
+      const localSources = [
+        ["mont-royal", "data/mont-royal-snapshot.json", "Ville de Mont-Royal", "Mont-Royal"],
+        ["beaconsfield", "data/beaconsfield-snapshot.json", "Ville de Beaconsfield", "Beaconsfield"],
+        ["pjcci", "data/pjcci-work-advisories-snapshot.json", "PJCCI", "Grand Montreal"],
+        ["citizen", "data/citizen-reports-snapshot.json", "Signalements citoyens", "Grand Montreal"],
+        ["noovo", "data/noovo-road-closures-snapshot.json", "Noovo", "Grand Montreal"],
+        ["pedestrian-streets", "data/montreal-pedestrian-snapshot.json", "Rues pietonnisees", "Montreal"],
+        ["uci", "data/montreal-uci-closures-snapshot.json", "UCI", "Montreal"]
+      ];
+      for (const [key, file, name, municipality] of localSources) {
+        let snapshot;
+        try { snapshot = JSON.parse(await readFile(file, "utf8")); } catch (error) {
+          await collect(key, file, async () => { throw error; }, "review", { local: true });
+          continue;
+        }
+        const raw = [...(snapshot.records || snapshot.notices || snapshot.layers?.restrictions?.geojson?.features || []), ...(snapshot.curatedRecords || [])];
+        await collect(key, file, async () => raw, ["mont-royal", "beaconsfield"].includes(key) ? "local" : "review",
+          { local: true, extractedAt: snapshot.extractedAt, name, municipality, sourceUrl: snapshot.sourceUrl });
       }
-      const raw = [...(snapshot.records || snapshot.notices || snapshot.layers?.restrictions?.geojson?.features || []), ...(snapshot.curatedRecords || [])];
-      await collect(key, file, async () => raw, ["mont-royal", "beaconsfield"].includes(key) ? "local" : "review",
-        { local: true, extractedAt: snapshot.extractedAt, name, municipality, sourceUrl: snapshot.sourceUrl });
+      const curated = await page.evaluate(() => ({ regional: REGIONAL_MAJOR_CLOSURES, linkedCities: LINKED_CITY_WORKS }));
+      for (const [key, entries] of Object.entries(curated)) await collect(key, "js/app.js", async () => entries, "review", { local: true });
+      sources.push({ key: "montreal-notice-details", url: "data/montreal-pedestrian-notices-snapshot.json", status: "local-snapshot", checkedAt: null, sourceExtractedAt: notices.extractedAt, received: notices.records.length, retained: 0, role: "labels-and-notice-details" });
     }
-    const curated = await page.evaluate(() => ({ regional: REGIONAL_MAJOR_CLOSURES, linkedCities: LINKED_CITY_WORKS }));
-    for (const [key, entries] of Object.entries(curated)) await collect(key, "js/app.js", async () => entries, "review", { local: true });
-    sources.push({ key: "montreal-notice-details", url: "data/montreal-pedestrian-notices-snapshot.json", status: "local-snapshot", checkedAt: null, sourceExtractedAt: notices.extractedAt, received: notices.records.length, retained: 0, role: "labels-and-notice-details" });
   } finally {
     await browser.close();
   }
-  if (!sources.some((source) => source.status === "checked" && source.retained > 0)) throw new Error("No live pedestrian source verified; output unchanged");
+  if (!sources.some((source) => source.status === "checked" && (REPENTIGNY_ONLY || source.retained > 0))) throw new Error("No live pedestrian source verified; output unchanged");
   const uniqueIds = new Set(records.map((record) => record.id));
   if (uniqueIds.size !== records.length) throw new Error("Duplicate consolidated IDs; output unchanged");
+  let result;
+  if (REPENTIGNY_ONLY) {
+    const updatedSource = sources.find((source) => source.key === "repentigny");
+    const updatedRecords = [...previous.records.filter((record) => record.sourceKey !== "repentigny"), ...records]
+      .sort((first, second) => first.id.localeCompare(second.id));
+    const sourceList = previous.sources.map((source) => source.key === "repentigny" ? updatedSource : source);
+    if (!sourceList.some((source) => source.key === "repentigny")) sourceList.push(updatedSource);
+    const retainedReview = updatedSource.status === "failed"
+      ? previous.review.filter((item) => item.sourceKey === "repentigny")
+      : [];
+    result = {
+      ...previous,
+      generatedAt: new Date().toISOString(),
+      sources: sourceList,
+      records: updatedRecords,
+      review: [...previous.review.filter((item) => item.sourceKey !== "repentigny"), ...retainedReview, ...review]
+    };
+    await writeFile(OUTPUT, `${JSON.stringify(result, null, 2)}\n`, "utf8");
+    console.log(JSON.stringify({
+      output: OUTPUT,
+      generatedAt: result.generatedAt,
+      source: updatedSource,
+      otherSources: "unchanged, not reverified",
+      records: result.records.length,
+      review: result.review.length
+    }));
+    return;
+  }
   const snapshot = { schemaVersion: 1, generatedAt: new Date().toISOString(),
     policy: "Pedestrian and cycling impacts. Cycling-only records identify affectedUsers explicitly and do not confirm pedestrian restrictions. Per-source checkedAt is authoritative; local snapshots are not reverified. Unknown sidewalk sides are never inferred. Geometry is the published worksite unless explicitly identified otherwise. Selected documentary review notices are displayed separately without geometry or inferred dates.",
     sources, records: records.sort((first, second) => first.id.localeCompare(second.id)), review };
+  const { mergeMarathonPedestrianSnapshot } = await import("./build-marathon-closures.mjs");
+  const { mergeParkPedestrianSnapshot } = await import("./build-parc-jean-drapeau-snapshot.mjs");
   const marathon = JSON.parse(await readFile("data/Marathon-Beneva-Mtl-2026.json", "utf8"));
-  let result = mergeMarathonPedestrianSnapshot(snapshot, marathon);
+  result = mergeMarathonPedestrianSnapshot(snapshot, marathon);
   try {
     result = mergeParkPedestrianSnapshot(result, JSON.parse(await readFile("data/parc-jean-drapeau-snapshot.json", "utf8")));
   } catch (error) {
