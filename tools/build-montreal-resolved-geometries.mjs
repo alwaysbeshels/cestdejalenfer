@@ -28,6 +28,7 @@ const WFS_BASE = "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/mon
 const ENTRAVES_URL = `${WFS_BASE}?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal:entraves-ponctuelles&outputFormat=application/json&CQL_FILTER=affectedArea%20like%20%27%25street%25%27`;
 const OUT_SNAPSHOT = "data/montreal-entraves-geometries-snapshot.json";
 const OUT_CACHE = "tools/geobase-cache.json";
+const GEOMETRY_LENGTH_TOLERANCE = 0.45;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -283,6 +284,17 @@ function segLength(seg) {
   return total;
 }
 
+function geometryMatchesPublishedLength(geometry, publishedLength) {
+  const expected = Number(publishedLength);
+  if (!Number.isFinite(expected) || expected <= 0) return true;
+  const lines = geometry?.type === "LineString" ? [geometry.coordinates]
+    : geometry?.type === "MultiLineString" ? geometry.coordinates : [];
+  if (!lines.length) return false;
+  const actual = lines.reduce((total, coordinates) => total + coordinates.slice(1).reduce((length, point, index) =>
+    length + haversine(coordinates[index], point), 0), 0);
+  return Math.abs(actual - expected) <= expected * GEOMETRY_LENGTH_TOLERANCE;
+}
+
 function segDistance(a, b) {
   // Distance minimale entre extremites (poids du graphe).
   const pts = [a.coords[0], a.coords[a.coords.length - 1]];
@@ -441,7 +453,10 @@ async function main() {
       }
       if (polygon) out.occupancyZone = { type: "Polygon", coordinates: polygon };
       const existing = previousImpacts.get(out.requestId);
+      const existingGeometryLengthIsValid = existing?.geometryStatus !== "resolved-geobase"
+        || geometryMatchesPublishedLength(existing.geometry, out.analysis.lengthMeters);
       if (!lineGeometry && existing && existing.geometryStatus !== "published-line"
+        && existingGeometryLengthIsValid
         && ["permitId", "street", "from", "to", "point", "occupancyZone"].every((key) => isDeepStrictEqual(out[key], existing[key]))) {
         out.geometryStatus = existing.geometryStatus;
         if (existing.geometry) out.geometry = existing.geometry;
@@ -465,20 +480,24 @@ async function main() {
     idx += 1;
     const segments = await loadGeobaseStreet(impact._streetRaw, cache);
     const line = resolveImpactGeometry(impact.street, impact.from, impact.to, segments);
-    if (line && (!impact.occupancyZone || geometryTouchesOccupancyZone({ type: "LineString", coordinates: line }, impact.occupancyZone))) {
+    const lineLengthIsValid = line && geometryMatchesPublishedLength({ type: "LineString", coordinates: line }, impact.analysis.lengthMeters);
+    if (line && lineLengthIsValid && (!impact.occupancyZone || geometryTouchesOccupancyZone({ type: "LineString", coordinates: line }, impact.occupancyZone))) {
       impact.geometryStatus = "resolved-geobase";
       impact.geometry = { type: "LineString", coordinates: line };
       resolved += 1;
-    } else if (impact.occupancyZone) {
-      impact.geometryStatus = "occupancy-zone";
-      occupancyZone += 1;
-    } else if (impact.point) {
-      impact.geometryStatus = "point-only";
-      impact.geometry = { type: "Point", coordinates: impact.point };
-      noGeometry += 1;
     } else {
-      impact.geometryStatus = "no-geometry";
-      noGeometry += 1;
+      if (line && !lineLengthIsValid) impact.analysis.warnings.push("longueur geobase incompatible avec longueur publiee");
+      if (impact.occupancyZone) {
+        impact.geometryStatus = "occupancy-zone";
+        occupancyZone += 1;
+      } else if (impact.point) {
+        impact.geometryStatus = "point-only";
+        impact.geometry = { type: "Point", coordinates: impact.point };
+        noGeometry += 1;
+      } else {
+        impact.geometryStatus = "no-geometry";
+        noGeometry += 1;
+      }
     }
     delete impact._streetRaw;
     if (idx % 50 === 0 || idx === pending.length) {
