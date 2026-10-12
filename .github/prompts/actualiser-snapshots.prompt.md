@@ -1,7 +1,7 @@
 ---
 name: actualiser-snapshots
 description: "Actualiser les snapshots auto et pietons consolides, hors nids-de-poule, colmatage et evenements archives UCI/Marathon 2026, verifier leurs sources et leur affichage, sans publication automatique."
-argument-hint: "Toutes les sources du perimetre par defaut, ou une selection : PJCCI, parc Jean-Drapeau, Mont-Royal, signalements citoyens, entraves pietonnes consolidees, avis pietons Montreal..."
+argument-hint: "Toutes les sources du perimetre par defaut, ou une selection : Repentigny, PJCCI, parc Jean-Drapeau, Mont-Royal, signalements citoyens, entraves pietonnes consolidees, avis pietons Montreal..."
 agent: "Snapshots officiels"
 ---
 
@@ -23,6 +23,7 @@ Respecte aussi les [regles de publication](./deployment-rules.md).
 - Ne cree pas de nouvelle source, ne modifie pas l'interface et ne rafraichis pas les flux uniquement live dans le cadre de cette demande. Leur consultation pour valider une jointure existante ou alimenter le snapshot pieton consolide, lorsqu'il est dans le perimetre, reste permise.
 - « Entraves pietonnes consolidees » cible `data/pedestrian-closures-snapshot.json`; « avis pietons Montreal » cible son entree `data/montreal-pedestrian-notices-snapshot.json`. Ne les confonds pas avec les rues pietonnisees temporaires de la carte auto. Si « snapshot pieton » est ambigu, clarifie lequel avant execution.
 - Pour une actualisation globale, traite les snapshots d'entree avant la consolidation pietonne. Pour la seule consolidation, conserve les dates des entrees locales reutilisees et indique qu'elles n'ont pas ete reverifiees.
+- Pour Repentigny, actualise le snapshot automobile avec `npm run snapshot:repentigny`, puis l'entree Repentigny de la consolidation pietonne avec `node tools/build-pedestrian-snapshot.mjs --repentigny-only`. Ces extractions utilisent le meme flux Open511, mais les snapshots et leurs regles de retention restent distincts. Les autres entrees consolidees et leurs dates de verification doivent rester inchanges et etre signalees comme non reverifiees.
 - Ne fais aucun commit, push, deploiement ou installation de dependances sans demande explicite distincte. Une autorisation de publication d'une session precedente ne vaut pas pour cette execution.
 
 ## Execution

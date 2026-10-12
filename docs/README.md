@@ -661,18 +661,12 @@ Pour chaque couche : liste complete d'identifiants, attributs complets, absence 
 
 Les cinq objets ne publient pas de dates precises ni de restriction pietonne explicite. Ils sont donc conserves dans `review` avec leur projet, echeancier, texte et URL, mais ne deviennent pas des fermetures. L'ancien normalisateur automobile qui transformait les saisons en dates precises et attribuait systematiquement une voie touchee a ete retire. Mont-Saint-Hilaire reste documentaire (`inMap: false`) tant qu'une restriction admissible n'est pas etablie.
 
-#### Repentigny : adresse officielle retrouvee, connexion securisee en echec
+#### Repentigny : snapshot Open511 des entraves automobiles
 
-Liens exacts utiles pour poursuivre la recherche :
-
-- [API Open511 en echec](https://info-travaux.ville.repentigny.qc.ca/api/events/).
-- [Carte Info-travaux en echec](https://info-travaux.ville.repentigny.qc.ca/).
-- [Page municipale Travaux d'infrastructures](https://repentigny.ca/services/citoyens/entretien-circulation/travaux-dinfrastructures) et [Grands projets](https://repentigny.ca/la-ville/a-propos/grands-projets) : elles renvoient encore vers cette meme carte.
-- [Jeu officiel Info-travaux (API) sur Donnees Quebec](https://www.donneesquebec.ca/recherche/api/3/action/package_show?id=a201ab69-0777-4a93-abed-ed89eaab7fa2) : meme adresse, ressource HTML de la carte Open511. La recherche ArcGIS publique a aussi retourne l'element `d8f725a006114dde8aa509ad4c7d5659`, qui renvoie vers un ancien avis du meme hote, pas vers une nouvelle API.
-
-Constats de transport : le nom se resout en IPv4 `206.162.182.85`; Node renvoie `ECONNRESET` et Chromium `ERR_CONNECTION_RESET` avant une reponse HTTP sur HTTPS. Le test TLS 1.2 echoue par reinitialisation; TLS 1.3 renvoie une alerte de negociation. Une requete HTTP non securisee recoit un `301` de nginx vers `https://info-travaux.ville.repentigny.qc.ca:443/api/events/`, qui est le meme service HTTPS en echec. Passer en HTTP n'est donc pas un remplacement fonctionnel.
-
-Le stade de l'echec est identifie : connexion HTTPS/TLS, pas JSON invalide, pagination ou erreur CORS du navigateur. Ces controles ne permettent pas d'attribuer avec certitude l'interruption au serveur municipal ou a un intermediaire reseau. Aucun nouvel endpoint n'est confirme. L'URL existante reste dans l'extraction pour permettre une reprise du service; l'erreur conserve maintenant sa cause reseau dans le snapshot. Le catalogue ne presente pas Repentigny comme une source actuellement affichee. Avant de le reactiver, verifier une reponse Open511 complete et des fiches effectivement chargees, pas seulement la page municipale.
+- [Carte Info-travaux officielle](https://info-travaux.ville.repentigny.qc.ca/) et [API Open511](https://info-travaux.ville.repentigny.qc.ca/api/events/).
+- Le 9 octobre 2026 a `04:43:32.661Z`, Chromium a recu et valide 9 evenements actifs. Huit avaient un horaire, une reference routiere et une geometrie publies; ils sont conserves dans [le snapshot automobile](../data/repentigny-roadworks-snapshot.json). L'evenement sans intervalle publie n'est pas presente comme entrave automobile datee.
+- La carte automobile charge ce snapshot local et applique les libelles et severites deja utilises pour Open511. Elle ne requiert plus le flux live au chargement. Actualiser avec `npm run snapshot:repentigny`; les intervalles publies sont tous conserves et la plage affichee couvre du debut du premier au terme du dernier intervalle.
+- Le meme endpoint reste configure pour l'extraction separee des entraves pietonnes. La connexion echouait le 3 octobre sur ce poste, mais le succes Chromium du 9 octobre confirme que cette panne anterieure n'est plus l'etat du dernier controle.
 
 #### Snapshots du perimetre
 
