@@ -206,7 +206,7 @@ const SOURCE_CATALOG = [
   { name: "Ville de L'Assomption - Info-travaux", url: "https://www.lassomption.ca/" },
   { name: "Ville de Montreal - Info entraves et travaux", url: "https://services.montreal.ca/cartes/entraves" },
   { name: "Ville de Montréal - Géométries d'entraves résolues (snapshot géobase)", url: "data/montreal-entraves-geometries-snapshot.json", dataType: "snapshot", extractedAt: "2026-10-12T22:15:00.871Z" },
-  { name: "Ville de Montréal - Avis détaillés (carte piétonne)", url: "data/montreal-pedestrian-notices-snapshot.json", dataType: "snapshot", extractedAt: "2026-10-12T21:42:10.485Z" },
+  { name: "Ville de Montréal - Avis détaillés (carte piétonne)", url: "data/montreal-pedestrian-notices-snapshot.json", dataType: "snapshot", extractedAt: "2026-10-13T00:07:51.930Z" },
   { name: "Ville de Montreal - carte UCI 2026", url: "https://services.montreal.ca/cartes/uci" },
   { name: "Ville de Montréal - Piétonnisation de l'avenue du Mont-Royal", url: "https://montreal.ca/lieux/avenue-du-mont-royal" },
   { name: "Ville de Montréal - Rues piétonnes saisonnières", url: "https://montreal.ca/lieux?mtl_content.lieux.installation.code=RUPIE" },

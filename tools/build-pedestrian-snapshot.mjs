@@ -80,6 +80,7 @@ async function montSaintHilaireLayers() {
 
 async function main() {
   const REPENTIGNY_ONLY = process.argv.includes("--repentigny-only");
+  const MONTREAL_ONLY = process.argv.includes("--montreal-only");
   let previous = { records: [], sources: [] };
   try { previous = JSON.parse(await readFile(OUTPUT, "utf8")); } catch (error) { if (error.code !== "ENOENT") throw error; }
   if (process.argv.includes("--parc-jean-drapeau-only")) {
@@ -157,7 +158,8 @@ async function main() {
                 const impacts = normalize === "montreal" ? parseJson(attributes.occupancyImpactImpactsOfSection, []) : [];
                 const impactIndex = Number(record.id.split("-").at(-1));
                 record.evidence = { kind: "structured", reference: attributes.permitPermitId || String(attributes.OBJECTID),
-                  publishedType: normalize === "montreal" ? (record.pedestrianArea === "park" ? attributes.occupancyImpactParkImpactBlockedType : impacts[impactIndex]?.sidewalk?.blockedType) : "Sentier_Ferme",
+                  publishedType: normalize === "montreal" ? (record.pedestrianArea === "park" ? attributes.occupancyImpactParkImpactBlockedType
+                    : record.pedestrianArea === "path" ? impacts[impactIndex]?.bikePath?.blockedType : impacts[impactIndex]?.sidewalk?.blockedType) : "Sentier_Ferme",
                   backSidewalk: impacts[impactIndex]?.backSidewalk || null };
                 retained.push(record);
               });
@@ -254,6 +256,10 @@ async function main() {
       await collect("repentigny", urls.repentignyOpen511,
         () => fetchRepentignyEvents(page, urls.repentignyOpen511), "normalizeRepentignyEvent",
         { sourceUrl: urls.repentignyOpen511 });
+    } else if (MONTREAL_ONLY) {
+      const montrealUrl = new URL(urls.montreal);
+      montrealUrl.searchParams.delete("CQL_FILTER");
+      await collect("montreal", montrealUrl.href, async () => geojsonFeatures(await json(montrealUrl)), "montreal");
     } else {
       const montrealUrl = new URL(urls.montreal);
       montrealUrl.searchParams.delete("CQL_FILTER");
@@ -321,7 +327,7 @@ async function main() {
   } finally {
     await browser.close();
   }
-  if (!sources.some((source) => source.status === "checked" && (REPENTIGNY_ONLY || source.retained > 0))) throw new Error("No live pedestrian source verified; output unchanged");
+  if (!sources.some((source) => source.status === "checked" && (REPENTIGNY_ONLY || MONTREAL_ONLY || source.retained > 0))) throw new Error("No live pedestrian source verified; output unchanged");
   const uniqueIds = new Set(records.map((record) => record.id));
   if (uniqueIds.size !== records.length) throw new Error("Duplicate consolidated IDs; output unchanged");
   let result;
@@ -340,6 +346,33 @@ async function main() {
       sources: sourceList,
       records: updatedRecords,
       review: [...previous.review.filter((item) => item.sourceKey !== "repentigny"), ...retainedReview, ...review]
+    };
+    await writeFile(OUTPUT, `${JSON.stringify(result, null, 2)}\n`, "utf8");
+    console.log(JSON.stringify({
+      output: OUTPUT,
+      generatedAt: result.generatedAt,
+      source: updatedSource,
+      otherSources: "unchanged, not reverified",
+      records: result.records.length,
+      review: result.review.length
+    }));
+    return;
+  }
+  if (MONTREAL_ONLY) {
+    const updatedSource = sources.find((source) => source.key === "montreal");
+    const updatedRecords = [...previous.records.filter((record) => record.sourceKey !== "montreal"), ...records]
+      .sort((first, second) => first.id.localeCompare(second.id));
+    const sourceList = previous.sources.map((source) => source.key === "montreal" ? updatedSource : source);
+    if (!sourceList.some((source) => source.key === "montreal")) sourceList.push(updatedSource);
+    const retainedReview = updatedSource.status === "failed"
+      ? previous.review.filter((item) => item.sourceKey === "montreal")
+      : [];
+    result = {
+      ...previous,
+      generatedAt: new Date().toISOString(),
+      sources: sourceList,
+      records: updatedRecords,
+      review: [...previous.review.filter((item) => item.sourceKey !== "montreal"), ...retainedReview, ...review]
     };
     await writeFile(OUTPUT, `${JSON.stringify(result, null, 2)}\n`, "utf8");
     console.log(JSON.stringify({

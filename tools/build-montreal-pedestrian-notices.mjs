@@ -83,12 +83,16 @@ async function main() {
       return {
         sidewalk: messages.Impacts.zones.types.sidewalk.action,
         park: messages.Impacts.zones.types.park.action,
+        bikePaths: messages.Impacts.zones.types.bikePaths.action,
         reasons: messages.ContentHeader.reasons,
         dailyLife: messages.Impacts.impacts.types
       };
     });
     if (!labels.sidewalk?.blocked || !labels.sidewalk?.obstructed || !labels.park?.blocked || !labels.park?.closed) {
       throw new Error("Official impact labels missing; snapshot not written");
+    }
+    if (!labels.bikePaths?.blocked || !labels.bikePaths?.obstructed) {
+      throw new Error("Official bike-path impact labels missing; snapshot not written");
     }
   } finally {
     await browser.close();

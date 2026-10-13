@@ -53,7 +53,7 @@ function closureImpactLabel(closure) {
 // Phase 2 Validation: Tous les endpoints ci-dessous ont été testés et validés HTTP 200
 const LIVE_SOURCES = {
   // ✓ Phase 2 Validé - WFS Montreal (entraves ponctuelles)
-  montreal: "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal:entraves-ponctuelles&outputFormat=application/json&CQL_FILTER=affectedArea%20like%20%27%25street%25%27",
+  montreal: "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal:entraves-ponctuelles&outputFormat=application/json&CQL_FILTER=affectedArea%20like%20%27%25street%25%27%20OR%20affectedArea%20like%20%27%25alley%25%27",
   // Snapshot local des restrictions UCI 2026
   uciSnapshot: "data/montreal-uci-closures-snapshot.json",
   // ✓ Phase 2 Validé - ArcGIS Longueuil (points d'entraves)
@@ -3573,7 +3573,7 @@ function normalizeMontrealFeature(feature, index) {
   const polygonCoordinates = parseJson(properties.locationOccupancyZoneGeometryCoordinates, null);
   const point = feature.geometry?.type === "Point" ? feature.geometry.coordinates : parseJson(properties.locationSummaryGeometryPin, null);
 
-  return impacts.flatMap((impact, impactIndex) => {
+  const records = impacts.flatMap((impact, impactIndex) => {
     const lineGeometry = parseJson(impact.spatialAnalysis?.lineGeometry, null);
     const from = impact.spatialAnalysis?.fromShortName || impact.spatialAnalysis?.fromName || "origine non précisée";
     const to = impact.spatialAnalysis?.toShortName || impact.spatialAnalysis?.toName || "destination non précisée";
@@ -3641,6 +3641,56 @@ function normalizeMontrealFeature(feature, index) {
       width: impact.streetImpactWidth
     };
   });
+
+  const affectedAreas = parseJson(properties.affectedArea, []);
+  const alleyType = properties.occupancyImpactAlleyBlockedType;
+  if (affectedAreas.includes("alley") && ["blocked", "obstructed"].includes(alleyType)) {
+    const closed = alleyType === "blocked";
+    const label = closed ? "Ruelle fermée" : "Ruelle entravée";
+    const severity = closed ? "critical" : "moderate";
+    const geometry = polygonCoordinates
+      ? { type: "Polygon", coordinates: polygonCoordinates }
+      : feature.geometry;
+    records.push({
+      id: `mtl-${properties.id || index}-alley`,
+      title: `${label} - ${properties.occupancyName || "Ruelle"}`,
+      reference: properties.permitPermitId || null,
+      sourceRecordId: properties.id || null,
+      category: categoryFromAuthority(properties.siteAuthority || properties.occupancySubmitterDetailsSubmitterCategory),
+      sourceKind: "montreal-wfs",
+      responsible: properties.submitterSummaryOrganizationName || properties.occupancysubmitterdetailsPublicOrganization || siteAuthorityLabel(properties.siteAuthority),
+      siteAuthority: properties.siteAuthority || null,
+      organization: properties.submitterSummaryOrganizationName || null,
+      borough: properties.boroughId || "Montreal",
+      startDate: dateOnly(properties.durationStartDate),
+      endDate: dateOnly(properties.durationEndDate),
+      impact: label,
+      trafficLabel: label,
+      severity,
+      roadType: "street",
+      periods: periodsFromMontrealSchedule(properties),
+      schedule: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        .filter((day) => properties[`durationDays${day}Active`])
+        .map((day) => ({
+          day,
+          allDay: properties[`durationDays${day}AllDayRound`] === true,
+          start: properties[`durationDays${day}StartTime`],
+          end: properties[`durationDays${day}EndTime`]
+        })),
+      direction: "Direction non publiée.",
+      streets: properties.occupancyName || "Ruelle",
+      source: "Ville de Montreal - Info entraves et travaux",
+      sourceUrl: "https://services.montreal.ca/cartes/entraves",
+      color: SEVERITY_META[severity].color,
+      geometry,
+      geometryNote: polygonCoordinates
+        ? "Emprise de chantier publiée; le tracé exact de la ruelle n'est pas publié."
+        : "Point de localisation publié; le tracé exact de la ruelle n'est pas publié.",
+      point,
+      rawType: alleyType
+    });
+  }
+  return records;
 }
 
 function isPedestrianStreetFeature(properties, impact) {

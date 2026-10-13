@@ -1,5 +1,5 @@
 {
-  "extractedAt": "2026-10-12T21:42:10.485Z",
+  "extractedAt": "2026-10-13T00:07:51.930Z",
   "sourceUrl": "https://montreal.ca/entraves-travaux/entraves",
   "apiUrl": "https://montreal.ca/entraves-travaux/api/recherche",
   "sourceRecordCount": 1807,
@@ -20,6 +20,10 @@
     "park": {
       "blocked": "Travaux en cours dans le parc",
       "closed": "Travaux en cours dans le parc"
+    },
+    "bikePaths": {
+      "obstructed": "Aménagements alternatifs prévus pour la circulation cycliste au besoin",
+      "blocked": "Aménagements alternatifs prévus pour la circulation cycliste au besoin"
     },
     "reasons": {
       "a_1ExistingAerial": "Travaux sur le réseau aérien existant",
