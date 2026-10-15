@@ -262,6 +262,12 @@ npm run serve
 
 `npm run serve` démarre le même serveur statique local (`python -m http.server 5500`) sur `http://localhost:5500`. Le dossier `node_modules/` n'est jamais publié ni requis en production; il est exclu par `.gitignore`.
 
+### Aperçus des liens partagés
+
+Les pages d'accueil racine, française et anglaise déclarent directement dans leur HTML les métadonnées Open Graph et Twitter : titre, description et image absolue `https://cestdejalenfer.ca/favicon-512.png`. Cette image PNG de 512 × 512 représente le logo orange du site, et non une icône de navigation. Les robots de partage n'ont pas besoin d'exécuter JavaScript pour la découvrir.
+
+Après publication, Meta peut conserver un ancien aperçu en cache. Une nouvelle collecte peut être demandée avec le [Sharing Debugger de Facebook](https://developers.facebook.com/tools/debug/) pour l'URL partagée exacte, y compris sa variante `www` si utilisée. Cela ne garantit pas le remplacement immédiat des aperçus déjà envoyés dans Instagram.
+
 ### Date de vérification des snapshots
 
 Lors de chaque mise à jour demandée des snapshots, `extractedAt` indique la dernière vérification réussie de la source, même si aucune nouvelle donnée admissible n'est trouvée. Les métadonnées de fraîcheur correspondantes dans `data/sources.js` doivent porter la même date. Si les données sont inchangées, seuls ces horodatages sont actualisés : les enregistrements, géométries et dates publiées par les organismes restent intacts. Une consultation échouée, partielle ou limitée au cache local ne fait pas avancer la date. Cette date ne signifie ni que la source vient de publier de nouvelles données, ni que les géométries ont été reconstruites.
