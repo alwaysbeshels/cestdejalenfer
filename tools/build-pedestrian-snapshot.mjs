@@ -1,4 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
+import { isDeepStrictEqual } from "node:util";
 import { chromium } from "playwright";
 
 const OUTPUT = "data/pedestrian-closures-snapshot.json";
@@ -233,8 +234,20 @@ async function main() {
             })) };
         }, { raw, normalize, key, today, options });
         const unique = new Map();
+        const previousById = new Map(previous.records
+          .filter((record) => record.sourceKey === key)
+          .map((record) => [record.id, record]));
         for (const record of result.records) {
-          const stored = { ...record, sourceKey: key, sourceCheckedAt: checkedAt || sourceExtractedAt };
+          const stored = { ...record, sourceKey: key };
+          const previousRecord = previousById.get(stored.id);
+          const withoutProvenance = (value) => {
+            const { sourceKey: _sourceKey, sourceCheckedAt: _sourceCheckedAt, ...data } = value;
+            return data;
+          };
+          stored.sourceCheckedAt = options.local && previousRecord
+            && isDeepStrictEqual(withoutProvenance(previousRecord), withoutProvenance(stored))
+            ? previousRecord.sourceCheckedAt
+            : checkedAt || sourceExtractedAt || record.sourceCheckedAt || null;
           if (unique.has(stored.id) && JSON.stringify(unique.get(stored.id)) !== JSON.stringify(stored)) throw new Error(`Conflicting duplicate ${stored.id}`);
           unique.set(stored.id, stored);
         }

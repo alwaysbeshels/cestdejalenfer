@@ -7,6 +7,14 @@ const SOURCE = "https://montreal.ca/entraves-travaux/entraves";
 const OUTPUT = "data/montreal-pedestrian-notices-snapshot.json";
 const WFS = "https://api.montreal.ca/api/it-platforms/geomatic/wfs-maps/montreal/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=montreal:entraves-ponctuelles&outputFormat=application/json";
 
+function dateOnlyInMontreal(value) {
+  const date = new Date(value);
+  if (!value || !Number.isFinite(date.valueOf())) return null;
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Toronto", year: "numeric", month: "2-digit", day: "2-digit"
+  }).format(date);
+}
+
 async function fetchPage(page) {
   const response = await fetch(`${API}?page=${page}`, { signal: AbortSignal.timeout(30000) });
   if (!response.ok) throw new Error(`Page ${page}: HTTP ${response.status}`);
@@ -56,8 +64,8 @@ async function main() {
   const expected = geojson.features.filter((feature) => {
     const properties = feature.properties;
     const areas = JSON.parse(properties.affectedArea || "[]");
-    return areas.some((area) => area === "sidewalk" || area === "park")
-      && properties.durationEndDate && properties.durationEndDate.slice(0, 10) >= today;
+    const endDate = dateOnlyInMontreal(properties.durationEndDate);
+    return areas.some((area) => area === "sidewalk" || area === "park") && endDate && endDate >= today;
   });
   const browser = await chromium.launch({ headless: true });
   let labels;
@@ -129,7 +137,15 @@ async function main() {
   };
   const unchanged = previous && ["sourceUrl", "apiUrl", "note", "labels", "records"]
     .every((key) => isDeepStrictEqual(previous[key], snapshot[key]));
-  await writeFile(OUTPUT, `${JSON.stringify(unchanged ? { ...previous, extractedAt: snapshot.extractedAt } : snapshot, null, 2)}\n`, "utf8");
+  const output = unchanged ? {
+    ...previous,
+    extractedAt: snapshot.extractedAt,
+    sourceRecordCount: snapshot.sourceRecordCount,
+    pageCount: snapshot.pageCount,
+    verification: snapshot.verification,
+    retainedRecordCount: snapshot.retainedRecordCount
+  } : snapshot;
+  await writeFile(OUTPUT, `${JSON.stringify(output, null, 2)}\n`, "utf8");
   console.log(JSON.stringify({ extractedAt: snapshot.extractedAt, sourceRecords: entries.length, retained: records.length,
     customDescriptions: records.filter((record) => record.workImpact).length, output: OUTPUT }));
 }

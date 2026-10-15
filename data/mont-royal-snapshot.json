@@ -1,5 +1,5 @@
 {
-  "extractedAt": "2026-10-12T21:37:06.026Z",
+  "extractedAt": "2026-10-15T02:57:53.260Z",
   "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
   "municipality": "Ville de Mont-Royal",
   "records": [
@@ -8685,642 +8685,6 @@
       }
     },
     {
-      "id": "512ee35d-d448-487f-a9be-91eabb7cbef4",
-      "title": "Côte-de-Liesse (Lucerne.Graham) - Telecon pour BELL",
-      "startDate": "2026-10-08",
-      "endDate": "2026-10-12",
-      "impact": "Fermeture de la voie du centre et la voie de gauche à partir de Lucerne Mobilisation ponctuelle\nFermeture de la voie du centre et la voie de gauche à partir de Lucerne Mobilisation ponctuelle",
-      "trafficLabels": [
-        "Entrave partielle"
-      ],
-      "streets": "Côte-de-Liesse",
-      "direction": "Direction non publiée.",
-      "reference": "",
-      "geometry": {
-        "type": "MultiLineString",
-        "coordinates": [
-          [
-            [
-              -73.66238754566315,
-              45.50798524701477
-            ],
-            [
-              -73.66250040999546,
-              45.507800779646146
-            ],
-            [
-              -73.6625281364967,
-              45.50773724791574
-            ]
-          ],
-          [
-            [
-              -73.66216373849497,
-              45.50838109357082
-            ],
-            [
-              -73.66238754566315,
-              45.50798524701477
-            ]
-          ],
-          [
-            [
-              -73.66207758556763,
-              45.50851888290717
-            ],
-            [
-              -73.66216373849497,
-              45.50838109357082
-            ]
-          ],
-          [
-            [
-              -73.66182181634163,
-              45.50897236993964
-            ],
-            [
-              -73.66207758556763,
-              45.50851888290717
-            ]
-          ]
-        ]
-      },
-      "sourceUrl": "https://montroyal.opatech.ca/#/public?city=montroyal&entraves=true&closing=true&detours=true&lang=fr",
-      "publishedProject": {
-        "data": {
-          "informations": {
-            "name": "Côte-de-Liesse (Lucerne.Graham) - Telecon pour BELL",
-            "comment": "<p>Fermeture de la voie du centre et la voie de gauche à partir de Lucerne</p><p>Mobilisation ponctuelle</p>",
-            "notes": "<p>Fermeture de la voie du centre et la voie de gauche à partir de Lucerne</p><p>Mobilisation ponctuelle</p>",
-            "inchargeof": "Ann-Lise Annoual",
-            "phone": "(514)734-3037",
-            "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
-            "role": "Coordonatrice technique",
-            "agents": [
-              {
-                "name": "Ann-Lise Annoual",
-                "role": "Coordonatrice technique",
-                "phone": "(514)734-3037",
-                "email": "ann-lise.annoual@ville.mont-royal.qc.ca",
-                "organization": "",
-                "publicContact": true,
-                "isAuthor": true
-              }
-            ],
-            "district": [],
-            "city": [],
-            "entity": [
-              "5"
-            ],
-            "step": "2",
-            "status": "1",
-            "workType": [],
-            "serviceInfra": "",
-            "servicePublic": "",
-            "workType1": [],
-            "workCategory": [],
-            "sector": [],
-            "dista": [],
-            "distp": "",
-            "publish": true,
-            "publishReport": true,
-            "citizenOpinions": false,
-            "notification": false,
-            "internalCommunication": false,
-            "externalCommunication": false,
-            "publicWork": false,
-            "publicMap": false,
-            "publicMapWork": true,
-            "typeMap": {
-              "waze": false,
-              "map": true
-            },
-            "passanger": {
-              "key": "passanger",
-              "title": {
-                "label": "Type d'usager",
-                "label_fr": "Type d'usager",
-                "label_en": "Passenger type"
-              },
-              "title1": {
-                "label": "Type d'impact",
-                "label_fr": "Type d'impact",
-                "label_en": "Impact type"
-              },
-              "show": true,
-              "showInList": false,
-              "search": false,
-              "value": [
-                {
-                  "value": "type1",
-                  "status": false,
-                  "content": "",
-                  "label": "Local ou usager du site",
-                  "label_fr": "Local ou usager du site",
-                  "label_en": "Local or site user"
-                },
-                {
-                  "value": "type2",
-                  "status": false,
-                  "content": "",
-                  "label": "Automobiliste",
-                  "label_fr": "Automobiliste",
-                  "label_en": "Driver"
-                },
-                {
-                  "value": "type3",
-                  "status": false,
-                  "content": "",
-                  "label": "Cycliste",
-                  "label_fr": "Cycliste",
-                  "label_en": "Cyclist"
-                },
-                {
-                  "value": "type4",
-                  "status": false,
-                  "content": "",
-                  "label": "Piéton",
-                  "label_fr": "Piéton",
-                  "label_en": "Pedestrian"
-                },
-                {
-                  "value": "type5",
-                  "status": false,
-                  "content": "",
-                  "label": "Transport collectif",
-                  "label_fr": "Transport collectif",
-                  "label_en": "Public transport"
-                },
-                {
-                  "value": "type6",
-                  "status": false,
-                  "content": "",
-                  "label": "Accessibilité véhicules d'urgence",
-                  "label_fr": "Accessibilité véhicules d'urgence",
-                  "label_en": "Emergency vehicles accessibility"
-                },
-                {
-                  "value": "type7",
-                  "status": false,
-                  "content": "",
-                  "label": "Accessibilité personnes à mobilité réduite",
-                  "label_fr": "Accessibilité personnes à mobilité réduite",
-                  "label_en": "Accessibility for people with reduced mobility"
-                }
-              ]
-            },
-            "trafficImpact": {
-              "key": "trafficImpact",
-              "title": {
-                "label": "Impacts - Gestion de la circulation",
-                "label_fr": "Impacts - Gestion de la circulation",
-                "label_en": "Impacts - Traffic Management"
-              },
-              "title1": {
-                "label": "Impacts - Précisions",
-                "label_fr": "Impacts - Précisions",
-                "label_en": "Impacts - Details"
-              },
-              "show": true,
-              "showInList": false,
-              "search": true,
-              "value": [
-                {
-                  "value": "1",
-                  "status": false,
-                  "content": "",
-                  "label": "Fermeture complète",
-                  "label_fr": "Fermeture complète",
-                  "label_en": "Complete closure"
-                },
-                {
-                  "value": "2",
-                  "status": true,
-                  "content": "Fermeture de deux voies (centre et gauche)",
-                  "label": "Entrave partielle",
-                  "label_fr": "Entrave partielle",
-                  "label_en": "Partial obstruction"
-                },
-                {
-                  "value": "3",
-                  "status": false,
-                  "content": "",
-                  "label": "Circulation locale seulement",
-                  "label_fr": "Circulation locale seulement",
-                  "label_en": "Local Traffic only"
-                },
-                {
-                  "value": "4",
-                  "status": false,
-                  "content": "",
-                  "label": "Modification de stationnement",
-                  "label_fr": "Modification de stationnement",
-                  "label_en": "Parking modification"
-                },
-                {
-                  "value": "5",
-                  "status": false,
-                  "content": "",
-                  "label": "Trajet de détour",
-                  "label_fr": "Trajet de détour",
-                  "label_en": "Detour route"
-                },
-                {
-                  "value": "6",
-                  "status": false,
-                  "content": "",
-                  "label": "Présence de signaleurs",
-                  "label_fr": "Présence de signaleurs",
-                  "label_en": "Presence of flaggers"
-                },
-                {
-                  "value": "7",
-                  "status": false,
-                  "content": "",
-                  "label": "Accès aux commerces maintenu",
-                  "label_fr": "Accès aux commerces maintenu",
-                  "label_en": "Access to shops maintained"
-                },
-                {
-                  "value": "8",
-                  "status": false,
-                  "content": "",
-                  "label": "Trajet ou arrêt de la STM",
-                  "label_fr": "Trajet ou arrêt de la STM",
-                  "label_en": "Routes or Stops STM"
-                },
-                {
-                  "value": "9",
-                  "status": false,
-                  "content": "",
-                  "label": "Corridor scolaire entravé",
-                  "label_fr": "Corridor scolaire entravé",
-                  "label_en": "Blocked school corridor"
-                },
-                {
-                  "value": "10",
-                  "status": false,
-                  "content": "",
-                  "label": "Réduction de la vitesse légale",
-                  "label_fr": "Réduction de la vitesse légale",
-                  "label_en": "Reduced legal speed limit"
-                },
-                {
-                  "value": "11",
-                  "status": false,
-                  "content": "",
-                  "label": "Fermeture de trottoir",
-                  "label_fr": "Fermeture de trottoir",
-                  "label_en": "Closure of sidewalk"
-                },
-                {
-                  "value": "12",
-                  "status": false,
-                  "content": "",
-                  "label": "Fermeture de piste cyclable",
-                  "label_fr": "Fermeture de piste cyclable",
-                  "label_en": "Closure of cycling path"
-                },
-                {
-                  "value": "13",
-                  "status": false,
-                  "content": "",
-                  "label": "Collectes des matières résiduelles",
-                  "label_fr": "Collectes des matières résiduelles",
-                  "label_en": "Collection of residual materials"
-                },
-                {
-                  "value": "14",
-                  "status": false,
-                  "content": "",
-                  "label": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
-                  "label_fr": "Fermeture temporaire de services municipaux ( Parc, Chalet etc)",
-                  "label_en": "Temporary closure of municipal services (Park, Chalet etc)"
-                }
-              ]
-            },
-            "portableWater": {
-              "key": "portableWater",
-              "title": {
-                "label": "Impacts - Alimentation en eau potable",
-                "label_fr": "Impacts - Alimentation en eau potable",
-                "label_en": "Impacts - Potable water supply"
-              },
-              "show": true,
-              "showInList": false,
-              "search": true,
-              "value": [
-                {
-                  "value": "1",
-                  "status": false,
-                  "content": "",
-                  "label": "Réseau temporaire d’eau potable",
-                  "label_fr": "Réseau temporaire d’eau potable",
-                  "label_en": "Temporary potable water network"
-                },
-                {
-                  "value": "2",
-                  "status": false,
-                  "content": "",
-                  "label": "Interruption d’eau potable",
-                  "label_fr": "Interruption d’eau potable",
-                  "label_en": "Interruption of potable water"
-                },
-                {
-                  "value": "3",
-                  "status": false,
-                  "content": "",
-                  "label": "Perte de pression temporaire",
-                  "label_fr": "Perte de pression temporaire",
-                  "label_en": "Temporary pressure loss"
-                },
-                {
-                  "value": "4",
-                  "status": false,
-                  "content": "",
-                  "label": "Changement de couleur de l’eau - non nocif",
-                  "label_fr": "Changement de couleur de l’eau - non nocif",
-                  "label_en": "Water color change - not harmful"
-                }
-              ]
-            },
-            "documents": {
-              "allowed": false,
-              "plan": false,
-              "other": ""
-            },
-            "typeProject": "linear",
-            "requestDate": "",
-            "authorizeDate": "",
-            "cost": "",
-            "departments": [],
-            "eventType": "",
-            "permitInfo": {
-              "timeRange": "",
-              "applicantType": "",
-              "details": [],
-              "equipments": [],
-              "applicant": {
-                "name": "",
-                "phone": "",
-                "email": "",
-                "address": "",
-                "postalCode": ""
-              },
-              "isWeekendWork": false
-            }
-          },
-          "entraves": {
-            "date": [
-              1791464400000,
-              1791838800000
-            ],
-            "perimeter": 5.9,
-            "entraves": [
-              {
-                "selected": {
-                  "path": [
-                    {
-                      "geometry": {
-                        "type": "polyline",
-                        "paths": [
-                          [
-                            [
-                              -8200059.472199999,
-                              5701851.051600002
-                            ],
-                            [
-                              -8200072.0362,
-                              5701821.750100002
-                            ],
-                            [
-                              -8200075.1227,
-                              5701811.658500001
-                            ]
-                          ]
-                        ],
-                        "hasM": false,
-                        "hasZ": false,
-                        "spatialReference": {
-                          "latestWkid": 3857,
-                          "wkid": 102100
-                        }
-                      },
-                      "attributes": {
-                        "FID": 17250,
-                        "ID_TRC": 1603153,
-                        "DEB_GCH": 0,
-                        "FIN_GCH": 0,
-                        "ARR_GCH": "N/A",
-                        "SENS_CIR": -1,
-                        "CLASSE": 7,
-                        "LIE_VOIE": "de la",
-                        "TYP_VOIE": "chemin",
-                        "DIR_VOIE": " ",
-                        "NOM_VOIE": "Côte-de-Liesse",
-                        "DEB_DRT": 0,
-                        "FIN_DRT": 0,
-                        "ARR_DRT": "N/A",
-                        "LIM_GCH": "Mont-Royal",
-                        "LIM_DRT": "Mont-Royal",
-                        "Shape__Length": 0.00028557411200878536
-                      }
-                    },
-                    {
-                      "geometry": {
-                        "type": "polyline",
-                        "paths": [
-                          [
-                            [
-                              -8200034.5581,
-                              5701913.929700002
-                            ],
-                            [
-                              -8200059.472199999,
-                              5701851.051600002
-                            ]
-                          ]
-                        ],
-                        "hasM": false,
-                        "hasZ": false,
-                        "spatialReference": {
-                          "latestWkid": 3857,
-                          "wkid": 102100
-                        }
-                      },
-                      "attributes": {
-                        "FID": 17251,
-                        "ID_TRC": 1603154,
-                        "DEB_GCH": 3980,
-                        "FIN_GCH": 3980,
-                        "ARR_GCH": "N/A",
-                        "SENS_CIR": -1,
-                        "CLASSE": 7,
-                        "LIE_VOIE": "de la",
-                        "TYP_VOIE": "chemin",
-                        "DIR_VOIE": " ",
-                        "NOM_VOIE": "Côte-de-Liesse",
-                        "DEB_DRT": 0,
-                        "FIN_DRT": 0,
-                        "ARR_DRT": "N/A",
-                        "LIM_GCH": "Mont-Royal",
-                        "LIM_DRT": "Mont-Royal",
-                        "Shape__Length": 0.0004547351480993478
-                      }
-                    },
-                    {
-                      "geometry": {
-                        "type": "polyline",
-                        "paths": [
-                          [
-                            [
-                              -8200024.967599999,
-                              5701935.8169
-                            ],
-                            [
-                              -8200034.5581,
-                              5701913.929700002
-                            ]
-                          ]
-                        ],
-                        "hasM": false,
-                        "hasZ": false,
-                        "spatialReference": {
-                          "latestWkid": 3857,
-                          "wkid": 102100
-                        }
-                      },
-                      "attributes": {
-                        "FID": 17253,
-                        "ID_TRC": 1603158,
-                        "DEB_GCH": 0,
-                        "FIN_GCH": 0,
-                        "ARR_GCH": "N/A",
-                        "SENS_CIR": -1,
-                        "CLASSE": 7,
-                        "LIE_VOIE": "de la",
-                        "TYP_VOIE": "chemin",
-                        "DIR_VOIE": " ",
-                        "NOM_VOIE": "Côte-de-Liesse",
-                        "DEB_DRT": 0,
-                        "FIN_DRT": 0,
-                        "ARR_DRT": "N/A",
-                        "LIM_GCH": "Mont-Royal",
-                        "LIM_DRT": "Mont-Royal",
-                        "Shape__Length": 0.00016250602912635062
-                      }
-                    },
-                    {
-                      "geometry": {
-                        "type": "polyline",
-                        "paths": [
-                          [
-                            [
-                              -8199996.4955,
-                              5702007.851599999
-                            ],
-                            [
-                              -8200024.967599999,
-                              5701935.8169
-                            ]
-                          ]
-                        ],
-                        "hasM": false,
-                        "hasZ": false,
-                        "spatialReference": {
-                          "latestWkid": 3857,
-                          "wkid": 102100
-                        }
-                      },
-                      "attributes": {
-                        "FID": 17256,
-                        "ID_TRC": 1603162,
-                        "DEB_GCH": 0,
-                        "FIN_GCH": 0,
-                        "ARR_GCH": "N/A",
-                        "SENS_CIR": -1,
-                        "CLASSE": 7,
-                        "LIE_VOIE": "de la",
-                        "TYP_VOIE": "chemin",
-                        "DIR_VOIE": " ",
-                        "NOM_VOIE": "Côte-de-Liesse",
-                        "DEB_DRT": 0,
-                        "FIN_DRT": 0,
-                        "ARR_DRT": "N/A",
-                        "LIM_GCH": "Mont-Royal",
-                        "LIM_DRT": "Mont-Royal",
-                        "Shape__Length": 0.0005206423513145788
-                      }
-                    }
-                  ],
-                  "startPoint": {
-                    "type": "point",
-                    "latitude": 45.50773724791574,
-                    "longitude": -73.6625281364967,
-                    "x": -8200075.1227,
-                    "y": 5701811.658500001,
-                    "spatialReference": {
-                      "latestWkid": 3857,
-                      "wkid": 102100
-                    },
-                    "hasM": false,
-                    "hasZ": false
-                  },
-                  "endPoint": {
-                    "type": "point",
-                    "latitude": 45.50897236993962,
-                    "longitude": -73.66182181634163,
-                    "x": -8199996.4955,
-                    "y": 5702007.851599999,
-                    "spatialReference": {
-                      "latestWkid": 3857,
-                      "wkid": 102100
-                    },
-                    "hasM": false,
-                    "hasZ": false
-                  },
-                  "streetsTrack": [
-                    {
-                      "name": "Côte-de-Liesse",
-                      "distance": 147
-                    }
-                  ]
-                },
-                "type": "linear",
-                "value": "Côte-de-Liesse [Sur 147 m] ",
-                "label": "Côte-de-Liesse <span class=\"paths-distance\">[Sur 147 m]</span> ",
-                "name": "Côte-de-Liesse",
-                "showError": false,
-                "entraveId": "f921b640-c27e-11f1-9c93-7f3eb0c153ce"
-              }
-            ],
-            "layer": "roadworks",
-            "validateEntraves": true,
-            "timeRange": "",
-            "timeOfDay": ""
-          },
-          "phases": [],
-          "projectType": {
-            "isQuick": true,
-            "isDraft": false,
-            "isPublished": true,
-            "advanceOptions": {
-              "detour": false,
-              "phaseAndDetour": false
-            }
-          },
-          "uuid": "512ee35d-d448-487f-a9be-91eabb7cbef4",
-          "conflicts": []
-        },
-        "archives": []
-      },
-      "geometrySource": {
-        "crs": "EPSG:3857",
-        "field": "data.entraves.entraves[].selected.path[].geometry.paths",
-        "outputCrs": "EPSG:4326"
-      }
-    },
-    {
       "id": "6caf0801-2754-4ccf-9c03-05248e64f07f",
       "title": "Fermeture - Côte-de-Liesse - Travaux de chaussée ",
       "startDate": "2026-10-14",
@@ -9948,8 +9312,8 @@
           },
           "entraves": {
             "date": [
-              1791936000000,
-              1793005200000
+              1791950400000,
+              1792987200000
             ],
             "perimeter": 8.23,
             "entraves": [
@@ -10853,10 +10217,10 @@
                   ],
                   "startPoint": {
                     "type": "point",
-                    "latitude": 45.5062256587285,
-                    "longitude": -73.66351291192949,
-                    "x": -8200184.747399723,
-                    "y": 5701571.555799754,
+                    "latitude": 45.50622565872773,
+                    "longitude": -73.66351291192825,
+                    "x": -8200184.747399585,
+                    "y": 5701571.555799632,
                     "spatialReference": {
                       "latestWkid": 3857,
                       "wkid": 102100
@@ -10866,10 +10230,10 @@
                   },
                   "endPoint": {
                     "type": "point",
-                    "latitude": 45.52799755262202,
-                    "longitude": -73.64991421605681,
-                    "x": -8198670.947499724,
-                    "y": 5705030.452999755,
+                    "latitude": 45.52799755262125,
+                    "longitude": -73.64991421605556,
+                    "x": -8198670.947499585,
+                    "y": 5705030.452999632,
                     "spatialReference": {
                       "latestWkid": 3857,
                       "wkid": 102100
@@ -11124,10 +10488,10 @@
                     ],
                     "startPoint": {
                       "type": "point",
-                      "latitude": 45.506550035719485,
-                      "longitude": -73.66331000226974,
-                      "x": -8200162.159599723,
-                      "y": 5701623.079699756,
+                      "latitude": 45.50655003571872,
+                      "longitude": -73.66331000226849,
+                      "x": -8200162.159599584,
+                      "y": 5701623.079699633,
                       "spatialReference": {
                         "latestWkid": 3857,
                         "wkid": 102100
@@ -11137,10 +10501,10 @@
                     },
                     "endPoint": {
                       "type": "point",
-                      "latitude": 45.50838109356924,
-                      "longitude": -73.66216373849248,
-                      "x": -8200034.558099724,
-                      "y": 5701913.929699756,
+                      "latitude": 45.50838109356847,
+                      "longitude": -73.66216373849123,
+                      "x": -8200034.558099586,
+                      "y": 5701913.929699633,
                       "spatialReference": {
                         "latestWkid": 3857,
                         "wkid": 102100
@@ -11162,8 +10526,8 @@
                   "dates": [
                     {
                       "dateId": "56f65950-c33e-11f1-82c7-5f27aa64ef1e",
-                      "sdate": 1791936000000,
-                      "edate": 1792054800000,
+                      "sdate": 1791950400000,
+                      "edate": 1792036800000,
                       "days": [
                         2,
                         3,
@@ -11176,8 +10540,8 @@
                       "typeStreet": [],
                       "comment": "",
                       "dates": [
-                        1791936000000,
-                        1792054800000
+                        1791950400000,
+                        1792036800000
                       ]
                     }
                   ],
@@ -13423,10 +12787,10 @@
                         ],
                         "startPoint": {
                           "type": "point",
-                          "latitude": 45.50622565872928,
-                          "longitude": -73.66351291193072,
-                          "x": -8200184.74739986,
-                          "y": 5701571.555799876,
+                          "latitude": 45.5062256587285,
+                          "longitude": -73.66351291192949,
+                          "x": -8200184.747399723,
+                          "y": 5701571.555799754,
                           "spatialReference": {
                             "latestWkid": 3857,
                             "wkid": 102100
@@ -13436,10 +12800,10 @@
                         },
                         "endPoint": {
                           "type": "point",
-                          "latitude": 45.49948230145144,
-                          "longitude": -73.66064978079592,
-                          "x": -8199866.025099861,
-                          "y": 5700500.51109988,
+                          "latitude": 45.49948230145066,
+                          "longitude": -73.66064978079469,
+                          "x": -8199866.025099723,
+                          "y": 5700500.511099754,
                           "spatialReference": {
                             "latestWkid": 3857,
                             "wkid": 102100
@@ -13491,8 +12855,8 @@
                       "dates": [
                         {
                           "dateId": "6dcb2870-c340-11f1-9cdc-c545eeedc7ed",
-                          "sdate": 1791936000000,
-                          "edate": 1792054800000,
+                          "sdate": 1791950400000,
+                          "edate": 1792036800000,
                           "days": [
                             1,
                             2,
@@ -13917,10 +13281,10 @@
                     ],
                     "startPoint": {
                       "type": "point",
-                      "latitude": 45.50838109357078,
-                      "longitude": -73.66216373849497,
-                      "x": -8200034.5581,
-                      "y": 5701913.929700002,
+                      "latitude": 45.50838109357001,
+                      "longitude": -73.66216373849373,
+                      "x": -8200034.558099863,
+                      "y": 5701913.929699878,
                       "spatialReference": {
                         "latestWkid": 3857,
                         "wkid": 102100
@@ -13930,10 +13294,10 @@
                     },
                     "endPoint": {
                       "type": "point",
-                      "latitude": 45.5152579286174,
-                      "longitude": -73.65783886423827,
-                      "x": -8199553.1153,
-                      "y": 5703006.3486,
+                      "latitude": 45.515257928616634,
+                      "longitude": -73.65783886423704,
+                      "x": -8199553.115299863,
+                      "y": 5703006.348599877,
                       "spatialReference": {
                         "latestWkid": 3857,
                         "wkid": 102100
@@ -13955,8 +13319,8 @@
                   "dates": [
                     {
                       "dateId": "d141dfe0-c33e-11f1-82c7-5f27aa64ef1e",
-                      "sdate": 1792108800000,
-                      "edate": 1792486800000,
+                      "sdate": 1792123200000,
+                      "edate": 1792555200000,
                       "days": [
                         1,
                         2,
@@ -13973,8 +13337,8 @@
                       "typeStreet": [],
                       "comment": "",
                       "dates": [
-                        1792108800000,
-                        1792486800000
+                        1792123200000,
+                        1792555200000
                       ]
                     }
                   ],
@@ -14842,10 +14206,10 @@
                         ],
                         "startPoint": {
                           "type": "point",
-                          "latitude": 45.507985247014766,
-                          "longitude": -73.66238754566315,
-                          "x": -8200059.472199999,
-                          "y": 5701851.051600002,
+                          "latitude": 45.50798524701399,
+                          "longitude": -73.66238754566191,
+                          "x": -8200059.472199861,
+                          "y": 5701851.051599878,
                           "spatialReference": {
                             "latestWkid": 3857,
                             "wkid": 102100
@@ -14855,10 +14219,10 @@
                         },
                         "endPoint": {
                           "type": "point",
-                          "latitude": 45.516164864080984,
-                          "longitude": -73.6572225292235,
-                          "x": -8199484.505199999,
-                          "y": 5703150.429700002,
+                          "latitude": 45.51616486408022,
+                          "longitude": -73.65722252922225,
+                          "x": -8199484.50519986,
+                          "y": 5703150.429699881,
                           "spatialReference": {
                             "latestWkid": 3857,
                             "wkid": 102100
@@ -14894,8 +14258,8 @@
                       "dates": [
                         {
                           "dateId": "4a9cda00-c341-11f1-9cdc-c545eeedc7ed",
-                          "sdate": 1792108800000,
-                          "edate": 1792486800000,
+                          "sdate": 1792123200000,
+                          "edate": 1792555200000,
                           "days": [
                             1,
                             2,
@@ -15290,10 +14654,10 @@
                     ],
                     "startPoint": {
                       "type": "point",
-                      "latitude": 45.51424584759493,
-                      "longitude": -73.65847099792144,
-                      "x": -8199623.484099724,
-                      "y": 5702845.566199757,
+                      "latitude": 45.514245847594154,
+                      "longitude": -73.65847099792019,
+                      "x": -8199623.484099585,
+                      "y": 5702845.566199634,
                       "spatialReference": {
                         "latestWkid": 3857,
                         "wkid": 102100
@@ -15303,10 +14667,10 @@
                     },
                     "endPoint": {
                       "type": "point",
-                      "latitude": 45.51794277172618,
-                      "longitude": -73.65599395101766,
-                      "x": -8199347.740499725,
-                      "y": 5703432.885299759,
+                      "latitude": 45.517942771725416,
+                      "longitude": -73.65599395101641,
+                      "x": -8199347.740499586,
+                      "y": 5703432.885299636,
                       "spatialReference": {
                         "latestWkid": 3857,
                         "wkid": 102100
@@ -15328,8 +14692,8 @@
                   "dates": [
                     {
                       "dateId": "ec53f570-c33e-11f1-82c7-5f27aa64ef1e",
-                      "sdate": 1792540800000,
-                      "edate": 1792659600000,
+                      "sdate": 1792641600000,
+                      "edate": 1792728000000,
                       "days": [
                         1,
                         2,
@@ -15346,8 +14710,8 @@
                       "typeStreet": [],
                       "comment": "",
                       "dates": [
-                        1792540800000,
-                        1792659600000
+                        1792641600000,
+                        1792728000000
                       ]
                     }
                   ],
@@ -15642,10 +15006,10 @@
                     ],
                     "startPoint": {
                       "type": "point",
-                      "latitude": 45.51794277172618,
-                      "longitude": -73.65599395101766,
-                      "x": -8199347.740499725,
-                      "y": 5703432.885299759,
+                      "latitude": 45.517942771725416,
+                      "longitude": -73.65599395101641,
+                      "x": -8199347.740499586,
+                      "y": 5703432.885299636,
                       "spatialReference": {
                         "latestWkid": 3857,
                         "wkid": 102100
@@ -15655,10 +15019,10 @@
                     },
                     "endPoint": {
                       "type": "point",
-                      "latitude": 45.51959307989464,
-                      "longitude": -73.65487572006714,
-                      "x": -8199223.259599722,
-                      "y": 5703695.077199761,
+                      "latitude": 45.519593079893866,
+                      "longitude": -73.6548757200659,
+                      "x": -8199223.259599585,
+                      "y": 5703695.077199638,
                       "spatialReference": {
                         "latestWkid": 3857,
                         "wkid": 102100
@@ -15680,8 +15044,8 @@
                   "dates": [
                     {
                       "dateId": "1fb13860-c33f-11f1-82c7-5f27aa64ef1e",
-                      "sdate": 1792713600000,
-                      "edate": 1793005200000,
+                      "sdate": 1792987200000,
+                      "edate": 1793073600000,
                       "days": [
                         1,
                         2,
@@ -15698,8 +15062,8 @@
                       "typeStreet": [],
                       "comment": "",
                       "dates": [
-                        1792713600000,
-                        1793005200000
+                        1792987200000,
+                        1793073600000
                       ]
                     }
                   ],
@@ -15891,7 +15255,51 @@
             "isPublished": true
           },
           "uuid": "6caf0801-2754-4ccf-9c03-05248e64f07f",
-          "conflicts": []
+          "conflicts": [
+            {
+              "uuid": "6caf0801-2754-4ccf-9c03-05248e64f07f",
+              "step": "entrave",
+              "publish": true,
+              "type": "linear",
+              "name": "Fermeture - Côte-de-Liesse - Travaux de chaussée ",
+              "entraveIndex": 1,
+              "entraveId": "cf9277a0-c33d-11f1-82c7-5f27aa64ef1e",
+              "value": "Côte-de-Liesse [Sur 2645 m] ",
+              "dates": [
+                1791950400000,
+                1792987200000
+              ],
+              "conflicts": [
+                {
+                  "uuid": "783539af-ba33-4899-8cc4-907bcaaecd00",
+                  "name": "Canora",
+                  "inchargeof": "Mélanie Kechayan",
+                  "phone": "(514) 734-3035",
+                  "type": "linear",
+                  "publish": false,
+                  "entraves": [
+                    {
+                      "entraveId": "8f2f0e80-c3ec-11f1-b4de-a14d9cdb730b",
+                      "entraveIndex": 1,
+                      "value": "Canora [Sur 493 m] ",
+                      "label": "Canora <span class=\"paths-distance\">[Sur 493 m]</span> ",
+                      "dates": [
+                        {
+                          "ranges": [
+                            1791975600000,
+                            1792987200000
+                          ],
+                          "days": true,
+                          "dateRangeNb": 1
+                        }
+                      ]
+                    }
+                  ],
+                  "phases": []
+                }
+              ]
+            }
+          ]
         },
         "archives": []
       },
@@ -15912,8 +15320,8 @@
       "publish": true,
       "nopublish": false,
       "ranges": [
-        1776289023990,
-        1807393023990
+        1776477995039,
+        1807581995039
       ],
       "city": "montroyal",
       "tags": {
@@ -15934,8 +15342,8 @@
       "modeMap": "0",
       "lang": "fr"
     },
-    "sourceRecordCount": 10,
-    "retainedRecordCount": 10,
+    "sourceRecordCount": 9,
+    "retainedRecordCount": 9,
     "excluded": [],
     "limitation": "Snapshot limited to the date window and public filters sent by the official map; not live."
   }

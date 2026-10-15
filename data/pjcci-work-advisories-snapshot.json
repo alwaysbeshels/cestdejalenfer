@@ -1,10 +1,10 @@
 {
-  "extractedAt": "2026-10-12T21:51:45.108Z",
+  "extractedAt": "2026-10-15T03:15:47.524Z",
   "sourceUrl": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
   "interactiveMapUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
-  "asOf": "2026-09-28",
-  "total": 9,
-  "parentNoticeTotal": 2,
+  "asOf": "2026-10-14",
+  "total": 10,
+  "parentNoticeTotal": 3,
   "interactiveMapEntraves": {
     "34": {
       "id": 1062,
@@ -129,9 +129,9 @@
   },
   "validation": {
     "geometryPolicy": "Verified named road/bridge lines only; official map points are references, never fallback display geometry.",
-    "sourceArchiveCount": 145,
-    "archiveAvis": 2,
-    "excludedHistoricalParents": 143,
+    "sourceArchiveCount": 138,
+    "archiveAvis": 3,
+    "excludedHistoricalParents": 135,
     "excludedHistoricalSections": [
       "Pont Clement: Du 3 au 15 mars",
       "Voies surelevees: Du 6 mars jusqu’a mai 2026",
@@ -149,7 +149,8 @@
       "gaetan-laberge-vers-sud",
       "gaetan-laberge-vers-centre-ville",
       "voies-victoria-clement-vers-sud",
-      "voies-victoria-clement-vers-centre-ville"
+      "voies-victoria-clement-vers-centre-ville",
+      "honore-mercier-left-lane-to-montreal"
     ],
     "rejectedPreviousGeometry": [
       {
@@ -172,10 +173,11 @@
       "Approximate annual/seasonal schedules are not converted to invented January 1 or October 31 dates.",
       "The UCI Bonaventure and exit 58 sections ended September 22 and are excluded, although their archive parent remains dated through September 23."
     ],
-    "activeFutureArchiveParents": 2,
+    "activeFutureArchiveParents": 3,
     "excludedNonAutomobileParents": [],
     "archiveParentsWithoutMapMatch": [
-      "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-a-la-circulation-du-parc-dentreprises-de-la-pointe-saint-charles-circulation-aux-entreprises-locales/"
+      "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-a-la-circulation-du-parc-dentreprises-de-la-pointe-saint-charles-circulation-aux-entreprises-locales/",
+      "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-honore-mercier-congestion-a-prevoir-fermeture-de-la-voie-de-gauche-direction-montreal-pour-une-duree-indeterminee/"
     ],
     "excludedParentsWithExpiredSections": [
       {
@@ -793,6 +795,42 @@
         45.482822
       ],
       "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/"
+    },
+    {
+      "dateAffichageTravaux": "14 octobre 2026",
+      "anneDebut": "2026-10-14T12:09:00.000000Z",
+      "anneFin": "2026-10-14T12:09:00.000000Z",
+      "datedebut": "2026-10-14 08:09:00",
+      "datefin": "2026-10-14 08:09:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": "Fermeture demandée par le ministère des Transports et de la Mobilité durable.\n\nDès le mercredi 14 octobre et pour une durée indéterminée&#160;:\n\n\n\tFermeture de la voie de gauche sur la travée centrale du pont, en direction de Montréal\n\t1 voie sur 2 demeure ouverte\n\tDes épisodes de congestion sont à prévoir\n\n\n \n\nConsultez Québec511 pour planifier vos déplacements.",
+      "title": "Pont Honoré-Mercier | CONGESTION À PRÉVOIR - Fermeture de la voie de gauche, direction Montréal, pour une durée indéterminée (Ministère des Transports et de la Mobilité durable)",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-honore-mercier-congestion-a-prevoir-fermeture-de-la-voie-de-gauche-direction-montreal-pour-une-duree-indeterminee/",
+      "tags": [],
+      "tagId": [],
+      "segmentId": "honore-mercier-left-lane-to-montreal",
+      "segmentTitle": "Pont Honoré-Mercier - fermeture de la voie de gauche, direction Montréal",
+      "segmentStreets": "Pont Honoré-Mercier, travée centrale",
+      "segmentImpact": "Fermeture de la voie de gauche sur la travée centrale du pont, en direction de Montréal\n1 voie sur 2 demeure ouverte\nDes épisodes de congestion sont à prévoir",
+      "segmentDirection": "En direction de Montréal",
+      "segmentDateStart": "2026-10-14",
+      "segmentDateText": "Dès le mercredi 14 octobre 2026 et pour une durée indéterminée; aucune date de fin n'est publiée.",
+      "noGeometry": true,
+      "geometry": null,
+      "geometryNote": "Aucun tracé ou point de carte officiel vérifié pour cet avis; aucune géométrie de remplacement n'est utilisée.",
+      "analysis": {
+        "sections": [
+          "Pont Honoré-Mercier"
+        ],
+        "bullets": [
+          "Fermeture de la voie de gauche sur la travée centrale du pont, en direction de Montréal",
+          "1 voie sur 2 demeure ouverte",
+          "Des épisodes de congestion sont à prévoir"
+        ],
+        "sourceText": "Fermeture demandée par le ministère des Transports et de la Mobilité durable.\n\nDès le mercredi 14 octobre et pour une durée indéterminée :\n\n\n\tFermeture de la voie de gauche sur la travée centrale du pont, en direction de Montréal\n\t1 voie sur 2 demeure ouverte\n\tDes épisodes de congestion sont à prévoir\n\n\n \n\nConsultez Québec511 pour planifier vos déplacements.",
+        "directionSourceField": "archive description",
+        "datePolicy": "Published start date retained. Duration is explicitly indeterminate; no end date is invented."
+      }
     }
   ]
 }
