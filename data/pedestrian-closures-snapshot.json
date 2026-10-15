@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-15T04:16:01.780Z",
+  "generatedAt": "2026-10-15T19:43:48.466Z",
   "policy": "Pedestrian and cycling impacts. Cycling-only records identify affectedUsers explicitly and do not confirm pedestrian restrictions. Per-source checkedAt is authoritative; local snapshots are not reverified. Unknown sidewalk sides are never inferred. Geometry is the published worksite unless explicitly identified otherwise. Selected documentary review notices are displayed separately without geometry or inferred dates.",
   "sources": [
     {
@@ -176,11 +176,12 @@
     {
       "key": "repentigny",
       "url": "https://info-travaux.ville.repentigny.qc.ca/api/events/",
-      "status": "failed",
-      "checkedAt": "2026-10-09T03:10:59.888Z",
+      "status": "checked",
+      "checkedAt": "2026-10-15T19:43:48.420Z",
       "sourceExtractedAt": null,
+      "received": 12,
       "retained": 2,
-      "error": "page.evaluate: TypeError: Failed to fetch\n    at eval (eval at evaluate (:311:30), <anonymous>:12:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+      "reviewCount": 1
     },
     {
       "key": "laval",
@@ -226041,7 +226042,7 @@
       },
       "details": [],
       "sourceKey": "repentigny",
-      "sourceCheckedAt": "2026-10-09T03:10:59.888Z"
+      "sourceCheckedAt": "2026-10-15T19:43:48.420Z"
     },
     {
       "id": "pedestrian-repentigny-repentigny-open511-ville.repentigny.qc.ca/2023-sidewalk-unknown-critical",
@@ -226102,7 +226103,7 @@
       },
       "details": [],
       "sourceKey": "repentigny",
-      "sourceCheckedAt": "2026-10-09T03:10:59.888Z"
+      "sourceCheckedAt": "2026-10-15T19:43:48.420Z"
     },
     {
       "id": "pedestrian-terrebonneEntraveLines-terrebonne-8af1f11f-a23c-425a-8987-b15476731c65-path-not-applicable-critical-cyclists",
@@ -227605,6 +227606,15 @@
       "reason": "pedestrian-mention-without-explicit-restriction",
       "text": "Réfection de chaussées, bordures et trottoirs - Malard\nTravaux en cours sur Malard; ralentissements locaux possibles.\nMalard",
       "sourceKey": "linkedCities"
+    },
+    {
+      "id": "ville.repentigny.qc.ca/2000",
+      "reason": "missing-dates-or-geometry",
+      "title": "Entrave déraillement - Fermeture complète de la piste cyclable et des accès piétons pour une durée indéterminée",
+      "sourceUrl": "https://info-travaux.ville.repentigny.qc.ca/api/events/",
+      "publishedSchedule": null,
+      "text": "Fermeture\nEntrave déraillement - Fermeture complète de la piste cyclable et des accès piétons pour une durée indéterminée\nAucun",
+      "sourceKey": "repentigny"
     }
   ]
 }

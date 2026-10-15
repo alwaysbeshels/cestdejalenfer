@@ -1,10 +1,10 @@
 {
-  "extractedAt": "2026-10-15T03:15:47.524Z",
+  "extractedAt": "2026-10-15T18:52:09.355Z",
   "sourceUrl": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
   "interactiveMapUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/",
-  "asOf": "2026-10-14",
-  "total": 10,
-  "parentNoticeTotal": 3,
+  "asOf": "2026-10-15",
+  "total": 13,
+  "parentNoticeTotal": 4,
   "interactiveMapEntraves": {
     "34": {
       "id": 1062,
@@ -129,8 +129,8 @@
   },
   "validation": {
     "geometryPolicy": "Verified named road/bridge lines only; official map points are references, never fallback display geometry.",
-    "sourceArchiveCount": 138,
-    "archiveAvis": 3,
+    "sourceArchiveCount": 139,
+    "archiveAvis": 4,
     "excludedHistoricalParents": 135,
     "excludedHistoricalSections": [
       "Pont Clement: Du 3 au 15 mars",
@@ -149,8 +149,7 @@
       "gaetan-laberge-vers-sud",
       "gaetan-laberge-vers-centre-ville",
       "voies-victoria-clement-vers-sud",
-      "voies-victoria-clement-vers-centre-ville",
-      "honore-mercier-left-lane-to-montreal"
+      "voies-victoria-clement-vers-centre-ville"
     ],
     "rejectedPreviousGeometry": [
       {
@@ -171,12 +170,14 @@
       "Map key 65 explicitly describes the southbound impact; the downtown bullet is established by the archive only.",
       "Map keys 64 and 66 share official id 1082; distinct keys preserved.",
       "Approximate annual/seasonal schedules are not converted to invented January 1 or October 31 dates.",
-      "The UCI Bonaventure and exit 58 sections ended September 22 and are excluded, although their archive parent remains dated through September 23."
+      "The UCI Bonaventure and exit 58 sections ended September 22 and are excluded, although their archive parent remains dated through September 23.",
+      "Honoré-Mercier: visually reviewed PJCCI diagram establishes the Montréal carriageway closure and both travel directions on the opposite carriageway. Shared OSM geometry covers only verified source vertices inside the official work extent; no temporary lane/crossover coordinates are invented."
     ],
-    "activeFutureArchiveParents": 3,
+    "activeFutureArchiveParents": 4,
     "excludedNonAutomobileParents": [],
     "archiveParentsWithoutMapMatch": [
       "/fr/structures/archive-des-avis-de-travaux-et-chantiers/a-bonaventure-fermeture-a-la-circulation-du-parc-dentreprises-de-la-pointe-saint-charles-circulation-aux-entreprises-locales/",
+      "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-honore-mercier-circulation-a-contresens-sur-la-partie-centrale-du-pont-du-17-au-19-octobre-travaux-du-ministere-des/",
       "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-honore-mercier-congestion-a-prevoir-fermeture-de-la-voie-de-gauche-direction-montreal-pour-une-duree-indeterminee/"
     ],
     "excludedParentsWithExpiredSections": [
@@ -199,7 +200,52 @@
         ],
         "reason": "All automobile obstruction sections ended September 22; the archive parent date is September 23."
       }
-    ]
+    ],
+    "honoreMercierReview": {
+      "reviewedAt": "2026-10-15T22:56:38.084Z",
+      "scope": "Targeted correction of two Honoré-Mercier advisories, not a complete archive review; extractedAt and archive restart point are not advanced.",
+      "notices": [
+        {
+          "url": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-honore-mercier-circulation-a-contresens-sur-la-partie-centrale-du-pont-du-17-au-19-octobre-travaux-du-ministere-des/",
+          "detailSha256": "2147a34b5e62ea704cccf91100ab5870bfb686d57669fe49dd307fb07af4ddf9",
+          "media": [
+            {
+              "url": "https://jacquescartierchamplain.ca/site/assets/files/18789/crt_hm_contresens_dir-mtl_2026_fr.jpg",
+              "sha256": "a40950ab1c4c64583f25e0ff89186ef05fa95c698663a45f5e48e9f824c21ea6",
+              "status": "visually-inspected",
+              "observation": "Schéma inspecté : la section centrale de la chaussée direction Montréal porte les symboles de fermeture complète et le libellé « SECTION CENTRALE direction Montréal ». Le cheminement fléché bascule sur l’autre chaussée aux deux extrémités de la section; le cartouche indique « CIRCULATION À CONTRESENS. Une voie par direction ». Les deux directions partagent donc la chaussée normalement vers la Rive-Sud pendant les travaux."
+            }
+          ],
+          "segmentIds": [
+            "honore-mercier-contresens-rive-sud",
+            "honore-mercier-contresens-montreal",
+            "honore-mercier-section-centrale-fermee-montreal"
+          ]
+        },
+        {
+          "url": "https://jacquescartierchamplain.ca/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-honore-mercier-congestion-a-prevoir-fermeture-de-la-voie-de-gauche-direction-montreal-pour-une-duree-indeterminee/",
+          "detailSha256": "df3a1e37a5ca8997a7067417c8172905307fdbd08228748096975f422bd0123a",
+          "media": [],
+          "textSufficient": true,
+          "currentStatusEvidence": {
+            "url": "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:evenements&srsname=EPSG:4326&outputformat=geojson",
+            "featureId": 127843,
+            "checkedAt": "2026-10-15T22:45:43.457Z",
+            "duration": "Indéterminée"
+          },
+          "segmentIds": [
+            "honore-mercier-voie-gauche-montreal-indeterminee"
+          ]
+        }
+      ],
+      "supportingArticleUrl": "https://www.quebec.ca/nouvelles/actualites/details/pont-honore-mercier-travaux-de-reparation-du-17-au-19-octobre-2026-72692",
+      "supportingArticleSha256": "1eed4237bbf8a73e21fa37ea62a76907e1c59d1e5d00871efb51a5f080470324",
+      "limitations": [
+        "Official event 127843 geometry is a location, not the exact central-span or left-lane footprint.",
+        "Official work 169669 geometry is retained without extending or redrawing it.",
+        "No actual reopening is presumed from the planned end of weekend repairs."
+      ]
+    }
   },
   "notices": [
     {
@@ -797,6 +843,896 @@
       "mapSourceUrl": "https://jacquescartierchamplain.ca/fr/circulation-routiere/secteur-bonaventure/"
     },
     {
+      "dateAffichageTravaux": "Du 15 au 19 octobre 2026",
+      "anneDebut": "2026-10-15T18:12:00.000000Z",
+      "anneFin": "2026-10-19T14:12:00.000000Z",
+      "datedebut": "2026-10-15 14:12:00",
+      "datefin": "2026-10-19 10:12:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": " \n\nDu samedi 17 octobre, 3 h, au lundi 19 octobre, 5 h&#160;:\n\n\n\t1 voie disponible direction Rive-Sud + 1 voie disponible en contresens, direction Montréal\n\tDes épisodes de congestion sont à prévoir\n\n\n \n\nCes travaux de réparation sont tenus par le ministère des Transports et de la Mobilité durable.\n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.\n\nConsultez Québec511 pour planifier vos déplacements.",
+      "title": "Pont Honoré-Mercier | Circulation à contresens sur la partie centrale du pont du 17 au 19 octobre (travaux du ministère des Transports et de la Mobilité durable)",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-honore-mercier-circulation-a-contresens-sur-la-partie-centrale-du-pont-du-17-au-19-octobre-travaux-du-ministere-des/",
+      "img": "/site/assets/files/18789/crt_hm_contresens_dir-mtl_2026_fr.-small.jpg",
+      "tags": [
+        "Pont Honoré-Mercier"
+      ],
+      "tagId": [
+        1152
+      ],
+      "segmentId": "honore-mercier-contresens-rive-sud",
+      "segmentTitle": "Pont Honoré-Mercier - 1 voie disponible direction Rive-Sud",
+      "segmentStreets": "Pont Honoré-Mercier, partie centrale",
+      "segmentImpact": "1 voie disponible direction Rive-Sud",
+      "segmentDirection": "Direction Rive-Sud",
+      "segmentResponsible": "Ministère des Transports et de la Mobilité durable",
+      "segmentDateStart": "2026-10-17",
+      "segmentDateEnd": "2026-10-19",
+      "segmentDateText": "Du samedi 17 octobre, 3 h, au lundi 19 octobre, 5 h.",
+      "segmentComplement": "Des épisodes de congestion sont à prévoir. Les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.",
+      "noGeometry": false,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.6527944,
+            45.4214853
+          ],
+          [
+            -73.6547312,
+            45.4177057
+          ],
+          [
+            -73.6551804,
+            45.4168055
+          ],
+          [
+            -73.6566325,
+            45.4139555
+          ],
+          [
+            -73.6567066,
+            45.413811
+          ],
+          [
+            -73.6570008,
+            45.4132383
+          ],
+          [
+            -73.6573216,
+            45.4126086
+          ]
+        ]
+      },
+      "geometryNote": "Les deux directions partagent la chaussée normalement vers la Rive-Sud, conformément au schéma PJCCI inspecté. Tracé OSM 567465771 limité à ses sommets consécutifs compris dans l’étendue nord-sud du chantier officiel MTMD 169669 : portion vérifiée, sans prolongement vers la voie maritime. Les raccordements temporaires et la séparation des voies ne sont pas géométrés.",
+      "segmentGeometrySource": {
+        "kind": "OpenStreetMap way, verified shared carriageway portion",
+        "sourceUrl": "https://www.openstreetmap.org/way/567465771",
+        "apiUrl": "https://api.openstreetmap.org/api/0.6/way/567465771/full",
+        "wayId": 567465771,
+        "wayVersion": 13,
+        "wayTimestamp": "2026-03-02T16:17:51Z",
+        "verifiedAt": "2026-10-15T22:56:38.084Z",
+        "fullCoordinates": [
+          [
+            -73.6527944,
+            45.4214853
+          ],
+          [
+            -73.6547312,
+            45.4177057
+          ],
+          [
+            -73.6551804,
+            45.4168055
+          ],
+          [
+            -73.6566325,
+            45.4139555
+          ],
+          [
+            -73.6567066,
+            45.413811
+          ],
+          [
+            -73.6570008,
+            45.4132383
+          ],
+          [
+            -73.6573216,
+            45.4126086
+          ],
+          [
+            -73.6579728,
+            45.4113296
+          ],
+          [
+            -73.6584538,
+            45.4103827
+          ],
+          [
+            -73.6585796,
+            45.4101366
+          ],
+          [
+            -73.6589823,
+            45.4093488
+          ],
+          [
+            -73.6590973,
+            45.409107
+          ]
+        ],
+        "retainedVertexIndices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "extentControl": {
+          "url": "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
+          "featureId": 169669,
+          "checkedAt": "2026-10-15T22:45:44.186Z",
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                -73.657475,
+                45.412054
+              ],
+              [
+                -73.657391,
+                45.412219
+              ],
+              [
+                -73.656989,
+                45.413007
+              ],
+              [
+                -73.656761,
+                45.413456
+              ],
+              [
+                -73.656596,
+                45.41378
+              ],
+              [
+                -73.65654,
+                45.413879
+              ],
+              [
+                -73.656492,
+                45.413963
+              ],
+              [
+                -73.656389,
+                45.414142
+              ],
+              [
+                -73.656095,
+                45.414631
+              ],
+              [
+                -73.655621,
+                45.415411
+              ],
+              [
+                -73.655185,
+                45.41613
+              ],
+              [
+                -73.65498,
+                45.416468
+              ],
+              [
+                -73.654803,
+                45.416759
+              ],
+              [
+                -73.65458,
+                45.417127
+              ],
+              [
+                -73.654488,
+                45.417275
+              ],
+              [
+                -73.654429,
+                45.41737
+              ],
+              [
+                -73.65238,
+                45.420734
+              ],
+              [
+                -73.652276,
+                45.420905
+              ],
+              [
+                -73.652074,
+                45.421238
+              ],
+              [
+                -73.651983,
+                45.421385
+              ],
+              [
+                -73.651937,
+                45.421463
+              ],
+              [
+                -73.651907,
+                45.421519
+              ],
+              [
+                -73.651858,
+                45.421616
+              ],
+              [
+                -73.65183,
+                45.421678
+              ],
+              [
+                -73.651796,
+                45.421763
+              ],
+              [
+                -73.651765,
+                45.421848
+              ],
+              [
+                -73.651759,
+                45.421868
+              ],
+              [
+                -73.651741,
+                45.421924
+              ],
+              [
+                -73.651737,
+                45.421941
+              ],
+              [
+                -73.651728,
+                45.421973
+              ],
+              [
+                -73.651721,
+                45.421997
+              ],
+              [
+                -73.651705,
+                45.422067
+              ],
+              [
+                -73.651695,
+                45.422131
+              ],
+              [
+                -73.651681,
+                45.422225
+              ],
+              [
+                -73.651662,
+                45.422363
+              ],
+              [
+                -73.651615,
+                45.42271
+              ],
+              [
+                -73.651598,
+                45.422847
+              ],
+              [
+                -73.651588,
+                45.422932
+              ],
+              [
+                -73.65157,
+                45.423073
+              ],
+              [
+                -73.651565,
+                45.423108
+              ]
+            ]
+          },
+          "limitation": "Only consecutive published OSM vertices within the official event latitude extent are displayed. No interpolation of crossovers or claim of complete temporary lane coverage."
+        },
+        "directionEvidence": {
+          "imageUrl": "https://jacquescartierchamplain.ca/site/assets/files/18789/crt_hm_contresens_dir-mtl_2026_fr.jpg",
+          "imageSha256": "a40950ab1c4c64583f25e0ff89186ef05fa95c698663a45f5e48e9f824c21ea6",
+          "inspection": "visually-inspected",
+          "observation": "Schéma inspecté : la section centrale de la chaussée direction Montréal porte les symboles de fermeture complète et le libellé « SECTION CENTRALE direction Montréal ». Le cheminement fléché bascule sur l’autre chaussée aux deux extrémités de la section; le cartouche indique « CIRCULATION À CONTRESENS. Une voie par direction ». Les deux directions partagent donc la chaussée normalement vers la Rive-Sud pendant les travaux."
+        }
+      },
+      "analysis": {
+        "sections": [
+          "PONT HONORÉ-MERCIER"
+        ],
+        "bullets": [
+          "1 voie disponible direction Rive-Sud",
+          "Des épisodes de congestion sont à prévoir"
+        ],
+        "sourceText": " \n\nDu samedi 17 octobre, 3 h, au lundi 19 octobre, 5 h&#160;:\n\n\n\t1 voie disponible direction Rive-Sud + 1 voie disponible en contresens, direction Montréal\n\tDes épisodes de congestion sont à prévoir\n\n\n \n\nCes travaux de réparation sont tenus par le ministère des Transports et de la Mobilité durable.\n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nConsultez Québec511 pour planifier vos déplacements.",
+        "directionSourceField": "archive description",
+        "datePolicy": "The archive dates the advisory from October 15 to 19; the full description publishes the work schedule from October 17 at 03:00 to October 19 at 05:00.",
+        "directionToCarriageway": "Schéma inspecté : la section centrale de la chaussée direction Montréal porte les symboles de fermeture complète et le libellé « SECTION CENTRALE direction Montréal ». Le cheminement fléché bascule sur l’autre chaussée aux deux extrémités de la section; le cartouche indique « CIRCULATION À CONTRESENS. Une voie par direction ». Les deux directions partagent donc la chaussée normalement vers la Rive-Sud pendant les travaux."
+      },
+      "suppressDirectionArrows": true,
+      "segmentTimeStart": "03:00",
+      "segmentTimeEnd": "05:00"
+    },
+    {
+      "dateAffichageTravaux": "Du 15 au 19 octobre 2026",
+      "anneDebut": "2026-10-15T18:12:00.000000Z",
+      "anneFin": "2026-10-19T14:12:00.000000Z",
+      "datedebut": "2026-10-15 14:12:00",
+      "datefin": "2026-10-19 10:12:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": " \n\nDu samedi 17 octobre, 3 h, au lundi 19 octobre, 5 h&#160;:\n\n\n\t1 voie disponible direction Rive-Sud + 1 voie disponible en contresens, direction Montréal\n\tDes épisodes de congestion sont à prévoir\n\n\n \n\nCes travaux de réparation sont tenus par le ministère des Transports et de la Mobilité durable.\n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.\n\nConsultez Québec511 pour planifier vos déplacements.",
+      "title": "Pont Honoré-Mercier | Circulation à contresens sur la partie centrale du pont du 17 au 19 octobre (travaux du ministère des Transports et de la Mobilité durable)",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-honore-mercier-circulation-a-contresens-sur-la-partie-centrale-du-pont-du-17-au-19-octobre-travaux-du-ministere-des/",
+      "img": "/site/assets/files/18789/crt_hm_contresens_dir-mtl_2026_fr.-small.jpg",
+      "tags": [
+        "Pont Honoré-Mercier"
+      ],
+      "tagId": [
+        1152
+      ],
+      "segmentId": "honore-mercier-contresens-montreal",
+      "segmentTitle": "Pont Honoré-Mercier - 1 voie disponible en contresens, direction Montréal",
+      "segmentStreets": "Pont Honoré-Mercier, partie centrale",
+      "segmentImpact": "1 voie disponible en contresens, direction Montréal",
+      "segmentDirection": "En contresens, direction Montréal",
+      "segmentResponsible": "Ministère des Transports et de la Mobilité durable",
+      "segmentDateStart": "2026-10-17",
+      "segmentDateEnd": "2026-10-19",
+      "segmentDateText": "Du samedi 17 octobre, 3 h, au lundi 19 octobre, 5 h.",
+      "segmentComplement": "Des épisodes de congestion sont à prévoir. Les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.",
+      "noGeometry": false,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.6527944,
+            45.4214853
+          ],
+          [
+            -73.6547312,
+            45.4177057
+          ],
+          [
+            -73.6551804,
+            45.4168055
+          ],
+          [
+            -73.6566325,
+            45.4139555
+          ],
+          [
+            -73.6567066,
+            45.413811
+          ],
+          [
+            -73.6570008,
+            45.4132383
+          ],
+          [
+            -73.6573216,
+            45.4126086
+          ]
+        ]
+      },
+      "geometryNote": "Les deux directions partagent la chaussée normalement vers la Rive-Sud, conformément au schéma PJCCI inspecté. Tracé OSM 567465771 limité à ses sommets consécutifs compris dans l’étendue nord-sud du chantier officiel MTMD 169669 : portion vérifiée, sans prolongement vers la voie maritime. Les raccordements temporaires et la séparation des voies ne sont pas géométrés.",
+      "segmentGeometrySource": {
+        "kind": "OpenStreetMap way, verified shared carriageway portion",
+        "sourceUrl": "https://www.openstreetmap.org/way/567465771",
+        "apiUrl": "https://api.openstreetmap.org/api/0.6/way/567465771/full",
+        "wayId": 567465771,
+        "wayVersion": 13,
+        "wayTimestamp": "2026-03-02T16:17:51Z",
+        "verifiedAt": "2026-10-15T22:56:38.084Z",
+        "fullCoordinates": [
+          [
+            -73.6527944,
+            45.4214853
+          ],
+          [
+            -73.6547312,
+            45.4177057
+          ],
+          [
+            -73.6551804,
+            45.4168055
+          ],
+          [
+            -73.6566325,
+            45.4139555
+          ],
+          [
+            -73.6567066,
+            45.413811
+          ],
+          [
+            -73.6570008,
+            45.4132383
+          ],
+          [
+            -73.6573216,
+            45.4126086
+          ],
+          [
+            -73.6579728,
+            45.4113296
+          ],
+          [
+            -73.6584538,
+            45.4103827
+          ],
+          [
+            -73.6585796,
+            45.4101366
+          ],
+          [
+            -73.6589823,
+            45.4093488
+          ],
+          [
+            -73.6590973,
+            45.409107
+          ]
+        ],
+        "retainedVertexIndices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "extentControl": {
+          "url": "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
+          "featureId": 169669,
+          "checkedAt": "2026-10-15T22:45:44.186Z",
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                -73.657475,
+                45.412054
+              ],
+              [
+                -73.657391,
+                45.412219
+              ],
+              [
+                -73.656989,
+                45.413007
+              ],
+              [
+                -73.656761,
+                45.413456
+              ],
+              [
+                -73.656596,
+                45.41378
+              ],
+              [
+                -73.65654,
+                45.413879
+              ],
+              [
+                -73.656492,
+                45.413963
+              ],
+              [
+                -73.656389,
+                45.414142
+              ],
+              [
+                -73.656095,
+                45.414631
+              ],
+              [
+                -73.655621,
+                45.415411
+              ],
+              [
+                -73.655185,
+                45.41613
+              ],
+              [
+                -73.65498,
+                45.416468
+              ],
+              [
+                -73.654803,
+                45.416759
+              ],
+              [
+                -73.65458,
+                45.417127
+              ],
+              [
+                -73.654488,
+                45.417275
+              ],
+              [
+                -73.654429,
+                45.41737
+              ],
+              [
+                -73.65238,
+                45.420734
+              ],
+              [
+                -73.652276,
+                45.420905
+              ],
+              [
+                -73.652074,
+                45.421238
+              ],
+              [
+                -73.651983,
+                45.421385
+              ],
+              [
+                -73.651937,
+                45.421463
+              ],
+              [
+                -73.651907,
+                45.421519
+              ],
+              [
+                -73.651858,
+                45.421616
+              ],
+              [
+                -73.65183,
+                45.421678
+              ],
+              [
+                -73.651796,
+                45.421763
+              ],
+              [
+                -73.651765,
+                45.421848
+              ],
+              [
+                -73.651759,
+                45.421868
+              ],
+              [
+                -73.651741,
+                45.421924
+              ],
+              [
+                -73.651737,
+                45.421941
+              ],
+              [
+                -73.651728,
+                45.421973
+              ],
+              [
+                -73.651721,
+                45.421997
+              ],
+              [
+                -73.651705,
+                45.422067
+              ],
+              [
+                -73.651695,
+                45.422131
+              ],
+              [
+                -73.651681,
+                45.422225
+              ],
+              [
+                -73.651662,
+                45.422363
+              ],
+              [
+                -73.651615,
+                45.42271
+              ],
+              [
+                -73.651598,
+                45.422847
+              ],
+              [
+                -73.651588,
+                45.422932
+              ],
+              [
+                -73.65157,
+                45.423073
+              ],
+              [
+                -73.651565,
+                45.423108
+              ]
+            ]
+          },
+          "limitation": "Only consecutive published OSM vertices within the official event latitude extent are displayed. No interpolation of crossovers or claim of complete temporary lane coverage."
+        },
+        "directionEvidence": {
+          "imageUrl": "https://jacquescartierchamplain.ca/site/assets/files/18789/crt_hm_contresens_dir-mtl_2026_fr.jpg",
+          "imageSha256": "a40950ab1c4c64583f25e0ff89186ef05fa95c698663a45f5e48e9f824c21ea6",
+          "inspection": "visually-inspected",
+          "observation": "Schéma inspecté : la section centrale de la chaussée direction Montréal porte les symboles de fermeture complète et le libellé « SECTION CENTRALE direction Montréal ». Le cheminement fléché bascule sur l’autre chaussée aux deux extrémités de la section; le cartouche indique « CIRCULATION À CONTRESENS. Une voie par direction ». Les deux directions partagent donc la chaussée normalement vers la Rive-Sud pendant les travaux."
+        }
+      },
+      "analysis": {
+        "sections": [
+          "PONT HONORÉ-MERCIER"
+        ],
+        "bullets": [
+          "1 voie disponible en contresens, direction Montréal",
+          "Des épisodes de congestion sont à prévoir"
+        ],
+        "sourceText": " \n\nDu samedi 17 octobre, 3 h, au lundi 19 octobre, 5 h&#160;:\n\n\n\t1 voie disponible direction Rive-Sud + 1 voie disponible en contresens, direction Montréal\n\tDes épisodes de congestion sont à prévoir\n\n\n \n\nCes travaux de réparation sont tenus par le ministère des Transports et de la Mobilité durable.\n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nConsultez Québec511 pour planifier vos déplacements.",
+        "directionSourceField": "archive description",
+        "datePolicy": "The archive dates the advisory from October 15 to 19; the full description publishes the work schedule from October 17 at 03:00 to October 19 at 05:00.",
+        "directionToCarriageway": "Schéma inspecté : la section centrale de la chaussée direction Montréal porte les symboles de fermeture complète et le libellé « SECTION CENTRALE direction Montréal ». Le cheminement fléché bascule sur l’autre chaussée aux deux extrémités de la section; le cartouche indique « CIRCULATION À CONTRESENS. Une voie par direction ». Les deux directions partagent donc la chaussée normalement vers la Rive-Sud pendant les travaux."
+      },
+      "suppressDirectionArrows": true,
+      "segmentTimeStart": "03:00",
+      "segmentTimeEnd": "05:00"
+    },
+    {
+      "dateAffichageTravaux": "Du 15 au 19 octobre 2026",
+      "anneDebut": "2026-10-15T18:12:00.000000Z",
+      "anneFin": "2026-10-19T14:12:00.000000Z",
+      "datedebut": "2026-10-15 14:12:00",
+      "datefin": "2026-10-19 10:12:00",
+      "parentUrl": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/",
+      "description": " \n\nDu samedi 17 octobre, 3 h, au lundi 19 octobre, 5 h&#160;:\n\n\n\t1 voie disponible direction Rive-Sud + 1 voie disponible en contresens, direction Montréal\n\tDes épisodes de congestion sont à prévoir\n\n\n \n\nCes travaux de réparation sont tenus par le ministère des Transports et de la Mobilité durable.\n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.\n\nConsultez Québec511 pour planifier vos déplacements.",
+      "title": "Pont Honoré-Mercier | Circulation à contresens sur la partie centrale du pont du 17 au 19 octobre (travaux du ministère des Transports et de la Mobilité durable)",
+      "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-honore-mercier-circulation-a-contresens-sur-la-partie-centrale-du-pont-du-17-au-19-octobre-travaux-du-ministere-des/",
+      "img": "/site/assets/files/18789/crt_hm_contresens_dir-mtl_2026_fr.-small.jpg",
+      "tags": [
+        "Pont Honoré-Mercier"
+      ],
+      "tagId": [
+        1152
+      ],
+      "segmentId": "honore-mercier-section-centrale-fermee-montreal",
+      "segmentTitle": "Pont Honoré-Mercier - Fermeture complète de la section centrale direction Montréal",
+      "segmentStreets": "Pont Honoré-Mercier, partie centrale",
+      "segmentImpact": "Pont fermé en direction EST, circulation à contresens sur la chaussée opposée en tout temps",
+      "segmentDirection": "Direction Montréal : chaussée fermée; circulation reportée en contresens sur la chaussée opposée",
+      "segmentResponsible": "Ministère des Transports et de la Mobilité durable",
+      "segmentDateStart": "2026-10-17",
+      "segmentDateEnd": "2026-10-19",
+      "segmentDateText": "Du samedi 17 octobre, 3 h, au lundi 19 octobre, 5 h.",
+      "segmentComplement": "Des épisodes de congestion sont à prévoir. Les travaux pourraient être annulés ou reportés selon l’évolution du chantier ou les conditions météorologiques.",
+      "noGeometry": false,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.657475,
+            45.412054
+          ],
+          [
+            -73.657391,
+            45.412219
+          ],
+          [
+            -73.656989,
+            45.413007
+          ],
+          [
+            -73.656761,
+            45.413456
+          ],
+          [
+            -73.656596,
+            45.41378
+          ],
+          [
+            -73.65654,
+            45.413879
+          ],
+          [
+            -73.656492,
+            45.413963
+          ],
+          [
+            -73.656389,
+            45.414142
+          ],
+          [
+            -73.656095,
+            45.414631
+          ],
+          [
+            -73.655621,
+            45.415411
+          ],
+          [
+            -73.655185,
+            45.41613
+          ],
+          [
+            -73.65498,
+            45.416468
+          ],
+          [
+            -73.654803,
+            45.416759
+          ],
+          [
+            -73.65458,
+            45.417127
+          ],
+          [
+            -73.654488,
+            45.417275
+          ],
+          [
+            -73.654429,
+            45.41737
+          ],
+          [
+            -73.65238,
+            45.420734
+          ],
+          [
+            -73.652276,
+            45.420905
+          ],
+          [
+            -73.652074,
+            45.421238
+          ],
+          [
+            -73.651983,
+            45.421385
+          ],
+          [
+            -73.651937,
+            45.421463
+          ],
+          [
+            -73.651907,
+            45.421519
+          ],
+          [
+            -73.651858,
+            45.421616
+          ],
+          [
+            -73.65183,
+            45.421678
+          ],
+          [
+            -73.651796,
+            45.421763
+          ],
+          [
+            -73.651765,
+            45.421848
+          ],
+          [
+            -73.651759,
+            45.421868
+          ],
+          [
+            -73.651741,
+            45.421924
+          ],
+          [
+            -73.651737,
+            45.421941
+          ],
+          [
+            -73.651728,
+            45.421973
+          ],
+          [
+            -73.651721,
+            45.421997
+          ],
+          [
+            -73.651705,
+            45.422067
+          ],
+          [
+            -73.651695,
+            45.422131
+          ],
+          [
+            -73.651681,
+            45.422225
+          ],
+          [
+            -73.651662,
+            45.422363
+          ],
+          [
+            -73.651615,
+            45.42271
+          ],
+          [
+            -73.651598,
+            45.422847
+          ],
+          [
+            -73.651588,
+            45.422932
+          ],
+          [
+            -73.65157,
+            45.423073
+          ],
+          [
+            -73.651565,
+            45.423108
+          ]
+        ]
+      },
+      "geometryNote": "Ligne officielle MTMD du chantier 169669, conservée exactement. Le schéma PJCCI confirme la fermeture de la section centrale direction Montréal et le report des deux sens sur l’autre chaussée. Cette ligne de localisation officielle n’est pas un tracé des voies temporaires.",
+      "segmentGeometrySource": {
+        "kind": "official MTMD WFS geometry",
+        "sourceUrl": "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
+        "layer": "ms:chantiers_mtmdet",
+        "featureId": 169669,
+        "verifiedAt": "2026-10-15T22:45:44.186Z",
+        "sourceUpdatedAt": "2026/10/15 14:58:00",
+        "attributes": {
+          "identifiant": "169669",
+          "identifiantChantier": "319510",
+          "routeAutoroute": "138",
+          "entraveType": "Majeure (semaine et fin de semaine)",
+          "debut": "2026/10/17 03:00:00",
+          "fin": "2026/10/19 05:00:00",
+          "miseAJour": "2026/10/15 14:58:00",
+          "identificationDesTravaux": "Réparation de structures",
+          "urlFrancais": "https://www.quebec.ca/nouvelles/actualites/details/pont-honore-mercier-travaux-de-reparation-du-17-au-19-octobre-2026-72692",
+          "texteUrlFrancais": "Communiqué de presse 15 octobre",
+          "detoursEtItinerairesFacultatifs": "",
+          "entrave": "Pont fermé en direction EST, circulation à contresens sur la chaussée opposée en tout temps",
+          "entravesLieesAuxChargesEtDimensions": "Largeur de la voie réduite à 3,2 mètres\n\n",
+          "localisation": "Entre Kahnawake et Montréal, sur le pont Honoré-Mercier",
+          "direction": "Ouest et est",
+          "descriptionFrancais": "Réparation de structures\nEntre Kahnawake et Montréal, sur le pont Honoré-Mercier\nPont fermé en direction EST, circulation à contresens sur la chaussée opposée en tout temps\nLargeur de la voie réduite à 3,2 mètres",
+          "descriptionAnglais": "Structural repair\nBetween Kahnawake and Montreal, on the Honoré-Mercier Bridge\nHighway closed EASTBOUND.Two-way traffic on the opposite roadway at all times\nLane width reduced to 3.2 meters",
+          "couleurLigne": "#FF0000",
+          "source": "https://www.quebec511.info"
+        },
+        "diagram": {
+          "url": "https://jacquescartierchamplain.ca/site/assets/files/18789/crt_hm_contresens_dir-mtl_2026_fr.jpg",
+          "sha256": "a40950ab1c4c64583f25e0ff89186ef05fa95c698663a45f5e48e9f824c21ea6",
+          "inspection": "visually-inspected",
+          "observation": "Schéma inspecté : la section centrale de la chaussée direction Montréal porte les symboles de fermeture complète et le libellé « SECTION CENTRALE direction Montréal ». Le cheminement fléché bascule sur l’autre chaussée aux deux extrémités de la section; le cartouche indique « CIRCULATION À CONTRESENS. Une voie par direction ». Les deux directions partagent donc la chaussée normalement vers la Rive-Sud pendant les travaux."
+        }
+      },
+      "analysis": {
+        "sections": [
+          "PONT HONORÉ-MERCIER"
+        ],
+        "sourceText": " \n\nDu samedi 17 octobre, 3 h, au lundi 19 octobre, 5 h&#160;:\n\n\n\t1 voie disponible direction Rive-Sud + 1 voie disponible en contresens, direction Montréal\n\tDes épisodes de congestion sont à prévoir\n\n\n \n\nCes travaux de réparation sont tenus par le ministère des Transports et de la Mobilité durable.\n\nVeuillez noter que les travaux pourraient être annulés ou reportés selon l&#8217;évolution du chantier ou les conditions météorologiques.\n\nConsultez Québec511 pour planifier vos déplacements.",
+        "diagramObservation": "Schéma inspecté : la section centrale de la chaussée direction Montréal porte les symboles de fermeture complète et le libellé « SECTION CENTRALE direction Montréal ». Le cheminement fléché bascule sur l’autre chaussée aux deux extrémités de la section; le cartouche indique « CIRCULATION À CONTRESENS. Une voie par direction ». Les deux directions partagent donc la chaussée normalement vers la Rive-Sud pendant les travaux.",
+        "supportingOfficialText": "Pont fermé en direction EST, circulation à contresens sur la chaussée opposée en tout temps",
+        "directionToCarriageway": "The closed carriageway is the one normally toward Montréal, not the carriageway carrying temporary contraflow."
+      },
+      "segmentTimeStart": "03:00",
+      "segmentTimeEnd": "05:00",
+      "suppressDirectionArrows": true
+    },
+    {
       "dateAffichageTravaux": "14 octobre 2026",
       "anneDebut": "2026-10-14T12:09:00.000000Z",
       "anneFin": "2026-10-14T12:09:00.000000Z",
@@ -806,30 +1742,76 @@
       "description": "Fermeture demandée par le ministère des Transports et de la Mobilité durable.\n\nDès le mercredi 14 octobre et pour une durée indéterminée&#160;:\n\n\n\tFermeture de la voie de gauche sur la travée centrale du pont, en direction de Montréal\n\t1 voie sur 2 demeure ouverte\n\tDes épisodes de congestion sont à prévoir\n\n\n \n\nConsultez Québec511 pour planifier vos déplacements.",
       "title": "Pont Honoré-Mercier | CONGESTION À PRÉVOIR - Fermeture de la voie de gauche, direction Montréal, pour une durée indéterminée (Ministère des Transports et de la Mobilité durable)",
       "url": "/fr/structures/archive-des-avis-de-travaux-et-chantiers/pont-honore-mercier-congestion-a-prevoir-fermeture-de-la-voie-de-gauche-direction-montreal-pour-une-duree-indeterminee/",
-      "tags": [],
+      "tags": [
+        "Pont Honoré-Mercier"
+      ],
       "tagId": [],
-      "segmentId": "honore-mercier-left-lane-to-montreal",
-      "segmentTitle": "Pont Honoré-Mercier - fermeture de la voie de gauche, direction Montréal",
-      "segmentStreets": "Pont Honoré-Mercier, travée centrale",
-      "segmentImpact": "Fermeture de la voie de gauche sur la travée centrale du pont, en direction de Montréal\n1 voie sur 2 demeure ouverte\nDes épisodes de congestion sont à prévoir",
-      "segmentDirection": "En direction de Montréal",
+      "segmentId": "honore-mercier-voie-gauche-montreal-indeterminee",
+      "segmentTitle": "Pont Honoré-Mercier - Fermeture de la voie de gauche direction Montréal, durée indéterminée",
+      "segmentImpact": "Fermeture de la voie de gauche sur la travée centrale du pont, en direction de Montréal. 1 voie sur 2 demeure ouverte.",
+      "segmentDirection": "Direction Montréal",
+      "segmentResponsible": "Ministère des Transports et de la Mobilité durable",
+      "segmentStreets": "Pont Honoré-Mercier, travée centrale (localisation officielle Québec 511)",
       "segmentDateStart": "2026-10-14",
-      "segmentDateText": "Dès le mercredi 14 octobre 2026 et pour une durée indéterminée; aucune date de fin n'est publiée.",
-      "noGeometry": true,
-      "geometry": null,
-      "geometryNote": "Aucun tracé ou point de carte officiel vérifié pour cet avis; aucune géométrie de remplacement n'est utilisée.",
+      "segmentDateEnd": null,
+      "openEnded": true,
+      "status": "active",
+      "statusVerifiedAt": "2026-10-15T22:45:43.457Z",
+      "segmentDateText": "Dès le mercredi 14 octobre et pour une durée indéterminée.",
+      "segmentComplement": "Des épisodes de congestion sont à prévoir. Aucune date de fin effective n’est publiée. Du 17 octobre à 3 h au 19 octobre à 5 h, un avis distinct prévoit la fermeture de la chaussée vers Montréal et la circulation à contresens; le communiqué annonce la remise en service après les réparations, sans confirmer encore la levée effective de cette restriction.",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.658817,
+            45.409412
+          ],
+          [
+            -73.658278,
+            45.410453
+          ]
+        ]
+      },
+      "noGeometry": false,
+      "suppressDirectionArrows": true,
+      "geometryNote": "Ligne de localisation officielle de l’événement Québec 511 127843, conservée exactement. Elle ne délimite pas toute la travée centrale ni la voie de gauche. Aucun prolongement de cette géométrie n’a été inventé.",
+      "segmentGeometrySource": {
+        "kind": "official MTMD WFS geometry",
+        "sourceUrl": "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:evenements&srsname=EPSG:4326&outputformat=geojson",
+        "layer": "ms:evenements",
+        "featureId": 127843,
+        "verifiedAt": "2026-10-15T22:45:43.457Z",
+        "attributes": {
+          "identifiant": 127843,
+          "entrave": "Fermeture de 1 voie sur 2",
+          "numeroRoute": "138",
+          "localisation": "Pont Honoré-Mercier entre Kahnawake et Montréal",
+          "direction": "EST",
+          "municipalite": "",
+          "duree": "Indéterminée",
+          "cause": "Travaux",
+          "consequence": "Congestion",
+          "detour": "",
+          "regions": "(1:Montérégie)",
+          "regionsDiffusion": "(1:Montérégie)",
+          "enVigueurDepuis": "2026-10-14T17:22:00",
+          "couleurLigne": "#FF6A33"
+        }
+      },
       "analysis": {
         "sections": [
-          "Pont Honoré-Mercier"
+          "PONT HONORÉ-MERCIER"
         ],
-        "bullets": [
+        "sourceText": "Fermeture demandée par le ministère des Transports et de la Mobilité durable.\n\nDès le mercredi 14 octobre et pour une durée indéterminée&#160;:\n\n\n\tFermeture de la voie de gauche sur la travée centrale du pont, en direction de Montréal\n\t1 voie sur 2 demeure ouverte\n\tDes épisodes de congestion sont à prévoir\n\n\n \n\nConsultez Québec511 pour planifier vos déplacements.",
+        "supportingPassages": [
+          "Dès le mercredi 14 octobre et pour une durée indéterminée",
           "Fermeture de la voie de gauche sur la travée centrale du pont, en direction de Montréal",
-          "1 voie sur 2 demeure ouverte",
-          "Des épisodes de congestion sont à prévoir"
+          "1 voie sur 2 demeure ouverte"
         ],
-        "sourceText": "Fermeture demandée par le ministère des Transports et de la Mobilité durable.\n\nDès le mercredi 14 octobre et pour une durée indéterminée :\n\n\n\tFermeture de la voie de gauche sur la travée centrale du pont, en direction de Montréal\n\t1 voie sur 2 demeure ouverte\n\tDes épisodes de congestion sont à prévoir\n\n\n \n\nConsultez Québec511 pour planifier vos déplacements.",
-        "directionSourceField": "archive description",
-        "datePolicy": "Published start date retained. Duration is explicitly indeterminate; no end date is invented."
+        "datePolicy": "Archive display date is not an end date. Current official Québec 511 event 127843 confirms an indefinite one-lane closure. No end date is invented.",
+        "media": "No relevant image or attachment is published in the inspected detail page.",
+        "limitation": "PJCCI says October 14; the MTMD article describes a preventive closure on October 13 and the current event began October 14 at 17:22. The PJCCI published start date is retained, not silently replaced.",
+        "temporaryConfiguration": "Do not infer early reopening, an additional lane closure on the contraflow carriageway, or that the indefinite closure has been lifted."
       }
     }
   ]

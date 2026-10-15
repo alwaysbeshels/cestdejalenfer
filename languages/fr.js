@@ -716,6 +716,7 @@ window.TRANSLATIONS.fr = {
   "popup.tunnelNote": "Ce tracé suit un tunnel — il est dessiné sous les rues de surface affichées sur la carte.",
   "popup.notPublished": "non publiée",
   "popup.unknownPeriod": "Période indéterminée",
+  "popup.openEnded": "Durée indéterminée",
   "popup.startDate": "Début",
   "popup.endDate": "Fin",
   "popup.dayNight": "Jour et nuit",

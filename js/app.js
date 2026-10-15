@@ -1978,18 +1978,22 @@ function normalizePjcciNotice(notice) {
     : "major";
   const today = new Date().toISOString().slice(0, 10);
   const startDate = notice.segmentDateStart || String(notice.datedebut || notice.anneDebut || "").slice(0, 10) || today;
-  const endDate = notice.segmentDateEnd || String(notice.datefin || notice.anneFin || "").slice(0, 10);
-  if (!endDate || endDate < today) return null;
+  const openEnded = notice.openEnded === true && notice.status === "active";
+  const endDate = openEnded ? null : notice.segmentDateEnd || String(notice.datefin || notice.anneFin || "").slice(0, 10);
+  if ((!endDate && !openEnded) || (endDate && endDate < today)) return null;
 
   return {
     id: `pjcci-${notice.url}-${notice.segmentId || "notice"}`,
     title,
     category: "regional",
     sourceKind: "pjcci",
-    responsible: "PJCCI",
+    responsible: notice.segmentResponsible || "PJCCI",
     borough: notice.tags?.[0] || "Structures PJCCI",
     startDate,
     endDate,
+    startTime: notice.segmentTimeStart || null,
+    endTime: notice.segmentTimeEnd || null,
+    openEnded,
     impact: notice.segmentDateText ? `${notice.segmentDateText} ${impact}` : impact,
     trafficLabel: severity === "critical" ? "Fermeture ou entrave majeure" : "Travaux",
     severity,
@@ -2002,6 +2006,7 @@ function normalizePjcciNotice(notice) {
     color: SEVERITY_META[severity].color,
     geometry: notice.geometry || { type: "Point", coordinates },
     point: notice.geometry ? representativePoint(notice.geometry) : coordinates,
+    suppressDirectionArrows: notice.suppressDirectionArrows === true,
     geometryNote: notice.geometryNote || notice.segmentGeometryNote || null,
     details: notice.segmentComplement ? [["Information complémentaire", notice.segmentComplement]] : []
   };
@@ -4039,6 +4044,7 @@ function closureDateRangeHtml(closure) {
   if (!hasStart && !hasEnd) return t("popup.unknownPeriod");
   const start = `${formatDate(closure.startDate)}${closure.startTime ? ` ${t("popup.at")} ${escapeHtml(closure.startTime)}` : ""}`;
   const end = `${formatDate(closure.endDate)}${closure.endTime ? ` ${t("popup.at")} ${escapeHtml(closure.endTime)}` : ""}`;
+  if (hasStart && !hasEnd && closure.openEnded) return `${start} — ${t("popup.openEnded")}`;
   if (!hasStart || !hasEnd) {
     const knownDate = hasStart ? `${t("popup.startDate")}: ${start}` : `${t("popup.endDate")}: ${end}`;
     return `${t("popup.unknownPeriod")} (${knownDate})`;
@@ -4292,11 +4298,18 @@ function centerPopupInMap(popup, pass = 0) {
   map.panBy([horizontalOffset, verticalOffset], { animate: true, duration: 0.28 });
 }
 
+const PJCCI_POPUP_GROUP_RADIUS_METERS = 75;
+
 function closuresNearLatLng(latLng, primaryClosure) {
-  if (primaryClosure.sourceKind === "pjcci") {
-    return [primaryClosure];
-  }
   const center = L.latLng(latLng.lat, latLng.lng);
+  if (primaryClosure.sourceKind === "pjcci") {
+    return currentClosures
+      .filter((closure) => closure.id === primaryClosure.id
+        || (closure.sourceKind === "pjcci"
+          && closure.sourceUrl === primaryClosure.sourceUrl
+          && minDistanceMeters(center, closure) <= PJCCI_POPUP_GROUP_RADIUS_METERS))
+      .sort((a, b) => severityRank(a.severity) - severityRank(b.severity));
+  }
   return currentClosures
     .filter((closure) => closure.id === primaryClosure.id || minDistanceMeters(center, closure) <= 45)
     .sort((a, b) => severityRank(a.severity) - severityRank(b.severity));
@@ -4315,6 +4328,13 @@ function nearestClosure(latLng, maxDistanceMeters = 140) {
 }
 
 function minDistanceMeters(center, closure) {
+  if (closure.sourceKind === "pjcci" && ["LineString", "MultiLineString"].includes(closure.geometry?.type)) {
+    const lines = closure.geometry.type === "LineString" ? [closure.geometry.coordinates] : closure.geometry.coordinates;
+    const point = [center.lng, center.lat];
+    return lines.reduce((minimum, line) => line.slice(1).reduce(
+      (distance, end, index) => Math.min(distance, distanceToSegment(point, line[index], end)), minimum
+    ), Number.POSITIVE_INFINITY);
+  }
   const coordinates = flattenCoordinates(closure.geometry?.coordinates);
   if (coordinates.length === 0 && closure.point) {
     coordinates.push(closure.point);

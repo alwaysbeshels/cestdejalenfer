@@ -716,6 +716,7 @@ window.TRANSLATIONS.en = {
   "popup.tunnelNote": "This tracing follows a tunnel — it is drawn beneath the surface streets shown on the map.",
   "popup.notPublished": "not published",
   "popup.unknownPeriod": "Dates unknown",
+  "popup.openEnded": "Until further notice",
   "popup.startDate": "Start",
   "popup.endDate": "End",
   "popup.dayNight": "Day and night",
