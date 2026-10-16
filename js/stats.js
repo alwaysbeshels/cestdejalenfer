@@ -2330,7 +2330,7 @@
     const projects = new Map((memoryFetchCache.get(LIVE_SOURCES.quebec511)?.features || []).map((feature) => [`q511-${feature.properties?.identifiant || feature.id}`, feature.properties]));
     const nullable = (value) => value === null || value === undefined || String(value).trim() === "" ? null : String(value);
     const dateKey = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value || "") && Number.isFinite(parseDate(value).valueOf()) && formatInputDate(parseDate(value)) === value ? value : null;
-    return allClosures.map((closure) => {
+    return allClosures.filter((closure) => !isCoveredByMobiliteClosure(closure)).map((closure) => {
       const type = authorityType(closure);
       const item = { closure, type, route: routeLabel(closure), organization: organizationName(closure, type), length: lengthInfo(closure.geometry) };
       const namedOrganization = customOrganizationName(closure, type);

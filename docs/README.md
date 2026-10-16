@@ -272,6 +272,29 @@ Après publication, Meta peut conserver un ancien aperçu en cache. Une nouvelle
 
 Lors de chaque mise à jour demandée des snapshots, `extractedAt` indique la dernière vérification réussie de la source, même si aucune nouvelle donnée admissible n'est trouvée. Les métadonnées de fraîcheur correspondantes dans `data/sources.js` doivent porter la même date. Si les données sont inchangées, seuls ces horodatages sont actualisés : les enregistrements, géométries et dates publiées par les organismes restent intacts. Une consultation échouée, partielle ou limitée au cache local ne fait pas avancer la date. Cette date ne signifie ni que la source vient de publier de nouvelles données, ni que les géométries ont été reconstruites.
 
+### Mobilité Montréal : bulletin du 16 au 19 octobre 2026
+
+Le [snapshot des fermetures majeures](../data/mobilite-montreal-snapshot.json) contient l'analyse des 13 avis du [bulletin officiel](https://mobilitemontreal.gouv.qc.ca/fermetures-majeures/), des cinq cartes de la page et de la sixième carte du communiqué A-13/A-520 lié. Les observations visuelles, textes collectés, URL, empreintes SHA-256, horaires, détours et divergences sont conservés. Le rappel REM et le passage piéton du communiqué sont analysés mais exclus des entraves automobiles.
+
+Les avis sont décomposés en 29 impacts : 24 ont un tracé vérifié (18 références MTMD et six références OSM, dont un viaduc à deux chaussées), cinq restent sans géométrie. Ces derniers concernent une portion complémentaire de desserte à l'échangeur des Laurentides, les accès Sherbrooke et Curatteau vers A-25, l'accès depuis l'île Charron et la canalisation vers cette île. Ils restent dans le snapshot et les détails de leur avis parent, sans point approximatif ni itinéraire inventé.
+
+Une voie retranchée, une configuration de voies et un contresens sont classés `major`; une canalisation d'accès est `moderate`. Une bretelle fermée porte son libellé propre, jamais « autoroute fermée ». Les horaires A-25/Souligny/accessoires sont séparés. Les fermetures A-13 utilisent les plages récurrentes publiées, avec réouverture quotidienne et changement d'heure de Montréal le 1er novembre. Les heures absentes ne sont pas présentées comme publiées; la configuration Victoria sans fin précise est limitée à la fenêtre d'observation du bulletin.
+
+Le rapprochement est explicite : 18 avis Québec 511 ont une correspondance vérifiée et trois composantes PJCCI du même épisode Mercier sont identifiées. Les signatures comparent identifiant, lieu, direction, impact, dates, heures et géométrie. Les données natives restent chargées; les copies confirmées sont masquées dans la carte, les comptes et les graphiques personnalisés. Pour Tellier, l'avis Québec 511 de plus longue durée a priorité sur la répétition du bulletin : samedi 8 h n'est pas présenté comme sa réouverture. Un avis natif modifié ou l'absence du snapshot annule son masquage. Hors de la fenêtre couverte, les avis natifs de plus longue durée restent accessibles. Les différences publiées (notamment Roméo-Vachon et Victoria) sont conservées, sans correction silencieuse.
+
+Pour Mercier, les trois composantes détaillées PJCCI et leurs géométries ont priorité sur l'avis Mobilité Montréal agrégé et la copie Québec 511. Il ne s'agit pas de fusionner la chaussée fermée avec la chaussée portant le contresens. L'avis de voie fermée à durée indéterminée reste distinct, tout comme les travaux Bonaventure dans la direction opposée ou avec un autre impact. Les popups conservent les liens des sources correspondantes. Le snapshot PJCCI n'est ni modifié ni réactualisé par cette intégration.
+
+```bash
+npm run snapshot:mobilite-montreal:capture
+npm run snapshot:mobilite-montreal
+npm run test:mobilite-montreal:unit
+npm run test:mobilite-montreal
+```
+
+La capture télécharge les preuves dans le répertoire temporaire `mobilite-montreal-evidence` et ne publie aucune entrave. Après chaque changement du bulletin, examiner tous les textes, cartes et pièces liées, puis mettre à jour l'analyse et les références vérifiées du snapshot avant la génération. Le générateur refuse d'écrire si une empreinte ou une couverture de sections/images a changé sans revue, si une voie ne correspond plus aux tags et limites vérifiés, ou si les signatures PJCCI ne peuvent pas être confirmées. Il actualise `extractedAt` et les trois entrées de fraîcheur du catalogue uniquement après réussite. Aucune collecte planifiée ni publication automatique n'est ajoutée.
+
+La validation navigateur nécessite le serveur local sur `http://127.0.0.1:5500` (ou `MOBILITE_VALIDATION_URL`). Elle exécute le code réel en FR/EN à 1 440 et 390 px, avec clics et contrôles de pixels des lignes, vérifie les filtres jour/nuit, les limites temporelles, les correspondances de sources et la panne isolée du snapshot. Le flux MTMD y est rejoué à partir des attributs effectivement vérifiés pour rendre le test reproductible; les données PJCCI restent inchangées.
+
 ### Repentigny : actualisation du 15 octobre 2026
 
 Vérification du flux officiel Open511 à `2026-10-15T19:40:29.556Z` (UTC). L'extraction Chromium a suivi toutes les pages HTTPS sur l'hôte officiel, validé les identifiants, horaires et géométries, et reçu 12 événements actifs. Onze événements avec des intervalles publiés, une référence routière et une géométrie officielle sont retenus; un événement actif sans date ou géométrie reste exclu de l'automobile. Le snapshot contient 11 `LineString` et 30 intervalles.

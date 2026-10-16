@@ -11,6 +11,10 @@
     "snapshot:repentigny": "node tools/build-repentigny-roadworks-snapshot.mjs",
     "snapshot:montreal": "node tools/build-montreal-resolved-geometries.mjs",
     "snapshot:pjcci": "node tools/build-pjcci-work-advisories-snapshot.mjs",
+    "snapshot:mobilite-montreal": "node tools/build-mobilite-montreal-snapshot.mjs",
+    "snapshot:mobilite-montreal:capture": "node tools/build-mobilite-montreal-snapshot.mjs --capture",
+    "test:mobilite-montreal": "node tools/validate-mobilite-montreal.mjs",
+    "test:mobilite-montreal:unit": "node tools/validate-mobilite-montreal.mjs --unit",
     "snapshot:montreal-uci": "node tools/build-montreal-uci-snapshot.mjs",
     "snapshot:montreal-uci:date": "node tools/build-montreal-uci-snapshot.mjs --date=2026-09-22"
   },

@@ -36,6 +36,9 @@ function roadTypeFromText(value) {
 }
 
 function closureImpactLabel(closure) {
+  if (closure.mobiliteRecordId) return t(`mobilite.impact.${closure.impactType}`);
+  const binding = mobiliteDuplicateBindings.get(closure.id);
+  if (binding?.preferExisting && binding.impactType && binding.fingerprint === closure.mobiliteSourceFingerprint) return t(`mobilite.impact.${binding.impactType}`);
   if (PEDESTRIAN_MODE || closure.severity !== "critical") {
     return (SEVERITY_META[closure.severity] ?? SEVERITY_META.major).label();
   }
@@ -86,7 +89,8 @@ const LIVE_SOURCES = {
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
   // WFS MTMD Quebec 511 - evenements (fermetures, incidents, restrictions)
   quebec511Events: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:evenements&srsname=EPSG:4326&outputformat=geojson",
-  pjcciSnapshot: "data/pjcci-work-advisories-snapshot.json?v=20260911-pjcci-map-source"
+  pjcciSnapshot: "data/pjcci-work-advisories-snapshot.json?v=20260911-pjcci-map-source",
+  mobiliteMontrealSnapshot: "data/mobilite-montreal-snapshot.json"
 };
 
 // Phase 2 Validé - 3 couches ArcGIS Laval confirmées
@@ -1230,11 +1234,13 @@ function getDateRange() {
 }
 
 function hasExpiredToday(closure, now = new Date()) {
+  if (closure.mobiliteRecordId) return Date.parse(closure.activeIntervals.at(-1).split("/")[1]) <= now.valueOf();
   const end = closure._endTime ?? parseDateTime(closure.endDate, closure.endTime, "23:59").valueOf();
   return Number.isFinite(end) && end <= now.valueOf();
 }
 
 function overlapsDateRange(closure, range) {
+  if (closure.mobiliteRecordId) return !hasExpiredToday(closure) && mobiliteScheduleOverlaps(closure, range);
   if (closure.sourceKind === "citizen-report") {
     const today = citizenLocalDateTime(closure, new Date()).slice(0, 10);
     if (closure.endDate && closure.endDate < today) return false;
@@ -1303,6 +1309,7 @@ function getActiveTimePeriods() {
 }
 
 function matchesTimePeriod(closure, activePeriods) {
+  if (closure.mobiliteRecordId && !(statsViewActive && statsAllDates)) return mobiliteScheduleOverlaps(closure, getDateRange(), activePeriods);
   if (["marathon-beneva-pdf", "marathon-beneva-article"].includes(closure.sourceKind) && closure.severity === "parking" && !(statsViewActive && statsAllDates)) {
     const range = getDateRange();
     const lower = Math.max(parseDateTime(closure.startDate, closure.startTime).valueOf(), range.start.valueOf());
@@ -1362,7 +1369,7 @@ function getFilteredClosures() {
   allClosures.forEach((closure) => {
     if (isCoveredByComplementaryClosure(closure)) return;
     if (PEDESTRIAN_MODE && !window.PEDESTRIAN_MAP.matchesArea(closure)) return;
-    if ((!categories || categories.has(closure.category))
+    if (closureMatchesCategories(closure, categories)
       && impacts.has(closure.severity)
       && matchesTimePeriod(closure, timePeriods)
       && ((statsViewActive && statsAllDates) || overlapsDateRange(closure, dateRange))
@@ -1384,7 +1391,7 @@ function getFilterBaseClosures() {
   allClosures.forEach((closure) => {
     if (isCoveredByComplementaryClosure(closure)) return;
     if (PEDESTRIAN_MODE && !window.PEDESTRIAN_MAP.matchesArea(closure)) return;
-    if ((!categories || categories.has(closure.category))
+    if (closureMatchesCategories(closure, categories)
       && matchesTimePeriod(closure, timePeriods)
       && ((statsViewActive && statsAllDates) || overlapsDateRange(closure, dateRange))
       && matchesSearch(closure, query)) {
@@ -1393,6 +1400,13 @@ function getFilterBaseClosures() {
   });
 
   return filteredClosures;
+}
+
+function closureMatchesCategories(closure, categories) {
+  if (!categories || categories.has(closure.category) || closure.categoryAliases?.some((category) => categories.has(category))) return true;
+  const binding = mobiliteDuplicateBindings.get(closure.id);
+  return binding?.preferExisting === true && binding.fingerprint === closure.mobiliteSourceFingerprint
+    && categories.has(binding.sourceKind === "pjcci" ? "q511" : "regional");
 }
 
 // Looked up once per allClosures change instead of once per UCI record (thousands of records).
@@ -1407,6 +1421,7 @@ function complementaryUciClosure() {
 }
 
 function isCoveredByComplementaryClosure(closure) {
+  if (isCoveredByMobiliteClosure(closure)) return true;
   if (closure.marathonGeometryReplacementId) {
     if (marathonGeometryOwnerCache.source !== allClosures || marathonGeometryOwnerCache.length !== allClosures.length) {
       marathonGeometryOwnerCache = { source: allClosures, length: allClosures.length, ids: new Set(allClosures.map((record) => record.id)) };
@@ -1557,6 +1572,138 @@ function normalizeRegionalClosure(closure) {
   };
 }
 
+let mobiliteSnapshot = null;
+let mobiliteSnapshotFailed = false;
+let mobiliteDuplicateBindings = new Map();
+let mobiliteOwnersCache = { source: null, length: -1, records: new Map() };
+
+function mobiliteMtmdFingerprint(feature) {
+  const properties = feature.properties;
+  return JSON.stringify([String(properties.identifiant || feature.id), properties.routeAutoroute || "",
+    String(properties.localisation || "").replace(/\s+/g, " ").trim(), properties.direction || "",
+    properties.debut || "", properties.fin || "", properties.entrave || "", feature.geometry]);
+}
+
+function mobilitePjcciFingerprint(notice) {
+  return JSON.stringify([notice.url, notice.segmentId, notice.segmentTitle || notice.title,
+    notice.segmentDateStart || notice.datedebut || null, notice.segmentTimeStart || null,
+    notice.segmentDateEnd || notice.datefin || null, notice.segmentTimeEnd || null,
+    notice.segmentImpact || notice.description || "", notice.segmentDirection || "",
+    notice.segmentStreets || "", notice.openEnded === true, notice.geometry || null]);
+}
+
+function mobiliteScheduleOverlaps(closure, range, activePeriods = null) {
+  const lower = Date.parse(`${formatInputDate(range.start)}T00:00:00Z`);
+  const upper = Date.parse(`${formatInputDate(range.end)}T00:00:00Z`) + 86400000;
+  const windows = activePeriods ? [
+    ...(activePeriods.has("day") ? [[5, 22]] : []),
+    ...(activePeriods.has("night") ? [[0, 5], [22, 24]] : [])
+  ] : null;
+  for (const interval of closure.activeIntervals) {
+    const [publishedStart, publishedEnd] = interval.split("/");
+    if (!(statsViewActive && statsAllDates) && Date.parse(publishedEnd) <= Date.now()) continue;
+    const start = Math.max(lower, Date.parse(`${publishedStart.slice(0, 19)}Z`));
+    const end = Math.min(upper, Date.parse(`${publishedEnd.slice(0, 19)}Z`));
+    if (start >= end) continue;
+    if (!windows) return true;
+    for (let day = Math.floor(start / 86400000) * 86400000; day < end; day += 86400000) {
+      if (windows.some(([from, to]) => start < day + to * 3600000 && end > day + from * 3600000)) return true;
+    }
+  }
+  return false;
+}
+
+function isCoveredByMobiliteClosure(closure) {
+  const binding = mobiliteDuplicateBindings.get(closure.id);
+  if (!mobiliteSnapshot || (!closure.mobiliteRecordId && (!binding || binding.fingerprint !== closure.mobiliteSourceFingerprint))) return false;
+  if (mobiliteOwnersCache.source !== allClosures || mobiliteOwnersCache.length !== allClosures.length) {
+    mobiliteOwnersCache = { source: allClosures, length: allClosures.length,
+      records: new Map(allClosures.filter((record) => record.mobiliteRecordId).map((record) => [record.mobiliteRecordId, record])),
+      sources: new Map(allClosures.map((record) => [record.id, record])) };
+  }
+  if (closure.mobiliteRecordId) {
+    const preferred = mobiliteSnapshot.duplicateBindings.filter((entry) => entry.recordId === closure.mobiliteRecordId && entry.preferExisting);
+    return preferred.length > 0 && preferred.every((entry) => {
+      const source = mobiliteOwnersCache.sources.get(entry.sourceId);
+      return source?.geometry && source.mobiliteSourceFingerprint === entry.fingerprint;
+    });
+  }
+  if (binding.preferExisting) return false;
+  const owner = mobiliteOwnersCache.records.get(binding.recordId);
+  if (!owner || !owner.geometry) return false;
+  if (statsViewActive && statsAllDates) return true;
+  return !hasExpiredToday(owner) && mobiliteScheduleOverlaps(owner, getDateRange());
+}
+
+function normalizeMobiliteClosures(snapshot) {
+  if (snapshot.schemaVersion !== 1 || snapshot.status !== "reviewed" || snapshot.timeZone !== "America/Toronto"
+    || !Array.isArray(snapshot.records) || !Array.isArray(snapshot.notices) || !Array.isArray(snapshot.duplicateBindings)) {
+    throw new Error("Invalid Mobilite Montreal snapshot");
+  }
+  const severities = { road_closed: "critical", direction_closed: "critical", ramp_closed: "critical",
+    lane_reduction: "major", contraflow: "major", lane_configuration: "major", channelized_access: "moderate" };
+  return snapshot.records.filter((record) => record.display === true).map((record) => {
+    if (severities[record.impactType] !== record.severity || !["LineString", "MultiLineString"].includes(record.geometry?.type)
+      || !record.activeIntervals?.length || record.activeIntervals.some((interval) => {
+        const [start, end] = interval.split("/").map(Date.parse);
+        return !Number.isFinite(start) || !Number.isFinite(end) || end <= start;
+      })) throw new Error(`Invalid Mobilite Montreal record ${record.id}`);
+    const notice = snapshot.notices.find((notice) => notice.id === record.noticeId);
+    if (!notice) throw new Error(`Missing Mobilite Montreal notice ${record.noticeId}`);
+    const bindings = snapshot.duplicateBindings.filter((binding) => binding.recordId === record.id);
+    const relatedSources = [...new Map(bindings.map((binding) => [binding.sourceUrl,
+      { url: binding.sourceUrl, label: binding.sourceKind === "pjcci" ? "PJCCI" : "MTMD / Québec 511" }])).values()];
+    const unmapped = snapshot.records.filter((entry) => entry.noticeId === record.noticeId && !entry.display);
+    const scheduleText = record.startDate === null
+      ? [t("mobilite.startNotPublished"), record.endDate === null ? t("mobilite.endNotPublished") : "",
+        record.observationEnd ? `${t("mobilite.observedThrough")} ${formatDate(record.observationEnd)}.` : ""].filter(Boolean).join(" ")
+      : record.weeklySchedule ? t("mobilite.overnight") : null;
+    return {
+      ...record,
+      id: `mobilite-montreal-${snapshot.bulletin.startDate}-${record.id}`,
+      mobiliteRecordId: record.id,
+      sourceKind: "mobilite-montreal",
+      category: "regional",
+      categoryAliases: bindings.some((binding) => binding.sourceKind === "quebec511-mtmd-wfs") ? ["q511"] : [],
+      borough: record.municipality,
+      responsible: "Mobilité Montréal / MTMD",
+      source: "Mobilité Montréal - fermetures majeures",
+      sourceUrl: snapshot.sourceUrl,
+      sourceVerifiedAt: snapshot.extractedAt,
+      color: SEVERITY_META[record.severity].color,
+      point: representativePoint(record.geometry),
+      schedule: record.weeklySchedule || [],
+      scheduleText,
+      relatedSources,
+      details: [
+        [t("mobilite.analysis"), notice.analysis],
+        [t("mobilite.detour"), record.detour || ""],
+        [t("mobilite.uncertainties"), (record.uncertainties || []).join("\n")],
+        [t("mobilite.unmapped"), unmapped.map((entry) => `${entry.title} : ${entry.impact} (${entry.startTime || "?"} - ${entry.endTime || "?"}).`).join("\n")]
+      ]
+    };
+  });
+}
+
+async function loadMobiliteClosures() {
+  try {
+    const snapshot = await fetchJson(LIVE_SOURCES.mobiliteMontrealSnapshot);
+    const records = normalizeMobiliteClosures(snapshot);
+    const recordIds = new Set(records.map((record) => record.mobiliteRecordId));
+    if (snapshot.duplicateBindings.some((binding) => !recordIds.has(binding.recordId) || !binding.fingerprint || !binding.sourceId)) {
+      throw new Error("Invalid Mobilite Montreal duplicate bindings");
+    }
+    mobiliteSnapshot = snapshot;
+    mobiliteDuplicateBindings = new Map(snapshot.duplicateBindings.map((binding) => [binding.sourceId, binding]));
+    mobiliteSnapshotFailed = false;
+    return records;
+  } catch (error) {
+    mobiliteSnapshotFailed = true;
+    mobiliteDuplicateBindings = new Map();
+    throw error;
+  }
+}
+
 function normalizePedestrianStreet(closure) {
   const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.critical;
   return {
@@ -1587,6 +1734,7 @@ function normalizeQuebec511Feature(feature) {
     id: `q511-${properties.identifiant || feature.id}`,
     category: "q511",
     sourceKind: "quebec511-mtmd-wfs",
+    mobiliteSourceFingerprint: mobiliteMtmdFingerprint(feature),
     title: properties.identificationDesTravaux || "Travaux routiers MTMD",
     responsible: "MTMD / Quebec 511",
     routeNumber: properties.routeAutoroute || null,
@@ -1873,7 +2021,8 @@ async function loadLinkedCityWorks() {
 }
 
 async function loadRegionalClosures() {
-  const routedClosures = await Promise.all(REGIONAL_MAJOR_CLOSURES.map(async (closure) => {
+  const legacyClosures = REGIONAL_MAJOR_CLOSURES.filter((closure) => !closure.source.includes("Mobilité Montréal"));
+  const routedClosures = await Promise.all(legacyClosures.map(async (closure) => {
     if (!closure.routeEndpoints) {
       return normalizeRegionalClosure(closure);
     }
@@ -1987,6 +2136,7 @@ function normalizePjcciNotice(notice) {
     title,
     category: "regional",
     sourceKind: "pjcci",
+    mobiliteSourceFingerprint: mobilitePjcciFingerprint(notice),
     responsible: notice.segmentResponsible || "PJCCI",
     borough: notice.tags?.[0] || "Structures PJCCI",
     startDate,
@@ -3944,7 +4094,8 @@ async function loadOfficialData() {
     loadCitizenReportClosures(),
     loadMarathonBenevaClosures(),
     loadParcJeanDrapeauClosures(),
-    loadPjcciClosures()
+    loadPjcciClosures(),
+    loadMobiliteClosures()
   ]);
   const localSnapshotClosures = localSnapshotResults
     .filter((result) => result.status === "fulfilled")
@@ -4019,7 +4170,7 @@ async function loadBackgroundOfficialData() {
     updateView({ fit: false });
   }
   // Toujours retirer l'indicateur de chargement une fois le fond charge.
-  const snapshotError = [marathonSnapshotFailed ? t("marathon.loadError") : null, parcJeanDrapeauSnapshotFailed ? t("parcJeanDrapeau.loadError") : null].filter(Boolean).join(" ");
+  const snapshotError = [marathonSnapshotFailed ? t("marathon.loadError") : null, parcJeanDrapeauSnapshotFailed ? t("parcJeanDrapeau.loadError") : null, mobiliteSnapshotFailed ? t("mobilite.loadError") : null].filter(Boolean).join(" ");
   showMapStatus(snapshotError || `Donnees chargees: ${allClosures.length} entraves actives dans la region.`, snapshotError ? "error" : "ready");
 
   enrichMunicipalGeometriesInBackground();
@@ -4099,6 +4250,7 @@ function popupContent(closure) {
       <p class="popup-meta"><strong>${t(closure.affectedUsers?.includes("cyclists") ? "pedestrian.cyclingImpact" : "popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
       <p class="popup-meta"><strong>${t("popup.direction")}:</strong> ${escapeHtml(closure.direction)}</p>
       <a href="${escapeHtml(closure.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(closure.source)}</a>
+      ${mobiliteRelatedSourcesHtml(closure)}
     </div>
   `;
   }
@@ -4124,8 +4276,21 @@ function popupContent(closure) {
       ${closure.tunnelNote ? `<p class="popup-meta popup-geometry-note"><strong>🚇 ${escapeHtml(closure.tunnelNote)}</strong></p>` : ""}
       ${closure.geometryNote ? `<p class="popup-meta popup-geometry-note"><strong>${t("popup.geometryNote")}:</strong> ${escapeHtml(closure.geometryNote)}</p>` : ""}
       <a href="${escapeHtml(closure.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(closure.source)}</a>
+      ${mobiliteRelatedSourcesHtml(closure)}
     </div>
   `;
+}
+
+function mobiliteRelatedSourcesHtml(closure) {
+  const binding = mobiliteDuplicateBindings.get(closure.id);
+  const related = binding?.preferExisting && binding.fingerprint === closure.mobiliteSourceFingerprint
+    ? [{ url: mobiliteSnapshot.sourceUrl, label: "Mobilité Montréal" }, ...mobiliteSnapshot.duplicateBindings
+      .filter((entry) => entry.recordId === binding.recordId && entry.sourceKind === "quebec511-mtmd-wfs" && entry.sourceId !== closure.id)
+      .map((entry) => ({ url: entry.sourceUrl, label: "MTMD / Québec 511" }))]
+    : closure.relatedSources || [];
+  const links = related.filter((source) => /^https:\/\//.test(source.url));
+  if (!links.length) return "";
+  return `<p class="popup-meta"><strong>${t("mobilite.otherSources")}:</strong> ${links.map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.label)}</a>`).join(" / ")}</p>`;
 }
 
 function periodsLabel(periods) {
@@ -4867,7 +5032,14 @@ window.addEventListener("languagechange", () => {
     const translatedPark = new Map(normalizeParcJeanDrapeauClosures(parcJeanDrapeauSnapshot).map((record) => [record.id, record]));
     allClosures = allClosures.map((record) => translatedPark.get(record.id) || record);
   }
-  if (marathonSnapshotFailed || parcJeanDrapeauSnapshotFailed) showMapStatus([marathonSnapshotFailed ? t("marathon.loadError") : null, parcJeanDrapeauSnapshotFailed ? t("parcJeanDrapeau.loadError") : null].filter(Boolean).join(" "), "error");
+  if (mobiliteSnapshot && !mobiliteSnapshotFailed) {
+    const translated = new Map(normalizeMobiliteClosures(mobiliteSnapshot).map((record) => [record.id, record]));
+    allClosures = dedupeClosures(allClosures.map((record) => translated.get(record.id) || record));
+    updateView({ fit: false });
+    const selected = currentClosures.find((record) => record.id === selectedClosureId && record.mobiliteRecordId);
+    if (selected && activeMapPopup) openGroupedPopup(selected, activeMapPopup.getLatLng());
+  }
+  if (marathonSnapshotFailed || parcJeanDrapeauSnapshotFailed || mobiliteSnapshotFailed) showMapStatus([marathonSnapshotFailed ? t("marathon.loadError") : null, parcJeanDrapeauSnapshotFailed ? t("parcJeanDrapeau.loadError") : null, mobiliteSnapshotFailed ? t("mobilite.loadError") : null].filter(Boolean).join(" "), "error");
   updateLocationControl();
   translateZoomControl();
   menuToggle.setAttribute("aria-label", t(menuToggle.classList.contains("is-open") ? "menu.close" : "menu.open"));
