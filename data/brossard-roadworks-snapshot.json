@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "extractedAt": "2026-10-17T16:15:01.515Z",
+  "sourceUrl": "https://brossard.ca/informations-travaux/#carte",
+  "municipality": "Ville de Brossard",
+  "timeZone": "America/Toronto",
+  "validation": {
+    "brossardSupplementalReview": {
+      "status": "complete",
+      "reviewedAt": "2026-10-17T16:08:28.829Z",
+      "checkedAt": "2026-10-17T16:15:01.515Z",
+      "previousRestartPoint": null,
+      "restartPoint": {
+        "url": "https://brossard.ca/app/uploads/2025/04/attach_cmsUpload_32cd2f38-f18d-4ed0-a468-396f1030dd26.pdf",
+        "title": "Programme triennal d’immobilisation 2024-2025-2026",
+        "sha256": "44be76b045c0953e52b62f89c0d3773389b3d39fe5d8eca56ca8caa68375f6a7"
+      },
+      "page": {
+        "url": "https://brossard.ca/sujets/travaux-et-entraves/",
+        "title": "Travaux et entraves | Ville de Brossard",
+        "contentSha256": "d12b4359d286ebaa92d6e8635ee2028bc9df6c487e4e376235d9a4c7927e05fa",
+        "links": [
+          {
+            "title": "Consultez la carte interactive Info-travaux",
+            "url": "https://brossard.ca/informations-travaux/"
+          },
+          {
+            "title": "liste des travaux du programme triennal d’immobilisation (PTI) 2024-2025-2026",
+            "url": "https://brossard.ca/app/uploads/2025/04/attach_cmsUpload_32cd2f38-f18d-4ed0-a468-396f1030dd26.pdf"
+          }
+        ]
+      },
+      "pti": {
+        "url": "https://brossard.ca/app/uploads/2025/04/attach_cmsUpload_32cd2f38-f18d-4ed0-a468-396f1030dd26.pdf",
+        "contentType": "application/pdf",
+        "byteLength": 2565049,
+        "sha256": "44be76b045c0953e52b62f89c0d3773389b3d39fe5d8eca56ca8caa68375f6a7"
+      },
+      "fingerprint": "32b9c378d5c39b21280247591ee329e584e97fa5ad8a15695e39dfaa2bb4e639",
+      "decisions": [
+        {
+          "url": "https://brossard.ca/sujets/travaux-et-entraves/",
+          "decision": "context-only",
+          "reason": "La page dirige les usagers vers la carte pour les travaux courants; son texte général ne constitue pas un avis d’entrave distinct."
+        },
+        {
+          "url": "https://brossard.ca/app/uploads/2025/04/attach_cmsUpload_32cd2f38-f18d-4ed0-a468-396f1030dd26.pdf",
+          "decision": "reviewed-no-traffic-record",
+          "reason": "Le plan cartographique 2024–2026 situe des projets d’immobilisation, mais ne publie pas d’intervalle d’entrave, de fermeture ou de configuration temporaire. Les traits et couleurs du plan ne sont pas numérisés ni utilisés pour classer un impact."
+        }
+      ],
+      "mediaReview": [
+        {
+          "url": "https://brossard.ca/app/uploads/2025/04/attach_cmsUpload_32cd2f38-f18d-4ed0-a468-396f1030dd26.pdf",
+          "sha256": "44be76b045c0953e52b62f89c0d3773389b3d39fe5d8eca56ca8caa68375f6a7",
+          "inspectionStatus": "visually-inspected",
+          "pageCount": 1,
+          "observations": [
+            "La page unique est un plan de projets d’immobilisation 2024–2026; aucun intervalle de fermeture ou impact routier propre à un avis n’est publié."
+          ]
+        }
+      ]
+    }
+  },
+  "captureMethod": "The official OpaTech iframe's successful same-origin POST, repeated with its published auto=true filter; no frontend proxy.",
+  "request": {
+    "city": "brossard",
+    "auto": true,
+    "pieton": false,
+    "cycliste": false
+  },
+  "sourceReview": {
+    "received": 8,
+    "retained": 2,
+    "reviewCount": 5,
+    "excluded": 1,
+    "review": [
+      {
+        "id": "SP-25-2089",
+        "title": "av. BARRY",
+        "publishedPeriod": {
+          "startDate": "2026-06-12",
+          "endDate": "2026-11-13",
+          "startTimestamp": 1781236800000,
+          "endTimestamp": 1794546000000
+        },
+        "trafficLabels": [],
+        "sourceDescription": "· L’enlèvement et la disposition du pavage;\n· Le remplacement de la conduite principale d’aqueduc et de toutes les composantes du réseau de\ndistribution d’eau potable existant (incluant la protection incendie);\n· Le remplacement des bouches à clé des branchements privés (à l’emprise);\n· Le remplacement des conduits et accessoires de branchements de services;\n· Le remplacement de la conduite principale d’égout sanitaire et des regards;\n· Le remplacement de la conduite d’égout pluvial;\n· L’enlèvement des puisards existants, la fourniture et l’installation de nouveaux puisards;\n· La réfection complète de la structure de chaussée (fondation granulaire et pavage);\n· La démolition de trottoirs et bordures en béton;\n· La reconfiguration géométrique de la rue, incluant la construction de trottoirs, de bordures en béton et\nd’avancées de trottoir avec îlots de plantation ;\n· Système de bioretention ;\n· L’implantation d’une piste cyclable du côté des adresses impaires de l’avenue;\n· La fourniture et la mise en place des enrobés bitumineux;\n· L’enlèvement et la disposition des éléments du système d’éclairage existant;\n· La fourniture et l’installation du nouveau système d’éclairage avec tous les composants;\n· La reconstruction de certains murets et de l’aménagement paysager des entrées privées;\n· La fourniture et l’installation d’un nouveau réseau d’éclairage incluant les bases de béton, les lampadaires\net luminaires et les fils et conduits électriques en tranchée;\n· Le remplacement de la signalisation permanente existante avec l’installation d’une nouvelle signalisation;\n· Le marquage de la chaussée;\n· La remise en état des lieux;\n· Les travaux connexes.",
+        "planAvailable": true,
+        "decision": "review",
+        "reason": "A plan is flagged by the map, but no public plan URL is exposed in the official response; traffic impact remains unverified."
+      },
+      {
+        "id": "SP-GTER-26-0018",
+        "title": "rue Orient",
+        "publishedPeriod": {
+          "startDate": "2026-10-26",
+          "endDate": "2026-10-30",
+          "startTimestamp": 1792987200000,
+          "endTimestamp": 1793332800000
+        },
+        "trafficLabels": [],
+        "sourceDescription": "Planage et mise en place d’un nouveau pavage sur la aveneu Orient entre la rue Outremont et la avenue Oregon\nPlanage et mise en place d’un nouveau pavage sur la aveneu Orient entre la rue Outremont et la avenue Oregon",
+        "planAvailable": false,
+        "decision": "review",
+        "reason": "No distinct automobile impact and geometry combination was established from the published fields."
+      },
+      {
+        "id": "2026-11216",
+        "title": "rue des SAULES",
+        "publishedPeriod": {
+          "startDate": "2026-09-30",
+          "endDate": "2026-10-20",
+          "startTimestamp": 1790740800000,
+          "endTimestamp": 1792468800000
+        },
+        "trafficLabels": [],
+        "sourceDescription": "",
+        "planAvailable": false,
+        "decision": "review",
+        "reason": "No distinct automobile impact and geometry combination was established from the published fields."
+      },
+      {
+        "id": "rue VILLIERS",
+        "title": "rue VILLIERS",
+        "publishedPeriod": {
+          "startDate": "2026-10-02",
+          "endDate": "2026-10-22",
+          "startTimestamp": 1790913600000,
+          "endTimestamp": 1792641600000
+        },
+        "trafficLabels": [],
+        "sourceDescription": "",
+        "planAvailable": false,
+        "decision": "review",
+        "reason": "No distinct automobile impact and geometry combination was established from the published fields."
+      },
+      {
+        "id": "2026-12188",
+        "title": "croiss. SATURNE",
+        "publishedPeriod": {
+          "startDate": "2026-11-17",
+          "endDate": "2026-11-18",
+          "startTimestamp": 1794891600000,
+          "endTimestamp": 1794978000000
+        },
+        "trafficLabels": [],
+        "sourceDescription": "",
+        "planAvailable": false,
+        "decision": "review",
+        "reason": "No distinct automobile impact and geometry combination was established from the published fields."
+      }
+    ],
+    "exclusions": [
+      {
+        "id": "2026-12020",
+        "title": "boul. LAPINIÈRE",
+        "publishedPeriod": {
+          "startDate": "2026-10-13",
+          "endDate": "2026-10-16",
+          "startTimestamp": 1791896400000,
+          "endTimestamp": 1792177200000
+        },
+        "reason": "Published end date is before the extraction date.",
+        "sourceDescription": "Travaux d’inspection civile pour Hydro-Québec – retranchement d’une voie de circulation\nTravaux prévus entre 9 h et 15 h .\nTravaux d’inspection civile pour Hydro-Québec – retranchement d’une voie de circulation\nTravaux prévus entre 9 h et 15 h .\nEntrave partielle: Retranchement d'une voie de circulation"
+      }
+    ]
+  },
+  "records": [
+    {
+      "id": "brossard-2026-GEN-206",
+      "sourceId": "2026-GEN-206",
+      "title": "Réfection de Grande Allée",
+      "streets": "Grande Allée, entre Arthur et Anthony.",
+      "startDate": "2026-08-10",
+      "endDate": "2026-10-30",
+      "impact": "Travaux sur Grande Allée entre Arthur et Anthony.\nFermeture des voies du côté Brossard et déviation de la circulation du côté Longueuil.\nTravaux sur Grande Allée entre Arthur et Anthony.\nFermeture des voies du côté Brossard et déviation de la circulation du côté Longueuil.",
+      "trafficLabels": [
+        "Fermeture des voies du côté Brossard",
+        "Déviation de la circulation du côté Longueuil"
+      ],
+      "trafficLabel": "Voies touchées",
+      "severity": "major",
+      "direction": "La source nomme les côtés Brossard et Longueuil, mais ne publie pas la direction de déplacement.",
+      "reference": "2026-GEN-206",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.45502185583202,
+              45.482285645946746
+            ],
+            [
+              -73.4547635776114,
+              45.48216698668989
+            ],
+            [
+              -73.45450761255266,
+              45.48204588970921
+            ],
+            [
+              -73.45425400467323,
+              45.48192237703333
+            ],
+            [
+              -73.45402517143103,
+              45.48179961107806
+            ],
+            [
+              -73.45379934395174,
+              45.481674139052416
+            ],
+            [
+              -73.45357658691411,
+              45.48154599620949
+            ],
+            [
+              -73.4533569649968,
+              45.48141522032179
+            ],
+            [
+              -73.45300923254021,
+              45.48120480373029
+            ]
+          ],
+          [
+            [
+              -73.45300923254021,
+              45.48120480373029
+            ],
+            [
+              -73.45294432836262,
+              45.481161724023906
+            ]
+          ],
+          [
+            [
+              -73.4529079340172,
+              45.481136744241354
+            ],
+            [
+              -73.45230838492186,
+              45.480719703057304
+            ]
+          ],
+          [
+            [
+              -73.45230838492186,
+              45.480719703057304
+            ],
+            [
+              -73.45183825700781,
+              45.48043044795838
+            ],
+            [
+              -73.45093020039273,
+              45.479818165722264
+            ]
+          ],
+          [
+            [
+              -73.45093020039273,
+              45.479818165722264
+            ],
+            [
+              -73.450258636056,
+              45.47937694989426
+            ]
+          ],
+          [
+            [
+              -73.450258636056,
+              45.47937694989426
+            ],
+            [
+              -73.4495886895851,
+              45.47894023042386
+            ]
+          ]
+        ]
+      },
+      "suppressDirectionArrows": true,
+      "geometryNote": "Six chemins officiels sont conservés séparément. La source ne relie pas ces chemins à une direction temporaire précise.",
+      "sourceDescription": "Travaux sur Grande Allée entre Arthur et Anthony.\nFermeture des voies du côté Brossard et déviation de la circulation du côté Longueuil.\nTravaux sur Grande Allée entre Arthur et Anthony.\nFermeture des voies du côté Brossard et déviation de la circulation du côté Longueuil.",
+      "sourceModifiedAt": null,
+      "sourceStartTimestamp": 1786334400000,
+      "sourceEndTimestamp": 1793332800000,
+      "sourceStatus": "1",
+      "sourceUrl": "https://brossard.ca/informations-travaux/#carte",
+      "sourceMapUrl": "https://brossard.ca/informations-travaux/#carte",
+      "periods": [],
+      "schedule": []
+    },
+    {
+      "id": "brossard-2026-12018",
+      "sourceId": "2026-12018",
+      "title": "Permis d'occupation temporaire 2026-12018",
+      "streets": "Localisation indiquée par le point officiel du permis.",
+      "startDate": "2026-10-13",
+      "endDate": "2026-10-30",
+      "impact": "Entrave partielle",
+      "trafficLabels": [
+        "Entrave partielle"
+      ],
+      "trafficLabel": "Entrave partielle",
+      "severity": "moderate",
+      "direction": "Direction non publiée.",
+      "reference": "2026-12018",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.4615542631081,
+          45.44689558505135
+        ]
+      },
+      "suppressDirectionArrows": true,
+      "geometryNote": "Point officiel du permis; la géométrie ne délimite pas l'emprise routière réduite.",
+      "sourceDescription": "Installation temporaire de matériaux de terrassement et de machinerie- Occupation d'une largeur de 0 à 3 mètres\nInstallation temporaire de matériaux de terrassement et de machinerie- Occupation d'une largeur de 0 à 3 mètres\nEntrave partielle: Largeur de rue réduite",
+      "sourceModifiedAt": null,
+      "sourceStartTimestamp": 1791864000000,
+      "sourceEndTimestamp": 1793419140000,
+      "sourceStatus": "1",
+      "sourceUrl": "https://brossard.ca/informations-travaux/#carte",
+      "sourceMapUrl": "https://brossard.ca/informations-travaux/#carte",
+      "periods": [],
+      "schedule": []
+    }
+  ]
+}

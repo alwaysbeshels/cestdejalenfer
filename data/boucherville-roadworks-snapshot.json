@@ -1,0 +1,905 @@
+{
+  "schemaVersion": 1,
+  "extractedAt": "2026-10-17T16:15:25.072Z",
+  "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+  "sourceApiUrl": "https://www.boucherville.ca/wp-json/wp/v2/point_of_interest?per_page=100&point_of_interest_category=646&_fields=id,date,modified,slug,title,link,point_of_interest_category",
+  "municipality": "Ville de Boucherville",
+  "timeZone": "America/Toronto",
+  "validation": {
+    "bouchervilleReview": {
+      "status": "complete",
+      "checkedAt": "2026-10-17T16:15:25.072Z",
+      "reviewedAt": "2026-10-17T16:08:29.475Z",
+      "previousRestartPoint": null,
+      "restartPoint": {
+        "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/travaux-prevus/",
+        "title": "Travaux prévus",
+        "period": "2026",
+        "contentSha256": "edd093927080ac4977ec7c406fded3acee4d2f41e53dc20e1dca79bbb434ae36"
+      },
+      "indexUrl": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/",
+      "noticeInventory": [
+        {
+          "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/",
+          "title": "Chantiers en cours et projets | Ville de Boucherville",
+          "sourceModifiedAt": "2022-08-22T13:45:33-04:00",
+          "contentSha256": "cf7a5740370e5f785eadb1d12d18d6b18e9859f8ed29c40c7f49626d797ac6fb",
+          "links": [
+            {
+              "title": "Travaux et infrastructures",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/"
+            },
+            {
+              "title": "ACCÉDER À LA PAGE AVIS DE TRAVAUX",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/avis-travaux/"
+            },
+            {
+              "title": "ACCÉDER À LA PAGE QUOI FAIRE SI DES TRAVAUX SONT PRÉVUS SUR VOTRE RUE ?",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/quoi-faire/"
+            },
+            {
+              "title": "ACCÉDER À LA PAGE CONSTRUCTION D’UN COMPLEXE MULTISPORT",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/construction-dun-complexe-multisport/"
+            },
+            {
+              "title": "ACCÉDER À LA PAGE TRAVAUX PRÉVUS",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/travaux-prevus/"
+            }
+          ],
+          "imageReferences": []
+        },
+        {
+          "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/avis-travaux/",
+          "title": "Avis de travaux | Ville de Boucherville",
+          "sourceModifiedAt": "2026-05-28T13:56:23-04:00",
+          "contentSha256": "c110e7089427102c1dfc778ba8f8f3c6f90dfa401dc546763c897620e46ba4f9",
+          "links": [
+            {
+              "title": "Travaux et infrastructures",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/"
+            },
+            {
+              "title": "Chantiers en cours et projets majeurs",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/"
+            },
+            {
+              "title": "Avis importants",
+              "url": "https://www.boucherville.ca/services-aux-citoyens/securite-publique/avis-importants/"
+            },
+            {
+              "title": "a page Travaux du tunnel Louis-Hippolyte-La Fontaine",
+              "url": "https://www.boucherville.ca/infos-pratiques/transport/travaux-tunnel/"
+            }
+          ],
+          "imageReferences": []
+        },
+        {
+          "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/quoi-faire/",
+          "title": "Travaux sur votre rue | Ville de Boucherville",
+          "sourceModifiedAt": "2025-01-22T09:41:35-05:00",
+          "contentSha256": "53621958ba024d2c670fc4142d7af8b380eb661a97add9aaff7c0b5ce4fdcb0b",
+          "links": [
+            {
+              "title": "Travaux et infrastructures",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/"
+            },
+            {
+              "title": "Chantiers en cours et projets majeurs",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/"
+            },
+            {
+              "title": "Inscrivez-vous à notre service d’alerte pour être avisé à l’avance!",
+              "url": "https://www.boucherville.ca/services-aux-citoyens/securite-publique/avis-importants/"
+            },
+            {
+              "title": "Avis importants.",
+              "url": "https://www.boucherville.ca/services-aux-citoyens/securite-publique/avis-importants/"
+            },
+            {
+              "title": "consultant nos avis de travaux",
+              "url": "https://www.boucherville.ca/travaux-et-infrastructures/chantiers-en-cours-et-projets-majeurs/avis-travaux/"
+            }
+          ],
+          "imageReferences": []
+        },
+        {
+          "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/construction-dun-complexe-multisport/",
+          "title": "Construction d'un complexe multisport | Ville de Boucherville",
+          "sourceModifiedAt": "2024-11-26T14:47:06-05:00",
+          "contentSha256": "d6a1893fd2a3b4cf22eef9128fd53bb15cf63b9add702f884c88b1ff7b30556a",
+          "links": [
+            {
+              "title": "Travaux et infrastructures",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/"
+            },
+            {
+              "title": "Chantiers en cours et projets majeurs",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/"
+            },
+            {
+              "title": "À quoi ressemblera-t-il?",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/construction-dun-complexe-multisport/#aquoi"
+            },
+            {
+              "title": "Activités sportives intérieures",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/construction-dun-complexe-multisport/#activites"
+            },
+            {
+              "title": "Principales installations",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/construction-dun-complexe-multisport/#installations"
+            },
+            {
+              "title": "Un complexe écoénergétique",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/construction-dun-complexe-multisport/#ecoenergetique"
+            },
+            {
+              "title": "Les travaux",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/avis-travaux/"
+            }
+          ],
+          "imageReferences": []
+        },
+        {
+          "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/travaux-prevus/",
+          "title": "Travaux prévus | Ville de Boucherville",
+          "sourceModifiedAt": "2026-05-14T16:47:04-04:00",
+          "contentSha256": "edd093927080ac4977ec7c406fded3acee4d2f41e53dc20e1dca79bbb434ae36",
+          "links": [
+            {
+              "title": "Travaux et infrastructures",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/"
+            },
+            {
+              "title": "Chantiers en cours et projets majeurs",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/"
+            },
+            {
+              "title": "Avis de travaux",
+              "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/avis-travaux/"
+            }
+          ],
+          "imageReferences": []
+        }
+      ],
+      "decisions": [
+        {
+          "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/",
+          "decision": "reviewed-index",
+          "reason": "The index lists the current/future works pages; the individual traffic details are published separately."
+        },
+        {
+          "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/avis-travaux/",
+          "decision": "map-source-only",
+          "reason": "The page describes the official map and points users to it for current roadwork impacts; no separate restriction record is published in the page text."
+        },
+        {
+          "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/quoi-faire/",
+          "decision": "excluded-guidance",
+          "reason": "General resident guidance; it does not identify a dated road or pedestrian restriction."
+        },
+        {
+          "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/construction-dun-complexe-multisport/",
+          "decision": "excluded-project",
+          "reason": "The multisport complex is published at 545 boulevard de Mortagne, with work from October 2024 for 24 months, but the page publishes no road closure, pedestrian closure, or detour."
+        },
+        {
+          "url": "https://www.boucherville.ca/travaux-infrastructures/chantiers-projets/travaux-prevus/",
+          "decision": "reviewed-project-index",
+          "reason": "The 2026 list gives work periods but no traffic impacts or restriction geometries; some entries are approximate or date-bounded only at month level. Details are published on the work-notice page 7–10 days before each work.",
+          "projects": [
+            {
+              "title": "Resurfaçage du Chemin d’Anjou",
+              "publishedPeriod": "27 avril au 2 juin 2026",
+              "decision": "excluded-expired",
+              "reason": "Le chantier est terminé avant la vérification."
+            },
+            {
+              "title": "Réaménagement de la rue de Normandie et du stationnement du parc de Normandie",
+              "publishedPeriod": "11 mai au 18 septembre 2026",
+              "decision": "excluded-expired",
+              "reason": "Le chantier est terminé avant la vérification."
+            },
+            {
+              "title": "Réfection des rues De Noyon, Père-Le Jeune et Jean-Plouf",
+              "publishedPeriod": "19 mai à la fin octobre 2026",
+              "decision": "review",
+              "reason": "La fin est approximative et la page ne publie pas l’impact routier ni une géométrie de restriction."
+            },
+            {
+              "title": "Ajout d’un sentier asphalté sur le chemin Du Tremblay (phase 1)",
+              "publishedPeriod": "25 mai à la fin juin 2026",
+              "decision": "excluded-expired",
+              "reason": "Le chantier est terminé avant la vérification."
+            },
+            {
+              "title": "Resurfaçage de diverses rues et du parc des Ateliers — secteur Le Laboureur",
+              "publishedPeriod": "6 jours entre le 31 août et le 30 octobre 2026",
+              "decision": "review",
+              "reason": "Les jours exacts et les impacts automobiles ne sont pas publiés."
+            },
+            {
+              "title": "Resurfaçage de diverses rues — secteur Claude-Dauzat",
+              "publishedPeriod": "6 jours en octobre 2026",
+              "decision": "review",
+              "reason": "Les jours exacts et les impacts automobiles ne sont pas publiés."
+            },
+            {
+              "title": "Resurfaçage de la rue des Vétérans",
+              "publishedPeriod": "4 jours en octobre 2026",
+              "decision": "review",
+              "reason": "Les jours exacts et les impacts automobiles ne sont pas publiés."
+            },
+            {
+              "title": "Resurfaçage de la rue Jacques-Viau",
+              "publishedPeriod": "4 jours d’ici le 28 août 2026",
+              "decision": "excluded-expired",
+              "reason": "La période publiée est passée."
+            },
+            {
+              "title": "Resurfaçage du boulevard du Fort-Saint-Louis",
+              "publishedPeriod": "6 nuits d’ici le 28 août 2026",
+              "decision": "excluded-expired",
+              "reason": "La période publiée est passée."
+            },
+            {
+              "title": "Ajout d’un sentier asphalté sur le chemin Du Tremblay (phase 2)",
+              "publishedPeriod": "Automne 2026",
+              "decision": "review",
+              "reason": "La période n’est publiée qu’à la saison et aucun impact routier n’est donné."
+            },
+            {
+              "title": "Piste cyclable du boulevard Fort-Saint-Louis",
+              "publishedPeriod": "Début des travaux : octobre 2026",
+              "decision": "review",
+              "reason": "Le plan ne donne ni fin ni impact. Ses limites (« stationnement des taxis ») ne concordent pas exactement avec le segment Cicot Sud du repère 69054; les sources ne sont pas fusionnées."
+            },
+            {
+              "title": "Terrain de baseball synthétique au parc Pierre-Laporte",
+              "publishedPeriod": "Fin des travaux : juillet 2026",
+              "decision": "excluded-expired",
+              "reason": "Le chantier est terminé avant la vérification."
+            },
+            {
+              "title": "Finition des travaux au parc des Ateliers",
+              "publishedPeriod": "Fin mai à fin juin 2026",
+              "decision": "excluded-expired",
+              "reason": "Le chantier est terminé avant la vérification."
+            },
+            {
+              "title": "Installation de bornes électriques pour vélos au Club d’aviron",
+              "publishedPeriod": "Été 2026",
+              "decision": "review",
+              "reason": "La période est saisonnière et aucun impact routier n’est publié."
+            },
+            {
+              "title": "Construction d’un complexe multisport",
+              "publishedPeriod": "Octobre 2024 à octobre 2026",
+              "decision": "review",
+              "reason": "La page projet confirme la durée, mais ne publie aucune entrave routière ou piétonne."
+            },
+            {
+              "title": "Mise en place d’une vanne modulante au bassin Vincent-D’Indy",
+              "publishedPeriod": "1er au 19 juin 2026",
+              "decision": "excluded-expired",
+              "reason": "Le chantier est terminé avant la vérification."
+            },
+            {
+              "title": "Réfection des postes de pompage Jean-Maneau, De Verrazano et Général-Vanier",
+              "publishedPeriod": "Début des travaux : automne 2026",
+              "decision": "review",
+              "reason": "Le plan ne donne pas de dates précises ni d’impact; ne pas fusionner avec le repère 68351 sur Jean-Maneau/Pierre-Piché."
+            },
+            {
+              "title": "Reprofilage des fossés du secteur Nobel",
+              "publishedPeriod": "Début des travaux : automne 2026",
+              "decision": "review",
+              "reason": "La période n’est publiée qu’à la saison et aucun impact routier n’est donné."
+            },
+            {
+              "title": "Amélioration du drainage de la rue Joseph-Huet",
+              "publishedPeriod": "Début des travaux : automne 2026",
+              "decision": "cross-check",
+              "reason": "Même intitulé que le repère 69062; le plan ne donne pas de limites ou d’impact additionnels. Conserver les dates et le texte détaillés publiés sur la carte."
+            }
+          ]
+        }
+      ],
+      "fingerprint": "5bda284167469ddc3173ba34328327c8886f62b717ba90d3ac8ca21dbb38da0b"
+    }
+  },
+  "sourceReview": {
+    "method": "Chromium same-origin FacetWP map payload plus complete paginated WordPress REST category inventory.",
+    "counts": {
+      "restRecordsReceived": 18,
+      "mapMarkersReceived": 17,
+      "retainedAutomobileImpacts": 4,
+      "retainedPedestrianImpacts": 1,
+      "reviewCandidates": 6,
+      "excludedMarkers": 8,
+      "markerlessRecords": 1
+    },
+    "inventory": [
+      {
+        "id": 69143,
+        "title": "Réfection de la chaussée en béton sur le chemin du Tremblay | 15 octobre et 16 octobre 2026",
+        "modified": "2026-10-08T10:27:26",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/refection-de-la-chaussee-en-beton-sur-le-chemin-du-tremblay-15-octobre-et-16-octobre-2026/",
+        "publishedPeriod": {
+          "startDate": "2026-10-15",
+          "endDate": "2026-10-16"
+        },
+        "decision": "excluded",
+        "reason": "The published period, including its published end time when available, is over at extraction.",
+        "sourceText": "Horaire : 7 h à 17 h Une des voies de droite en direction Est sera fermée à la circulation à proximité de la rue Graham-Bell En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+      },
+      {
+        "id": 69142,
+        "title": "Fermeture d'eau en cours | 8 octobre | boulevard du Fort-Saint-Louis",
+        "modified": "2026-10-08T10:10:45",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/fermeture-deau-en-cours-8-octobre-boulevard-du-fort-saint-louis/",
+        "publishedPeriod": null,
+        "decision": "review",
+        "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+        "sourceText": "Fermeture d’eau est en cours pour les adresses suivantes : 500 Boulevard du Fort-Saint-Louis Garderie les Flamboyants 510 boulevard du Fort-Saint-Louis SAQ 520 Boulevard du Fort-Saint-Louis place Pierre-Boucher ( exception Maxi) Durée minimale de la fermeture : 4 h Cette fermeture est requise pour effectuer des travaux de réparation sur le réseau d’aqueduc du secteur"
+      },
+      {
+        "id": 69112,
+        "title": "Construction d'un nouveau branchement | 6 octobre au 9 octobre 2026 | 674, rue de Normandie",
+        "modified": "2026-10-05T14:16:54",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/construction-dun-nouveau-branchement-6-octobre-au-9-octobre-2026-674-rue-de-normandie/",
+        "publishedPeriod": {
+          "startDate": "2026-10-06",
+          "endDate": "2026-10-09"
+        },
+        "decision": "excluded",
+        "reason": "The published period, including its published end time when available, is over at extraction.",
+        "sourceText": "Horaire : 7 h à 18 h du lundi au vendredi La rue de Normandie sera barrée entre les rues du Boisé et des Bois-Francs. Seulement la circulation locale sera permise.Le détour se fera par la rue des Bois-Francs."
+      },
+      {
+        "id": 69106,
+        "title": "Correction d'un ponceau | 1341, rue de Montbrun | 6 octobre au 8 octobre 2026",
+        "modified": "2026-10-02T11:29:50",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/correction-dun-ponceau-1341-rue-de-montbrun-6-octobre-au-8-octobre-2026/",
+        "publishedPeriod": {
+          "startDate": "2026-10-06",
+          "endDate": "2026-10-08"
+        },
+        "decision": "excluded",
+        "reason": "The published period, including its published end time when available, is over at extraction.",
+        "sourceText": "Horaire : 7h à 18h du lundi au vendredi Circulation en alternance avec un signaleur routier de 7 h 00 à 18 h 00 sur la rue De Montbrun à la hauteur du 1341, rue De Montbrun. Aménagement d’une piste cyclable temporaire. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+      },
+      {
+        "id": 69062,
+        "title": "Amélioration du drainage de la Joseph-Huet | 29 septembre au 30 octobre 2026",
+        "modified": "2026-10-01T11:52:04",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/amelioration-du-drainage-de-la-joseph-huet-29-septembre-au-30-octobre-2026/",
+        "publishedPeriod": {
+          "startDate": "2026-09-29",
+          "endDate": "2026-10-30"
+        },
+        "decision": "retained",
+        "reason": "Published automobile impact and active/future dates; official point retained without inventing a line.",
+        "sourceText": "Horaire : 7 h à 18 h du lundi au vendredi Entrave à la circulation : Totale sur une section de la rue Joseph-Huet autour du parc et détour occasionnel et entrave partielle sur les rues Pierre-Larrivé et Jean-Désy En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+      },
+      {
+        "id": 69054,
+        "title": "Réfection de la piste cyclable sur le boul. du Fort-Saint-Louis | Phase II | 1er octobre au 18 octobre 2026",
+        "modified": "2026-10-14T14:24:53",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/refection-de-la-piste-cyclable-sur-le-boul-du-fort-saint-louis-phase-ii-1er-octobre-au-14-octobre-2026/",
+        "publishedPeriod": {
+          "startDate": "2026-10-01",
+          "endDate": "2026-10-18"
+        },
+        "decision": "retained",
+        "reason": "Published automobile impact and active/future dates; official point retained without inventing a line.",
+        "sourceText": "Horaire : 7 h à 18 h du lundi au vendredi Travaux sur le boulevard du Fort-Saint-Louis, entre le boul. De Montarville et la rue Cicot sud : • Fermeture de la piste multifonctionnelle. Fermeture d’une voie de circulation pour l’aménagement d’une piste multifonctionnelle temporaire. • Maintien d’au minimum une voie de circulation par direction. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+      },
+      {
+        "id": 69018,
+        "title": "Travaux d'aqueduc sur le boulevard Jean-Paul Vincent",
+        "modified": "2026-10-01T09:38:56",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/travaux-daqueduc-sur-le-boulevard-jean-paul-vincent/",
+        "publishedPeriod": null,
+        "decision": "excluded",
+        "reason": "The notice assigns responsibility to Ville de Longueuil, not Ville de Boucherville.",
+        "sourceText": "La Ville de Longueuil procède à des travaux prioritaires de remplacement d’une chambre de vannes, une infrastructure cruciale liée au contrôle de l’alimentation en eau potable. Celle-ci est située sur le boulevard Jean-Paul-Vincent, à Longueuil, et dessert tout le territoire de la Ville de Boucherville ainsi qu’une partie adjacente du Vieux-Longueuil. Catégorie d’entrave Voie de circulation et trottoirs Nature de l’entrave • Repavage • Travaux souterrains d’aqueduc et/ou d’égout et/ou gaziers Début prévue de l’entrave Septembre Fin prévue de l’entrave Novembre Détails supplémentaires Le boulevard Jean-Paul-Vincent sera fermé à la circulation dans les deux sens, entre le boulevard Fernand-Lafontaine et la rue du Caribou. La circulation locale sera permise sur le boulevard Jean-Paul-Vincent, uniquement pour les automobilistes souhaitant se rendre à une résidence située sur le tronçon des travaux. Clientèle du transport collectif : voir le site du RTL pour les détours et arrêts non desservis : Travaux sur le boulevard Jean-Paul-Vincent – RTL Responsable des travaux Ville de Longueuil Consultez l’avis de travaux de la Ville de Longueuil"
+      },
+      {
+        "id": 68978,
+        "title": "Parc de la Futaie",
+        "modified": "2026-09-29T14:49:42",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/parc-de-la-futaie-3/",
+        "publishedPeriod": {
+          "startDate": "2026-09-28",
+          "endDate": "2026-11-20"
+        },
+        "decision": "review",
+        "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+        "sourceText": "Travaux de plantation d’arbres et de contrôle du nerprun envahissant. Horaire: 28 septembre au 20 novembre 2026 Entrepreneur : Nature-Action Québec"
+      },
+      {
+        "id": 68965,
+        "title": "Parc du Boisé-du-Pays-Brûlé",
+        "modified": "2026-09-29T14:42:59",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/parc-du-boise-du-pays-brule-2/",
+        "publishedPeriod": {
+          "startDate": "2026-09-28",
+          "endDate": "2026-11-20"
+        },
+        "decision": "review",
+        "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+        "sourceText": "Travaux de plantation d’arbres et de contrôle du nerprun envahissant Horaire : 28 septembre au 20 novembre 2026 Entrepreneur : Nature-Action Québec Entraves : Présence d’un conteneur temporaire et circulation liée au chantier sur les rues Paul-Doyon (secteur adjacent au parc), Pierre-Mercure et Jean-Vallerand."
+      },
+      {
+        "id": 68470,
+        "title": "Aménagement du parc des Ateliers | Phase II | 8 septembre au 9 octobre 2026",
+        "modified": "2026-09-08T09:10:52",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/amenagement-du-parc-des-ateliers-phase-ii-8-septembre-au-9-octobre-2026/",
+        "publishedPeriod": {
+          "startDate": "2026-09-08",
+          "endDate": "2026-10-09"
+        },
+        "decision": "excluded",
+        "reason": "The published period, including its published end time when available, is over at extraction.",
+        "sourceText": "Horaire : Lundi au vendredi de 7 h à 18 h En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+      },
+      {
+        "id": 68469,
+        "title": "Parcours cycliste au parc Sabrevois | 8 septembre au 9 octobre 2026",
+        "modified": "2026-09-28T15:58:51",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/parcours-cycliste-au-parc-sabrevois-8-septembre-au-9-octobre-2026/",
+        "publishedPeriod": {
+          "startDate": "2026-09-08",
+          "endDate": "2026-10-09"
+        },
+        "decision": "excluded",
+        "reason": "The published period, including its published end time when available, is over at extraction.",
+        "sourceText": "Ce parcours permettra aux plus jeunes d’apprendre à faire du vélo en leur proposant des circuits qui reproduisent des situations similaires à celles qu’ils pourront rencontrer sur la route, dans un environnement encadré et sécuritaire. Horaire : Lundi au vendredi de 7 h à 18 h. Entrave partielle à la circulation. Possibilité d’occupation d’une voie de la rue Jacques-Cartier. Les travaux comprennent notamment l’ajout de puisards, la réfection de la structure de chaussée, l’installation de bancs et d’un support à vélos, ainsi que la mise en place de la signalisation et du marquage au sol. Le chantier est balisé et les zones de travaux sont interdites d’accès. Un signaleur routier est présent en continu en présence d’activité sur le chantier afin d’assurer la sécurité lors des entrées et des sorties de véhicules et de machinerie. Échéancier des travaux : Jusqu’au 7 octobre : présence de machinerie lourde et travaux de pavage; Jusqu’au 16 octobre (sera révisé au besoin) : travaux de marquage au sol et installation du mobilier urbain."
+      },
+      {
+        "id": 68436,
+        "title": "Ajout d’un sentier multifonctionnel sur le ch. Du Tremblay (Phase II) | 9 septembre au 2 octobre 2026",
+        "modified": "2026-09-03T16:02:54",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/ajout-dun-sentier-multifonctionnel-sur-le-ch-du-tremblay-phase-ii-9-septembre-au-2-octobre-2026/",
+        "publishedPeriod": {
+          "startDate": "2026-09-09",
+          "endDate": "2026-10-02"
+        },
+        "decision": "excluded",
+        "reason": "The published period, including its published end time when available, is over at extraction.",
+        "sourceText": "Horaire : 9 septembre au 15 septembre : Fermeture de la voie Nobel sud de la rue Newton au ch. Du Tremblay Détour par la rue Newton Horaire : 20 h à 5 h ou la fin de semaine 9 septembre au 2 octobre : Voie retirée au ch. Du Tremblay sud"
+      },
+      {
+        "id": 68353,
+        "title": "Réfection de postes de pompages | Rues de Verrazano & Général-Vanier et mise-à-jour de divers postes de pompages",
+        "modified": "2026-09-01T11:31:54",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/refection-de-postes-de-pompages-rues-de-verrazano-general-vanier-et-mise-a-jour-de-divers-postes-de-pompages/",
+        "publishedPeriod": {
+          "startDate": "2026-08-31",
+          "endDate": "2026-11-26"
+        },
+        "decision": "review",
+        "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+        "sourceText": "Horaire : 31 août au 26 novembre 2026 Réfection des postes de pompage de la rue Verrazano & Général-Vanier et mise-à-jour de la télémétrie de divers postes de pompage. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+      },
+      {
+        "id": 68351,
+        "title": "Postes de pompages | Jean-Maneau et divers postes de pompages | Fermeture complète intersection rues Jean-Maneau & Pierre-Piché | Plusieurs détours",
+        "modified": "2026-09-01T10:52:14",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/postes-de-pompages-jean-maneau-et-divers-postes-de-pompages-fermeture-complete-intersection-rues-jean-maneau-pierre-piche-plusieurs-detours/",
+        "publishedPeriod": {
+          "startDate": "2026-08-31",
+          "endDate": "2026-10-19"
+        },
+        "decision": "retained",
+        "reason": "Published automobile impact and active/future dates; official point retained without inventing a line.",
+        "sourceText": "Horaire : 31 août au 19 octobre 2026. Du lundi au vendredi de 7:00 à 16:00 Réfection des postes de pompages rue Jean-Maneau et mise-à jour de la télémétrie de divers postes de pompages. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+      },
+      {
+        "id": 65246,
+        "title": "Réfection des rues du secteur De Noyon | Du 19 mai à fin octobre",
+        "modified": "2026-05-11T10:43:19",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/refection-des-rues-du-secteur-de-noyon-du-19-mai-a-fin-octobre/",
+        "publishedPeriod": null,
+        "decision": "review",
+        "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+        "sourceText": "Rues visées : De Noyon Du Père-Le Jeune, entre De Noyon et Jean-Maneau Jean-Plouf, entre De Noyon et Pierre-Piché Horaire de travail : Lundi au vendredi de 7 h à 18 h"
+      },
+      {
+        "id": 64952,
+        "title": "Remplacement du système d’éclairage sur la route 132 | Du 4 mai à la fin septembre",
+        "modified": "2026-09-11T15:50:34",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/remplacement-du-systeme-declairage-sur-la-route-132-du-4-mai-a-la-fin-aout/",
+        "publishedPeriod": null,
+        "decision": "review",
+        "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+        "sourceText": "Le ministère des Transports et de la Mobilité durable informe la population que le système d’éclairage de la route 132 sera remplacé entre le boulevard Marie-Victorin et le boulevard de Montarville, à Boucherville. Entraves à la circulation : • Fermeture d’une voie de la route 132, dans l’une ou l’autre des directions, entre le boulevard de Montarville et le boulevard Marie-Victorin. • Fermeture par défaut des bretelles d’accès à ce tronçon. Les chemins de détour seront balisés par une signalisation temporaire. Des épisodes de congestion sont à prévoir. Ainsi, il est recommandé, avant de prendre la route, de consulter Québec 511, un outil pratique pour planifier adéquatement ses déplacements, et de télécharger l’application mobile Québec 511."
+      },
+      {
+        "id": 48811,
+        "title": "Construction d’un complexe multisport | Octobre 2024 à octobre 2026",
+        "modified": "2026-04-28T13:36:11",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/construction-dun-complexe-multisport-24-mois-a-partir-doctobre-2024/",
+        "publishedPeriod": null,
+        "decision": "excluded",
+        "reason": "The published notice explicitly states there is no traffic obstruction.",
+        "sourceText": "Entrepreneur : Geyser Aucune entrave à la circulation Pour toutes questions : Direction du génie, 450 449-8610, genie@boucherville.ca"
+      },
+      {
+        "id": 69057,
+        "title": "Resurfaçage de diverses rues et du parc des Ateliers | 1er octobre au 15 octobre 2026 | Travaux de 2e couche d’asphalte dans le secteur Le Laboureur",
+        "modified": "2026-10-09T09:12:34",
+        "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+        "detailUrl": "https://www.boucherville.ca/point-of-interest/resurfacage-de-diverses-rues-et-du-parc-des-ateliers-1er-octobre-au-6-octobre-2026/",
+        "publishedPeriod": {
+          "startDate": "2026-10-01",
+          "endDate": "2026-10-15"
+        },
+        "decision": "excluded",
+        "reason": "The official map publishes no point and the published end date is before extraction."
+      }
+    ]
+  },
+  "records": [
+    {
+      "id": "boucherville-69062-joseph-huet",
+      "sourceId": "69062",
+      "sourceTitle": "Amélioration du drainage de la Joseph-Huet | 29 septembre au 30 octobre 2026",
+      "title": "Amélioration du drainage de la Joseph-Huet | 29 septembre au 30 octobre 2026",
+      "startDate": "2026-09-29",
+      "endDate": "2026-10-30",
+      "streets": "Rue Joseph-Huet, section autour du parc.",
+      "impact": "Entrave totale sur une section de la rue Joseph-Huet autour du parc; détour occasionnel.",
+      "trafficLabels": [
+        "Entrave totale"
+      ],
+      "trafficLabel": "Fermeture complète",
+      "severity": "critical",
+      "geometryNote": "Point officiel de l'avis; il ne délimite pas la section fermée.",
+      "periods": [
+        "day"
+      ],
+      "schedule": [
+        {
+          "day": "Mon",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Tue",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Wed",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Thu",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Fri",
+          "start": "07:00",
+          "end": "18:00"
+        }
+      ],
+      "direction": "Direction non publiée.",
+      "responsible": "Ville de Boucherville",
+      "borough": "Boucherville",
+      "reference": "69062",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.4355433,
+          45.5876255
+        ]
+      },
+      "point": [
+        -73.4355433,
+        45.5876255
+      ],
+      "sourceDescription": "Horaire : 7 h à 18 h du lundi au vendredi Entrave à la circulation : Totale sur une section de la rue Joseph-Huet autour du parc et détour occasionnel et entrave partielle sur les rues Pierre-Larrivé et Jean-Désy En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure.",
+      "sourceModified": "2026-10-01T11:52:04",
+      "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+      "detailUrl": "https://www.boucherville.ca/point-of-interest/amelioration-du-drainage-de-la-joseph-huet-29-septembre-au-30-octobre-2026/",
+      "sourceMapUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+      "sourceCheckedAt": "2026-10-17T16:15:25.072Z"
+    },
+    {
+      "id": "boucherville-69062-pierre-larrive-jean-desy",
+      "sourceId": "69062",
+      "sourceTitle": "Amélioration du drainage de la Joseph-Huet | 29 septembre au 30 octobre 2026",
+      "title": "Amélioration du drainage de la Joseph-Huet | 29 septembre au 30 octobre 2026",
+      "startDate": "2026-09-29",
+      "endDate": "2026-10-30",
+      "streets": "Rues Pierre-Larrivé et Jean-Désy.",
+      "impact": "Entrave partielle sur les rues Pierre-Larrivé et Jean-Désy.",
+      "trafficLabels": [
+        "Entrave partielle"
+      ],
+      "trafficLabel": "Accès limité",
+      "severity": "moderate",
+      "geometryNote": "Point officiel du projet; il ne localise pas précisément les entraves partielles sur ces deux rues.",
+      "periods": [
+        "day"
+      ],
+      "schedule": [
+        {
+          "day": "Mon",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Tue",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Wed",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Thu",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Fri",
+          "start": "07:00",
+          "end": "18:00"
+        }
+      ],
+      "direction": "Direction non publiée.",
+      "responsible": "Ville de Boucherville",
+      "borough": "Boucherville",
+      "reference": "69062",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.4355433,
+          45.5876255
+        ]
+      },
+      "point": [
+        -73.4355433,
+        45.5876255
+      ],
+      "sourceDescription": "Horaire : 7 h à 18 h du lundi au vendredi Entrave à la circulation : Totale sur une section de la rue Joseph-Huet autour du parc et détour occasionnel et entrave partielle sur les rues Pierre-Larrivé et Jean-Désy En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure.",
+      "sourceModified": "2026-10-01T11:52:04",
+      "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+      "detailUrl": "https://www.boucherville.ca/point-of-interest/amelioration-du-drainage-de-la-joseph-huet-29-septembre-au-30-octobre-2026/",
+      "sourceMapUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+      "sourceCheckedAt": "2026-10-17T16:15:25.072Z"
+    },
+    {
+      "id": "boucherville-69054-fort-saint-louis",
+      "sourceId": "69054",
+      "sourceTitle": "Réfection de la piste cyclable sur le boul. du Fort-Saint-Louis | Phase II | 1er octobre au 18 octobre 2026",
+      "title": "Réfection de la piste cyclable sur le boul. du Fort-Saint-Louis | Phase II | 1er octobre au 18 octobre 2026",
+      "startDate": "2026-10-01",
+      "endDate": "2026-10-18",
+      "streets": "Boulevard du Fort-Saint-Louis, entre le boulevard De Montarville et la rue Cicot Sud.",
+      "impact": "Fermeture d’une voie de circulation pour l’aménagement d’une piste multifonctionnelle temporaire. Maintien d’au minimum une voie de circulation par direction.",
+      "trafficLabels": [
+        "Fermeture d’une voie de circulation",
+        "Maintien d’au minimum une voie par direction"
+      ],
+      "trafficLabel": "Voie touchée",
+      "severity": "major",
+      "geometryNote": "Point officiel du projet; il ne délimite pas la voie automobile ni la piste multifonctionnelle.",
+      "periods": [
+        "day"
+      ],
+      "schedule": [
+        {
+          "day": "Mon",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Tue",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Wed",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Thu",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Fri",
+          "start": "07:00",
+          "end": "18:00"
+        }
+      ],
+      "direction": "Direction non publiée.",
+      "responsible": "Ville de Boucherville",
+      "borough": "Boucherville",
+      "reference": "69054",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.4547265979004,
+          45.59844281009772
+        ]
+      },
+      "point": [
+        -73.4547265979004,
+        45.59844281009772
+      ],
+      "sourceDescription": "Horaire : 7 h à 18 h du lundi au vendredi Travaux sur le boulevard du Fort-Saint-Louis, entre le boul. De Montarville et la rue Cicot sud : • Fermeture de la piste multifonctionnelle. Fermeture d’une voie de circulation pour l’aménagement d’une piste multifonctionnelle temporaire. • Maintien d’au minimum une voie de circulation par direction. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure.",
+      "sourceModified": "2026-10-14T14:24:53",
+      "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+      "detailUrl": "https://www.boucherville.ca/point-of-interest/refection-de-la-piste-cyclable-sur-le-boul-du-fort-saint-louis-phase-ii-1er-octobre-au-14-octobre-2026/",
+      "sourceMapUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+      "sourceCheckedAt": "2026-10-17T16:15:25.072Z"
+    },
+    {
+      "id": "boucherville-68351-jean-maneau-pierre-piche",
+      "sourceId": "68351",
+      "sourceTitle": "Postes de pompages | Jean-Maneau et divers postes de pompages | Fermeture complète intersection rues Jean-Maneau & Pierre-Piché | Plusieurs détours",
+      "title": "Postes de pompages | Jean-Maneau et divers postes de pompages | Fermeture complète intersection rues Jean-Maneau & Pierre-Piché | Plusieurs détours",
+      "startDate": "2026-08-31",
+      "endDate": "2026-10-19",
+      "streets": "Intersection des rues Jean-Maneau et Pierre-Piché.",
+      "impact": "Fermeture complète de l’intersection des rues Jean-Maneau et Pierre-Piché.",
+      "trafficLabels": [
+        "Fermeture complète"
+      ],
+      "trafficLabel": "Fermeture complète",
+      "severity": "critical",
+      "geometryNote": "Point officiel de l'avis; il ne délimite pas l'intersection ni les détours annoncés.",
+      "periods": [
+        "day"
+      ],
+      "schedule": [
+        {
+          "day": "Mon",
+          "start": "07:00",
+          "end": "16:00"
+        },
+        {
+          "day": "Tue",
+          "start": "07:00",
+          "end": "16:00"
+        },
+        {
+          "day": "Wed",
+          "start": "07:00",
+          "end": "16:00"
+        },
+        {
+          "day": "Thu",
+          "start": "07:00",
+          "end": "16:00"
+        },
+        {
+          "day": "Fri",
+          "start": "07:00",
+          "end": "16:00"
+        }
+      ],
+      "direction": "Direction non publiée.",
+      "responsible": "Ville de Boucherville",
+      "borough": "Boucherville",
+      "reference": "68351",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.44510884973757,
+          45.61900604775399
+        ]
+      },
+      "point": [
+        -73.44510884973757,
+        45.61900604775399
+      ],
+      "sourceDescription": "Horaire : 31 août au 19 octobre 2026. Du lundi au vendredi de 7:00 à 16:00 Réfection des postes de pompages rue Jean-Maneau et mise-à jour de la télémétrie de divers postes de pompages. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure.",
+      "sourceModified": "2026-09-01T10:52:14",
+      "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+      "detailUrl": "https://www.boucherville.ca/point-of-interest/postes-de-pompages-jean-maneau-et-divers-postes-de-pompages-fermeture-complete-intersection-rues-jean-maneau-pierre-piche-plusieurs-detours/",
+      "sourceMapUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+      "sourceCheckedAt": "2026-10-17T16:15:25.072Z"
+    }
+  ],
+  "pedestrianRecords": [
+    {
+      "id": "boucherville-69054-shared-path",
+      "sourceId": "69054",
+      "title": "Réfection de la piste cyclable sur le boul. du Fort-Saint-Louis | Phase II | 1er octobre au 18 octobre 2026",
+      "streets": "Boulevard du Fort-Saint-Louis, entre le boulevard De Montarville et la rue Cicot Sud.",
+      "startDate": "2026-10-01",
+      "endDate": "2026-10-18",
+      "periods": [
+        "day"
+      ],
+      "schedule": [
+        {
+          "day": "Mon",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Tue",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Wed",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Thu",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Fri",
+          "start": "07:00",
+          "end": "18:00"
+        }
+      ],
+      "scheduleText": null,
+      "pedestrianArea": "path",
+      "affectedUsers": [
+        "pedestrians",
+        "cyclists"
+      ],
+      "severity": "critical",
+      "impact": "Fermeture de la piste multifonctionnelle.",
+      "evidence": {
+        "kind": "published-text",
+        "text": "Fermeture de la piste multifonctionnelle."
+      },
+      "side": {
+        "code": "not-applicable",
+        "published": null,
+        "geometryStatus": "published"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.4547265979004,
+          45.59844281009772
+        ]
+      },
+      "point": [
+        -73.4547265979004,
+        45.59844281009772
+      ],
+      "geometryNote": "Point officiel du projet; aucun tracé précis de la piste n'est publié.",
+      "sourceDescription": "Horaire : 7 h à 18 h du lundi au vendredi Travaux sur le boulevard du Fort-Saint-Louis, entre le boul. De Montarville et la rue Cicot sud : • Fermeture de la piste multifonctionnelle. Fermeture d’une voie de circulation pour l’aménagement d’une piste multifonctionnelle temporaire. • Maintien d’au minimum une voie de circulation par direction. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure.",
+      "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+      "detailUrl": "https://www.boucherville.ca/point-of-interest/refection-de-la-piste-cyclable-sur-le-boul-du-fort-saint-louis-phase-ii-1er-octobre-au-14-octobre-2026/",
+      "sourceModified": "2026-10-14T14:24:53",
+      "sourceCheckedAt": "2026-10-17T16:15:25.072Z"
+    }
+  ]
+}

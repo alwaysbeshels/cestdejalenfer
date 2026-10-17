@@ -756,6 +756,15 @@ body[data-map-mode="pedestrian"] #mapFirstVisitHint {
 .impact-dot.major { background: #ff8c00; }
 .impact-dot.moderate { background: #ffe600; }
 .impact-dot.parking { background: #ff2bd6; }
+.impact-dot.worksite { background: #64748b; }
+
+.leaflet-marker-icon.closure-point-hit-target {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  opacity: 0;
+  pointer-events: auto;
+}
 
 .impact-count {
   margin-left: auto;
@@ -863,6 +872,11 @@ button:hover {
 
 .severity-chip.parking {
   background: #ff2bd6;
+}
+
+.severity-chip.worksite {
+  background: #64748b;
+  color: #fff;
 }
 
 .municipality-section {
@@ -1078,6 +1092,10 @@ body[data-map-mode="pedestrian"] .closure-card[data-severity="moderate"] .severi
 
 .closure-card[data-severity="parking"] .severity-badge {
   background: #ff2bd6;
+}
+
+.closure-card[data-severity="worksite"] .severity-badge {
+  background: #64748b;
 }
 
 .list-note {

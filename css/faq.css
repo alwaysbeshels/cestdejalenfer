@@ -22,7 +22,7 @@ body {
 }
 
 .faq-shell {
-  width: min(920px, calc(100% - 40px));
+  width: calc(100% - 32px);
   margin: 0 auto;
   padding: 54px 0 42px;
 }
@@ -225,6 +225,10 @@ h2 {
   gap: 8px;
 }
 
+#sources-utilisees {
+  min-width: 0;
+}
+
 details {
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -257,7 +261,7 @@ summary::after {
   line-height: 1;
 }
 
-details[open] summary::after {
+details[open] > summary::after {
   content: "−";
 }
 
@@ -266,6 +270,36 @@ details p {
   color: var(--muted);
   font-size: 0.96rem;
   line-height: 1.55;
+}
+
+.other-source-details {
+  margin: 0 16px 16px 28px;
+  border-color: rgba(15, 123, 102, 0.24);
+  border-left: 4px solid var(--accent);
+  background: rgba(15, 123, 102, 0.04);
+  box-shadow: none;
+}
+
+.other-source-details > summary {
+  min-height: 42px;
+  padding: 8px 40px 8px 12px;
+  color: var(--accent-dark);
+  font-size: 0.9rem;
+}
+
+.other-source-details > summary::after {
+  right: 12px;
+  font-size: 1.25rem;
+}
+
+.other-source-details > p {
+  padding: 0 12px 12px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.other-source-details .source-table-wrap {
+  margin: 0 12px 12px;
 }
 
 details .faq-answer {
@@ -281,6 +315,37 @@ details .faq-answer p {
 
 details .faq-answer p + p {
   margin-top: 10px;
+}
+
+.faq-municipality-coverage {
+  padding: 0 12px 10px;
+  color: var(--ink);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.faq-municipality-coverage strong {
+  font-weight: 900;
+}
+
+.faq-source-count {
+  padding: 0 12px 10px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.faq-source-count strong {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.faq-source-error {
+  padding: 0 12px 10px;
+  color: #9f1d1d;
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .impact-word {
@@ -332,6 +397,9 @@ details a {
 }
 
 .source-filter-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   min-height: 30px;
   padding: 4px 10px;
   border: 1px solid var(--line);
@@ -347,7 +415,19 @@ details a {
 
 .source-filter-button::after {
   content: "▾";
-  margin-left: 8px;
+}
+
+.source-filter-active-indicator {
+  display: none;
+  width: 12px;
+  height: 12px;
+  flex: 0 0 12px;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 0, 60% 44%, 60% 100%, 40% 100%, 40% 44%);
+}
+
+.source-filter-button.has-active-filter .source-filter-active-indicator {
+  display: inline-block;
 }
 
 .source-table th[data-source-filter] {
@@ -369,6 +449,14 @@ details a {
 
 .source-table th[data-source-filter="municipality"] {
   width: 145px;
+}
+
+.source-table th[data-source-filter="mrc"] {
+  width: 190px;
+}
+
+.source-table th[data-source-filter="sector"] {
+  width: 180px;
 }
 
 .source-filter-options {
@@ -425,19 +513,42 @@ details a {
   vertical-align: top;
 }
 
+.source-empty-row td {
+  height: 34px;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+}
+
+.source-empty-spacer td {
+  height: 24px;
+}
+
 .source-table th {
   color: var(--ink);
   font-size: 0.78rem;
   text-transform: uppercase;
 }
 
-.source-table th:nth-child(2),
-.source-table th:nth-child(4) {
+.source-table:not(.source-table-other) th:nth-child(5),
+.source-table:not(.source-table-other) th:nth-child(6) {
+  text-align: center;
+}
+
+.source-table-other th:nth-child(3) {
   text-align: center;
 }
 
 .source-col-municipality {
   width: 145px;
+}
+
+.source-col-mrc {
+  width: 190px;
+}
+
+.source-col-sector {
+  width: 180px;
 }
 
 .source-col-name {
@@ -457,23 +568,23 @@ details a {
   font-weight: 700;
 }
 
-.source-table td:nth-child(2) {
+.source-table:not(.source-table-other) td:nth-child(4) {
   color: var(--ink);
   font-weight: 700;
 }
 
-.source-table td:nth-child(3) {
-  width: 120px;
+.source-table:not(.source-table-other) td:nth-child(5),
+.source-table:not(.source-table-other) td:nth-child(6) {
   white-space: nowrap;
 }
 
-.source-table td:nth-child(4) {
-  width: 112px;
-  white-space: nowrap;
+.source-table-other td:first-child {
+  color: var(--ink);
 }
 
-.source-table td:nth-child(3),
-.source-table td:nth-child(4) {
+.source-table-other td:nth-child(2) {
+  color: var(--muted);
+  font-weight: 400;
   white-space: nowrap;
 }
 
@@ -516,7 +627,9 @@ details a {
 
 @media (max-width: 900px) {
   .source-col-municipality { width: 120px; }
-  .source-col-name { width: 260px; }
+  .source-col-mrc { width: 170px; }
+  .source-col-sector { width: 155px; }
+  .source-col-name { width: 300px; }
   .source-col-type { width: 140px; }
   .source-col-link { width: 120px; }
 }
@@ -560,7 +673,7 @@ details a {
 
 @media (max-width: 640px) {
   .faq-shell {
-    width: min(100% - 28px, 920px);
+    width: calc(100% - 24px);
     padding: 28px 0 26px;
   }
 

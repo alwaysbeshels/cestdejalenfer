@@ -1,5 +1,5 @@
 const sourceList = document.querySelector("#faqSourceList");
-const sourceTable = document.querySelector(".source-table");
+const otherSourceList = document.querySelector("#faqOtherSourceList");
 const backToTop = document.querySelector("#backToTop");
 const snapshotTooltip = document.createElement("div");
 
@@ -7,7 +7,12 @@ snapshotTooltip.className = "source-tooltip";
 snapshotTooltip.hidden = true;
 document.body.append(snapshotTooltip);
 
-let sourceFilterState = { municipality: null, dataType: null };
+let sourceFilterState = { municipality: null, mrc: null, sector: null, dataType: null };
+let cmmMunicipalityMetadata = null;
+let cmmMetadataLoadPromise = null;
+let pendingSourceFilter = null;
+
+const NOT_APPLICABLE = "__not-applicable__";
 
 function showSnapshotTooltip(event) {
   const tooltipText = event.currentTarget.dataset.snapshotTooltip;
@@ -55,10 +60,10 @@ function formatSnapshotUpdate(source) {
   }
 
   const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = date.toLocaleString(currentLanguage() === "en" ? "en-CA" : "fr-CA", {
-    month: "long",
+  const month = new Intl.DateTimeFormat("en-CA", {
+    month: "short",
     timeZone: "UTC",
-  }).slice(0, 4);
+  }).format(date).replace(/\.$/, "").toUpperCase();
   const year = date.getUTCFullYear();
   const formatted = `${day} ${month} ${year}`;
 
@@ -80,18 +85,114 @@ function sourceMunicipality(source) {
   return source.name.split(" - ")[0];
 }
 
+function normalizeMunicipalityKey(value) {
+  return String(value || "")
+    .replace(/^Ville de\s+/i, "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’‘]/g, "'")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+async function loadCmmMunicipalityMetadata() {
+  const response = await fetch(new URL("data/municipalites_cmm.csv?v=20261017-cmm-table-final2", LANGUAGE_ROOT_URL));
+  if (!response.ok) {
+    throw new Error(`CMM municipality roster returned HTTP ${response.status}`);
+  }
+  const [headerLine, ...lines] = (await response.text()).replace(/^\uFEFF/, "").trim().split(/\r?\n/);
+  const headers = headerLine.split(",");
+  const indexes = {
+    municipality: headers.indexOf("MUNICIPALITÉS"),
+    mrc: headers.indexOf("MRC"),
+    sector: headers.indexOf("SECTEUR")
+  };
+  if (Object.values(indexes).some((index) => index < 0)) {
+    throw new Error("CMM municipality roster is missing a required column");
+  }
+
+  const metadata = new Map();
+  for (const [lineIndex, line] of lines.entries()) {
+    const cells = line.split(",");
+    if (cells.length !== headers.length) {
+      throw new Error(`CMM municipality roster row ${lineIndex + 2} has an invalid column count`);
+    }
+    const name = cells[indexes.municipality].trim();
+    const mrc = cells[indexes.mrc].trim();
+    const sector = cells[indexes.sector].trim();
+    const key = normalizeMunicipalityKey(name);
+    if (!name || !mrc || !sector || metadata.has(key)) {
+      throw new Error(`CMM municipality roster row ${lineIndex + 2} has an invalid or duplicate municipality`);
+    }
+    metadata.set(key, {
+      sector,
+      mrc
+    });
+  }
+  const expectedCount = Number(window.CMM_MUNICIPALITY_TOTAL);
+  if (!Number.isSafeInteger(expectedCount) || metadata.size !== expectedCount) {
+    throw new Error(`CMM municipality roster count mismatch: expected ${expectedCount}, received ${metadata.size}`);
+  }
+  return metadata;
+}
+
+function sourceFilterOptionLabel(key, value) {
+  if (value === NOT_APPLICABLE) return t("faq.notApplicable");
+  if (key === "dataType") {
+    const labelKey = {
+      live: "faq.live",
+      snapshot: "faq.snapshot",
+      "snapshot-source": "faq.snapshotSource"
+    }[value] || "faq.live";
+    return t(labelKey);
+  }
+  if (key === "sector") {
+    return {
+      "Agglomeration de Montreal": "Agglomération de Montréal",
+      "Agglomeration de Longueuil": "Agglomération de Longueuil"
+    }[value] || value;
+  }
+  return value;
+}
+
 function sourceType(source) {
-  return source.dataType === "snapshot" ? "snapshot" : "live";
+  return source.dataType === "snapshot" || source.dataType === "snapshot-source"
+    ? source.dataType
+    : "live";
+}
+
+function sourceLinkUrl(source) {
+  const sourceUrl = source.faqUrl || (currentLanguage() === "en" && source.enUrl ? source.enUrl : source.url);
+  return new URL(sourceUrl, LANGUAGE_ROOT_URL).href;
 }
 
 function renderSourceFilter(key, values) {
+  const headerKey = {
+    municipality: "faq.municipalityHeader",
+    mrc: "faq.mrcHeader",
+    sector: "faq.sectorHeader",
+    dataType: "faq.typeHeader"
+  }[key];
+  if (!headerKey) {
+    throw new Error(`Unknown FAQ source filter: ${key}`);
+  }
   const wrapper = document.createElement("div");
   wrapper.className = "source-filter-menu";
   const button = document.createElement("button");
   button.type = "button";
   button.className = "source-filter-button";
-  button.textContent = t(key === "municipality" ? "faq.municipalityHeader" : "faq.typeHeader");
-  button.setAttribute("aria-label", t(key === "municipality" ? "faq.municipalityHeader" : "faq.typeHeader"));
+  button.textContent = t(headerKey);
+  const selectedValues = sourceFilterState[key];
+  const filterIsActive = selectedValues !== null && selectedValues.size > 0;
+  const activeFilterIndicator = document.createElement("span");
+  activeFilterIndicator.className = "source-filter-active-indicator";
+  activeFilterIndicator.setAttribute("aria-hidden", "true");
+  button.append(activeFilterIndicator);
+  button.classList.toggle("has-active-filter", filterIsActive);
+  button.setAttribute("aria-label", filterIsActive
+    ? `${t(headerKey)} — ${t("faq.filterApplied")}`
+    : t(headerKey));
   button.setAttribute("aria-expanded", "false");
   const menu = document.createElement("div");
   menu.className = "source-filter-options";
@@ -101,7 +202,11 @@ function renderSourceFilter(key, values) {
   const allInput = document.createElement("input");
   allInput.type = "checkbox";
   allInput.value = "__all__";
-  allInput.checked = sourceFilterState[key] === null || sourceFilterState[key].size === values.length;
+  const allSelected = selectedValues === null
+    || (selectedValues.size > 0 && values.every((value) => selectedValues.has(value)));
+  allInput.checked = allSelected;
+  allInput.indeterminate = selectedValues !== null && selectedValues.size > 0 && !allSelected
+    && values.some((value) => selectedValues.has(value));
   allLabel.className = "source-filter-all";
   allLabel.append(allInput, document.createTextNode(t("faq.all")));
   menu.append(allLabel);
@@ -111,22 +216,20 @@ function renderSourceFilter(key, values) {
     const input = document.createElement("input");
     input.type = "checkbox";
     input.value = value;
-    input.checked = sourceFilterState[key] === null || sourceFilterState[key].has(value);
+    input.checked = selectedValues === null || selectedValues.has(value);
     input.addEventListener("change", () => {
       const checked = optionInputs.filter((item) => item.checked).map((item) => item.value);
-      sourceFilterState[key] = new Set(checked);
-      allInput.checked = checked.length === values.length;
+      sourceFilterState[key] = values.length > 0 && checked.length === values.length
+        ? null
+        : new Set(checked);
       renderFaqSources(key);
     });
-    label.append(input, document.createTextNode(key === "dataType" ? t(value === "snapshot" ? "faq.snapshot" : "faq.live") : value));
+    label.append(input, document.createTextNode(sourceFilterOptionLabel(key, value)));
     menu.append(label);
     return input;
   });
 
   allInput.addEventListener("change", () => {
-    optionInputs.forEach((input) => {
-      input.checked = allInput.checked;
-    });
     sourceFilterState[key] = allInput.checked ? null : new Set();
     renderFaqSources(key);
   });
@@ -147,24 +250,125 @@ function renderSourceFilter(key, values) {
   return wrapper;
 }
 
-function renderSourceFilters(sources, openKey = null) {
-  const municipalityHeader = document.querySelector('[data-source-filter="municipality"]');
-  const typeHeader = document.querySelector('[data-source-filter="dataType"]');
-  if (!municipalityHeader || !typeHeader) return;
-  municipalityHeader.querySelector(".source-filter-menu")?.remove();
-  typeHeader.querySelector(".source-filter-menu")?.remove();
+function sourceFilterMatches(key, value) {
+  const selectedValues = sourceFilterState[key];
+  return selectedValues === null || selectedValues.size === 0 || selectedValues.has(value);
+}
 
-  const municipalityFilter = renderSourceFilter("municipality", [...new Set(sources.map(sourceMunicipality))].sort((a, b) => a.localeCompare(b, currentLanguage())));
-  const typeFilter = renderSourceFilter("dataType", ["live", "snapshot"]);
-  municipalityHeader.append(municipalityFilter);
-  typeHeader.append(typeFilter);
+function sourcePassesActiveFilters(source, skippedFilter, isOther = false) {
+  if (!isOther) {
+    if (skippedFilter !== "municipality" && !sourceFilterMatches("municipality", source.municipality)) return false;
+    if (skippedFilter !== "mrc" && !sourceFilterMatches("mrc", source.mrcFilterValue)) return false;
+    if (skippedFilter !== "sector" && !sourceFilterMatches("sector", source.sectorFilterValue)) return false;
+  }
+  return skippedFilter === "dataType" || sourceFilterMatches("dataType", sourceType(source));
+}
 
-  if (openKey) {
-    const openWrapper = openKey === "municipality" ? municipalityFilter : typeFilter;
+function availableFilterValues(key, generalSources, otherSources) {
+  const selected = sourceFilterState[key] === null ? [] : [...sourceFilterState[key]];
+  let available;
+  if (key === "dataType") {
+    available = [
+      ...generalSources.filter((source) => sourcePassesActiveFilters(source, key)).map(sourceType),
+      ...otherSources.filter((source) => sourcePassesActiveFilters(source, key, true)).map(sourceType)
+    ];
+  } else {
+    const value = {
+      municipality: (source) => source.municipality,
+      mrc: (source) => source.mrcFilterValue,
+      sector: (source) => source.sectorFilterValue
+    }[key];
+    available = generalSources
+      .filter((source) => sourcePassesActiveFilters(source, key))
+      .map(value);
+  }
+  return [...new Set([...available, ...selected])].sort((a, b) => a.localeCompare(b, currentLanguage()));
+}
+
+function renderSourceFilters(generalSources, otherSources, openKey = null) {
+  const filterValues = {
+    municipality: availableFilterValues("municipality", generalSources, otherSources),
+    mrc: availableFilterValues("mrc", generalSources, otherSources),
+    sector: availableFilterValues("sector", generalSources, otherSources),
+    dataType: availableFilterValues("dataType", generalSources, otherSources)
+  };
+  const filters = new Map();
+  for (const [key, values] of Object.entries(filterValues)) {
+    const header = document.querySelector(`[data-source-filter="${key}"]`);
+    if (!header) throw new Error(`FAQ source filter header is missing: ${key}`);
+    header.querySelector(".source-filter-menu")?.remove();
+    const filter = renderSourceFilter(key, values);
+    header.append(filter);
+    filters.set(key, filter);
+  }
+
+  if (openKey && filters.has(openKey)) {
+    const openWrapper = filters.get(openKey);
     const openMenu = openWrapper.querySelector(".source-filter-options");
     const openButton = openWrapper.querySelector(".source-filter-button");
     openMenu.hidden = false;
     openButton.setAttribute("aria-expanded", "true");
+  }
+}
+
+function appendSourceRow(source, list, includeMunicipality) {
+  const row = document.createElement("tr");
+  const nameCell = document.createElement("td");
+  const typeCell = document.createElement("td");
+  const linkCell = document.createElement("td");
+  const link = document.createElement("a");
+  const sourceUrl = sourceLinkUrl(source);
+  const snapshotUpdate = formatSnapshotUpdate(source);
+
+  if (includeMunicipality) {
+    const municipalityCell = document.createElement("td");
+    const mrcCell = document.createElement("td");
+    const sectorCell = document.createElement("td");
+    municipalityCell.textContent = source.municipality;
+    mrcCell.textContent = sourceFilterOptionLabel("mrc", source.mrcFilterValue);
+    sectorCell.textContent = sourceFilterOptionLabel("sector", source.sectorFilterValue);
+    row.append(municipalityCell, mrcCell, sectorCell);
+  }
+
+  nameCell.textContent = currentLanguage() === "en" && source.nameEn ? source.nameEn : source.name;
+  const dataType = sourceType(source);
+  typeCell.textContent = sourceFilterOptionLabel("dataType", dataType);
+  if (dataType === "snapshot" || (dataType === "snapshot-source" && snapshotUpdate)) {
+    const indicator = document.createElement("span");
+    indicator.className = "snapshot-indicator";
+    indicator.setAttribute("aria-hidden", "true");
+    indicator.textContent = "i";
+    typeCell.append(indicator);
+  }
+  link.href = sourceUrl;
+  link.target = "_blank";
+  link.rel = "noreferrer";
+  link.textContent = t("faq.sourceLink");
+
+  if (snapshotUpdate) {
+    attachSnapshotTooltip(typeCell, snapshotUpdate);
+  }
+
+  linkCell.append(link);
+  row.append(nameCell, typeCell, linkCell);
+  list.append(row);
+}
+
+function appendSourceTableMinimumRows(list, columnCount, sourceCount) {
+  const missingRows = Math.max(0, 5 - sourceCount);
+  for (let index = 0; index < missingRows; index++) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = columnCount;
+    if (sourceCount === 0 && index === 0) {
+      row.className = "source-empty-row";
+      cell.textContent = t("faq.noSourcesMatch");
+    } else {
+      row.className = "source-empty-spacer";
+      row.setAttribute("aria-hidden", "true");
+    }
+    row.append(cell);
+    list.append(row);
   }
 }
 
@@ -180,54 +384,86 @@ document.addEventListener("click", (event) => {
 });
 
 function renderFaqSources(openKey = null) {
-  if (!sourceList || !Array.isArray(window.SOURCE_CATALOG)) {
+  if (!sourceList || !otherSourceList || !Array.isArray(window.SOURCE_CATALOG)) {
+    return;
+  }
+  if (!cmmMunicipalityMetadata) {
+    pendingSourceFilter = openKey || pendingSourceFilter;
+    if (!cmmMetadataLoadPromise) {
+      cmmMetadataLoadPromise = loadCmmMunicipalityMetadata().then((metadata) => {
+        cmmMunicipalityMetadata = metadata;
+        const errorNotice = document.getElementById("faqSourceMetadataError");
+        if (errorNotice) errorNotice.hidden = true;
+        const pendingFilter = pendingSourceFilter;
+        pendingSourceFilter = null;
+        renderFaqSources(pendingFilter);
+      }).catch((error) => {
+        const errorNotice = document.getElementById("faqSourceMetadataError");
+        if (errorNotice) errorNotice.hidden = false;
+        console.error("FAQ CMM municipality metadata failed to load", error);
+      });
+    }
     return;
   }
 
-  const activeSources = window.SOURCE_CATALOG
-    .filter((source) => source.inMap === true)
-    .map((source) => ({ ...source, municipality: sourceMunicipality(source) }))
-    .filter((source) => (sourceFilterState.municipality === null || sourceFilterState.municipality.size === 0 || sourceFilterState.municipality.has(source.municipality))
-      && (sourceFilterState.dataType === null || sourceFilterState.dataType.size === 0 || sourceFilterState.dataType.has(sourceType(source))))
+  const municipalityCoverage = document.getElementById("faqMunicipalityCoverageCount");
+  const municipalityCoverageTotal = document.getElementById("faqMunicipalityCoverageTotal");
+  if (!municipalityCoverage || !municipalityCoverageTotal) {
+    throw new Error("FAQ municipality coverage markup is missing");
+  }
+  const total = Number(window.CMM_MUNICIPALITY_TOTAL);
+  if (!Number.isSafeInteger(total) || total <= 0) {
+    throw new Error("FAQ CMM municipality total is missing or invalid");
+  }
+  const mappedMunicipalities = new Set(window.SOURCE_CATALOG
+    .filter((source) => source.inMap === true && source.cmmMunicipality)
+    .map((source) => source.cmmMunicipality.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()));
+  const language = currentLanguage();
+  const municipalityUnit = language === "en"
+    ? (mappedMunicipalities.size === 1 ? "municipality" : "municipalities")
+    : (mappedMunicipalities.size === 1 ? "municipalité" : "municipalités");
+  municipalityCoverage.textContent = `${mappedMunicipalities.size} ${municipalityUnit}`;
+  municipalityCoverageTotal.textContent = String(total);
+
+  const faqSources = window.SOURCE_CATALOG.filter((source) => source.inMap === true || source.inFaq === true);
+  const sourceCount = document.getElementById("faqSourceUrlCount");
+  if (!sourceCount) {
+    throw new Error("FAQ source URL count markup is missing");
+  }
+  sourceCount.textContent = String(new Set(faqSources.map(sourceLinkUrl)).size);
+  const generalSources = faqSources
+    .filter((source) => source.faqGroup !== "other")
+    .map((source) => {
+      const municipality = sourceMunicipality(source);
+      const metadata = cmmMunicipalityMetadata.get(normalizeMunicipalityKey(municipality));
+      return {
+        ...source,
+        municipality,
+        mrcFilterValue: metadata ? metadata.mrc : NOT_APPLICABLE,
+        sectorFilterValue: metadata?.sector || NOT_APPLICABLE
+      };
+    });
+  const otherSources = faqSources.filter((source) => source.faqGroup === "other");
+  const matchesDataType = (source) => sourceFilterMatches("dataType", sourceType(source));
+  const visibleGeneralSources = generalSources
+    .filter((source) => sourceFilterMatches("municipality", source.municipality))
+    .filter((source) => sourceFilterMatches("mrc", source.mrcFilterValue))
+    .filter((source) => sourceFilterMatches("sector", source.sectorFilterValue))
+    .filter(matchesDataType)
     .sort((first, second) => first.municipality.localeCompare(second.municipality, currentLanguage(), { sensitivity: "base" })
       || first.name.localeCompare(second.name, currentLanguage(), { sensitivity: "base" }));
+  const visibleOtherSources = otherSources
+    .filter(matchesDataType)
+    .sort((first, second) => first.name.localeCompare(second.name, currentLanguage(), { sensitivity: "base" }));
 
-  renderSourceFilters(window.SOURCE_CATALOG.filter((source) => source.inMap === true).map((source) => ({ ...source, municipality: sourceMunicipality(source) })), openKey);
+  renderSourceFilters(generalSources, otherSources, openKey);
   sourceList.replaceChildren();
+  otherSourceList.replaceChildren();
 
-  activeSources
-    .forEach((source) => {
-    const row = document.createElement("tr");
-    const municipalityCell = document.createElement("td");
-    const nameCell = document.createElement("td");
-    const typeCell = document.createElement("td");
-    const linkCell = document.createElement("td");
-    const link = document.createElement("a");
-    const snapshotUpdate = formatSnapshotUpdate(source);
-
-    municipalityCell.textContent = source.municipality;
-    nameCell.textContent = currentLanguage() === "en" && source.nameEn ? source.nameEn : source.name;
-    typeCell.textContent = t(source.dataType === "snapshot" ? "faq.snapshot" : "faq.live");
-    if (source.dataType === "snapshot") {
-      const indicator = document.createElement("span");
-      indicator.className = "snapshot-indicator";
-      indicator.setAttribute("aria-hidden", "true");
-      indicator.textContent = "i";
-      typeCell.append(indicator);
-    }
-    link.href = currentLanguage() === "en" && source.enUrl ? source.enUrl : source.url;
-    link.target = "_blank";
-    link.rel = "noreferrer";
-    link.textContent = t("faq.sourceLink");
-
-    if (snapshotUpdate) {
-      attachSnapshotTooltip(typeCell, snapshotUpdate);
-    }
-
-    linkCell.append(link);
-    row.append(municipalityCell, nameCell, typeCell, linkCell);
-      sourceList.append(row);
-    });
+  visibleGeneralSources.forEach((source) => appendSourceRow(source, sourceList, true));
+  appendSourceTableMinimumRows(sourceList, 6, visibleGeneralSources.length);
+  visibleOtherSources.forEach((source) => appendSourceRow(source, otherSourceList, false));
+  appendSourceTableMinimumRows(otherSourceList, 3, visibleOtherSources.length);
 }
 
 function sortFaqLists() {

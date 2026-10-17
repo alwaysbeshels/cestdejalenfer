@@ -21,6 +21,12 @@ Cette commande ne rafraichit aucune source, ne lance aucun generateur et ne modi
 7. Pour les citoyens, analyse ensemble tous les `reportedFields` disponibles et le commentaire integral. Verifie dates declarees, reserves, horaires distincts, `geometryRef`, statut de revue et comptes. Controle la confidentialite sans reproduire de donnees personnelles dans le rapport. Une comparaison locale ne prouve pas la fidelite a des reponses distantes non consultees.
 8. Compare le catalogue et le code de chargement pour reperer les incoherences de `inMap`. Indique explicitement que la lecture du chargeur ne prouve pas son fonctionnement en navigateur; ne certifie pas l'integration reelle sans le test correspondant.
 
+## Revues municipales des avis et pieces liees
+
+- Pour les snapshots Boucherville, Brossard, Mercier, Sainte-Julie et Saint-Basile-le-Grand, controle les inventaires documentaires et les empreintes persistantes sous `validation` (`bouchervilleReview`, `brossardSupplementalReview`, `mercierReview`, `sainteJulieSupplementalReview`, `saintBasileReview`). Verifie les comptes, l'ordre, les URLs, les decisions, les empreintes texte/media, l'etat d'inspection et le point de reprise; un snapshot ancien ou un seul horodatage ne prouve pas qu'un avis a ete analyse.
+- Pour Sainte-Catherine, controle `validation.sainteCatherineReview` dans le snapshot pieton consolide, ainsi que `sources[].noticeReview` et les six avis/images inventoried. Distingue `reviewedAt` de `checkedAt`; `generatedAt` ne reverifie aucune source.
+- Un inventaire ou fingerprint absent/incoherent, ou une piece modifiee sans decision reexaminee, est une anomalie a rapporter. Cet audit reste local et en lecture seule : ne consulte pas les sources distantes et ne lance aucun generateur pour tenter de reparer l'etat.
+
 ## Snapshot pieton consolide
 
 - Inclus `data/pedestrian-closures-snapshot.json` et son entree de details `data/montreal-pedestrian-notices-snapshot.json` dans l'inventaire global. Distingue-les du snapshot de rues pietonnisees de la carte auto.

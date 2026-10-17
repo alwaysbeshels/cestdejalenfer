@@ -20,7 +20,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#d96d00">
   <title>Questions fréquentes | Carte des entraves</title>
-  <link rel="stylesheet" href="css/faq.css?v=20261001-potholes62">
+  <link rel="stylesheet" href="css/faq.css?v=20261017-filter-indicator1">
   <link rel="stylesheet" href="css/social.css?v=20261005-social1">
 </head>
 <body data-document-title="document.faqTitle">
@@ -151,16 +151,39 @@
         </details>
         <details id="sources-utilisees">
           <summary data-i18n="faq.q.sources"></summary>
+          <p class="faq-municipality-coverage">
+            <strong id="faqMunicipalityCoverageCount">25 municipalités</strong>
+            <span data-i18n="faq.municipalityCoverageMiddle">sur les</span>
+            <span id="faqMunicipalityCoverageTotal">82</span>
+            <span data-i18n="faq.municipalityCoveragePrefix">de la</span>
+            <a href="https://cmm.qc.ca/a-propos/territoires-et-municipalites/" target="_blank" rel="noreferrer" data-i18n="faq.municipalityCoverageName">Communauté métropolitaine de Montréal</a>
+          </p>
+          <p class="faq-source-count">
+            <span data-i18n="faq.sourceCountLabel"></span>
+            <strong id="faqSourceUrlCount">79</strong>
+            <span data-i18n="faq.sourceCountSuffix"></span>
+          </p>
+          <p id="faqSourceMetadataError" class="faq-source-error" data-i18n="faq.sourceMetadataError" role="alert" hidden></p>
           <p data-i18n="faq.a.sources"></p>
           <p data-i18n="faq.a.snapshotNote"></p>
-          <p id="source-availability" data-i18n="faq.a.sourceAvailability"></p>
           <div class="source-table-wrap">
             <table class="source-table">
-              <colgroup><col class="source-col-municipality"><col class="source-col-name"><col class="source-col-type"><col class="source-col-link"></colgroup>
-              <thead><tr><th scope="col" data-source-filter="municipality"></th><th scope="col" data-i18n="faq.sourcesHeader"></th><th scope="col" data-source-filter="dataType"></th><th scope="col" data-i18n="faq.linkHeader"></th></tr></thead>
+              <colgroup><col class="source-col-municipality"><col class="source-col-mrc"><col class="source-col-sector"><col class="source-col-name"><col class="source-col-type"><col class="source-col-link"></colgroup>
+              <thead><tr><th scope="col" data-source-filter="municipality"></th><th scope="col" data-source-filter="mrc"></th><th scope="col" data-source-filter="sector"></th><th scope="col" data-i18n="faq.sourcesHeader"></th><th scope="col" data-source-filter="dataType"></th><th scope="col" data-i18n="faq.linkHeader"></th></tr></thead>
               <tbody id="faqSourceList"></tbody>
             </table>
           </div>
+          <details class="other-source-details">
+            <summary data-i18n="faq.q.otherSources"></summary>
+            <p data-i18n="faq.a.otherSources"></p>
+            <div class="source-table-wrap">
+              <table class="source-table source-table-other">
+                <colgroup><col class="source-col-name"><col class="source-col-type"><col class="source-col-link"></colgroup>
+                <thead><tr><th scope="col" data-i18n="faq.sourcesHeader"></th><th scope="col" data-i18n="faq.typeHeader"></th><th scope="col" data-i18n="faq.linkHeader"></th></tr></thead>
+                <tbody id="faqOtherSourceList"></tbody>
+              </table>
+            </div>
+          </details>
         </details>
         <details>
           <summary data-i18n="faq.q.snapshots"></summary>
@@ -209,11 +232,11 @@
     </footer>
   </main>
   <button id="backToTop" class="back-to-top" type="button" data-i18n-aria-label="faq.top" hidden>↑</button>
-  <script src="languages/fr.js?v=20261016-mobilite1"></script>
-  <script src="languages/en.js?v=20261016-mobilite1"></script>
+  <script src="languages/fr.js?v=20261017-snapshot-source1"></script>
+  <script src="languages/en.js?v=20261017-snapshot-source1"></script>
   <script src="js/i18n.js?v=20261005-nav1"></script>
-  <script src="data/sources.js?v=20261016-mobilite1"></script>
-  <script src="js/faq.js?v=20261005-faq-order1"></script>
+  <script src="data/sources.js?v=20261017-snapshot-source1"></script>
+  <script src="js/faq.js?v=20261017-snapshot-source1"></script>
   <script src="js/analytics.js?v=20261003-analytics1"></script>
   <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
 </body>

@@ -72,6 +72,11 @@
     "parc-jean-drapeau": "data/parc-jean-drapeau-snapshot.json",
     "mont-royal-snapshot": "data/mont-royal-snapshot.json",
     "beaconsfield-snapshot": "data/beaconsfield-snapshot.json",
+    "boucherville-snapshot": "data/boucherville-roadworks-snapshot.json",
+    "brossard-snapshot": "data/brossard-roadworks-snapshot.json",
+    "saint-basile-snapshot": "data/saint-basile-worksites-snapshot.json",
+    "sainte-julie-snapshot": "data/sainte-julie-worksites-snapshot.json",
+    "pedestrian-boucherville": "data/boucherville-roadworks-snapshot.json",
     "noovo-road-snapshot": "data/noovo-road-closures-snapshot.json",
     "citizen-report": "data/citizen-reports-snapshot.json",
     "pjcci": "data/pjcci-work-advisories-snapshot.json",
@@ -472,7 +477,8 @@
     const today = formatInputDate(new Date());
     const inSevenDays = addDays(today, 7);
 
-    const candidates = allClosures.filter((closure) => impacts.has(closure.severity)
+    const candidates = allClosures.filter((closure) => !closure.worksiteOnly
+      && impacts.has(closure.severity)
       && matchesTimePeriod(closure, periods)
       && !isCoveredByComplementaryClosure(closure));
     const items = candidates.filter((closure) => statsAllDates || overlapsDateRange(closure, range)).map((closure) => {
@@ -1441,9 +1447,9 @@
     </div>`, { noteKey: "stats.upcomingIntro", infoKey: "stats.upcomingNote", wide: true, filters });
   }
 
-  // Everything received from each source, whatever the panel filters.
+  // Worksite-only locations are map context, not automobile restrictions.
   function sourceSection() {
-    const loadedBySource = countBy(allClosures, (closure) => closure.source || closure.sourceKind);
+    const loadedBySource = countBy(allClosures.filter((closure) => !closure.worksiteOnly), (closure) => closure.source || closure.sourceKind);
     const catalog = window.SOURCE_CATALOG || [];
     const kinds = new Set();
     const statuses = new Set();
@@ -2330,7 +2336,7 @@
     const projects = new Map((memoryFetchCache.get(LIVE_SOURCES.quebec511)?.features || []).map((feature) => [`q511-${feature.properties?.identifiant || feature.id}`, feature.properties]));
     const nullable = (value) => value === null || value === undefined || String(value).trim() === "" ? null : String(value);
     const dateKey = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value || "") && Number.isFinite(parseDate(value).valueOf()) && formatInputDate(parseDate(value)) === value ? value : null;
-    return allClosures.filter((closure) => !isCoveredByMobiliteClosure(closure)).map((closure) => {
+    return allClosures.filter((closure) => !closure.worksiteOnly && !isCoveredByComplementaryClosure(closure)).map((closure) => {
       const type = authorityType(closure);
       const item = { closure, type, route: routeLabel(closure), organization: organizationName(closure, type), length: lengthInfo(closure.geometry) };
       const namedOrganization = customOrganizationName(closure, type);

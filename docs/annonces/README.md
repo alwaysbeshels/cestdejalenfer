@@ -12,6 +12,7 @@ Pour plusieurs sujets le même jour, compléter l'édition en préparation plut�
 
 | Date | Sujets | Langues | Fichier |
 | --- | --- | --- | --- |
+| 2026-10-17 | Statistiques personnalisées, sources municipales et piétonnes, FAQ des sources, correction des colmatages 2021 | [Français](2026-10-17.md#français) · [English](2026-10-17.md#english) | [Édition du 17 octobre](2026-10-17.md) |
 | 2026-10-03 | Statistiques des entraves routières, onglet Comment ça marche et menu en icônes | [Français](2026-10-03.md#français) · [English](2026-10-03.md#english) | [Édition du 3 octobre](2026-10-03.md) |
 | 2026-10-02 | Bilan du site, nids-de-poule et colmatages; graphiques, arrondissements et améliorations mobiles prévus | [Français](2026-10-02.md#français) · [English](2026-10-02.md#english) | [Édition du 2 octobre](2026-10-02.md) |
 | 2026-09-30 | Modes Piétons et lecteur d'écran | [Français](2026-09-30.md#français) · [English](2026-09-30.md#english) | [Édition du 30 septembre](2026-09-30.md) |

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-15T19:43:48.466Z",
+  "generatedAt": "2026-10-17T16:27:30.113Z",
   "policy": "Pedestrian and cycling impacts. Cycling-only records identify affectedUsers explicitly and do not confirm pedestrian restrictions. Per-source checkedAt is authoritative; local snapshots are not reverified. Unknown sidewalk sides are never inferred. Geometry is the published worksite unless explicitly identified otherwise. Selected documentary review notices are displayed separately without geometry or inferred dates.",
   "sources": [
     {
@@ -312,9 +312,598 @@
       "received": 0,
       "retained": 0,
       "reviewCount": 0
+    },
+    {
+      "key": "sainte-catherine",
+      "url": "https://www.ville.sainte-catherine.qc.ca/carte-interactive/?q=S04sSU3PL8pMLVY1dTJQNXWxNTY1VCtOzUlNLklNsQUA",
+      "status": "checked",
+      "checkedAt": "2026-10-17T16:27:30.062Z",
+      "sourceExtractedAt": null,
+      "received": 3,
+      "retained": 1,
+      "reviewCount": 1,
+      "excluded": 1,
+      "exclusions": [
+        {
+          "id": "sainte-catherine-612269351",
+          "title": "Opération rinçage d'aqueduc à partir de mi-septembre ",
+          "sourceUrl": "https://www.ville.sainte-catherine.qc.ca/carte-interactive/?q=S04sSU3PL8pMLVY1dTJQNXWxNTY1VCtOzUlNLklNsQUA",
+          "reason": "water-main-flushing-with-no-pedestrian-or-cycling-restriction"
+        }
+      ],
+      "inventory": [
+        {
+          "indexPosition": 1,
+          "id": "1040837351",
+          "title": "Avis préventif d'ébullition de l'eau  - 1720-1724, rue Centrale",
+          "address": "1724 rue Centrale, Sainte-Catherine",
+          "categoryId": "351",
+          "latitude": "45.3943763",
+          "longitude": "-73.57987059999999",
+          "descriptionSha256": "02d6d330c7d95ae0f61955c0ee58119aea9baaf6370cba8c6c6220f3466fcaf9",
+          "media": [
+            {
+              "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/Ved_aqueducs-3.jpg",
+              "contentType": "image/jpeg",
+              "byteLength": 261488,
+              "sha256": "8b80258ca47a4b4db7f3a6468a7a2aca5c63cdb24ffe243b2ad47e254949bcd8"
+            }
+          ]
+        },
+        {
+          "indexPosition": 2,
+          "id": "1040499351",
+          "title": "Travaux de bordures et de trottoirs - Multiples rues",
+          "address": "5465, boul.Marie-Victorin, Sainte-Catherine",
+          "categoryId": "351",
+          "latitude": "45.4053171",
+          "longitude": "-73.5717217",
+          "descriptionSha256": "3e910b8b45cffc62b4aeef964c00cac794358dd63b069a0641056e23410a84b4",
+          "media": [
+            {
+              "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/MU_alerte.jpg",
+              "contentType": "image/jpeg",
+              "byteLength": 89207,
+              "sha256": "de9a40161fbea5cec6c0a02f6a405d1545231f393d6a97dc07814f5358a20dfd"
+            }
+          ]
+        },
+        {
+          "indexPosition": 3,
+          "id": "612269351",
+          "title": "Opération rinçage d'aqueduc à partir de mi-septembre ",
+          "address": "",
+          "categoryId": "351",
+          "latitude": "45.395820",
+          "longitude": "-73.565743",
+          "descriptionSha256": "06cb5bb81b60a96c12d0b580f1bb9014410d77a7eaa62ad575b41f51e67b7b29",
+          "media": [
+            {
+              "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/MU_eau1.jpg",
+              "contentType": "image/jpeg",
+              "byteLength": 80703,
+              "sha256": "898c2a274d3846b7f93a67ca59a1bb5c41a2e404e2bdf68bf76f139b27b90e1e"
+            }
+          ]
+        }
+      ],
+      "mediaReview": [
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/Ved_aqueducs-3.jpg",
+          "sha256": "8b80258ca47a4b4db7f3a6468a7a2aca5c63cdb24ffe243b2ad47e254949bcd8",
+          "inspectionStatus": "visually-inspected",
+          "inspectedAt": "2026-10-17T00:55:14Z",
+          "observations": [
+            "Photo of a damaged water-service pipe; it shows no road, route, or pedestrian geometry."
+          ]
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/MU_alerte.jpg",
+          "sha256": "de9a40161fbea5cec6c0a02f6a405d1545231f393d6a97dc07814f5358a20dfd",
+          "inspectionStatus": "visually-inspected",
+          "inspectedAt": "2026-10-17T00:55:14Z",
+          "observations": [
+            "Generic traffic-cone photograph; it contains no site, route, or impact details and its colors are not used for classification."
+          ]
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/MU_eau1.jpg",
+          "sha256": "898c2a274d3846b7f93a67ca59a1bb5c41a2e404e2bdf68bf76f139b27b90e1e",
+          "inspectionStatus": "visually-inspected",
+          "inspectedAt": "2026-10-17T00:55:14Z",
+          "observations": [
+            "Photo of water flowing from a tap into a glass; it shows no road or pedestrian geometry."
+          ]
+        }
+      ],
+      "requestFilter": "category%5B%5D=351&selected=",
+      "noticeReview": {
+        "status": "complete",
+        "reviewedAt": "2026-10-17T16:21:52.760Z",
+        "previousRestartPoint": null,
+        "restartPoint": {
+          "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/20261013-it-bds-1720ruecentrale/",
+          "title": "Avis préventif d'ébullition de l'eau - 1720-1724, rue Centrale - Ville de Sainte-Catherine",
+          "publishedPeriod": "15–16 octobre 2026, selon le titre et le corps du premier avis"
+        },
+        "index": {
+          "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/",
+          "title": "Avis et info-travaux - Ville de Sainte-Catherine",
+          "noticeCount": 6,
+          "contentSha256": "aae4fddf4da0d70775561a6d63a5590e75d8af64dfe911e815b2b105b7bd028a",
+          "orderedNoticeUrls": [
+            "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/20261013-it-bds-1720ruecentrale/",
+            "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/operation-de-vaccination-contre-la-rage-du-raton-laveur/",
+            "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/avis-abritempo/",
+            "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/20260921-it-bordures/",
+            "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/2026-it-rincage-aqueduc/",
+            "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/fermeture-de-piscine-reglement/"
+          ]
+        },
+        "inventory": [
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/20261013-it-bds-1720ruecentrale/",
+            "title": "Avis préventif d'ébullition de l'eau - 1720-1724, rue Centrale - Ville de Sainte-Catherine",
+            "text": "Accueil Avis préventif d'ébullition de l'eau - 1720-1724, rue Centrale Partager Avis et info travaux Avis préventif d'ébullition de l'eau - 1720-1724, rue Centrale Du 15 octobre 2026 0 h 00 au En vigueur MàJ de l'avis : 15 octobre 16 h Avis préventif d'ébullition de l'eau - EN VIGUEUR Réparation de la boite de service au 1720-1724 rue Centrale le 15 octobre 2026. Secteur visé | 1720-1724 et 1740, rue Centrale Les citoyens du secteur visé doivent faire bouillir l’eau au rétablissement du service à gros bouillon pendant au moins une minute avant toute consommation, et ce, jusqu’à nouvel ordre. *Les citoyens du secteur indiqué seront informés de la levée de l’avis préventif d’ébullition de l’eau par accroche-portes et sur le site Internet de la Ville. Consignes - Avis préventif d'ébullition de l'eau La Ville de Sainte-Catherine est désolée des inconvénients que cette situation peut occasionner et remercie les citoyens de leur compréhension. Pour nous joindre • Bciti • Par téléphone : 450 632-0590, poste 5152 En dehors des heures d’ouverture : composez le 911 pour joindre le personnel de garde Avis de sécurité Toutes les mesures seront prises pour assurer la sécurité du chantier. Nous vous rappelons d’être particulièrement vigilants et de suivre les consignes de sécurité lorsque vous circulez aux abords d’un chantier. Nous vous remercions de votre collaboration. Retour",
+            "modifiedAt": null,
+            "attachments": [],
+            "images": [],
+            "contentSha256": "2dc7c13d96a04129c55c9873ecd40a30899f6211bdb58a5a8eb925b150c8d232",
+            "decision": "excluded",
+            "reason": "Boil-water advisory for a few addresses; no automobile, sidewalk, or cycling restriction is published."
+          },
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/operation-de-vaccination-contre-la-rage-du-raton-laveur/",
+            "title": "Opération de vaccination contre la rage du raton laveur - Ville de Sainte-Catherine",
+            "text": "Accueil Opération de vaccination contre la rage du raton laveur Partager Avis et info travaux Opération de vaccination contre la rage du raton laveur Du 13 octobre 2026 7 h 00 au 23 octobre 2026 17 h 00 Du 13 au 23 octobre 2026, les équipes du ministère de la Faune mèneront une opération de type capturer-vacciner-relâcher dans notre secteur. Elles captureront des ratons laveurs et des mouffettes à l’aide de cages, les vaccineront, puis les relâcheront sur place. Les cages sont conformes aux normes internationales de piégeage et vérifiées quotidiennement. La rage est une maladie mortelle pour les humains et les animaux. La vaccination des animaux sauvages contribue à réduire sa propagation vers les secteurs urbains de la Rive-Sud et de l’île de Montréal. Comment collaborer Gardez vos animaux domestiques à l’intérieur ou sous surveillance pour éviter qu’ils soient capturés accidentellement. Ils seront relâchés par les équipes du Ministère, au besoin.Ne vous approchez pas des cages et ne tentez jamais de libérer un animal capturé. Pour toute question Joindre le ministère de la Faune au 1 877 346-6763. DÉTAILS : Opérations de surveillance et de contrôle de la rage du raton laveur Retour",
+            "modifiedAt": null,
+            "attachments": [],
+            "images": [],
+            "contentSha256": "7809c6dc7f26dcabea6a829616a99a4870e9438af0320b170e06d9a4fb6242b4",
+            "decision": "excluded",
+            "reason": "Wildlife vaccination operation; no road or pedestrian obstruction is published."
+          },
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/avis-abritempo/",
+            "title": "Installation des abris d'auto hivernaux (tempo) - Ville de Sainte-Catherine",
+            "text": "Accueil Installation des abris d'auto hivernaux (tempo) Partager Avis et info travaux Installation des abris d'auto hivernaux (tempo) Du 15 octobre 2026 au 15 avril 2027 Un abri maximum est autorisé pour les résidences unifamiliales, bi ou tri-famililales*. L'installation des abri hivernal temporaire est autorisée sous réserve de respecter la réglementation en vigueur. Résumé des règles entourant leur installation Permis du 15 octobre au 15 avrilAucune demande de permis à remplir mais doit respecter la réglementationAbri de fabrication certifiée, en bon état, de couleur unie et sans perforationÉrigé dans l'allée dans l'espace de stationnement hors rueNe doit pas empiéter sur l'emprise de ruePour les propriétés localisées à une intersection, d'autres règles sont applicables, notamment, en lien avec le triangle de visibilitéSuperficie max. : 45 m2Hauteur max. : 2,5 m Dégagements minimaux à respecter 2,4 m de la bordure ou 1,5 m du trottoir0,5 m d'une ligne latérale de terrain3 m d'une borne d'incendie Veuillez noter que des inspections sont effectuées par les inspecteurs municipaux afin de vérifier, au besoin, la conformité des installations, notamment, pour valider les distances. * ATTENTION : Selon votre adresse, d'autres règles pourraient s'appliquer. En cas de doute, veuillez toujours valider la réglementation en vigueur auprès du Service de l'aménagement du territoire. ➡️ 450 632-0590, poste 5130 ou ✉️ amenagement@vdsc.ca 💡Bon voisinage, y penser contribue au bien-être de tous ! S'assurer que la neige de l'abri se déversera sur notre propre terrain, et non celui du voisin. S'assurer que l'abri ne nuit pas à la visibilité pour les voisins qui doivent entrer et sortir de leur entrée en voiture. Avis légal : L’information ci-dessus n’est présentée qu’à titre informatif dans le but de faciliter la compréhension. Le texte officiel d’un document a toujours préséance sur les informations sur le contenu du site Web. Pour consulter les textes officiels, veuillez communiquer avec les Services juridiques et greffe à greffe@vdsc.ca. Pour signaler un abri non conforme Veuillez transmettre votre demande en incluant les détails pertinents (localisation et détails concernant les points non-conformes). - En remplissant une requête sur bciti+ - En appelant le Service de gestion des requêtes au 450 632-0590, poste 5152 - En remplissant le formulaire pour nous joindre Retour",
+            "modifiedAt": null,
+            "attachments": [],
+            "images": [],
+            "contentSha256": "4f3df04a2663a691b6c88c1e1d8e8845708da3e949cdf741b8a458e538521c60",
+            "decision": "excluded",
+            "reason": "The published shelter rules concern private driveways and setbacks; they do not announce a public-road closure."
+          },
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/20260921-it-bordures/",
+            "title": "Travaux de bordures et de trottoirs - Multiples rues - Ville de Sainte-Catherine",
+            "text": "Accueil Travaux de bordures et de trottoirs - Multiples rues Partager Avis et info travaux Travaux de bordures et de trottoirs - Multiples rues Du 28 septembre 2026 7 h 00 au 23 octobre 2026 17 h 00 Nature des travaux | Sciage et démolition des bordures et trottoirs, travaux d’excavation suivis du coffrage et de la coulée des nouvelles bordures Période | Du 28 sept. au 23 oct. 2026* Localisation | Multiples rues sur le territoire Impacts Circulation | Fermeture d'une voie durant les travaux Circulation en alternanceInstallation de signalisation temporairePrésence de signaleurs, lorsque requis Stationnement sur rue | Interdiction temporaire dans la zone des travaux. Veuillez respecter la signalisation installée. Avis de sécurité Toutes les mesures seront prises pour assurer la sécurité du chantier. Nous vous rappelons d’être vigilants et de suivre les consignes de sécurité lorsque vous circulez aux abords d’un chantier. Pour nous joindre 450 632-0590, poste 5152 Composez le 911 pour joindre le personnel de garde en dehors des heures d’ouverture Version | 21 septembre 2026 Retour",
+            "modifiedAt": null,
+            "attachments": [],
+            "images": [],
+            "contentSha256": "405f9c549681faa4cde4c7d913daafb6ef04bf94f509669b61a290f30225a1b8",
+            "decision": "retained-pedestrian-point; automobile-impact-review",
+            "reason": "The official map's Point confirms sidewalk/curb work on multiple streets. The detail page also announces one-lane closures and alternating traffic, but names no streets or limits; do not create an automobile line or attach that citywide effect to the map Point."
+          },
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/2026-it-rincage-aqueduc/",
+            "title": "Opération rinçage d'aqueduc à partir de mi-septembre - Ville de Sainte-Catherine",
+            "text": "Accueil Opération rinçage d'aqueduc à partir de mi-septembre Partager Avis et info travaux Opération rinçage d'aqueduc à partir de mi-septembre Du 16 septembre 2026 7 h 00 au 1 novembre 2026 17 h 00 Le Service des travaux publics de la Ville a commencé l’opération annuelle de rinçage du réseau d’aqueduc le 16 septembre prochain. Cette opération standard a lieu chaque année. Elle permet d'assurer la bonne qualité de l'eau potable. L'opération visera chaque secteur de la Ville à tour de rôle. Dates | 16 septembre jusqu’au début novembre approximativementHoraire | Lundi au jeudi de 7 h à 16 hLieu | Tout le territoire de Sainte-Catherine, par secteur. Impacts des travaux Lorsque l'opération a lieu dans votre secteur, vous pourriez remarquer : Une baisse de la pression d'eau durant 15 à 30 min. Une coloration jaunâtre ou rougeâtre de l'eau à l'ouverture des robinets. ⚠ Si l'eau du robinet est colorée, ouvrez le robinet d’eau froide du bain et laissez couler l'eau dans le bain jusqu'à ce qu'elle redevienne incolore (retirer le filtre si possible). Cela pourrait prendre environ 15 minutes. Si malgré cela l’eau continue d’être colorée, communiquez avec le Service des travaux publics : 450 632-0590, poste 5310, ou travaux.publics@vdsc.ca. Sécurité L'eau colorée ne présente aucun risque pour la santé. Elle peut être consommée sans danger. Vous n'avez pas besoin de faire bouillir l'eau avant de l'utiliser. Renseignements supplémentaires Utilisation des électroménagers Assurez-vous que l'eau est incolore avant d'utiliser des appareils électroménagers, tels que le lave-vaisselle ou la machine à laver. À quoi sert l'opération de rinçage du réseau d’aqueduc? Le rinçage du réseau d’aqueduc permet d'évacuer les particules qui se sont formées sur les parois des conduites. La vitesse d’écoulement de l’eau sera augmentée et l’eau rouillée sera évacuée à l’aide d’une borne incendie. Pourquoi ne pas nous aviser avant que l'opération ait lieu dans mon secteur? Les travaux sont planifiés à l’aide d’un logiciel spécialisé qui détermine les séquences de rinçage. Il n’est donc pas possible de prévoir avec précision l’ordre dans lequel les secteurs seront visités. La Ville de Sainte-Catherine vous remercie de votre collaboration. Retour",
+            "modifiedAt": null,
+            "attachments": [],
+            "images": [],
+            "contentSha256": "ec2d2609cd1a3d9c400277c8187fe9a6026303711066b7a0b75161e95bb65cb0",
+            "decision": "excluded",
+            "reason": "Water-main flushing and possible water-pressure/color changes only; no road or pedestrian closure is published."
+          },
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/fermeture-de-piscine-reglement/",
+            "title": "Fermeture de piscine - Ville de Sainte-Catherine",
+            "text": "Accueil Fermeture de piscine Partager Avis et info travaux Fermeture de piscine Du 1 janvier 2026 au 31 décembre 2026 La fraîcheur de l’automne approche. Il sera bientôt temps de fermer votre piscine. Nous vous rappelons que, selon l'article 85.3 du Règlement de zonage 2009-Z-00: Le lavage à contre-courant (back-wash) doit se faire vers la voie publique;La vidange des piscines doit obligatoirement s’effectuer vers la voie publique, afin d’éviter les accumulations d’eau sur votre terrain ou sur celui de vos voisins;Il est strictement interdit d’effectuer la vidange des piscines dans un parc ou un espace vert adjacent. Quiconque contrevient au règlements municipaux peut être passible d’une amende. Renseignez-vous sur la règlementation en vigueur : 450 632-0590, poste 5130 Retour",
+            "modifiedAt": null,
+            "attachments": [],
+            "images": [],
+            "contentSha256": "41fb5d7407ff7755cb4c92278b14e8b0b7727374a6d3ca139c0540512536afde",
+            "decision": "excluded",
+            "reason": "The notice concerns residential-pool draining rules; it is not a temporary mobility restriction."
+          }
+        ],
+        "mediaReview": [
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/Ved_travaux-3.jpg",
+            "contentType": "image/jpeg",
+            "byteLength": 112562,
+            "sha256": "07ea33aa223ad4f3cd562f45cf30ac229fd9c0770df6c61f21d9a1fcc553c779",
+            "inspectionStatus": "visually-inspected",
+            "observations": [
+              "Generic close-up photograph of traffic cones and a work sign; it identifies no street, side, limit, or route geometry."
+            ]
+          },
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/ratonlaveur_ved.jpg",
+            "contentType": "image/jpeg",
+            "byteLength": 164699,
+            "sha256": "1443ea6e4b49b05c9717963b9032b06643f4dcacc48dc779075bcabb3f433fce",
+            "inspectionStatus": "visually-inspected",
+            "observations": [
+              "Photograph of a raccoon; it contains no roadwork or pedestrian-route information."
+            ]
+          },
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/ved-abris-auto.jpg",
+            "contentType": "image/jpeg",
+            "byteLength": 224234,
+            "sha256": "62c6b1e7454d4939fad50936ff4706866f63fba194124a3169f4aae7662ba8c4",
+            "inspectionStatus": "visually-inspected",
+            "observations": [
+              "Photograph of a snow-covered temporary car shelter on private property; it is not a public-road restriction diagram."
+            ]
+          },
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/MU_alerte.jpg",
+            "contentType": "image/jpeg",
+            "byteLength": 112260,
+            "sha256": "dbed32d74486f3c7a21716856f7716351391bfb1fa27b0aacafa4a61100e02e6",
+            "inspectionStatus": "visually-inspected",
+            "observations": [
+              "Generic photograph of stacked traffic cones; it contains no location, road limits, or closure configuration."
+            ]
+          },
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/MU_eau1.jpg",
+            "contentType": "image/jpeg",
+            "byteLength": 112930,
+            "sha256": "cd6261ecf326f89790025b9241b3b784067f34edb707537cfa461a4d1b9d8220",
+            "inspectionStatus": "visually-inspected",
+            "observations": [
+              "Photograph of water flowing from a tap into a glass; it contains no road or pedestrian geometry."
+            ]
+          },
+          {
+            "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/Ved-securite_piscine.jpg",
+            "contentType": "image/jpeg",
+            "byteLength": 181289,
+            "sha256": "bc379939ca301415b4cf5ac1ba60c0b9a209ab33038ca96bcbcde79140c01ade",
+            "inspectionStatus": "visually-inspected",
+            "observations": [
+              "Photograph of a swimming-pool ladder and water; it contains no roadwork information."
+            ]
+          }
+        ],
+        "fingerprint": "ac369c5c71c6f71fe05a61766eb15d4e289b2855b61db46e2cfcc495b04a8000",
+        "checkedAt": "2026-10-17T16:27:30.062Z"
+      }
+    },
+    {
+      "key": "boucherville",
+      "url": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+      "status": "local-snapshot",
+      "checkedAt": null,
+      "sourceExtractedAt": "2026-10-17T03:45:55.109Z",
+      "received": 18,
+      "retained": 1,
+      "reviewCount": 0,
+      "inventory": [
+        {
+          "id": 69143,
+          "title": "Réfection de la chaussée en béton sur le chemin du Tremblay | 15 octobre et 16 octobre 2026",
+          "modified": "2026-10-08T10:27:26",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/refection-de-la-chaussee-en-beton-sur-le-chemin-du-tremblay-15-octobre-et-16-octobre-2026/",
+          "publishedPeriod": {
+            "startDate": "2026-10-15",
+            "endDate": "2026-10-16"
+          },
+          "decision": "excluded",
+          "reason": "The published period, including its published end time when available, is over at extraction.",
+          "sourceText": "Horaire : 7 h à 17 h Une des voies de droite en direction Est sera fermée à la circulation à proximité de la rue Graham-Bell En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+        },
+        {
+          "id": 69142,
+          "title": "Fermeture d'eau en cours | 8 octobre | boulevard du Fort-Saint-Louis",
+          "modified": "2026-10-08T10:10:45",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/fermeture-deau-en-cours-8-octobre-boulevard-du-fort-saint-louis/",
+          "publishedPeriod": null,
+          "decision": "review",
+          "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+          "sourceText": "Fermeture d’eau est en cours pour les adresses suivantes : 500 Boulevard du Fort-Saint-Louis Garderie les Flamboyants 510 boulevard du Fort-Saint-Louis SAQ 520 Boulevard du Fort-Saint-Louis place Pierre-Boucher ( exception Maxi) Durée minimale de la fermeture : 4 h Cette fermeture est requise pour effectuer des travaux de réparation sur le réseau d’aqueduc du secteur"
+        },
+        {
+          "id": 69112,
+          "title": "Construction d'un nouveau branchement | 6 octobre au 9 octobre 2026 | 674, rue de Normandie",
+          "modified": "2026-10-05T14:16:54",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/construction-dun-nouveau-branchement-6-octobre-au-9-octobre-2026-674-rue-de-normandie/",
+          "publishedPeriod": {
+            "startDate": "2026-10-06",
+            "endDate": "2026-10-09"
+          },
+          "decision": "excluded",
+          "reason": "The published period, including its published end time when available, is over at extraction.",
+          "sourceText": "Horaire : 7 h à 18 h du lundi au vendredi La rue de Normandie sera barrée entre les rues du Boisé et des Bois-Francs. Seulement la circulation locale sera permise.Le détour se fera par la rue des Bois-Francs."
+        },
+        {
+          "id": 69106,
+          "title": "Correction d'un ponceau | 1341, rue de Montbrun | 6 octobre au 8 octobre 2026",
+          "modified": "2026-10-02T11:29:50",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/correction-dun-ponceau-1341-rue-de-montbrun-6-octobre-au-8-octobre-2026/",
+          "publishedPeriod": {
+            "startDate": "2026-10-06",
+            "endDate": "2026-10-08"
+          },
+          "decision": "excluded",
+          "reason": "The published period, including its published end time when available, is over at extraction.",
+          "sourceText": "Horaire : 7h à 18h du lundi au vendredi Circulation en alternance avec un signaleur routier de 7 h 00 à 18 h 00 sur la rue De Montbrun à la hauteur du 1341, rue De Montbrun. Aménagement d’une piste cyclable temporaire. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+        },
+        {
+          "id": 69062,
+          "title": "Amélioration du drainage de la Joseph-Huet | 29 septembre au 30 octobre 2026",
+          "modified": "2026-10-01T11:52:04",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/amelioration-du-drainage-de-la-joseph-huet-29-septembre-au-30-octobre-2026/",
+          "publishedPeriod": {
+            "startDate": "2026-09-29",
+            "endDate": "2026-10-30"
+          },
+          "decision": "retained",
+          "reason": "Published automobile impact and active/future dates; official point retained without inventing a line.",
+          "sourceText": "Horaire : 7 h à 18 h du lundi au vendredi Entrave à la circulation : Totale sur une section de la rue Joseph-Huet autour du parc et détour occasionnel et entrave partielle sur les rues Pierre-Larrivé et Jean-Désy En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+        },
+        {
+          "id": 69054,
+          "title": "Réfection de la piste cyclable sur le boul. du Fort-Saint-Louis | Phase II | 1er octobre au 18 octobre 2026",
+          "modified": "2026-10-14T14:24:53",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/refection-de-la-piste-cyclable-sur-le-boul-du-fort-saint-louis-phase-ii-1er-octobre-au-14-octobre-2026/",
+          "publishedPeriod": {
+            "startDate": "2026-10-01",
+            "endDate": "2026-10-18"
+          },
+          "decision": "retained",
+          "reason": "Published automobile impact and active/future dates; official point retained without inventing a line.",
+          "sourceText": "Horaire : 7 h à 18 h du lundi au vendredi Travaux sur le boulevard du Fort-Saint-Louis, entre le boul. De Montarville et la rue Cicot sud : • Fermeture de la piste multifonctionnelle. Fermeture d’une voie de circulation pour l’aménagement d’une piste multifonctionnelle temporaire. • Maintien d’au minimum une voie de circulation par direction. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+        },
+        {
+          "id": 69018,
+          "title": "Travaux d'aqueduc sur le boulevard Jean-Paul Vincent",
+          "modified": "2026-10-01T09:38:56",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/travaux-daqueduc-sur-le-boulevard-jean-paul-vincent/",
+          "publishedPeriod": null,
+          "decision": "excluded",
+          "reason": "The notice assigns responsibility to Ville de Longueuil, not Ville de Boucherville.",
+          "sourceText": "La Ville de Longueuil procède à des travaux prioritaires de remplacement d’une chambre de vannes, une infrastructure cruciale liée au contrôle de l’alimentation en eau potable. Celle-ci est située sur le boulevard Jean-Paul-Vincent, à Longueuil, et dessert tout le territoire de la Ville de Boucherville ainsi qu’une partie adjacente du Vieux-Longueuil. Catégorie d’entrave Voie de circulation et trottoirs Nature de l’entrave • Repavage • Travaux souterrains d’aqueduc et/ou d’égout et/ou gaziers Début prévue de l’entrave Septembre Fin prévue de l’entrave Novembre Détails supplémentaires Le boulevard Jean-Paul-Vincent sera fermé à la circulation dans les deux sens, entre le boulevard Fernand-Lafontaine et la rue du Caribou. La circulation locale sera permise sur le boulevard Jean-Paul-Vincent, uniquement pour les automobilistes souhaitant se rendre à une résidence située sur le tronçon des travaux. Clientèle du transport collectif : voir le site du RTL pour les détours et arrêts non desservis : Travaux sur le boulevard Jean-Paul-Vincent – RTL Responsable des travaux Ville de Longueuil Consultez l’avis de travaux de la Ville de Longueuil"
+        },
+        {
+          "id": 68978,
+          "title": "Parc de la Futaie",
+          "modified": "2026-09-29T14:49:42",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/parc-de-la-futaie-3/",
+          "publishedPeriod": {
+            "startDate": "2026-09-28",
+            "endDate": "2026-11-20"
+          },
+          "decision": "review",
+          "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+          "sourceText": "Travaux de plantation d’arbres et de contrôle du nerprun envahissant. Horaire: 28 septembre au 20 novembre 2026 Entrepreneur : Nature-Action Québec"
+        },
+        {
+          "id": 68965,
+          "title": "Parc du Boisé-du-Pays-Brûlé",
+          "modified": "2026-09-29T14:42:59",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/parc-du-boise-du-pays-brule-2/",
+          "publishedPeriod": {
+            "startDate": "2026-09-28",
+            "endDate": "2026-11-20"
+          },
+          "decision": "review",
+          "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+          "sourceText": "Travaux de plantation d’arbres et de contrôle du nerprun envahissant Horaire : 28 septembre au 20 novembre 2026 Entrepreneur : Nature-Action Québec Entraves : Présence d’un conteneur temporaire et circulation liée au chantier sur les rues Paul-Doyon (secteur adjacent au parc), Pierre-Mercure et Jean-Vallerand."
+        },
+        {
+          "id": 68470,
+          "title": "Aménagement du parc des Ateliers | Phase II | 8 septembre au 9 octobre 2026",
+          "modified": "2026-09-08T09:10:52",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/amenagement-du-parc-des-ateliers-phase-ii-8-septembre-au-9-octobre-2026/",
+          "publishedPeriod": {
+            "startDate": "2026-09-08",
+            "endDate": "2026-10-09"
+          },
+          "decision": "excluded",
+          "reason": "The published period, including its published end time when available, is over at extraction.",
+          "sourceText": "Horaire : Lundi au vendredi de 7 h à 18 h En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+        },
+        {
+          "id": 68469,
+          "title": "Parcours cycliste au parc Sabrevois | 8 septembre au 9 octobre 2026",
+          "modified": "2026-09-28T15:58:51",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/parcours-cycliste-au-parc-sabrevois-8-septembre-au-9-octobre-2026/",
+          "publishedPeriod": {
+            "startDate": "2026-09-08",
+            "endDate": "2026-10-09"
+          },
+          "decision": "excluded",
+          "reason": "The published period, including its published end time when available, is over at extraction.",
+          "sourceText": "Ce parcours permettra aux plus jeunes d’apprendre à faire du vélo en leur proposant des circuits qui reproduisent des situations similaires à celles qu’ils pourront rencontrer sur la route, dans un environnement encadré et sécuritaire. Horaire : Lundi au vendredi de 7 h à 18 h. Entrave partielle à la circulation. Possibilité d’occupation d’une voie de la rue Jacques-Cartier. Les travaux comprennent notamment l’ajout de puisards, la réfection de la structure de chaussée, l’installation de bancs et d’un support à vélos, ainsi que la mise en place de la signalisation et du marquage au sol. Le chantier est balisé et les zones de travaux sont interdites d’accès. Un signaleur routier est présent en continu en présence d’activité sur le chantier afin d’assurer la sécurité lors des entrées et des sorties de véhicules et de machinerie. Échéancier des travaux : Jusqu’au 7 octobre : présence de machinerie lourde et travaux de pavage; Jusqu’au 16 octobre (sera révisé au besoin) : travaux de marquage au sol et installation du mobilier urbain."
+        },
+        {
+          "id": 68436,
+          "title": "Ajout d’un sentier multifonctionnel sur le ch. Du Tremblay (Phase II) | 9 septembre au 2 octobre 2026",
+          "modified": "2026-09-03T16:02:54",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/ajout-dun-sentier-multifonctionnel-sur-le-ch-du-tremblay-phase-ii-9-septembre-au-2-octobre-2026/",
+          "publishedPeriod": {
+            "startDate": "2026-09-09",
+            "endDate": "2026-10-02"
+          },
+          "decision": "excluded",
+          "reason": "The published period, including its published end time when available, is over at extraction.",
+          "sourceText": "Horaire : 9 septembre au 15 septembre : Fermeture de la voie Nobel sud de la rue Newton au ch. Du Tremblay Détour par la rue Newton Horaire : 20 h à 5 h ou la fin de semaine 9 septembre au 2 octobre : Voie retirée au ch. Du Tremblay sud"
+        },
+        {
+          "id": 68353,
+          "title": "Réfection de postes de pompages | Rues de Verrazano & Général-Vanier et mise-à-jour de divers postes de pompages",
+          "modified": "2026-09-01T11:31:54",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/refection-de-postes-de-pompages-rues-de-verrazano-general-vanier-et-mise-a-jour-de-divers-postes-de-pompages/",
+          "publishedPeriod": {
+            "startDate": "2026-08-31",
+            "endDate": "2026-11-26"
+          },
+          "decision": "review",
+          "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+          "sourceText": "Horaire : 31 août au 26 novembre 2026 Réfection des postes de pompage de la rue Verrazano & Général-Vanier et mise-à-jour de la télémétrie de divers postes de pompage. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+        },
+        {
+          "id": 68351,
+          "title": "Postes de pompages | Jean-Maneau et divers postes de pompages | Fermeture complète intersection rues Jean-Maneau & Pierre-Piché | Plusieurs détours",
+          "modified": "2026-09-01T10:52:14",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/postes-de-pompages-jean-maneau-et-divers-postes-de-pompages-fermeture-complete-intersection-rues-jean-maneau-pierre-piche-plusieurs-detours/",
+          "publishedPeriod": {
+            "startDate": "2026-08-31",
+            "endDate": "2026-10-19"
+          },
+          "decision": "retained",
+          "reason": "Published automobile impact and active/future dates; official point retained without inventing a line.",
+          "sourceText": "Horaire : 31 août au 19 octobre 2026. Du lundi au vendredi de 7:00 à 16:00 Réfection des postes de pompages rue Jean-Maneau et mise-à jour de la télémétrie de divers postes de pompages. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure."
+        },
+        {
+          "id": 65246,
+          "title": "Réfection des rues du secteur De Noyon | Du 19 mai à fin octobre",
+          "modified": "2026-05-11T10:43:19",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/refection-des-rues-du-secteur-de-noyon-du-19-mai-a-fin-octobre/",
+          "publishedPeriod": null,
+          "decision": "review",
+          "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+          "sourceText": "Rues visées : De Noyon Du Père-Le Jeune, entre De Noyon et Jean-Maneau Jean-Plouf, entre De Noyon et Pierre-Piché Horaire de travail : Lundi au vendredi de 7 h à 18 h"
+        },
+        {
+          "id": 64952,
+          "title": "Remplacement du système d’éclairage sur la route 132 | Du 4 mai à la fin septembre",
+          "modified": "2026-09-11T15:50:34",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/remplacement-du-systeme-declairage-sur-la-route-132-du-4-mai-a-la-fin-aout/",
+          "publishedPeriod": null,
+          "decision": "review",
+          "reason": "No separately mappable, dated automobile restriction established by the reviewed map fields.",
+          "sourceText": "Le ministère des Transports et de la Mobilité durable informe la population que le système d’éclairage de la route 132 sera remplacé entre le boulevard Marie-Victorin et le boulevard de Montarville, à Boucherville. Entraves à la circulation : • Fermeture d’une voie de la route 132, dans l’une ou l’autre des directions, entre le boulevard de Montarville et le boulevard Marie-Victorin. • Fermeture par défaut des bretelles d’accès à ce tronçon. Les chemins de détour seront balisés par une signalisation temporaire. Des épisodes de congestion sont à prévoir. Ainsi, il est recommandé, avant de prendre la route, de consulter Québec 511, un outil pratique pour planifier adéquatement ses déplacements, et de télécharger l’application mobile Québec 511."
+        },
+        {
+          "id": 48811,
+          "title": "Construction d’un complexe multisport | Octobre 2024 à octobre 2026",
+          "modified": "2026-04-28T13:36:11",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/construction-dun-complexe-multisport-24-mois-a-partir-doctobre-2024/",
+          "publishedPeriod": null,
+          "decision": "excluded",
+          "reason": "The published notice explicitly states there is no traffic obstruction.",
+          "sourceText": "Entrepreneur : Geyser Aucune entrave à la circulation Pour toutes questions : Direction du génie, 450 449-8610, genie@boucherville.ca"
+        },
+        {
+          "id": 69057,
+          "title": "Resurfaçage de diverses rues et du parc des Ateliers | 1er octobre au 15 octobre 2026 | Travaux de 2e couche d’asphalte dans le secteur Le Laboureur",
+          "modified": "2026-10-09T09:12:34",
+          "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+          "detailUrl": "https://www.boucherville.ca/point-of-interest/resurfacage-de-diverses-rues-et-du-parc-des-ateliers-1er-octobre-au-6-octobre-2026/",
+          "publishedPeriod": {
+            "startDate": "2026-10-01",
+            "endDate": "2026-10-15"
+          },
+          "decision": "excluded",
+          "reason": "The official map publishes no point and the published end date is before extraction."
+        }
+      ],
+      "requestFilter": "avis-de-travaux; input reused from the validated local automobile snapshot"
     }
   ],
   "records": [
+    {
+      "id": "pedestrian-boucherville-boucherville-69054-shared-path-path-not-applicable-critical-cyclists",
+      "title": "Réfection de la piste cyclable sur le boul. du Fort-Saint-Louis | Phase II | 1er octobre au 18 octobre 2026",
+      "streets": "Boulevard du Fort-Saint-Louis, entre le boulevard De Montarville et la rue Cicot Sud.",
+      "category": "municipal",
+      "sourceKind": "pedestrian-boucherville",
+      "source": "Ville de Boucherville - Snapshot des entraves auto et piétonnes",
+      "sourceUrl": "https://www.boucherville.ca/carte-interactive/?_poi_categories=avis-de-travaux",
+      "affectedUsers": [
+        "pedestrians",
+        "cyclists"
+      ],
+      "responsible": "Ville de Boucherville",
+      "borough": "Boucherville",
+      "pedestrianArea": "path",
+      "startDate": "2026-10-01",
+      "endDate": "2026-10-18",
+      "openEnded": false,
+      "periods": [
+        "day",
+        "night"
+      ],
+      "schedule": [
+        {
+          "day": "Mon",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Tue",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Wed",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Thu",
+          "start": "07:00",
+          "end": "18:00"
+        },
+        {
+          "day": "Fri",
+          "start": "07:00",
+          "end": "18:00"
+        }
+      ],
+      "scheduleText": null,
+      "publishedIntervals": null,
+      "publishedDirection": null,
+      "sourceDescription": "Horaire : 7 h à 18 h du lundi au vendredi Travaux sur le boulevard du Fort-Saint-Louis, entre le boul. De Montarville et la rue Cicot sud : • Fermeture de la piste multifonctionnelle. Fermeture d’une voie de circulation pour l’aménagement d’une piste multifonctionnelle temporaire. • Maintien d’au minimum une voie de circulation par direction. En cas d’imprévu, tel que des conditions météorologiques défavorables, les travaux seront reportés à une date ultérieure.",
+      "severity": "critical",
+      "impact": "Fermeture de la piste multifonctionnelle.",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.4547265979004,
+          45.59844281009772
+        ]
+      },
+      "point": [
+        -73.4547265979004,
+        45.59844281009772
+      ],
+      "side": {
+        "code": "not-applicable",
+        "published": null,
+        "geometryStatus": "published"
+      },
+      "evidence": {
+        "kind": "published-text",
+        "text": "Fermeture de la piste multifonctionnelle."
+      },
+      "details": [],
+      "sourceKey": "boucherville",
+      "sourceCheckedAt": "2026-10-17T03:45:55.109Z"
+    },
     {
       "id": "pedestrian-laval-laval-2-1146468-sidewalk-east-critical",
       "title": "Partielle - Boul. des Laurentides",
@@ -226106,6 +226695,65 @@
       "sourceCheckedAt": "2026-10-15T19:43:48.420Z"
     },
     {
+      "id": "pedestrian-sainte-catherine-1040499351-sidewalk-unknown-moderate",
+      "title": "Travaux de bordures et de trottoirs - Multiples rues",
+      "streets": "Multiples rues sur le territoire",
+      "category": "municipal",
+      "sourceKind": "pedestrian-sainte-catherine",
+      "source": "Ville de Sainte-Catherine - Carte interactive des travaux",
+      "sourceUrl": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/20260921-it-bordures/",
+      "responsible": "Ville de Sainte-Catherine",
+      "borough": "Sainte-Catherine",
+      "pedestrianArea": "sidewalk",
+      "startDate": "2026-09-28",
+      "endDate": "2026-10-23",
+      "openEnded": false,
+      "periods": [],
+      "schedule": null,
+      "scheduleText": null,
+      "publishedIntervals": null,
+      "publishedDirection": null,
+      "sourceDescription": "Nature des travaux | Sciage et démolition des bordures et trottoirs, travaux d’excavation suivis du coffrage et de la coulée des nouvelles bordures\nPériode | Du 28 sept. au 23 oct. 2026*\nLocalisation | Multiples rues sur le territoire\nImpacts\nCirculation | Fermeture d'une voie durant les travaux\nCirculation en alternance\nInstallation de signalisation temporaire\nPrésence de signaleurs, lorsque requis\nStationnement sur rue | Interdiction temporaire dans la zone des travaux. Veuillez respecter la signalisation installée.\nAvis de sécurité\nToutes les mesures seront prises pour assurer la sécurité du chantier. Nous vous rappelons d’être vigilants et de suivre les consignes de sécurité lorsque vous circulez aux abords d’un chantier.\nPour nous joindre\n450 632-0590, poste 5152\nComposez le 911 pour joindre le personnel de garde en dehors des heures d’ouverture\nVersion | 21 septembre 2026\n\nAccueil Travaux de bordures et de trottoirs - Multiples rues Partager Avis et info travaux Travaux de bordures et de trottoirs - Multiples rues Du 28 septembre 2026 7 h 00 au 23 octobre 2026 17 h 00 Nature des travaux | Sciage et démolition des bordures et trottoirs, travaux d’excavation suivis du coffrage et de la coulée des nouvelles bordures Période | Du 28 sept. au 23 oct. 2026* Localisation | Multiples rues sur le territoire Impacts Circulation | Fermeture d'une voie durant les travaux Circulation en alternanceInstallation de signalisation temporairePrésence de signaleurs, lorsque requis Stationnement sur rue | Interdiction temporaire dans la zone des travaux. Veuillez respecter la signalisation installée. Avis de sécurité Toutes les mesures seront prises pour assurer la sécurité du chantier. Nous vous rappelons d’être vigilants et de suivre les consignes de sécurité lorsque vous circulez aux abords d’un chantier. Pour nous joindre 450 632-0590, poste 5152 Composez le 911 pour joindre le personnel de garde en dehors des heures d’ouverture Version | 21 septembre 2026 Retour",
+      "severity": "moderate",
+      "impact": "Nature des travaux | Sciage et démolition des bordures et trottoirs, travaux d’excavation suivis du coffrage et de la coulée des nouvelles bordures",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.5717217,
+          45.4053171
+        ]
+      },
+      "point": [
+        -73.5717217,
+        45.4053171
+      ],
+      "relatedSources": [
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/carte-interactive/?q=S04sSU3PL8pMLVY1dTJQNXWxNTY1VCtOzUlNLklNsQUA",
+          "label": "Carte interactive des travaux"
+        }
+      ],
+      "side": {
+        "code": "unknown",
+        "published": null,
+        "geometryStatus": "published"
+      },
+      "evidence": {
+        "kind": "published-text",
+        "text": "Nature des travaux | Sciage et démolition des bordures et trottoirs, travaux d’excavation suivis du coffrage et de la coulée des nouvelles bordures"
+      },
+      "details": [
+        {
+          "labelKey": "pedestrian.mapMarkerAddress",
+          "label": "Adresse associée au repère municipal (pas l’emplacement de toutes les rues touchées)",
+          "value": "5465, boul.Marie-Victorin, Sainte-Catherine",
+          "valueKey": null
+        }
+      ],
+      "sourceKey": "sainte-catherine",
+      "sourceCheckedAt": "2026-10-17T01:07:05.712Z"
+    },
+    {
       "id": "pedestrian-terrebonneEntraveLines-terrebonne-8af1f11f-a23c-425a-8987-b15476731c65-path-not-applicable-critical-cyclists",
       "title": "Fermeture complete - Piste cyclable située entre le chemin Comtois et le chemin Martin",
       "streets": "Piste cyclable située entre le chemin Comtois et le chemin Martin",
@@ -227615,6 +228263,180 @@
       "publishedSchedule": null,
       "text": "Fermeture\nEntrave déraillement - Fermeture complète de la piste cyclable et des accès piétons pour une durée indéterminée\nAucun",
       "sourceKey": "repentigny"
+    },
+    {
+      "id": "sainte-catherine-1040837351",
+      "title": "Avis préventif d'ébullition de l'eau  - 1720-1724, rue Centrale",
+      "sourceUrl": "https://www.ville.sainte-catherine.qc.ca/carte-interactive/?q=S04sSU3PL8pMLVY1dTJQNXWxNTY1VCtOzUlNLklNsQUA",
+      "reason": "cycling-closure-period-and-path-geometry-unresolved",
+      "text": "MàJ de l'avis : 15 octobre 16 h\nAvis préventif d'ébullition de l'eau - EN VIGUEUR\nRéparation de la boite de service au 1720-1724 rue Centrale le 15 octobre 2026.\nSecteur visé | 1720-1724 et 1740, rue Centrale\nLes citoyens du secteur visé doivent faire bouillir l’eau au rétablissement du service à gros bouillon pendant au moins une minute avant toute consommation, et ce, jusqu’à nouvel ordre.\n*Les citoyens du secteur indiqué seront informés de la levée de l’avis préventif d’ébullition de l’eau par accroche-portes et sur le site Internet de la Ville.\n_____________________________________________________________\nDate de l’avis : 13 octobre 2026\nAvis de travaux | Réparation d’une boîte de service\nRue Centrale| 1720-1724 rue Centrale   ➡️ Google Map\nTravaux en cours\nDes travaux de réparation d'une boîte de service se dérouleront dans le stationnement du 1720-1724, rue Centrale. Les travaux nécessiteront une coupure d'eau localisée temporaire pour les adresses indiquées ci-dessous.\nImpacts des travaux\nCirculation |\nAucune fermeture de rue prévue\nPiste cyclable |\nFermeture du tronçon entre le 1700 et le 1760, rue Centrale\nStationnement de la garderie Soleil souriant |\nLes parents pourront utiliser le débarcadaire temporaire aménagé en bordure de rue entre le 1640 et le 1724, rue Centrale.\nCoupure d’eau localisée | 15 octobre de 7 h à 16 h*\nSecteur visé |  1720-1724 et 1740, rue Centrale\nAvis préventif d'ébullition de l'eau\nÀ la suite du rétablissement du service d'aqueduc, les citoyens du secteur visé doivent faire bouillir l’eau au rétablissement du service à gros bouillon pendant au moins une minute avant toute consommation, et ce, jusqu’à nouvel ordre.\n*Il est impossible de prévoir avec exactitude la durée de la coupure d’eau mais tous les efforts sont faits pour rétablir le service le plus rapidement possible.",
+      "publishedPoint": {
+        "type": "Point",
+        "coordinates": [
+          -73.57987059999999,
+          45.3943763
+        ]
+      },
+      "geometry": null,
+      "sourceKey": "sainte-catherine"
     }
-  ]
+  ],
+  "validation": {
+    "sainteCatherineReview": {
+      "status": "complete",
+      "reviewedAt": "2026-10-17T16:21:52.760Z",
+      "previousRestartPoint": null,
+      "restartPoint": {
+        "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/20261013-it-bds-1720ruecentrale/",
+        "title": "Avis préventif d'ébullition de l'eau - 1720-1724, rue Centrale - Ville de Sainte-Catherine",
+        "publishedPeriod": "15–16 octobre 2026, selon le titre et le corps du premier avis"
+      },
+      "index": {
+        "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/",
+        "title": "Avis et info-travaux - Ville de Sainte-Catherine",
+        "noticeCount": 6,
+        "contentSha256": "aae4fddf4da0d70775561a6d63a5590e75d8af64dfe911e815b2b105b7bd028a",
+        "orderedNoticeUrls": [
+          "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/20261013-it-bds-1720ruecentrale/",
+          "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/operation-de-vaccination-contre-la-rage-du-raton-laveur/",
+          "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/avis-abritempo/",
+          "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/20260921-it-bordures/",
+          "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/2026-it-rincage-aqueduc/",
+          "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/fermeture-de-piscine-reglement/"
+        ]
+      },
+      "inventory": [
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/20261013-it-bds-1720ruecentrale/",
+          "title": "Avis préventif d'ébullition de l'eau - 1720-1724, rue Centrale - Ville de Sainte-Catherine",
+          "text": "Accueil Avis préventif d'ébullition de l'eau - 1720-1724, rue Centrale Partager Avis et info travaux Avis préventif d'ébullition de l'eau - 1720-1724, rue Centrale Du 15 octobre 2026 0 h 00 au En vigueur MàJ de l'avis : 15 octobre 16 h Avis préventif d'ébullition de l'eau - EN VIGUEUR Réparation de la boite de service au 1720-1724 rue Centrale le 15 octobre 2026. Secteur visé | 1720-1724 et 1740, rue Centrale Les citoyens du secteur visé doivent faire bouillir l’eau au rétablissement du service à gros bouillon pendant au moins une minute avant toute consommation, et ce, jusqu’à nouvel ordre. *Les citoyens du secteur indiqué seront informés de la levée de l’avis préventif d’ébullition de l’eau par accroche-portes et sur le site Internet de la Ville. Consignes - Avis préventif d'ébullition de l'eau La Ville de Sainte-Catherine est désolée des inconvénients que cette situation peut occasionner et remercie les citoyens de leur compréhension. Pour nous joindre • Bciti • Par téléphone : 450 632-0590, poste 5152 En dehors des heures d’ouverture : composez le 911 pour joindre le personnel de garde Avis de sécurité Toutes les mesures seront prises pour assurer la sécurité du chantier. Nous vous rappelons d’être particulièrement vigilants et de suivre les consignes de sécurité lorsque vous circulez aux abords d’un chantier. Nous vous remercions de votre collaboration. Retour",
+          "modifiedAt": null,
+          "attachments": [],
+          "images": [],
+          "contentSha256": "2dc7c13d96a04129c55c9873ecd40a30899f6211bdb58a5a8eb925b150c8d232",
+          "decision": "excluded",
+          "reason": "Boil-water advisory for a few addresses; no automobile, sidewalk, or cycling restriction is published."
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/operation-de-vaccination-contre-la-rage-du-raton-laveur/",
+          "title": "Opération de vaccination contre la rage du raton laveur - Ville de Sainte-Catherine",
+          "text": "Accueil Opération de vaccination contre la rage du raton laveur Partager Avis et info travaux Opération de vaccination contre la rage du raton laveur Du 13 octobre 2026 7 h 00 au 23 octobre 2026 17 h 00 Du 13 au 23 octobre 2026, les équipes du ministère de la Faune mèneront une opération de type capturer-vacciner-relâcher dans notre secteur. Elles captureront des ratons laveurs et des mouffettes à l’aide de cages, les vaccineront, puis les relâcheront sur place. Les cages sont conformes aux normes internationales de piégeage et vérifiées quotidiennement. La rage est une maladie mortelle pour les humains et les animaux. La vaccination des animaux sauvages contribue à réduire sa propagation vers les secteurs urbains de la Rive-Sud et de l’île de Montréal. Comment collaborer Gardez vos animaux domestiques à l’intérieur ou sous surveillance pour éviter qu’ils soient capturés accidentellement. Ils seront relâchés par les équipes du Ministère, au besoin.Ne vous approchez pas des cages et ne tentez jamais de libérer un animal capturé. Pour toute question Joindre le ministère de la Faune au 1 877 346-6763. DÉTAILS : Opérations de surveillance et de contrôle de la rage du raton laveur Retour",
+          "modifiedAt": null,
+          "attachments": [],
+          "images": [],
+          "contentSha256": "7809c6dc7f26dcabea6a829616a99a4870e9438af0320b170e06d9a4fb6242b4",
+          "decision": "excluded",
+          "reason": "Wildlife vaccination operation; no road or pedestrian obstruction is published."
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/avis-abritempo/",
+          "title": "Installation des abris d'auto hivernaux (tempo) - Ville de Sainte-Catherine",
+          "text": "Accueil Installation des abris d'auto hivernaux (tempo) Partager Avis et info travaux Installation des abris d'auto hivernaux (tempo) Du 15 octobre 2026 au 15 avril 2027 Un abri maximum est autorisé pour les résidences unifamiliales, bi ou tri-famililales*. L'installation des abri hivernal temporaire est autorisée sous réserve de respecter la réglementation en vigueur. Résumé des règles entourant leur installation Permis du 15 octobre au 15 avrilAucune demande de permis à remplir mais doit respecter la réglementationAbri de fabrication certifiée, en bon état, de couleur unie et sans perforationÉrigé dans l'allée dans l'espace de stationnement hors rueNe doit pas empiéter sur l'emprise de ruePour les propriétés localisées à une intersection, d'autres règles sont applicables, notamment, en lien avec le triangle de visibilitéSuperficie max. : 45 m2Hauteur max. : 2,5 m Dégagements minimaux à respecter 2,4 m de la bordure ou 1,5 m du trottoir0,5 m d'une ligne latérale de terrain3 m d'une borne d'incendie Veuillez noter que des inspections sont effectuées par les inspecteurs municipaux afin de vérifier, au besoin, la conformité des installations, notamment, pour valider les distances. * ATTENTION : Selon votre adresse, d'autres règles pourraient s'appliquer. En cas de doute, veuillez toujours valider la réglementation en vigueur auprès du Service de l'aménagement du territoire. ➡️ 450 632-0590, poste 5130 ou ✉️ amenagement@vdsc.ca 💡Bon voisinage, y penser contribue au bien-être de tous ! S'assurer que la neige de l'abri se déversera sur notre propre terrain, et non celui du voisin. S'assurer que l'abri ne nuit pas à la visibilité pour les voisins qui doivent entrer et sortir de leur entrée en voiture. Avis légal : L’information ci-dessus n’est présentée qu’à titre informatif dans le but de faciliter la compréhension. Le texte officiel d’un document a toujours préséance sur les informations sur le contenu du site Web. Pour consulter les textes officiels, veuillez communiquer avec les Services juridiques et greffe à greffe@vdsc.ca. Pour signaler un abri non conforme Veuillez transmettre votre demande en incluant les détails pertinents (localisation et détails concernant les points non-conformes). - En remplissant une requête sur bciti+ - En appelant le Service de gestion des requêtes au 450 632-0590, poste 5152 - En remplissant le formulaire pour nous joindre Retour",
+          "modifiedAt": null,
+          "attachments": [],
+          "images": [],
+          "contentSha256": "4f3df04a2663a691b6c88c1e1d8e8845708da3e949cdf741b8a458e538521c60",
+          "decision": "excluded",
+          "reason": "The published shelter rules concern private driveways and setbacks; they do not announce a public-road closure."
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/20260921-it-bordures/",
+          "title": "Travaux de bordures et de trottoirs - Multiples rues - Ville de Sainte-Catherine",
+          "text": "Accueil Travaux de bordures et de trottoirs - Multiples rues Partager Avis et info travaux Travaux de bordures et de trottoirs - Multiples rues Du 28 septembre 2026 7 h 00 au 23 octobre 2026 17 h 00 Nature des travaux | Sciage et démolition des bordures et trottoirs, travaux d’excavation suivis du coffrage et de la coulée des nouvelles bordures Période | Du 28 sept. au 23 oct. 2026* Localisation | Multiples rues sur le territoire Impacts Circulation | Fermeture d'une voie durant les travaux Circulation en alternanceInstallation de signalisation temporairePrésence de signaleurs, lorsque requis Stationnement sur rue | Interdiction temporaire dans la zone des travaux. Veuillez respecter la signalisation installée. Avis de sécurité Toutes les mesures seront prises pour assurer la sécurité du chantier. Nous vous rappelons d’être vigilants et de suivre les consignes de sécurité lorsque vous circulez aux abords d’un chantier. Pour nous joindre 450 632-0590, poste 5152 Composez le 911 pour joindre le personnel de garde en dehors des heures d’ouverture Version | 21 septembre 2026 Retour",
+          "modifiedAt": null,
+          "attachments": [],
+          "images": [],
+          "contentSha256": "405f9c549681faa4cde4c7d913daafb6ef04bf94f509669b61a290f30225a1b8",
+          "decision": "retained-pedestrian-point; automobile-impact-review",
+          "reason": "The official map's Point confirms sidewalk/curb work on multiple streets. The detail page also announces one-lane closures and alternating traffic, but names no streets or limits; do not create an automobile line or attach that citywide effect to the map Point."
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/2026-it-rincage-aqueduc/",
+          "title": "Opération rinçage d'aqueduc à partir de mi-septembre - Ville de Sainte-Catherine",
+          "text": "Accueil Opération rinçage d'aqueduc à partir de mi-septembre Partager Avis et info travaux Opération rinçage d'aqueduc à partir de mi-septembre Du 16 septembre 2026 7 h 00 au 1 novembre 2026 17 h 00 Le Service des travaux publics de la Ville a commencé l’opération annuelle de rinçage du réseau d’aqueduc le 16 septembre prochain. Cette opération standard a lieu chaque année. Elle permet d'assurer la bonne qualité de l'eau potable. L'opération visera chaque secteur de la Ville à tour de rôle. Dates | 16 septembre jusqu’au début novembre approximativementHoraire | Lundi au jeudi de 7 h à 16 hLieu | Tout le territoire de Sainte-Catherine, par secteur. Impacts des travaux Lorsque l'opération a lieu dans votre secteur, vous pourriez remarquer : Une baisse de la pression d'eau durant 15 à 30 min. Une coloration jaunâtre ou rougeâtre de l'eau à l'ouverture des robinets. ⚠ Si l'eau du robinet est colorée, ouvrez le robinet d’eau froide du bain et laissez couler l'eau dans le bain jusqu'à ce qu'elle redevienne incolore (retirer le filtre si possible). Cela pourrait prendre environ 15 minutes. Si malgré cela l’eau continue d’être colorée, communiquez avec le Service des travaux publics : 450 632-0590, poste 5310, ou travaux.publics@vdsc.ca. Sécurité L'eau colorée ne présente aucun risque pour la santé. Elle peut être consommée sans danger. Vous n'avez pas besoin de faire bouillir l'eau avant de l'utiliser. Renseignements supplémentaires Utilisation des électroménagers Assurez-vous que l'eau est incolore avant d'utiliser des appareils électroménagers, tels que le lave-vaisselle ou la machine à laver. À quoi sert l'opération de rinçage du réseau d’aqueduc? Le rinçage du réseau d’aqueduc permet d'évacuer les particules qui se sont formées sur les parois des conduites. La vitesse d’écoulement de l’eau sera augmentée et l’eau rouillée sera évacuée à l’aide d’une borne incendie. Pourquoi ne pas nous aviser avant que l'opération ait lieu dans mon secteur? Les travaux sont planifiés à l’aide d’un logiciel spécialisé qui détermine les séquences de rinçage. Il n’est donc pas possible de prévoir avec précision l’ordre dans lequel les secteurs seront visités. La Ville de Sainte-Catherine vous remercie de votre collaboration. Retour",
+          "modifiedAt": null,
+          "attachments": [],
+          "images": [],
+          "contentSha256": "ec2d2609cd1a3d9c400277c8187fe9a6026303711066b7a0b75161e95bb65cb0",
+          "decision": "excluded",
+          "reason": "Water-main flushing and possible water-pressure/color changes only; no road or pedestrian closure is published."
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/citoyens/informations-pratiques/avis-et-info-travaux/fermeture-de-piscine-reglement/",
+          "title": "Fermeture de piscine - Ville de Sainte-Catherine",
+          "text": "Accueil Fermeture de piscine Partager Avis et info travaux Fermeture de piscine Du 1 janvier 2026 au 31 décembre 2026 La fraîcheur de l’automne approche. Il sera bientôt temps de fermer votre piscine. Nous vous rappelons que, selon l'article 85.3 du Règlement de zonage 2009-Z-00: Le lavage à contre-courant (back-wash) doit se faire vers la voie publique;La vidange des piscines doit obligatoirement s’effectuer vers la voie publique, afin d’éviter les accumulations d’eau sur votre terrain ou sur celui de vos voisins;Il est strictement interdit d’effectuer la vidange des piscines dans un parc ou un espace vert adjacent. Quiconque contrevient au règlements municipaux peut être passible d’une amende. Renseignez-vous sur la règlementation en vigueur : 450 632-0590, poste 5130 Retour",
+          "modifiedAt": null,
+          "attachments": [],
+          "images": [],
+          "contentSha256": "41fb5d7407ff7755cb4c92278b14e8b0b7727374a6d3ca139c0540512536afde",
+          "decision": "excluded",
+          "reason": "The notice concerns residential-pool draining rules; it is not a temporary mobility restriction."
+        }
+      ],
+      "mediaReview": [
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/Ved_travaux-3.jpg",
+          "contentType": "image/jpeg",
+          "byteLength": 112562,
+          "sha256": "07ea33aa223ad4f3cd562f45cf30ac229fd9c0770df6c61f21d9a1fcc553c779",
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Generic close-up photograph of traffic cones and a work sign; it identifies no street, side, limit, or route geometry."
+          ]
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/ratonlaveur_ved.jpg",
+          "contentType": "image/jpeg",
+          "byteLength": 164699,
+          "sha256": "1443ea6e4b49b05c9717963b9032b06643f4dcacc48dc779075bcabb3f433fce",
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Photograph of a raccoon; it contains no roadwork or pedestrian-route information."
+          ]
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/ved-abris-auto.jpg",
+          "contentType": "image/jpeg",
+          "byteLength": 224234,
+          "sha256": "62c6b1e7454d4939fad50936ff4706866f63fba194124a3169f4aae7662ba8c4",
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Photograph of a snow-covered temporary car shelter on private property; it is not a public-road restriction diagram."
+          ]
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/MU_alerte.jpg",
+          "contentType": "image/jpeg",
+          "byteLength": 112260,
+          "sha256": "dbed32d74486f3c7a21716856f7716351391bfb1fa27b0aacafa4a61100e02e6",
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Generic photograph of stacked traffic cones; it contains no location, road limits, or closure configuration."
+          ]
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/MU_eau1.jpg",
+          "contentType": "image/jpeg",
+          "byteLength": 112930,
+          "sha256": "cd6261ecf326f89790025b9241b3b784067f34edb707537cfa461a4d1b9d8220",
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Photograph of water flowing from a tap into a glass; it contains no road or pedestrian geometry."
+          ]
+        },
+        {
+          "url": "https://www.ville.sainte-catherine.qc.ca/medias/images/alerts/_channelImage/Ved-securite_piscine.jpg",
+          "contentType": "image/jpeg",
+          "byteLength": 181289,
+          "sha256": "bc379939ca301415b4cf5ac1ba60c0b9a209ab33038ca96bcbcde79140c01ade",
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Photograph of a swimming-pool ladder and water; it contains no roadwork information."
+          ]
+        }
+      ],
+      "fingerprint": "ac369c5c71c6f71fe05a61766eb15d4e289b2855b61db46e2cfcc495b04a8000",
+      "checkedAt": "2026-10-17T16:27:30.062Z"
+    }
+  }
 }

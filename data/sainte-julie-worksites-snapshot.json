@@ -1,0 +1,317 @@
+{
+  "schemaVersion": 1,
+  "extractedAt": "2026-10-17T16:15:00.723Z",
+  "sourceUrl": "https://saintejulie.ca/fr/carte/travaux",
+  "sourceApiUrl": "https://saintejulie.ca/action.stejulie.location.json?category=travaux&lang=fr",
+  "municipality": "Ville de Sainte-Julie",
+  "timeZone": "America/Toronto",
+  "validation": {
+    "sainteJulieSupplementalReview": {
+      "status": "complete",
+      "reviewedAt": "2026-10-17T16:09:41.773Z",
+      "checkedAt": "2026-10-17T16:15:00.685Z",
+      "previousRestartPoint": null,
+      "restartPoint": {
+        "url": "https://saintejulie.ca/travaux",
+        "title": "Travaux",
+        "contentSha256": "623c4800e74d60caf31888d7b8d231aa91352a3f62a287dfb739880d6ffa9272"
+      },
+      "url": "https://saintejulie.ca/travaux",
+      "title": "Travaux",
+      "contentSha256": "623c4800e74d60caf31888d7b8d231aa91352a3f62a287dfb739880d6ffa9272",
+      "links": [
+        {
+          "title": "Services aux citoyens",
+          "url": "https://saintejulie.ca/services-aux-citoyens"
+        },
+        {
+          "title": "Services municipaux",
+          "url": "https://saintejulie.ca/administratifs"
+        },
+        {
+          "title": "Animaux",
+          "url": "https://saintejulie.ca/services-les-plus-demandes/animaux"
+        },
+        {
+          "title": "Assermentation",
+          "url": "https://saintejulie.ca/assermentation"
+        },
+        {
+          "title": "Mariage civil",
+          "url": "https://saintejulie.ca/services-les-plus-demandes/mariage-civil"
+        },
+        {
+          "title": "Permis et réglementation",
+          "url": "https://saintejulie.ca/services-aux-citoyens/permis-et-reglementation"
+        },
+        {
+          "title": "Publications",
+          "url": "https://saintejulie.ca/administratifs/publications"
+        },
+        {
+          "title": "Réclamation",
+          "url": "https://saintejulie.ca/reclamation"
+        },
+        {
+          "title": "Taxation et évaluation",
+          "url": "https://saintejulie.ca/services-les-plus-demandes/taxation-et-evaluation"
+        },
+        {
+          "title": "Travaux publics",
+          "url": "https://saintejulie.ca/administratifs/travaux-publics"
+        },
+        {
+          "title": "Actualités",
+          "url": "https://saintejulie.ca/actualites"
+        },
+        {
+          "title": "Événements à venir",
+          "url": "https://saintejulie.ca/evenements"
+        },
+        {
+          "title": "Contacts médias",
+          "url": "https://saintejulie.ca/nous-joindre/contacts-medias"
+        },
+        {
+          "title": "Nous joindre",
+          "url": "https://saintejulie.ca/nous-joindre"
+        },
+        {
+          "title": "Carte interactive",
+          "url": "https://saintejulie.ca/carte-interactive-de-la-ville-de-sainte-julie"
+        },
+        {
+          "title": "Emplois à la ville",
+          "url": "https://saintejulie.ca/administration/emplois"
+        },
+        {
+          "title": "Politique de confidentialité",
+          "url": "https://saintejulie.ca/politique-de-confidentialite"
+        },
+        {
+          "title": "Services en ligne",
+          "url": "https://saintejulie.ca/services-enligne"
+        },
+        {
+          "title": "Services municipaux",
+          "url": "https://saintejulie.ca/administratifs"
+        },
+        {
+          "title": "Nouveau résident",
+          "url": "https://saintejulie.ca/nouveau-resident"
+        },
+        {
+          "title": "Mobilité et transport collectif",
+          "url": "https://saintejulie.ca/mobilite-transport"
+        },
+        {
+          "title": "Sécurité publique",
+          "url": "https://saintejulie.ca/securite-publique"
+        },
+        {
+          "title": "Familles et aînés",
+          "url": "https://saintejulie.ca/familles-aines"
+        },
+        {
+          "title": "Matières résiduelles et environnement",
+          "url": "https://saintejulie.ca/services-aux-citoyens/matieres-residuelles-et-environnement"
+        },
+        {
+          "title": "Sports et loisirs",
+          "url": "https://saintejulie.ca/sports-et-loisirs"
+        },
+        {
+          "title": "Associations et organismes",
+          "url": "https://saintejulie.ca/loisirs-et-activites/associations-et-organismes/associations-et-organismes"
+        },
+        {
+          "title": "Vie culturelle",
+          "url": "https://saintejulie.ca/sports-loisirs-et-culture/vie-culturelle"
+        },
+        {
+          "title": "Bibliothèque",
+          "url": "https://saintejulie.ca/bibliotheque"
+        },
+        {
+          "title": "Pour la famille",
+          "url": "https://saintejulie.ca/sports-loisirs-et-culture/pour-la-famille"
+        },
+        {
+          "title": "Événement",
+          "url": "https://saintejulie.ca/loisirs-et-activites/evenement"
+        },
+        {
+          "title": "Découvrir la ville",
+          "url": "https://saintejulie.ca/la-ville/decouvrir-la-ville"
+        },
+        {
+          "title": "Vie démocratique",
+          "url": "https://saintejulie.ca/la-ville/vie-democratique"
+        },
+        {
+          "title": "Administration",
+          "url": "https://saintejulie.ca/la-ville/administration"
+        },
+        {
+          "title": "Développement et affaires",
+          "url": "https://saintejulie.ca/a-propos-de-la-ville/developpement-et-affaires"
+        },
+        {
+          "title": "Voir la carte",
+          "url": "https://saintejulie.ca/carte-interactive/hotel-de-ville"
+        },
+        {
+          "title": "Consulter l'horaire",
+          "url": "https://saintejulie.ca/services-aux-citoyens/services-administratifs"
+        },
+        {
+          "title": "Voir toutes nos coordonnées",
+          "url": "https://saintejulie.ca/nous-joindre"
+        },
+        {
+          "title": "Formulaire de contact",
+          "url": "https://saintejulie.ca/nous-joindre"
+        }
+      ],
+      "mediaReview": [
+        {
+          "url": "https://saintejulie.ca/uploads/cms_sections/images/Banniere_Travaux-1440w.jpg",
+          "alt": "Travaux",
+          "contentType": "image/jpeg",
+          "byteLength": 75365,
+          "sha256": "c6726fb414971dee97d663c206650736c77cdeda607ab991e2568469c1b439c4",
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Generic decorative city-map banner with no named road or restriction geometry."
+          ]
+        },
+        {
+          "url": "https://saintejulie.ca/uploads/html_content/Info-Travaux/parcArthurGatuhier_18-5.png",
+          "alt": "parcArthurGatuhier_18-5.png (2.12 MB)",
+          "contentType": "image/png",
+          "byteLength": 2218439,
+          "sha256": "46655587165938e8c9f0ced0c862ed19831725a5225a2874f7d8bedbb8da38ec",
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Architectural rendering of the Arthur-Gauthier park playground and courts; not a georeferenced traffic or pedestrian-closure plan."
+          ]
+        },
+        {
+          "url": "https://saintejulie.ca/uploads/html_content/Info-Travaux/parcArthurGatuhier_5-12.png",
+          "alt": "parcArthurGatuhier_5-12.png (2.09 MB)",
+          "contentType": "image/png",
+          "byteLength": 2193600,
+          "sha256": "9413e67b01a808134cce3b8f0505d808e1a33774d3a1df62906f23262dae44bd",
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Architectural rendering of playground equipment and park paths; it does not publish a closure, side, date, or georeferenced route."
+          ]
+        }
+      ],
+      "conclusion": "The page lists planned works and says dates are approximate; emergency work is announced on the municipality's social media or alert service. The park images are 2025 concept renderings, not traffic restrictions.",
+      "fingerprint": "1faae365b6e0ca975b7a56a279c8bf89c93460a3349d9fb5b36c4723faf58ddf"
+    }
+  },
+  "policy": "The sole retained record is a worksite-only official point. Its approximate end wording is preserved verbatim; it is shown only on the successful check date and is not classified as a road closure.",
+  "sourceReview": {
+    "received": 8,
+    "retained": 1,
+    "reviewCount": 5,
+    "excluded": 2,
+    "review": [
+      {
+        "id": "6598",
+        "title": "Chemin du Fer-à-Cheval, près de la rue du Liseron",
+        "sourceStatus": "travaux, 6598, all",
+        "decision": "review",
+        "reason": "The published dates are expired or incomplete for an active automobile impact.",
+        "sourceDescription": "Ces travaux permettront de remplacer la conduite pluviale déjà présente sous la chaussée. L’objectif de ces travaux est de régler la problématique d’accumulation d’eau dans le bas de la piste cyclable lors de forte pluie ou lors de la fonte de la neige au dégel. Pendant la durée des travaux, la circulation se fera en alternance pour les véhicules et la route sera barrée pour les cyclistes. Des ralentissements importants sont à prévoir entre Sainte-Julie et Saint-Bruno-de-Montarville.\nEntrepreneur : CG2\nDébut des travaux : 27 avril\nDurée des travaux : Du 27 avril au 1er mai inclusivement (selon les besoins opérationnels et les conditions météorologiques, les travaux peuvent se poursuivre plus tard)"
+      },
+      {
+        "id": "6603",
+        "title": "Parc Arthur-Gauthier",
+        "sourceStatus": "travaux, 6603, all",
+        "decision": "excluded",
+        "reason": "Park construction is not a road restriction.",
+        "sourceDescription": "Le réaménagement des aires de jeux et des sentiers permettra de mettre à niveau ce parc visité par de nombreux Julievillois. Les modules étant devenus désuets, il était nécessaire de procéder à ces travaux.\nEntrepreneur : à confirmer\nCoûts des travaux : à confirmer\nDébut des travaux : début septembre\nDurée des travaux : 10 semaines (selon les besoins opérationnels et des conditions météorologiques, les travaux peuvent se poursuivre plus tard)"
+      },
+      {
+        "id": "6604",
+        "title": "Parc Edmour-J.-Harvey",
+        "sourceStatus": "travaux, 6604, all",
+        "decision": "excluded",
+        "reason": "Park construction is not a road restriction.",
+        "sourceDescription": "Plusieurs travaux sont prévus au parc Edmour-J.-Harvey. Tout d’abord la reconstruction du chalet de services permettra à la Ville d’offrir plus de service dans ce parc. Des salles de réunion seront disponibles, une aire de relaxation, une terrasse et bien plus. Pendant les travaux de démolition et de construction, une partie du parc sera inaccessible pour la sécurité des utilisateurs.\nEntrepreneur : Montarville Gestion et Construction inc\nCoûts des travaux : 7 939 003,85 $\nDébut des travaux : 18 août 2025\nDurée des travaux : 1 an"
+      },
+      {
+        "id": "7017",
+        "title": "Rue de Villandry",
+        "sourceStatus": "travaux, 7017, all",
+        "decision": "review",
+        "reason": "The source does not publish a usable start date or explicit current status.",
+        "sourceDescription": "Installation d’une chambre de vanne et d’un débitmètre sectoriel d’aqueduc sur la rue de Villandry.\nDébut des travaux : à déterminer\nDurée des travaux : à déterminer"
+      },
+      {
+        "id": "7018",
+        "title": "Rue de Normandie, entre les rues Borduas et d’Anjou",
+        "sourceStatus": "travaux, 7018, all",
+        "decision": "review",
+        "reason": "The published dates are expired or incomplete for an active automobile impact.",
+        "sourceDescription": "Travaux majeurs de réfection de la rue de Normandie, incluant les égouts et l’aqueduc, le pavage, la reconstruction des trottoirs et l’inclusion d’une piste cyclopédestre.\nEntrepreneur : Excavation C.G.2\nCoûts des travaux : 8 341 000 $\nDébut des travaux : 22 avril 2026\nDurée des travaux : 17 semaines"
+      },
+      {
+        "id": "7019",
+        "title": "Rue des Hêtres",
+        "sourceStatus": "travaux, 7019, all",
+        "decision": "review",
+        "reason": "The published dates are expired or incomplete for an active automobile impact.",
+        "sourceDescription": "Travaux de pavage sur la rue des Hêtres.\nDébut des travaux : 26 août 2026\nDurée des travaux : 2 jours"
+      },
+      {
+        "id": "7020",
+        "title": "Secteur du Moulin",
+        "sourceStatus": "travaux, 7020, all",
+        "decision": "review",
+        "reason": "The published dates are expired or incomplete for an active automobile impact.",
+        "sourceDescription": "Travaux d’installation de régulateurs de débit dans des puisards du secteur du Moulin.\nDébut des travaux : avril 2026\nDurée des travaux : à déterminer"
+      }
+    ]
+  },
+  "records": [
+    {
+      "id": "sainte-julie-7021",
+      "sourceId": "7021",
+      "title": "Intersection de la rue Principale et du chemin du Fer-à-Cheval",
+      "streets": "Travaux de réfection de l’intersection de la rue Principale et du chemin du Fer-à-Cheval, ainsi que du chemin du Fer-à-Cheval jusqu’après le 738 chemin du Fer-à-Cheval.",
+      "startDate": "2026-07-15",
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "published-period-covers-check-date",
+      "reportedPeriod": "Début des travaux : 15 juillet 2026\nFin des travaux dans l'intersection : 29 août 2026\nFin des travaux sur le chemin du Fer-à-Cheval : fin octobre 2026",
+      "impact": "La source publie des travaux et des détours, mais ne précise pas de fermeture, de voie touchée ni d’impact automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "7021",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.328423,
+          45.600963
+        ]
+      },
+      "point": [
+        -73.328423,
+        45.600963
+      ],
+      "geometryNote": "Point officiel de la carte; il localise les travaux sans tracer la section touchée ni les détours.",
+      "sourceDescription": "Travaux de réfection de l’intersection de la rue Principale et du chemin du Fer-à-Cheval, ainsi que du chemin du Fer-à-Cheval jusqu’après le 738 chemin du Fer-à-Cheval.\nDébut des travaux : 15 juillet 2026\nFin des travaux dans l'intersection : 29 août 2026\nFin des travaux sur le chemin du Fer-à-Cheval : fin octobre 2026\nDétours prévus:\nVia la rue Principale, la rue Cyrille-Lapointe et le chemin de Touraine (en passant dans la Ville de Saint-Amable) ;\nVia le chemin de Touraine, la montée Sainte-Julie et le boulevard Saint-Joseph ;\nVia la rue Principale, la montée des Quarante-Deux, l’autoroute 20, le boulevard Armand-Frappier et le chemin du Fer-à-Cheval.",
+      "detourText": "Détours prévus:\nVia la rue Principale, la rue Cyrille-Lapointe et le chemin de Touraine (en passant dans la Ville de Saint-Amable) ;\nVia le chemin de Touraine, la montée Sainte-Julie et le boulevard Saint-Joseph ;\nVia la rue Principale, la montée des Quarante-Deux, l’autoroute 20, le boulevard Armand-Frappier et le chemin du Fer-à-Cheval.",
+      "sourceUrl": "https://saintejulie.ca/fr/carte/travaux",
+      "sourceApiUrl": "https://saintejulie.ca/action.stejulie.location.json?category=travaux&lang=fr",
+      "periods": [],
+      "schedule": []
+    }
+  ]
+}

@@ -1,83 +1,83 @@
-Municipalite,Secteur_CMM
-Baie-d'Urfé,Agglomeration de Montreal
-Beaconsfield,Agglomeration de Montreal
-Cote-Saint-Luc,Agglomeration de Montreal
-Dollard-des-Ormeaux,Agglomeration de Montreal
-Dorval,Agglomeration de Montreal
-Hampstead,Agglomeration de Montreal
-Kirkland,Agglomeration de Montreal
-L'Ile-Dorval,Agglomeration de Montreal
-Montreal,Agglomeration de Montreal
-Montreal-Est,Agglomeration de Montreal
-Montreal-Ouest,Agglomeration de Montreal
-Mont-Royal,Agglomeration de Montreal
-Pointe-Claire,Agglomeration de Montreal
-Sainte-Anne-de-Bellevue,Agglomeration de Montreal
-Senneville,Agglomeration de Montreal
-Westmount,Agglomeration de Montreal
-Boucherville,Agglomeration de Longueuil
-Brossard,Agglomeration de Longueuil
-Longueuil,Agglomeration de Longueuil
-Saint-Bruno-de-Montarville,Agglomeration de Longueuil
-Saint-Lambert,Agglomeration de Longueuil
-Laval,Laval
-Blainville,Couronne Nord
-Boisbriand,Couronne Nord
-Bois-des-Filion,Couronne Nord
-Charlemagne,Couronne Nord
-Deux-Montagnes,Couronne Nord
-L'Assomption,Couronne Nord
-Lorraine,Couronne Nord
-Mascouche,Couronne Nord
-Mirabel,Couronne Nord
-Oka,Couronne Nord
-Pointe-Calumet,Couronne Nord
-Repentigny,Couronne Nord
-Rosemere,Couronne Nord
-Sainte-Anne-des-Plaines,Couronne Nord
-Sainte-Marthe-sur-le-Lac,Couronne Nord
-Sainte-Therese,Couronne Nord
-Saint-Eustache,Couronne Nord
-Saint-Joseph-du-Lac,Couronne Nord
-Saint-Sulpice,Couronne Nord
-Terrebonne,Couronne Nord
-Beauharnois,Couronne Sud
-Beloeil,Couronne Sud
-Calixa-Lavallee,Couronne Sud
-Candiac,Couronne Sud
-Carignan,Couronne Sud
-Chambly,Couronne Sud
-Chateauguay,Couronne Sud
-Contrecoeur,Couronne Sud
-Delson,Couronne Sud
-Hudson,Couronne Sud
-La Prairie,Couronne Sud
-Lery,Couronne Sud
-Les Cedres,Couronne Sud
-L'Ile-Cadieux,Couronne Sud
-L'Ile-Perrot,Couronne Sud
-McMasterville,Couronne Sud
-Mercier,Couronne Sud
-Mont-Saint-Hilaire,Couronne Sud
-Notre-Dame-de-l'Ile-Perrot,Couronne Sud
-Otterburn Park,Couronne Sud
-Pincourt,Couronne Sud
-Pointe-des-Cascades,Couronne Sud
-Richelieu,Couronne Sud
-Saint-Amable,Couronne Sud
-Saint-Basile-le-Grand,Couronne Sud
-Saint-Constant,Couronne Sud
-Sainte-Catherine,Couronne Sud
-Sainte-Julie,Couronne Sud
-Saint-Isidore,Couronne Sud
-Saint-Jean-Baptiste,Couronne Sud
-Saint-Lazare,Couronne Sud
-Saint-Mathias-sur-Richelieu,Couronne Sud
-Saint-Mathieu,Couronne Sud
-Saint-Mathieu-de-BeLoeil,Couronne Sud
-Saint-Philippe,Couronne Sud
-Terrasse-Vaudreuil,Couronne Sud
-Varennes,Couronne Sud
-Vaudreuil-Dorion,Couronne Sud
-Vaudreuil-sur-le-Lac,Couronne Sud
-Vercheres,Couronne Sud
+MUNICIPALITÉS,MRC,SECTEUR
+Baie-d'Urfé,Agglomération de Montréal,Agglomération de Montréal
+Beaconsfield,Agglomération de Montréal,Agglomération de Montréal
+Beauharnois,MRC Beauharnois-Salaberry,Couronne Sud
+Beloeil,MRC La Vallée-du-Richelieu,Couronne Sud
+Blainville,MRC Thérèse-De Blainville,Couronne Nord
+Boisbriand,MRC Thérèse-De Blainville,Couronne Nord
+Bois-des-Filion,MRC Thérèse-De Blainville,Couronne Nord
+Boucherville,Agglomération de Longueuil,Agglomération de Longueuil
+Brossard,Agglomération de Longueuil,Agglomération de Longueuil
+Calixa-Lavallée,MRC Marguerite-D'Youville,Couronne Sud
+Candiac,MRC Roussillon,Couronne Sud
+Carignan,MRC La Vallée-du-Richelieu,Couronne Sud
+Chambly,MRC La Vallée-du-Richelieu,Couronne Sud
+Charlemagne,MRC L'Assomption,Couronne Nord
+Châteauguay,MRC Roussillon,Couronne Sud
+Contrecoeur,MRC Marguerite-D'Youville,Couronne Sud
+Côte-Saint-Luc,Agglomération de Montréal,Agglomération de Montréal
+Delson,MRC Roussillon,Couronne Sud
+Deux-Montagnes,MRC Deux-Montagnes,Couronne Nord
+Dollard-des-Ormeaux,Agglomération de Montréal,Agglomération de Montréal
+Dorval,Agglomération de Montréal,Agglomération de Montréal
+Hampstead,Agglomération de Montréal,Agglomération de Montréal
+Hudson,MRC Vaudreuil-Soulanges,Couronne Sud
+Kirkland,Agglomération de Montréal,Agglomération de Montréal
+La Prairie,MRC Roussillon,Couronne Sud
+L'Assomption,MRC L'Assomption,Couronne Nord
+Laval,MRC Laval,Laval
+Léry,MRC Roussillon,Couronne Sud
+Les Cèdres,MRC Vaudreuil-Soulanges,Couronne Sud
+L'Île-Cadieux,MRC Vaudreuil-Soulanges,Couronne Sud
+L'Île-Dorval,Agglomération de Montréal,Agglomération de Montréal
+L'Île-Perrot,MRC Vaudreuil-Soulanges,Couronne Sud
+Longueuil,Agglomération de Longueuil,Agglomération de Longueuil
+Lorraine,MRC Thérèse-De Blainville,Couronne Nord
+Mascouche,MRC Les Moulins,Couronne Nord
+McMasterville,MRC La Vallée-du-Richelieu,Couronne Sud
+Mercier,MRC Roussillon,Couronne Sud
+Mirabel,MRC Mirabel,Couronne Nord
+Montréal,Agglomération de Montréal,Agglomération de Montréal
+Montréal-Est,Agglomération de Montréal,Agglomération de Montréal
+Montréal-Ouest,Agglomération de Montréal,Agglomération de Montréal
+Mont-Royal,Agglomération de Montréal,Agglomération de Montréal
+Mont-Saint-Hilaire,MRC La Vallée-du-Richelieu,Couronne Sud
+Notre-Dame-de-l'Île-Perrot,MRC Vaudreuil-Soulanges,Couronne Sud
+Oka,MRC Deux-Montagnes,Couronne Nord
+Otterburn Park,MRC La Vallée-du-Richelieu,Couronne Sud
+Pincourt,MRC Vaudreuil-Soulanges,Couronne Sud
+Pointe-Calumet,MRC Deux-Montagnes,Couronne Nord
+Pointe-Claire,Agglomération de Montréal,Agglomération de Montréal
+Pointe-des-Cascades,MRC Vaudreuil-Soulanges,Couronne Sud
+Repentigny,MRC L'Assomption,Couronne Nord
+Richelieu,MRC Rouville,Couronne Sud
+Rosemère,MRC Thérèse-De Blainville,Couronne Nord
+Saint-Amable,MRC Marguerite-D'Youville,Couronne Sud
+Saint-Basile-le-Grand,MRC La Vallée-du-Richelieu,Couronne Sud
+Saint-Bruno-de-Montarville,Agglomération de Longueuil,Agglomération de Longueuil
+Saint-Constant,MRC Roussillon,Couronne Sud
+Sainte-Anne-de-Bellevue,Agglomération de Montréal,Agglomération de Montréal
+Sainte-Anne-des-Plaines,MRC Thérèse-De Blainville,Couronne Nord
+Sainte-Catherine,MRC Roussillon,Couronne Sud
+Sainte-Julie,MRC Marguerite-D'Youville,Couronne Sud
+Sainte-Marthe-sur-le-Lac,MRC Deux-Montagnes,Couronne Nord
+Sainte-Thérèse,MRC Thérèse-De Blainville,Couronne Nord
+Saint-Eustache,MRC Deux-Montagnes,Couronne Nord
+Saint-Isidore,MRC Roussillon,Couronne Sud
+Saint-Jean-Baptiste,MRC La Vallée-du-Richelieu,Couronne Sud
+Saint-Joseph-du-Lac,MRC Deux-Montagnes,Couronne Nord
+Saint-Lambert,Agglomération de Longueuil,Agglomération de Longueuil
+Saint-Lazare,MRC Vaudreuil-Soulanges,Couronne Sud
+Saint-Mathias-sur-Richelieu,MRC Rouville,Couronne Sud
+Saint-Mathieu,MRC Roussillon,Couronne Sud
+Saint-Mathieu-de-Beloeil,MRC La Vallée-du-Richelieu,Couronne Sud
+Saint-Philippe,MRC Roussillon,Couronne Sud
+Saint-Sulpice,MRC L'Assomption,Couronne Nord
+Senneville,Agglomération de Montréal,Agglomération de Montréal
+Terrasse-Vaudreuil,MRC Vaudreuil-Soulanges,Couronne Sud
+Terrebonne,MRC Les Moulins,Couronne Nord
+Varennes,MRC Marguerite-D'Youville,Couronne Sud
+Vaudreuil-Dorion,MRC Vaudreuil-Soulanges,Couronne Sud
+Vaudreuil-sur-le-Lac,MRC Vaudreuil-Soulanges,Couronne Sud
+Verchères,MRC Marguerite-D'Youville,Couronne Sud
+Westmount,Agglomération de Montréal,Agglomération de Montréal

@@ -1,0 +1,138 @@
+{
+  "extractedAt": "2026-10-17T16:08:59.715Z",
+  "sourceUrl": "https://www.ville.mercier.qc.ca/info-travaux/",
+  "municipality": "Ville de Mercier",
+  "records": [],
+  "review": [
+    {
+      "id": "mercier-route-138-coin-rue-william-et-des-erables",
+      "title": "Route 138 / rue William et Des Érables",
+      "indexTitle": "ROUTE 138 / RUE WILLIAM ET DES ÉRABLES",
+      "sourceUrl": "https://www.ville.mercier.qc.ca/info-travaux/route-138-coin-rue-william-et-des-erables/",
+      "publishedAt": "2024-05-30T15:43:56+00:00",
+      "sourceModifiedAt": "2026-06-02T12:58:38+00:00",
+      "locationText": "Boulevard Saint-Jean-Baptiste, à l’intersection de la route 138 et de la rue des Érables/William.",
+      "publishedImpact": "Fermeture temporaire du boulevard Saint-Jean-Baptiste à l’intersection de la route 138 et de la rue des Érables/William.",
+      "period": {
+        "sourceText": "📅 𝗗𝘂 𝟭𝗲𝗿 𝗷𝘂𝗶𝗻, 𝟳 𝗵 𝗮𝘂 𝟭𝟳 𝗷𝘂𝗶𝗹𝗹𝗲𝘁, 𝟭𝟳 𝗵",
+        "startDate": null,
+        "endDate": null,
+        "startTime": "07:00",
+        "endTime": "17:00",
+        "year": null,
+        "limitation": "The published passage omits the year; publication and modification timestamps do not establish the work year."
+      },
+      "sourcePassages": {
+        "workAndClosure": "Des travaux de réfection de la rue des Érables ainsi que la construction d’un poste de pompage nécessitent la fermeture temporaire du boulevard Saint-Jean-Baptiste à l’intersection de la route 138 et de la rue des Érables/William. Avec la mobilisation de l’entrepreneur, il y aura la mise en place de la signalisation et du réseau temporaire d’eau potable.",
+        "vehicleDetour": "𝑫𝒆́𝒕𝒐𝒖𝒓 𝒑𝒐𝒖𝒓 𝒍𝒆𝒔 𝒗𝒆́𝒉𝒊𝒄𝒖𝒍𝒆𝒔 : rues Lalonde, Saint-Joseph et Saint-Laurent (Chemin jaune)",
+        "truckDetour": "𝑫𝒆́𝒕𝒐𝒖𝒓 𝒑𝒐𝒖𝒓 𝒍𝒆𝒔 𝒄𝒂𝒎𝒊𝒐𝒏𝒔 : autoroute de l’Acier (30) et chemin de la Beauce (route 205) (Chemin bleu)",
+        "localTrafficOnly": "𝐀𝐭𝐭𝐞𝐧𝐭𝐢𝐨𝐧 : le chemin jaune est pour la circulation locale et non la circulation en transit!",
+        "businessAccess": "Les commerces du secteurs resteront accessibles : Restaurant Grégoire, Plaza du dollar, JEMO Sport, Bar Salon Marie-André.",
+        "workContingency": "Les travaux, effectués par la Ville de Mercier, pourraient être reportés, prolongés ou annulés en raison de conditions météorologiques défavorables ou de contraintes opérationnelles."
+      },
+      "direction": null,
+      "laneConfiguration": null,
+      "responsible": "Ville de Mercier",
+      "detours": [
+        {
+          "roadUsers": "véhicules",
+          "publishedRoute": "rues Lalonde, Saint-Joseph et Saint-Laurent",
+          "publishedMapLabel": "Chemin jaune",
+          "geometry": null,
+          "limitation": "The notice says the yellow route is for local traffic, not through traffic."
+        },
+        {
+          "roadUsers": "camions",
+          "publishedRoute": "autoroute de l’Acier (30) et chemin de la Beauce (route 205)",
+          "publishedMapLabel": "Chemin bleu",
+          "geometry": null
+        }
+      ],
+      "geometry": null,
+      "geometryStatus": "unresolved-not-georeferenced",
+      "contentSha256": "af65bf8871cf6a6aa8fbaa711d97acf6fdfa834c7012c31e609898a20ff80b53",
+      "media": [
+        {
+          "url": "https://www.ville.mercier.qc.ca/wp-content/uploads/route-138.png",
+          "alt": "",
+          "contentType": "image/png",
+          "byteLength": 595236,
+          "sha256": "b20cb34614f741980e8e0eb58ac3fbab59518e3519da9e31c0418d5868e21c80",
+          "inspectionStatus": "visually-inspected",
+          "inspectedAt": "2026-10-16T23:20:33Z",
+          "observations": [
+            "The red star marks the closure and its legend reads « Fermeture boul. Saint-Jean-Baptiste/rue des Érables ».",
+            "The blue line legend reads « Chemin de détour »; the yellow line legend reads « Circulation locale seulement ».",
+            "The visual labels support the text's vehicle/truck detour distinction and local-only warning.",
+            "The image is an aerial schematic without published coordinates or a georeferenced road geometry; neither the star nor the colored routes are digitized."
+          ]
+        }
+      ],
+      "attachments": [],
+      "status": "reviewed-with-unresolved-data",
+      "decision": "Keep in review; do not create a map record.",
+      "reasons": [
+        "The page's work period gives month, day, and time but no year, so exact dates and active/future eligibility are not established.",
+        "The page says the work may be postponed, prolonged, or cancelled and does not state that the closure is currently active.",
+        "The notice and image identify an intersection and show a symbolic star, but publish no coordinates, scale, or road geometry; no trace can be digitized or guessed.",
+        "The published text and image give detour descriptions, not closure geometries; detours must not be drawn as closed roads."
+      ]
+    }
+  ],
+  "extraction": {
+    "method": "Chromium capture of the official HTML index and all linked notices; original notice media fetched and fingerprinted for review.",
+    "requestMethod": "GET",
+    "responseFormat": "text/html",
+    "indexTitle": "Info-Travaux",
+    "indexContentSha256": "9b3089b653941e82d39913ab740cde8edeb8a8184022a2637fbdf6860e9d351c",
+    "sourceNoticeCount": 1,
+    "capturedNoticeCount": 1,
+    "retainedRecordCount": 0,
+    "limitations": [
+      "The official site currently exposes notices as HTML rather than a structured roadwork and geometry feed.",
+      "The reviewed image distinguishes the closure marker and detour/local-traffic routes but is not georeferenced; its pixels are not converted into road geometry.",
+      "The notice remains a review candidate until its work year, current/future status, and independently verifiable geometry are established."
+    ]
+  },
+  "validation": {
+    "mercierReview": {
+      "status": "complete-review-with-unresolved-candidate",
+      "reviewedAt": "2026-10-16T23:20:33Z",
+      "previousRestartPoint": null,
+      "previousRestartPointNote": "The prior snapshot had no completed notice-review inventory; its presence was not treated as evidence of review.",
+      "restartPoint": {
+        "url": "https://www.ville.mercier.qc.ca/info-travaux/route-138-coin-rue-william-et-des-erables/",
+        "publishedAt": "2024-05-30T15:43:56+00:00",
+        "sourceModifiedAt": "2026-06-02T12:58:38+00:00"
+      },
+      "index": {
+        "url": "https://www.ville.mercier.qc.ca/info-travaux/",
+        "title": "Info-Travaux",
+        "noticeCount": 1,
+        "contentSha256": "9b3089b653941e82d39913ab740cde8edeb8a8184022a2637fbdf6860e9d351c"
+      },
+      "inventory": [
+        {
+          "indexPosition": 1,
+          "id": "mercier-route-138-coin-rue-william-et-des-erables",
+          "indexTitle": "ROUTE 138 / RUE WILLIAM ET DES ÉRABLES",
+          "title": "Route 138 / rue William et Des Érables",
+          "url": "https://www.ville.mercier.qc.ca/info-travaux/route-138-coin-rue-william-et-des-erables/",
+          "publishedAt": "2024-05-30T15:43:56+00:00",
+          "sourceModifiedAt": "2026-06-02T12:58:38+00:00",
+          "contentSha256": "af65bf8871cf6a6aa8fbaa711d97acf6fdfa834c7012c31e609898a20ff80b53",
+          "media": [
+            {
+              "url": "https://www.ville.mercier.qc.ca/wp-content/uploads/route-138.png",
+              "alt": "",
+              "contentType": "image/png",
+              "byteLength": 595236,
+              "sha256": "b20cb34614f741980e8e0eb58ac3fbab59518e3519da9e31c0418d5868e21c80"
+            }
+          ],
+          "attachments": []
+        }
+      ]
+    }
+  }
+}

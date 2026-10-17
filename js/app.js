@@ -19,7 +19,8 @@ const SEVERITY_META = {
   major: { label: () => t("severity.major"), color: "#ff8c00", width: 7, opacity: 0.96 },
   moderate: { label: () => t("severity.moderate"), color: "#ffe600", width: 6, opacity: 0.94 },
   parking: { label: () => t("severity.parking"), color: "#ff2bd6", width: 5, opacity: 0.92 },
-  minor: { label: () => t("severity.minor"), color: "#00e676", width: 4, opacity: 0.78 }
+  minor: { label: () => t("severity.minor"), color: "#00e676", width: 4, opacity: 0.78 },
+  worksite: { label: () => t("severity.worksite"), color: "#64748b", width: 5, opacity: 0.86 }
 };
 
 if (PEDESTRIAN_MODE) SEVERITY_META.moderate.color = SEVERITY_META.major.color;
@@ -36,6 +37,7 @@ function roadTypeFromText(value) {
 }
 
 function closureImpactLabel(closure) {
+  if (closure.worksiteOnly) return t("severity.worksite");
   if (closure.mobiliteRecordId) return t(`mobilite.impact.${closure.impactType}`);
   const binding = mobiliteDuplicateBindings.get(closure.id);
   if (binding?.preferExisting && binding.impactType && binding.fingerprint === closure.mobiliteSourceFingerprint) return t(`mobilite.impact.${binding.impactType}`);
@@ -84,13 +86,20 @@ const LIVE_SOURCES = {
   citizenReportsSnapshot: "data/citizen-reports-snapshot.json",
   marathonBenevaSnapshot: "data/Marathon-Beneva-Mtl-2026.json",
   parcJeanDrapeauSnapshot: "data/parc-jean-drapeau-snapshot.json",
-  montSaintHilaireWorks: "https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_10Septembre2026_WFL1/FeatureServer",
+  montSaintHilaireWorks: "https://services5.arcgis.com/RupmNFqbsv0VX4xY/arcgis/rest/services/INFO_TRAVAUX_2026_Pour_diffusion_13Octobre2026_new_WFL1/FeatureServer",
   // ✓ Phase 2 Validé - WFS MTMD Quebec 511 (travaux routiers provinciaux)
   quebec511: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:chantiers_mtmdet&srsname=EPSG:4326&outputformat=geojson",
   // WFS MTMD Quebec 511 - evenements (fermetures, incidents, restrictions)
   quebec511Events: "https://ws.mapserver.transports.gouv.qc.ca/swtq?service=wfs&version=2.0.0&request=getfeature&typename=ms:evenements&srsname=EPSG:4326&outputformat=geojson",
   pjcciSnapshot: "data/pjcci-work-advisories-snapshot.json?v=20260911-pjcci-map-source",
-  mobiliteMontrealSnapshot: "data/mobilite-montreal-snapshot.json"
+  mobiliteMontrealSnapshot: "data/mobilite-montreal-snapshot.json",
+  bouchervilleSnapshot: "data/boucherville-roadworks-snapshot.json",
+  brossardSnapshot: "data/brossard-roadworks-snapshot.json",
+  saintBasileSnapshot: "data/saint-basile-worksites-snapshot.json",
+  sainteJulieSnapshot: "data/sainte-julie-worksites-snapshot.json",
+  chamblyPoints: "https://chambly.ca/api/v1/pois",
+  mcmastervilleKml: "https://www.google.com/maps/d/kml?mid=1v2gaHW5Woc8hV-Majzrtnnu1EChm0BM&forcekml=1",
+  mcmastervillePosts: "https://www.mcmasterville.ca/wp-json/wp/v2/posts"
 };
 
 // Phase 2 Validé - 3 couches ArcGIS Laval confirmées
@@ -1224,6 +1233,12 @@ function formatInputDate(date) {
   return `${year}-${month}-${day}`;
 }
 
+function montrealDate(date = new Date()) {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Toronto", year: "numeric", month: "2-digit", day: "2-digit"
+  }).format(date);
+}
+
 function getDateRange() {
   const start = parseDate(dateStart.value);
   const end = dateEndUsesOpenDefault ? parseDate("2099-12-31") : parseDate(dateEnd.value || "2099-12-31");
@@ -1241,6 +1256,12 @@ function hasExpiredToday(closure, now = new Date()) {
 
 function overlapsDateRange(closure, range) {
   if (closure.mobiliteRecordId) return !hasExpiredToday(closure) && mobiliteScheduleOverlaps(closure, range);
+  if (closure.worksiteOnly) {
+    const checkedDate = closure.currentOnlyDate || (closure.sourceCheckedAt ? montrealDate(new Date(closure.sourceCheckedAt)) : null);
+    if (!checkedDate) return false;
+    const checked = parseDate(checkedDate);
+    return !Number.isNaN(checked.valueOf()) && checked >= range.start && checked <= range.end;
+  }
   if (closure.sourceKind === "citizen-report") {
     const today = citizenLocalDateTime(closure, new Date()).slice(0, 10);
     if (closure.endDate && closure.endDate < today) return false;
@@ -1332,6 +1353,7 @@ function matchesTimePeriod(closure, activePeriods) {
     }
     return false;
   }
+  if (Array.isArray(closure.periods) && closure.periods.length === 0) return activePeriods.size > 0;
   return closure.periods.some((period) => activePeriods.has(period));
 }
 
@@ -1350,12 +1372,15 @@ function matchesSearch(closure, query) {
 }
 
 function severityRank(severity) {
-  return { critical: 0, major: 1, moderate: 2, parking: 3, minor: 4 }[severity] ?? 5;
+  return { critical: 0, major: 1, moderate: 2, parking: 3, minor: 4, worksite: 5 }[severity] ?? 6;
 }
 
 function layerRank(closure) {
-  const ranks = { parking: 0, minor: 1, moderate: 2, major: 3, critical: 4 };
-  return ranks[closure.severity] ?? 1;
+  const ranks = { parking: 0, minor: 1, moderate: 2, major: 3, critical: 4, worksite: 5 };
+  const severityRank = ranks[closure.severity] ?? 1;
+  // Keep points clickable above line hit areas, with road impacts above neutral worksites.
+  if (closure.geometry?.type === "Point") return closure.worksiteOnly ? 9 : 10 + severityRank;
+  return severityRank;
 }
 
 function getFilteredClosures() {
@@ -1367,6 +1392,7 @@ function getFilteredClosures() {
 
   const filteredClosures = [];
   allClosures.forEach((closure) => {
+    if (statsViewActive && closure.worksiteOnly) return;
     if (isCoveredByComplementaryClosure(closure)) return;
     if (PEDESTRIAN_MODE && !window.PEDESTRIAN_MAP.matchesArea(closure)) return;
     if (closureMatchesCategories(closure, categories)
@@ -1389,6 +1415,7 @@ function getFilterBaseClosures() {
 
   const filteredClosures = [];
   allClosures.forEach((closure) => {
+    if (statsViewActive && closure.worksiteOnly) return;
     if (isCoveredByComplementaryClosure(closure)) return;
     if (PEDESTRIAN_MODE && !window.PEDESTRIAN_MAP.matchesArea(closure)) return;
     if (closureMatchesCategories(closure, categories)
@@ -1421,6 +1448,11 @@ function complementaryUciClosure() {
 }
 
 function isCoveredByComplementaryClosure(closure) {
+  if (closure.municipalDuplicateOwnerId && closure.municipalDuplicateFingerprint) {
+    const owner = allClosures.find((record) => record.id === closure.municipalDuplicateOwnerId);
+    if (owner && owner.municipalDuplicateFingerprint === closure.municipalDuplicateFingerprint
+      && mcmastervilleDuplicateFingerprint(owner, closure) === closure.municipalDuplicateFingerprint) return true;
+  }
   if (isCoveredByMobiliteClosure(closure)) return true;
   if (closure.marathonGeometryReplacementId) {
     if (marathonGeometryOwnerCache.source !== allClosures || marathonGeometryOwnerCache.length !== allClosures.length) {
@@ -2363,6 +2395,501 @@ async function loadBeaconsfieldSnapshotClosures() {
       details: [["Extraction", snapshot.extractedAt], ["Nature des travaux", labels.join(", ")], ["Référence", record.reference]]
     };
   });
+}
+
+function normalizeMunicipalSnapshotRecord(record, snapshot, source) {
+  const severity = SEVERITY_META[record.severity];
+  const geometry = record.geometry;
+  const coordinates = flattenCoordinates(geometry?.coordinates)
+    .filter((coordinate) => Array.isArray(coordinate) && Number.isFinite(coordinate[0]) && Number.isFinite(coordinate[1]));
+  if (!record.id || !severity || !geometry?.type || !coordinates.length || !snapshot.extractedAt) {
+    throw new Error(`Invalid ${source.sourceKind} snapshot record ${record.id || "(missing ID)"}`);
+  }
+  const geometryNote = record.worksiteOnly
+    ? t("municipal.worksitePointNote")
+    : source.sourceKind === "boucherville-snapshot"
+      ? t("municipal.bouchervillePointNote")
+      : source.sourceKind === "brossard-snapshot"
+        ? t(geometry.type === "MultiLineString" ? "municipal.brossardLineNote" : "municipal.brossardPointNote")
+        : record.geometryNote;
+  const details = [
+    ...(record.sourceStatus ? [[t("popup.sourceStatus"), record.sourceStatus]] : []),
+    ...(record.reportedPeriod ? [[t("popup.publishedPeriod"), record.reportedPeriod]] : []),
+    ...(record.detourText ? [[t("popup.detour"), record.detourText]] : []),
+    ...(record.sourceDescription ? [[t("popup.sourceText"), record.sourceDescription]] : []),
+    ...(geometryNote ? [[t("popup.geometryNote"), geometryNote]] : []),
+    [t("popup.sourceCheckedAt"), snapshot.extractedAt]
+  ];
+  return {
+    ...record,
+    category: "municipal",
+    sourceKind: source.sourceKind,
+    responsible: record.responsible || source.responsible,
+    borough: record.borough || source.borough,
+    source: source.label,
+    sourceCheckedAt: snapshot.extractedAt,
+    trafficLabel: severity.label(),
+    color: severity.color,
+    geometryNote,
+    pointHitPriority: geometry.type === "Point" || record.pointHitPriority === true,
+    point: record.point || representativePoint(geometry),
+    details
+  };
+}
+
+async function loadBouchervilleSnapshotClosures() {
+  const snapshot = await fetchJson(LIVE_SOURCES.bouchervilleSnapshot, { cache: false });
+  if (snapshot.schemaVersion !== 1 || !Array.isArray(snapshot.records) || !Array.isArray(snapshot.pedestrianRecords)) {
+    throw new Error("Invalid Boucherville roadworks snapshot");
+  }
+  return snapshot.records.map((record) => normalizeMunicipalSnapshotRecord(record, snapshot, {
+    sourceKind: "boucherville-snapshot",
+    responsible: "Ville de Boucherville",
+    borough: "Boucherville",
+    label: "Ville de Boucherville - Snapshot des entraves auto et piétonnes"
+  }));
+}
+
+async function loadBrossardSnapshotClosures() {
+  const snapshot = await fetchJson(LIVE_SOURCES.brossardSnapshot, { cache: false });
+  if (snapshot.schemaVersion !== 1 || !Array.isArray(snapshot.records)) {
+    throw new Error("Invalid Brossard roadworks snapshot");
+  }
+  return snapshot.records.map((record) => normalizeMunicipalSnapshotRecord(record, snapshot, {
+    sourceKind: "brossard-snapshot",
+    responsible: "Ville de Brossard",
+    borough: "Brossard",
+    label: "Ville de Brossard - Snapshot des entraves auto"
+  }));
+}
+
+async function loadSaintBasileSnapshotClosures() {
+  const snapshot = await fetchJson(LIVE_SOURCES.saintBasileSnapshot, { cache: false });
+  if (snapshot.schemaVersion !== 1 || !Array.isArray(snapshot.records)) {
+    throw new Error("Invalid Saint-Basile worksite snapshot");
+  }
+  return snapshot.records.map((record) => normalizeMunicipalSnapshotRecord(record, snapshot, {
+    sourceKind: "saint-basile-snapshot",
+    responsible: "Ville de Saint-Basile-le-Grand",
+    borough: "Saint-Basile-le-Grand",
+    label: "Ville de Saint-Basile-le-Grand - Snapshot des chantiers et avis routiers vérifiés"
+  }));
+}
+
+async function loadSainteJulieSnapshotClosures() {
+  const snapshot = await fetchJson(LIVE_SOURCES.sainteJulieSnapshot, { cache: false });
+  if (snapshot.schemaVersion !== 1 || !Array.isArray(snapshot.records)) {
+    throw new Error("Invalid Sainte-Julie worksite snapshot");
+  }
+  return snapshot.records.map((record) => normalizeMunicipalSnapshotRecord(record, snapshot, {
+    sourceKind: "sainte-julie-snapshot",
+    responsible: "Ville de Sainte-Julie",
+    borough: "Sainte-Julie",
+    label: "Ville de Sainte-Julie - Snapshot d'un point de chantier (impact non publié)"
+  }));
+}
+
+async function loadChamblyWorksiteClosures() {
+  const response = await fetchJson(LIVE_SOURCES.chamblyPoints, { cache: false });
+  const records = response.data?.pois;
+  if (!Array.isArray(records)) throw new Error("Chambly POI response has no published pois array");
+  const sourceCheckedAt = new Date().toISOString();
+  const currentOnlyDate = montrealDate(new Date(sourceCheckedAt));
+  const worksInProgress = records.filter((record) => Array.isArray(record.categoriesSlug)
+    && record.categoriesSlug.includes("chantiers-municipaux")
+    && record.categoriesSlug.includes("en-cours"));
+  const roadName = /\b(?:rue|chemin|route|rang|boulevard|boul\.|avenue|autoroute|mont[ée]e)\b/i;
+  const mapped = [];
+  const pending = [];
+
+  for (const record of worksInProgress) {
+    if (!roadName.test(record.title || "")) {
+      pending.push({ id: record.id, reason: "No road name in the current worksite title." });
+      continue;
+    }
+    const latitude = Number(record.position?.lat);
+    const longitude = Number(record.position?.lng);
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)
+      || latitude < 45 || latitude > 47 || longitude < -75 || longitude > -72) {
+      pending.push({ id: record.id, reason: "No valid published map point." });
+      continue;
+    }
+    const point = [longitude, latitude];
+    mapped.push({
+      id: `chambly-worksite-${record.id}`,
+      sourceId: String(record.id),
+      title: record.title,
+      category: "municipal",
+      sourceKind: "chambly-live",
+      responsible: "Ville de Chambly",
+      borough: "Chambly",
+      source: "Ville de Chambly - Chantiers en cours (point, impact non publié)",
+      sourceUrl: "https://chambly.ca/carte-interactive/chantiers-municipaux/en-cours",
+      sourceCheckedAt,
+      sourceStatus: record.category,
+      currentOnlyDate,
+      worksiteOnly: true,
+      streets: record.title,
+      impact: "La carte publie un chantier en cours à ce point, mais ne précise pas d’impact routier.",
+      trafficLabel: t("severity.worksite"),
+      severity: "worksite",
+      direction: t("popup.notPublished"),
+      reference: String(record.id),
+      geometry: { type: "Point", coordinates: point },
+      point,
+      pointHitPriority: true,
+      geometryNote: t("municipal.worksitePointNote"),
+      periods: [],
+      schedule: [],
+      details: [
+        [t("popup.sourceStatus"), record.category],
+        ...(record.kml ? [[t("popup.publishedKml"), record.kml]] : []),
+        [t("popup.sourceCheckedAt"), sourceCheckedAt]
+      ]
+    });
+  }
+
+  if (pending.length) console.warn("Chambly current works kept out of the map:", pending);
+  console.info("Chambly live worksite verification:", {
+    received: records.length, currentWorks: worksInProgress.length, mappedPoints: mapped.length, review: pending.length
+  });
+  return mapped;
+}
+
+function municipalHtmlText(value) {
+  const documentContent = new DOMParser().parseFromString(String(value || ""), "text/html");
+  return documentContent.body.textContent.replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function normalizeMunicipalSourceText(value) {
+  return municipalHtmlText(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’‘]/g, "'").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function parseKmlCoordinates(value) {
+  return String(value || "").trim().split(/\s+/).filter(Boolean).map((coordinate) => {
+    const values = coordinate.split(",").map(Number);
+    if (values.length < 2 || !Number.isFinite(values[0]) || !Number.isFinite(values[1])) {
+      throw new Error("McMasterville KML contains an invalid coordinate");
+    }
+    return values.slice(0, 2);
+  });
+}
+
+function parseKmlPlacemarkGeometry(element) {
+  const type = element.localName;
+  const coordinates = [...element.getElementsByTagNameNS("*", "coordinates")][0]?.textContent || "";
+  const points = parseKmlCoordinates(coordinates);
+  if (type === "Point" && points.length === 1) return { type: "Point", coordinates: points[0] };
+  if (type === "LineString" && points.length >= 2) return { type: "LineString", coordinates: points };
+  return null;
+}
+
+function parseMcMastervilleKml(xml) {
+  const documentContent = new DOMParser().parseFromString(xml, "application/xml");
+  if (documentContent.querySelector("parsererror")) throw new Error("McMasterville KML is not valid XML");
+  const placemarks = [...documentContent.getElementsByTagNameNS("*", "Placemark")];
+  if (!placemarks.length) throw new Error("McMasterville KML contains no placemarks");
+  const groups = new Map();
+  for (const placemark of placemarks) {
+    const name = [...placemark.getElementsByTagNameNS("*", "name")][0]?.textContent
+      .replace(/^<!\[CDATA\[|\]\]>$/g, "").trim() || "";
+    const description = municipalHtmlText([...placemark.getElementsByTagNameNS("*", "description")][0]?.textContent || "");
+    const geometryElements = [...placemark.children].filter((element) => ["Point", "LineString"].includes(element.localName));
+    const geometries = geometryElements.map(parseKmlPlacemarkGeometry).filter(Boolean);
+    if (!name || !geometries.length) continue;
+    const key = `${normalizeMunicipalSourceText(name)}|${normalizeMunicipalSourceText(description)}`;
+    if (!groups.has(key)) groups.set(key, { name, description, geometries: [] });
+    groups.get(key).geometries.push(...geometries);
+  }
+  return [...groups.values()];
+}
+
+function parseMcMastervillePeriod(text) {
+  const normalized = normalizeMunicipalSourceText(text);
+  const match = normalized.match(/\ba compter du\s+([a-z]+)\s+(\d{1,2})\s+([a-z]+),?\s+des\s+(\d{1,2})(?::(\d{2})|\s*h(?:\s*(\d{2}))?).*?jusqu'au\s+([a-z]+)\s+(\d{1,2})\s+([a-z]+)\s+(20\d{2})\b/);
+  if (!match) return null;
+  const months = { janvier: 1, fevrier: 2, mars: 3, avril: 4, mai: 5, juin: 6,
+    juillet: 7, aout: 8, septembre: 9, octobre: 10, novembre: 11, decembre: 12 };
+  const toIsoDate = (day, month, year) => {
+    const monthNumber = months[month];
+    const date = new Date(Date.UTC(Number(year), monthNumber - 1, Number(day)));
+    if (!monthNumber || date.getUTCFullYear() !== Number(year)
+      || date.getUTCMonth() !== monthNumber - 1 || date.getUTCDate() !== Number(day)) return null;
+    return date.toISOString().slice(0, 10);
+  };
+  const year = match[10];
+  const startDate = toIsoDate(match[2], match[3], year);
+  const endDate = toIsoDate(match[8], match[9], year);
+  const startTime = `${String(Number(match[4])).padStart(2, "0")}:${match[5] || match[6] || "00"}`;
+  const weekdays = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+  const startWeekday = new Date(`${startDate}T12:00:00Z`).getUTCDay();
+  const endWeekday = new Date(`${endDate}T12:00:00Z`).getUTCDay();
+  if (!startDate || !endDate || startDate > endDate
+    || weekdays[startWeekday] !== match[1] || weekdays[endWeekday] !== match[7]) {
+    throw new Error("McMasterville notice dates do not match the published weekday wording");
+  }
+  return { startDate, endDate, startTime };
+}
+
+async function fetchMunicipalResource(url, timeout = 15000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeout);
+  try {
+    const response = await fetch(url, { signal: controller.signal, headers: { Accept: "*/*" }, cache: "no-store" });
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+    const contentType = response.headers.get("content-type") || "";
+    const totalPages = response.headers.get("X-WP-TotalPages");
+    const total = response.headers.get("X-WP-Total");
+    const text = await response.text();
+    return { contentType, totalPages, total, text };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function fetchMcMastervillePostIndex() {
+  const currentYear = new Date().getFullYear();
+  const posts = [];
+  const ids = new Set();
+  let totalPages = null;
+  let reportedTotal = null;
+  for (let pageNumber = 1; pageNumber <= 50; pageNumber += 1) {
+    const url = new URL(LIVE_SOURCES.mcmastervillePosts);
+    url.search = new URLSearchParams({
+      categories: "129",
+      after: `${currentYear - 1}-01-01T00:00:00`,
+      per_page: "100",
+      page: String(pageNumber),
+      _fields: "id,date,modified,link,title,categories"
+    });
+    const response = await fetchMunicipalResource(url);
+    if (!/json/i.test(response.contentType)) throw new Error("McMasterville article index is not JSON");
+    const rows = JSON.parse(response.text);
+    if (!Array.isArray(rows)) throw new Error("McMasterville article index is not an array");
+    const pagesHeader = response.totalPages === null ? Number.NaN : Number(response.totalPages);
+    const totalHeader = response.total === null ? Number.NaN : Number(response.total);
+    if (pageNumber === 1) {
+      totalPages = Number.isInteger(pagesHeader) && pagesHeader > 0 ? pagesHeader : null;
+      reportedTotal = Number.isInteger(totalHeader) && totalHeader >= 0 ? totalHeader : null;
+    }
+    for (const post of rows) {
+      if (!Number.isInteger(Number(post.id)) || ids.has(Number(post.id))) throw new Error("McMasterville article pagination has duplicate or invalid IDs");
+      ids.add(Number(post.id));
+      posts.push(post);
+    }
+    if (totalPages && pageNumber >= totalPages) break;
+    if (rows.length < 100) break;
+    if (pageNumber === 50) throw new Error("McMasterville article pagination exceeded the safety limit");
+  }
+  if (reportedTotal !== null && posts.length !== reportedTotal) throw new Error("McMasterville article index is incomplete");
+  return posts;
+}
+
+async function loadMcMastervilleClosures() {
+  const [kmlResponse, posts] = await Promise.all([
+    fetchMunicipalResource(LIVE_SOURCES.mcmastervilleKml),
+    fetchMcMastervillePostIndex()
+  ]);
+  if (!/xml|kml/i.test(kmlResponse.contentType)) throw new Error("McMasterville KML response has an unexpected content type");
+  const kmlGroups = parseMcMastervilleKml(kmlResponse.text);
+  const closureGroups = kmlGroups.filter((group) => /fermeture|entrave/i.test(`${group.name} ${group.description}`));
+  const candidates = closureGroups.filter((group) => normalizeMunicipalSourceText(group.name).includes("richelieu")
+    && group.geometries.some((geometry) => geometry.type === "LineString"));
+  const otherClosureGroups = closureGroups.filter((group) => !candidates.includes(group));
+  if (otherClosureGroups.length) {
+    console.info("McMasterville KML entries not mapped without a matched dated notice:", otherClosureGroups.map((group) => group.name));
+  }
+  if (candidates.length !== 1) {
+    if (candidates.length === 0) {
+      console.warn("McMasterville KML closure candidate kept in review: no dated matching line is published.");
+      return [];
+    }
+    throw new Error("McMasterville KML has conflicting Richelieu closure geometries");
+  }
+
+  const group = candidates[0];
+  const postMatches = posts.filter((post) => {
+    const title = normalizeMunicipalSourceText(post.title?.rendered || "");
+    return title.includes("fermeture") && title.includes("richelieu");
+  });
+  if (postMatches.length !== 1) {
+    if (postMatches.length === 0) {
+      console.warn("McMasterville KML Richelieu closure kept in review: no matching current notice was found.");
+      return [];
+    }
+    throw new Error("McMasterville has multiple current Richelieu closure notices");
+  }
+
+  const articleUrl = new URL(`${LIVE_SOURCES.mcmastervillePosts}/${postMatches[0].id}`);
+  articleUrl.search = new URLSearchParams({
+    _fields: "id,date,modified,link,title,content,categories"
+  });
+  const articleResponse = await fetchMunicipalResource(articleUrl);
+  if (!/json/i.test(articleResponse.contentType)) throw new Error("McMasterville notice detail is not JSON");
+  const article = JSON.parse(articleResponse.text);
+  if (Number(article.id) !== Number(postMatches[0].id) || !article.content?.rendered) {
+    throw new Error("McMasterville notice detail does not match its index identity");
+  }
+
+  const htmlDocument = new DOMParser().parseFromString(article.content.rendered, "text/html");
+  const paragraphs = [...htmlDocument.querySelectorAll("p")]
+    .map((paragraph) => paragraph.textContent.replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim())
+    .filter(Boolean);
+  const closurePassage = paragraphs.find((paragraph) => /sera ferm[eé] à la circulation/i.test(paragraph));
+  const detourPassage = paragraphs.find((paragraph) => /automobilistes seront invit[eé]s/i.test(paragraph));
+  const parkingPassage = paragraphs.find((paragraph) => /interdit de stationner sur rue|stationnement sur rue.*interdit/i.test(paragraph));
+  const continuousPassage = paragraphs.find((paragraph) => /travaux se d[eé]rouleront en continu/i.test(paragraph));
+  if (!closurePassage || !detourPassage || !parkingPassage || !continuousPassage) {
+    throw new Error("McMasterville notice no longer publishes the reviewed closure, detour, parking, and continuous-work passages");
+  }
+  const period = parseMcMastervillePeriod(closurePassage);
+  if (!period || !/entre les rues Saint-Fran[cç]ois et de l’École/i.test(closurePassage)
+    || !/route 223/i.test(group.name + " " + group.description)) {
+    throw new Error("McMasterville notice and official KML no longer establish the same road section and dated closure");
+  }
+  const checkedAt = new Date().toISOString();
+  const currentDate = montrealDate(new Date(checkedAt));
+  if (period.endDate < currentDate) return [];
+  const line = group.geometries.find((geometry) => geometry.type === "LineString");
+  const pointGeometry = group.geometries.find((geometry) => geometry.type === "Point");
+  if (!line || !pointGeometry || line.coordinates.some(([longitude, latitude]) => !Number.isFinite(longitude)
+    || !Number.isFinite(latitude) || longitude < -75 || longitude > -72 || latitude < 45 || latitude > 47)) {
+    throw new Error("McMasterville official KML geometry is missing or outside the source municipality");
+  }
+  if (!/ferme/i.test(normalizeMunicipalSourceText(group.description))
+    || !normalizeMunicipalSourceText(group.description).includes("richelieu")) {
+    throw new Error("McMasterville KML description conflicts with the article text");
+  }
+
+  return [{
+    id: `mcmasterville-${article.id}`,
+    sourceId: String(article.id),
+    title: municipalHtmlText(article.title?.rendered || ""),
+    category: "municipal",
+    sourceKind: "mcmasterville-live",
+    responsible: "Ville de McMasterville",
+    borough: "McMasterville",
+    source: "Ville de McMasterville - Avis détaillés et géométrie KML (flux live)",
+    sourceUrl: article.link,
+    sourceCheckedAt: checkedAt,
+    sourcePublishedAt: article.date,
+    sourceModifiedAt: article.modified,
+    startDate: period.startDate,
+    endDate: period.endDate,
+    startTime: period.startTime,
+    impact: closurePassage,
+    trafficLabel: t("severity.critical"),
+    trafficLabels: ["Fermeture complète"],
+    severity: "critical",
+    streets: "Chemin du Richelieu (route 223), entre les rues Saint-François et de l’École.",
+    direction: "Direction non publiée.",
+    reference: String(article.id),
+    geometry: line,
+    point: pointGeometry.coordinates,
+    publishedGeometries: group.geometries,
+    suppressDirectionArrows: true,
+    pointHitPriority: true,
+    geometryNote: t("municipal.mcmastervilleGeometryNote"),
+    periods: ["day", "night"],
+    schedule: [],
+    scheduleText: `${continuousPassage} L’avis ne publie pas l’heure de réouverture le samedi.`,
+    relatedSources: [{ url: LIVE_SOURCES.mcmastervilleKml, label: "Carte officielle KML" }],
+    details: [
+      [t("popup.sourceText"), closurePassage],
+      [t("popup.detour"), detourPassage],
+      [t("popup.parkingNotice"), parkingPassage],
+      [t("popup.publishedKml"), group.description],
+      [t("popup.sourceCheckedAt"), checkedAt]
+    ]
+  }];
+}
+
+function municipalLineGeometries(geometry) {
+  if (geometry?.type === "LineString") return [geometry.coordinates];
+  if (geometry?.type === "MultiLineString") return geometry.coordinates;
+  return [];
+}
+
+function coordinateDistanceMeters(first, second) {
+  const radians = Math.PI / 180;
+  const latitudeDelta = (second[1] - first[1]) * radians;
+  const longitudeDelta = (second[0] - first[0]) * radians;
+  const latitude1 = first[1] * radians;
+  const latitude2 = second[1] * radians;
+  const haversine = Math.sin(latitudeDelta / 2) ** 2
+    + Math.cos(latitude1) * Math.cos(latitude2) * Math.sin(longitudeDelta / 2) ** 2;
+  return 6371000 * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
+}
+
+function municipalLinesShareEndpoints(first, second, toleranceMeters = 30) {
+  const firstLines = municipalLineGeometries(first);
+  const secondLines = municipalLineGeometries(second);
+  return firstLines.some((firstLine) => secondLines.some((secondLine) => {
+    if (firstLine.length < 2 || secondLine.length < 2) return false;
+    const direct = coordinateDistanceMeters(firstLine[0], secondLine[0]) <= toleranceMeters
+      && coordinateDistanceMeters(firstLine.at(-1), secondLine.at(-1)) <= toleranceMeters;
+    const reversed = coordinateDistanceMeters(firstLine[0], secondLine.at(-1)) <= toleranceMeters
+      && coordinateDistanceMeters(firstLine.at(-1), secondLine[0]) <= toleranceMeters;
+    return direct || reversed;
+  }));
+}
+
+function mcmastervilleDuplicateFingerprint(quebec511, municipal) {
+  const signature = (record) => [
+    record.id,
+    record.sourceKind,
+    record.startDate,
+    record.endDate,
+    record.startTime || null,
+    record.endTime || null,
+    normalizeSearchText(record.streets),
+    normalizeSearchText(record.impact),
+    record.severity,
+    record.geometry
+  ];
+  return JSON.stringify([quebec511, municipal].sort((a, b) => a.id.localeCompare(b.id)).map(signature));
+}
+
+function isMcMastervilleQuebec511Duplicate(municipal, quebec511) {
+  if (!["quebec511-mtmd-wfs", "quebec511-event"].includes(quebec511.sourceKind)
+    || municipal.severity !== "critical" || quebec511.severity !== "critical"
+    || municipal.startDate !== quebec511.startDate || municipal.endDate !== quebec511.endDate
+    || municipal.startTime !== quebec511.startTime
+    || (municipal.endTime && quebec511.endTime && municipal.endTime !== quebec511.endTime)) return false;
+  const requiredTerms = ["richelieu", "saint francois", "ecole"];
+  const municipalText = normalizeSearchText(`${municipal.title} ${municipal.streets} ${municipal.impact}`);
+  const quebecText = normalizeSearchText(`${quebec511.title} ${quebec511.streets} ${quebec511.impact}`);
+  if (!requiredTerms.every((term) => municipalText.includes(term) && quebecText.includes(term))
+    || !/ferm/.test(municipalText) || !/ferm/.test(quebecText)) return false;
+  return municipalLinesShareEndpoints(municipal.geometry, quebec511.geometry);
+}
+
+function bindMcMastervilleQuebec511Duplicates(records) {
+  const municipalRecords = records.filter((record) => record.sourceKind === "mcmasterville-live");
+  const quebec511Records = records.filter((record) => ["quebec511-mtmd-wfs", "quebec511-event"].includes(record.sourceKind));
+  for (const municipal of municipalRecords) {
+    const matches = quebec511Records.filter((record) => isMcMastervilleQuebec511Duplicate(municipal, record));
+    if (matches.length !== 1) {
+      if (matches.length > 1) console.warn("McMasterville closure has multiple Quebec 511 matches; no duplicate suppression applied.", municipal.id);
+      continue;
+    }
+    const quebec511 = matches[0];
+    const fingerprint = mcmastervilleDuplicateFingerprint(quebec511, municipal);
+    municipal.municipalDuplicateOwnerId = quebec511.id;
+    municipal.municipalDuplicateFingerprint = fingerprint;
+    quebec511.municipalDuplicateFingerprint = fingerprint;
+    const relatedUrl = municipal.sourceUrl;
+    quebec511.relatedSources = [
+      ...(quebec511.relatedSources || []).filter((source) => source.url !== relatedUrl),
+      { url: relatedUrl, label: t("municipal.mcmastervilleSource") }
+    ];
+    quebec511.details = [
+      ...(quebec511.details || []),
+      [t("municipal.mcmastervilleDuplicate"), [municipal.impact, municipal.scheduleText].filter(Boolean).join(" ")]
+    ];
+    console.info("McMasterville notice matched the same Quebec 511 closure; municipal source linked without a duplicate map card.", municipal.id, quebec511.id);
+  }
 }
 
 async function loadMontrealPedestrianSnapshotClosures() {
@@ -4059,7 +4586,7 @@ async function fetchJson(url, { timeout = 15000, cache = true } = {}) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeout);
     try {
-      const response = await fetch(url, { signal: controller.signal });
+      const response = await fetch(url, { signal: controller.signal, cache: cache ? "default" : "no-store" });
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
       }
@@ -4085,25 +4612,37 @@ async function loadOfficialData() {
   if (PEDESTRIAN_MODE) return window.PEDESTRIAN_MAP.load();
   showMapStatus(t("map.loading"), "loading");
 
-  const localSnapshotResults = await Promise.allSettled([
-    loadUciSnapshotClosures(),
-    loadMontRoyalSnapshotClosures(),
-    loadBeaconsfieldSnapshotClosures(),
-    loadMontrealPedestrianSnapshotClosures(),
-    loadNoovoRoadClosuresSnapshot(),
-    loadCitizenReportClosures(),
-    loadMarathonBenevaClosures(),
-    loadParcJeanDrapeauClosures(),
-    loadPjcciClosures(),
-    loadMobiliteClosures()
-  ]);
+  const sourceFailures = [];
+  const localSnapshotSources = [
+    { name: "Montréal UCI", load: loadUciSnapshotClosures },
+    { name: "Mont-Royal", load: loadMontRoyalSnapshotClosures },
+    { name: "Beaconsfield", load: loadBeaconsfieldSnapshotClosures },
+    { name: "Rues piétonnes de Montréal", load: loadMontrealPedestrianSnapshotClosures },
+    { name: "Noovo", load: loadNoovoRoadClosuresSnapshot },
+    { name: "Signalements citoyens", load: loadCitizenReportClosures },
+    { name: "Marathon Beneva", load: loadMarathonBenevaClosures },
+    { name: "Parc Jean-Drapeau", load: loadParcJeanDrapeauClosures },
+    { name: "PJCCI", load: loadPjcciClosures },
+    { name: "Mobilité Montréal", load: loadMobiliteClosures },
+    { name: "Boucherville", load: loadBouchervilleSnapshotClosures },
+    { name: "Brossard", load: loadBrossardSnapshotClosures },
+    { name: "Saint-Basile-le-Grand", load: loadSaintBasileSnapshotClosures },
+    { name: "Sainte-Julie", load: loadSainteJulieSnapshotClosures }
+  ];
+  const localSnapshotResults = await Promise.allSettled(localSnapshotSources.map((source) => source.load()));
+  localSnapshotResults.forEach((result, index) => {
+    if (result.status === "rejected") {
+      console.warn(`${localSnapshotSources[index].name} snapshot failed`, result.reason);
+      sourceFailures.push(localSnapshotSources[index].name);
+    }
+  });
   const localSnapshotClosures = localSnapshotResults
     .filter((result) => result.status === "fulfilled")
     .flatMap((result) => result.value);
   if (localSnapshotClosures.length > 0) {
     allClosures = dedupeClosures([...allClosures, ...localSnapshotClosures]);
     updateView({ fit: false });
-    showMapStatus(`Snapshots locaux charges: ${allClosures.length} entraves`, "loading");
+    showMapStatus(t("map.localSnapshotsLoaded").replace("{count}", String(allClosures.length)), "loading");
   }
 
   const primarySources = await Promise.allSettled([
@@ -4123,11 +4662,21 @@ async function loadOfficialData() {
     const montrealClosures = montrealResult.value.features.flatMap(normalizeMontrealFeature);
     primaryClosures.push(...montrealClosures);
     sourceCounts.push(`${montrealClosures.length} entraves auto Montreal`);
+  } else {
+    console.warn("Ville de Montréal WFS failed", montrealResult.reason);
+    sourceFailures.push("Montréal");
   }
 
   if (regionalResult.status === "fulfilled") {
     primaryClosures.push(...regionalResult.value);
     sourceCounts.push(`${regionalResult.value.length} fermetures ponts/grands axes alignees aux routes`);
+  } else {
+    console.warn("Regional closure sources failed", regionalResult.reason);
+    sourceFailures.push("Fermetures régionales");
+  }
+  if (primarySources[2].status === "rejected") {
+    console.warn("Resolved Montreal geometry snapshot failed", primarySources[2].reason);
+    sourceFailures.push("Géométries de Montréal");
   }
 
   if (primaryClosures.length > 0) {
@@ -4141,29 +4690,38 @@ async function loadOfficialData() {
   map.invalidateSize(true);
   updateView({ fit: !locationHasCentered });
 
-  loadBackgroundOfficialData();
+  loadBackgroundOfficialData(sourceFailures);
 }
 
-async function loadBackgroundOfficialData() {
-  const backgroundSources = await Promise.allSettled([
-    loadLinkedCityWorks(),
-    loadLongueuilClosures(),
-    loadLavalClosures(),
-    loadQuebec511Closures(),
-    loadQuebec511Events(),
-    loadRepentignyClosures(),
-    loadMunicipalArcgisClosures(),
-    loadDorvalAndBoisbriandClosures(),
-    loadTerrebonneClosures(),
-  ]);
+async function loadBackgroundOfficialData(initialFailures = []) {
+  const sourceDefinitions = [
+    { name: "Municipalités liées", load: loadLinkedCityWorks },
+    { name: "Longueuil", load: loadLongueuilClosures },
+    { name: "Laval", load: loadLavalClosures },
+    { name: "Québec 511", load: loadQuebec511Closures },
+    { name: "Événements Québec 511", load: loadQuebec511Events },
+    { name: "Repentigny", load: loadRepentignyClosures },
+    { name: "Sources ArcGIS municipales", load: loadMunicipalArcgisClosures },
+    { name: "Dorval et Boisbriand", load: loadDorvalAndBoisbriandClosures },
+    { name: "Terrebonne", load: loadTerrebonneClosures },
+    { name: "Chambly", load: loadChamblyWorksiteClosures },
+    { name: "McMasterville", load: loadMcMastervilleClosures }
+  ];
+  const backgroundSources = await Promise.allSettled(sourceDefinitions.map((source) => source.load()));
 
   const additions = [];
+  const failures = [...initialFailures];
 
-  for (const result of backgroundSources) {
+  backgroundSources.forEach((result, index) => {
     if (result.status === "fulfilled") {
       additions.push(...result.value);
+    } else {
+      console.warn(`${sourceDefinitions[index].name} source failed`, result.reason);
+      failures.push(sourceDefinitions[index].name);
     }
-  }
+  });
+
+  bindMcMastervilleQuebec511Duplicates(additions);
 
   if (additions.length > 0) {
     allClosures = dedupeClosures([...allClosures, ...additions]);
@@ -4171,7 +4729,10 @@ async function loadBackgroundOfficialData() {
   }
   // Toujours retirer l'indicateur de chargement une fois le fond charge.
   const snapshotError = [marathonSnapshotFailed ? t("marathon.loadError") : null, parcJeanDrapeauSnapshotFailed ? t("parcJeanDrapeau.loadError") : null, mobiliteSnapshotFailed ? t("mobilite.loadError") : null].filter(Boolean).join(" ");
-  showMapStatus(snapshotError || `Donnees chargees: ${allClosures.length} entraves actives dans la region.`, snapshotError ? "error" : "ready");
+  const failureNames = [...new Set(failures)];
+  const partialFailure = failureNames.length ? `${t("map.partialSourceErrors")} ${failureNames.join(", ")}.` : "";
+  const statusMessage = [partialFailure, snapshotError].filter(Boolean).join(" ");
+  showMapStatus(statusMessage || t("map.dataLoadedCount").replace("{count}", String(allClosures.length)), statusMessage ? "error" : "ready");
 
   enrichMunicipalGeometriesInBackground();
 }
@@ -4233,6 +4794,13 @@ function closureScheduleHtml(closure, className) {
   return lines.length ? `<p class="${className}"><strong>${t(closure.sourceKind === "citizen-report" ? "citizen.schedule" : "schedule.label")}:</strong><br>${lines.map(escapeHtml).join("<br>")}</p>` : "";
 }
 
+function closureImpactFieldKey(closure) {
+  if (closure.affectedUsers?.includes("cyclists")) {
+    return closure.affectedUsers.includes("pedestrians") ? "pedestrian.sharedPathImpact" : "pedestrian.cyclingImpact";
+  }
+  return "popup.impact";
+}
+
 function popupContent(closure) {
   const meta = CATEGORY_META[closure.category] ?? CATEGORY_META.event;
   const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
@@ -4247,7 +4815,7 @@ function popupContent(closure) {
       <p class="popup-meta">${closureDateRangeHtml(closure)}</p>
       ${closureScheduleHtml(closure, "popup-meta")}
       <p class="popup-meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
-      <p class="popup-meta"><strong>${t(closure.affectedUsers?.includes("cyclists") ? "pedestrian.cyclingImpact" : "popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
+      <p class="popup-meta"><strong>${t(closureImpactFieldKey(closure))}:</strong> ${escapeHtml(closure.impact)}</p>
       <p class="popup-meta"><strong>${t("popup.direction")}:</strong> ${escapeHtml(closure.direction)}</p>
       <a href="${escapeHtml(closure.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(closure.source)}</a>
       ${mobiliteRelatedSourcesHtml(closure)}
@@ -4271,7 +4839,7 @@ function popupContent(closure) {
       ${details}
       <p class="popup-meta"><strong>${t("popup.responsible")}:</strong> ${escapeHtml(closure.responsible || t("popup.notPublished"))}</p>
       <p class="popup-meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
-      <p class="popup-meta"><strong>${t(closure.affectedUsers?.includes("cyclists") ? "pedestrian.cyclingImpact" : "popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
+      <p class="popup-meta"><strong>${t(closureImpactFieldKey(closure))}:</strong> ${escapeHtml(closure.impact)}</p>
       <p class="popup-meta"><strong>${t("popup.direction")}:</strong> ${escapeHtml(closure.direction)}</p>
       ${closure.tunnelNote ? `<p class="popup-meta popup-geometry-note"><strong>🚇 ${escapeHtml(closure.tunnelNote)}</strong></p>` : ""}
       ${closure.geometryNote ? `<p class="popup-meta popup-geometry-note"><strong>${t("popup.geometryNote")}:</strong> ${escapeHtml(closure.geometryNote)}</p>` : ""}
@@ -4294,6 +4862,10 @@ function mobiliteRelatedSourcesHtml(closure) {
 }
 
 function periodsLabel(periods) {
+  if (!Array.isArray(periods) || periods.length === 0) {
+    return t("popup.periodUnspecified");
+  }
+
   if (periods.includes("day") && periods.includes("night")) {
     return t("popup.dayNight");
   }
@@ -4508,6 +5080,26 @@ function minDistanceMeters(center, closure) {
   return coordinates.reduce((minimum, [lon, lat]) => Math.min(minimum, center.distanceTo([lat, lon])), Number.POSITIVE_INFINITY);
 }
 
+function addPointHitTarget(closure, closureLayers, coordinates) {
+  if (!Array.isArray(coordinates) || !Number.isFinite(coordinates[0]) || !Number.isFinite(coordinates[1])) return;
+  if (!map.getPane("closurePointHitPane")) {
+    const pane = map.createPane("closurePointHitPane");
+    pane.style.zIndex = "650";
+  }
+  const target = L.marker([coordinates[1], coordinates[0]], {
+    pane: "closurePointHitPane",
+    icon: L.divIcon({ className: "closure-point-hit-target", html: "", iconSize: [30, 30], iconAnchor: [15, 15] }),
+    keyboard: false,
+    interactive: true,
+    bubblingMouseEvents: false,
+    riseOnHover: false
+  });
+  target.on("click", (event) => {
+    dismissMapFirstVisitHint();
+    openGroupedPopup(closure, event.latlng);
+  }).addTo(closureLayers);
+}
+
 function renderMap(closures) {
   const visibleClosureIds = new Set(closures.map((closure) => closure.id));
 
@@ -4528,6 +5120,9 @@ function renderMap(closures) {
       
       // Only remove and re-render if geometry type actually changed (e.g., Point→MultiLineString)
       if (newGeometryType === oldGeometryType) {
+        if (newGeometryType === "Point") {
+          existing.closures.eachLayer((layer) => layer.bringToFront?.());
+        }
         return; // Same geometry type, no need to re-render
       }
       
@@ -4544,8 +5139,18 @@ function renderMap(closures) {
 
     const severity = SEVERITY_META[closure.severity] ?? SEVERITY_META.major;
     const lineWidth = mapLineWidth(severity.width);
-    const commonStyle = { color: closure.color, weight: lineWidth, opacity: severity.opacity, renderer: fastRenderer };
-    const hitStyle = { color: closure.color, weight: Math.max(34, severity.width + 20), opacity: 0, renderer: fastRenderer };
+    const commonStyle = {
+      color: closure.color,
+      weight: lineWidth,
+      opacity: severity.opacity,
+      dashArray: closure.worksiteOnly ? "5 6" : null,
+      bubblingMouseEvents: !closure.pointHitPriority,
+      renderer: fastRenderer
+    };
+    const hitStyle = {
+      color: closure.color, weight: Math.max(34, severity.width + 20), opacity: 0,
+      bubblingMouseEvents: !closure.pointHitPriority, renderer: fastRenderer
+    };
     let mainLayer = null;
 
     if (closure.geometry?.type === "LineString") {
@@ -4581,7 +5186,7 @@ function renderMap(closures) {
         dismissMapFirstVisitHint();
         openGroupedPopup(closure, event.latlng);
       }).addTo(closureLayers);
-      addDirectionArrows(latLngs, closure, closureArrows);
+      if (!closure.worksiteOnly && !closure.suppressDirectionArrows) addDirectionArrows(latLngs, closure, closureArrows);
     } else if (closure.geometry?.type === "MultiLineString") {
       closure.geometry.coordinates.forEach((lineCoordinates) => {
         const latLngs = toLatLngs(lineCoordinates);
@@ -4591,7 +5196,7 @@ function renderMap(closures) {
           dismissMapFirstVisitHint();
           openGroupedPopup(closure, event.latlng);
         }).addTo(closureLayers);
-        addDirectionArrows(latLngs, closure, closureArrows);
+        if (!closure.worksiteOnly && !closure.suppressDirectionArrows) addDirectionArrows(latLngs, closure, closureArrows);
       });
     } else if (closure.geometry?.type === "Polygon") {
       mainLayer = L.polygon(toLatLngs(closure.geometry.coordinates), {
@@ -4606,11 +5211,12 @@ function renderMap(closures) {
       mainLayer._mapLineBaseWidth = severity.width;
     } else if (closure.point) {
       mainLayer = L.circleMarker([closure.point[1], closure.point[0]], {
-        radius: closure.severity === "critical" ? 8 : 6,
+        radius: closure.worksiteOnly ? 7 : closure.severity === "critical" ? 8 : 6,
         color: "#ffffff",
         weight: 3,
         fillColor: closure.color,
         fillOpacity: 1,
+        bubblingMouseEvents: !closure.pointHitPriority,
         renderer: fastRenderer
       }).addTo(closureLayers);
     }
@@ -4620,6 +5226,28 @@ function renderMap(closures) {
         dismissMapFirstVisitHint();
         openGroupedPopup(closure, event.latlng);
       });
+    }
+    const publishedPoints = (closure.publishedGeometries || [])
+      .filter((geometry) => geometry.type === "Point" && Array.isArray(geometry.coordinates))
+      .map((geometry) => geometry.coordinates);
+    publishedPoints.forEach((coordinates) => {
+      const pointLayer = L.circleMarker([coordinates[1], coordinates[0]], {
+        radius: closure.worksiteOnly ? 7 : closure.severity === "critical" ? 8 : 6,
+        color: "#ffffff",
+        weight: 3,
+        fillColor: closure.color,
+        fillOpacity: 1,
+        bubblingMouseEvents: !closure.pointHitPriority,
+        renderer: fastRenderer
+      }).on("click", (event) => {
+        dismissMapFirstVisitHint();
+        openGroupedPopup(closure, event.latlng);
+      }).addTo(closureLayers);
+      pointLayer._mapLineBaseWidth = severity.width;
+    });
+    if (closure.pointHitPriority) {
+      addPointHitTarget(closure, closureLayers, closure.geometry?.type === "Point"
+        ? closure.geometry.coordinates : publishedPoints[0] || closure.point);
     }
   });
 }
@@ -4929,7 +5557,7 @@ function renderList(closures) {
       <p class="meta"><strong>${closureDateRangeHtml(closure)}</strong></p>
       ${closureScheduleHtml(closure, "meta")}
       <p class="meta"><strong>${t("popup.period")}:</strong> ${escapeHtml(periodsLabel(closure.periods))}</p>
-      <p class="meta"><strong>${t(closure.affectedUsers?.includes("cyclists") ? "pedestrian.cyclingImpact" : "popup.impact")}:</strong> ${escapeHtml(closure.impact)}</p>
+      <p class="meta"><strong>${t(closureImpactFieldKey(closure))}:</strong> ${escapeHtml(closure.impact)}</p>
       <p class="meta"><strong>${t("popup.direction")}:</strong> ${escapeHtml(closure.direction)}</p>
       <a href="${escapeHtml(closure.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(closure.source)}</a>
     `;

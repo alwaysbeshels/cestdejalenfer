@@ -1,0 +1,1494 @@
+{
+  "schemaVersion": 1,
+  "extractedAt": "2026-10-17T16:20:52.022Z",
+  "sourceUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+  "municipality": "Ville de Saint-Basile-le-Grand",
+  "timeZone": "America/Toronto",
+  "policy": "Retain the official map points whose published category status is refection-ou-amenagement-en-cours. Worksite points are not traffic closures and are visible only for the successful check date.",
+  "sourceReview": {
+    "receivedMapItems": 68,
+    "workItemsReceived": 16,
+    "retainedCurrentPoints": 13,
+    "reviewCount": 3,
+    "supplementalNoticeReview": {
+      "indexUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+      "additionalNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/projets-de-construction-residentielle/projet-le-millenia/",
+      "reviewedAt": "2026-10-17T16:19:34.734Z",
+      "checkedAt": "2026-10-17T16:20:52.022Z",
+      "reviewedNoticeCount": 15,
+      "relatedProjectPageCount": 1,
+      "restartPoint": {
+        "indexUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+        "latestPublishedModification": "2026-10-16T15:54:46+00:00",
+        "noticeUrlsAtBoundary": [
+          "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/reconstruction-dune-portion-du-rang-des-vingt/"
+        ]
+      },
+      "currentTrafficRestrictionsNotMapped": [
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-postes-pompage/",
+          "title": "Fermeture de l’intersection Bella-Vista/des Martinets",
+          "reason": "Le début est donné comme la semaine du 19 octobre et la durée comme environ une semaine; les dates exactes ne sont pas publiées. Le point reste un chantier neutre."
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/projets-de-construction-residentielle/projet-le-millenia/",
+          "title": "Pavage des rues Belzil, Anne-Hébert et Prévert",
+          "reason": "L’avis du 16 octobre décrit des fermetures à partir du 9 et du 19 octobre, mais sans dates de fin exactes; une limite de tronçon sur Prévert se contredit. Les points officiels restent des points de chantier, pas des lignes de fermeture."
+        }
+      ],
+      "expiredOrNonRoadNotices": [
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/ajout-dune-borne-fontaine-sur-la-montee-des-trinitaires/",
+          "title": "Ajout d’une borne-fontaine sur la montée des Trinitaires",
+          "reason": "La carte marque encore ce point comme en cours, mais l’avis détaillé donne une fermeture terminée le 7 août 2026. La contradiction n’est pas résolue; le point n’est pas conservé parmi les chantiers courants."
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/sentier-mobilier-parc-montpellier/",
+          "title": "Réaménagement des sentiers et ajout de mobilier urbain au parc de Montpellier",
+          "reason": "La fermeture du parc commence le 8 septembre pour environ trois semaines; la mise à jour du 2 octobre ne confirme pas que la fermeture continue le 17 octobre. Pas de tracé piéton ou d’entrave de rue publié."
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/construction-dun-nouvel-egout-collecteur-par-la-ville-de-saint-bruno-de-montarville/",
+          "title": "Nouvel égout collecteur – Ville de Saint-Bruno-de-Montarville",
+          "reason": "Les lettres décrivent des accès de chantier et une hausse de camions, mais aucune fermeture de voie publique datée ou géométrie de restriction."
+        }
+      ],
+      "inventory": [
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+          "title": "Travaux - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-16T14:07:19+00:00",
+          "decision": {
+            "decision": "complete-index-reviewed",
+            "reason": "All linked project pages and the related Le Millénia article were inventoried; no pagination is published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/reconstruction-dune-portion-du-rang-des-vingt/",
+          "title": "Reconstruction du rang des Vingt - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-16T15:54:46+00:00",
+          "decision": {
+            "decision": "worksite-point-only",
+            "reason": "The project is current, but the notice says partial interruptions with circulation possible and alternating traffic; exact current closure bounds and dates are not published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/amenagement-dune-patinoire-et-de-terrains-de-pickleball-au-parc-du-ruisseau/",
+          "title": "Aménagement d'une patinoire et de terrains de pickleball au parc du Ruisseau - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-13T17:25:20+00:00",
+          "decision": {
+            "decision": "worksite-point-only",
+            "reason": "Only the rink/volleyball facility is fenced; other park portions remain accessible. Approximate period, no road closure or public-path geometry."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-de-la-rue-lafrance-ouest/",
+          "title": "Réfection de la rue Lafrance Ouest - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-16T13:03:27+00:00",
+          "decision": {
+            "decision": "worksite-point-only",
+            "reason": "The 2024 street reconstruction is complete; the 16 October 2026 visit is landscaping on 17 October, with no traffic or pedestrian closure published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/ajout-dune-nouvelle-conduite-daqueduc-en-bordure-du-boul-sir-wilfrid-laurier-route-116-projet-de-la-rievr/",
+          "title": "Ajout d'une nouvelle conduite d'aqueduc en bordure du boul. Sir-Wilfrid-Laurier (route 116) - Projet de la RIEVR - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-09-24T19:06:23+00:00",
+          "decision": {
+            "decision": "review-status-conflict",
+            "reason": "The notice says work began in late August and continues to November with both lanes open, while the map status is upcoming. No traffic closure is published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/rehabilitation-du-bassin-de-montpellier/",
+          "title": "Réhabilitation du bassin de Montpellier - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-15T15:41:41+00:00",
+          "decision": {
+            "decision": "worksite-point-only",
+            "reason": "The 2025–2029 maintenance is ongoing in season, but the notice publishes no closed route or exact affected pedestrian trace."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-postes-pompage/",
+          "title": "Réfection de plusieurs postes de pompage et optimisation de conduites - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-16T13:07:27+00:00",
+          "decision": {
+            "decision": "review-approximate-phases",
+            "reason": "The notice publishes full or local-only road restrictions in later phases, but the exact November dates are not yet published. Existing official points remain neutral worksite points."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/sentier-mobilier-parc-montpellier/",
+          "title": "Réaménagement des sentiers et ajout de mobilier urbain au parc de Montpellier - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-02T15:55:13+00:00",
+          "decision": {
+            "decision": "review-uncertain-pedestrian-end",
+            "reason": "A park/path closure began on 8 September for approximately three weeks; the 2 October update does not confirm that the closure remains active on 17 October. No street obstruction is published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/construction-dun-nouvel-egout-collecteur-par-la-ville-de-saint-bruno-de-montarville/",
+          "title": "Construction d’un nouvel égout collecteur par la Ville de Saint‑Bruno-de-Montarville - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-09-24T15:24:01+00:00",
+          "decision": {
+            "decision": "review-no-public-road-closure",
+            "reason": "The three 2026 letters describe site access and added truck traffic, but no dated public-road closure or verified geometry; the responsible authority is Ville de Saint-Bruno-de-Montarville."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/remplacement-thermopompes-edifice-leopold-bouchard/",
+          "title": "Remplacement des thermopompes à l'édifice Léopold-Bouchard - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-09-16T18:19:27+00:00",
+          "decision": {
+            "decision": "excluded-no-road-impact",
+            "reason": "The notice explicitly says the work is inside the building with no obstruction."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/raccordements-inverses/",
+          "title": "Raccordements inversés - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-04-25T01:29:58+00:00",
+          "decision": {
+            "decision": "excluded-no-road-impact",
+            "reason": "The notice concerns inspections and corrections on private properties; no public-road restriction is published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/surface-caoutchouc-jeux-eau-parc-montpellier/",
+          "title": "Ajout d'une surface en caoutchouc autour des jeux d'eau du parc de Montpellier - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-05-27T12:18:02+00:00",
+          "decision": {
+            "decision": "excluded-park-only",
+            "reason": "The notice concerns a playground surface and publishes no roadway or public-path restriction."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/rehabilitation-vanne-route-116/",
+          "title": "Réhabilitation d'une vanne d'aqueduc sur le boul. Sir-Wilfrid-Laurier (route 116) - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-06-19T13:37:10+00:00",
+          "decision": {
+            "decision": "review-shoulder-only-no-dates",
+            "reason": "The notice says only the shoulder is affected overnight from about 22 h, but gives no work dates or exact segment; no road lane closure is published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/travaux-de-reconstruction-de-lemissaire-pluvial-du-parc-du-ruisseau-et-de-rehabilitation-dune-chambre-pluviale-sur-la-rue-principale/",
+          "title": "Travaux de reconstruction de l’émissaire pluvial du parc du Ruisseau et de réhabilitation d’une chambre pluviale sur la rue Principale - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-09T15:41:05+00:00",
+          "decision": {
+            "decision": "review-worksite-no-traffic-impact",
+            "reason": "Approximate October–November work dates and locations are published, but no automobile or pedestrian restriction is stated and no exact worksite geometry is available."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/mise-a-niveau-des-aires-de-balancoires-aux-parcs-des-cheminots-et-des-fromagers/",
+          "title": "Mise à niveau des aires de balançoires aux parcs des Cheminots et des Fromagers - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-08-06T20:07:36+00:00",
+          "decision": {
+            "decision": "excluded-expired-no-road-impact",
+            "reason": "The June–July park work is past; the notice explicitly says no traffic obstruction."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/ajout-dune-borne-fontaine-sur-la-montee-des-trinitaires/",
+          "title": "Ajout d’une borne-fontaine sur la montée des Trinitaires - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": null,
+          "decision": {
+            "decision": "review-map-status-conflict-expired-notice",
+            "reason": "La carte marque encore ce point comme en cours, mais l’avis détaillé donne une fermeture terminée le 7 août 2026. La contradiction n’est pas résolue; le point n’est pas conservé parmi les chantiers courants."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/projets-de-construction-residentielle/projet-le-millenia/",
+          "title": "Projet Le Millénia - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-16T14:20:44+00:00",
+          "decision": {
+            "decision": "review-closure-period-and-geometry",
+            "reason": "The 16 October notice publishes local paving closures beginning 9 and 19 October, but no exact closure end; the Prévert limit is self-contradictory and the official points do not delineate the closed segments."
+          }
+        }
+      ]
+    },
+    "review": [
+      {
+        "id": "lieu-71142",
+        "title": "Ajout d’une borne-fontaine – Montée des Trinitaires",
+        "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/ajout-dune-borne-fontaine-sur-la-montee-des-trinitaires/",
+        "sourceStatus": "refection-ou-amenagement-en-cours",
+        "publishedPeriod": "Du 3 au 7 août 2026",
+        "reason": "La carte marque encore ce point comme en cours, mais l’avis détaillé donne une fermeture terminée le 7 août 2026. La contradiction n’est pas résolue; le point n’est pas conservé parmi les chantiers courants.",
+        "publishedPoint": {
+          "type": "Point",
+          "coordinates": [
+            -73.2925856,
+            45.5308194
+          ]
+        }
+      },
+      {
+        "id": "lieu-70775",
+        "title": "Bouclage du réseau d’aqueduc sur le boul. Sir-Wilfrid-Laurier",
+        "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+        "sourceStatus": "refection-ou-amenagement-a-venir",
+        "reason": "Published as upcoming, not currently in progress."
+      },
+      {
+        "id": "lieu-70777",
+        "title": "Remplacement des portes piétonnes, incluant l’ajout d’un système de contrôle d’accès, et agrandissement des bureaux du garage municipal Léon-Taillon",
+        "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+        "sourceStatus": "refection-ou-amenagement-a-venir",
+        "reason": "Published as upcoming, not currently in progress."
+      }
+    ]
+  },
+  "validation": {
+    "saintBasileReview": {
+      "status": "complete",
+      "reviewedAt": "2026-10-17T16:19:34.734Z",
+      "checkedAt": "2026-10-17T16:20:52.022Z",
+      "previousRestartPoint": null,
+      "restartPoint": {
+        "indexUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+        "latestPublishedModification": "2026-10-16T15:54:46+00:00",
+        "noticeUrlsAtBoundary": [
+          "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/reconstruction-dune-portion-du-rang-des-vingt/"
+        ]
+      },
+      "index": {
+        "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+        "title": "Travaux - Ville de Saint-Basile-le-Grand",
+        "contentSha256": "75559c3e2b59381033296dd02e80baa9f95d26f73f101b2c94683ccc86c9191b",
+        "noticeCount": 15,
+        "relatedProjectPageCount": 1
+      },
+      "inventory": [
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+          "title": "Travaux - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-16T14:07:19+00:00",
+          "contentSha256": "75559c3e2b59381033296dd02e80baa9f95d26f73f101b2c94683ccc86c9191b",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2017/01/sw-img_une_travaux-1.jpg",
+              "alt": "Chantier et véhicules de travaux"
+            }
+          ],
+          "attachmentUrls": [
+            {
+              "title": "Foire aux questions • Travaux d’infrastructures routières",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2023/11/GLR_2023_Liste-des-questions-frequentes-FAQ-travaux-infrastructures-routieres.pdf"
+            }
+          ],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2017/01/sw-img_une_travaux-1.jpg",
+            "https://www.villesblg.ca/wp-content/uploads/2023/11/GLR_2023_Liste-des-questions-frequentes-FAQ-travaux-infrastructures-routieres.pdf"
+          ],
+          "decision": {
+            "decision": "complete-index-reviewed",
+            "reason": "All linked project pages and the related Le Millénia article were inventoried; no pagination is published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/reconstruction-dune-portion-du-rang-des-vingt/",
+          "title": "Reconstruction du rang des Vingt - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-16T15:54:46+00:00",
+          "contentSha256": "c69776b0370f82e72b8983359872c26883c6c50e7eadee27b48b439283c1e66c",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2020/07/IM-WEB_2020-07-03_info-travaux_1920x600.jpg",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2020/07/IM-WEB_2020-07-03_info-travaux_1920x600.jpg"
+          ],
+          "decision": {
+            "decision": "worksite-point-only",
+            "reason": "The project is current, but the notice says partial interruptions with circulation possible and alternating traffic; exact current closure bounds and dates are not published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/amenagement-dune-patinoire-et-de-terrains-de-pickleball-au-parc-du-ruisseau/",
+          "title": "Aménagement d'une patinoire et de terrains de pickleball au parc du Ruisseau - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-13T17:25:20+00:00",
+          "contentSha256": "04baa3aa7c8762163f05d52293deddf77fff702bd433c903ff99396004de8dbd",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/06/amenagement-patinoire-terrains-ruisseau.png",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [
+            {
+              "title": "Voir le plan des travaux prévus pour les deux phases",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/08/Plan-preliminaire-pour-site-web_VF.pdf"
+            }
+          ],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2026/06/amenagement-patinoire-terrains-ruisseau.png",
+            "https://www.villesblg.ca/wp-content/uploads/2026/08/Plan-preliminaire-pour-site-web_VF.pdf"
+          ],
+          "decision": {
+            "decision": "worksite-point-only",
+            "reason": "Only the rink/volleyball facility is fenced; other park portions remain accessible. Approximate period, no road closure or public-path geometry."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-de-la-rue-lafrance-ouest/",
+          "title": "Réfection de la rue Lafrance Ouest - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-16T13:03:27+00:00",
+          "contentSha256": "d15118ad25c199f2d1acc81c86d5972827e3563824a6439bd73855fabd6cc12a",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2024/02/lafrance-ouest_1920x600-scaled.jpg",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [
+            {
+              "title": "Présentation PowerPoint Présentée lors de la séance d'information du 13 mars 2024",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2024/03/Seance-dinformation-Lafrance-Ouest-VF.pdf"
+            },
+            {
+              "title": "Plans vulgarisés Présentés lors de la séance d'information du 13 mars 2024",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2024/03/Plan-vulgarise_VF.pdf"
+            }
+          ],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2024/02/lafrance-ouest_1920x600-scaled.jpg",
+            "https://www.villesblg.ca/wp-content/uploads/2024/03/Seance-dinformation-Lafrance-Ouest-VF.pdf",
+            "https://www.villesblg.ca/wp-content/uploads/2024/03/Plan-vulgarise_VF.pdf"
+          ],
+          "decision": {
+            "decision": "worksite-point-only",
+            "reason": "The 2024 street reconstruction is complete; the 16 October 2026 visit is landscaping on 17 October, with no traffic or pedestrian closure published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/ajout-dune-nouvelle-conduite-daqueduc-en-bordure-du-boul-sir-wilfrid-laurier-route-116-projet-de-la-rievr/",
+          "title": "Ajout d'une nouvelle conduite d'aqueduc en bordure du boul. Sir-Wilfrid-Laurier (route 116) - Projet de la RIEVR - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-09-24T19:06:23+00:00",
+          "contentSha256": "d50982bd9cbfa130a96d8623ac1352784e83b6e4cf69e3ebebaaafd09455a415",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/08/Bouclage-116_1920x600.png",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2026/08/Bouclage-116_1920x600.png"
+          ],
+          "decision": {
+            "decision": "review-status-conflict",
+            "reason": "The notice says work began in late August and continues to November with both lanes open, while the map status is upcoming. No traffic closure is published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/rehabilitation-du-bassin-de-montpellier/",
+          "title": "Réhabilitation du bassin de Montpellier - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-15T15:41:41+00:00",
+          "contentSha256": "78e5fced5375ba8f958f54b145a2a2c4bb84699f2f63ed29ed888b2b5b3968b3",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/10/travaux-dragage_1920x600.png",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2026/10/travaux-dragage_1920x600.png"
+          ],
+          "decision": {
+            "decision": "worksite-point-only",
+            "reason": "The 2025–2029 maintenance is ongoing in season, but the notice publishes no closed route or exact affected pedestrian trace."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-postes-pompage/",
+          "title": "Réfection de plusieurs postes de pompage et optimisation de conduites - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-16T13:07:27+00:00",
+          "contentSha256": "2df67b7cce6f50bb6a28eb028073ec197f324626c7d6a35fe86b595b59a89349",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/05/refection-postes-pompage_1920x600-scaled.jpg",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2026/05/refection-postes-pompage_1920x600-scaled.jpg"
+          ],
+          "decision": {
+            "decision": "review-approximate-phases",
+            "reason": "The notice publishes full or local-only road restrictions in later phases, but the exact November dates are not yet published. Existing official points remain neutral worksite points."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/sentier-mobilier-parc-montpellier/",
+          "title": "Réaménagement des sentiers et ajout de mobilier urbain au parc de Montpellier - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-02T15:55:13+00:00",
+          "contentSha256": "01989b7ad54349742198956908f0678992ad81a96c651bb136e73163452fb7ea",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/09/parc-montpellier_1920x600-scaled.png",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2026/09/parc-montpellier_1920x600-scaled.png"
+          ],
+          "decision": {
+            "decision": "review-uncertain-pedestrian-end",
+            "reason": "A park/path closure began on 8 September for approximately three weeks; the 2 October update does not confirm that the closure remains active on 17 October. No street obstruction is published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/construction-dun-nouvel-egout-collecteur-par-la-ville-de-saint-bruno-de-montarville/",
+          "title": "Construction d’un nouvel égout collecteur par la Ville de Saint‑Bruno-de-Montarville - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-09-24T15:24:01+00:00",
+          "contentSha256": "0faf1549fcd6358ca7816a1c5e9a2313484869fbe948f5f34d516808d1e74d66",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2017/02/sw-img_une_entretien-conduites-sanitaires-et-pluviales.jpg",
+              "alt": "Photo d'un couvercle d'une conduite pluviale"
+            }
+          ],
+          "attachmentUrls": [
+            {
+              "title": "2026-09-24 – Début des travaux (rue Bouchard)",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/09/LET_egout-collecteur_bouchard_VF.pdf"
+            },
+            {
+              "title": "2026-09-24 – Début des travaux (rue Principale)",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/09/LET_egout-collecteur_autourPrinicpale_VF.pdf"
+            },
+            {
+              "title": "2026-09-24 – Travaux à venir (chemin Bella-Vista)",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/09/LET_egout-collecteur_BellaVista_VF.pdf"
+            }
+          ],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2017/02/sw-img_une_entretien-conduites-sanitaires-et-pluviales.jpg",
+            "https://www.villesblg.ca/wp-content/uploads/2026/09/LET_egout-collecteur_bouchard_VF.pdf",
+            "https://www.villesblg.ca/wp-content/uploads/2026/09/LET_egout-collecteur_autourPrinicpale_VF.pdf",
+            "https://www.villesblg.ca/wp-content/uploads/2026/09/LET_egout-collecteur_BellaVista_VF.pdf"
+          ],
+          "decision": {
+            "decision": "review-no-public-road-closure",
+            "reason": "The three 2026 letters describe site access and added truck traffic, but no dated public-road closure or verified geometry; the responsible authority is Ville de Saint-Bruno-de-Montarville."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/remplacement-thermopompes-edifice-leopold-bouchard/",
+          "title": "Remplacement des thermopompes à l'édifice Léopold-Bouchard - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-09-16T18:19:27+00:00",
+          "contentSha256": "54c02e149bfda5e6e0fdd716dec693a785a7204133a555383044ba1d0a81d6fb",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2017/04/sw-img_une-edifice-Leopold-bouchard.jpg",
+              "alt": "Photo panoramique de l'édifice Léopold-Bouchard"
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2017/04/sw-img_une-edifice-Leopold-bouchard.jpg"
+          ],
+          "decision": {
+            "decision": "excluded-no-road-impact",
+            "reason": "The notice explicitly says the work is inside the building with no obstruction."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/raccordements-inverses/",
+          "title": "Raccordements inversés - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-04-25T01:29:58+00:00",
+          "contentSha256": "e0d479c6b9438cb1f6f43ea2033f804f20e986887f264531994797b6ce3618a1",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2017/12/sw-img_une_amelioration-reseau-egouts-sanitaires.jpg",
+              "alt": "Débordements d’égouts sanitaires"
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2017/12/sw-img_une_amelioration-reseau-egouts-sanitaires.jpg"
+          ],
+          "decision": {
+            "decision": "excluded-no-road-impact",
+            "reason": "The notice concerns inspections and corrections on private properties; no public-road restriction is published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/surface-caoutchouc-jeux-eau-parc-montpellier/",
+          "title": "Ajout d'une surface en caoutchouc autour des jeux d'eau du parc de Montpellier - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-05-27T12:18:02+00:00",
+          "contentSha256": "bec33d76565ca70421d8e468597fd4ad5dd263b1a538493468657fc5005af622",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/04/ajout-surface-caoutchouc-parc-montpellier_1920x600-scaled.jpg",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2026/04/ajout-surface-caoutchouc-parc-montpellier_1920x600-scaled.jpg"
+          ],
+          "decision": {
+            "decision": "excluded-park-only",
+            "reason": "The notice concerns a playground surface and publishes no roadway or public-path restriction."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/rehabilitation-vanne-route-116/",
+          "title": "Réhabilitation d'une vanne d'aqueduc sur le boul. Sir-Wilfrid-Laurier (route 116) - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-06-19T13:37:10+00:00",
+          "contentSha256": "fd68e84c23719277912c0617e79f1c1ea7e5b43fb8b7f4a01aeac8344b8a9129",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/05/rehabilitation-vanne-116_1920x600-scaled.jpg",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2026/05/rehabilitation-vanne-116_1920x600-scaled.jpg"
+          ],
+          "decision": {
+            "decision": "review-shoulder-only-no-dates",
+            "reason": "The notice says only the shoulder is affected overnight from about 22 h, but gives no work dates or exact segment; no road lane closure is published."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/travaux-de-reconstruction-de-lemissaire-pluvial-du-parc-du-ruisseau-et-de-rehabilitation-dune-chambre-pluviale-sur-la-rue-principale/",
+          "title": "Travaux de reconstruction de l’émissaire pluvial du parc du Ruisseau et de réhabilitation d’une chambre pluviale sur la rue Principale - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-09T15:41:05+00:00",
+          "contentSha256": "58a8f65266e5d244ce91c739b00738fc8a640169114ff52770f4455ab5e8340e",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2020/07/IM-WEB_2020-07-03_info-travaux_1920x600.jpg",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2020/07/IM-WEB_2020-07-03_info-travaux_1920x600.jpg"
+          ],
+          "decision": {
+            "decision": "review-worksite-no-traffic-impact",
+            "reason": "Approximate October–November work dates and locations are published, but no automobile or pedestrian restriction is stated and no exact worksite geometry is available."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/mise-a-niveau-des-aires-de-balancoires-aux-parcs-des-cheminots-et-des-fromagers/",
+          "title": "Mise à niveau des aires de balançoires aux parcs des Cheminots et des Fromagers - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-08-06T20:07:36+00:00",
+          "contentSha256": "30c3c55e28c19c337aeab2ebc5ae7b29e10bb22126dd003f66ef394d52a20366",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/06/balancoires-cheminot_1920x600.png",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2026/06/balancoires-cheminot_1920x600.png"
+          ],
+          "decision": {
+            "decision": "excluded-expired-no-road-impact",
+            "reason": "The June–July park work is past; the notice explicitly says no traffic obstruction."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/ajout-dune-borne-fontaine-sur-la-montee-des-trinitaires/",
+          "title": "Ajout d’une borne-fontaine sur la montée des Trinitaires - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": null,
+          "contentSha256": "16dbe89397e5b7b974f46f37f2ab6488fbffa62ddce9509553e7b66d5da8c3b1",
+          "imageUrls": [
+            {
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/07/borne-incendie_1920x600.jpg",
+              "alt": ""
+            }
+          ],
+          "attachmentUrls": [],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2026/07/borne-incendie_1920x600.jpg"
+          ],
+          "decision": {
+            "decision": "review-map-status-conflict-expired-notice",
+            "reason": "La carte marque encore ce point comme en cours, mais l’avis détaillé donne une fermeture terminée le 7 août 2026. La contradiction n’est pas résolue; le point n’est pas conservé parmi les chantiers courants."
+          }
+        },
+        {
+          "url": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/projets-de-construction-residentielle/projet-le-millenia/",
+          "title": "Projet Le Millénia - Ville de Saint-Basile-le-Grand",
+          "sourceModifiedAt": "2026-10-16T14:20:44+00:00",
+          "contentSha256": "4ebd90f583a95c57a0af62e1e766ef3f1665b11f79d859f99c38b6f1d565f18e",
+          "imageUrls": [],
+          "attachmentUrls": [
+            {
+              "title": "Consultez le compte-rendu",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2021/04/DO-EX_2021-04-09_reponses-consultation-ecrite-PPCMOI-20-03.pdf"
+            },
+            {
+              "title": "présentation du projet",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2021/03/Presentation-seance-Conseil.pdf"
+            },
+            {
+              "title": "",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2025/09/Millenia-04-scaled.jpg"
+            },
+            {
+              "title": "",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2025/09/Millenia-03-scaled.jpg"
+            },
+            {
+              "title": "",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/02/millenia1.png"
+            },
+            {
+              "title": "",
+              "url": "https://www.villesblg.ca/wp-content/uploads/2026/02/millenia2.png"
+            }
+          ],
+          "mediaUrls": [
+            "https://www.villesblg.ca/wp-content/uploads/2021/04/DO-EX_2021-04-09_reponses-consultation-ecrite-PPCMOI-20-03.pdf",
+            "https://www.villesblg.ca/wp-content/uploads/2021/03/Presentation-seance-Conseil.pdf",
+            "https://www.villesblg.ca/wp-content/uploads/2025/09/Millenia-04-scaled.jpg",
+            "https://www.villesblg.ca/wp-content/uploads/2025/09/Millenia-03-scaled.jpg",
+            "https://www.villesblg.ca/wp-content/uploads/2026/02/millenia1.png",
+            "https://www.villesblg.ca/wp-content/uploads/2026/02/millenia2.png"
+          ],
+          "decision": {
+            "decision": "review-closure-period-and-geometry",
+            "reason": "The 16 October notice publishes local paving closures beginning 9 and 19 October, but no exact closure end; the Prévert limit is self-contradictory and the official points do not delineate the closed segments."
+          }
+        }
+      ],
+      "mediaReview": [
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2017/01/sw-img_une_travaux-1.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+          "contentType": "image/jpeg",
+          "byteLength": 273506,
+          "sha256": "63c80a60237eaa6c9a7c3ad5cf76c6d3a0b1a6bb7e4780ecd9a73d09f31c10d8",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Photograph of an excavator, utility truck and concrete pipes at a construction site; it contains no labels, road limits, dates, directions or closure configuration."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2023/11/GLR_2023_Liste-des-questions-frequentes-FAQ-travaux-infrastructures-routieres.pdf",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+          "contentType": "application/pdf",
+          "byteLength": 354515,
+          "sha256": "7a67a5a9f0bd3d0c92d94e53f11490553c49b9d5c9185fed7b56d0c23da0b459",
+          "pageCount": 14,
+          "inspectionStatus": "text-reviewed-all-pages",
+          "observations": [
+            "All 14 text pages were reviewed. Pages 2, 10 and 11 describe generic communications, usual hours and access around an active excavation; they provide no project-specific dates, named roads, limits, or closure geometry. Text-reviewed; not a project plan."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2020/07/IM-WEB_2020-07-03_info-travaux_1920x600.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/travaux-de-reconstruction-de-lemissaire-pluvial-du-parc-du-ruisseau-et-de-rehabilitation-dune-chambre-pluviale-sur-la-rue-principale/",
+          "contentType": "image/jpeg",
+          "byteLength": 160911,
+          "sha256": "376e071a5b648a2ab3e2e6a628ad1b3fdafdfa6e3cb3f81c8fae499ef5402cb9",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Generic Info-Travaux banner; no location or closure geometry."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/06/amenagement-patinoire-terrains-ruisseau.png",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/amenagement-dune-patinoire-et-de-terrains-de-pickleball-au-parc-du-ruisseau/",
+          "contentType": "image/png",
+          "byteLength": 1617852,
+          "sha256": "a30600eaeb665d79d76d0759a847cf3b349e116f3f09415b9b8df6dcb9aae1b8",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Aerial photograph of park sports facilities; it does not define a road closure or public path outline."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/08/Plan-preliminaire-pour-site-web_VF.pdf",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/amenagement-dune-patinoire-et-de-terrains-de-pickleball-au-parc-du-ruisseau/",
+          "contentType": "application/pdf",
+          "byteLength": 10207882,
+          "sha256": "dab62835905f61bb4137000b2c15668cb2baecc64e7d3273fc6e68bd5c1c5b75",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "One-page preliminary park plan. It shows sports facilities and park paths, not an automobile restriction; the notice says the rest of the park remains accessible."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2024/02/lafrance-ouest_1920x600-scaled.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-de-la-rue-lafrance-ouest/",
+          "contentType": "image/jpeg",
+          "byteLength": 406442,
+          "sha256": "50f33b915487c2d350f82018d9e000348e09ca3c70b1ff73b9bed078dabd578b",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Completed-street rendering with a multi-use path; not a temporary closure diagram."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2024/03/Seance-dinformation-Lafrance-Ouest-VF.pdf",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-de-la-rue-lafrance-ouest/",
+          "contentType": "application/pdf",
+          "byteLength": 4141614,
+          "sha256": "3e7a6e6350dccd145be9ad81e642f3fb8432bea4e07539e3e1ebb139cb825498",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "All 25 historical 2024 presentation slides were inspected; they cover construction phases, driveway access and mobility design through 2025, not the October 2026 landscaping visit."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2024/03/Plan-vulgarise_VF.pdf",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-de-la-rue-lafrance-ouest/",
+          "contentType": "application/pdf",
+          "byteLength": 5226704,
+          "sha256": "c895ff541fd6e3aefa7cc2a01020a273615e6ddfb6fe4c356f1a065bdf2ffa6d",
+          "pageCount": 1,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "One-page plan of the completed Lafrance street and multi-use path; it is not a current obstruction trace."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/08/Bouclage-116_1920x600.png",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/ajout-dune-nouvelle-conduite-daqueduc-en-bordure-du-boul-sir-wilfrid-laurier-route-116-projet-de-la-rievr/",
+          "contentType": "image/png",
+          "byteLength": 4407719,
+          "sha256": "d9d4bd1c96ddb5e0538dea098cd8f25fe6e7aaf6da9dd45877f71e3ecb7998e8",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Street-view photograph of Route 116 and its shoulder; no closure or work-limit annotation."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/10/travaux-dragage_1920x600.png",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/rehabilitation-du-bassin-de-montpellier/",
+          "contentType": "image/png",
+          "byteLength": 2328817,
+          "sha256": "23efb1a96f693ed9bc73dfa807a4ee5e4ae7e584f81ecee7f8d7508c84c0e97d",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Aerial view of the Montpellier basin and surrounding park; no route restriction is shown."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/05/refection-postes-pompage_1920x600-scaled.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-postes-pompage/",
+          "contentType": "image/jpeg",
+          "byteLength": 333405,
+          "sha256": "59cf10a4589c1c84b3e9c873b056ee1a61f7f2ecaefc1ae59406bcd1130dff47",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Street-view photograph of a local road and cycling path; no temporary limits or closure signs."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/09/parc-montpellier_1920x600-scaled.png",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/sentier-mobilier-parc-montpellier/",
+          "contentType": "image/png",
+          "byteLength": 3855993,
+          "sha256": "49e92f04a0b6791c149d3fc0fc8c09f6b76a66b8a202ab2ce55a4cf1636a7ec5",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Aerial view of the park basin and paths; it does not delineate a temporary pedestrian closure."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2017/02/sw-img_une_entretien-conduites-sanitaires-et-pluviales.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/construction-dun-nouvel-egout-collecteur-par-la-ville-de-saint-bruno-de-montarville/",
+          "contentType": "image/jpeg",
+          "byteLength": 239114,
+          "sha256": "c054fd464d58333e13682205b30ac2d34fc0aeda003c0d2e6256ef5465f279e7",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Close-up of a storm-sewer cover; no road or obstruction geometry."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/09/LET_egout-collecteur_bouchard_VF.pdf",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/construction-dun-nouvel-egout-collecteur-par-la-ville-de-saint-bruno-de-montarville/",
+          "contentType": "application/pdf",
+          "byteLength": 352342,
+          "sha256": "5a8ee947131fad1f6e668b3c3a89b2e3823d3f0708d085e0461a1dc959a07b9e",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "All three letter pages and their access sketch were inspected; the text says the 2026 fall work is not on the public street, and any local interruption is unscheduled."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/09/LET_egout-collecteur_autourPrinicpale_VF.pdf",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/construction-dun-nouvel-egout-collecteur-par-la-ville-de-saint-bruno-de-montarville/",
+          "contentType": "application/pdf",
+          "byteLength": 255394,
+          "sha256": "1c3f1e5c115cc72dbfb8cfba16aad763a9adab1caab0abcde19bca6b57a2b07c",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Both letter pages were inspected; the diagram is a local access sketch, not georeferenced restriction geometry, and no dated public-road closure is published."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/09/LET_egout-collecteur_BellaVista_VF.pdf",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/construction-dun-nouvel-egout-collecteur-par-la-ville-de-saint-bruno-de-montarville/",
+          "contentType": "application/pdf",
+          "byteLength": 257147,
+          "sha256": "62a5378b774c8933b0bf22de3825200140e6efd5ea0c95d4536fdba0e007554b",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Both letter pages were inspected; the works are future 2027 and the sketch gives no current public-road closure."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2017/04/sw-img_une-edifice-Leopold-bouchard.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/remplacement-thermopompes-edifice-leopold-bouchard/",
+          "contentType": "image/jpeg",
+          "byteLength": 270270,
+          "sha256": "9194cff5e2cf695869f9201dfb12a81dbc4b60328ad7fd5996f1d343f444bb14",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Photograph of the municipal building where work is interior; no road geometry."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2017/12/sw-img_une_amelioration-reseau-egouts-sanitaires.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/raccordements-inverses/",
+          "contentType": "image/jpeg",
+          "byteLength": 162498,
+          "sha256": "34f3baf1bb438d4c2a7532101d763c69d517c557e07b63d438d9ffa516af57d3",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Photograph of wastewater/sewer work; no temporary route geometry."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/04/ajout-surface-caoutchouc-parc-montpellier_1920x600-scaled.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/surface-caoutchouc-jeux-eau-parc-montpellier/",
+          "contentType": "image/jpeg",
+          "byteLength": 431831,
+          "sha256": "ae45f9c67bd109dd84f669df4743cada42670dd2b813f17e4ee74e3f5a8fefb8",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Photograph of a splash-pad playground; no public-road restriction."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/05/rehabilitation-vanne-116_1920x600-scaled.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/rehabilitation-vanne-route-116/",
+          "contentType": "image/jpeg",
+          "byteLength": 182746,
+          "sha256": "be6ff664ca0c6fce35155b554fe898b00c579b3f42c64ebf2930f9a137e637a0",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Street-view photograph of Route 116; it does not mark the shoulder work limits."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/06/balancoires-cheminot_1920x600.png",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/mise-a-niveau-des-aires-de-balancoires-aux-parcs-des-cheminots-et-des-fromagers/",
+          "contentType": "image/png",
+          "byteLength": 7696037,
+          "sha256": "ebad0a76cb691a39071e91e96ebc3616d302fe25824530328a98787b57937790",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Photograph of park playground equipment; no street obstruction geometry."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/07/borne-incendie_1920x600.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/ajout-dune-borne-fontaine-sur-la-montee-des-trinitaires/",
+          "contentType": "image/jpeg",
+          "byteLength": 1688102,
+          "sha256": "a7ed3497ade4b41c9a43df560d4e981b6059a019699761c077bac7e4ceda1f18",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Close-up of a fire hydrant; it does not identify the published street closure extent."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2021/04/DO-EX_2021-04-09_reponses-consultation-ecrite-PPCMOI-20-03.pdf",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/projets-de-construction-residentielle/projet-le-millenia/",
+          "contentType": "application/pdf",
+          "byteLength": 394835,
+          "sha256": "3652bc58cb5396409c53f7810f84c63dee410d560f88473f34687cd9a97fa617",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected-relevant-pages",
+          "observations": [
+            "Historical 2021 written-consultation report about the proposed development and long-term traffic study; it is not a 2026 work restriction. Relevant circulation pages were reviewed."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2021/03/Presentation-seance-Conseil.pdf",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/projets-de-construction-residentielle/projet-le-millenia/",
+          "contentType": "application/pdf",
+          "byteLength": 3179636,
+          "sha256": "a113cd9f644e0f5d175dad1bef8567e89e4dc7a50e092f42e37a9c115b5280db",
+          "pageCount": 19,
+          "inspectionStatus": "visually-inspected-relevant-pages",
+          "observations": [
+            "Historical 2021 development presentation; mobility slides show conceptual site paths and traffic-study context, not current temporary restrictions."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2025/09/Millenia-04-scaled.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/projets-de-construction-residentielle/projet-le-millenia/",
+          "contentType": "image/jpeg",
+          "byteLength": 760155,
+          "sha256": "61e852d92d0348e0c4e6e6c1421c2f242841178be9c79abf1dc676cdd0115470",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Architectural rendering of a proposed multi-use path within the development; not a temporary closure map."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2025/09/Millenia-03-scaled.jpg",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/projets-de-construction-residentielle/projet-le-millenia/",
+          "contentType": "image/jpeg",
+          "byteLength": 1215705,
+          "sha256": "20af8a7032148dce6a08bf0fc9bc8d725e8ff0d58c9983476a56ec654fbcaa7f",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Architectural rendering of proposed apartments and park space; no road restriction geometry."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/02/millenia1.png",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/projets-de-construction-residentielle/projet-le-millenia/",
+          "contentType": "image/png",
+          "byteLength": 365201,
+          "sha256": "72547420bc23138a8144c15e5d1ca2c3054b93c22d024a1fddd55873e13ae3c9",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Architectural rendering of the proposed residential development; it does not establish a temporary street closure."
+          ]
+        },
+        {
+          "url": "https://www.villesblg.ca/wp-content/uploads/2026/02/millenia2.png",
+          "parentNoticeUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/projets-de-construction-residentielle/projet-le-millenia/",
+          "contentType": "image/png",
+          "byteLength": 403946,
+          "sha256": "e5a87a1daa1a6936235e83a453b8abd71be5c6697abeb2427b00631a5ac7786b",
+          "pageCount": null,
+          "inspectionStatus": "visually-inspected",
+          "observations": [
+            "Architectural rendering of the proposed residential development; it does not establish a temporary street closure."
+          ]
+        }
+      ],
+      "fingerprint": "3f41e728baa66855c9ad9c84d9ccece6e2a9c4d4fda7e3a52a7d42a9220dd3e3"
+    }
+  },
+  "records": [
+    {
+      "id": "saint-basile-lieu-72323",
+      "sourceId": "lieu-72323",
+      "title": "Réaménagement des sentiers et ajout de mobilier urbain",
+      "streets": "Réaménagement des sentiers et ajout de mobilier urbain",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-72323",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.2932135,
+          45.53492
+        ]
+      },
+      "point": [
+        -73.2932135,
+        45.53492
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/sentier-mobilier-parc-montpellier/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 0
+    },
+    {
+      "id": "saint-basile-lieu-61620",
+      "sourceId": "lieu-61620",
+      "title": "Reconstruction du rang des Vingt (entre la rue Taillon Ouest et le 8, rue de l’Îlot-du-Coteau)",
+      "streets": "Reconstruction du rang des Vingt (entre la rue Taillon Ouest et le 8, rue de l’Îlot-du-Coteau)",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-61620",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.2995184569657,
+          45.53619964586295
+        ]
+      },
+      "point": [
+        -73.2995184569657,
+        45.53619964586295
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/reconstruction-dune-portion-du-rang-des-vingt/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 0
+    },
+    {
+      "id": "saint-basile-lieu-61629",
+      "sourceId": "lieu-61629",
+      "title": "Poursuite des interventions sur le bassin de rétention du parc de Montpellier",
+      "streets": "Poursuite des interventions sur le bassin de rétention du parc de Montpellier",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-61629",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.2932135,
+          45.53492
+        ]
+      },
+      "point": [
+        -73.2932135,
+        45.53492
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 0
+    },
+    {
+      "id": "saint-basile-lieu-68613",
+      "sourceId": "lieu-68613",
+      "title": "Remplacement des thermopompes à l’édifice Léopold-Bouchard",
+      "streets": "Remplacement des thermopompes à l’édifice Léopold-Bouchard",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-68613",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.2866044,
+          45.5259569
+        ]
+      },
+      "point": [
+        -73.2866044,
+        45.5259569
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/remplacement-thermopompes-edifice-leopold-bouchard/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 1
+    },
+    {
+      "id": "saint-basile-lieu-69149",
+      "sourceId": "lieu-69149",
+      "title": "Réfection de plusieurs postes de pompage – Rue Alvares",
+      "streets": "Réfection de plusieurs postes de pompage – Rue Alvares",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-69149",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.27417451324463,
+          45.53360613826136
+        ]
+      },
+      "point": [
+        -73.27417451324463,
+        45.53360613826136
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-postes-pompage/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 1
+    },
+    {
+      "id": "saint-basile-lieu-69151",
+      "sourceId": "lieu-69151",
+      "title": "Réfection de plusieurs postes de pompage – 21, rue des Ormes",
+      "streets": "Réfection de plusieurs postes de pompage – 21, rue des Ormes",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-69151",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.28235312645874,
+          45.525850495983654
+        ]
+      },
+      "point": [
+        -73.28235312645874,
+        45.525850495983654
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-postes-pompage/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 1
+    },
+    {
+      "id": "saint-basile-lieu-69152",
+      "sourceId": "lieu-69152",
+      "title": "Réfection de plusieurs postes de pompage – 52, rue des Ormes",
+      "streets": "Réfection de plusieurs postes de pompage – 52, rue des Ormes",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-69152",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.28070453068848,
+          45.528420058431244
+        ]
+      },
+      "point": [
+        -73.28070453068848,
+        45.528420058431244
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-postes-pompage/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 1
+    },
+    {
+      "id": "saint-basile-lieu-69150",
+      "sourceId": "lieu-69150",
+      "title": "Optimisation de conduites – Intersection des rues Bella-Vista et des Martinets",
+      "streets": "Optimisation de conduites – Intersection des rues Bella-Vista et des Martinets",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-69150",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.28269849471125,
+          45.50899557053647
+        ]
+      },
+      "point": [
+        -73.28269849471125,
+        45.50899557053647
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/refection-postes-pompage/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 1
+    },
+    {
+      "id": "saint-basile-lieu-70776",
+      "sourceId": "lieu-70776",
+      "title": "Aménagement d’une patinoire et de terrains de pickleball au parc du Ruisseau",
+      "streets": "Aménagement d’une patinoire et de terrains de pickleball au parc du Ruisseau",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-70776",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.2936533576583,
+          45.51488564073043
+        ]
+      },
+      "point": [
+        -73.2936533576583,
+        45.51488564073043
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 0
+    },
+    {
+      "id": "saint-basile-lieu-70778",
+      "sourceId": "lieu-70778",
+      "title": "Réfection de la halte du rang des Vingt",
+      "streets": "Réfection de la halte du rang des Vingt",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-70778",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.2962843490421,
+          45.53831295478217
+        ]
+      },
+      "point": [
+        -73.2962843490421,
+        45.53831295478217
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 0
+    },
+    {
+      "id": "saint-basile-lieu-70780",
+      "sourceId": "lieu-70780",
+      "title": "Réfection de la rue Lafrance Ouest",
+      "streets": "Réfection de la rue Lafrance Ouest",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-70780",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.296361632872,
+          45.53004472059963
+        ]
+      },
+      "point": [
+        -73.296361632872,
+        45.53004472059963
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 0
+    },
+    {
+      "id": "saint-basile-lieu-70781",
+      "sourceId": "lieu-70781",
+      "title": "Réfection de la rue Belzil",
+      "streets": "Réfection de la rue Belzil",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-70781",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.29942014724689,
+          45.52715178354906
+        ]
+      },
+      "point": [
+        -73.29942014724689,
+        45.52715178354906
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 0
+    },
+    {
+      "id": "saint-basile-lieu-70782",
+      "sourceId": "lieu-70782",
+      "title": "Réfection de la rue Anne-Hébert",
+      "streets": "Réfection de la rue Anne-Hébert",
+      "startDate": null,
+      "endDate": null,
+      "currentOnlyDate": "2026-10-17",
+      "worksiteOnly": true,
+      "sourceStatus": "refection-ou-amenagement-en-cours",
+      "impact": "Point de chantier publié; l’avis ne précise pas l’impact sur la circulation automobile.",
+      "trafficLabel": "Chantier — impact routier non publié",
+      "severity": "worksite",
+      "direction": "Direction non publiée.",
+      "reference": "lieu-70782",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.30150587783541,
+          45.528147674229935
+        ]
+      },
+      "point": [
+        -73.30150587783541,
+        45.528147674229935
+      ],
+      "geometryNote": "Point officiel de la carte des travaux; aucun segment d’entrave n’est publié dans cette couche.",
+      "sourceDescription": "",
+      "publishedDate": null,
+      "streetWorks": null,
+      "detourPlan": null,
+      "sourceUrl": "https://www.villesblg.ca/services-aux-citoyens/infrastructures-et-reseau-routier/travaux/",
+      "sourceMapUrl": "https://www.villesblg.ca/carte-interactive/?categorie=travaux",
+      "periods": [],
+      "schedule": [],
+      "imageCount": 0
+    }
+  ]
+}

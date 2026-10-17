@@ -27,6 +27,13 @@ Respecte aussi les [regles de publication](./deployment-rules.md).
 - Pour Repentigny, actualise le snapshot automobile avec `npm run snapshot:repentigny`, puis l'entree Repentigny de la consolidation pietonne avec `node tools/build-pedestrian-snapshot.mjs --repentigny-only`. Ces extractions utilisent le meme flux Open511, mais les snapshots et leurs regles de retention restent distincts. Les autres entrees consolidees et leurs dates de verification doivent rester inchanges et etre signalees comme non reverifiees.
 - Ne fais aucun commit, push, deploiement ou installation de dependances sans demande explicite distincte. Une autorisation de publication d'une session precedente ne vaut pas pour cette execution.
 
+## Avis municipaux et documents lies
+
+- Pour Boucherville, Brossard, Mercier, Sainte-Catherine, Sainte-Julie et Saint-Basile-le-Grand, traite aussi les pages d'avis/projets, PDF, images et pieces jointes officiels deja catalogues ou lies par les pages de travaux. Consulte l'agent pour les URL, schemas et decisions propres a chaque ville; ne confonds pas ces documents avec un flux live.
+- Lis l'inventaire complet et les avis detaillees avant toute decision. Conserve l'ordre, les URLs, les empreintes de texte et de medias, l'etat reel d'inspection et une decision motivee dans la revue persistante du snapshot.
+- Quand les empreintes et inventaires sont identiques, reutilise l'analyse humaine sauvegardee; ne reinterprete pas les avis inchanges. Si un lien, un avis, une image, un PDF, son contenu ou son ordre change, preserve le snapshot et sa fraicheur jusqu'a la revue complete des changements. N'utilise `--review-supplemental-sources` ou `--record-sainte-catherine-notice-review` qu'apres cette revue.
+- La consolidation Sainte-Catherine reste un snapshot pieton: lance `node tools/build-pedestrian-snapshot.mjs --sainte-catherine-only` avec Chromium et le serveur local, et actualise seulement son `sources[].checkedAt` ainsi que l'entree FAQ correspondante apres une verification live complete. `generatedAt` n'est pas un horodatage de verification.
+
 ## Execution
 
 1. Verifie l'etat du depot et preserve les modifications deja presentes. Lis le [README](../../README.md), le [catalogue](../../data/sources.js), les portions utiles du [chargeur](../../js/app.js), les snapshots du perimetre et leurs generateurs. Conserve une base de comparaison avant toute ecriture; les fichiers temporaires restent hors depot.
